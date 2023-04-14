@@ -1,0 +1,135 @@
+ Android studio快捷键大全 和 eclipse对照（原）
+
+Ctrl+空格                  代码提示                           (同Eclipse中Alt+/)
+Ctrl+Shift+N             项目内查找文件              (同Eclipse中Ctrl+Shift+R)
+
+double Shift               全局查找
+Ctrl+F12                     示当前文件的结构         (同Eclipse中Ctrl+0)
+Ctrl+Alt+L                 格式化                                (同Eclipse中Ctrl+Shift+F)
+Ctrl+Alt+O                优化导入的包                 (同Eclipse中Ctrl+Shift+O)
+Ctrl+Q                        查看文档                           (同Eclipse中F2)
+Alt+F7                        搜寻被调用处（工程）         (同Eclipse中ctrl+shift + G)
+
+Ctrl+F7                        搜寻被调用处(当前文件)
+
+Ctrl+Alt+F7               搜寻被调用处（工程）悬浮窗显示结果
+Alt+Insert                生成代码                          (同Eclipse中Alt+Shift+S)                        (GetSet)
+Alt+Enter                 快速修复                           (同Eclipse中F1)
+
+Ctrl+Alt+T                  把代码包在一起            (同Eclipse中Alt+Shift+Z)                        (加try catch if ,while,for,runnable等)
+
+Ctrl+Alt+M                抽取方法                            (同Eclipse中Alt+Shift+M)
+
+Alt+Shift+向上          向上移动代码                   (同Eclipse中Alt+向上)
+
+Alt+Shift+向下          向下移动代码                   (同Eclipse中Alt+向下)
+
+Ctrl + Shift + U          大小写转换                      (同Eclipse中Ctrl+Shift+X/Y)
+
+Ctrl+Alt+V                  快捷生成局部变量       (同Eclipse中Ctrl+2后加L)
+
+Ctrl+Alt+C                  快捷生成常量
+
+Ctrl+Alt+F                  快捷生成成员变量       (同Eclipse中Ctrl+1选field)
+
+Shift+F6                    重命名
+
+.cast                            强制类型转换快捷键           如：输入findViewById(R.id.iv_drag).cast会生成（）findViewById(R.id.iv_drag)
+
+.var                              生成变量快捷键                     如：输入findViewById(R.id.iv_drag).var会生成View view = findViewById(R.id.iv_drag);
+
+ 
+
+Ctrl+/                          单行注释，反注释再按一次即可
+
+Ctrl+Shift+/               模块注释，反注释再按一次即可
+
+Ctrl + Left/Right       快捷移动(不选中代码)
+
+Ctrl + Shift+Left/Right快捷移动(选中代码)
+
+Ctrl + O                       快捷覆写方法
+
+Ctrl+Shift+ Enter      自动完成当前行（行的末尾加；并将光标置于行的末尾）
+
+Ctrl+Shift+空格        联想并自动完成当前行
+
+Ctrl+J                          模板代码提示                                                                                    待解决：找不到switch 模板代码
+
+Ctrl+P                          方法参数提示
+
+Ctrl+Alt+I                   快捷看类的源码
+
+Ctrl＋W                      一级一级扩大选中范围
+
+Ctrl+[或]                   跳转到大括号开头或结尾
+Alt+↑或↓               在方法间移动
+
+Ctrl + F                        查找
+
+Ctrl+Shift+F               高级查找
+
+Ctrl + R                        查找+替换
+
+Ctrl+Shift+R              高级查找+替换
+
+F2                                快速定位到文件错误或警告位置
+
+Ctrl+Shift+Backspace 跳转到上次修改的地方
+
+Ctrl+Shift+← 后退
+
+Ctrl+Shift+→ 前进
+
+Ctrl+X                        剪切当前行
+Ctrl+Y                        删除当前行
+Ctrl+D                        复制当前行
+
+ 
+
+Ctrl+E                        显示最近打开的文件
+
+Ctrl+Shift+E              显示最近修改的文件
+
+Ctrl+Alt+S                  打开settings界面
+
+Ctrl+Alt+Shift+S        打开Project Structure界面
+
+Ctrl+F9                        编译工程
+
+Shift+F9                      调试运行（Debug）
+
+Shift+F10                   运行（Run）
+
+Alt+Shift+F9               Debug项目（手动选择项目）
+
+Alt+Shift+F10           运行项目（手动选择项目）
+
+ 
+
+ 
+
+Ctrl+Shift+K               push文件到Server（git）    
+
+Ctrl+N                         快速查找类名、文件
+
+Ctrl+Tab                     打开界面切换窗口，保持按住Ctrl键，选中相应的要打开的窗口。
+
+Alt+←或→               切换已打开的文件视图
+
+Alt+1                          开关Project视图
+
+Alt+7                           开关Structure视图
+Ctrl+_F4                    关闭当前窗口
+
+ 
+
+插件：
+
+    Android Layout ID Converter    由XML文件自动生成所有带id控件的findViewById          1.4版本在Astudio1.3不可用
+    Android ToolBox Plugin               生成Viewholder                                                                                    1.1.4版本在Astudio1.3不可用
+    Android Postfix Completion      “”.toast生成Toast.makeText···“”.log 生成 Log.d(····)
+    GsonFormat                                  JSON字符串一键生成javabean
+
+
+

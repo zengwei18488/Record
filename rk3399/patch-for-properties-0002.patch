@@ -1,0 +1,165 @@
+diff --git a/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java b/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java
+index 9c700b4280..1606f7309d 100644
+--- a/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java
++++ b/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java
+@@ -39,6 +39,7 @@ import android.view.WindowInsets;
+ import android.view.accessibility.AccessibilityEvent;
+ import android.widget.FrameLayout;
+ import android.widget.TextView;
++import android.os.SystemProperties;
+ 
+ import com.android.internal.logging.MetricsLogger;
+ import com.android.keyguard.KeyguardStatusView;
+@@ -732,6 +733,9 @@ public class NotificationPanelView extends PanelView implements
+ 
+     @Override
+     public boolean onTouchEvent(MotionEvent event) {
++        if(mStatusBarState == StatusBarState.SHADE && !SystemProperties.getBoolean("persist.qsm", true)){
++            return false;
++        }
+         if (mBlockTouches || mQsContainer.isCustomizing()) {
+             return false;
+         }
+diff --git a/hardware/rockchip/librga/version.h b/hardware/rockchip/librga/version.h
+index d45b21556b..88086f0d55 100644
+--- a/hardware/rockchip/librga/version.h
++++ b/hardware/rockchip/librga/version.h
+@@ -1,6 +1,6 @@
+ #ifndef _rk_graphics_version_h_
+ #define _rk_graphics_version_h_
+ 
+-#define RK_GRAPHICS_VER "version:08e7f83+2019-09-23 17:08:38"
++#define RK_GRAPHICS_VER "version:24bc2f8+2020-01-16 13:43:02"
+ 
+ #endif // VERSION_H
+diff --git a/hardware/rockchip/omx_il/include/rockchip/git_info.h b/hardware/rockchip/omx_il/include/rockchip/git_info.h
+index da18c0a359..9fec6fd614 100644
+--- a/hardware/rockchip/omx_il/include/rockchip/git_info.h
++++ b/hardware/rockchip/omx_il/include/rockchip/git_info.h
+@@ -1 +1 @@
+-#define OMX_COMPILE_INFO      "author:  zengwei\n time: Mon, 23 Sep 2019 17:08:38 +0800 git commit 08e7f83e8e7d53a50338545e107f07ff57b698f8 "
++#define OMX_COMPILE_INFO      "author:  zengwei\n time: Thu, 16 Jan 2020 13:43:02 +0800 git commit 24bc2f89de169e69820b917c3e7d8ce74a841327 "
+diff --git a/packages/apps/Settings/src/com/android/settings/DevelopmentSettings.java b/packages/apps/Settings/src/com/android/settings/DevelopmentSettings.java
+index ca139e8e77..2d6c09ee8c 100644
+--- a/packages/apps/Settings/src/com/android/settings/DevelopmentSettings.java
++++ b/packages/apps/Settings/src/com/android/settings/DevelopmentSettings.java
+@@ -422,6 +422,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+             disableForUser(mClearAdbKeys);
+             disableForUser(mEnableTerminal);
+             disableForUser(mPassword);
++        } else if (!SystemProperties.getBoolean("persist.setting.dev.usbdebug", true)) {
++            disableForUser(mEnableAdb);
+         }
+ 
+         mDebugAppPref = findPreference(DEBUG_APP_KEY);
+@@ -621,7 +623,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
+         final EnforcedAdmin admin = RestrictedLockUtils.checkIfMaximumTimeToLockIsSet(
+                 getActivity());
+         mKeepScreenOn.setDisabledByAdmin(admin);
+-        if (admin == null) {
++        if (admin == null && SystemProperties.getBoolean("persist.setting.dev.stayawake", true)) {
+             mDisabledPrefs.remove(mKeepScreenOn);
+         } else {
+             mDisabledPrefs.add(mKeepScreenOn);
+diff --git a/packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java b/packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java
+index de62f92ae3..fb4b23b3a0 100644
+--- a/packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java
++++ b/packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java
+@@ -242,6 +242,10 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment implements In
+                 return true;
+             }
+ 
++            if (!SystemProperties.getBoolean("persist.setting.dev", true)) {
++                return true;
++            }
++
+             if (mDevHitCountdown > 0) {
+                 mDevHitCountdown--;
+                 if (mDevHitCountdown == 0) {
+diff --git a/packages/apps/Settings/src/com/android/settings/PrivacySettings.java b/packages/apps/Settings/src/com/android/settings/PrivacySettings.java
+index 396e5fa207..499e714ca7 100644
+--- a/packages/apps/Settings/src/com/android/settings/PrivacySettings.java
++++ b/packages/apps/Settings/src/com/android/settings/PrivacySettings.java
+@@ -28,6 +28,7 @@ import android.os.RemoteException;
+ import android.os.ServiceManager;
+ import android.os.UserHandle;
+ import android.os.UserManager;
++import android.os.SystemProperties;
+ import android.provider.SearchIndexableResource;
+ import android.provider.Settings;
+ import android.support.v14.preference.SwitchPreference;
+@@ -264,6 +265,7 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
+     private static void getNonVisibleKeys(Context context, Collection<String> nonVisibleKeys) {
+         final IBackupManager backupManager = IBackupManager.Stub.asInterface(
+                 ServiceManager.getService(Context.BACKUP_SERVICE));
++        boolean isHide = !SystemProperties.getBoolean("persist.setting.factory_reset", true);
+         boolean isServiceActive = false;
+         try {
+             isServiceActive = backupManager.isBackupServiceActive(UserHandle.myUserId());
+@@ -273,16 +275,16 @@ public class PrivacySettings extends SettingsPreferenceFragment implements Index
+         }
+         boolean vendorSpecific = context.getPackageManager().
+                 resolveContentProvider(GSETTINGS_PROVIDER, 0) == null;
+-        if (vendorSpecific || isServiceActive) {
++        if (vendorSpecific || isServiceActive || isHide) {
+             nonVisibleKeys.add(BACKUP_INACTIVE);
+         }
+-        if (vendorSpecific || !isServiceActive) {
++        if (vendorSpecific || !isServiceActive || isHide) {
+             nonVisibleKeys.add(BACKUP_DATA);
+             nonVisibleKeys.add(AUTO_RESTORE);
+             nonVisibleKeys.add(CONFIGURE_ACCOUNT);
+         }
+         if (RestrictedLockUtils.hasBaseUserRestriction(context,
+-                UserManager.DISALLOW_FACTORY_RESET, UserHandle.myUserId())) {
++                UserManager.DISALLOW_FACTORY_RESET, UserHandle.myUserId()) || isHide) {
+             nonVisibleKeys.add(FACTORY_RESET);
+         }
+     }
+diff --git a/packages/apps/Settings/src/com/android/settings/SettingsActivity.java b/packages/apps/Settings/src/com/android/settings/SettingsActivity.java
+index 7eccc9e54e..c6bfffda52 100755
+--- a/packages/apps/Settings/src/com/android/settings/SettingsActivity.java
++++ b/packages/apps/Settings/src/com/android/settings/SettingsActivity.java
+@@ -1106,16 +1106,17 @@ public class SettingsActivity extends SettingsDrawerActivity
+         final boolean showDev = mDevelopmentPreferences.getBoolean(
+                     DevelopmentSettings.PREF_SHOW, android.os.Build.TYPE.equals("eng"))
+                 && !um.hasUserRestriction(UserManager.DISALLOW_DEBUGGING_FEATURES);
++        boolean bIsShowDev = showDev && SystemProperties.getBoolean("persist.setting.dev", true);
+         setTileEnabled(new ComponentName(packageName,
+                         Settings.DevelopmentSettingsActivity.class.getName()),
+-                showDev, isAdmin, pm);
++                        bIsShowDev, isAdmin, pm);
+        if(!SystemProperties.get("ro.build.characteristics","null").equals("tablet")) {
+            setTileEnabled(new ComponentName(packageName,
+                            Settings.ScreenshotSettingsActivity.class.getName()),
+                    false, isAdmin, pm);
+        }
+         // Reveal development-only quick settings tiles
+-        DevelopmentTiles.setTilesEnabled(this, showDev);
++        DevelopmentTiles.setTilesEnabled(this, bIsShowDev);
+ 
+         if (UserHandle.MU_ENABLED && !isAdmin) {
+             // When on restricted users, disable all extra categories (but only the settings ones).
+@@ -1131,8 +1132,14 @@ public class SettingsActivity extends SettingsDrawerActivity
+             }
+         }
+ 
++        boolean bIsShowApps = SystemProperties.getBoolean("persist.setting.manageapp", true);
++        setTileEnabled(new ComponentName(packageName,
++                Settings.ManageApplicationsActivity.class.getName()), bIsShowApps, isAdmin, pm);
++
+         String backupIntent = getResources().getString(R.string.config_backup_settings_intent);
+         boolean useDefaultBackup = TextUtils.isEmpty(backupIntent);
++        boolean bIsHideBackup = SystemProperties.getBoolean("persist.setting.factory_reset", true);
++        useDefaultBackup =  useDefaultBackup && bIsHideBackup;
+         setTileEnabled(new ComponentName(packageName,
+                 Settings.PrivacySettingsActivity.class.getName()), useDefaultBackup, isAdmin, pm);
+         boolean hasBackupActivity = false;
+@@ -1144,6 +1151,7 @@ public class SettingsActivity extends SettingsDrawerActivity
+                 Log.e(LOG_TAG, "Invalid backup intent URI!", e);
+             }
+         }
++        hasBackupActivity = hasBackupActivity && bIsHideBackup;
+         setTileEnabled(new ComponentName(packageName,
+                 BackupSettingsActivity.class.getName()), hasBackupActivity,
+                 isAdmin || Utils.isCarrierDemoUser(this), pm);

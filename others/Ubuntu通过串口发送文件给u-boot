@@ -1,0 +1,115 @@
+Platform: IMX6Q
+
+Windows可以通过默认的串口终端发送给u-boot，而在ubuntu上默认的minicom无此功能，不过可以通过c-kermit实现。
+
+
+PS: 红色字体代表需要输入的命令。
+
+
+1. 安装 c-kermit
+#sudo apt-get install ckermit
+
+2. 测试
+[kris@ecovacs:~/yocto_3.14.28-1.0.1]$ kermit
+C-Kermit 9.0.302 OPEN SOURCE:, 20 Aug 2011, for Linux+SSL+KRB5 (64-bit)
+ Copyright (C) 1985, 2011,
+  Trustees of Columbia University in the City of New York.
+Type ? or HELP for help.
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>
+
+
+如果提示?SET SPEED has no effect without prior SET LINE
+那么chmod 777 /dev/ttyUSB0
+
+
+3. 配置
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>set line /dev/ttyUSB0
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>set speed 115200
+/dev/ttyUSB0, 115200 bps
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>set flow-control none
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>
+
+ps: 本平台使用ttyUSB0, 115200
+
+
+4. 连接板子u-boot
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>connect
+复位板子，然后PC上按任一键就能进入u-boot命令行了。
+
+Connecting to /dev/ttyUSB0, speed 115200
+ Escape character: Ctrl-\ (ASCII 28, FS): enabled
+Type the escape character followed by C to get back,
+or followed by ? to see other options.
+----------------------------------------------------
+
+
+U-Boot 2009.08-dirty (12月 22 2015 - 14:34:22)
+
+CPU: Freescale i.MX6 family TO1.5 at 792 MHz
+Thermal sensor with ratio = 174
+Temperature:   36 C, calibration data 0x54d4c369
+mx6q pll1: 792MHz
+mx6q pll2: 528MHz
+mx6q pll3: 480MHz
+mx6q pll8: 50MHz
+ipg clock     : 66000000Hz
+ipg per clock : 66000000Hz
+uart clock    : 80000000Hz
+cspi clock    : 60000000Hz
+ahb clock     : 132000000Hz
+axi clock   : 264000000Hz
+emi_slow clock: 132000000Hz
+ddr clock     : 528000000Hz
+usdhc1 clock  : 198000000Hz
+usdhc2 clock  : 198000000Hz
+usdhc3 clock  : 198000000Hz
+usdhc4 clock  : 198000000Hz
+nfc clock     : 24000000Hz
+Board: i.MX6Q-SABRESD: unknown-board Board: 0x63015 [POR ]
+Boot Device: SD
+I2C:   ready
+DRAM:   2 GB
+MMC:   FSL_USDHC: 0,FSL_USDHC: 1,FSL_USDHC: 2
+*** Warning - bad CRC or MMC, using default environment
+
+In:    serial
+Out:   serial
+Err:   serial
+Found PFUZE100! deviceid=10,revid=21
+Net:   got MAC address from IIM: 00:00:00:00:00:00
+FEC0 [PRIME]
+Hit any key to stop autoboot:  0
+MX6Q TEK U-Boot >
+
+5. 加载文件到内存
+比如一个文件要加载到0x907000
+MX6Q TEK U-Boot > loadb 0x907000
+## Ready for binary (kermit) download to 0x00907000 at 115200 bps...
+
+然后按
+ctrl + \
+然后再按 connect 回到c-kermit
+
+再发送文件：
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>send /home/kris/ddr-stress-test-mx6dq.bin
+发送完成会自动回到c-kermit界面，然后外面再连到u-boot
+(/home/kris/yocto_3.14.28-1.0.1/) C-Kermit>connect
+Connecting to /dev/ttyUSB0, speed 115200
+ Escape character: Ctrl-\ (ASCII 28, FS): enabled
+Type the escape character followed by C to get back,
+or followed by ? to see other options.
+----------------------------------------------------
+## Total Size      = 0x000160e2 = 90338 Bytes
+## Start Addr      = 0x00907000
+MX6Q TEK U-Boot >
+
+接着就可以运行文件了
+MX6Q TEK U-Boot > go 0x00907000
+## Starting application at 0x00907000 ...
+
+
+参考：
+
+http://blog.chinaunix.net/uid-23121085-id-2546601.html
+
+http://blog.csdn.net/g1036583997/article/details/38497941

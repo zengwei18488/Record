@@ -1,0 +1,156 @@
+zengwei@zengwei-TianYi510Pro-18ICB:/media/store/work/AM623X-SDK/tisdk/sources/meta-ti/conf/machine$ git status
+头指针分离于 08.04.01.005
+尚未暂存以备提交的变更：
+  （使用 "git add <文件>..." 更新要提交的内容）
+  （使用 "git restore <文件>..." 丢弃工作区的改动）
+	修改：     ../../recipes-bsp/ti-sci-fw/ti-sci-fw_git.bb
+	修改：     ../../recipes-bsp/tifs-lpm-stub/tifs-lpm-stub_git.bb
+	修改：     ../../recipes-kernel/linux/kernel-rdepends.inc
+	修改：     ../../recipes-security/optee/optee-os_%.bbappend
+
+未跟踪的文件:
+  （使用 "git add <文件>..." 以包含要提交的内容）
+	am62xx-rs10-k3r5.conf
+	am62xx-rs10.conf
+
+修改尚未加入提交（使用 "git add" 和/或 "git commit -a"）
+zengwei@zengwei-TianYi510Pro-18ICB:/media/store/work/AM623X-SDK/tisdk/sources/meta-ti/conf/machine$ git diff
+diff --git a/recipes-bsp/ti-sci-fw/ti-sci-fw_git.bb b/recipes-bsp/ti-sci-fw/ti-sci-fw_git.bb
+index 2a59e896..377090c9 100644
+--- a/recipes-bsp/ti-sci-fw/ti-sci-fw_git.bb
++++ b/recipes-bsp/ti-sci-fw/ti-sci-fw_git.bb
+@@ -36,6 +36,7 @@ SYSFW_PREFIX_j7200-hs-evm-k3r5 = "fs"
+ SYSFW_PREFIX_j721s2-evm-k3r5 = "fs"
+ SYSFW_PREFIX_j721s2-hs-evm-k3r5 = "fs"
+ SYSFW_PREFIX_am62xx-evm-k3r5 = "fs"
++SYSFW_PREFIX_am62xx-rs10-k3r5 = "fs"
+ SYSFW_PREFIX_am62xx-lp-evm-k3r5 = "fs"
+ 
+ SYSFW_TISCI = "${S}/ti-sysfw/ti-${SYSFW_PREFIX}-firmware-${SYSFW_SOC}-*.bin"
+diff --git a/recipes-bsp/tifs-lpm-stub/tifs-lpm-stub_git.bb b/recipes-bsp/tifs-lpm-stub/tifs-lpm-stub_git.bb
+index 876036f2..bec1eab0 100644
+--- a/recipes-bsp/tifs-lpm-stub/tifs-lpm-stub_git.bb
++++ b/recipes-bsp/tifs-lpm-stub/tifs-lpm-stub_git.bb
+@@ -7,7 +7,7 @@ PR = "${INC_PR}.0"
+ 
+ CLEANBROKEN = "1"
+ 
+-COMPATIBLE_MACHINE = "am62xx-evm|am62xx-lp-evm"
++COMPATIBLE_MACHINE = "am62xx-evm|am62xx-lp-evm|am62xx-rs10"
+ 
+ PACKAGE_ARCH = "${MACHINE_ARCH}"
+ 
+diff --git a/recipes-kernel/linux/kernel-rdepends.inc b/recipes-kernel/linux/kernel-rdepends.inc
+index ae855a88..dc448302 100644
+--- a/recipes-kernel/linux/kernel-rdepends.inc
++++ b/recipes-kernel/linux/kernel-rdepends.inc
+@@ -52,5 +52,6 @@ RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_j721s2-hs-evm = " cnm-wave-fw"
+ 
+ # Add run-time dependency for TIFS Low Power Module stub
+ RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am62xx-evm = " tifs-lpm-stub"
++RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am62xx-rs10 = " tifs-lpm-stub"
+ RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am62xx-lp-evm = " tifs-lpm-stub"
+ 
+diff --git a/recipes-security/optee/optee-os_%.bbappend b/recipes-security/optee/optee-os_%.bbappend
+index e7de5157..afee15d3 100644
+--- a/recipes-security/optee/optee-os_%.bbappend
++++ b/recipes-security/optee/optee-os_%.bbappend
+@@ -7,6 +7,7 @@ DEPENDS_append_ti-soc = " python3-cryptography-native"
+ EXTRA_OEMAKE_append_k3 = "${@ 'CFG_CONSOLE_UART='+ d.getVar('OPTEE_K3_USART') if d.getVar('OPTEE_K3_USART') else ''}"
+ 
+ EXTRA_OEMAKE_append_am62xx-evm = " CFG_WITH_SOFTWARE_PRNG=y CFG_TEE_CORE_LOG_LEVEL=1"
++EXTRA_OEMAKE_append_am62xx-rs10 = " CFG_WITH_SOFTWARE_PRNG=y CFG_TEE_CORE_LOG_LEVEL=1"
+ EXTRA_OEMAKE_append_am62xx-lp-evm = " CFG_WITH_SOFTWARE_PRNG=y CFG_TEE_CORE_LOG_LEVEL=1"
+ EXTRA_OEMAKE_append_j721s2-evm = " CFG_WITH_SOFTWARE_PRNG=y"
+ EXTRA_OEMAKE_append_j721s2-hs-evm = " CFG_WITH_SOFTWARE_PRNG=y"
+ 
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+./meta-processor-sdk/recipes-connectivity/wl18xx-target-scripts/wl18xx-target-scripts_%.bbappend:SRC_URI_append_am62xx-evm = " \
+
+SRC_URI_append_am62xx-rs10 = " \
+    file://0001-Customize-hostapd.conf-for-am62xx-sk-wifi-oob-experi.patch \
+    file://0002-Customize-wpa_supplicant.conf-for-am62xx-sk-wifi-oob.patch \
+"
+
+
+./meta-processor-sdk/recipes-core/images/tisdk-docker-rootfs-image.bb:do_image_wic_append_am62xx-evm[depends] += " wifi-oob:do_deploy"
+./meta-processor-sdk/recipes-core/images/tisdk-docker-rootfs-image.bb:IMAGE_BOOT_FILES_append_am62xx-evm += " wificfg"
+
+do_image_wic_append_am62xx-rs10[depends] += " wifi-oob:do_deploy"
+IMAGE_BOOT_FILES_append_am62xx-rs10 += " wificfg"
+
+
+./meta-processor-sdk/recipes-core/images/tisdk-core-bundle.bbappend:DEPLOY_IMAGES_NAME_append_am62xx-evm = " ti-fs-firmware-am62x-gp.bin ipc_echo_testb_mcu1_0_release_strip.xer5f wificfg"
+
+DEPLOY_IMAGES_NAME_append_am62xx-rs10 = " ti-fs-firmware-am62x-gp.bin ipc_echo_testb_mcu1_0_release_strip.xer5f wificfg"
+
+
+./meta-processor-sdk/recipes-core/images/tisdk-default-image.bbappend:do_image_wic_append_am62xx-evm[depends] += " wifi-oob:do_deploy"
+./meta-processor-sdk/recipes-core/images/tisdk-default-image.bbappend:IMAGE_BOOT_FILES_append_am62xx-evm += " wificfg"
+do_image_wic_append_am62xx-rs10[depends] += " wifi-oob:do_deploy"
+
+do_image_wic_append_am62xx-rs10[depends] += " wifi-oob:do_deploy"
+IMAGE_BOOT_FILES_append_am62xx-rs10 += " wificfg"
+
+
+
+./meta-processor-sdk/recipes-core/matrix/matrix-gui_2.0.bbappend:SYSTEMD_AUTO_ENABLE_${PN}_am62xx-evm = "disable"
+
+SYSTEMD_AUTO_ENABLE_${PN}_am62xx-rs10 = "disable"
+
+
+./meta-processor-sdk/recipes-core/packagegroups/packagegroup-arago-tisdk-connectivity.bbappend:WLAN_TI_append_am62xx-evm = " \
+
+WLAN_TI_append_am62xx-rs10 = " \
+    wifi-oob \
+"
+
+
+./meta-processor-sdk/recipes-core/packagegroups/packagegroup-arago-tisdk-graphics.bbappend:GRAPHICS_DEMO_am62xx-evm = "\
+
+GRAPHICS_DEMO_am62xx-rs10 = "\
+    hmi-demo \
+    powervr-graphics \
+"
+
+
+./meta-arago/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile_1.0.bb:K3_UBOOT_MACHINE_R5_am62xx-evm = "am62x_evm_r5_config"
+
+K3_UBOOT_MACHINE_R5_am62xx-rs10 = "am62x_evm_r5_config"
+
+./meta-arago/meta-arago-extras/recipes-core/matrix/matrix-gui_2.0.bb:SYSTEMD_AUTO_ENABLE_am62xx-evm = "disable"
+
+SYSTEMD_AUTO_ENABLE_am62xx-rs10 = "disable"
+
+
+./meta-ti/recipes-bsp/ti-sci-fw/ti-sci-fw_git.bb:SYSFW_PREFIX_am62xx-evm-k3r5 = "fs"
+
+SYSFW_PREFIX_am62xx-rs10-k3r5 = "fs"
+
+
+./meta-ti/recipes-bsp/tifs-lpm-stub/tifs-lpm-stub_git.bb:COMPATIBLE_MACHINE = "am62xx-evm|am62xx-lp-evm"
+
+COMPATIBLE_MACHINE = "am62xx-evm|am62xx-lp-evm|am62xx-rs10"
+
+
+
+./meta-ti/recipes-security/optee/optee-os_%.bbappend:EXTRA_OEMAKE_append_am62xx-evm = " CFG_WITH_SOFTWARE_PRNG=y CFG_TEE_CORE_LOG_LEVEL=1"
+
+EXTRA_OEMAKE_append_am62xx-rs10 = " CFG_WITH_SOFTWARE_PRNG=y CFG_TEE_CORE_LOG_LEVEL=1"
+
+
+./meta-ti/recipes-kernel/linux/kernel-rdepends.inc:RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am62xx-evm = " tifs-lpm-stub"
+
+RDEPENDS_${KERNEL_PACKAGE_NAME}-base_append_am62xx-rs10 = " tifs-lpm-stub"
+
+
+./meta-arago/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile/k3/Makefile_u-boot-spl:	if [ $(PLATFORM) = am62xx-evm ]; then \
+./meta-arago/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile/Makefile_sysfw-image:SYSFW_SOC_am62xx-evm = am62x
+
+PATCH
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+

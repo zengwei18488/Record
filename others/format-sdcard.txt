@@ -1,0 +1,155 @@
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# fdisk /dev/sdb
+
+Command (m for help): p
+
+Disk /dev/sdb: 3980 MB, 3980394496 bytes
+123 heads, 62 sectors/track, 1019 cylinders, total 7774208 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x6214ee98
+
+   Device Boot      Start         End      Blocks   Id  System
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1): 
+Using default value 1
+First sector (2048-7774207, default 2048): 
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-7774207, default 7774207): 
+Using default value 7774207
+
+Command (m for help): p
+
+Disk /dev/sdb: 3980 MB, 3980394496 bytes
+123 heads, 62 sectors/track, 1019 cylinders, total 7774208 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x6214ee98
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1            2048     7774207     3886080   83  Linux
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mkfs.ext
+mkfs.ext2     mkfs.ext3     mkfs.ext4     mkfs.ext4dev  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mkfs.ext
+mkfs.ext2     mkfs.ext3     mkfs.ext4     mkfs.ext4dev  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mkfs.ext3 ^C
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# partprobe 
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# ls /dev/sd
+sda   sda1  sda2  sda3  sda5  sda6  sda7  sdb   sdb1  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# ls /dev/sd
+sda   sda1  sda2  sda3  sda5  sda6  sda7  sdb   sdb1  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mkfs.vfat  /dev/sd
+sda   sda1  sda2  sda3  sda5  sda6  sda7  sdb   sdb1  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mkfs.vfat  /dev/sdb
+sdb   sdb1  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mkfs.vfat  /dev/sdb
+sdb   sdb1  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mkfs.vfat  /dev/sdb1 
+mkfs.vfat 3.0.12 (29 Oct 2011)
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# 
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# 
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# 
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mou
+mount             mount.fuse        mount.ntfs        mountpoint        
+mountall          mount.lowntfs-3g  mount.ntfs-3g     mousetweaks       
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mou
+mount             mount.fuse        mount.ntfs        mountpoint        
+mountall          mount.lowntfs-3g  mount.ntfs-3g     mousetweaks       
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# mount
+/dev/sda1 on / type ext3 (rw,errors=remount-ro)
+proc on /proc type proc (rw,noexec,nosuid,nodev)
+sysfs on /sys type sysfs (rw,noexec,nosuid,nodev)
+none on /sys/fs/fuse/connections type fusectl (rw)
+none on /sys/kernel/debug type debugfs (rw)
+none on /sys/kernel/security type securityfs (rw)
+udev on /dev type devtmpfs (rw,mode=0755)
+devpts on /dev/pts type devpts (rw,noexec,nosuid,gid=5,mode=0620)
+tmpfs on /run type tmpfs (rw,noexec,nosuid,size=10%,mode=0755)
+none on /run/lock type tmpfs (rw,noexec,nosuid,nodev,size=5242880)
+none on /run/shm type tmpfs (rw,nosuid,nodev)
+/dev/sda2 on /boot type ext4 (rw)
+/dev/sda5 on /usr type ext3 (rw)
+/dev/sda6 on /home type ext3 (rw)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,noexec,nosuid,nodev)
+gvfs-fuse-daemon on /home/zengwei/.gvfs type fuse.gvfs-fuse-daemon (rw,nosuid,nodev,user=zengwei)
+yixuan@172.21.170.48:/home/yixuan/advantech/GF-06 on /home/zengwei/work/GF-06 type fuse.sshfs (rw,nosuid,nodev,max_read=65536,user=zengwei)
+yixuan@172.21.170.48:/home/yixuan/advantech/GF-16 on /home/zengwei/work/GF-16/GF-16 type fuse.sshfs (rw,nosuid,nodev,max_read=65536,user=zengwei)
+/dev/sdb1 on /media/ACD6-3CA3 type vfat (rw,nosuid,nodev,uid=1000,gid=1000,shortname=mixed,dmask=0077,utf8=1,showexec,flush,uhelper=udisks)
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# 
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# fdisk /dev/sd
+sda   sda1  sda2  sda3  sda5  sda6  sda7  sdb   sdb1  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# fdisk /dev/sdb
+sdb   sdb1  
+root@zengwei-Lenovo:/home/zengwei/work/img-gf-06/aimb-r200-img/Factory_scripts# fdisk /dev/sdb
+
+Command (m for help): p
+
+Disk /dev/sdb: 3980 MB, 3980394496 bytes
+54 heads, 28 sectors/track, 5141 cylinders, total 7774208 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x6214ee98
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1            2048     7774207     3886080   83  Linux
+
+Command (m for help): t
+Selected partition 1
+Hex code (type L to list codes): C
+Changed system type of partition 1 to c (W95 FAT32 (LBA))
+
+Command (m for help): p
+
+Disk /dev/sdb: 3980 MB, 3980394496 bytes
+54 heads, 28 sectors/track, 5141 cylinders, total 7774208 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x6214ee98
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1            2048     7774207     3886080    c  W95 FAT32 (LBA)
+
+Command (m for help): a
+Partition number (1-4): 1
+
+Command (m for help): 
+Command (m for help): p
+
+Disk /dev/sdb: 3980 MB, 3980394496 bytes
+54 heads, 28 sectors/track, 5141 cylinders, total 7774208 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x6214ee98
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sdb1   *        2048     7774207     3886080    c  W95 FAT32 (LBA)
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+
+WARNING: Re-reading the partition table failed with error 16: Device or resource busy.
+The kernel still uses the old table. The new table will be used at
+the next reboot or after you run partprobe(8) or kpartx(8)
+
+WARNING: If you have created or modified any DOS 6.x
+partitions, please see the fdisk manual page for additional
+information.
+Syncing disks.
+

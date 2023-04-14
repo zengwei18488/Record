@@ -1,0 +1,382 @@
+Android R11
+
+git@github.com:ADVANTECH-Corp/linux-imx.git  -b  adv_5.10.35_2.0.0
+git@github.com:ADVANTECH-Corp/uboot-imx.git -b  adv_v2021.04_5.10.35_2.0.0
+
+tar zcvf rsb3720-androidR11-images.tar.gz boot.img dtbo-imx8mp.img partition-table-28GB.img partition-table.img super.img u-boot-imx8mp.imx vbmeta.img vbmeta-imx8mp.img vendor_boot.img vendor.img
+
+[Uboot]
+arch/arm/dts/Makefile
+arch/arm/mach-imx/imx8m/Kconfig
+
+configs/imx8mp_rsb3720a1_android_6G_defconfig
+
+include/configs/imx8mp_rsb3720.h
+include/configs/imx8mp_rsb3720_android.h
+
+arch/arm/dts/imx8mp-rsb3720-a1.dts
+arch/arm/dts/imx8mp-rsb3720-a1-u-boot.dtsi
+
+board/freescale/imx8mp_rsb3720a1
+
+./common/board_r.c
+include/asm-generic/u-boot.h
+
+scripts/config_whitelist.txt
+
+[Kernel]
+*******************************************yocto 3.0
+arch/arm64/boot/dts/freescale/imx8mp-rsb3720-a1-android.dts
+arch/arm64/configs/imx_v8_android_defconfig
+
+./net/bluetooth/hci_core.c
+./fs/proc/uboot.c
+./fs/proc/Makefile
+./fs/proc/advboot.c
+./fs/proc/boardinfo.c
+./arch/arm64/mm/proc-board.c
+./arch/arm64/mm/Makefile
+./arch/arm/boot/dts/Makefile
+./arch/arm/mach-imx/proc-board.c
+./arch/arm/mach-imx/Makefile
+./include/linux/proc-board.h
+
+./drivers/gpio/gpio-mxc.c
+./drivers/gpio/gpio-set-direction.c
+./drivers/gpio/gpio-pca953x.c
+./drivers/gpio/gpiolib-sysfs.c
+
+./drivers/pci/controller/dwc/pci-imx6.c
+
+./drivers/phy/freescale/phy-fsl-imx8-pcie.c
+./drivers/phy/freescale/phy-fsl-samsung-hdmi.c
+
+./drivers/mmc/core/mmc.c
+
+./include/linux/power/ec_battery.h
+./drivers/power/supply/ec_battery.c
+
+./drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+./drivers/gpu/drm/bridge/cadence/cdns-hdmi-core.c
+./drivers/gpu/drm/bridge/it6263.c
+
+./sound/soc/codecs/sgtl5000.c
+./sound/soc/fsl/imx-sgtl5000.c
+./sound/soc/fsl/fsl_sai.c
+./sound/soc/fsl/fsl_sai.h
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+./drivers/watchdog/watchdog_advantech.c
+./drivers/watchdog/imx_sc_wdt.c
+
+./drivers/net/phy/rtl8366_smi.c
+./drivers/net/phy/realtek.c
+./drivers/net/phy/rtl8367b.c
+
+./drivers/net/usb/qmi_wwan.c
+
+./drivers/tty/serial/imx.c
+./drivers/tty/serial/fsl_lpuart.c
+
+./drivers/mtd/spi-nor/spi-nor.c
+
+./drivers/char/tpm/tpm_tis_spi.c
+./drivers/char/tpm/tpm.h
+./drivers/char/tpm/tpm_tis_core.h
+./drivers/char/tpm/tpm_tis_core.c
+
+./drivers/mfd/pca9450.c
+
+./drivers/video/fbdev/mxc/mxc_lcdif.c
+./drivers/video/fbdev/mxc/mxcfb_ch7055.c
+./drivers/video/fbdev/mxc/mxc_ipuv3_fb.c
+./drivers/video/backlight/backlight.c
+./drivers/video/backlight/pwm_bl.c
+
+./drivers/usb/serial/qcserial.c
+./drivers/usb/serial/usb_wwan.c
+./drivers/usb/serial/option.c
+./drivers/usb/serial/cp210x.c
+
+./drivers/gpu/drm/panel/panel-simple.c
+./drivers/gpu/drm/imx/sec_mipi_dsim-imx.c
+./drivers/gpu/drm/imx/dpu/dpu-crtc.c
+./drivers/gpu/drm/imx/lcdifv3/lcdifv3-crtc.c
+
+./drivers/spi/spidev.c
+./drivers/spi/spi-nxp-fspi.c
+######################################################################
+kernel 5.10.35
+
+./fs/proc/uboot.c
+./fs/proc/Makefile
+./fs/proc/advboot.c
+./fs/proc/boardinfo.c
+
+./arch/arm64/mm/proc-board.c
+./arch/arm64/mm/Makefile
+./arch/arm64/configs/imx_v8_adv_defconfig             @@@@@@
+
+./arch/arm/boot/dts/Makefile
+
+./arch/arm/mach-imx/proc-board.c
+./arch/arm/mach-imx/Makefile
+
+./arch/arm/configs/imx_v7_adv_defconfig             @@@@@@
+
+./include/linux/proc-board.h
+./include/linux/tpm.h
+
+./drivers/watchdog/watchdog_advantech.c             @@@@@@
+./drivers/watchdog/imx_sc_wdt.c             @@@@@@
+
+./drivers/net/usb/qmi_wwan.c
+
+./drivers/power/supply/ec_battery.c
+
+./drivers/tty/serial/imx.c
+./drivers/tty/serial/fsl_lpuart.c
+
+./drivers/gpio/gpio-mxc.c
+./drivers/gpio/gpio-set-direction.c
+./drivers/gpio/gpio-pca953x.c
+./drivers/gpio/gpiolib-sysfs.c
+
+./drivers/char/tpm/tpm_tis_spi.c             @@@@@@
+./drivers/char/tpm/tpm.h             @@@@@@
+./drivers/char/tpm/tpm_tis_core.h             @@@@@@
+./drivers/char/tpm/tpm_tis_core.c             @@@@@@
+
+./drivers/phy/freescale/phy-fsl-imx8-pcie.c
+./drivers/phy/freescale/phy-fsl-samsung-hdmi.c
+
+./drivers/pci/controller/dwc/pci-imx6.c
+
+./drivers/video/fbdev/mxc/mxc_lcdif.c
+./drivers/video/fbdev/mxc/mxcfb_ch7055.c
+./drivers/video/fbdev/mxc/mxc_ipuv3_fb.c
+./drivers/video/backlight/backlight.c
+./drivers/video/backlight/pwm_bl.c
+
+./drivers/usb/serial/qcserial.c
+./drivers/usb/serial/usb_wwan.c
+./drivers/usb/serial/option.c
+
+./drivers/mmc/core/mmc.c
+
+./drivers/gpu/drm/bridge/adv7511/adv7511_drv.c
+./drivers/gpu/drm/bridge/sec-dsim.c
+./drivers/gpu/drm/bridge/nwl-dsi.c
+./drivers/gpu/drm/bridge/it6263.c
+./drivers/gpu/drm/panel/panel-simple.c
+./drivers/gpu/drm/imx/lcdifv3/lcdifv3-crtc.c
+
+./drivers/spi/spi-nxp-fspi.c
+
+./sound/soc/codecs/sgtl5000.c
+./sound/soc/fsl/imx-sgtl5000.c
+./sound/soc/fsl/fsl_sai.c
+
+
+[Android]
+devices/nxp/imx8m/AndroidProducts.mk
+devices/nxp/imx8m/rsb3720_a1/
+
+vendor/nxp-opensource/arm-trusted-firmware/plat/imx/imx8m/imx8mp/imx8mp_bl31_setup.c
+vendor/nxp-opensource/arm-trusted-firmware/plat/imx/imx8m/imx8mp/platform.mk
+vendor/nxp-opensource/imx/alsa/tinyalsa_hal.cpp
+
+hardware/nxp/libbt/Android.mk
+
+##############################################################################################
+
+git init
+git checkout -b android-11.0.0_2.6.0
+git add .
+git commit -m "Initial commit"
+git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-uboot
+git remote add origin https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-IMX-Android11/_git/android-uboot
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-kernel
+git remote set-url origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-external
+git remote set-url origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-cts
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-test
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-tools
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-development
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-system
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-device
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-frameworks
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-packages
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp-vendor
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android11/android-bsp
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android10/rsb3720-android-scripts
+
+git push --set-upstream origin android-11.0.0_2.6.0
+
+sudo git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 /opt/prebuilt-android-clang -b master-kernel-build-2021
+
+
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin/aarch64-linux-gnu-
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-elf/bin/aarch64-elf-
+
+export CLANG_PATH=/opt/prebuilt-android-clang
+
+source build/envsetup.sh; lunch rsb3720_a1-userdebug;./imx-make.sh -j12
+source build/envsetup.sh; lunch evk_8mp-userdebug 
+
+./imx-make.sh bootloader -j8
+./imx-make.sh bootloader kernel -j8
+./imx-make.sh kernel -j8
+./imx-make.sh bootimage -j8;./imx-make.sh dtboimage -j8
+./imx-make.sh -j12
+
+./imx-make.sh -j12 2>&1 | tee build-log.txt
+./imx-make.sh -j12 2>&1 | tee build-log-evk.txt
+
+sudo ./imx-sdcard-partition.sh -f imx8mp -c 28 /dev/sdx
+
+sudo dd if=dtbo-imx8mp.img of=/dev/sdc1 bs=10M conv=fsync,nocreat;
+sudo dd if=dtbo-imx8mp.img of=/dev/sdc2 bs=10M conv=fsync,nocreat;
+sudo dd if=boot.img of=/dev/sdc2 bs=10M conv=fsync,nocreat;
+sudo dd if=boot.img of=/dev/sdc2 bs=10M conv=fsync,nocreat;
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+######################################################################################################
+******************************************************************************************************
+######################################################################################################
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+
+sgdisk
+./build/make/target/product/base_system.mk
+external/gptfdisk/Android.bp
+
+simg2img源码，mm 编译arm版本
+system/core/libsparse/
+
+
+[    5.275391] input: PixArt Lenovo USB Optical Mouse as /devices/platform/32f10108.usb/38200000.dwc3/xhci-hcd.2.auto/usb3/3-1/3-1.1/3-1.1:1.0/0003:17EF:608D.0001/input/input1
+[    5.291583] hid-generic 0003:17EF:608D.0001: input,hidraw0: USB HID v1.11 Mouse [PixArt Lenovo USB Optical Mouse] on usb-xhci-hcd.2.auto-1.1/input0
+
+on property:sys.boot_completed=1
+   setprop service.adb.tcp.port 5555
+   setprop ctl.stop adbd
+   setprop ctl.start adbd
+   
+   config文件
+out/target/product/rsb3720_a1/obj/UBOOT_OBJ/include/generated/autoconf.h
+
+system/core/adb/daemon    //adb源码
+
+
+修改列表（modify）
+drivers/video/backlight/backlight.c
+arch/arm64/boot/dts/freescale/imx8mp-rsb3720-a1-android.dts
+
+
+docker run -it --name imx8-android10-build -v /media/org-home/zengwei/work/nxp-imx8-Q10:/home/adv/android:rw advrisc/u18.04-rk3399abv10 /bin/bash
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+sd启动 1-on 2-on 3-off 4-off
+emmc   1-off 2-on 3-off 4-off
+
+sudo ./fsl-sdcard-partition.sh -super -f imx8mp /dev/sdc
+sudo ./mk-sdcard-mmc-partition.sh -super -f imx8mp /dev/sdc
+./mk-emmc-mmc-partition.sh -super -f imx8mp /dev/block/mmcblk2
+
+
+dd of=/data/u-boot.imx if=/dev/block/mmcblk2 bs=1k conv=fsync count=8192
+
+dd if=/dev/zero of=/dev/sdc bs=1k seek=32 conv=fsync count=8160
+dd if=u-boot-imx8mp.imx of=/dev/sdc bs=1k seek=32 conv=fsync
+
+./dd if=/dev/zero of=/dev/block/mmcblk2 bs=1k seek=32 conv=fsync count=8160
+./dd if=u-boot-imx8mp.imx of=/dev/block/mmcblk2 bs=1k seek=32 conv=fsync
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+i2c_imx subsys_initcall
+
+wifi
+
+./vendor/nxp/imx-firmware/nxp/FwImage_8997/pcieuart8997_combo_v4.bin
+
+GPU
+
+drivers/mxc/gpu-viv/hal/kernel/arch/gc_hal_kernel_hardware.c
+drivers/mxc/gpu-viv/hal/os/linux/kernel/gc_hal_kernel_driver.c
+
+gpu-top   查看gpu占有率
+
+lvds single display
+
+U-Boot > setenv bootargs console=ttymxc2,115200 earlycon=ec_imx6q,0x30880000,115200 init=/init androidboot.console=ttymxc2 androidboot.hardware=nxp cma=960M@0x400M-0x1000M androidboot.primary_display=imx-drm firmware_class.path=/vendor/firmware loop.max_part=7 androidboot.vendor.sysrq=1 transparent_hugepage=never androidboot.wificountrycode=CN moal.mod_para=wifi_mod_para.conf androidboot.lcd_density=240 swiotlb=65536
+U-Boot > setenv append_bootargs androidboot.selinux=permissive
+U-Boot > saveenv
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+git init
+git checkout -b q10.0.0_2.3.0-ga
+git add .
+git commit -m "Initial commit"
+git remote add origin https://gitlab.edgecenter.io/nxp/android-bsp.git
+git push --set-upstream origin q10.0.0_2.3.0-ga
+
+git clone https://github.com/ADVANTECH-Corp/linux-imx.git -b adv_5.4.24_2.1.0
+git clone https://github.com/ADVANTECH-Corp/uboot-imx.git -b adv_v2020.04_5.4.24_2.1.0
+git clone https://github.com/ADVANTECH-Corp/Android_Patch.git -b android-10.0.0_r35
+
+patch -p1 < ../../../Android_Patch/10001-Linux_Yocto_5.4.24_2.1.0-to-android-10.0.0_r35.patch
+patch -p1 < ../../../Android_Patch/10001-Uboot_Yocto_5.4.24_2.1.0-to-android-10.0.0_r35.patch
+
+imx8mp-rsb3720-a1.dts
+rsb3720_a1
+
+
+git push -u origin q10.0.0_2.3.0-ga
+git pull --rebase origin master
+git push origin q10.0.0_2.3.0-ga:q10.0.0_2.3.0-ga
+
+
+https://gitlab.edgecenter.io/nxp/android-bsp.git
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin/aarch64-linux-gnu-
+
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-elf/bin/aarch64-elf-
+
+source build/envsetup.sh;lunch rsb3720_a1-userdebug
+lunch evk_8mp-userdebug 
+lunch evk_8mq-userdebug 
+./imx-make.sh bootloader -j8
+./imx-make.sh bootloader kernel -j8
+./imx-make.sh kernel -j8
+./imx-make.sh bootimage -j8
+./imx-make.sh dtboimage -j8
+./imx-make.sh -j8
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+RISC8-server
+
+imx8-android-q10-risc8
+advrisc/u16.04-imx6abv6
+/home/adv/imx8
+
+imx8-android-p9-risc8
+advrisc/u16.04-imx6abv6
+/home/adv/imx8
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+cp configs/imx8mp_evk_android_dual_defconfig configs/imx8mp_rsb3720_android_dual_defconfig
+cp configs/imx8mp_evk_android_trusty_defconfig configs/imx8mp_rsb3720_android_trusty_defconfig
+cp configs/imx8mp_evk_android_trusty_dual_defconfig configs/imx8mp_rsb3720_android_trusty_dual_defconfig
+cp configs/imx8mp_evk_android_trusty_secure_unlock_defconfig configs/imx8mp_rsb3720_android_trusty_secure_unlock_defconfig
+cp configs/imx8mp_evk_android_uuu_defconfig configs/imx8mp_rsb3720_android_uuu_defconfig

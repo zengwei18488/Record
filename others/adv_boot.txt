@@ -1,0 +1,41 @@
+adv_boot 
+
+源码svn路径：
+URL: http://172.21.161.52/svn/EC_CN/fsl/android/trunk/imx6/android_kk4.4.2_1.0.0/FSL_BSP_ER1209
+
+本地原始代码路径(48服务器)
+/home/zengwei/work/R200/imx6/android_kk4.4.2_1.0.0/FSL_BSP_ER1209
+
+
+源码结构：
+drwxr-xr-x 1 1004 1008 4096  5月 23 17:54 cross_compiler/         交叉编译工具
+drwxr-xr-x 1 1004 1008 4096  5月 23 17:55 image/                  生成文件
+drwxr-xr-x 1 1004 1008 4096  5月 23 17:54 scripts/                脚本
+drwxr-xr-x 1 1004 1008 4096  5月 23 17:50 source/                 源码
+
+源码：
+source/adv_boot/
+
+配置文件：
+source/adv_boot/board/freescale/mx6q_rom-7420/flash_header.S
+
+修改位置：
+#else  /* i.MX6Q */
+#if defined CONFIG_MEM_SIZE_1G_SAMSUNG
+dcd_hdr:          .word 0x40C802D2 /* Tag=0xD2, Len=88*8 + 4 + 4, Ver=0x40 */
+write_dcd_cmd:    .word 0x04C402CC /* Tag=0xCC, Len=88*8 + 4, Param=0x04 */
+
+
+#elif defined CONFIG_MEM_SIZE_2G_SAMSUNG
+dcd_hdr:          .word 0x40C802D2 /* Tag=0xD2, Len=88*8 + 4 + 4, Ver=0x40 */
+write_dcd_cmd:    .word 0x04C402CC /* Tag=0xCC, Len=88*8 + 4, Param=0x04 */
+
+
+编译方式：
+# cd scripts/
+
+# source ./setenv.sh
+
+# ./cfg_advboot.sh mx6q_rom-7420_2G_64b_adv_samsung_config  (or mx6q_rom-7420_1G_64b_adv_samsung_config)
+
+# ./mk_advboot.sh

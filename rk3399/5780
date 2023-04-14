@@ -1,0 +1,110 @@
+make rk3399_rom5780a3_2G_defconfig
+make ARCHV=aarch64
+
+make ARCH=arm64 rk3399_adv_defconfig
+make ARCH=arm64 rk3399-rom5780-a3.img -j12
+
+source build/envsetup.sh 
+lunch rk3399_rom5780-userdebug
+make -j8
+
+./mkimage.sh
+
+adb.exe root
+adb.exe disable-verity
+adb.exe reboot
+adb.exe root
+adb.exe remount
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+arch/arm64/boot/dts/rockchip/rk3399-rom5780-a3.dts
+                                                     arch/arm64/boot/dts/rockchip/rk3399.dtsi
+arch/arm64/configs/rk3399_adv_defconfig
+
+drivers/base/regmap/regmap.c
+drivers/clk/rockchip/clk-rk3399.c
+                                                    drivers/extcon/extcon-pd-virtual.c
+
+drivers/gpio/gpio-pca953x.c
+
+drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+drivers/gpu/drm/rockchip/dw-mipi-dsi.c
+drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+drivers/gpu/drm/rockchip/rockchip_lvds.c
+drivers/gpu/drm/rockchip/rockchip_rgb.c
+drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+drivers/gpu/drm/drm_crtc.c
+
+drivers/i2c/busses/i2c-rk3x.c
+drivers/i2c/muxes/i2c-mux-pca954x.c
+
+drivers/misc/gpio-adv.c
+
+drivers/net/wireless/rockchip_wlan/rtl8822be/
+drivers/net/wireless/rockchip_wlan/Kconfig
+drivers/net/wireless/rockchip_wlan/Makefile
+drivers/net/wireless/rockchip_wlan/cm276_bt/
+drivers/net/usb/usbnet.c
+
+drivers/pci/host/pcie-rockchip.c
+
+drivers/regulator/rk808-regulator.c
+
+drivers/rtc/rtc-pt7c4337.c
+drivers/rtc/rtc-s35390a.c
+
+drivers/watchdog/dw_wdt.c
+drivers/watchdog/watchdog_advantech.c
+drivers/watchdog/Kconfig
+drivers/watchdog/Makefile
+
+include/linux/mfd/rk808.h
+
+sound/soc/rockchip/rockchip_spdif.c
+sound/soc/rockchip/rockchip_i2s.c
+sound/soc/codecs/rt5640.c
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+UBOOT
+ configs/rk3399_rom5780a2_2G_defconfig 
+ board/rockchip/advantech/Kconfig 
+ arch/arm/dts/rk3399-rom5780-a2.dts
+
+able_status_by_alias_node
+arch/arm/cpu/armv8/rk33xx/Kconfig
+board/rockchip/advantech/Kconfig
+board/rockchip/advantech/Makefile
+board/rockchip/advantech/advantech.c
+board/rockchip/advantech/config.mk
+board/rockchip/advantech/demo.c
+board/rockchip/advantech/io_tool.c
+board/rockchip/rk33xx/Kconfig
+common/cmd_bootrk.c
+configs/rk3399_rsb4710a1_2G_defconfig
+drivers/spi/rk_spi.c
+drivers/video/backlight/pwm_bl.c
+include/configs/rk3399_rsb4710.h
+
+KERNEL
+ arch/arm64/boot/dts/rockchip/rk3399-rom5780-a2.dts
+ arch/arm64/configs/rk3399_adv_defconfig
+ arch/arm64/Kconfig.platforms
+ arch/arm64/configs/rockchip_defconfig_back
+
+
+Android
+
+device/rockchip/rk3399/AndroidProducts.mk
+device/rockchip/rk3399/advantech.sh
+device/rockchip/rk3399/init.rsb4710.rc
+device/rockchip/rk3399/rk3399_rsb4710.mk
+device/rockchip/rk3399/vendorsetup.sh
+
+device/rockchip/rk3399/rk3399_rsb4710/
+
+
+
+

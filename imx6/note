@@ -1,0 +1,156 @@
+android_install_folder/system/core/rootdir/init.rc 
+
+直接找到源码android/out/target/product/xxxx/root文件夹下，xxxx代表你的产品名称
+修改过后，重新编译源码，打包，烧录即可！   boot.img
+
+make CC="arm-none-linux-gnueabi-gcc -static"
+
+Usage: service [-h|-?]
+       service list
+       service check SERVICE
+       service call SERVICE CODE [i32 INT | s16 STR] ...
+Options:
+   i32: Write the integer INT into the send parcel.
+   s16: Write the UTF-16 string STR into the send parcel.
+
+adb shell service list
+service call phone 1 (frameworks/base/telephony/java/com/android/internal/telephony/ITelephony.aidl)
+frameworks/base/telephony/java/com/android/internal/telephony/ISms.aidl
+service call SERVICE CODE 
+adb shell service call window 2013 i32 1 (android.view.IWindowManager)
+
+ethtool
+./configure --host=arm-none-linux-gnueabi
+-static修改Makefile
+
+IMX BUG Suspend
+EV_PWR:value[1],type[22],code[205]
+apm_power: Requesting system suspend...
+
+IMXc查看cpu温度
+cat /sys/devices/virtual/thermal/thermal_zone0/temp
+
+#if defined(CONFIG_MACH_MX6Q_GF06)
+#endif
+
+#if defined(CONFIG_MACH_MX6Q_R200)
+#endif
+
+event's {EVENT=adv7282m_irq, SUBSYSTEM=i2c, DEVPATH=/devices/platform/imx-i2c.0/i2c-0/0-0021, SEQNUM=2141, ACTION=change, DRIVER=adv7282m, MODALIAS=i2c:adv7282m}
+
+
+export SDK_PATH=/usr/java/adt-bundle-linux-x86_64-20140321/sdk
+export NDK_PATH=/usr/java/android-ndk-r9c
+export JAVA_HOME=/usr/java/jdk1.6.0_45
+export CLASSPATH=/usr/java/jdk1.6.0_45/lib:/home/zengwei/jdk1.6.0_45/jre/lib
+
+export PATH=$PATH:$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$SDK_PATH/platform-tools:$SDK_PATH/tools:$NDK_PATH:$CLASSPATH
+
+make KDIR="/home/yixuan/advantech/GF-06/android_kk4.4.2/android/kernel_imx/" CROSS_COMPILE="/home/yixuan/advantech/GF-06/android_kk4.4.2/android/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/bin/arm-eabi-"
+
+scp yixuan@172.21.170.48://home/yixuan/advantech/GF-16/android_jb4.3/android
+
+    dd if=../image/adv_boot.bin of=/dev/sdb bs=512 seek=2 skip=2 1>/dev/null 2>/dev/null;sync
+
+    dd if=../image/u-boot_crc.bin.crc of=/dev/sdb bs=512 seek=2  &> /dev/null;sync
+
+    dd if=../image/u-boot_crc.bin of=/dev/sdb bs=512 seek=3 &> /dev/null;sync
+
+    dd if=../image/boot.img of=/dev/sdb1  &> /dev/null;sync
+
+    dd if=../image/system.img of=/dev/sdb5 bs=512k &> /dev/null;sync
+
+    dd if=../image/recovery.img of=/dev/sdb2 bs=512k &> /dev/null;sync
+
+dd if=../image/u-boot_crc.bin.crc of=/dev/sdb bs=512 seek=2  &> /dev/null;sync
+dd if=../image/u-boot_crc.bin of=/dev/sdb bs=512 seek=3 &> /dev/null;sync
+
+dd if=../image/u-boot_crc.bin.crc of=/dev/sdb bs=512 seek=2 conv=fsync &>/dev/null
+dd if=../image/u-boot_crc.bin     of=/dev/sdb bs=512 seek=3 conv=fsync &>/dev/null
+
+lvds时序
+iomux-mx6q.h
+fsl_devices.h
+adv7282m_mipi_tvin.c
+mxc_v4l2_capture.h
+mxc_ipuv3_fb.c
+pwm_bl.c
+
+notifier.c/register_reboot_notifier
+earlysuspend.h
+board-mx6q_rom3420.h
+
+
+Updating '.':
+U    arch/arm/mach-mx6/board-mx6q_advantech.c
+U    arch/arm/mach-mx6/Makefile
+U    arch/arm/mach-mx6/Kconfig
+U    arch/arm/configs/imx6_gf16_android_defconfig
+U    drivers/video/mxc/mxc_ipuv3_fb.c
+U    include/linux/fsl_devices.h
+Updated to revision 1090.
+
+------------------------------------------------------------------------
+r1088 | yanwei.cao@advantech.com.cn | 2015-11-20 18:25:02 +0800 (Fri, 20 Nov 2015) | 1 line
+Changed paths:
+   M /iMX6/Android/branches/EBC-GF16/kernel_imx_jb4.3/arch/arm/mach-mx6/board-mx6q_advantech.c
+   M /iMX6/Android/branches/EBC-GF16/kernel_imx_jb4.3/drivers/media/video/mxc/capture/adv7282m_mipi_tvin.c
+   M /iMX6/Android/branches/EBC-GF16/kernel_imx_jb4.3/include/linux/fsl_devices.h
+
+add 7282m interrupt
+------------------------------------------------------------------------
+
+
+U    device/fsl/imx6/etc/recovery_emmc.fstab
+U    device/fsl/ebc_gf16/FwImage/sd8897_uapsta.bin
+U    device/fsl/ebc_gf16/BoardConfig.mk
+A    device/fsl/ebc_gf16/recovery.fstab
+U    device/fsl/ebc_gf16/init.rc
+U    device/fsl/ebc_gf16/SD-UAPSTA-BT-8897-JB43_LINUX_3_4_39-PXA1088-15.68.201.p113-15.28.201.p113-M3X15459_B0-GPL/wlan_src/mlan.ko
+U    device/fsl/ebc_gf16/SD-UAPSTA-BT-8897-JB43_LINUX_3_4_39-PXA1088-15.68.201.p113-15.28.201.p113-M3X15459_B0-GPL/wlan_src/Makefile
+U    device/fsl/ebc_gf16/SD-UAPSTA-BT-8897-JB43_LINUX_3_4_39-PXA1088-15.68.201.p113-15.28.201.p113-M3X15459_B0-GPL/wlan_src/sd8xxx.ko
+U    device/fsl/ebc_gf16/SD-UAPSTA-BT-8897-JB43_LINUX_3_4_39-PXA1088-15.68.201.p113-15.28.201.p113-M3X15459_B0-GPL/mbtc_src/mbt8xxx.ko
+U    device/fsl/ebc_gf16/SD-UAPSTA-BT-8897-JB43_LINUX_3_4_39-PXA1088-15.68.201.p113-15.28.201.p113-M3X15459_B0-GPL/mbtc_src/Makefile
+U    hardware/imx/lights/fsl_lights.c
+U    frameworks/native/cmds/hwtestd/hwtestd.c
+A    frameworks/base/services/java/com/android/server/SystemBackupReceiver.java
+A    frameworks/base/services/java/com/android/server/ZipUpdateReceiver.java
+U    frameworks/base/services/java/com/android/server/HwtestService.java
+A    frameworks/base/services/java/com/android/server/SystemRestoreReceiver.java
+U    frameworks/base/core/java/android/os/IHwtestService.aidl
+U    frameworks/base/core/java/android/os/RecoverySystem.java
+U    frameworks/base/core/res/AndroidManifest.xml
+U    frameworks/base/wifi/java/android/net/wifi/WifiStateMachine.java
+U    frameworks/base/api/current.txt
+U    packages/apps/AdvFunTest/src/com/advantech/advfuntest/AdvFunTest.java
+U    packages/apps/AdvFunTest/src/com/advantech/advfuntest/FuncView.java
+U    packages/apps/AdvFunTest/res/values/strings.xml
+U    packages/apps/AdvFunTest/res/layout/advfuntest.xml
+U    packages/apps/AdvFunTest/res/layout/func_view.xml
+A    packages/apps/AdvFunTest/res/layout/led_view.xml
+U    packages/apps/Settings/src/com/android/settings/MasterClear.java
+U    packages/apps/Settings/src/com/android/settings/bluetooth/BluetoothEnabler.java
+U    packages/apps/Settings/src/com/android/settings/wifi/WifiEnabler.java
+U    packages/apps/Settings/res/values/strings.xml
+U    packages/apps/Settings/res/xml/privacy_settings.xml
+
+【问题原因】
+Android里默认是不会编译配置为M的driver的
+所以，你配置CFG80211为M，根本就没有编译！
+【解决办法】
+修改android的源码：
+build/core/Makefile
+找到
+$(MAKE) –C kernel_imx –j那一行，在uImage 和 $(KERNEL_ENV)中间添加 “ modules ”(前后有空格)
+
+.gitignore
+*.md
+*.dtb.dts
+*.dtb
+*.tmp
+*.cmd
+*.o
+*.mod.c
+*.builtin
+*.order
+

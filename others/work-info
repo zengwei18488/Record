@@ -1,0 +1,50 @@
+   https://172.20.2.44/svn/essrisc/AM335x/Linux/
+
+       https://172.20.2.44/svn/essrisc/AM335x/Android/
+
+       https://172.20.2.44/svn/A+TC_ECG/  
+
+FTP server :  ftp.advantech.com.tw
+User name :  ftpupload
+Password :   ftpupload
+
+
+ 针对AIMB-R200软件部分，昨天有和台北Charles及PM秦霞沟通，目前情况如下：
+
+         iMX6平台Linux系统：
+
+                  目前正式发布的最新Linux版本是fsl-yocto-3.10.17_1.0.0，下载地址如下：
+
+                  https://172.20.2.44/svn/essrisc/iMX6/Linux/fsl-yocto-3.10.17_1.0.0/
+
+                  使用的内核版本是3.10.17
+
+ 
+
+                   正在开发中的Linux版本是fsl-yocto-3.14.28_1.0.0（目前还不确定发布日期），下载地址如下：
+
+                   https://172.20.2.44/svn/essrisc/iMX6/Linux/fsl-yocto-3.14.28_1.0.0/
+
+                   使用的内核版本是3.14.28
+
+        
+
+         iMX6平台的Android系统：
+
+                   目前正是发布的是Android 4.4.2（就是我们目前GF06使用的版本）， 现在地址如下：
+
+                   https://172.20.2.44/svn/essrisc/iMX6/Android/android_kk4.4.2_1.0.0/
+
+                   内核版本是3.0.35
+
+        
+
+                   正在开发中的Android版本是Android 5.0，下载地址如下：
+
+                   https://172.20.2.44/svn/essrisc/iMX6/Android/android_L5.0.0_1.0.0/
+
+                   使用内核版本是3.10.53， 内核版本下载地址是：
+
+                   https://172.20.2.44/svn/essrisc/iMX6/Linux/fsl-yocto-3.10.53_1.1.0/
+
+ 

@@ -1,0 +1,200 @@
+LVDS时序
+kernel_imx\drivers\video\mxc\Mxcfb_modedb.c
+kernel_imx\drivers\video\mxc\Mxcfb.c
+
+kernel_imx\arch\mach-mx6\Board-mx6q_advantech.c
+kernel_imx\arch\plat-mxc\Pwm.c
+
+kernel_imx\drivers\video\backlight.c
+kernel_imx\drivers\video\backlight\Pwm_bl.c
+
+adb shell dumpsys activity top
+adb shell pm path com.xxxx.xxx
+
+./frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
+
+soft and Physical keyboard
+frameworks/base/core/java/android/inputmethodservice/InputMethodService.java
+onEvaluateInputViewShown()
+frameworks/base/services/core/java/com/android/server/wm/WindowManagerService.java中，如果把updateShowImeWithHardKeyboard()方法中的showImeWithHardKeyboard变量直接置为true
+public void updateShowImeWithHardKeyboard() { //final boolean showImeWithHardKeyboard = Settings.Secure.getIntForUser( //mContext.getContentResolver(), Settings.Secure.SHOW_IME_WITH_HARD_KEYBOARD, 0, //mCurrentUserId) == 1; final boolean showImeWithHardKeyboard = true; synchronized (mWindowMap) { if (mShowImeWithHardKeyboard != showImeWithHardKeyboard) { mShowImeWithHardKeyboard = showImeWithHardKeyboard; mH.sendEmptyMessage(H.SEND_NEW_CONFIGURATION); } } } 
+
+android5.0
+./../../../../out/host/linux-x86/bin/simg2img  system.img  system_raw.img
+
+gpiod_export  gpiolib.c
+
+error: unmappable character for encoding ASCII （java编译过程中出现的错误）
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+
+disable statusbar
+android/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java
+disable(StatusBarManager.DISABLE_EXPAND);
+
+Hide Status Bar
+frameworks/base/core/res/res/values/dimens.xml
+把<dimen name="status_bar_height">25dip</dimen> 修改为<dimen name="status_bar_height">0dip</dimen>
+
+disable navigationbar
+device/fsl/XXX/overlay/frameworks\base\core\res\res\values\config.xml
+name="config_showNavigationBar">false</bool>
+
+新增产品修改涉及内容
+./kernel_imx/arch/arm/mach-mx6/board.c
+./kernel_imx/arch/arm/plat-mxc/system.c
+./kernel_imx/arch/arm/kernel/process.c
+./kernel_imx/drivers/input/keyboard/gpio_keys.c
+
+android/device/fsl/imx6/AndroidProducts.mk
+
+./build/core/Makefile:ifneq ($(strip $(TARGET_BOOTLOADER_CONFIG)),)
+./build/core/Makefile:	@for ubootplat in $(TARGET_BOOTLOADER_CONFIG); do
+./device/fsl/ebc_gf06/BoardConfig.mk:TARGET_BOOTLOADER_CONFIG := 6q:mx6q_rom-7420_android_config
+
+device/fsl/ebc_gf06
+device/fsl/imx6/soc/ebc_gf06.mk
+device/fsl/imx6/ebc_gf06.mk
+device/fsl/imx6/vendorsetup.sh
+bootable/bootloader/uboot-imx/include/configs/mx6q_rom-7420_2G_64b_adv_samsung.h
+kernel_imx/arch/arm/configs/imx6_gf06_android_kk44_defconfig
+kernel_imx/arch/arm/mach-mx6/Kconfig
+
+device/fsl/imx6/etc/apns-conf.xml
+out.../system/etc/apns-conf.xml
+
+3/4G模块
+system/core/rootdir/init.rc
+device/fsl/imx6/init.rc
+device/ti/am335xevm_sk/init.am335xevm.rc
+device/generic/x86/init.rc
+device/samsung/smdkv210/init.smdkv210_sdmmc.rc
+
+./out/target/product/aimb_r200/system/lib/libhuawei-ril.so
+./device/fsl/common/modules/HUAWEI_MU609/libhuawei-ril.so
+
+external/ppp/pppd/Android.mk
+
+M2M
+UNIM2M.NJM2MAPN
+unim2m.gzm2mapn
+
+echo 'ATI\r' >/dev/ttyUSB2
+echo 'AT+QCFG=?\r' >/dev/ttyUSB2​
+
+busybox microcom -t 120000 /dev/ttyUSB2 
+
+Quectel CMUX Revision: Quectel_Linux_CMUX_SR01A07V01
+
+PCIE
+make menuconfig ARCH=arm 
+network驱动
+
+init.rc
+hardware/ril/rild/rild.c   main()  property_get(LIB_ARGS_PROPERTY, args, "");   
+getprop [rild.libargs]
+./device/fsl/imx6/etc/init.rc:service ril-daemon /system/bin/rild -l libhuawei-ril.so  修改为对应设备so
+./device/fsl/imx6/aimb_r200.mk
+./out/target/product/aimb_r200/root/init.rc:    setprop rild.libargs "-d /dev/ttyUSB1"
+
+watchdog
+arch/arm/plat-mxc/devices/platform-imx2-wdt.c
+kernel_imx/arch/arm/mach-mx6/devices-imx6q.h
+kernel_imx/include/linux/fsl_devices.h
+device/fsl/imx6/etc/init.rc
+kernel_imx/arch/arm/mach-mx6/board-mx6q_advantech.c
+kernel_imx/arch/arm/mach-mx6/board-mx6q_r200.h
+kernel_imx/arch/arm/plat-mxc/include/mach/devices-common.h
+
+drivers/watchdog/gpio_wdt.c
+
+system/core/init/watchdogd.c 
+
+I2C
+i2cget -y 2 0x29 0x15 w
+i2cset -y 2 0x29 0x15 0x0190 w
+2表示第三条bus总线，i2c3，0x29是地址
+
+	下面是用来使Android当机的命令：
+     echo "c" >/proc/sysrq-trigger
+
+8051
+System.c/board-mx6q_advantech.c  mx6_mcu_reset/mx6_snvs_poweroff
+
+看看SELINUX状态，
+adb shell getenforce
+如果是enforcing状态，切换到permissive下试试
+adb shell setenforce 0 
+"sestatus -v"
+查看相关SELINUX权限的话，需要去执行ls -Z、id -Z
+
+/*判断selinux功能是否启用。方法是：
+   1） /sys/fs/selinux 是否存在。或者
+   2)  ro.boot.selinux 属性不为disabled
+menuconfig配置
+
+sata
+./memtool -32 0x020E0034 1
+
+./memtool -32 0x01ffc0a0 1
+md.l 0x020E0034
+
+RSB6410  36.4.14 GPR (IOMUXC_GPR13) PAGE 1948
+        Gen1 0x05911C52
+               05939452  0000 0101 1001 0011 1001 0100 0101 0010                                       
+        Gen2 0x05919452  0000 0101 1001 0001 1001 0100 0101 0010
+                                                     
+        fsl,transmit-level-mV = <1133>;    bits:2-6    10100 
+        fsl,transmit-boost-mdB = <2960>;   bits:7-10   1000
+        fsl,transmit-atten-16ths = <12>;   bits:11-13  010
+        fsl,receive-eq-mdB = <3000>;       bits:24-26  101
+        fsl,no-spread-spectrum;      bits:14     0
+
+             ./imx6q-rsb6410-a1.dts
+yocto2.0\2.1
+uboot-imx6/include/configs/mx6rsb6410.h:#define CONFIG_SATA_GEN2        0x05919452
+linux-imx6/drivers/ata/ahci_imx.c
+
+
+
+Dual-Audio
+AudioPolicyManagerBase::routing_strategy AudioPolicyManagerBase::getStrategy
+
+扩展模式
+/storage/emulated/legacy/
+system/build.prop  #adv.presentation_mode=true
+
+iperf -s -i 5 -w 2M -d
+iperf -c 192.168.1.100 -i 5 -w 2M -d -t 1000000
+
+./stl /dev/ttyS0 -svoa -b 115200 -c n81 -f rtscts -h 60
+./stl /dev/ttymxc3 -rvoa -b 115200 -c n81 -f rtscts -h 60
+
+./stl /dev/ttyS0 -rvoa -b 115200 -c n81 -f rtscts -h 60
+./stl /dev/ttymxc3 -svoa -b 115200 -c n81 -f rtscts -h 60
+
+adb shell /system/bin/screencap -p /data/screenshot.png
+
+调整背光
+hardware/imx/lights/
+
+ota
+./packages/apps/fsl_imx_demo
+
+recovery
+RecoverySystem.java
+device/fsl/imx6/etc/recovery_emmc.fstab
+packages/apps/fsl_imx_demo/FSLOta/
+bootable/recovery/
+
+CPU temperature and frequency
+
+echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+cat /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_cur_freq
+echo 100 > /sys/class/thermal/thermal_zone0/trip_point_0_temp
+echo 90 > /sys/class/thermal/thermal_zone0/trip_point_1_temp
+echo 80 > /sys/class/thermal/thermal_zone0/trip_point_2_temp
+
+/sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_min_freq
+
+
+

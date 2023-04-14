@@ -1,0 +1,1862 @@
+--------- beginning of /dev/log/main
+D/MagDaemon( 2265): init_sensors
+I/installd( 2258): installd firing up
+I/DEBUG   ( 2253): debuggerd: Sep 10 2015 13:16:36
+I/Netd    ( 2252): Netd 1.0 starting
+W/InterfaceController( 2252): Warning (dlopen failed: library "/system/lib/libnetcmdiface.so" not found) while opening the net interface command library
+D/MagDaemon( 2265): couldn't find 'FreescaleAccelerometer' input device
+D/MagDaemon( 2265): inital sensor error
+E/DirectVolume( 2251): Vold managed volumes must have auto mount point; ignoring /mnt/media_rw/udisk
+E/DirectVolume( 2251): Vold managed volumes must have auto mount point; ignoring /mnt/media_rw/sata
+--------- beginning of /dev/log/system
+I/Vold    ( 2251): Vold 2.1 (the revenge) firing up
+D/Vold    ( 2251): load fstab = /fstab.freescale
+D/Vold    ( 2251): Volume udisk state changing -1 (Initializing) -> 0 (No-Media)
+D/Vold    ( 2251): Volume sata state changing -1 (Initializing) -> 0 (No-Media)
+W/linker  ( 2260): libhuawei-ril.so has text relocations. This is wasting memory and is a security risk. Please fix.
+E/TouchD  ( 2261): Remove all old debug log failed.
+D/TouchD  ( 2261): 
+D/TouchD  ( 2261): 			Tue Nov 10 17:07:59 2015
+D/TouchD  ( 2261): 			
+D/TouchD  ( 2261): File: read - /data/eGTouchA.ini
+D/TouchD  ( 2261): Device[0] PID [null] was set to add to module.
+D/TouchD  ( 2261): Device[1] PID [null] was set to add to module.
+D/TouchD  ( 2261): Daemon Version: [2.5.3710]
+D/TouchD  ( 2261): Run process as a background daemon
+D/TouchD  ( 2320): ===============   Entering GetEnvironment   ===============
+D/TouchD  ( 2320): Android Version: 4.4
+D/TouchD  ( 2320): Entering GetKernelVersion
+D/TouchD  ( 2320): Kernel_Version = 3.0.35
+D/TouchD  ( 2320): Entering GetCPUinfo
+D/TouchD  ( 2320): Command uname -m output to /dev/null failed.
+D/TouchD  ( 2320): Get CPU Info failed
+D/TouchD  ( 2320): Entering ListEETIUsbDevice
+D/TouchD  ( 2320): ---------------  Done with GetEnvironment   ---------------
+D/TouchD  ( 2320): Current PID = 2320
+D/TouchD  ( 2320): Loop in endless scan
+D/TouchD  ( 2320): Entering EndlessScanLoop
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/SurfaceFlinger( 2254): SurfaceFlinger is starting
+I/SurfaceFlinger( 2254): SurfaceFlinger's main thread ready to run. Initializing graphics H/W...
+I/mediaserver( 2257): ServiceManager: 0x40dc5538
+I/AudioFlinger( 2257): Using default 3000 mSec as standby time.
+I/CameraService( 2257): CameraService started (pid=2257)
+D/libEGL  ( 2254): loaded /system/lib/egl/libEGL_VIVANTE.so
+I/CameraService( 2257): Loaded "Freescale CameraHal Module" camera module
+I/FslCameraHAL( 2257): Face Back Camera is 0, orient is 0
+I/FslCameraHAL( 2257): Face Front Camera is 0, orient is 0
+I/AudioPolicyManagerBase( 2257): loadAudioPolicyConfig() loaded /system/etc/audio_policy.conf
+W/audio_hw_primary( 2257): card 0, id sgtl5000audio ,driver sgtl5000-audio, name sgtl5000-audio
+W/audio_hw_primary( 2257): out rate 44100
+W/audio_hw_primary( 2257): in rate 44100, channels 2 format 0
+W/audio_hw_primary( 2257): card 1, id imxhdmisoc ,driver imx-hdmi-soc, name imx-hdmi-soc
+W/audio_hw_primary( 2257): out rate 44100
+W/audio_hw_primary( 2257): in rate 0, channels 0 format 0
+I/AudioFlinger( 2257): loadHwModule() Loaded primary audio interface from Freescale i.MX Audio HW HAL (audio) handle 1
+W/audio_hw_primary( 2257): open output stream devices 2, format 1, channels 3, sample_rate 44100, flag 2
+W/audio_hw_primary( 2257): opened out stream...1074714616
+I/AudioFlinger( 2257): HAL output buffer size 192 frames, normal mix buffer size 768 frames
+I/AudioMixer( 2257): found effect "Multichannel Downmix To Stereo" from The Android Open Source Project
+E/MonoPipe( 2257): Failed to fetch local time frequency when constructing a MonoPipe (res = -32).  getNextWriteTimestamp calls will be non-functional
+D/libEGL  ( 2254): loaded /system/lib/egl/libGLESv1_CM_VIVANTE.so
+D/libEGL  ( 2254): loaded /system/lib/egl/libGLESv2_VIVANTE.so
+W/imx6.gralloc( 2254): 32bpp setting of Framebuffer catched!
+W/imx6.gralloc( 2254): using (fd=15)
+W/imx6.gralloc( 2254): id           = DISP4 BG - DI1
+W/imx6.gralloc( 2254): xres         = 1920 px
+W/imx6.gralloc( 2254): yres         = 1080 px
+W/imx6.gralloc( 2254): xres_virtual = 1920 px
+W/imx6.gralloc( 2254): yres_virtual = 3456 px
+W/imx6.gralloc( 2254): bpp          = 32
+W/imx6.gralloc( 2254): r            =  0:8
+W/imx6.gralloc( 2254): g            =  8:8
+W/imx6.gralloc( 2254): b            = 16:8
+W/imx6.gralloc( 2254): width        = 480 mm (101.599998 dpi)
+W/imx6.gralloc( 2254): height       = 270 mm (101.599998 dpi)
+W/imx6.gralloc( 2254): refresh rate = 60.00 Hz
+I/v_hwc   ( 2254): Default primary display
+I/v_hwc   ( 2254): xres         = 1920 px
+I/v_hwc   ( 2254): yres         = 1080 px
+I/v_hwc   ( 2254): xdpi         = 101.6 dpi
+I/v_hwc   ( 2254): ydpi         = 101.6 dpi
+I/v_hwc   ( 2254): refresh rate = 60.0 Hz
+I/v_hwc   ( 2254): External display
+I/v_hwc   ( 2254): xres         = 1920 px
+I/v_hwc   ( 2254): yres         = 1080 px
+I/v_hwc   ( 2254): xdpi         = 0.0 dpi
+I/v_hwc   ( 2254): ydpi         = 0.0 dpi
+I/v_hwc   ( 2254): refresh rate = 60.0 Hz
+I/v_hwc   ( 2254): Virtual display @2 initialized.
+I/v_hwc   ( 2254): Vivante HWComposer v2.4
+I/v_hwc   ( 2254): Device:               0x40dbe3d8
+I/v_hwc   ( 2254): Separated 2D:         YES
+I/v_hwc   ( 2254): 2D PE20:              YES
+I/v_hwc   ( 2254): Multi-source blit:    NO
+I/v_hwc   ( 2254): Multi-source blit Ex: NO
+I/v_hwc   ( 2254): OPF/YUV blit/Tiling : NO
+I/v_hwc   ( 2254): Filter stretch      : YES
+I/FslHwcomposer( 2254): using viv hwc!
+I/FslHwcomposer( 2254): fb0 is hdmi
+I/FslHwcomposer( 2254):  device
+I/FslHwcomposer( 2254): fb0 device plugin
+I/FslHwcomposer( 2254): fb1 is overlay device
+I/FslHwcomposer( 2254): fb2 is lcd
+I/FslHwcomposer( 2254):  device
+I/FslHwcomposer( 2254): fb3 is overlay device
+W/FslHwcomposer( 2254): open /sys/class/graphics/fb4 failed
+W/FslHwcomposer( 2254): open /sys/class/graphics/fb5 failed
+I/FslHwcomposer( 2254): hwcomposer: open framebuffer fb0
+I/FslHwcomposer( 2254): hwcomposer: open framebuffer fb2
+W/imx6.gralloc( 2254): 32bpp setting of Framebuffer catched!
+W/imx6.gralloc( 2254): using (fd=24)
+W/imx6.gralloc( 2254): id           = DISP3 BG
+W/imx6.gralloc( 2254): xres         = 1920 px
+W/imx6.gralloc( 2254): yres         = 1080 px
+W/imx6.gralloc( 2254): xres_virtual = 1920 px
+W/imx6.gralloc( 2254): yres_virtual = 3456 px
+W/imx6.gralloc( 2254): bpp          = 32
+W/imx6.gralloc( 2254): r            =  0:8
+W/imx6.gralloc( 2254): g            =  8:8
+W/imx6.gralloc( 2254): b            = 16:8
+W/imx6.gralloc( 2254): width        = 305 mm (159.895081 dpi)
+W/imx6.gralloc( 2254): height       = 171 mm (160.421051 dpi)
+W/imx6.gralloc( 2254): refresh rate = 60.00 Hz
+I/FslHwcomposer( 2254): hwc_device_open,411
+I/SurfaceFlinger( 2254): Using composer version 1.3
+W/SurfaceFlinger( 2254): no suitable EGLConfig found, trying a simpler query
+I/SurfaceFlinger( 2254): EGL informations:
+I/SurfaceFlinger( 2254): vendor    : Android
+I/SurfaceFlinger( 2254): version   : 1.4 Android META-EGL
+I/SurfaceFlinger( 2254): extensions: EGL_KHR_get_all_proc_addresses EGL_ANDROID_presentation_time EGL_KHR_image EGL_KHR_image_base EGL_KHR_image_pixmap EGL_KHR_lock_surface EGL_KHR_gl_texture_2D_image EGL_KHR_gl_texture_cubemap_image EGL_KHR_gl_renderbuffer_image EGL_KHR_reusable_sync EGL_KHR_fence_sync EGL_ANDROID_image_native_buffer EGL_ANDROID_recordable 
+I/SurfaceFlinger( 2254): Client API: OpenGL_ES
+I/SurfaceFlinger( 2254): EGLSurface: 8-8-8-8, config=0x4bdccc60
+I/SurfaceFlinger( 2254): OpenGL ES informations:
+I/SurfaceFlinger( 2254): vendor    : Vivante Corporation
+I/SurfaceFlinger( 2254): renderer  : Vivante GC2000
+I/SurfaceFlinger( 2254): version   : OpenGL ES 2.0
+I/SurfaceFlinger( 2254): extensions: GL_EXT_debug_marker GL_OES_compressed_ETC1_RGB8_texture GL_OES_compressed_paletted_texture GL_OES_EGL_image GL_OES_depth24 GL_OES_fbo_render_mipmap GL_OES_fragment_precision_high GL_OES_rgb8_rgba8 GL_OES_stencil1 GL_OES_stencil4 GL_OES_texture_npot GL_OES_vertex_half_float GL_OES_depth_texture GL_OES_packed_depth_stencil GL_OES_standard_derivatives GL_OES_get_program_binary GL_EXT_texture_format_BGRA8888 GL_IMG_read_format GL_EXT_blend_minmax GL_EXT_read_format_bgra GL_EXT_multi_draw_arrays GL_APPLE_texture_format_BGRA8888 GL_APPLE_texture_max_level GL_ARM_rgba8 GL_EXT_frag_depth GL_VIV_shader_binary GL_VIV_direct_texture GL_OES_mapbuffer GL_OES_EGL_image_external GL_EXT_discard_framebuffer GL_EXT_multisampled_render_to_texture GL_VIV_clamp_to_border GL_OES_vertex_type_10_10_10_2 GL_EXT_texture_type_2_10_10_10_REV GL_EXT_texture_filter_anisotropic GL_OES_element_index_uint
+I/SurfaceFlinger( 2254): GL_MAX_TEXTURE_SIZE = 8192
+I/SurfaceFlinger( 2254): GL_MAX_VIEWPORT_DIMS = 8192
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+E/SurfaceFlinger( 2254): HWComposer: framebufferTarget is null
+D/SurfaceFlinger( 2254): marking display 1 as acquired/unblanked
+D/SurfaceFlinger( 2254): Screen acquired, type=0 flinger=0x40dbb450
+D/libEGL  ( 2481): loaded /system/lib/egl/libEGL_VIVANTE.so
+D/libEGL  ( 2481): loaded /system/lib/egl/libGLESv1_CM_VIVANTE.so
+D/libEGL  ( 2481): loaded /system/lib/egl/libGLESv2_VIVANTE.so
+D/AndroidRuntime( 2255): 
+D/AndroidRuntime( 2255): >>>>>> AndroidRuntime START com.android.internal.os.ZygoteInit <<<<<<
+D/AndroidRuntime( 2255): CheckJNI is ON
+I/AndroidRuntime( 2255): JNI options: '-Xjniopts:warnonly'
+E/BufferQueue( 2254): [BootAnimation] dequeueBuffer: can't dequeue multiple buffers without setting the buffer count
+I/v_hwc   ( 2254): Display(0x4009b008) detected: format=306 1920x1080
+I/v_hwc   ( 2254): Display buffer(0x400bb250) detected: physical=0x6e400000
+I/v_hwc   ( 2254): Display buffer(0x4006e540) detected: physical=0x6ec70000
+I/v_hwc   ( 2254): Display buffer(0x4006e448) detected: physical=0x6f4e0000
+V/NatController( 2252): runCmd(/system/bin/iptables -F natctrl_FORWARD) res=0
+V/NatController( 2252): runCmd(/system/bin/iptables -A natctrl_FORWARD -j DROP) res=0
+V/NatController( 2252): runCmd(/system/bin/iptables -t nat -F natctrl_nat_POSTROUTING) res=0
+V/NatController( 2252): runCmd(/system/bin/ip rule flush) res=0
+V/NatController( 2252): runCmd(/system/bin/ip -6 rule flush) res=0
+V/NatController( 2252): runCmd(/system/bin/ip rule add from all lookup default prio 32767) res=0
+V/NatController( 2252): runCmd(/system/bin/ip rule add from all lookup main prio 32766) res=0
+V/NatController( 2252): runCmd(/system/bin/ip -6 rule add from all lookup default prio 32767) res=0
+V/NatController( 2252): runCmd(/system/bin/ip -6 rule add from all lookup main prio 32766) res=0
+V/NatController( 2252): runCmd(/system/bin/ip route flush cache) res=0
+V/NatController( 2252): runCmd(/system/bin/iptables -F natctrl_tether_counters) res=1
+V/NatController( 2252): runCmd(/system/bin/iptables -X natctrl_tether_counters) res=1
+V/NatController( 2252): runCmd(/system/bin/iptables -N natctrl_tether_counters) res=0
+D/dalvikvm( 2255): Trying to load lib libjavacore.so 0x0
+D/dalvikvm( 2255): Added shared lib libjavacore.so 0x0
+D/dalvikvm( 2255): Trying to load lib libnativehelper.so 0x0
+D/dalvikvm( 2255): Added shared lib libnativehelper.so 0x0
+D/dalvikvm( 2255): No JNI_OnLoad found in libnativehelper.so 0x0, skipping init
+D/MDnsDS  ( 2252): MDnsSdListener::Hander starting up
+D/MDnsDS  ( 2252): MDnsSdListener starting to monitor
+D/MDnsDS  ( 2252): Going to poll with pollCount 1
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/dalvikvm( 2255): Note: class Landroid/app/ActivityManagerNative; has 179 unimplemented (abstract) methods
+E/memtrack( 2255): Couldn't load memtrack module (No such file or directory)
+E/android.os.Debug( 2255): failed to load memtrack module: -2
+I/ethernet( 2255): Loading ethernet jni class
+I/SamplingProfilerIntegration( 2255): Profiling disabled.
+I/Zygote  ( 2255): Preloading classes...
+D/dalvikvm( 2255): GC_EXPLICIT freed 40K, 8% free 520K/564K, paused 0ms+0ms, total 3ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 3K, 4% free 597K/616K, paused 0ms+1ms, total 3ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 16K, 3% free 641K/660K, paused 1ms+0ms, total 6ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 19K, 4% free 675K/696K, paused 2ms+0ms, total 7ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 10K, 2% free 719K/732K, paused 0ms+1ms, total 6ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 27K, 4% free 747K/776K, paused 1ms+0ms, total 7ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 32K, 5% free 769K/804K, paused 1ms+0ms, total 4ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 7K, 2% free 822K/832K, paused 1ms+1ms, total 5ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 29K, 4% free 847K/880K, paused 1ms+0ms, total 5ms
+D/TextLayoutCache( 2255): Using debug level = 0 - Debug Enabled = 0
+D/dalvikvm( 2255): WAIT_FOR_CONCURRENT_GC blocked 1ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 14K, 3% free 885K/904K, paused 2ms+2ms, total 8ms
+I/dalvikvm( 2255): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+D/MtpDeviceJNI( 2255): register_android_mtp_MtpDevice
+I/dalvikvm( 2255): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+I/dalvikvm( 2255): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+I/dalvikvm( 2255): threadid=1: recursive native library load attempt (/system/lib/libmedia_jni.so)
+D/dalvikvm( 2255): GC_EXPLICIT freed 19K, 3% free 921K/944K, paused 0ms+1ms, total 5ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 21K, 3% free 957K/980K, paused 1ms+0ms, total 6ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 14K, 2% free 995K/1012K, paused 1ms+1ms, total 6ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 28K, 3% free 1021K/1052K, paused 1ms+0ms, total 7ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 16K, 2% free 1076K/1096K, paused 1ms+1ms, total 9ms
+E/EmojiFactory_jni( 2255): Failed to load libemoji.so: dlopen failed: library "libemoji.so" not found
+D/dalvikvm( 2255): GC_EXPLICIT freed 30K, 3% free 1392K/1424K, paused 1ms+1ms, total 13ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 35K, 3% free 1416K/1456K, paused 0ms+1ms, total 8ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 30K, 3% free 1440K/1476K, paused 1ms+1ms, total 10ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 37K, 3% free 1457K/1500K, paused 1ms+1ms, total 14ms
+I/LibraryLoader( 2255): loading: webviewchromium
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/LibraryLoader( 2255): loaded: webviewchromium
+D/dalvikvm( 2255): GC_EXPLICIT freed 16K, 2% free 1500K/1520K, paused 1ms+1ms, total 13ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 24K, 2% free 1528K/1556K, paused 0ms+2ms, total 10ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 81K, 6% free 1574K/1660K, paused 1ms+2ms, total 14ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 36K, 5% free 1593K/1660K, paused 1ms+1ms, total 13ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 31K, 3% free 1618K/1660K, paused 1ms+1ms, total 10ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 19K, 2% free 1681K/1704K, paused 1ms+2ms, total 12ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 23K, 2% free 1712K/1740K, paused 2ms+1ms, total 12ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 29K, 2% free 1738K/1772K, paused 1ms+2ms, total 11ms
+D/dalvikvm( 2255): GC_FOR_ALLOC freed 250K, 12% free 1999K/2252K, paused 15ms, total 15ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 209K, 10% free 2119K/2336K, paused 2ms+2ms, total 22ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 35K, 9% free 2138K/2336K, paused 1ms+1ms, total 15ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 25K, 8% free 2171K/2344K, paused 1ms+1ms, total 14ms
+W/Zygote  ( 2255): Class not found for preloading: java.lang.UnsafeByteSequence
+D/dalvikvm( 2255): GC_EXPLICIT freed 37K, 7% free 2191K/2344K, paused 1ms+2ms, total 19ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 40K, 6% free 2208K/2344K, paused 1ms+1ms, total 18ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 42K, 6% free 2221K/2344K, paused 1ms+1ms, total 15ms
+I/System  ( 2255): Loaded time zone names for "" in 93ms (87ms in ICU)
+I/System  ( 2255): Loaded time zone names for "en_US" in 63ms (57ms in ICU)
+D/dalvikvm( 2255): GC_EXPLICIT freed 204K, 9% free 2389K/2612K, paused 1ms+2ms, total 20ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 14K, 7% free 2453K/2612K, paused 1ms+1ms, total 20ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 30K, 6% free 2479K/2612K, paused 1ms+2ms, total 16ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 34K, 5% free 2499K/2612K, paused 1ms+1ms, total 20ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 32K, 4% free 2521K/2612K, paused 2ms+2ms, total 20ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 29K, 3% free 2546K/2612K, paused 1ms+2ms, total 16ms
+I/Zygote  ( 2255): ...preloaded 2777 classes in 4398ms.
+D/dalvikvm( 2255): GC_EXPLICIT freed 17K, 3% free 2549K/2612K, paused 1ms+1ms, total 17ms
+I/Zygote  ( 2255): Preloading resources...
+W/Resources( 2255): Preloaded drawable resource #0x1080096 (android:drawable/toast_frame) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080105 (android:drawable/btn_check_on_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080104 (android:drawable/btn_check_on_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080102 (android:drawable/btn_check_on_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080101 (android:drawable/btn_check_on_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ff (android:drawable/btn_check_on_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fe (android:drawable/btn_check_on_focused_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 34K, 3% free 2569K/2648K, paused 2ms+2ms, total 22ms
+W/Resources( 2255): Preloaded drawable resource #0x10800fd (android:drawable/btn_check_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fc (android:drawable/btn_check_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fb (android:drawable/btn_check_on_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fa (android:drawable/btn_check_on_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800f2 (android:drawable/btn_check_off_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800f1 (android:drawable/btn_check_off_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ed (android:drawable/btn_check_off_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ec (android:drawable/btn_check_off_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ea (android:drawable/btn_check_off_focused_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 59K, 4% free 2562K/2656K, paused 1ms+2ms, total 17ms
+W/Resources( 2255): Preloaded drawable resource #0x10800e9 (android:drawable/btn_check_off_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e8 (android:drawable/btn_check_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e7 (android:drawable/btn_check_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e6 (android:drawable/btn_check_off_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e5 (android:drawable/btn_check_off_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080102 (android:drawable/btn_check_on_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ed (android:drawable/btn_check_off_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080105 (android:drawable/btn_check_on_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800f2 (android:drawable/btn_check_off_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ff (android:drawable/btn_check_on_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ea (android:drawable/btn_check_off_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ed (android:drawable/btn_check_off_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080102 (android:drawable/btn_check_on_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fd (android:drawable/btn_check_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e8 (android:drawable/btn_check_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fb (android:drawable/btn_check_on_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e6 (android:drawable/btn_check_off_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e8 (android:drawable/btn_check_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fd (android:drawable/btn_check_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800dc (android:drawable/btn_check_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 108K, 5% free 2567K/2692K, paused 1ms+2ms, total 23ms
+W/Resources( 2255): Preloaded drawable resource #0x1080101 (android:drawable/btn_check_on_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ec (android:drawable/btn_check_off_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080104 (android:drawable/btn_check_on_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800f1 (android:drawable/btn_check_off_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fe (android:drawable/btn_check_on_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e9 (android:drawable/btn_check_off_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ec (android:drawable/btn_check_off_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080101 (android:drawable/btn_check_on_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fc (android:drawable/btn_check_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e7 (android:drawable/btn_check_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fa (android:drawable/btn_check_on_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e5 (android:drawable/btn_check_off_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800e7 (android:drawable/btn_check_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800fc (android:drawable/btn_check_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800db (android:drawable/btn_check_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 84K, 5% free 2566K/2692K, paused 1ms+2ms, total 17ms
+W/Resources( 2255): Preloaded drawable resource #0x1080195 (android:drawable/btn_radio_on_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080194 (android:drawable/btn_radio_on_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080192 (android:drawable/btn_radio_on_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080191 (android:drawable/btn_radio_on_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108018f (android:drawable/btn_radio_on_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108018e (android:drawable/btn_radio_on_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108018d (android:drawable/btn_radio_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108018c (android:drawable/btn_radio_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108018b (android:drawable/btn_radio_on_disabled_focused_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 53K, 5% free 2566K/2692K, paused 1ms+2ms, total 25ms
+W/Resources( 2255): Preloaded drawable resource #0x108018a (android:drawable/btn_radio_on_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080187 (android:drawable/btn_radio_off_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080186 (android:drawable/btn_radio_off_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080184 (android:drawable/btn_radio_off_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080183 (android:drawable/btn_radio_off_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080181 (android:drawable/btn_radio_off_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080180 (android:drawable/btn_radio_off_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108017f (android:drawable/btn_radio_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108017e (android:drawable/btn_radio_off_disabled_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 51K, 5% free 2567K/2692K, paused 1ms+2ms, total 17ms
+W/Resources( 2255): Preloaded drawable resource #0x108017d (android:drawable/btn_radio_off_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108017c (android:drawable/btn_radio_off_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080128 (android:drawable/btn_default_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080127 (android:drawable/btn_default_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080124 (android:drawable/btn_default_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080123 (android:drawable/btn_default_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108011c (android:drawable/btn_default_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108011b (android:drawable/btn_default_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080119 (android:drawable/btn_default_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080118 (android:drawable/btn_default_disabled_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 24K, 4% free 2596K/2692K, paused 1ms+2ms, total 19ms
+W/Resources( 2255): Preloaded drawable resource #0x1080116 (android:drawable/btn_default_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080115 (android:drawable/btn_default_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080123 (android:drawable/btn_default_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080118 (android:drawable/btn_default_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080127 (android:drawable/btn_default_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108011b (android:drawable/btn_default_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080123 (android:drawable/btn_default_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080115 (android:drawable/btn_default_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080118 (android:drawable/btn_default_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108011d (android:drawable/btn_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080124 (android:drawable/btn_default_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080119 (android:drawable/btn_default_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080128 (android:drawable/btn_default_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108011c (android:drawable/btn_default_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080124 (android:drawable/btn_default_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080116 (android:drawable/btn_default_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080119 (android:drawable/btn_default_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108011e (android:drawable/btn_default_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 55K, 3% free 2627K/2700K, paused 1ms+2ms, total 17ms
+W/Resources( 2255): Preloaded drawable resource #0x10801d1 (android:drawable/btn_star_off_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801db (android:drawable/btn_star_on_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d7 (android:drawable/btn_star_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cd (android:drawable/btn_star_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801dd (android:drawable/btn_star_on_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d3 (android:drawable/btn_star_off_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d9 (android:drawable/btn_star_on_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cf (android:drawable/btn_star_off_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d5 (android:drawable/btn_star_on_disabled_focused_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 108K, 5% free 2572K/2708K, paused 1ms+2ms, total 19ms
+W/Resources( 2255): Preloaded drawable resource #0x10801cb (android:drawable/btn_star_off_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d1 (android:drawable/btn_star_off_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801db (android:drawable/btn_star_on_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d7 (android:drawable/btn_star_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cd (android:drawable/btn_star_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801dd (android:drawable/btn_star_on_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d3 (android:drawable/btn_star_off_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d9 (android:drawable/btn_star_on_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cf (android:drawable/btn_star_off_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d5 (android:drawable/btn_star_on_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d7 (android:drawable/btn_star_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cb (android:drawable/btn_star_off_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cd (android:drawable/btn_star_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d1 (android:drawable/btn_star_off_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801db (android:drawable/btn_star_on_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801c8 (android:drawable/btn_star_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 86K, 5% free 2575K/2708K, paused 1ms+2ms, total 17ms
+W/Resources( 2255): Preloaded drawable resource #0x10801d0 (android:drawable/btn_star_off_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801da (android:drawable/btn_star_on_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d6 (android:drawable/btn_star_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cc (android:drawable/btn_star_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801dc (android:drawable/btn_star_on_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d2 (android:drawable/btn_star_off_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d8 (android:drawable/btn_star_on_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ce (android:drawable/btn_star_off_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d4 (android:drawable/btn_star_on_disabled_focused_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 53K, 5% free 2574K/2708K, paused 1ms+2ms, total 16ms
+W/Resources( 2255): Preloaded drawable resource #0x10801ca (android:drawable/btn_star_off_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d0 (android:drawable/btn_star_off_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801da (android:drawable/btn_star_on_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d6 (android:drawable/btn_star_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cc (android:drawable/btn_star_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801dc (android:drawable/btn_star_on_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d2 (android:drawable/btn_star_off_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d8 (android:drawable/btn_star_on_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ce (android:drawable/btn_star_off_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d4 (android:drawable/btn_star_on_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d6 (android:drawable/btn_star_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ca (android:drawable/btn_star_off_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801cc (android:drawable/btn_star_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801d0 (android:drawable/btn_star_off_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801da (android:drawable/btn_star_on_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801c7 (android:drawable/btn_star_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 86K, 5% free 2576K/2708K, paused 2ms+1ms, total 25ms
+W/Resources( 2255): Preloaded drawable resource #0x10801f7 (android:drawable/btn_toggle_on_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f6 (android:drawable/btn_toggle_on_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f5 (android:drawable/btn_toggle_on_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f4 (android:drawable/btn_toggle_on_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f3 (android:drawable/btn_toggle_on_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f2 (android:drawable/btn_toggle_on_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f1 (android:drawable/btn_toggle_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f0 (android:drawable/btn_toggle_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ef (android:drawable/btn_toggle_on_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ee (android:drawable/btn_toggle_on_disabled_focused_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 18K, 4% free 2611K/2708K, paused 2ms+2ms, total 17ms
+W/Resources( 2255): Preloaded drawable resource #0x10801ec (android:drawable/btn_toggle_off_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801eb (android:drawable/btn_toggle_off_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ea (android:drawable/btn_toggle_off_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e9 (android:drawable/btn_toggle_off_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e8 (android:drawable/btn_toggle_off_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e7 (android:drawable/btn_toggle_off_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e6 (android:drawable/btn_toggle_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e5 (android:drawable/btn_toggle_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e4 (android:drawable/btn_toggle_off_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e3 (android:drawable/btn_toggle_off_disabled_focused_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 51K, 4% free 2613K/2708K, paused 1ms+2ms, total 19ms
+W/Resources( 2255): Preloaded drawable resource #0x10801f5 (android:drawable/btn_toggle_on_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f1 (android:drawable/btn_toggle_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f7 (android:drawable/btn_toggle_on_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f3 (android:drawable/btn_toggle_on_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f5 (android:drawable/btn_toggle_on_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ef (android:drawable/btn_toggle_on_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f1 (android:drawable/btn_toggle_on_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ea (android:drawable/btn_toggle_off_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e6 (android:drawable/btn_toggle_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ec (android:drawable/btn_toggle_off_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e8 (android:drawable/btn_toggle_off_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ea (android:drawable/btn_toggle_off_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e4 (android:drawable/btn_toggle_off_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e6 (android:drawable/btn_toggle_off_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e1 (android:drawable/btn_toggle_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 59K, 3% free 2628K/2708K, paused 1ms+3ms, total 24ms
+W/Resources( 2255): Preloaded drawable resource #0x10801f4 (android:drawable/btn_toggle_on_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f0 (android:drawable/btn_toggle_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f6 (android:drawable/btn_toggle_on_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f2 (android:drawable/btn_toggle_on_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f4 (android:drawable/btn_toggle_on_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801ee (android:drawable/btn_toggle_on_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801f0 (android:drawable/btn_toggle_on_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e9 (android:drawable/btn_toggle_off_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e5 (android:drawable/btn_toggle_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801eb (android:drawable/btn_toggle_off_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e7 (android:drawable/btn_toggle_off_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e9 (android:drawable/btn_toggle_off_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e3 (android:drawable/btn_toggle_off_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e5 (android:drawable/btn_toggle_off_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10801e0 (android:drawable/btn_toggle_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 75K, 4% free 2628K/2720K, paused 1ms+2ms, total 17ms
+W/Resources( 2255): Preloaded drawable resource #0x108064c (android:drawable/textfield_multiline_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080650 (android:drawable/textfield_multiline_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108064a (android:drawable/textfield_multiline_activated_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080652 (android:drawable/textfield_multiline_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108064c (android:drawable/textfield_multiline_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108064e (android:drawable/textfield_multiline_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080650 (android:drawable/textfield_multiline_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108063f (android:drawable/textfield_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080644 (android:drawable/textfield_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080637 (android:drawable/textfield_activated_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080647 (android:drawable/textfield_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108063f (android:drawable/textfield_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080642 (android:drawable/textfield_disabled_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080644 (android:drawable/textfield_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080258 (android:drawable/edit_text_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 75K, 4% free 2629K/2720K, paused 2ms+1ms, total 21ms
+W/Resources( 2255): Preloaded drawable resource #0x108064b (android:drawable/textfield_multiline_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108064f (android:drawable/textfield_multiline_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080649 (android:drawable/textfield_multiline_activated_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080651 (android:drawable/textfield_multiline_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108064b (android:drawable/textfield_multiline_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108064d (android:drawable/textfield_multiline_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108064f (android:drawable/textfield_multiline_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108063e (android:drawable/textfield_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080643 (android:drawable/textfield_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080636 (android:drawable/textfield_activated_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080646 (android:drawable/textfield_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108063e (android:drawable/textfield_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080641 (android:drawable/textfield_disabled_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080643 (android:drawable/textfield_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080257 (android:drawable/edit_text_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 74K, 4% free 2631K/2720K, paused 1ms+1ms, total 17ms
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/Resources( 2255): Preloaded drawable resource #0x1080633 (android:drawable/text_select_handle_left) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080635 (android:drawable/text_select_handle_right) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080630 (android:drawable/text_edit_paste_window) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108026d (android:drawable/expander_close_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108026e (android:drawable/expander_close_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108026d (android:drawable/expander_close_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080274 (android:drawable/expander_open_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080270 (android:drawable/expander_group_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 85K, 5% free 2604K/2736K, paused 1ms+2ms, total 23ms
+W/Resources( 2255): Preloaded drawable resource #0x108026e (android:drawable/expander_close_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080275 (android:drawable/expander_open_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080271 (android:drawable/expander_group_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041d (android:drawable/list_selector_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041d (android:drawable/list_selector_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fe (android:drawable/list_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fc (android:drawable/list_longpressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041a (android:drawable/list_selector_background_transition_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fe (android:drawable/list_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fc (android:drawable/list_longpressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041a (android:drawable/list_selector_background_transition_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803f7 (android:drawable/list_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080421 (android:drawable/list_selector_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041e (android:drawable/list_selector_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041e (android:drawable/list_selector_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803ff (android:drawable/list_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fd (android:drawable/list_longpressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041b (android:drawable/list_selector_background_transition_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803ff (android:drawable/list_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fd (android:drawable/list_longpressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041b (android:drawable/list_selector_background_transition_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803f7 (android:drawable/list_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080422 (android:drawable/list_selector_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 54K, 5% free 2611K/2736K, paused 2ms+2ms, total 18ms
+W/Resources( 2255): Preloaded drawable resource #0x1080401 (android:drawable/list_section_divider_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080400 (android:drawable/list_section_divider_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080432 (android:drawable/menu_hardkey_panel_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080433 (android:drawable/menu_hardkey_panel_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108043a (android:drawable/menu_submenu_background) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080431 (android:drawable/menu_dropdown_panel_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080430 (android:drawable/menu_dropdown_panel_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 35K, 4% free 2627K/2736K, paused 1ms+2ms, total 20ms
+W/Resources( 2255): Preloaded drawable resource #0x1080437 (android:drawable/menu_popup_panel_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080436 (android:drawable/menu_popup_panel_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080437 (android:drawable/menu_popup_panel_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080431 (android:drawable/menu_dropdown_panel_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080435 (android:drawable/menu_panel_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080436 (android:drawable/menu_popup_panel_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080430 (android:drawable/menu_dropdown_panel_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080434 (android:drawable/menu_panel_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 53K, 5% free 2638K/2760K, paused 1ms+2ms, total 19ms
+W/Resources( 2255): Preloaded drawable resource #0x108047c (android:drawable/overscroll_edge) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108047d (android:drawable/overscroll_glow) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 354K, 15% free 2587K/3036K, paused 1ms+1ms, total 20ms
+W/Resources( 2255): Preloaded drawable resource #0x1080545 (android:drawable/spinner_16_outer_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080544 (android:drawable/spinner_16_inner_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080549 (android:drawable/spinner_48_outer_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080548 (android:drawable/spinner_48_inner_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108054b (android:drawable/spinner_76_outer_holo) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 49K, 15% free 2588K/3036K, paused 1ms+3ms, total 21ms
+W/Resources( 2255): Preloaded drawable resource #0x108054a (android:drawable/spinner_76_inner_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804c5 (android:drawable/progress_bg_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804c6 (android:drawable/progress_bg_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804c5 (android:drawable/progress_bg_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d2 (android:drawable/progress_secondary_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d0 (android:drawable/progress_primary_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804c7 (android:drawable/progress_horizontal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804c6 (android:drawable/progress_bg_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d3 (android:drawable/progress_secondary_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d1 (android:drawable/progress_primary_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804c8 (android:drawable/progress_horizontal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804db (android:drawable/progressbar_indeterminate_holo1) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804dc (android:drawable/progressbar_indeterminate_holo2) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804dd (android:drawable/progressbar_indeterminate_holo3) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804de (android:drawable/progressbar_indeterminate_holo4) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804df (android:drawable/progressbar_indeterminate_holo5) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804e0 (android:drawable/progressbar_indeterminate_holo6) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804e1 (android:drawable/progressbar_indeterminate_holo7) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804e2 (android:drawable/progressbar_indeterminate_holo8) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804c9 (android:drawable/progress_indeterminate_horizontal_holo) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 355K, 15% free 2602K/3036K, paused 2ms+2ms, total 18ms
+W/Resources( 2255): Preloaded drawable resource #0x108054b (android:drawable/spinner_76_outer_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108054a (android:drawable/spinner_76_inner_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804cb (android:drawable/progress_large_holo) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 60K, 15% free 2592K/3036K, paused 2ms+1ms, total 21ms
+W/Resources( 2255): Preloaded drawable resource #0x1080549 (android:drawable/spinner_48_outer_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080548 (android:drawable/spinner_48_inner_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804ce (android:drawable/progress_medium_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d0 (android:drawable/progress_primary_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d1 (android:drawable/progress_primary_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d2 (android:drawable/progress_secondary_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d3 (android:drawable/progress_secondary_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080545 (android:drawable/spinner_16_outer_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080544 (android:drawable/spinner_16_inner_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10804d5 (android:drawable/progress_small_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080535 (android:drawable/scrubber_track_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080534 (android:drawable/scrubber_secondary_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080531 (android:drawable/scrubber_primary_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080532 (android:drawable/scrubber_progress_horizontal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080536 (android:drawable/scrubber_track_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080534 (android:drawable/scrubber_secondary_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080531 (android:drawable/scrubber_primary_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080533 (android:drawable/scrubber_progress_horizontal_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 46K, 15% free 2605K/3036K, paused 1ms+1ms, total 20ms
+W/Resources( 2255): Preloaded drawable resource #0x1080528 (android:drawable/scrollbar_handle_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080529 (android:drawable/scrollbar_handle_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 19K, 14% free 2639K/3036K, paused 1ms+2ms, total 20ms
+W/Resources( 2255): Preloaded drawable resource #0x1080208 (android:drawable/cab_background_bottom_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108020b (android:drawable/cab_background_top_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080209 (android:drawable/cab_background_bottom_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802bc (android:drawable/ic_cab_done_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 22K, 13% free 2669K/3036K, paused 2ms+1ms, total 24ms
+W/Resources( 2255): Preloaded drawable resource #0x108020a (android:drawable/cab_background_top_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802bd (android:drawable/ic_cab_done_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d0 (android:drawable/btn_cab_done_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d3 (android:drawable/btn_cab_done_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d1 (android:drawable/btn_cab_done_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d6 (android:drawable/btn_cab_done_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d2 (android:drawable/btn_cab_done_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d7 (android:drawable/btn_cab_done_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803ff (android:drawable/list_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d3 (android:drawable/btn_cab_done_focused_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d1 (android:drawable/btn_cab_done_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d5 (android:drawable/btn_cab_done_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fe (android:drawable/list_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d2 (android:drawable/btn_cab_done_focused_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d0 (android:drawable/btn_cab_done_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800d4 (android:drawable/btn_cab_done_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080038 (android:drawable/ic_menu_close_clear_cancel) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108033e (android:drawable/ic_menu_copy_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108033f (android:drawable/ic_menu_copy_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 53K, 13% free 2671K/3036K, paused 1ms+1ms, total 20ms
+W/Resources( 2255): Preloaded drawable resource #0x1080341 (android:drawable/ic_menu_cut_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080342 (android:drawable/ic_menu_cut_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080045 (android:drawable/ic_menu_more) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080355 (android:drawable/ic_menu_moreoverflow_normal_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080353 (android:drawable/ic_menu_moreoverflow_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080356 (android:drawable/ic_menu_moreoverflow_normal_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080354 (android:drawable/ic_menu_moreoverflow_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080359 (android:drawable/ic_menu_paste_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108035a (android:drawable/ic_menu_paste_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080360 (android:drawable/ic_menu_selectall_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 60K, 13% free 2666K/3036K, paused 1ms+2ms, total 26ms
+W/Resources( 2255): Preloaded drawable resource #0x108035f (android:drawable/ic_menu_selectall_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802c0 (android:drawable/ic_clear_disabled) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802c2 (android:drawable/ic_clear_normal) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802bf (android:drawable/ic_clear) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802c0 (android:drawable/ic_clear_disabled) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802c2 (android:drawable/ic_clear_normal) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080392 (android:drawable/ic_search) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802dd (android:drawable/ic_go) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108039b (android:drawable/ic_voice_search) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080221 (android:drawable/dialog_bottom_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 48K, 12% free 2675K/3036K, paused 1ms+2ms, total 21ms
+W/Resources( 2255): Preloaded drawable resource #0x1080222 (android:drawable/dialog_bottom_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080226 (android:drawable/dialog_full_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080227 (android:drawable/dialog_full_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108022f (android:drawable/dialog_middle_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 16K, 11% free 2710K/3036K, paused 2ms+2ms, total 26ms
+W/Resources( 2255): Preloaded drawable resource #0x1080230 (android:drawable/dialog_middle_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080231 (android:drawable/dialog_top_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080232 (android:drawable/dialog_top_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802d1 (android:drawable/ic_dialog_alert_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10802d2 (android:drawable/ic_dialog_alert_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803f4 (android:drawable/list_divider_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803f5 (android:drawable/list_divider_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803f5 (android:drawable/list_divider_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800bd (android:drawable/ab_transparent_dark_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800bb (android:drawable/ab_stacked_transparent_dark_holo) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 67K, 12% free 2696K/3036K, paused 2ms+1ms, total 18ms
+W/Resources( 2255): Preloaded drawable resource #0x10800a1 (android:drawable/ab_bottom_transparent_dark_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800b5 (android:drawable/ab_solid_dark_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800b8 (android:drawable/ab_stacked_solid_dark_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108009e (android:drawable/ab_bottom_solid_dark_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800be (android:drawable/ab_transparent_light_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800bc (android:drawable/ab_stacked_transparent_light_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800a2 (android:drawable/ab_bottom_transparent_light_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800b6 (android:drawable/ab_solid_light_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800ba (android:drawable/ab_stacked_solid_light_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800a0 (android:drawable/ab_bottom_solid_light_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10800b7 (android:drawable/ab_solid_shadow_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041d (android:drawable/list_selector_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041d (android:drawable/list_selector_disabled_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fe (android:drawable/list_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fc (android:drawable/list_longpressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041a (android:drawable/list_selector_background_transition_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fe (android:drawable/list_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fc (android:drawable/list_longpressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041a (android:drawable/list_selector_background_transition_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803f7 (android:drawable/list_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803b3 (android:drawable/item_background_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 58K, 11% free 2704K/3036K, paused 2ms+2ms, total 23ms
+W/Resources( 2255): Preloaded drawable resource #0x108041e (android:drawable/list_selector_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041e (android:drawable/list_selector_disabled_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803ff (android:drawable/list_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fd (android:drawable/list_longpressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041b (android:drawable/list_selector_background_transition_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803ff (android:drawable/list_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803fd (android:drawable/list_longpressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108041b (android:drawable/list_selector_background_transition_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803f7 (android:drawable/list_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x10803b4 (android:drawable/item_background_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027c (android:drawable/fastscroll_thumb_pressed_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027a (android:drawable/fastscroll_thumb_default_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027b (android:drawable/fastscroll_thumb_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027c (android:drawable/fastscroll_thumb_pressed_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027a (android:drawable/fastscroll_thumb_default_holo) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 83K, 12% free 2678K/3036K, paused 2ms+1ms, total 18ms
+W/Resources( 2255): Preloaded drawable resource #0x1080281 (android:drawable/fastscroll_track_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027d (android:drawable/fastscroll_track_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027f (android:drawable/fastscroll_track_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080281 (android:drawable/fastscroll_track_pressed_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027d (android:drawable/fastscroll_track_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080276 (android:drawable/fastscroll_label_left_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080278 (android:drawable/fastscroll_label_right_holo_dark) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 20K, 11% free 2714K/3036K, paused 1ms+2ms, total 21ms
+W/Resources( 2255): Preloaded drawable resource #0x1080282 (android:drawable/fastscroll_track_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027e (android:drawable/fastscroll_track_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080280 (android:drawable/fastscroll_track_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080282 (android:drawable/fastscroll_track_pressed_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108027e (android:drawable/fastscroll_track_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080277 (android:drawable/fastscroll_label_left_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080279 (android:drawable/fastscroll_label_right_holo_light) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 54K, 11% free 2715K/3036K, paused 2ms+1ms, total 24ms
+W/Resources( 2255): Preloaded drawable resource #0x108025b (android:drawable/editbox_dropdown_background_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080662 (android:drawable/textfield_search_selected_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080656 (android:drawable/textfield_search_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080664 (android:drawable/textfield_searchview_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108065f (android:drawable/textfield_search_right_selected_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108065d (android:drawable/textfield_search_right_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080666 (android:drawable/textfield_searchview_right_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080663 (android:drawable/textfield_search_selected_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080657 (android:drawable/textfield_search_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080665 (android:drawable/textfield_searchview_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080660 (android:drawable/textfield_search_right_selected_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108065e (android:drawable/textfield_search_right_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080667 (android:drawable/textfield_searchview_right_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080662 (android:drawable/textfield_search_selected_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080656 (android:drawable/textfield_search_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108065f (android:drawable/textfield_search_right_selected_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108065d (android:drawable/textfield_search_right_default_holo_dark) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080663 (android:drawable/textfield_search_selected_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080657 (android:drawable/textfield_search_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080660 (android:drawable/textfield_search_right_selected_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108065e (android:drawable/textfield_search_right_default_holo_light) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108062b (android:drawable/tab_unselected_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080626 (android:drawable/tab_selected_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108062a (android:drawable/tab_unselected_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080625 (android:drawable/tab_selected_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108062c (android:drawable/tab_unselected_pressed_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080627 (android:drawable/tab_selected_pressed_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108062c (android:drawable/tab_unselected_pressed_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080627 (android:drawable/tab_selected_pressed_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108061a (android:drawable/tab_indicator_holo) that varies with configuration!!
+D/dalvikvm( 2255): GC_EXPLICIT freed 86K, 12% free 2691K/3036K, paused 2ms+2ms, total 24ms
+W/Resources( 2255): Preloaded drawable resource #0x108062b (android:drawable/tab_unselected_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080626 (android:drawable/tab_selected_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108062a (android:drawable/tab_unselected_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080625 (android:drawable/tab_selected_focused_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x108062c (android:drawable/tab_unselected_pressed_holo) that varies with configuration!!
+W/Resources( 2255): Preloaded drawable resource #0x1080627 (android:drawable/tab_selected_pressed_holo) that varies with configuration!!
+I/Zygote  ( 2255): ...preloaded 274 resources in 1631ms.
+D/dalvikvm( 2255): GC_EXPLICIT freed 35K, 11% free 2711K/3036K, paused 2ms+2ms, total 18ms
+I/Zygote  ( 2255): ...preloaded 31 resources in 29ms.
+D/dalvikvm( 2255): GC_EXPLICIT freed 15K, 11% free 2704K/3036K, paused 2ms+2ms, total 18ms
+D/dalvikvm( 2255): GC_EXPLICIT freed 4K, 12% free 2700K/3036K, paused 2ms+1ms, total 20ms
+D/dalvikvm( 2255): GC_EXPLICIT freed <1K, 12% free 2700K/3036K, paused 1ms+2ms, total 25ms
+I/dalvikvm( 2255): System server process 2631 has been created
+I/Zygote  ( 2255): Accepting command socket connections
+D/SensorService( 2631): nuSensorService starting...
+E/SensorService( 2631): couldn't load sensors module (No such file or directory)
+I/installd( 2258): new connection
+E/SWITCHPROFILE( 2631): setprop: sys.interactive = active 
+I/SystemServer( 2631): Entered the Android system server!
+I/SystemServer( 2631): Waiting for installd to be ready.
+I/Installer( 2631): connecting...
+I/SystemServer( 2631): Enabled StrictMode logging for WM Looper
+I/SystemServer( 2631): Power Manager
+I/SystemServer( 2631): Activity Manager
+I/ActivityManager( 2631): Memory class: 64
+W/UsageStats( 2631): Usage stats version changed; dropping
+I/AppOps  ( 2631): No existing app ops /data/system/appops.xml; starting empty
+I/UiThread( 2631): Enabled StrictMode logging for UI thread
+D/dalvikvm( 2631): GC_CONCURRENT freed 178K, 8% free 2915K/3156K, paused 4ms+1ms, total 21ms
+I/IntentFirewall( 2631): Read new rules (A:0 B:0 S:0)
+I/ActivityManager( 2631): Enabled StrictMode logging for AThread's Looper
+I/SystemServer( 2631): Display Manager
+I/SystemServer( 2631): Telephony Registry
+I/DisplayManagerService( 2631): Display device added: DisplayDeviceInfo{"Built-in Screen": 1920 x 1080, 60.000004 fps, density 160, 213.0 x 213.0 dpi, touch INTERNAL, rotation 0, type BUILT_IN, FLAG_DEFAULT_DISPLAY, FLAG_ROTATES_WITH_CONTENT, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS}
+I/DisplayManagerService( 2631): Display device added: DisplayDeviceInfo{"HDMI Screen": 1920 x 1080, 60.000004 fps, density 320, 320.0 x 320.0 dpi, touch EXTERNAL, rotation 0, type HDMI, FLAG_SECURE, FLAG_SUPPORTS_PROTECTED_BUFFERS, FLAG_PRESENTATION}
+I/SystemServer( 2631): Scheduling Policy
+I/SystemServer( 2631): Package Manager
+D/dalvikvm( 2631): GC_CONCURRENT freed 383K, 15% free 2984K/3480K, paused 2ms+2ms, total 17ms
+D/dalvikvm( 2631): WAIT_FOR_CONCURRENT_GC blocked 11ms
+D/SELinuxMMAC( 2631): Couldn't find install policy /data/security/mac_permissions.xml
+D/SELinuxMMAC( 2631): Using install policy file /system/etc/security/mac_permissions.xml
+D/dalvikvm( 2631): GC_CONCURRENT freed 247K, 10% free 3145K/3480K, paused 1ms+3ms, total 17ms
+I/AudioFlinger( 2257): Using module 1 has the primary audio interface
+I/AudioFlinger( 2257): AudioFlinger's thread 0x40b8d008 ready to run
+W/audio_hw_primary( 2257): out_set_parameters routing=2, ret 1, out 1074714616
+I/audio_a2dp_hw( 2257): adev_open:  adev_open in A2dp_hw module
+I/AudioFlinger( 2257): loadHwModule() Loaded a2dp audio interface from A2DP Audio HW HAL (audio) handle 3
+I/r_submix( 2257): adev_open(name=audio_hw_if)
+I/r_submix( 2257): adev_init_check()
+I/AudioFlinger( 2257): loadHwModule() Loaded r_submix audio interface from Wifi Display audio HAL (audio) handle 4
+I/AudioFlinger( 2257): loadHwModule() Loaded usb audio interface from USB audio HW HAL (audio) handle 5
+I/AudioPolicyService( 2257): Loaded audio policy from LEGACY Audio Policy HAL (audio_policy)
+W/PackageManager( 2631): Running ENG build: no pre-dexopt!
+W/PackageParser( 2631): No actions in intent filter at /system/priv-app/Contacts.apk Binary XML file line #375
+D/dalvikvm( 2631): GC_CONCURRENT freed 201K, 8% free 3373K/3636K, paused 5ms+2ms, total 30ms
+I/v_hwc   ( 2254): vsync thread exit: callback procs not registered.
+W/PackageParser( 2631): No actions in intent filter at /system/priv-app/Dialer.apk Binary XML file line #162
+W/ResourceType( 2631): Failure getting entry for 0x7f050000 (t=4 e=0) in package 0 (error -75)
+D/dalvikvm( 2631): GC_CONCURRENT freed 178K, 7% free 3663K/3904K, paused 3ms+2ms, total 25ms
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/PackageParser( 2631): No actions in intent filter at /system/app/Bluetooth.apk Binary XML file line #210
+W/ResourceType( 2631): Failure getting entry for 0x7f04000f (t=3 e=15) in package 0 (error -75)
+W/ResourceType( 2631): Failure getting entry for 0x7f04000f (t=3 e=15) in package 0 (error -75)
+D/dalvikvm( 2631): GC_CONCURRENT freed 208K, 7% free 3870K/4140K, paused 3ms+2ms, total 26ms
+W/PackageParser( 2631): Unknown element under <application>: permission at /system/app/Gallery2.apk Binary XML file line #257
+W/PackageParser( 2631): Unknown element under <application>: permission at /system/app/Gallery2.apk Binary XML file line #260
+D/dalvikvm( 2631): GC_CONCURRENT freed 272K, 8% free 4003K/4336K, paused 3ms+2ms, total 31ms
+D/PackageManager( 2631): No files in app dir /vendor/app
+W/PackageManager( 2631): Package com.android.gallery3d desires unavailable shared library com.google.android.media.effects; ignoring!
+I/PackageManager( 2631): Time to scan packages: 2.927 seconds
+W/PackageManager( 2631): Not granting permission android.permission.GLOBAL_SEARCH to package com.android.quicksearchbox (protectionLevel=18 flags=0x8be45)
+W/PackageManager( 2631): Unknown permission com.android.smspush.WAPPUSH_MANAGER_BIND in package com.android.phone
+W/PackageManager( 2631): Unknown permission com.google.android.gallery3d.permission.GALLERY_PROVIDER in package com.android.bluetooth
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH in package com.android.providers.calendar
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.cl in package com.android.providers.calendar
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.mail in package com.android.calendar
+W/PackageManager( 2631): Not granting permission android.permission.ACCESS_DOWNLOAD_MANAGER to package com.android.browser (protectionLevel=18 flags=0x9be45)
+W/PackageManager( 2631): Not granting permission android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS to package com.android.browser (protectionLevel=2 flags=0x9be45)
+W/PackageManager( 2631): Not granting permission android.permission.BIND_WALLPAPER to package com.android.camera2 (protectionLevel=18 flags=0x58bc45)
+W/PackageManager( 2631): Unknown permission android.permission.INSTALL_DRM in package com.android.mms
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH in package com.android.settings
+W/PackageManager( 2631): Not granting permission android.permission.WRITE_MEDIA_STORAGE to package com.android.gallery3d (protectionLevel=18 flags=0x58bc45)
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.ACCESS_GOOGLE_PASSWORD in package com.android.development
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH in package com.android.development
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.ALL_SERVICES in package com.android.development
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.YouTubeUser in package com.android.development
+W/PackageManager( 2631): Not granting permission android.permission.DELETE_PACKAGES to package com.svox.pico (protectionLevel=18 flags=0x8be45)
+W/PackageManager( 2631): Not granting permission android.permission.DEVICE_POWER to package com.android.deskclock (protectionLevel=2 flags=0x48be45)
+D/dalvikvm( 2631): GC_EXPLICIT freed 430K, 12% free 3941K/4444K, paused 2ms+3ms, total 30ms
+I/SystemServer( 2631): Entropy Mixer
+I/EntropyMixer( 2631): Writing entropy...
+I/SystemServer( 2631): User Service
+I/SystemServer( 2631): Account Manager
+I/SystemServer( 2631): Content Manager
+I/SystemServer( 2631): System Content Providers
+I/lights  ( 2631): max backlight file is /sys/class/backlight/pwm-backlight.0/max_brightness
+I/lights  ( 2631): backlight brightness file is /sys/class/backlight/pwm-backlight.0/brightness
+I/SystemServer( 2631): Lights Service
+I/SystemServer( 2631): Battery Service
+I/SystemServer( 2631): Vibrator Service
+I/SystemServer( 2631): Consumer IR Service
+I/libsuspend( 2631): Selected early suspend
+I/libsuspend( 2631): Starting early suspend unblocker thread
+I/SWITCHPROFILE( 2631): Switchprofile thread received GOV_INTERACTIVE from Power HAL
+D/PermissionCache( 2254): checking android.permission.ACCESS_SURFACE_FLINGER for uid=1000 => granted (406 us)
+D/SurfaceFlinger( 2254): Screen acquired, type=0 flinger=0x40dbb450
+D/SurfaceFlinger( 2254):  screen was previously acquired
+D/SurfaceFlinger( 2254): Screen acquired, type=1 flinger=0x40dbb450
+D/SurfaceFlinger( 2254):  screen was previously acquired
+E/SWITCHPROFILE( 2631): setprop: sys.interactive = active 
+I/SystemServer( 2631): Alarm Manager
+I/SystemServer( 2631): Init Watchdog
+I/SystemServer( 2631): Input Manager
+I/InputManager( 2631): Initializing input manager, mUseDevInputEventForAudioJack=false
+I/SystemServer( 2631): Window Manager
+I/WindowManager( 2631): No existing display settings /data/system/display_settings.xml; starting empty
+I/WindowManager( 2631): No keyguard interface!
+D/dalvikvm( 2631): GC_CONCURRENT freed 313K, 9% free 4107K/4492K, paused 6ms+3ms, total 46ms
+E/EventHub( 2631): could not get driver version for /dev/input/mice, Not a typewriter
+I/InputManager( 2631): Starting input manager
+I/SystemServer( 2631): No Bluetooh Service (Property disabled)
+I/SystemServer( 2631): Input Method Service
+W/InputMethodManagerService( 2631): Couldn't create dir.: /data/system/inputmethod
+W/ResourceType( 2631): Failure getting entry for 0x7f060000 (t=5 e=0) in package 0 (error -75)
+I/SystemServer( 2631): Accessibility Manager
+I/ActivityManager( 2631): Config changes=1df8 {1.0 ?mcc?mnc en_US ldltr sw1080dp w1920dp h1080dp 160dpi xlrg long land ?uimode ?night -touch -keyb/v/h -nav/h s.2}
+I/ActivityManager( 2631): Config changes=400 {1.0 ?mcc?mnc en_US ldltr sw1080dp w1920dp h1007dp 160dpi xlrg long land ?uimode ?night -touch -keyb/v/h -nav/h s.3}
+I/SystemServer( 2631): Mount Service
+D/MountService( 2631): got storage path: null description: Internal storage primary: true removable: false emulated: true mtpReserve: 100 allowMassStorage: false maxFileSize: 0
+D/MountService( 2631): addVolumeLocked() StorageVolume:
+D/MountService( 2631):     mStorageId=65537 mPath=/storage/emulated/0 mDescriptionId=17040678 
+D/MountService( 2631):     mPrimary=true mRemovable=false mEmulated=true mMtpReserveSpace=100 
+D/MountService( 2631):     mAllowMassStorage=false mMaxFileSize=0 mOwner=UserHandle{0} mUuid=null 
+D/MountService( 2631):     mUserLabel=null mState=null 
+D/MountService( 2631): got storage path: /storage/extsd description: SD card primary: false removable: true emulated: false mtpReserve: 0 allowMassStorage: false maxFileSize: 0
+D/MountService( 2631): boot from sd ,ignore storage(extsd)
+D/MountService( 2631): got storage path: /storage/udisk description: USB storage primary: false removable: true emulated: false mtpReserve: 0 allowMassStorage: false maxFileSize: 0
+D/MountService( 2631): addVolumeLocked() StorageVolume:
+D/MountService( 2631):     mStorageId=0 mPath=/storage/udisk mDescriptionId=17040680 mPrimary=false 
+D/MountService( 2631):     mRemovable=true mEmulated=false mMtpReserveSpace=0 mAllowMassStorage=false 
+D/MountService( 2631):     mMaxFileSize=0 mOwner=null mUuid=null mUserLabel=null mState=null 
+D/MountService( 2631): got storage path: /storage/sata description: SATA disk primary: false removable: true emulated: false mtpReserve: 0 allowMassStorage: false maxFileSize: 0
+D/MountService( 2631): addVolumeLocked() StorageVolume:
+D/MountService( 2631):     mStorageId=0 mPath=/storage/sata mDescriptionId=17040681 mPrimary=false 
+D/MountService( 2631):     mRemovable=true mEmulated=false mMtpReserveSpace=0 mAllowMassStorage=false 
+D/MountService( 2631):     mMaxFileSize=0 mOwner=null mUuid=null mUserLabel=null mState=null 
+I/SystemServer( 2631): LockSettingsService
+I/SystemServer( 2631): Device Policy
+I/SystemServer( 2631): Status Bar
+I/SystemServer( 2631): Clipboard Service
+I/SystemServer( 2631): NetworkManagement Service
+D/MountService( 2631): volume state changed for /storage/udisk (unmounted -> removed)
+D/MountService( 2631): volume state changed for /storage/sata (unmounted -> removed)
+I/SystemServer( 2631): Text Service Manager Service
+I/PackageManager( 2631): No secure containers on sdcard
+D/EventHub( 2631): No input device configuration file found for device 'PixArt USB Optical Mouse'.
+I/EventHub( 2631): New device: id=1, fd=100, path='/dev/input/event1', name='PixArt USB Optical Mouse', classes=0x80000008, configuration='', keyLayout='', keyCharacterMap='', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=false
+E/EventHub( 2631): could not get driver version for /dev/input/mouse0, Not a typewriter
+W/PackageManager( 2631): Not granting permission android.permission.GLOBAL_SEARCH to package com.android.quicksearchbox (protectionLevel=18 flags=0x8be45)
+W/PackageManager( 2631): Unknown permission com.android.smspush.WAPPUSH_MANAGER_BIND in package com.android.phone
+W/PackageManager( 2631): Unknown permission com.google.android.gallery3d.permission.GALLERY_PROVIDER in package com.android.bluetooth
+I/SystemServer( 2631): NetworkStats Service
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH in package com.android.providers.calendar
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.cl in package com.android.providers.calendar
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.mail in package com.android.calendar
+W/PackageManager( 2631): Not granting permission android.permission.ACCESS_DOWNLOAD_MANAGER to package com.android.browser (protectionLevel=18 flags=0x9be45)
+W/PackageManager( 2631): Not granting permission android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS to package com.android.browser (protectionLevel=2 flags=0x9be45)
+W/PackageManager( 2631): Not granting permission android.permission.BIND_WALLPAPER to package com.android.camera2 (protectionLevel=18 flags=0x58bc45)
+W/PackageManager( 2631): Unknown permission android.permission.INSTALL_DRM in package com.android.mms
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH in package com.android.settings
+W/PackageManager( 2631): Not granting permission android.permission.WRITE_MEDIA_STORAGE to package com.android.gallery3d (protectionLevel=18 flags=0x58bc45)
+I/SystemServer( 2631): NetworkPolicy Service
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.ACCESS_GOOGLE_PASSWORD in package com.android.development
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH in package com.android.development
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.ALL_SERVICES in package com.android.development
+W/PackageManager( 2631): Unknown permission com.google.android.googleapps.permission.GOOGLE_AUTH.YouTubeUser in package com.android.development
+W/PackageManager( 2631): Not granting permission android.permission.DELETE_PACKAGES to package com.svox.pico (protectionLevel=18 flags=0x8be45)
+I/SystemServer( 2631): Wi-Fi P2pService
+W/PackageManager( 2631): Not granting permission android.permission.DEVICE_POWER to package com.android.deskclock (protectionLevel=2 flags=0x48be45)
+D/dalvikvm( 2631): GC_CONCURRENT freed 308K, 9% free 4248K/4624K, paused 3ms+4ms, total 52ms
+D/EventHub( 2631): No input device configuration file found for device 'gpio-keys'.
+W/EventHub( 2631): Unable to disable kernel key repeat for /dev/input/event0: Function not implemented
+I/EventHub( 2631): New device: id=2, fd=93, path='/dev/input/event0', name='gpio-keys', classes=0x1, configuration='', keyLayout='/system/usr/keylayout/Generic.kl', keyCharacterMap='/system/usr/keychars/Generic.kcm', builtinKeyboard=false, usingSuspendBlockIoctl=true, usingClockIoctl=false
+I/InputReader( 2631): Device added: id=-1, name='Virtual', sources=0x00000301
+I/InputReader( 2631): Device added: id=2, name='gpio-keys', sources=0x00000101
+I/InputReader( 2631): Device added: id=1, name='PixArt USB Optical Mouse', sources=0x00002002
+I/InputReader( 2631): Reconfiguring input devices.  changes=0x00000004
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/SystemServer( 2631): Wi-Fi Service
+I/SystemServer( 2631): Connectivity Service
+D/ConnectivityService( 2631): ConnectivityService starting up
+D/ConnectivityService( 2631): wifiOnly=false
+E/ConnectivityService( 2631): Ignoring protectedNetwork 14
+I/ethernet( 2631): ==>android_net_ethernet_initEthernetNative
+I/ethernet( 2631): interface can0:2 found
+I/ethernet( 2631): interface eth0:3 found
+E/ethernet( 2631): android_net_ethernet_initEthernetNative exited with success
+E/ethernet( 2631): User ask for device name on 0, list:6854E760, total:2
+E/ethernet( 2631): Found: eth0
+E/ethernet( 2631): User ask for device name on 1, list:6854E760, total:2
+E/ethernet( 2631): Found: can0
+E/ethernet( 2631): Poll events from ethernet devices
+D/NetUtils( 2631): android_net_utils_resetConnections in env=0x41de7e50 clazz=0xea600019 iface=eth0 mask=0x3
+D/ConnectivityService( 2631): Starting Ethernet Service.
+V/EthernetStateTracker( 2631): Starts...
+V/EthernetStateTracker( 2631): Successed
+I/EthernetService( 2631): Ethernet dev enabled 2
+V/EthernetService( 2631): device 0 name eth0
+V/EthernetService( 2631): device 1 name can0
+V/EthernetStateTracker( 2631): start to monitor the ethernet devices
+I/EthernetManager( 2631): Init Ethernet Manager, service: com.android.server.EthernetService@42245458
+I/EthernetStateTracker( 2631): reset device eth0
+D/WifiHW  ( 2631): Unable to unload driver module "ath9k": No such file or directory
+D/NetUtils( 2631): android_net_utils_resetConnections in env=0x41de7e50 clazz=0xec900019 iface=eth0 mask=0x3
+I/EthernetStateTracker( 2631): trigger dhcp for device eth0
+I/EthernetStateTracker( 2631): reset device eth0
+D/EthernetStateTracker( 2631): DhcpHandler: DHCP request started
+E/ethernet( 2631): recvmsg get data
+E/ethernet( 2631):  event :16  found
+E/ethernet( 2631): the device flag :1043
+E/ethernet( 2631): Done parsing
+E/ethernet( 2631): poll state :eth0:17:, left:4088
+I/EthernetStateTracker( 2631): report new state DISCONNECTED on dev eth0
+V/EthernetStateTracker( 2631): update network state tracker
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/EthernetStateTracker( 2631): Could not stop DHCP
+I/EthernetStateTracker( 2631): trigger dhcp for device eth0
+D/BluetoothTethering( 2631): startMonitoring: target: Handler (com.android.server.ConnectivityService$NetworkStateTrackerHandler) {4224dea0}
+D/BluetoothTethering( 2631): startMonitoring: mCsHandler: Handler (com.android.server.ConnectivityService$NetworkStateTrackerHandler) {4224dea0}
+E/BluetoothAdapter( 2631): Bluetooth binder is null
+E/MobileDataStateTracker( 2631): default: Ignoring feature request because could not acquire PhoneService
+E/MobileDataStateTracker( 2631): default: Could not enable APN type "default"
+I/WifiService( 2631): WifiService starting up with Wi-Fi disabled
+I/SystemServer( 2631): Network Service Discovery Service
+D/NsdService( 2631): Network service discovery enabled true
+I/SystemServer( 2631): UpdateLock Service
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/dalvikvm( 2631): GC_CONCURRENT freed 291K, 8% free 4416K/4776K, paused 3ms+3ms, total 61ms
+I/SystemServer( 2631): Notification Manager
+I/SystemServer( 2631): Device Storage Monitor
+I/SystemServer( 2631): Location Manager
+I/SystemServer( 2631): Country Detector
+I/SystemServer( 2631): Search Service
+I/SystemServer( 2631): DropBox Service
+I/SystemServer( 2631): Wallpaper Service
+I/SystemServer( 2631): Audio Service
+I/MediaFocusControl( 2631):   Remote Control   registerMediaButtonIntent() for PendingIntent{4210ef90: PendingIntentRecord{4228b2a8 android broadcastIntent}}
+I/Flexcan JNI( 2631): Flexcan JNI: initializing......
+E/Flexcan JNI( 2631): Flexcan JNI: failed to get flexcan stub module!
+I/SystemServer( 2631): Flexcan Service
+W/FlexcanService( 2631): ---FlexcanService struct func
+I/SystemServer( 2631): Dock Observer
+W/DockObserver( 2631): This kernel does not have dock station support
+I/SystemServer( 2631): Wired Accessory Manager
+W/WiredAccessoryManager( 2631): This kernel does not have wired headset support
+I/SystemServer( 2631): USB Service
+I/SystemServer( 2631): Serial Service
+I/SystemServer( 2631): Twilight Service
+I/SystemServer( 2631): UI Mode Manager Service
+I/SystemServer( 2631): Backup Service
+V/BackupManagerService( 2631): Initializing package tracking
+V/BackupManagerService( 2631): No ancestral data
+V/BackupManagerService( 2631): addPackageParticipantsLocked: all
+I/BackupManagerService( 2631): Scheduling backup for new app com.android.calendar
+D/BackupManagerService( 2631): Now staging backup of com.android.calendar
+I/BackupManagerService( 2631): Scheduling backup for new app com.android.browser
+D/BackupManagerService( 2631): Now staging backup of com.android.browser
+I/BackupManagerService( 2631): Scheduling backup for new app com.android.providers.userdictionary
+D/BackupManagerService( 2631): Now staging backup of com.android.providers.userdictionary
+I/BackupManagerService( 2631): Scheduling backup for new app com.android.sharedstoragebackup
+D/BackupManagerService( 2631): Now staging backup of com.android.sharedstoragebackup
+I/BackupManagerService( 2631): Scheduling backup for new app android
+D/BackupManagerService( 2631): Now staging backup of android
+I/BackupManagerService( 2631): Scheduling backup for new app com.android.dialer
+D/BackupManagerService( 2631): Now staging backup of com.android.dialer
+I/BackupManagerService( 2631): Scheduling backup for new app com.android.providers.settings
+D/BackupManagerService( 2631): Now staging backup of com.android.providers.settings
+E/ethernet( 2631): Poll events from ethernet devices
+V/BackupManagerService( 2631): Starting with transport android/com.android.internal.backup.LocalTransport
+V/BackupManagerService( 2631): Found transports: 1
+I/BackupManagerService( 2631): Binding to transport host ComponentInfo{android/com.android.internal.backup.LocalTransportService}
+D/dalvikvm( 2631): GC_CONCURRENT freed 256K, 7% free 4558K/4884K, paused 4ms+3ms, total 45ms
+I/BackupManagerService( 2631): Found stale backup journal, scheduling
+I/BackupManagerService( 2631):   com.android.calendar
+I/BackupManagerService( 2631):   com.android.browser
+I/BackupManagerService( 2631):   com.android.providers.userdictionary
+I/BackupManagerService( 2631):   com.android.sharedstoragebackup
+I/BackupManagerService( 2631):   android
+I/BackupManagerService( 2631):   com.android.dialer
+I/BackupManagerService( 2631):   com.android.providers.settings
+D/Atlas   ( 2631): Loaded configuration: SliceMinArea (768x768) flags=0x2 count=24
+I/BackupManagerService( 2631): Backup enabled => false
+I/BackupManagerService( 2631): Opting out of backup
+I/SystemServer( 2631): AppWidget Service
+I/SystemServer( 2631): Recognition Service
+I/SystemServer( 2631): DiskStats Service
+I/SystemServer( 2631): SamplingProfiler Service
+I/SystemServer( 2631): NetworkTimeUpdateService
+I/SystemServer( 2631): CommonTimeManagementService
+I/SystemServer( 2631): CertBlacklister
+I/SystemServer( 2631): Assets Atlas Service
+I/SystemServer( 2631): IdleMaintenanceService
+I/SystemServer( 2631): Print Service
+I/SystemServer( 2631): Media Router Service
+I/WindowManager( 2631): SAFE MODE not enabled
+D/dalvikvm( 2631): JIT started for system_server
+D/libEGL  ( 2631): loaded /system/lib/egl/libEGL_VIVANTE.so
+I/Zygote  ( 2631): Process: zygote socket opened
+D/libEGL  ( 2631): loaded /system/lib/egl/libGLESv1_CM_VIVANTE.so
+V/KeyguardServiceDelegate( 2631): *** Keyguard started
+V/KeyguardServiceDelegate( 2631): onSystemReady() called before keyguard service was ready
+I/ActivityManager( 2631): Start proc com.android.systemui for service com.android.keyguard/.KeyguardService: pid=2702 uid=10007 gids={50007, 1028, 1015, 1035, 3002, 3001}
+I/SWITCHPROFILE( 2631): Switchprofile thread received GOV_INTERACTIVE from Power HAL
+E/SWITCHPROFILE( 2631): setprop: sys.interactive = active 
+I/ActivityManager( 2631): System now ready
+I/SystemServer( 2631): Making services ready
+D/NetworkManagementService( 2631): enabling bandwidth control
+W/MountService( 2631): Duplicate state transition (mounted -> mounted) for /storage/emulated/0
+V/KeyguardService( 2702): onCreate()
+D/libEGL  ( 2631): loaded /system/lib/egl/libGLESv2_VIVANTE.so
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.streaming.sw-based' already exists, ignoring this one.
+E/OMXMaster( 2257): A component of name 'OMX.Freescale.std.parser.fsl.sw-based' already exists, ignoring this one.
+D/SystemUIService( 2702): loading: class com.android.systemui.recent.Recents
+D/SystemUIService( 2702): running: com.android.systemui.recent.Recents@420c9598
+D/SystemUIService( 2702): loading: class com.android.systemui.statusbar.SystemBars
+D/SystemUIService( 2702): running: com.android.systemui.statusbar.SystemBars@420c9b80
+D/SystemUIService( 2702): loading: class com.android.systemui.usb.StorageNotification
+D/SystemUIService( 2702): running: com.android.systemui.usb.StorageNotification@420cb940
+D/SystemUIService( 2702): loading: class com.android.systemui.power.PowerUI
+D/SystemUIService( 2702): running: com.android.systemui.power.PowerUI@420cd0b0
+D/SystemUIService( 2702): loading: class com.android.systemui.media.RingtonePlayer
+D/SystemUIService( 2702): running: com.android.systemui.media.RingtonePlayer@420ce088
+D/SystemUIService( 2702): loading: class com.android.systemui.settings.SettingsUI
+D/SystemUIService( 2702): running: com.android.systemui.settings.SettingsUI@420cf650
+I/StatusBarManagerService( 2631): registerStatusBar bar=com.android.internal.statusbar.IStatusBar$Stub$Proxy@422c1da8
+D/PhoneStatusBar( 2702): mSettingsPanelGravity = 8388661
+D/Atlas   ( 2631): Rendered atlas in 526.05ms (5.57+520.48ms)
+D/dalvikvm( 2702): GC_CONCURRENT freed 182K, 8% free 2935K/3180K, paused 8ms+3ms, total 34ms
+D/dalvikvm( 2702): GC_FOR_ALLOC freed 26K, 7% free 3274K/3484K, paused 17ms, total 18ms
+V/PhoneStatusBar/NavigationBarView( 2702): touchEnabled:false
+E/BluetoothAdapter( 2702): Bluetooth binder is null
+E/BluetoothAdapter( 2702): Bluetooth binder is null
+E/BluetoothAdapter( 2702): Bluetooth binder is null
+E/NetdConnector( 2631): NDC Command {1 bandwidth enable} took too long (655ms)
+D/dalvikvm( 2702): GC_CONCURRENT freed 113K, 5% free 3655K/3828K, paused 2ms+4ms, total 52ms
+E/BluetoothAdapter( 2702): Bluetooth binder is null
+I/ActivityManager( 2631): Start proc android.process.acore for content provider com.android.providers.contacts/.ContactsProvider2: pid=2762 uid=10002 gids={50002, 3003, 1028, 1015}
+D/PhoneStatusBar( 2702): disable: < expand icons alerts ticker system_info back home recent clock search >
+D/dalvikvm( 2631): GC_CONCURRENT freed 224K, 6% free 4731K/5024K, paused 3ms+6ms, total 47ms
+E/BluetoothAdapter( 2702): Bluetooth binder is null
+D/PhoneStatusBar( 2702): heads up is disabled
+D/dalvikvm( 2702): GC_CONCURRENT freed 103K, 4% free 4011K/4176K, paused 3ms+41ms, total 95ms
+D/dalvikvm( 2762): GC_CONCURRENT freed 246K, 10% free 2971K/3276K, paused 5ms+10ms, total 56ms
+D/dalvikvm( 2762): WAIT_FOR_CONCURRENT_GC blocked 5ms
+I/ActivityManager( 2631): Start proc android.process.media for broadcast com.android.providers.media/.MtpReceiver: pid=2796 uid=10005 gids={50005, 1028, 1015, 1023, 1024, 2001, 3003, 3007}
+I/ActivityManager( 2631): Config changes=200 {1.0 ?mcc?mnc en_US ldltr sw1080dp w1920dp h1007dp 160dpi xlrg long land -touch -keyb/v/h -nav/h s.4}
+W/RecognitionManagerService( 2631): no available voice recognition services found for user 0
+D/libEGL  ( 2702): loaded /system/lib/egl/libEGL_VIVANTE.so
+W/ContextImpl( 2631): Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1145 com.android.server.usb.UsbSettingsManager.deviceAttached:621 com.android.server.usb.UsbHostManager.usbDeviceAdded:156 com.android.server.usb.UsbHostManager.monitorUsbHostBus:-2 com.android.server.usb.UsbHostManager.access$000:38 
+D/libEGL  ( 2702): loaded /system/lib/egl/libGLESv1_CM_VIVANTE.so
+W/InputMethodManagerService( 2631): Ignoring setImeWindowStatus of uid 1000 token: null
+W/ResourceType( 2631): Failure getting entry for 0x7f060000 (t=5 e=0) in package 0 (error -75)
+I/ActivityManager( 2631): Start proc com.android.inputmethod.latin for service com.android.inputmethod.latin/.LatinIME: pid=2811 uid=10030 gids={50030, 1028, 1015}
+V/InputMethodManagerService( 2631): Adding window token: android.os.Binder@422d8d68
+W/GpsLocationProvider( 2631): Could not open GPS configuration file /etc/gps.conf
+W/LocationManagerService( 2631): no network location provider found
+E/FlpHardwareProvider( 2631): Error hw_get_module 'flp': -2
+E/FlpHardwareProvider( 2631): Error hw_get_module 'flp': -2
+E/LocationManagerService( 2631): no geocoder provider found
+E/LocationManagerService( 2631): No FusedProvider found.
+E/LocationManagerService( 2631): no geofence provider found
+I/CommonTimeManagementService( 2631): No common time service detected on this platform.  Common time services will be unavailable.
+I/InputReader( 2631): Reconfiguring input devices.  changes=0x00000020
+I/InputReader( 2631): Reconfiguring input devices.  changes=0x00000010
+D/libEGL  ( 2702): loaded /system/lib/egl/libGLESv2_VIVANTE.so
+I/ActivityManager( 2631): Start proc com.android.phone for added application com.android.phone: pid=2826 uid=1001 gids={41001, 3002, 3001, 3003, 1028, 1015}
+I/ActivityManager( 2631): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000000 cmp=com.android.launcher/com.android.launcher2.Launcher} from pid 0
+I/ActivityManager( 2631): Start proc com.android.launcher for activity com.android.launcher/com.android.launcher2.Launcher: pid=2838 uid=10008 gids={50008}
+I/SystemServer( 2631): Enabled StrictMode for system server main thread.
+E/BufferQueue( 2254): [StatusBar] dequeueBuffer: can't dequeue multiple buffers without setting the buffer count
+D/OpenGLRenderer( 2702): Enabling debug mode 0
+I/ActivityManager( 2631): Start proc com.android.printspooler for service com.android.printspooler/.PrintSpoolerService: pid=2853 uid=10039 gids={50039}
+D/dalvikvm( 2631): GC_CONCURRENT freed 255K, 7% free 4904K/5228K, paused 12ms+29ms, total 195ms
+I/EthernetStateTracker( 2631): received disconnected events, stack=false HW=false
+E/BufferQueue( 2254): [NavigationBar] dequeueBuffer: can't dequeue multiple buffers without setting the buffer count
+I/PrintSpoolerService( 2853): No existing print spooler state.
+I/Choreographer( 2631): Skipped 119 frames!  The application may be doing too much work on its main thread.
+D/StatusBar.NetworkController( 2702): onServiceStateChanged voiceState=1 dataState=1
+D/StatusBar.NetworkController( 2702): updateTelephonySignalStrength: !hasService()
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=?? combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+V/KeyguardServiceDelegate( 2631): *** Keyguard connected (yay!)
+W/InputMethodManagerService( 2631): Focus gain on non-focused client android.view.inputmethod.InputMethodManager$1@4226d4b8 (uid=1000 pid=2631)
+D/StatusBar.NetworkController( 2702): onCallStateChanged state=0
+D/StatusBar.NetworkController( 2702): onDataConnectionStateChanged: state=-1 type=0
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=?? combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+D/StatusBar.NetworkController( 2702): onDataActivity: direction=0
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=?? combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+D/StatusBar.NetworkController( 2702): onSignalStrengthsChanged signalStrength=SignalStrength: 99 -1 -1 -1 -1 -1 -1 99 2147483647 2147483647 2147483647 2147483647 gsm|lte level=0
+D/StatusBar.NetworkController( 2702): updateTelephonySignalStrength: !hasService()
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=0 combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+I/LatinIME( 2811): Hardware accelerated drawing: true
+I/MediaFocusControl( 2631):   Remote Control   registerMediaButtonIntent() for PendingIntent{422320d0: PendingIntentRecord{4228b2a8 android broadcastIntent}}
+I/Choreographer( 2702): Skipped 69 frames!  The application may be doing too much work on its main thread.
+V/BackupManagerService( 2631): Connected to transport ComponentInfo{android/com.android.internal.backup.LocalTransportService}
+V/BackupManagerService( 2631): Registering transport android/com.android.internal.backup.LocalTransportService::android/com.android.internal.backup.LocalTransport = com.android.internal.backup.LocalTransport@42235570
+E/BluetoothAdapter( 2826): Bluetooth binder is null
+E/BluetoothAdapter( 2826): Bluetooth binder is null
+D/dalvikvm( 2826): GC_CONCURRENT freed 198K, 8% free 2978K/3236K, paused 11ms+3ms, total 95ms
+D/CallNotifier( 2826): CallNotifier: mSignalInfoToneGenerator created when toneplay
+E/BluetoothAdapter( 2826): Bluetooth binder is null
+D/dalvikvm( 2631): GC_CONCURRENT freed 335K, 8% free 5001K/5404K, paused 2ms+7ms, total 116ms
+D/PhoneStatusBar( 2702): mSettingsPanelGravity = 8388661
+W/ResourceType( 2631): Failure getting entry for 0x7f060000 (t=5 e=0) in package 0 (error -75)
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=0 combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/dalvikvm( 2631): GC_CONCURRENT freed 442K, 10% free 5132K/5644K, paused 25ms+6ms, total 107ms
+D/dalvikvm( 2631): WAIT_FOR_CONCURRENT_GC blocked 69ms
+D/dalvikvm( 2631): WAIT_FOR_CONCURRENT_GC blocked 73ms
+D/dalvikvm( 2631): WAIT_FOR_CONCURRENT_GC blocked 71ms
+V/StatusBar( 2702): userId 0 is in the house
+V/KeyguardServiceDelegate( 2631): **** SHOWN CALLED ****
+I/Choreographer( 2702): Skipped 33 frames!  The application may be doing too much work on its main thread.
+I/FusedLocation( 2631): engine started (com.android.location.fused)
+I/ActivityManager( 2631): Start proc com.android.music for broadcast com.android.music/.MediaButtonIntentReceiver: pid=2898 uid=10034 gids={50034, 3003, 1028, 1015}
+D/MobileDataStateTracker( 2631): fota: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=fota
+D/TelephonyDebugService( 2826): TelephonyDebugService()
+D/MobileDataStateTracker( 2631): fota: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): supl: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=supl
+D/MobileDataStateTracker( 2631): supl: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): hipri: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=hipri
+D/MobileDataStateTracker( 2631): hipri: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): ims: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=ims
+D/MobileDataStateTracker( 2631): ims: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): default: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=default
+D/MobileDataStateTracker( 2631): default: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): mms: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=mms
+D/MobileDataStateTracker( 2631): mms: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): cbs: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=cbs
+D/MobileDataStateTracker( 2631): cbs: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): fota: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=fota
+D/MobileDataStateTracker( 2631): fota: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): supl: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=supl
+D/MobileDataStateTracker( 2631): supl: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): hipri: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=hipri
+D/MobileDataStateTracker( 2631): hipri: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): ims: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=ims
+D/MobileDataStateTracker( 2631): ims: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): default: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=default
+W/InputAttributes( 2811): No editor info for this field. Bug?
+D/MobileDataStateTracker( 2631): default: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): mms: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=mms
+W/CallNotifier( 2826): Got onMwiChanged() on non-voice-capable device! Ignoring...
+D/MobileDataStateTracker( 2631): mms: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): cbs: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=cbs
+D/dalvikvm( 2702): GC_CONCURRENT freed 218K, 7% free 4189K/4468K, paused 8ms+17ms, total 170ms
+D/MobileDataStateTracker( 2631): cbs: Received state=DISCONNECTED, old=DISCONNECTED, reason=radioTurnedOff
+D/MobileDataStateTracker( 2631): fota: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=fota
+D/MobileDataStateTracker( 2631): fota: Received state=DISCONNECTED, old=DISCONNECTED, reason=dataDetached
+D/MobileDataStateTracker( 2631): supl: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=supl
+D/MobileDataStateTracker( 2631): supl: Received state=DISCONNECTED, old=DISCONNECTED, reason=dataDetached
+D/MobileDataStateTracker( 2631): hipri: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=hipri
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=0 combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+D/MobileDataStateTracker( 2631): hipri: Received state=DISCONNECTED, old=DISCONNECTED, reason=dataDetached
+D/MobileDataStateTracker( 2631): ims: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=ims
+D/MobileDataStateTracker( 2631): ims: Received state=DISCONNECTED, old=DISCONNECTED, reason=dataDetached
+D/MobileDataStateTracker( 2631): default: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=default
+D/MobileDataStateTracker( 2631): default: Received state=DISCONNECTED, old=DISCONNECTED, reason=dataDetached
+D/MobileDataStateTracker( 2631): mms: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=mms
+D/MobileDataStateTracker( 2631): mms: Received state=DISCONNECTED, old=DISCONNECTED, reason=dataDetached
+I/ResourceUtils( 2811): Found default value: resource=keypress_vibration_durations build=[HARDWARE=freescale MODEL=SABRESD-MX6DQ BRAND=Freescale MANUFACTURER=Freescale] default=-1
+D/MobileDataStateTracker( 2631): cbs: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=cbs
+D/MobileDataStateTracker( 2631): cbs: Received state=DISCONNECTED, old=DISCONNECTED, reason=dataDetached
+D/MobileDataStateTracker( 2631): fota: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=fota
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=0 combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+D/StatusBar.NetworkController( 2702): onServiceStateChanged voiceState=1 dataState=1
+D/StatusBar.NetworkController( 2702): updateTelephonySignalStrength: !hasService()
+D/StatusBar.NetworkController( 2702): refreshViews connected={ } level=0 combinedSignalIconId=0x7f0200a2/com.android.systemui:drawable/stat_sys_signal_null mobileLabel=No Internet connection wifiLabel= emergencyOnly=false combinedLabel=No Internet connection mAirplaneMode=false mDataActivity=0 mPhoneSignalIconId=0x7f0200a2 mQSPhoneSignalIconId=0x7f020057 mDataDirectionIconId=0x0 mDataSignalIconId=0x7f0200a2 mDataTypeIconId=0x0 mQSDataTypeIconId=0x0 mWifiIconId=0x0 mQSWifiIconId=0x0 mEthernetIconId=0x7f020096 mBluetoothTetherIconId=0x10805cc
+D/MobileDataStateTracker( 2631): fota: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+I/ResourceUtils( 2811): Found default value: resource=keypress_volumes build=[HARDWARE=freescale MODEL=SABRESD-MX6DQ BRAND=Freescale MANUFACTURER=Freescale] default=-1.0f
+I/dalvikvm( 2898): CheckJNI enabled: not enabling JNI app bug workarounds.
+D/MobileDataStateTracker( 2631): supl: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=supl
+D/MobileDataStateTracker( 2631): supl: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): hipri: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=hipri
+D/MobileDataStateTracker( 2631): hipri: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): ims: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=ims
+D/MobileDataStateTracker( 2631): ims: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): default: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=default
+D/MobileDataStateTracker( 2631): default: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): mms: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=mms
+D/MobileDataStateTracker( 2631): mms: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): cbs: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=cbs
+D/MobileDataStateTracker( 2631): cbs: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): fota: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=fota
+D/MobileDataStateTracker( 2631): fota: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): supl: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=supl
+D/MobileDataStateTracker( 2631): supl: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): hipri: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=hipri
+D/MobileDataStateTracker( 2631): hipri: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): ims: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=ims
+D/MobileDataStateTracker( 2631): ims: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): default: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=default
+D/dalvikvm( 2838): GC_CONCURRENT freed 201K, 9% free 2969K/3232K, paused 10ms+43ms, total 163ms
+D/MobileDataStateTracker( 2631): default: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): mms: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=mms
+D/MobileDataStateTracker( 2631): mms: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+D/MobileDataStateTracker( 2631): cbs: Broadcast received: android.intent.action.ANY_DATA_STATE apnType=cbs
+D/MobileDataStateTracker( 2631): cbs: Received state=DISCONNECTED, old=DISCONNECTED, reason=roamingOff
+I/LatinIME:LogUtils( 2811): Dictionary info: dictionary = userunigram.en_US.dict ; version = ? ; date = ?
+I/LatinIME:LogUtils( 2811): Dictionary info: dictionary = UserHistoryDictionary.en_US.dic ; version = ? ; date = 1447172680
+I/MediaFocusControl( 2631):   Remote Control   registerMediaButtonIntent() for PendingIntent{421c5a90: PendingIntentRecord{4231d8a8 com.android.music broadcastIntent}}
+I/LatinIME:LogUtils( 2811): Dictionary info: dictionary = personalization.en_US.dict ; version = ? ; date = 1447172680
+D/dalvikvm( 2811): GC_CONCURRENT freed 219K, 9% free 2951K/3220K, paused 8ms+14ms, total 160ms
+I/LatinIME:LogUtils( 2811): Dictionary info: dictionary = PersonalizationPredictionDictio ; version = ? ; date = 1447172680
+D/dalvikvm( 2702): GC_FOR_ALLOC freed 61K, 7% free 4199K/4468K, paused 53ms, total 56ms
+I/LatinIME:LogUtils( 2811): Dictionary info: dictionary = main:en ; version = 42 ; date = 1381226429
+I/dalvikvm-heap( 2702): Grow heap (frag case) to 13.532MB for 9830416-byte allocation
+D/dalvikvm( 2702): GC_CONCURRENT freed 60K, 3% free 13738K/14072K, paused 4ms+6ms, total 41ms
+I/ContactLocale( 2762): AddressBook Labels [en_US]: [, A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, Α, Β, Γ, Δ, Ε, Ζ, Η, Θ, Ι, Κ, Λ, Μ, Ν, Ξ, Ο, Π, Ρ, Σ, Τ, Υ, Φ, Χ, Ψ, Ω, , А, Б, В, Г, Д, Е, Є, Ж, З, И, І, Ї, Й, К, Л, М, Н, О, П, Р, С, Т, У, Ф, Х, Ц, Ч, Ш, Щ, Ю, Я, , א, ב, ג, ד, ה, ו, ז, ח, ט, י, כ, ל, מ, נ, ס, ע, פ, צ, ק, ר, ש, ת, , ا, ب, ت, ث, ج, ح, خ, د, ذ, ر, ز, س, ش, ص, ض, ط, ظ, ع, غ, ف, ق, ك, ل, م, ن, ه, و, ي, , ก, ข, ฃ, ค, ฅ, ฆ, ง, จ, ฉ, ช, ซ, ฌ, ญ, ฎ, ฏ, ฐ, ฑ, ฒ, ณ, ด, ต, ถ, ท, ธ, น, บ, ป, ผ, ฝ, พ, ฟ, ภ, ม, ย, ร, ฤ, ล, ฦ, ว, ศ, ษ, ส, ห, ฬ, อ, ฮ, , ㄱ, ㄴ, ㄷ, ㄹ, ㅁ, ㅂ, ㅅ, ㅇ, ㅈ, ㅊ, ㅋ, ㅌ, ㅍ, ㅎ, , あ, か, さ, た, な, は, ま, や, ら, わ, #, ]
+D/dalvikvm( 2702): GC_FOR_ALLOC freed <1K, 3% free 13738K/14072K, paused 66ms, total 66ms
+D/dalvikvm( 2838): GC_CONCURRENT freed 91K, 5% free 3349K/3496K, paused 3ms+31ms, total 81ms
+I/dalvikvm-heap( 2702): Grow heap (frag case) to 35.892MB for 23508496-byte allocation
+D/dalvikvm( 2631): GC_CONCURRENT freed 551K, 11% free 5082K/5704K, paused 11ms+7ms, total 166ms
+D/dalvikvm( 2702): GC_CONCURRENT freed 0K, 1% free 36696K/37032K, paused 5ms+4ms, total 36ms
+D/dalvikvm( 2702): WAIT_FOR_CONCURRENT_GC blocked 25ms
+D/libEGL  ( 2838): loaded /system/lib/egl/libEGL_VIVANTE.so
+D/libEGL  ( 2838): loaded /system/lib/egl/libGLESv1_CM_VIVANTE.so
+D/libEGL  ( 2838): loaded /system/lib/egl/libGLESv2_VIVANTE.so
+E/BufferQueue( 2254): [com.android.launcher/com.android.launcher2.Launcher] dequeueBuffer: can't dequeue multiple buffers without setting the buffer count
+D/OpenGLRenderer( 2838): Enabling debug mode 0
+I/ActivityManager( 2631): Displayed com.android.launcher/com.android.launcher2.Launcher: +2s686ms
+E/BufferQueue( 2254): [com.android.systemui.ImageWallpaper] dequeueBuffer: can't dequeue multiple buffers without setting the buffer count
+D/dalvikvm( 2838): GC_FOR_ALLOC freed 121K, 5% free 3567K/3752K, paused 36ms, total 37ms
+D/dalvikvm( 2838): GC_FOR_ALLOC freed 8K, 5% free 3784K/3980K, paused 28ms, total 28ms
+D/dalvikvm( 2838): GC_CONCURRENT freed 95K, 4% free 4101K/4264K, paused 4ms+3ms, total 51ms
+D/dalvikvm( 2838): GC_CONCURRENT freed 223K, 8% free 4269K/4600K, paused 3ms+3ms, total 42ms
+I/Choreographer( 2702): Skipped 120 frames!  The application may be doing too much work on its main thread.
+I/SurfaceFlinger( 2254): Boot is finished (26461 ms)
+E/BluetoothAdapter( 2631): Bluetooth binder is null
+E/BluetoothAdapter( 2631): Bluetooth binder is null
+V/WiredAccessoryManager( 2631): init()
+W/WiredAccessoryManager( 2631): /sys/class/switch/usb_audio/state not found while attempting to determine initial switch state
+V/WiredAccessoryManager( 2631): newName=hdmi_audio newState=16 headsetState=16 prev headsetState=0
+V/WiredAccessoryManager( 2631): device hdmi_audio connected
+I/RecoverySystem( 2631): No recovery log file
+I/ActivityManager( 2631): Start proc com.android.providers.calendar for broadcast com.android.providers.calendar/.CalendarReceiver: pid=2936 uid=10001 gids={50001, 3003, 1028, 1015}
+I/BootReceiver( 2631): Copying audit failures to DropBox
+I/BootReceiver( 2631): Checking for fsck errors
+D/dalvikvm( 2255): GC_EXPLICIT freed 38K, 4% free 2712K/2812K, paused 4ms+3ms, total 84ms
+D/dalvikvm( 2255): GC_EXPLICIT freed <1K, 4% free 2712K/2812K, paused 4ms+4ms, total 48ms
+D/dalvikvm( 2631): GC_FOR_ALLOC freed 253K, 11% free 5105K/5732K, paused 98ms, total 98ms
+I/PowerManagerService( 2631): Boot animation finished.
+D/dalvikvm( 2255): GC_EXPLICIT freed <1K, 4% free 2712K/2812K, paused 4ms+5ms, total 55ms
+I/CalendarProvider2( 2936): Created com.android.providers.calendar.CalendarAlarmManager@420c75c8(com.android.providers.calendar.CalendarProvider2@420be7e8)
+I/ActivityManager( 2631): Delay finish: com.android.providers.media/.MediaScannerReceiver
+I/ActivityManager( 2631): Delaying start of: ServiceRecord{4230b378 u0 com.android.providers.calendar/.EmptyService}
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/audio_hw_primary( 2257): open output stream devices 1024, format 1, channels 0, sample_rate 0, flag 1
+W/audio_hw_primary( 2257): adev_open_output_stream() HDMI multichannel
+W/audio_hw_primary( 2257): out_read_hdmi_channel_masks() card 1 got 2 sup channels
+W/audio_hw_primary( 2257): out_read_hdmi_rates() card 1 got 32000 sup rates
+W/audio_hw_primary( 2257): out_read_hdmi_rates() card 1 got 44100 sup rates
+W/audio_hw_primary( 2257): out_read_hdmi_rates() card 1 got 48000 sup rates
+W/audio_hw_primary( 2257): opened out stream...1092074848
+I/AudioFlinger( 2257): HAL output buffer size 192 frames, normal mix buffer size 192 frames
+W/audio_hw_primary( 2257): out get parameters query sup_sampling_rates=, reply sup_sampling_rates=32000|44100|48000
+W/audio_hw_primary( 2257): out get parameters query sup_channels=, reply sup_channels=AUDIO_CHANNEL_OUT_STEREO
+I/AudioFlinger( 2257): AudioFlinger's thread 0x417db7b0 ready to run
+W/audio_hw_primary( 2257): out_set_parameters closing=true, ret -2, out 1092074848
+W/audio_hw_primary( 2257): out_set_parameters exiting=1, ret -2, out 1092074848
+W/audio_hw_primary( 2257): adev_close_output_stream...1092074848
+D/dalvikvm( 2796): GC_CONCURRENT freed 205K, 9% free 2885K/3152K, paused 3ms+4ms, total 23ms
+W/audio_hw_primary( 2257): out_set_parameters routing=0, ret 1, out 1074714616
+D/dalvikvm( 2796): GC_CONCURRENT freed 279K, 11% free 3001K/3340K, paused 3ms+2ms, total 25ms
+D/dalvikvm( 2796): null clazz in OP_INSTANCE_OF, single-stepping
+D/dalvikvm( 2796): GC_CONCURRENT freed 383K, 13% free 3029K/3472K, paused 3ms+3ms, total 19ms
+V/MediaScanner( 2796): pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@420ba428
+V/MediaScanner( 2796): /pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@420ba428
+I/ActivityManager( 2631): Resuming delayed broadcast
+I/ActivityManager( 2631): Start proc com.android.mms for broadcast com.android.mms/.transaction.MmsSystemEventReceiver: pid=2983 uid=10009 gids={50009, 3003, 1028, 1015}
+D/CountryDetector( 2631): The first listener is added
+V/MmsConfig( 2983): mnc/mcc: 
+V/MmsConfig( 2983): tag: bool value: enabledMMS - true
+V/MmsConfig( 2983): tag: int value: maxMessageSize - 307200
+V/MmsConfig( 2983): tag: int value: maxImageHeight - 480
+V/MmsConfig( 2983): tag: int value: maxImageWidth - 640
+V/MmsConfig( 2983): tag: int value: defaultSMSMessagesPerThread - 10000
+V/MmsConfig( 2983): tag: int value: defaultMMSMessagesPerThread - 1000
+V/MmsConfig( 2983): tag: int value: minMessageCountPerThread - 10
+V/MmsConfig( 2983): tag: int value: maxMessageCountPerThread - 5000
+V/MmsConfig( 2983): tag: string value: uaProfUrl - http://www.google.com/oha/rdf/ua-profile-kila.xml
+V/MmsConfig( 2983): tag: int value: recipientLimit - -1
+V/MmsConfig( 2983): tag: bool value: enableMultipartSMS - true
+V/MmsConfig( 2983): tag: int value: smsToMmsTextThreshold - -1
+V/MmsConfig( 2983): tag: bool value: enableSlideDuration - true
+V/MmsConfig( 2983): tag: int value: maxMessageTextSize - -1
+I/ActivityManager( 2631): Delay finish: com.android.mms/.transaction.MmsSystemEventReceiver
+I/ActivityManager( 2631): Resuming delayed broadcast
+I/ActivityManager( 2631): Delay finish: com.android.mms/.transaction.SmsReceiver
+I/ActivityManager( 2631): Resuming delayed broadcast
+I/ActivityManager( 2631): Start proc com.android.onetimeinitializer for broadcast com.android.onetimeinitializer/.OneTimeInitializerReceiver: pid=3011 uid=10011 gids={50011}
+D/Mms:app ( 2983): cancelNotification
+V/OneTimeInitializerRece( 3011): OneTimeInitializerReceiver.onReceive
+I/ActivityManager( 2631): Delay finish: com.android.onetimeinitializer/.OneTimeInitializerReceiver
+I/ActivityManager( 2631): Resuming delayed broadcast
+I/ActivityManager( 2631): Start proc com.android.calendar for broadcast com.android.calendar/.alerts.AlertReceiver: pid=3026 uid=10019 gids={50019, 3003}
+D/ExtensionsFactory( 3026): No custom extensions.
+D/AlertReceiver( 3026): onReceive: a=android.intent.action.BOOT_COMPLETED Intent { act=android.intent.action.BOOT_COMPLETED flg=0x8000010 cmp=com.android.calendar/.alerts.AlertReceiver (has extras) }
+D/AlertService( 3026): 0 Action = android.intent.action.BOOT_COMPLETED
+I/ActivityManager( 2631): Delay finish: com.android.calendar/.alerts.AlertReceiver
+D/AlertService( 3026): Scheduling next alarm with AlarmScheduler. sEventReminderReceived: null
+D/AlarmScheduler( 3026): No events found starting within 1 week.
+I/CalendarProvider2( 2936): Sending notification intent: Intent { act=android.intent.action.PROVIDER_CHANGED dat=content://com.android.calendar }
+W/ContentResolver( 2936): Failed to get type for: content://com.android.calendar (Unknown URL content://com.android.calendar)
+I/ActivityManager( 2631): Resuming delayed broadcast
+I/ActivityManager( 2631): Start proc com.android.deskclock for broadcast com.android.deskclock/.AlarmInitReceiver: pid=3046 uid=10023 gids={50023, 1028}
+V/AlarmClock( 3046): AlarmInitReceiver android.intent.action.BOOT_COMPLETED
+V/AlarmClock( 3046): AlarmInitReceiver - Reset timers and clear stopwatch data
+I/AlarmClock( 3046): Displaying next alarm time: ''
+V/AlarmClock( 3046): AlarmInitReceiver finished
+I/ActivityManager( 2631): Start proc com.android.email for broadcast com.android.email/.service.EmailBroadcastReceiver: pid=3063 uid=10026 gids={50026, 3003, 1028, 1015}
+D/ActivityThread( 3063): Loading provider com.android.email.provider;com.android.email.notifier: com.android.email.provider.EmailProvider
+D/ActivityThread( 3063): Loading provider com.android.email.provider;com.android.email.notifier: com.android.email.provider.EmailProvider
+I/ActivityManager( 2631): Delay finish: com.android.email/.service.EmailBroadcastReceiver
+D/dalvikvm( 3063): GC_CONCURRENT freed 217K, 9% free 2898K/3184K, paused 4ms+2ms, total 19ms
+W/ActivityManager( 2631): Unable to start service Intent { cmp=com.android.email/.service.AttachmentDownloadService } U=0: not found
+I/Email   ( 3063): Observing account changes for notifications
+W/ActivityManager( 2631): Unable to start service Intent { cmp=com.android.email/.service.AttachmentDownloadService } U=0: not found
+W/ActivityManager( 2631): Unable to start service Intent { cmp=com.android.email/.service.AttachmentDownloadService } U=0: not found
+I/ActivityManager( 2631): Delaying start of: ServiceRecord{422d6368 u0 com.android.exchange/.service.EmailSyncAdapterService}
+I/ActivityManager( 2631): Start proc com.android.exchange for service com.android.exchange/.service.EmailSyncAdapterService: pid=3085 uid=10027 gids={50027, 3003, 1028, 1015}
+I/ActivityManager( 2631): Resuming delayed broadcast
+I/LauncherIconVisibilityManager( 2811): Boot has been completed
+I/LauncherIconVisibilityManager( 2811): Activity has already been disabled: ComponentInfo{com.android.inputmethod.latin/com.android.inputmethod.latin.setup.SetupActivity}
+V/SmsReceiverService( 2983): onStart: #1 mResultCode: -1 = Activity.RESULT_OK
+D/AlertReceiver( 3026): onReceive: a=android.intent.action.PROVIDER_CHANGED Intent { act=android.intent.action.PROVIDER_CHANGED dat=content://com.android.calendar flg=0x10 cmp=com.android.calendar/.alerts.AlertReceiver }
+D/AlertService( 3026): 0 Action = android.intent.action.PROVIDER_CHANGED
+I/ActivityManager( 2631): Delay finish: com.android.calendar/.alerts.AlertReceiver
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/GlobalDismissManager( 3026): no sender configured
+D/AlertService( 3026): Beginning updateAlertNotification
+D/AlertService( 3026): No fired or scheduled alerts
+D/AlertService( 3026): Scheduling next alarm with AlarmScheduler. sEventReminderReceived: null
+D/AlarmScheduler( 3026): No events found starting within 1 week.
+I/ActivityManager( 2631): Resuming delayed broadcast
+I/ActivityManager( 2631): Delay finish: com.android.providers.calendar/.CalendarProviderBroadcastReceiver
+I/ActivityManager( 2631): Resuming delayed broadcast
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/ActivityManager( 2631): Waited long enough for: ServiceRecord{4231cb70 u0 com.android.music/.MediaPlaybackService}
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/ActivityManager( 2631): Waited long enough for: ServiceRecord{4234b820 u0 com.android.calendar/.alerts.InitAlarmsService}
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/NetUtils( 2631): dhcp_do_request failed : eth0 (new)
+E/EthernetStateTracker( 2631): DhcpHandler: DHCP request failed: Timed out waiting for DHCP to finish
+D/EthernetStateTracker( 2631): DhcpHandler: DHCP request started
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/InitAlarmsService( 3026): Clearing and rescheduling alarms.
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/NetUtils( 2631): dhcp_do_request failed : eth0 (new)
+E/EthernetStateTracker( 2631): DhcpHandler: DHCP request failed: Timed out waiting for DHCP to finish
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/SocketClient( 2252): write error (Broken pipe)
+D/ConnectivityService( 2631): Sampling interval elapsed, updating statistics ..
+D/ConnectivityService( 2631): Done.
+D/ConnectivityService( 2631): Setting timer for 720seconds
+D/dalvikvm( 2631): GC_CONCURRENT freed 429K, 10% free 5200K/5752K, paused 3ms+4ms, total 42ms
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/MediaFocusControl( 2631):  AudioFocus  abandonAudioFocus() from android.media.AudioManager@420b4d78com.android.music.MediaPlaybackService$3@420b3bf8
+I/ActivityManager( 2631): Start proc com.android.musicfx for broadcast com.android.musicfx/.ControlPanelReceiver: pid=3175 uid=10010 gids={50010, 3003, 3002}
+V/MusicFXControlPanelReceiver( 3175): onReceive
+V/MusicFXControlPanelReceiver( 3175): Action: android.media.action.CLOSE_AUDIO_EFFECT_CONTROL_SESSION
+V/MusicFXControlPanelReceiver( 3175): Package name: com.android.music
+V/MusicFXControlPanelReceiver( 3175): Audio session: 7
+V/MusicFXControlPanelEffect( 3175): closeSession(android.app.ReceiverRestrictedContext@420b0070, com.android.music, 7)
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/ContextImpl( 2631): Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1145 com.android.server.usb.UsbSettingsManager.deviceAttached:621 com.android.server.usb.UsbHostManager.usbDeviceAdded:156 com.android.server.usb.UsbHostManager.monitorUsbHostBus:-2 com.android.server.usb.UsbHostManager.access$000:38 
+D/Vold    ( 2251): Volume udisk state changing 0 (No-Media) -> 2 (Pending)
+D/Vold    ( 2251): Volume udisk state changing 2 (Pending) -> 1 (Idle-Unmounted)
+D/MountService( 2631): volume state changed for /storage/udisk (removed -> unmounted)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_UNMOUNTED dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+I/Vold    ( 2251): /dev/block/vold/8:1 being considered for volume udisk
+D/Vold    ( 2251): Volume udisk state changing 1 (Idle-Unmounted) -> 3 (Checking)
+D/MountService( 2631): volume state changed for /storage/udisk (unmounted -> checking)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_CHECKING dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+I/fsck_msdos( 2251): ** /dev/block/vold/8:1
+I/ActivityManager( 2631): Start proc com.android.externalstorage for broadcast com.android.externalstorage/.MountReceiver: pid=3322 uid=10006 gids={50006, 1028, 1015, 1023}
+I/fsck_msdos( 2251): ** Phase 1 - Read and Compare FATs
+I/fsck_msdos( 2251): Attempting to allocate 3784 KB for FAT
+D/ExternalStorage( 3322): After updating volumes, found 1 active roots
+D/ExternalStorage( 3322): After updating volumes, found 1 active roots
+D/MediaScannerReceiver( 2796): action: android.intent.action.MEDIA_UNMOUNTED path: /mnt/media_rw/udisk
+I/fsck_msdos( 2251): Attempting to allocate 3784 KB for FAT
+I/fsck_msdos( 2251): ** Phase 2 - Check Cluster Chains
+I/fsck_msdos( 2251): ** Phase 3 - Checking Directories
+I/fsck_msdos( 2251): ** Phase 4 - Checking for Lost Files
+I/fsck_msdos( 2251): 43 files, 3593284 free (898321 clusters)
+I/Vold    ( 2251): Filesystem check completed OK
+W/Vold    ( 2251): The SD card is world-writable because the 'persist.sampling_profiler' system property is set to '1'.
+D/Vold    ( 2251): blkid identified as /dev/block/vold/8:1: LABEL="LOONGSON" UUID="E6B5-80CF" TYPE="vfat" 
+D/Vold    ( 2251): Volume udisk state changing 3 (Checking) -> 4 (Mounted)
+D/MountService( 2631): volume state changed for /storage/udisk (checking -> mounted)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_MOUNTED dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/ExternalStorage( 3322): After updating volumes, found 2 active roots
+E/VoldConnector( 2631): NDC Command {3 volume mount /storage/udisk} took too long (1050ms)
+D/MediaScannerReceiver( 2796): action: android.intent.action.MEDIA_MOUNTED path: /mnt/media_rw/udisk
+D/dalvikvm( 2796): GC_CONCURRENT freed 381K, 13% free 3032K/3476K, paused 2ms+2ms, total 17ms
+V/MediaScanner( 2796): pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@42141e68
+V/MediaScanner( 2796): /pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@42141e68
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/DirectVolume( 2251): Volume udisk /mnt/media_rw/udisk partition 8:1 removed
+D/Vold    ( 2251): Volume udisk state changing 4 (Mounted) -> 5 (Unmounting)
+D/MountService( 2631): volume state changed for /storage/udisk (mounted -> unmounted)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_UNMOUNTED dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/MountService( 2631): volume state changed for /storage/udisk (unmounted -> bad_removal)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_BAD_REMOVAL dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/ExternalStorage( 3322): After updating volumes, found 1 active roots
+D/MediaScannerReceiver( 2796): action: android.intent.action.MEDIA_UNMOUNTED path: /mnt/media_rw/udisk
+D/MediaProvider( 2796): deleting all entries for storage StorageVolume:
+D/MediaProvider( 2796):     mStorageId=131073 mPath=/storage/udisk mDescriptionId=17040680 
+D/MediaProvider( 2796):     mPrimary=false mRemovable=true mEmulated=false mMtpReserveSpace=0 
+D/MediaProvider( 2796):     mAllowMassStorage=false mMaxFileSize=0 mOwner=null mUuid=E6B5-80CF 
+D/MediaProvider( 2796):     mUserLabel=LOONGSON mState=bad_removal 
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_EJECT dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/Vold    ( 2251): /storage/udisk sucessfully unmounted
+I/Vold    ( 2251): /mnt/media_rw/udisk sucessfully unmounted
+I/Vold    ( 2251): /mnt/media_rw/udisk unmounted successfully
+D/Vold    ( 2251): Volume udisk state changing 5 (Unmounting) -> 1 (Idle-Unmounted)
+D/DirectVolume( 2251): Crisis averted
+D/DirectVolume( 2251): Volume udisk /mnt/media_rw/udisk disk 8:0 removed
+D/Vold    ( 2251): Volume udisk state changing 1 (Idle-Unmounted) -> 0 (No-Media)
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/ContextImpl( 2631): Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1145 com.android.server.usb.UsbSettingsManager.deviceAttached:621 com.android.server.usb.UsbHostManager.usbDeviceAdded:156 com.android.server.usb.UsbHostManager.monitorUsbHostBus:-2 com.android.server.usb.UsbHostManager.access$000:38 
+D/Vold    ( 2251): Volume udisk state changing 0 (No-Media) -> 2 (Pending)
+D/Vold    ( 2251): Volume udisk state changing 2 (Pending) -> 1 (Idle-Unmounted)
+I/Vold    ( 2251): /dev/block/vold/8:1 being considered for volume udisk
+D/Vold    ( 2251): Volume udisk state changing 1 (Idle-Unmounted) -> 3 (Checking)
+D/MountService( 2631): volume state changed for /storage/udisk (bad_removal -> checking)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_CHECKING dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+I/fsck_msdos( 2251): ** /dev/block/vold/8:1
+I/fsck_msdos( 2251): ** Phase 1 - Read and Compare FATs
+I/fsck_msdos( 2251): Attempting to allocate 3784 KB for FAT
+I/fsck_msdos( 2251): Attempting to allocate 3784 KB for FAT
+I/fsck_msdos( 2251): ** Phase 2 - Check Cluster Chains
+I/fsck_msdos( 2251): ** Phase 3 - Checking Directories
+I/fsck_msdos( 2251): ** Phase 4 - Checking for Lost Files
+I/fsck_msdos( 2251): 43 files, 3593284 free (898321 clusters)
+I/Vold    ( 2251): Filesystem check completed OK
+W/Vold    ( 2251): The SD card is world-writable because the 'persist.sampling_profiler' system property is set to '1'.
+D/Vold    ( 2251): blkid identified as /dev/block/vold/8:1: LABEL="LOONGSON" UUID="E6B5-80CF" TYPE="vfat" 
+D/Vold    ( 2251): Volume udisk state changing 3 (Checking) -> 4 (Mounted)
+D/MountService( 2631): volume state changed for /storage/udisk (checking -> mounted)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_MOUNTED dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+E/VoldConnector( 2631): NDC Command {4 volume mount /storage/udisk} took too long (1003ms)
+D/ExternalStorage( 3322): After updating volumes, found 2 active roots
+D/MediaScannerReceiver( 2796): action: android.intent.action.MEDIA_MOUNTED path: /mnt/media_rw/udisk
+D/dalvikvm( 2796): GC_CONCURRENT freed 476K, 16% free 2973K/3512K, paused 1ms+2ms, total 17ms
+V/MediaScanner( 2796): pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@42122638
+V/MediaScanner( 2796): /pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@42122638
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/DirectVolume( 2251): Volume udisk /mnt/media_rw/udisk partition 8:1 removed
+D/Vold    ( 2251): Volume udisk state changing 4 (Mounted) -> 5 (Unmounting)
+D/MountService( 2631): volume state changed for /storage/udisk (mounted -> unmounted)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_UNMOUNTED dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/ExternalStorage( 3322): After updating volumes, found 1 active roots
+D/MountService( 2631): volume state changed for /storage/udisk (unmounted -> bad_removal)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_BAD_REMOVAL dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_EJECT dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/MediaProvider( 2796): deleting all entries for storage StorageVolume:
+D/MediaProvider( 2796):     mStorageId=131073 mPath=/storage/udisk mDescriptionId=17040680 
+D/MediaProvider( 2796):     mPrimary=false mRemovable=true mEmulated=false mMtpReserveSpace=0 
+D/MediaProvider( 2796):     mAllowMassStorage=false mMaxFileSize=0 mOwner=null mUuid=E6B5-80CF 
+D/MediaProvider( 2796):     mUserLabel=LOONGSON mState=bad_removal 
+D/MediaScannerReceiver( 2796): action: android.intent.action.MEDIA_UNMOUNTED path: /mnt/media_rw/udisk
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+I/Vold    ( 2251): /storage/udisk sucessfully unmounted
+I/Vold    ( 2251): /mnt/media_rw/udisk sucessfully unmounted
+I/Vold    ( 2251): /mnt/media_rw/udisk unmounted successfully
+D/Vold    ( 2251): Volume udisk state changing 5 (Unmounting) -> 1 (Idle-Unmounted)
+D/DirectVolume( 2251): Crisis averted
+D/DirectVolume( 2251): Volume udisk /mnt/media_rw/udisk disk 8:0 removed
+D/Vold    ( 2251): Volume udisk state changing 1 (Idle-Unmounted) -> 0 (No-Media)
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+W/ContextImpl( 2631): Calling a method in the system process without a qualified user: android.app.ContextImpl.sendBroadcast:1145 com.android.server.usb.UsbSettingsManager.deviceAttached:621 com.android.server.usb.UsbHostManager.usbDeviceAdded:156 com.android.server.usb.UsbHostManager.monitorUsbHostBus:-2 com.android.server.usb.UsbHostManager.access$000:38 
+D/Vold    ( 2251): Volume udisk state changing 0 (No-Media) -> 1 (Idle-Unmounted)
+I/Vold    ( 2251): /dev/block/vold/8:0 being considered for volume udisk
+D/Vold    ( 2251): Volume udisk state changing 1 (Idle-Unmounted) -> 3 (Checking)
+D/MountService( 2631): volume state changed for /storage/udisk (bad_removal -> checking)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_CHECKING dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+I/fsck_msdos( 2251): ** /dev/block/vold/8:0
+I/fsck_msdos( 2251): ** Phase 1 - Read and Compare FATs
+I/fsck_msdos( 2251): Attempting to allocate 980 KB for FAT
+I/fsck_msdos( 2251): Attempting to allocate 980 KB for FAT
+I/fsck_msdos( 2251): ** Phase 2 - Check Cluster Chains
+I/fsck_msdos( 2251): ** Phase 3 - Checking Directories
+I/fsck_msdos( 2251): ** Phase 4 - Checking for Lost Files
+I/fsck_msdos( 2251): 3 files, 997048 free (249262 clusters)
+I/Vold    ( 2251): Filesystem check completed OK
+W/Vold    ( 2251): The SD card is world-writable because the 'persist.sampling_profiler' system property is set to '1'.
+D/Vold    ( 2251): blkid identified as /dev/block/vold/8:0: UUID="5275-9071" TYPE="vfat" 
+D/Vold    ( 2251): Volume udisk state changing 3 (Checking) -> 4 (Mounted)
+D/MountService( 2631): volume state changed for /storage/udisk (checking -> mounted)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_MOUNTED dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+E/VoldConnector( 2631): NDC Command {5 volume mount /storage/udisk} took too long (647ms)
+D/ExternalStorage( 3322): After updating volumes, found 2 active roots
+D/MediaScannerReceiver( 2796): action: android.intent.action.MEDIA_MOUNTED path: /mnt/media_rw/udisk
+D/dalvikvm( 2796): GC_CONCURRENT freed 427K, 16% free 2956K/3512K, paused 2ms+4ms, total 37ms
+V/MediaScanner( 2796): pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@420fca70
+V/MediaScanner( 2796): /pruneDeadThumbnailFiles... android.database.sqlite.SQLiteCursor@420fca70
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/DirectVolume( 2251): Volume udisk /mnt/media_rw/udisk disk 8:0 removed
+D/Vold    ( 2251): Volume udisk state changing 4 (Mounted) -> 0 (No-Media)
+D/MountService( 2631): volume state changed for /storage/udisk (mounted -> unmounted)
+D/MountService( 2631): sendStorageIntent Intent { act=unmounted dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/MountService( 2631): volume state changed for /storage/udisk (unmounted -> removed)
+D/MountService( 2631): sendStorageIntent Intent { act=android.intent.action.MEDIA_REMOVED dat=file:///storage/udisk (has extras) } to UserHandle{-1}
+D/dalvikvm( 2631): GC_CONCURRENT freed 477K, 10% free 5241K/5788K, paused 2ms+3ms, total 57ms
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID
+D/TouchD  ( 2320): Entering CheckVIDinlsusb()
+D/TouchD  ( 2320): Command busybox lsusb | grep 0eef output to /dev/null failed.
+D/TouchD  ( 2320): Entering CheckIniDevPID

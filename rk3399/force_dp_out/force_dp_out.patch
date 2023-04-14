@@ -1,0 +1,363 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator-edp.dts b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator-edp.dts
+index 92f50db..6fe86e1 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator-edp.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator-edp.dts
+@@ -46,6 +46,20 @@
+ #include "rk3399-android.dtsi"
+ #include "rk3399-vop-clk-set.dtsi"
+ 
++# define DP_TRAIN_VOLTAGE_SWING_LEVEL_0 (0 << 0)
++# define DP_TRAIN_VOLTAGE_SWING_LEVEL_1 (1 << 0)
++# define DP_TRAIN_VOLTAGE_SWING_LEVEL_2 (2 << 0)
++# define DP_TRAIN_VOLTAGE_SWING_LEVEL_3 (3 << 0)
++
++# define DP_TRAIN_PRE_EMPH_LEVEL_0              (0 << 3)
++# define DP_TRAIN_PRE_EMPH_LEVEL_1              (1 << 3)
++# define DP_TRAIN_PRE_EMPH_LEVEL_2              (2 << 3)
++# define DP_TRAIN_PRE_EMPH_LEVEL_3              (3 << 3)
++
++# define DP_LINK_BW_1_62                    0x06
++# define DP_LINK_BW_2_7                     0x0a
++# define DP_LINK_BW_5_4                     0x14 
++
+ / {
+ 	model = "Rockchip RK3399 Excavator Board edp (Android)";
+ 	compatible = "rockchip,android", "rockchip,rk3399-excavator-edp", "rockchip,rk3399";
+@@ -96,6 +110,53 @@
+ 			};
+ 		};
+ 	};
++	
++	
++  dp_panel: dp-panel {
++		compatible = "simple-panel";
++	
++		display-timings {
++			native-mode = <&timing1>;
++
++			timing1: timing1 {
++				clock-frequency = <148500000>;
++				hactive = <1920>;
++				vactive = <1080>;
++				hfront-porch = <280>;
++				hsync-len = <44>;
++				hback-porch = <88>;
++				vfront-porch = <45>;
++				vsync-len = <5>;
++				vback-porch = <4>;
++				hsync-active = <0>;
++				vsync-active = <0>;
++				de-active = <0>;
++				pixelclk-active = <0>;
++			};
++			timing2: timing2 {
++				clock-frequency = <74250000>;
++				hactive = <1280>;
++				vactive = <720>;
++				hfront-porch = <110>;
++				hsync-len = <40>;
++				hback-porch = <220>;
++				vfront-porch = <5>;
++				vsync-len = <5>;
++				vback-porch = <20>;
++				hsync-active = <0>;
++				vsync-active = <0>;
++				de-active = <0>;
++				pixelclk-active = <0>;
++			};
++		};
++
++		ports {
++			panel_in_dp: endpoint {
++				remote-endpoint = <&dp_out_panel>;
++			};
++		};
++	};
++
+ 
+ 	test-power {
+ 		status = "okay";
+@@ -151,8 +212,25 @@
+ 
+ &cdn_dp {
+ 	status = "okay";
++	force-out;
++  lanes = <2>;
++  rate =  <DP_LINK_BW_2_7>;
++  swing = <DP_TRAIN_VOLTAGE_SWING_LEVEL_1>;
++  pre-emphasis = <DP_TRAIN_PRE_EMPH_LEVEL_1>;
++	
+ 	extcon = <&fusb0>;
+ 	phys = <&tcphy0_dp>;
++	ports {
++		port@1 {
++			reg = <1>;
++
++			dp_out_panel: endpoint {
++				remote-endpoint = <&panel_in_dp>;
++			};
++		};
++	};
++
++	
+ };
+ 
+ &dp_in_vopb {
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index bfe6710..895fb40 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -2166,7 +2166,9 @@ static struct drm_display_mode *drm_mode_detailed(struct drm_device *dev,
+ 	mode->vsync_start = mode->vdisplay + vsync_offset;
+ 	mode->vsync_end = mode->vsync_start + vsync_pulse_width;
+ 	mode->vtotal = mode->vdisplay + vblank;
+-
++  printk("hactive = %d,h-backproch =%d,pluse_width = %d,hfront-porch = %d\n",hactive,hsync_offset,hsync_pulse_width,hblank);
++  printk("vactive = %d,v-backproch =%d,pluse_width = %d,vfront-porch = %d\n",vactive,vsync_offset,vsync_pulse_width,vblank);
++  printk("clock = %d\n",mode->clock);
+ 	/* Some EDIDs have bogus h/vtotal values */
+ 	if (mode->hsync_end > mode->htotal)
+ 		mode->htotal = mode->hsync_end + 1;
+diff --git a/drivers/gpu/drm/rockchip/Makefile b/drivers/gpu/drm/rockchip/Makefile
+index 1276a03..33d9331 100644
+--- a/drivers/gpu/drm/rockchip/Makefile
++++ b/drivers/gpu/drm/rockchip/Makefile
+@@ -8,7 +8,7 @@ rockchipdrm-$(CONFIG_DRM_FBDEV_EMULATION) += rockchip_drm_fbdev.o
+ 
+ obj-$(CONFIG_ROCKCHIP_DW_HDMI) += dw_hdmi-rockchip.o
+ obj-$(CONFIG_ROCKCHIP_CDN_DP) += cdn-dp.o
+-cdn-dp-objs := cdn-dp-core.o cdn-dp-reg.o cdn-dp-link-training.o
++cdn-dp-objs := cdn-dp-core.o cdn-dp-reg.o cdn-dp-link-training.o cdn_dp_force_out.o
+ obj-$(CONFIG_ROCKCHIP_DW_MIPI_DSI) += dw-mipi-dsi.o
+ obj-$(CONFIG_ROCKCHIP_ANALOGIX_DP) += analogix_dp-rockchip.o
+ obj-$(CONFIG_ROCKCHIP_INNO_HDMI) += inno_hdmi.o
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+index a321b28..75f19f40 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+@@ -398,6 +398,9 @@ static int cdn_dp_connector_get_modes(struct drm_connector *connector)
+ 	struct edid *edid;
+ 	int ret = 0;
+ 
++  if(dp->force_out)
++	  return drm_panel_get_modes(dp->panel);
++	
+ 	mutex_lock(&dp->lock);
+ 	edid = dp->edid;
+ 	if (edid) {
+@@ -807,12 +810,16 @@ static void cdn_dp_encoder_enable(struct drm_encoder *encoder)
+ 
+ 	mutex_lock(&dp->lock);
+ 
++  if (dp->panel)
++		drm_panel_prepare(dp->panel);
++
+ 	ret = cdn_dp_enable(dp);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dp->dev, "Failed to enable encoder %d\n",
+ 			      ret);
+ 		goto out;
+ 	}
++
+ 	if (!cdn_dp_check_link_status(dp)) {
+ 		ret = cdn_dp_train_link(dp);
+ 		if (ret) {
+@@ -820,6 +827,7 @@ static void cdn_dp_encoder_enable(struct drm_encoder *encoder)
+ 			goto out;
+ 		}
+ 	}
++	
+ 	if (dp->use_fw_training) {
+ 		ret = cdn_dp_set_video_status(dp, CONTROL_VIDEO_IDLE);
+ 		if (ret) {
+@@ -843,7 +851,8 @@ static void cdn_dp_encoder_enable(struct drm_encoder *encoder)
+ 			goto out;
+ 		}
+ 	}
+-
++  if (dp->panel)
++		drm_panel_enable(dp->panel);
+ out:
+ 	mutex_unlock(&dp->lock);
+ 	if (!ret) {
+@@ -862,6 +871,9 @@ static void cdn_dp_encoder_disable(struct drm_encoder *encoder)
+ 
+ 	mutex_lock(&dp->lock);
+ 
++  if (dp->panel)
++		drm_panel_disable(dp->panel);
++
+ 	if (dp->active) {
+ 		ret = cdn_dp_disable(dp);
+ 		if (ret) {
+@@ -887,6 +899,9 @@ static void cdn_dp_encoder_disable(struct drm_encoder *encoder)
+ 	 */
+ 	if (!dp->connected && cdn_dp_connected_port(dp))
+ 		schedule_work(&dp->event_work);
++	
++	if (dp->panel)
++		drm_panel_unprepare(dp->panel);
+ }
+ 
+ void cdn_dp_hdcp_atomic_enable(struct drm_connector *connector)
+@@ -1513,6 +1528,96 @@ static ssize_t cdn_dp_aux_transfer(struct drm_dp_aux *aux,
+ 	return ret;
+ }
+ 
++static int cdn_dp_attach_panel(struct device *dev, struct drm_connector *connector)
++{
++			     	
++  struct cdn_dp_device *dp = dev_get_drvdata(dev);
++	struct device_node *remote = NULL;
++	struct device_node  *port, *endpoint;
++	int ret,i;
++	
++  port = of_graph_get_port_by_id(dev->of_node, 1);
++	if (!port) {
++		dev_err(dev, "can't found port point, please init cdn dp panel port!\n");
++		return -EINVAL;
++	}
++
++	for_each_child_of_node(port, endpoint) {
++		remote = of_graph_get_remote_port_parent(endpoint);
++		if (!remote) {
++			dev_err(dev, "can't found panel node, please init!\n");
++			ret = -EINVAL;
++			goto err_put_port;
++		}
++		if (!of_device_is_available(remote)) {
++			of_node_put(remote);
++			remote = NULL;
++			continue;
++		}
++		break;
++	}
++	if (!remote) {
++		dev_err(dev, "can't found remote node, please init!\n");
++		ret = -EINVAL;
++		goto err_put_port;
++	}
++
++	dp->panel = of_drm_find_panel(remote);
++	if (!dp->panel) {
++		DRM_ERROR("failed to find panel node\n");
++		ret  = -EPROBE_DEFER;
++		goto err_put_remote;
++	}
++  if (dp->panel) {
++		connector = &dp->connector;	
++		
++	  if (of_property_read_bool(dev->of_node, "force-out"))
++		  dp->force_out = true;		
++		else 
++		  dp->force_out = false;
++		if (!of_property_read_u32(dev->of_node, "lanes", &i)) {
++		  dp->force_lanes = i;
++		} else {
++		  dp->force_lanes = 4;
++		}
++		if (!of_property_read_u32(dev->of_node, "rate", &i)) {
++		  dp->force_rate = i;
++		} else {
++		  dp->force_rate = DP_LINK_BW_2_7;
++		}
++		if (!of_property_read_u32(dev->of_node, "swing", &i)) {
++		  dp->force_swing = i;
++		} else {
++		  dp->force_swing = DP_TRAIN_VOLTAGE_SWING_LEVEL_1;
++		}
++		if (!of_property_read_u32(dev->of_node, "pre-emphasis", &i)) {
++		  dp->force_pre_emphasis = i;
++		} else {
++		  dp->force_pre_emphasis = DP_TRAIN_PRE_EMPH_LEVEL_1;
++		}
++		
++		ret = drm_panel_attach(dp->panel, connector);
++		if (ret < 0) {
++			DRM_ERROR("failed to attach panel\n");
++			goto err_free_connector;
++		}
++		dp->connector.port = dev->of_node;
++	} 
++	of_node_put(remote);
++	of_node_put(port);
++
++	return 0;
++
++err_free_connector:
++	drm_connector_cleanup(connector);
++err_put_remote:
++	of_node_put(remote);
++err_put_port:
++	of_node_put(port);
++
++	return ret;
++}
++
+ static int cdn_dp_bind(struct device *dev, struct device *master, void *data)
+ {
+ 	struct cdn_dp_device *dp = dev_get_drvdata(dev);
+@@ -1582,6 +1687,8 @@ static int cdn_dp_bind(struct device *dev, struct device *master, void *data)
+ 		DRM_ERROR("failed to attach connector and encoder\n");
+ 		goto err_free_connector;
+ 	}
++ 
++  cdn_dp_attach_panel(dev, connector);
+ 
+ 	cdn_dp_audio_codec_init(dp, dev);
+ 
+@@ -1627,6 +1734,7 @@ static void cdn_dp_unbind(struct device *dev, struct device *master, void *data)
+ #ifdef CONFIG_SWITCH
+ 	switch_dev_unregister(&dp->switchdev);
+ #endif
++	drm_panel_detach(dp->panel);
+ 
+ 	cancel_work_sync(&dp->event_work);
+ 	platform_device_unregister(dp->audio_pdev);
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.h b/drivers/gpu/drm/rockchip/cdn-dp-core.h
+index cd089c9..e5b3c60 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.h
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.h
+@@ -95,6 +95,7 @@ struct cdn_dp_hdcp_key_1x {
+ struct cdn_dp_device {
+ 	struct device *dev;
+ 	struct drm_device *drm_dev;
++	struct drm_panel *panel;
+ 	struct drm_connector connector;
+ 	struct drm_encoder encoder;
+ 	struct drm_display_mode mode;
+@@ -142,5 +143,10 @@ struct cdn_dp_device {
+ 	struct cdn_dp_hdcp_key_1x key;
+ 	struct delayed_work hdcp_event_work;
+ 	struct work_struct hdcp_prop_work;
++	u8 force_lanes;
++	u8 force_swing;
++	u8 force_pre_emphasis;
++	u8 force_rate;
++	bool force_out;
+ };
+ #endif  /* _CDN_DP_CORE_H */
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-reg.c b/drivers/gpu/drm/rockchip/cdn-dp-reg.c
+index 0650e38..e3ce0d4 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-reg.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-reg.c
+@@ -619,7 +619,8 @@ int cdn_dp_train_link(struct cdn_dp_device *dp)
+ 	 * link training instead of relying on firmware, if software training
+ 	 * fail, keep firmware training as a fallback if sw training fails.
+ 	 */
+-	ret = cdn_dp_software_train_link(dp);
++	//ret = cdn_dp_software_train_link(dp);
++	ret = cdn_dp_link_force_out(dp);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dp->dev,
+ 			"Failed to do software training %d\n", ret);
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-reg.h b/drivers/gpu/drm/rockchip/cdn-dp-reg.h
+index effc2ef..3445774 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-reg.h
++++ b/drivers/gpu/drm/rockchip/cdn-dp-reg.h
+@@ -576,4 +576,5 @@ int cdn_dp_hdcp_tx_status_req(struct cdn_dp_device *dp, uint16_t *tx_status);
+ int cdn_dp_hdcp_tx_is_receiver_id_valid_req(struct cdn_dp_device *dp);
+ int cdn_dp_hdcp_tx_respond_id_valid(struct cdn_dp_device *dp, bool valid);
+ int cdn_dp_software_train_link(struct cdn_dp_device *dp);
++int cdn_dp_link_force_out(struct cdn_dp_device *dp); 
+ #endif /* _CDN_DP_REG_H */

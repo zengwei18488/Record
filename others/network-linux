@@ -1,0 +1,492 @@
+3.1 网络配置命令
+Linux 系统中最常用的网络配置命令包括ifconfig、 route ，其中ifconfig 用来查看和配置网络接口（通常是网卡）信息，包括网络接口设备的IP 地址、掩码等；route 用来管理Linux 系统内核中的路由表，它最大的用途就是用来设定静态的路由表项，通常是在系统用ifconfig 配置网络接口后，用它来设定主机或者一网段的IP 地址应该通过什么接口发送等。
+
+3.1.1 ifconfig
+	ifconfig 的语法为:
+	ifconfig [-a] [-v] [-s] <interface> [[<AF>] <address>]
+	  [[-]broadcast [<address>]]
+	  [netmask <address>] 
+	  [up|down]
+其中 interface 为网卡名，address 为IP 地址，broadcast 表示设置广播地址，其后的address 为广播地址的IP ，netmask 表示设置子网掩码，其后的address 为子网掩码的IP， up、 down 设置当前网卡的状态，up表示启用当前网卡，down 表示关闭当前网卡。
+
+Ifconfig 的常用参数说明如下：
+-a 查看所有网卡状态
+-V 查看ifconfig 命令的版本信息
+-s 查看统计信息
+示例：
+1） 将第一块网卡的 IP 地址设置为192.168.0.1：
+	ifconfig eth0 192.168.0.1 （格式： ifconfig 网络设备名 IP 地址）
+2） 暂时关闭或启用网卡：
+	关闭第一块网卡： ifconfig eth0 down
+	启用第一块网卡 ifconfig eth0 up
+3 ）将第一块网卡的子网掩码设置为 255.255.255.0：
+	ifconfig eth0 netmask 255.255.255.0 （格式：ifconfig 网络设备名 netmask子网掩码）
+我们也可以同时设置 IP 地址和子网掩码：
+	ifconfig eth0 192.168.0.1 netmask 255.255.255.0
+4） 查看第一块网卡的状态：
+	ifconfig eth0
+如果要查看所有的网卡状态， 则直接使用不带参数的ifconfig 命令即可。
+ifconfig 输出的状态信息是十分有用的，下面我们就简单说明一下：
+有几个状态比较重要：
+UP/DOWN ：网卡是否启动了，如果是DOWN的话，那肯定无法用的；
+RX packets 中的errors 包的数量如果过大说明网卡在接收时有问题；
+TX packets 中的errors 包的数量如果过大说明网卡在发送时有问题；
+
+3.1.2 route
+route 命令的语法为:
+	route [-CFvnee]
+	route [-v] [-A family] add [-net|-host] target [netmask Nm] [gw Gw] [metric N] [mod] [reinstate] [[dev] If]
+	route [-v] [-A family] del [-net|-host] target [gw Gw] [netmask Nm] [metricN] [[dev] If]
+	route [-V] [--version] [-h] [--help]
+route 的常用参数说明如下:
+-v 使用冗余输出模式。
+-A family 指定特定的地址族 （例如”inet” “inet6″）。
+-n 使用数字显示的地址 例如202.38.75.75 而不是去解释域名。
+-e 使用与 netstat 相同的输出格式。
+-ee 参数会产生很长的输出， 包括内核路由表的几乎所有信息。
+-net 目标 （target） 是一个网段。
+-host 目标 （target） 是一个单独的主机。
+-F 显示内核 FIB 路由表结果可能被-e 和-ee 参数改变。
+-C 显示内核中路由缓存信息。
+del 删除一个路由表项。
+add 增加一个路由表项。
+Target 配置的目的网段或者主机 。可以是IP， 或者是网络或主机名。
+netmask Nm 用来指明要添加的路由表项的网络掩码。
+gw Gw 任何通往目的 （target） 的IP 分组都要通过这个网关。
+metric M 设置路由表中该项的尺度域（ metric field） 为M。
+示例：
+1） 添加一条路由表项，网段192.168.0.x 应该从接口”eth0″走
+	route add -net 192.168.0.0 netmask 255.255.255.0 dev eth0
+2 ）添加一条缺省路由
+	route add 0.0.0.0 gw 网关地址
+如果没有其他匹配的路由项， 就使用这个路由规则。
+3） 删除缺省路由
+	route del 0.0.0.0 gw 网关地址
+4） route 命令的输出结果示例说明
+输出的格式有以下几栏：
+
+Destination 目标网段或者主机
+Gateway 网关地址， 如果没有设置，则是”*”表示
+Genmask 网络掩码
+Flags 一些可能的标记如下：
+U （路由是活动的）
+H （目标是一个主机）
+G （使用网关 （gateway））
+R （reinstate route 动态路由产生的表项）
+D （dynamically installed by daemon or redirect）
+M （modified from routing daemon or redirect）
+! （reject route）
+Metric 路由距离。
+Ref 路由项引用次数。（ linux 内核中没有使用）
+Use 查找路由项的次数 。
+Iface 该路由表项对应的输出接口。
+
+3.2 网络操作命令
+Linux 系统常用的网络操作命令包括netstat、nslookup、 host finger 和ping。
+netstat 命令的功能是显示网络连接、路由表和网络接口信息,可以让用户得知目前都有哪些网络连接正在运作。nslookup 命令的功能是查询一台机器的IP地址和其对应的域名。它通常需要一台域名服务器来提供域名服务，如果用户已经设置好域名服务器，就可以用这个命令查看不同 主机的IP 地址对应的域名。host 命令可根据主机名查询主机的IP 地址或根据主机IP 地址查询主机名；finger 命令的功能是查询用户的信息，通常会显示系统中某个用户的用户名、主目录、停滞时间、登录时间、登录shell 等信息。ping 命令用于查看网络上的主机是否在工作。
+
+3.2.1 netstat
+netstat 命令的语法为:
+netstat [选项]
+netstat的常用参数说明如下:
+
+-a 显示所有 socket 包括正在监听的
+-c 每隔 1 秒就重新显示一遍直到用户中断它
+-i 显示所有网络接口的信息格式同 “ifconfig –e”
+-n 以网络 IP 地址代替名称显示出网络连接情形
+-r 显示核心路由表格式同 “route –e”
+-t 显示 TCP 协议的连接情况
+-u 显示 UDP 协议的连接情况
+-v 显示正在进行的工作
+
+示例：
+
+1 ）在本机使用 netstat 命令，其输出为如下
+	Active Internet connections (w/o servers)
+	Proto Recv-Q Send-Q Local Address Foreign Address State
+	tcp 0 256 10.153.89.66:ssh 10.153.21.168:1054 ESTABLISHED
+	tcp 0 0 10.153.89.66:ssh 10.153.21.166:1222 ESTABLISHED
+	tcp 0 0 10.153.89.66:1521 10.153.21.166:2625 ESTABLISHED
+	tcp 0 0 10.153.89.66:1521 10.153.21.166:2623 ESTABLISHED
+	Active UNIX domain sockets (w/o servers)
+	Proto RefCnt Flags Type State I-Node Path
+	unix 9 [ ] DGRAM 919 /dev/log
+	unix 2 [ ] STREAM CONNECTED 50246124
+	unix 3 [ ] STREAM CONNECTED 3914245
+	/tmp/.ICE-unix/dcop18694-1074144356
+	unix 3 [ ] STREAM CONNECTED 3914244
+	unix 3 [ ] STREAM CONNECTED 3914127 /tmp/.X11-unix/X0
+	…..
+
+3.2.2 nslookup
+nslookup 命令的功能是查询一台机器的IP 地址和其对应的域名。它通常需要一台域名服务器来提供域名服务。如果用户已经设置好域名服务器，就可以用这个命令查看不同主机的IP 地址对应的域名。命令的语法为：
+nslookup [IP 地址/域名]
+示例：
+
+在本机执行 nslookup 命令
+	Default Server: name.tlc.com.cn
+	Address: 192.168.1.99
+	>
+在符号“ >” 后面输入要查询的IP 地址或域名并回车即可。如果要退出该命令，输入exit 并回车即可。
+3.2.3 host命令
+
+host 命令的功能基本与nslookup 相。同命令的语法为：
+host [选项] [IP 地址/域名/主机名]
+host 的常用参数如下：
+-a 显示所查域名或IP 地址、域名或主机名的相关信息。
+示例：
+	[root]# host huawei-3com.com
+	huawei-3com.com has address 172.19.1.228
+3.2.4 finger
+
+finger 命令的功能是查询用户的信息，通常会显示系统中某个用户的用户名、主目录、停滞时间、登录时间、登录shell 等信息。如果要查询远程机上的用户信息，需要在用户名后面接“@主机名”采用[用户名@主机名]的格式，不过要查询的网络主机需要运行finger 守护进程。该命令的一般格式为：
+finger [选项] [使用者] [用户@主机]
+finger 的常用参数如下：
+-s 显示用户的注册名、实际姓名、终端名称、写状态、停滞时间、登录时间等信息。
+-l 除了用-s 选项显示的信息外，还显示用户主目录、登录shell、 邮件状态等信息，以及用户主目录下的.plan 、project 和.forward 文件的内容
+-p 除了不显示.plan 文件和.project 文件以外与-l 选项相同
+示例：
+
+1 ）显示用户 orcale 的信息
+	finger oracle
+其显示结果为
+	Login: oracle Name: (null)
+	Directory: /home/oracle Shell: /bin/bash
+	On since Fri Feb 6 16:26 (CST) on pts/1 from 10.153.21.166 33 seconds idle
+	On since Wed Feb 4 20:10 (CST) on pts/2 from 10.153.21.166 1 second idle
+	No mail.
+	No Plan.
+3.2.5 Ping 命令
+
+ping 命令用于查看网络上的主机是否在工作，它向该主机发送ICMPECHO_REQUEST 包。有时我们想从网络上的某台主机上下载文件，可是又不知道那台主机是否开着，就需要使用ping 命令查看。该命令的一般格式为：
+ping [选项] [主机名/IP地址]
+ping 的常用参数如下：
+
+-c 数目 在发送指定数目的包后停止
+-d 设定 SO_DEBUG 的选项
+-f 大量且快速地送网络封包给一台机器看它的回应
+-I 秒数 设定间隔几秒送一个网络封包给一台机器预设值是一秒送一次
+-l 次数 在指定次数内以最快的方式送封包数据到指定机器 （只有超级用户可以使用此选项）
+-q 不显示任何传送封包的信息只显示最后的结果
+-r 不经由网关而直接送封包到一台机器通常是查看本机的网络接口是否有问题
+-s 字节数 指定发送的数据字节数， 预设值是56， 加上8 字节的ICMP头，一共是64ICMP 数据字节
+3.3 常用网络配置文件介绍
+在 Linux 系统中，TCP/IP 网络是通过若干个文本文件进行配置的，需要编辑这些文件来完成联网工作。系统中重要的有关网络配置文件为：
+	/etc/sysconfig/network
+	/etc/hosts
+	/etc/services
+	/etc/host.conf
+	/etc/nsswitch.conf
+	/etc/resolv.conf
+	/etc/xinetd.conf
+	/etc/modules.conf
+	/etc/sysconfig/network-scripts/ifcfg-ethN
+
+接下来我们将对这些文件逐一讲述， 这些文件都可以在系统运行时进行修改，不用启动或者停止任何守护程序，更改会立刻生效( 除了/etc/sysconfig/network)。 另外，这些文件都支持由”#”开头的注释，每一个文件都有在UNIX手册页中的第5 部分中有一项，可以用man 命令来获取它们。
+3.3.1 /etc/sysconfig/network 网络设置
+
+该文件用来指定服务器上的网络配置信息， 包含了控制和网络有关的文件和守护程序的行为的参数。下面是一个例子文件：
+	NETWORKING=yes
+	HOSTNAME=machine1
+	GATEWAY=210.34.6.2
+	FORWARD_IPV4=yes
+	GATEWAYDEV=
+
+其中， NETWORK=yes/no 表示网络是否被配置；
+HOSTNAME=hostname hostname 表示服务器的主机名；
+GATEWAY=gw-ip gw-ip 表示网络网关的IP 地址；
+FORWARD_IPV4=yes/no 是否开启IP 转发功能；
+GAREWAYDEV=gw-dev gw-dw 表示网关的设备名，如：eth0 等；
+3.3.2 /etc/hosts IP 地址和主机名的映射
+/etc/hosts 中包含了IP 地址和主机名之间的映射还，包括主机名的别名IP，地址的设计使计算机容易识别，但对于人却很难记住它们，为了解决这个问题，创建了/etc/hosts 这个文件。下面是一个例子文件：
+	127.0.0.1 machine1 localhost.localdomain localhost
+	192.168.1.100 machine7
+	192.168.1.101 otherpc otheralias
+
+在这个例子中 ，本机名是machine1， otherpc 还有别名otheralias ，它可以指向otheralias。 一旦配置完机器的网络配置文件，应该重新启动网络以使修改生效，使用下面的命令来重新启动网络：
+	service network restart
+
+/etc/hosts 文件通常含有主机名、localhost 和系统管理员经常使用的系统别名，有时候telnet 到Linux 机器要等待很长时间，可以通过在”/etc/hosts”加入客户的机器的IP 地址和主机名的匹配项，就可以减少登录等待时间。在没有域名服务器情况下，系统上的所有网络程序都通过查询该文件来解析对应于某个主机名的IP 地址，否则，其他的主机名通常使用DNS 来解决，DNS 客户部分的配置在文件/etc/resolv.conf 中。
+3.3.3 /etc/services
+
+/etc/services 中包含了服务名和端口号之间的映射,不少的系统程序要使用这个文件,下面是RedHat 安装时缺省的/etc/services 中的前几行:
+	tcpmux 1/tcp # TCP port service multiplexer
+	echo 7/tcp
+	echo 7/udp
+	discard 9/tcp sink null
+	discard 9/udp sink null
+	systat 11/tcp users
+最左边一列是主机服务名 ,中间一列是端口号，“/ ”后面是端口类型， 可以是TCP 也可以是UDP 。任何后面的列都是前面服务的别名。在这个文件中也存在着别名，它们出现在端口号后面，在上述例子中sink 和null 都是discard服务的别名。
+3.3.4 /etc/host.conf 配置名字解析器
+
+有两个文件声明系统到哪里寻找名字信息来配置 UNIX名字解析器的库。文件/etc/host.conf 由版本5 的libc 库所使用，而/etc/nsswitch.conf 由版本6 使用(glibc )。 问题在于一些程序使用其中一个，而一些使用另一个，所以将两个文件都配置正确是必要的。
+
+/etc/host.conf 文件指定如何解析主机名，Linux 通过解析器库来获得主机名对应的IP。 地址下面是RedHat 安装后缺省的”/etc/host.conf”内容：
+	order hosts bind
+	multi on
+
+“order ” 指定主机名查询顺序，其参数为用逗号隔开的查找方法，支持的查找方法为bind、 hosts 和nis ，分别代表DNS 、/etc/hosts 和NIS， 这里规定先查询”/etc/hosts”文件然后再使用DNS 来解析域名。
+
+“trim” 表明当通过DNS 进行地址到主机名的转换时，域名将从主机名中被裁剪掉，trim 可以被多个域包含多次，对/etc/hosts 和NIS 查询方法不起作用，注意在/etc/hosts 和NIS 表中主机名是被适当地(有或没有全域名)列出的。
+
+“multi” 指定是否”/etc/hosts”文件中指定的主机可以有多个地址，值为on 表示允许，拥有多个IP 地址的主机一般称为具有多个网络界面。
+
+“nospoof ” 指是否允许对该服务器进行IP 地址欺骗，值为on 表示不允许。IP欺骗是一种攻击系统安全的手段，通过把IP 地址伪装成别的计算机，来取得其它计算机的信任。
+
+“alert” 当nospoof 指令为on 时，alert 控制欺骗的企图是否用syslog 工具进行记录，值为on 表示使用，缺省值为off。
+
+“rccorder” 如果被设置为on ，所有的查询将被重新排序，所以在同一子网中的主机将首选被返，回缺省值为off。
+3.3.5 /etc/nsswitch.conf 配置名字解析器
+
+/etc/nsswitch.conf 文件是由Sun 公司开发并用于管理系统中多个配置文件查找的顺序，它比/etc/host.conf 文件提供了更多的功能。/etc/nsswitch.conf 中的每一行或者是注释(以#号开头)或者是一个关键字后跟冒号和一系列要试用的有顺序的方法。每一个关键字是在/etc/目录可以被/etc /nsswitch.conf 控制的/etc 文件的名字。下面是可以被包含的关键字：
+
+aliases 邮件别名；
+
+passwd 系统用户；
+
+group 用户组；
+
+shadow 隐蔽口令；
+
+hosts 主机名和I P 地址；
+
+networks 网络名和号；
+
+protocols 网络协议；
+
+services 端口号和服务名称；
+
+ethers 以太网号；
+
+rpc 远程进程调用的名称和号；
+
+netgroup 网内组；
+3.3.6 /etc/resolv.conf 配置DNS 客户
+
+文件/etc/resolv.conf 配置DNS 客户，它包含了主机的域名搜索顺序和DNS服务器的地址，每一行应包含一个关键字和一个或多个的由空格隔开的参数。
+
+下面是一个例子文件：
+	nameserver 192.168.0.36
+	nameserver 192.168.0.37
+	search huawei-3com.com
+
+合法的参数及其意义如下：
+
+nameserver 表明DNS 服务器的IP 地址，可以有很多行的nameserver ，每一个带一个I P 地址。在查询时就按nameserver 在本文件中的顺序进行，且只有当第一个nameserver 没有反应时才查询下面的nameserver.
+
+domain 声明主机的域名。很多程序用到它，如邮件系统；当为没有域名的主机进行DNS 查询时，也要用到。如果没有域名，主机名将被使，用删除所有在第一个点( . )前面的内容。
+
+search 它的多个参数指明域名查询顺序。当要查询没有域名的主机，主机将在由search 声明的域中分别查找。domain 和search 不能共存；如果同时存在，后面出现的将会被使用。
+
+sortlist 允许将得到域名结果进行特定的排序。它的参数为网络/掩码对，允许任意的排列顺序。Red Hat 中没有提供缺省的/ e t c / r e s o l v. c o n f 文件，它的内容是根据在安装时给出的选项动态创建的。
+3.3.7 /etc/xinetd.conf
+
+redhat 7.1 及以后版本计和以往的版本有一个明显的区别,就是用xinetd.conf代替原来的inetd.conf ,并且直接使用了firewall 服务.xinetd(eXtended InterNET services daemon)对inetd 功能进行了扩展,xinetd 的默认配置文件是/etc/xinetd.conf ,它看起来尽管和老版本的/etc/inetd.conf 完全不同,其实只是以一个脚本的形式将inetd 中每一行指定的服务扩展为一个/etc/xinetd.d/下的配置文件,其格式为:
+	service service-name
+	 {
+	disabled = yes/no; //是否禁用
+	socket_type = xxx; //TCP/IP socket type,such as stream,dgram,raw,….
+	protocol = xxx; //服务使用的协议
+	server = xxx; //服务daemon 的完整路径
+	server_args = xxx; //服务的参数
+	port = xxx; //指定服务的端口号
+	wait = xxx; //是否阻塞服务即单线程或多线程
+	user = xxx; //服务进程的uid
+	group = xxx; //gid
+	REUSE = xxx; //可重用标志
+	……
+	}
+
+示例：
+
+1 ）配置ftp 服务
+
+在/etc/xinetd.d 目录下，编辑wu-ftpd
+	# default: on
+	# description: The wu-ftpd FTP server serves FTP connections. It uses
+	# normal, unencrypted usernames and passwords for authentication.
+	service ftp
+	{
+	disable = no
+	socket_type = stream
+	wait = no
+	user = root
+	server = /usr/sbin/in.ftpd
+	server_args = -l -a
+	log_on_success += DURATION
+	nice = 10}
+
+2 ）配置telnet 服务
+
+在/etc/xinetd.d 目录下，编辑telnet
+	# default: on
+	 # description: The telnet server serves telnet sessions; it uses
+	 # unencrypted username/password pairs for authentication.
+	 service telnet
+	 {
+	 disable = no
+	 flags = REUSE
+	 socket_type = stream
+	 wait = no
+	 user = root
+	 server = /usr/sbin/in.telnetd
+	 log_on_failure += USERID
+	 }
+
+配置完成后 重新启动服务
+	#/etc/rc.d/init.d/xinetd restart
+3.3.8 /etc/modules.conf 文件
+
+该配置文件定义了各种需要在启动时加载的模块的参数信息 ,文件格式如下:
+	alias eth0 tg3
+	alias eth1 3c905
+3.3.9 /etc/sysconfig/network-scripts/ifcfg-ethN 文件
+
+系统网络设备的配置文件保存在”/etc/sysconfig/network-scripts”目录下，ifcfg-eth0 包含第一块网卡的配置信息，ifcfg-eth1 包含第二块网卡的配置信息。
+
+下面是“/etc/sysconfig/network-scripts/ifcfg-eth0”文件的示例：
+	DEVICE=eth0
+	ONBOOT=yes
+	BOOTPROTO=static
+	IPADDR=192.168.0.66
+	NETMASK=255.255.255.0
+	GATEWAY=192.168.0.65
+
+若希望手工修改网络地址或在新的接口上增加新的网络界面，可以通过修改对应的文件（ifcfg-ethN） 或创建新的文件来实现。
+3.4 常用网络操作方法
+
+Linux 提供了一组强有力的网络命令来为用户服务，这些工具能够帮助用户登录到远程计算机上、传输文件和执行远程命令等。本节介绍下列几个常用的有关网络操作的命令：
+
+ftp 传输文件
+
+telnet 登录到远程计算机上
+
+r – 使用各种远程命令。
+3.4.1 ftp 远程文件传输
+
+ftp 命令是标准的文件传输协议的用户接口，ftp 是在TCP/IP 网络上的计算机之间传输文件的简单有效的方法。它允许用户传输ASCII 文件和二进制文件。在ftp 会话过程中，用户可以通过使用ftp 客户程序连接到另一台计算机上。从此，用户可以在目录中上下移动、列出目录内容、把文件从远程机拷贝到本地机上、把文件从本地机传输到远程系统中。需要注 意的是，如果用户没有那个文件的存取权限，就不能从远程系统中获得文件或向远程系统传输文件为。了使用ftp 来传输文件，用户必须知道远程计算机上的合法用户名和口令，这个用户名/口令的组合用来确认ftp 会话，并用来确定用户对要传输的文件可以进行什么样的访问。
+
+ftp 命令的一般格式如下：
+	$ ftp 主机名/IP
+	1
+	如果没有指定主机名， ftp 将给出提示符，等待用户输入命令：
+	$ ftp	 
+	ftp >
+	 
+	此时在 ftp>提示符后面输入open 命令加主机名或IP 地址，将试图连接指定的主机。不管使用哪一种方法，如果连接成功，需要在远程机上登录，用户如果在远程机上有帐号，就可以通过ftp 使用这一帐号并需要提供口令。在远程机上的用户帐号的读写权限决定该用户在远程机上能下载什么文件和将上载文件放到哪个目录中。
+	一旦用户使用 ftp 在远程站点上登录成功，将得到“ftp>” 提示符。现在可以自由使用ftp 提供的命令，可以用 help 命令取得可供使用的命令清单，也可以在 help 命令后面指定具体的命令名称，获得这条命令的说明。
+
+	最常用的命令有：
+	ls 列出远程机的当前目录
+	cd 在远程机上改变工作目录
+	lcd 在本地机上改变工作目录
+	ascii 设置文件传输方式为 ASCII 模式，默认情况下 ，ftp 按ASCII模式传输文件， 用户也可以指定其他模式，ascii 和brinary 命令的功能是设置传输的模式，用ASCII 模式传输文件对纯文本是非常好的 ，但为避免对二进制文件的破坏，用户可以以二进制模式传输文件。
+	binary 设置文件传输方式为二进制模式
+	close 终止当前的 ftp 会话
+	hash 每次传输完数据缓冲区中的数据后就显示一个#号
+	get mget 从远程机传送指定文件到本地机 get 命令的一般格式为
+	get 文件名
+	mget 命令一次获取多个远程文件mget 命令的一般格式为
+	mget 文件名列表
+	使用用空格分隔的或带通配符的文件名列表来指定要获取的文件，对其中的每个文件都要求用户确认是否传送。
+	put （mput） 从本地机传送指定文件到远程机， put 命令的一般格式为：
+	put 文件名
+	mput 命令一次发送多个本地文件mput 命令的一般格式为：
+	mput 文件名列表
+	使用用空格分隔的或带通配符的文件名列表来指定要发送的文件，对其中的每个文件都要求用户确认是否发送。
+	open 连接远程 ftp 站点
+	quit 断开与远程机的连接并退出 ftp
+	? 显示本地帮助信息
+	! 转到 Shell 中
+	示例：
+	 使用 ftp 传输文件过程如下
+	1
+	[root@localhost root]# ftp 192.168.1.66
+	 Connected to 192.168.1.66 (192.168.1.66).
+	 220 localhost.localdomain FTP server (Version wu-2.6.2-5) ready.
+	 Name (192.168.1.66:root): test
+	 331 Password required for test.
+	 Password:
+	 230 User oracle logged in. Access restrictions apply
+	 Remote system type is UNIX.
+	 Using binary mode to transfer files.
+	 ftp> ls
+	 227 Entering Passive Mode (192.168.1.66,228,168)
+	 150 Opening ASCII mode data connection for directory listing.
+	 total 312
+	 -rw-r–r– 1 root root 1215 Feb 4 13:49 button1.jpg
+	 -rw-r–r– 1 root root 1133 Feb 4 13:49 button2.jpg
+	 -rw-r–r– 1 root root 1435 Feb 4 13:46 index.html
+	 226 Transfer complete.
+	 ftp> lcd
+	 Local directory now /root
+	 ftp> lcd tmp
+	 Local directory now /root/tmp
+	 ftp> bin
+	 200 Type set to I.
+	 ftp> mget *.jpg
+	 mget button1.jpg? y
+	 227 Entering Passive Mode (10,153,89,66,187,198)
+	 150 Opening BINARY mode data connection for button1.jpg (1215 bytes).
+	 226 Transfer complete.
+	 1215 bytes received in 0.0119 secs (1e+02 Kbytes/sec)
+	 mget button2.jpg? y
+	 227 Entering Passive Mode (10,153,89,66,243,218)
+	 150 Opening BINARY mode data connection for button2.jpg (1133 bytes).
+	 226 Transfer complete.
+	 1133 bytes received in 0.00223 secs (5e+02 Kbytes/sec)
+	 ftp> quit
+	 221-You have transferred 2348 bytes in 2 files.
+	 221-Total traffic for this session was 3315 bytes in 3 transfers.
+	 221-Thank you for using the FTP service on localhost.localdomain.
+	221 Goodbye.
+3.4.2 telnet
+
+用户使用 telnet 命令进行远程登录该。命令允许用户使用telnet 协议在远程计算机之间进行通信，用户可以通过网络在远程计算机上登录，就像登录到本地机上执行命令一样。为了通过telnet 登录到远程计算机上，必须知道远程机上的合法用户名和口令。虽然有些系统确实为远程用户提供登录功能，但出于对安全的考虑，要限制来宾的操作权限，因此， 这种情况下能使用的功能是很少的，当允许远程用户登录时，系统通常把这些用户放在一个受限制的shell 中，以防系统被怀有恶意的或不小心的用户破坏。用户还可以使用telnet从远程站点登录到自己的计算机上，检查电子邮件、编辑文件和运行程序，就像在本 地登录一样。但是，用户只能使用基于终端的环境而不是X Wndows环境，telnet 只为普通终端提供终端仿真，而不支持 X Wndow等图形环境。
+telnet 命令的一般形式为：
+1
+	telnet 主机名/IP
+
+其中“主机名/IP” 是要连接的远程机的主机名或IP 地址。如果这一命令执行成功，将从远程机上得到login： 提示符。
+
+使用 telnet 命令登录的过程如下：
+
+$ telnet 主机名/IP
+
+一旦 telnet 成功地连接到远程系统上，就显示登录信息并提示用户输人用户名和口令。如果用户名和口令输入正确，就能成功登录并在远程系统上工作。
+
+在 telnet 提示符后面可以输入很多命令，用来控制telnet 会话过程，在telnet联机帮助手册中对这些命令有详细的说明。
+
+示例：
+	# telnet 192.168.1.66
+	 Trying 192.168.1.66…
+	 Connected to 192.168.1.66.
+	 Escape character is ‘^]’.
+	 Red Hat Linux release 7.3 (Valhalla)
+	 Kernel 2.4.18-3 on an i686
+	 login: test
+	 Password:
+	 Last login: Mon Feb 9 15:03:56 from 10.153.21.166
+	[test@localhost test]$
+3.4.3 r-系列命令
+
+除 ftp 和telnet 以外，还可以使用r-系列命令访问远程计算机和在网络上交换文件。使用r-系列命令需要特别注意因为如果用户不小心，就会造成严重的安全漏洞。用户发出一 个r-系列命令后，远程系统检查名为/etc/hosts.equiv的文件，以查看用户的主机是否列在这个文件中，如果它没有找到用户的主机，就检查远 程机上同名用户的主目录中名为，rhosts 的文件，看是否包括该
+用户的主机。如果该用户的主机包括在这两个文件中的任何一个之中，该用户执行r-系列命令就不用提供口令。
+
+rlogin 命令
+
+rlogin 是“remote login” （远程登录）的缩写。该命令与telnet 命令很相似，允许用户启动远程系统上的交互命令会话。rlogin 的一般格式是：
+	rlogin [ -8EKLdx ] [ -e char ] [-k realm ] [ - l username ] host
+
+一般最常用的格式是：
+	rlogin host
+
+rsh 命令
+
+rsh 是“remote shell”（ 远程 shell） 的缩写。该命令在指定的远程主机上启动一个shell 并执行用户在rsh 命令行中指定的命令。如果用户没有给出要执行的命令，rsh 就用rlogin 命令使用户登录到远程机上。rsh 命令的一般格式是：
+	rsh [-Kdnx] [-k realm] [-l username] host [command]
+
+一般常用的格式是：
+	rsh host [command ]
+
+command 可以是从shell 提示符下键人的任何Linux 命令。

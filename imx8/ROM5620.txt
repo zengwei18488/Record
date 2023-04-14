@@ -1,0 +1,81 @@
+
+sudo tar -xvJf gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu.tar.xz -C /opt
+sudo tar -xvJf gcc-arm-8.3-2019.03-x86_64-aarch64-elf.tar.xz -C /opt
+
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin/aarch64-linux-gnu-
+
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-elf/bin/aarch64-elf-
+
+source build/envsetup.sh
+lunch rom5620_a1-userdebug
+
+lunch mek_8q-userdebug
+
+# Build U-Boot/kernel with imx-make.sh first, but not to build Android images.
+$ ./imx-make.sh bootloader kernel -j12 2>&1 | tee build-log.txt
+
+# Start the process of build Android images with "make" function.
+$ make -j12 2>&1 | tee -a build-log.txt
+
+make mrproper 清除旧目标文件和配置
+
+arch/arm64/configs/rom5620_android_defconfig
+drivers/power/supply/Makefile
+drivers/video/fbdev/mxc/Makefile
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+sudo ./uuu_imx_android_flash.sh -f imx8qxp -a -e -super -t emmc -u c0
+
+sudo ./fsl-sdcard-partition.sh -f imx8qxp -super -u c0 /dev/sdc
+
+sudo dd if=u-boot-imx8qxp-c0.imx of=/dev/sdc bs=1k seek=32 conv=fsync
+
+sudo dd if=<image name>.wic of=/dev/sdc bs=1M && sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+git init
+git checkout -b q10.0.0_2.6.0
+git add .
+git commit -m "Initial commit"
+git remote add origin https://gitlab.edgecenter.io/nxp/android-bsp.git
+git push --set-upstream origin q10.0.0_2.6.0
+git config http.postBuffer 1024000000
+token(hNqA_YWQKGXYSma4W9kZ)
+
+DIFF出kernel_imx_yocto and uboot_imx_yocto
+
+1、获取源码
+git clone https://github.com/ADVANTECH-Corp/linux-imx.git -b adv_5.4.70_2.3.0
+git clone https://github.com/ADVANTECH-Corp/uboot-imx.git -b adv_v2020.04_5.4.70_2.3.0
+
+
+2、通过提交记录找到advantech最早的一次提交commit，checkout至此（作为基础版本与android进行对比）
+    查找commit的comment内容，使用grep参数：
+      git log --grep=comment注释的关键词
+    查找用户，使用author参数
+      git log --author=用户名关键字
+
+github查找对应commit id，搜索栏hash:e42dee801ec55bc40347cbb98f13bfb5899f0368；
+https://github.com/ADVANTECH-Corp/uboot-imx/commit/e42dee801ec55bc40347cbb98f13bfb5899f0368 
+or https://github.com/ADVANTECH-Corp/uboot-imx/tree/e42dee801ec55bc40347cbb98f13bfb5899f0368
+
+uboot-imx:e42dee801ec55bc40347cbb98f13bfb5899f0368
+linux-imx:4f2631b022d843c1f2a5d34eae2fd98927a1a6c7
+
+git checkout e42dee801ec55bc40347cbb98f13bfb5899f0368
+git checkout 4f2631b022d843c1f2a5d34eae2fd98927a1a6c7
+
+3、产生patch
+git diff uboot-imx/ uboot-imx-ORG-bak/ > uboot.patch
+git diff linux-imx/ kernel_imx-ORG-bak/ > kernel.patch
+
+sed -i "s/\/uboot-imx//g" uboot.patch
+sed -i "s/\/uboot-imx-ORG-bak//g" uboot.patch
+sed -i "s/\/linux-imx//g" kernel.patch
+sed -i "s/\/kernel_imx-ORG-bak//g" kernel.patch
+
+patch -p1 --follow-symlinks < ../../../Android-Patch/kernel.patch
+回滚
+patch -R -p1 < ../../../Android-Patch/kernel.patch
+
+

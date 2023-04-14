@@ -1,0 +1,55 @@
+修改init.rc,增加开机自动执行脚本
+service startcount /system/etc/start.sh
+    class main
+    user root
+    group root
+    oneshot
+
+android_install_folder/system/core/rootdir/init.rc 
+
+直接找到源码android/out/target/product/xxxx/root文件夹下，xxxx代表你的产品名称
+修改过后，重新编译源码，打包，烧录即可！   boot.img
+
+#!/system/bin/sh
+i=`cat /data/count`
+let "i = $i + 1"
+echo $i >/data/count
+echo $i
+
+
+make CC="arm-none-linux-gnueabi-gcc -static"
+
+Usage: service [-h|-?]
+       service list
+       service check SERVICE
+       service call SERVICE CODE [i32 INT | s16 STR] ...
+Options:
+   i32: Write the integer INT into the send parcel.
+   s16: Write the UTF-16 string STR into the send parcel.
+
+
+adb shell service list
+service call phone 1 (frameworks/base/telephony/java/com/android/internal/telephony/ITelephony.aidl)
+frameworks/base/telephony/java/com/android/internal/telephony/ISms.aidl
+service call SERVICE CODE 
+adb shell service call window 2013 i32 1 (android.view.IWindowManager)
+
+
+富士康3G卡
+apn:
+unim2m.gzm2mapn
+
+NetWork:
+dhcpcd
+dhcpcd eth1
+busybox ifconfig eth1 up
+
+ethtool
+./configure --host=arm-none-linux-gnueabi
+-static修改Makefile
+
+
+rfkill unblock all
+busybox ifconfig wlan0 up
+iwconfig wlan0 essid "AP_NAME"
+dhcpcd wlan0 

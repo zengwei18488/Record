@@ -1,0 +1,12 @@
+AW-NB136NF
+
+android/device/fsl/imx6/rsb_6410.mk
+android/device/fsl/rsb_6410/BoardConfig.mk
+android/device/fsl/rsb_6410/init.rc
+android/kernel_imx/drivers/net/wireless/bcmdhd/
+android/kernel_imx/arch/arm/mach-mx6/board-mx6q_advantech.c
+android/kernel_imx/arch/arm/configs/imx6_6410_android_kk44_defconfig
+android/kernel_imx/arch/arm/mach-mx6/board-mx6q_6410.h
+android/kernel_imx/arch/arm/plat-mxc/include/mach/iomux-mx6q.h
+android/hardware/broadcom/libbt/
+

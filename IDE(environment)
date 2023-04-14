@@ -1,0 +1,174 @@
+android源码查看
+
+https://blog.csdn.net/qq_37207639/article/details/103976913
+http://androidxref.com，aospxref.com
+GrepCode、Android SDK Search，一个是 https://www.androidos.net.cn/ 还有一个是 http://aosp.opersys.com/
+
+Android 官方发布源码查看工具：Android Code Search，地址为：https://cs.android.com/
+
+Intellij IDEA
+
+向日葵  xhost +
+
+创建网络盘符到本地
+sshfs zengwei@172.21.170.48:/home/yixuan/advantech/GF-06 ~/work/GF-06
+sshfs zengwei@172.21.170.48:/home/zengwei/work/GF-06 ~/work/GF-06
+fusermount -u rk3288
+fusermount -u yocto2.1-uboot
+
+sshfs zengwei@172.21.170.48:/home/zengwei/temp ~/work/Temp/temp
+
+sshfs yanwei@172.21.170.48:/home/yixuan/advantech/JD ~/work/JD
+
+sshfs yanwei@172.21.170.48:/home/yanwei/rk3288-linux/git-kernel/kernel ~/work/debian9
+
+sshfs yanwei@172.21.170.48:/home/yanwei/link/rk3399-linux ~/work/rk3399-linux
+
+sshfs yanwei@172.21.170.48:/home/yanwei/link/rk3399-android10/kernel kernel/
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3288 ~/work/rk3288
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3399 /media/store/work/rk3399
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3568 /media/store/work/rk3568
+
+sshfs aka@172.21.171.106:/home/aka/work/code/rk356x/debian ~/work/rk356x/debian
+
+sshfs aka@172.21.171.106:/home/aka/work/code/rk3399 ~/work/rk3399
+
+sshfs aka@172.21.171.106:/home/aka/work/code/rk3288/debian/rk3288_rsb4680 ~/work/rk3288/debian
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/EBC-GF66 ~/work/EBC-GF66
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3288-android8.1 ~/work/rk3288-android8.1
+
+sshfs zengwei@172.21.170.48:/home/zengwei/workspace ~/work/workspace
+
+sshfs jinmin@172.21.170.48:/home/jinmin/work/gf06/new/uboot-imx6 ~/work/yocto2.1-uboot
+
+sshfs weijie@172.21.170.48:/home/weijie ~/weijie
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/R200 ~/work/R200
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rsb6410-5 ~/work/rsb6410-5
+
+sshfs zengwei@172.21.170.48:/home/yixuan/advantech/GF-16 ~/work/GF-16/GF-16
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/GF-16 ~/work/GF-16-AMPAK
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/AM335x ~/work/AM335x
+
+sshfs zhengguang@172.21.170.48:/home/zhengguang/svn_project/RSB6410 ~/work/RSB-6410-Linux
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/yocto1.7 ~/work/yocto1.7
+
+sshfs jinlong_tan@172.21.170.48:/home/jinlong_tan/yocto_2.0 ~/work/yocto2.0
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/GF06-Haier ~/work/GF06-Haier
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/android-6.0.1_2.1.0 ~/work/android-6.0.1_2.1.0
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/android6.0-github ~/work/android6.0-github
+
+sshfs zengwei@172.21.170.48:/home/zengwei/rsb6410_a2_android6.0_v6007 ~/work/rsb6410_a2_android6.0_v6007 
+
+sshfs zengwei@172.21.170.48:/home/zengwei/rsb6410_a2_yocto2.1_v8280 ~/work/rsb6410_a2_yocto2.1_v8280
+
+172.21.170.48:/home/public/sambaShare/FTP/adv
+FTP
+11111111
+
+P@ssw0rd
+
+1.     安裝openvpn
+apt-get install openvpn
+
+2.     將附件檔案放到 /etc/openvpn 目錄下, 並改副檔名為 .conf 
+mv advrisc.ovpn advrisc.conf
+cp advrisc.conf /etc/openvpn/
+
+3.     啟動服務 (指令依Ubunut版本而不同)
+sudo systemctl start openvpn@advrisc-vpn
+或是
+sudo /etc/init.d/openvpn start advrisc-vpn
+
+接著會詢問帳號/密碼, 請用跟FTP同樣的帳密
+ftpuser
+P@ssw0rd
+
+4.     最後, 檢查是否有得到tun0的IP address
+$ ifconfig
+tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
+          inet addr:10.8.0.6  P-t-P:10.8.0.5  Mask:255.255.255.255
+          UP POINTOPOINT RUNNING NOARP MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:100
+          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+
+officialbuild/dailybuild
+\\172.22.15.111\share\RISC_SW\
+
+cat /etc/issue | echo `xargs` Yocto > /etc/issue
+
+svn的使用
+
+svn log -r 1088 -v   显示1088版本的详细信息
+svn update
+svn log "path"
+
+svn -R revert  ＊ 
+
+    svn import --no-ignore . file:///home/user/svn/LinphoneSVN  
+
+sudo apt-get install rapidsvn   图形工具
+在 Linux 下，点击菜单栏 ==> ‘View/Preferences…’ 来设置参数，在 ‘Programs’ 页
+用 Scintilla/SciTE 作为编辑器 ( Editor )，用 nautilus 来作为浏览工具 ( explorer )，
+diff 和 merge 工具都可以选用 kdiff3，这些程序默认都是安装在 /usr/bin 目录下的
+
+
+编译环境问题
+1、Target java module does not define any source or resource files
+删除bin\目录。导入eclipse导致
+
+2、"mkimage" command not found - U-Boot images will not be built
+make[2]: *** [arch/arm/boot/uImage] Error 1
+make[1]: *** [uImage] Error 2
+make[1]: *** Waiting for unfinished jobs....
+安装apt-get install uboot-mkimage
+
+3、sudo apt-get install bison
+/bin/bash: crc32: command not found
+make[1]: *** [u-boot_crc.bin] Error 127
+make[1]: Leaving directory `/home/zengwei/GF-16/android_jb4.3/android/bootable/bootloader/uboot-imx'
+zengwei@zengwei-Lenovo:~/GF-16/android_jb4.3/android$ sudo apt-get install  libarchive-zip-perl
+
+出现lzo/lzo1x.h: No such file or directory
+sudo apt-get install liblzo2-dev
+
+uuid/uuid.h: No such file or directory
+sudo apt-get install uuid-dev
+
+交叉编译环境(android,静态)
+arm-none-linux-gnueabi-g++ -static -o testQ test.cpp 
+cat /proc/bus/input/devices
+
+GPIO
+ /sys/class/gpio/
+按export顺序生成
+
+8051
+on property:sys.boot_completed=1
+    #[Advantech GF08]signal to mcu:system is boot completed
+    write /sys/class/gpio/gpio1/value 0
+
+yocto
+MACHINE=imx6qrom7420a1 source setup-environment build
+MACHINE=<machine file> source fsl-setup-release.sh -b <build dir> -e <backend>
+MACHINE=imx6qrom7420a1 source fsl-setup-release.sh -b build-imx6qrom7420a1-release -e fb
+bitbake fsl-image-gui
+
+mount -o rw -t ntfs /dev/block/sda1 /mnt/media_rw/sata/
+
+

@@ -1,0 +1,869 @@
+
+betheme
+
+    首页
+    大数据
+    小程序
+    移动开发
+    后端
+    前端
+    所有文章
+
+echarts树状图点击展开子节点_CPU眼里的结构设备树节点及属性详解
+2023/3/22 10:51:45
+1 设备树(device tree)简介DTSpec定义一个devicetree的约束来描述硬件设备，boot引导程序将设备树传递给用户程序的内存空间中，并传递给用户相应设备树的指针。设备树为一个树形结构用来描述系统中的设备。每个节点由属性/值来描述给出设备的特性，除了根节点之外，每一个节点有一个确定的父节点。
+2 设备树基本模型
+DTS基本模型，图2-1展示了一个设备树的基本结构。其中“/”为该设备树文件中唯一的根节点，其后的节点以此根节点发散展开，形成树状结构。
+
+bc4031869f17f6de68a6d20d45fd2d59.png
+
+图2-1设备树基本结构
+
+3  设备树编写规则
+3.1 节点
+3.1.1节点命名
+
+设备树除根节点“/”外，其他节点命名根据以下规范：
+
+Label:node-name@unit-address
+
+其中：unit-address : 指定该节点在父节点地址空间中的地址。Lable是该节点的标号，可以省略。节点命名 node-name保证长度在1-31个字符之间，且仅能由表2-1中给出的字符组成。节点名必须以小写或者大写字母开头，并应尽量能够表明设备的类型。Unit-address必须和该节点属性中的一个 “reg” 的地址相匹配，如果该节点下没有”reg”属性，@unit-address则必须省略掉，node-name须保证在同一级下能够与其它节点区分。
+
+表2-1有效的节点命名字符
+
+Character
+	
+
+Description
+
+0-9
+	
+
+digit
+
+a-z
+	
+
+lowercase letter
+
+A-Z
+	
+
+uppercase letter
+
+,
+	
+
+comma
+
+.
+	
+
+period
+
+_
+	
+
+underscore
+
++
+	
+
+plus sign
+
+–       
+	
+
+dash
+
+图2-2给出了设备树节点命名的例子，图中i2c通过A0895000和A0896000两个单元地址进行区分。
+
+10c8ce168a1ae0f894dec3c8333ba785.png
+
+图2-2设备树节点命名
+
+节点命名应该通用、可以反应出设备的设备的功能，以下是一些推荐的节点名称：
+
+• adc
+
+• accelerometer
+
+• atm
+
+• audio-codec
+
+• audio-controller
+
+• backlight
+
+• Bluetooth
+
+• bus
+
+• cache-controller
+
+• camera
+
+• can
+
+• charger
+
+• clock
+
+• clock-controller
+
+• compact-ﬂash
+
+• cpu
+
+• cpus
+
+• crypto
+
+• disk
+
+• display
+
+• dma-controller
+
+• dsp •eeprom
+
+• efuse•endpoint
+
+• ethernet
+
+• ethernet-phy
+
+• fdc
+
+• flash
+
+• gnss
+
+• gpio
+
+• gpu
+
+• gyrometer
+
+• hdmi
+
+• i2c
+
+• i2c-mux
+
+• ide
+
+• interrupt-controller
+
+• isa
+
+• keyboard
+
+• key
+
+• keys
+
+• lcd-controller
+
+• led
+
+• leds
+
+• led-controller
+
+• light-sensor
+
+• magnetometer
+
+• mailbox
+
+• mdio
+
+• memory
+
+• memory-controller
+
+• mmc
+
+• mmc-slot
+
+• mouse
+
+• nand-controller
+
+• nvram
+
+• oscillator
+
+• parallel
+
+• pc-card
+
+• pci
+
+• pcie
+
+• phy
+
+• pinctrl
+
+• pmic
+
+• pmu
+
+• port
+
+• ports
+
+• power-monitor
+
+• pwm • regulator
+
+• reset-controller
+
+• rtc
+
+• sata
+
+• scsi
+
+• serial
+
+• sound
+
+• spi
+
+• sram-controller
+
+• ssi-controller
+
+• syscon
+
+• temperature-sensor
+
+• timer
+
+• touchscreen
+
+• usb
+
+• usb-hub
+
+• usb-phy
+
+• video-codec
+
+• vme
+
+• watchdog
+
+• wiifi
+3.1.2节点路径
+
+设备树中的节点可由从根节点开始的完整路径区分，使用方法如上，如果到节点的完整路径是明确的，则可以省略单元地址。如果客户端程序遇到不确的路径，它的行为将不确定。例如：/node-name-1/node-name-2
+3.2 属性
+属性赋值格式：“name=value”
+3.2.1属性命名
+
+设备树中每一个节点都有一些属性来描述该节点的特征，属性通常以“名称和值”的方式组成。属性命名字符组成如表3-2所示。非标准的属性名称应该赋予名称有特定具体的意义，如pin, function,tx_use_dma等。
+
+表2-1有效的属性命名字符
+
+Character
+	
+
+Description
+
+0-9
+	
+
+digit
+
+a-z
+	
+
+lowercase letter
+
+A-Z
+	
+
+uppercase letter
+
+,
+	
+
+comma
+
+.
+	period
+
+_
+	underscore
+
++
+	plus sign
+
+?
+	question mark
+
+#
+	hash
+
+–       
+	dash
+3.2.2属性值
+
+属性的值是由包含针对该属性相关的零或者多个字节组成的数组。当属性表征true-false信息的时候，属性值为空。
+
+Value
+	
+
+Description
+	
+
+值为空，如用来表征true-false属性
+	
+
+32位整形数，以大端形式, 一个cell  如0x1234567
+	
+
+字符串,如“hello”
+
+<  string list>
+	
+
+字符串数组，如：“hello”,“world”
+	
+
+编码对，具体格式参见个属性规定
+	
+
+一个的值，可以代表设备树中任何一个节点。
+3.2.3标准属性
+
+设备树节点有一些标准的属性，可以统一描述该节点具有的一些特征。
+
+    compatible属性
+
+属性名称：compatible 属性值类型
+
+compatible属性由一个或多个字符串组成。这些字符串定义了特定的设备模型。该属性允许一个设备表达它与一系列类似设备的兼容性，允许一个设备驱动程序与多个设备匹配。推荐的属性值赋值方式为“"manufacturer,model”。其中manufacturer为芯片制造商的名字，model指定了该设备的型号。
+
+例如：
+
+compatible= "leadcore,comip-powerkey";
+
+在此例中，操作系统会先去找支持"leadcore,comip-powerkey"设备的驱动，如果没有，则驱动与设备匹配失败，该设备无法正常运行。
+
+    phandle属性
+
+属性名称：phandle 属性值
+
+phandle使用一个u32的数值来表征设备树中唯一的节点。其他节点应用该节点时，可以引用该节点定义的phandle属性定义的值。
+
+例如：
+
+pic@10000000{       phandle = <1>;       interrupt-controller;
+
+该节点中phandle 被定义了，其他设备节点可以使用值1来引用pic这个节点，如：
+
+another_node@10909009{      interrupt-patrent =<1>;
+
+注：大多数设备树中不会显示包含phandle属性，DTC编译工具在编译设备树源码时会自动的插入调用phandle属性。
+
+    model属性
+
+属性名称：model属性值类型
+
+Model属性描述了设备生产商以及该设备的型号，格式为字符串形式。model用来准确地定义这个硬件是什么
+
+例如:
+
+model= "lc1860c evb2w board on LC1860";
+
+    status属性
+
+       属性名称：status 属性值类型
+status属性表明了设备的运行状态。有效值为以下几个：“okay” : 表明设备是可以操作的
+
+“disabled”：表明设备当前不可用，但是可能在以后成为可用设备，例如该设备依赖的某些开关或者设备没有打开或者接入到系统中。
+
+  “reserved”：通常表示设备已经运行但是不可以备操作，例如总线固件部分。
+
+  “fail” ：设备不可被操作，发生了错误，在未修复之前无法操作。
+
+  “fail-sss” ：表明设备无法被操作，sss是设备特有的，表明探测到了设备的错误。
+
+    #address-cell和 #size_sells属性
+
+属性名称：#address-cell 和 #size-cells 属性值：
+
+#address-cell 和 #size-cells通常用在具有子节点继承的节点中，并且指出子设备节点应该如何写地址。其中#address-cell的值若为1，其子设备reg中用1个数来表示地址，表示为一个32位地址，若为2则用两个数来表示地址，表示为一个63位的地址；size-cells为1，所以reg中用1个数来表示大小。
+
+例如：
+
+soc {     #address-cells = <1>;     #size-cells = <1>;     …}uart0:serial@a0882000 {        compatible = "leadcore,comip-uart";        reg = <0xa0882000 0x400>;        …
+
+              };
+
+节点serial是soc的子节点，注意到soc中，定义了#address-cells = <1>和#size-cells = <1>，因此所有以soc为父节点的节点在配置属性时，其reg中应使用1个cell表示地址，1个cell表示范围。上例中，0xa0882000为该子节点设备起始地址，0x400为子节点设备地址空间的大小。
+
+    Reg属性
+
+属性名称：reg属性值： 编码任意数量的(地址长度)对。
+
+reg属性表征了该节点设备资源在其父节点地址空间内的地址。最常见的是说给出映射IO寄存器块的内存的偏移量和长度。reg值是由一系列的 组成的，每一个“地址”、“长度”是一个u32的cell，而这两者是否被赋值依赖于其父节点的#address-cell 和#size-cells属性。当#size-cells为0时，reg中的长度值应该被省略。
+
+例如：
+
+uart2: serial@a0884000 {       compatible = "leadcore,comip-uart";       reg = <0xa0884000 0x400>;        …                }
+
+Serial是soc的子节点，soc节点中#address-cells = <1>和#size-cells = <1>，因此serial节点中reg属性的值须包含地址(u32)以及长度(u32)值。以上reg表明该节点设备在其父节点地址的偏移量为0x0884000，长度1024字节的内存块(soc的地址从0开始)。该设备起始地址为0x0884000，结束地址为0x0884400。
+
+51c320ed3a531d49eecd9480df185957.png
+
+图2-1lc1860手册中串口的基地址
+
+    Virtual-reg
+
+属性名称：virtual-reg 属性值：
+
+virtual-reg定义了一个有效地址，这个地址映射到设备节点中reg中的第一个地址值，此属性使引导程序可以为客户端程序提供已经设置的“虚拟-实体”的内存映射。
+
+    Ranges
+
+属性名称：ranges 属性值：或者编码任意数量的(子节点地址，父节点地址，长度)对。当ranges属性值为empty时，表明子节点地址空间与父节点地址空间为1:1映射。
+
+ranges属性提供了一种子节点地址空间以及父节点地址空间的映射关系或转换关系，该属性值是任意的三元数组对。其中子节点地址是父节点地址空间中的实际的物理地址。该节点的地址cell(u32)个数取决于当前节点中的#address-cells,该节点中的长度cell(u32)取决于当前节点中的#size-cells属性。
+
+例如：
+
+soc {     #address-cells= <1>;     #size-cells= <1>;     ranges= <0x0 0x10000000 0xd0000000>;     uart2: serial@a0884000 {           compatible ="leadcore,comip-uart";           reg = <0xa08840000x400>;            …      }      …}
+
+ranges =<0x0 0xe0000000 0x00100000>表示子地址空间从0开始，其长度为0x00100000的范围，该地址映射到其父总线地址空间的起始地址为0xe0000000，长度为0x00100000，具体地址范围如表2所示。
+
+表2 ranges属性表示的地址范围
+
+ranges
+	
+
+子总线空间
+	
+
+父总线空间
+
+0x0 0xe0000000 0xd0000000
+	
+
+0x0 ~0x0+0xd0000000
+	
+
+0x10000000~0x10000000+0xd0000000
+
+明确该节点下的设备serial节点地址在serial子空间地址范围为:
+0xa0884000~0xa0884000+0x400，
+
+其在父节点地址空间的映射范围为：
+
+0x10000000+0xa0884000~0x10000000+0xa0884000+0x400
+
+    Dma-ranges
+
+属性名称：dma-ramges 属性值：或者编码任意数量的(子节点地址，父节点地址，长度)对。
+
+dma-ranges用来描述dma子设备节点与其dma父设备节点的地址空间的映射或者转换关系。其属性值也是一个任意数量的三元数组对，表征了DMA子节点在其父DMA节点中的映射关系。该节点的地址cell(u32)个数取决于当前节点中的#address-cells,该节点中的长度cell(u32)取决于当前节点中的#size-cells属性。
+
+    Interrupts属性
+
+属性名称：interrupts属性值任意数量的数值对，表征中断说明。中断说明的格式由绑定的中断域定义。
+
+       三个数 interrupts = ;
+
+       X指的是：
+
+PPI：per processor interrupts      私有中断， 中断必须绑定一个固定CPU核，当处理该中断时，必须由绑定的CPU核处理,中断号16～31
+
+SPI：shared processor interrupts   共享中断，中断的处理可被任意的CPU核处理,中断号 32 ～32+224
+在arm-gic.h文件中定义的只有SPI和PPI,如下:
+
+#define GIC_SPI 0#define GIC_PPI 1
+
+ Y指的是：物理中断号
+
+ Z指的是：触发方式
+
+#defineIRQ_TYPE_NONE 0x00000000          \\ 未指明类型#defineIRQ_TYPE_EDGE_RISING 0x00000001   \\ 上升沿触发#defineIRQ_TYPE_EDGE_FALLING 0x00000002  \\下降沿触发 #defineIRQ_TYPE_EDGE_BOTH (IRQ_TYPE_EDGE_FALLING |IRQ_TYPE_EDGE_RISING)  \\  边沿触发#define IRQ_TYPE_LEVEL_HIGH0x00000004     \\  高电平触发#define IRQ_TYPE_LEVEL_LOW 0x00000008     \\    低电平触发#defineIRQ_TYPE_SENSE_MASK 0x0000000f
+
+例如：
+
+interrupts = <0 61 0>;
+
+     表明此节点中断类型为GIC_SPI，物理中断号为61+32=93，触发方式未指定。
+
+四个数：<主|子中断(0：主，1：子)主中断号子中断号触发方式>
+
+两个数：<中断号，中断等级>
+
+一个数：<中断号>
+
+    Interrupt-parent
+
+属性名称：interrupt-parent属性值：表明父中断节点。
+
+由于中断树的层级和设备树层级有差异，具有中断功能的设备节点必须明确通过该属性其父中断。若该设备无interrupt-parent属性，则默认其interrupt-parent属性为其父中断具有的该属性，如果遍历其中断树后，中断设备中没有该属性，则默认其父中断为设备树。
+例如：
+
+soc {    interrupt-parent =<&gic>;    …}
+
+       节点soc的中断父节点是gic。
+
+    Interrupts-extended
+
+属性名称：interrupts-extended，属性值phandle或者
+该属性指明所属的中断控制器，又描述中断，当一个设备连接到多个中断控制器时，使用该属性来进行中断定义。例如：
+
+interrupts-extended =<&pic 0xA 8>, <&gic 0xda>;
+
+该节点既能响应pic控制器的中断，又能响应gic控制器的中断，但二者不能同时响应。
+
+中断控制器的属性：
+
+    #interrupt-cells
+
+属性名称：#interrupt-cells，属性值 该属性定义了其及其子中断对中断域说明的编码所需要的cell个数。即interrups属性中的cell个数。例如：
+
+gic:interrupt-controller@a0118000 {                  compatible = "arm,cortex-a7-gic";                  interrupt-controller;                   #interrupt-cells = <3>;                   …         };   timer {            compatible = "arm,armv7-timer";            interrupt-parent = ;            interrupts = ;            …         }
+
+timer的父中断为gic中断控制器，gic节点中#interrupt-cells属性为 <3>，因此，timer中interrupts属性为3个cell。
+
+    Interrupt-controller
+
+属性名称：#interrupt-controller, 属性值 ，该属性表明该节点是一个中断控制器。
+
+例如：
+
+gic:interrupt-controller@a0118000 {                                     interrupt-controller;                                     #interrupt-cells = <3>;                                     …                                   };
+
+4 基本设备节点与属性
+4.1基本设备节点
+所有的设备树必须拥有一个根节点 “/”，并且以下的节点是一个系统必须的，且必须为根节点的子节点:
+
+    必须要有cpus 节点
+
+    至少一个 memory 节点
+    根节点
+
+设备树只有一个根节点，其它所有的节点都是它的子节点，根节点的完整路径是 “/”
+
+根节点必须具有的属性：   
+
+model            字符串，唯一表明系统板的型号，建议“厂家，型号”
+
+compatible    字符串数组，表明可以兼容的平台，建议“厂家，型号”
+
+#size-cells         说明其子节点reg属性中地址参数的个数
+
+#address-cells   说明其子节点reg属性中长度的参数个数
+
+其它标准属性位可选属性
+4.1.2 cpus节点
+
+所有设备树都需要/CPU节点。它不代表系统中的真实设备，而是充当表示系统cpus的子cpu节点的容器。Cpus节点必须包含#address-cells和#size-cells节点，并且该节点包含的属性，其子节点都应该遵守。
+例如：
+
+cpus{        #address-cells= <1>;        #size-cells= <0>;        cpu1:cpu@1 {               device_type= "cpu";               compatible= "arm,cortex-a7";               reg= <0x101>;               clock-frequency= <1495000000>;        };        cpu2:cpu@2 {               device_type= "cpu";               compatible= "arm,cortex-a7";               reg= <0x102>;               clock-frequency= <1495000000>;        };        …}
+
+cpu节点表示一个硬件执行块，该硬件执行块具有足够的独立性，能够运行一个操作系统，而不会干扰其他可能运行其他操作系统的cpu。CPU和线程通过统一的编号空间进行编号，该空间应尽可能与中断控制器的CPU/线程编号相匹配。CPU节点的地址用法是最简单的。每个CPU被分配了唯一的ID号，而且这个没有size。在上面的cpus节点中，#address-cells被设为了1，#size-cells则被设为了0，这就表示它的子节点中的reg属性是一个32位整数的address，而且没有size部分。
+
+在cpu节点中，必须具有的几个属性：
+属性名称：device_type，属性值 值必须是 “cpu”属性名称："reg" 属性值 数组它定义了由CPU节点表示的CPU/线程的唯一CPU/线程id。属性名称：clock-frequency属性值< prop-encoded-array>数组说明了当前节点的CPU工作的时钟频率(Hz)
+4.1.3 Aliases 节点
+
+     一个设备树仅能有一个aliases节点，该节点为其它节点定义一个“别名”。该节点必须为设备树根节点的子节点。该节点中其属性名称为属性值节点的别名，属性值为节点在设备树中的全路径。
+
+例如：
+
+/{    …    aliases {    serial0 = &uart0;    …    }}
+
+       为uart0定义了一个别名为 “serial0”。别名的命名只能选取数字“0-9”，小写字母“a-z”以及短横线“-”组合形成的字符串。
+4.1.4 Memory节点
+Memory节点是所有设备树所必须的节点，其位于根节点之下。该节点描述了系统物理内存分配，如果一个系统有多块内存，可以创建多个memory节点或者一个memoery节点在使用时用reg属性进行说明。
+
+例如：
+
+memory {        reg= <0 0x6400000 0 0x39000000>;       };
+
+表明该系统起始地址是0x6400000，长度为0x39000000 (912MB),以上在一个64位的机器中，假设#address-cells= <2>，#size-cells = <2>
+4.1.5 Chosen节点
+
+choosen节点不代表系统中的实际设备，但描述了系统软件在运行时选择或指定的参数。它必须是根节点的子节点。对于Linux内核，该节点下最有用的属性是bootargs，该属性的类型是字符串，用来向Linux内核传递cmdline。规范中还定义了stdout-path和stdin-path两个可选的、字符串类型的属性，这两个属性的目的是用来指定标准输入输出设备的，在linux中，这两个属性基本不用。
+属性bootargs，属性值，指定客户端程序启动参数的字符串。如果不需要启动参数，则该值是空字符串。通常，chosen 节点在 .dts 源文件中为空，并在启动时填充。
+
+       例如：
+
+chosen {      bootargs ="root=/dev/nfs rw nfsroot=192.168.1.1                  console=ttyS0,115200";};
+
+4.2特殊属性
+4.2.1 simple-bus compatible 属性值
+
+系统会将该node下所有的child nodes都作为platform device注册进kernel。
+
+例如：
+
+soc {        #address-cells= <1>;        #size-cells= <1>;        ranges= <0 0 0 0xffffffff>;        compatible= "simple-bus";        interrupt-parent= ;}
+
+Soc下的设备节点都将作为platformdevice被注册进kenel
+与50位技术专家面对面
+20年技术见证，附赠技术全景图
+echarts树状图点击展开子节点_CPU眼里的结构设备树节点及属性详解
+相关文章
+
+    深度学习stride_深度学习圣经“花书”各章摘要与笔记整理
+
+    红色石头的个人网站&#xff1a;红色石头的个人博客-机器学习、深度学习之路​redstonewill.com《深度学习》&#xff0c;又名“花书”。该书由三位大佬 Ian Goodfellow、Yoshua Bengio 和 Aaron Courville 撰写&#xff0c;是深度学习领域奠基性的经典教材&#xff0c;被誉为深…...
+    2022/4/29 13:19:58
+    哈希表的画法_智慧树知到_机械制图A_答案新版
+
+    【单选题】The feeding of dairy cows has undergone a _______.A. revolutionary B. revolutions C. revolutio【填空题】He _____ a pot of paint, dipped a brush in it, bent forward and applied the brush to the wall.【判断题】IP协议报文中有一个TTL(Time To Live)字段…...
+    2022/4/29 13:19:50
+    西建大历年电子与通信工程复试真题_历年复试试题回忆
+
+    1、发电机定子绕组三相短路定子转子回路各有哪些分量&#xff0c;分别按照什么时间常数衰减&#xff1b;2&#xff0c;比较Xd&#xff0c;Xd‘&#xff0c;Xd’‘&#xff0c;Xσ的大小&#xff0c;Eq&#xff0c;Eq’&#xff0c;Eq‘’的大小&#xff0c;并且简要说明其理由&…...
+    2022/4/29 13:19:44
+    冻结拆分_还不会固定表头？速来围观Excel冻结窗格实战教程
+
+    我们知道&#xff0c;一个完整的表格中&#xff0c;表头是不可或缺的组成部分之一。表头可以提示我们某一行或某一列是什么内容。但如果在行数或列数很多的情况下&#xff0c;随着鼠标的滚动&#xff0c;表头往往也随之消失&#xff0c;表格内容的辨识性也就大打折扣。这种情况…...
+    2022/4/29 13:19:38
+    相机录像出现花屏_[Unity3D]花屏问题解决
+
+    “多年前遇到的花屏问题&#xff0c;通过不断的测试、重现、修改、反思&#xff0c;终于得出了最终原因和最终答案&#xff01;”你的屏幕花了&#xff1f;去检查一下&#xff0c;你游戏中的相机clearFlag的设置&#xff0c;是不是没有clearFlag设置为SolidColor或者SkyBox的相…...
+    2022/4/29 13:19:32
+    mysql merge 分区_mysql merge 分区
+
+    1.插入测试数据1.usera插入500w数据2.userb插入500w数据3.userall(主表)usert1 (子表) 插入250w数据usert2 (子表) 插入250w数据4.userall2(主表)usert3 (子表) 插入250w数据usert4 (子表) 插入250w数据建表语句CREATE TABLE usertb(id serial,uname varchar(20) ,ucreatetime …...
+    2022/4/29 13:19:24
+    mysql win10 5.5_win10上MySql5.5版本升级到5.7
+
+    1、首先下载mysql5.7&#xff1a;根据自己电脑选择mysql位数进行下载&#xff0c;在此我下载的是zip压缩版本的&#xff0c;下载完成后解压2.关闭现有mysql服务。管理员身份打开cmd窗口&#xff0c;进入到mysql目录下面&#xff0c;将mysql服务移除输入&#xff1a;mysqld -rem…...
+    2022/4/29 13:19:18
+    mysql5.6 mysqld safe_mysql程序之mysqld_safe详解
+
+    mysqld_safe命令mysqld_safe是在Unix上启动mysqld服务器的推荐方法。mysqld_safe增加了一些安全特性&#xff0c;例如在发生错误时重新启动服务器&#xff0c;并将运行时信息记录到错误日志。用法&#xff1a;mysqld_safe [OPTIONS]参数解释&#xff1a;--help # 显示帮助信息并…...
+    2022/4/29 13:19:12
+    简洁自适应后台模板
+
+    什么是自适应网站模板？我也在研究网站自适应问题，总的来说就是为了让你的网站在不同的客户端上浏览无误。宽屏电脑和平板及手机。不同的设备显示的尺寸像素不一样。一般能够自适应就都是用百分比控制的。html5自适应网站是目前的主流，也可能是未来n年的主流。用过很多类似网…...
+    2022/4/29 13:19:01
+    mysql5.7 server id_三台mysql5.7服务器互作主从配置案例
+
+    一、架构三台msyql服务器221,222,223&#xff0c;每台服务器开两个实例&#xff0c;3306作为主库&#xff0c;3307作为另外一台服务器的从库二、每台服务器安装双实例参照&#xff1a;https://www.cnblogs.com/sky-cheng/p/10919447.html进行双实例安装三、每台服务器的3306实例…...
+    2022/4/29 13:18:58
+    mysql 经典问题_mysql经典排名问题
+
+    问题&#xff1a;编写一个 SQL 查询来实现评分排名。如果两个分数相同&#xff0c;则两个分数排名(Rank)相同。评分表ratings方法一&#xff1a;不运用dense_rank()&#xff0c;运用子查询解决这一问题可以分为两个步骤&#xff1a;步骤一&#xff1a;降序排列分数select a.Rat…...
+    2022/4/29 13:18:50
+    mysql 5.7参数目录_mysql5.7配置
+
+    my3306.cnf[client]port 3306 #端口socket /data/mysql3306/mysql3306.sock #mysql以socket方式运行的sock文件位置[mysql]auto-rehash #自动补全[mysqld_safe]log-error /data/mysql3306/my3306.err #错误日志pid-file /data/mysql3306/my3306.pid #process …...
+    2022/4/29 13:18:29
+    mysql fetch lengths_php mysqli_fetch_lengths()函数
+
+    定义mysqli_fetch_lengths()函数返回结果集中字段的长度。语法PHP mysqli_fetch_lengths()函数具有以下语法。mysqli_fetch_lengths(result);参数参数是否必须描述result需要。由mysqli_query()&#xff0c;mysqli_store_result()或mysqli_use_result()返回的结果集返回如果整数…...
+    2022/4/29 13:18:22
+    element标签弹窗_如何在element plus中实现不同弹窗传值
+
+    工具HBuilderXGitnpm浏览器技术Vue3Element PlusJavaScript在element plus组件中&#xff0c;弹窗el-dialog可以用来输入数据&#xff0c;还可以展示数据。如果在一个弹窗中输入不同的字段值&#xff0c;点击保存(确定)关闭自身&#xff0c;然后打开另一个新窗口&#xff0c;并…...
+    2022/4/29 13:18:15
+    mysql5.1 mysiam_MySQL 数据库清理MyISAM Innodb表(支持MySQL5.1.6以上的版本)
+
+    数据中心有大量的 MyISAM log表需要定时清理,定为每周末,10G左右,5-10分钟完成.event 调用这里就不写了,直接上存储过程....DROP PROCEDURE IF EXISTS proc_optable;tudougyyx2012-02-22CREATE PROCEDURE proc_optable()BEGINDECLARE dono INT DEFAULT 0;DECLARE o VARCHAR(200…...
+    2022/4/29 13:18:09
+    mysql字段名explain_Mysql中explain用法和结果字段的含义介绍
+
+    做一个积极的人编码、改bug、提升自己我有一个乐园&#xff0c;面向编程&#xff0c;春暖花开分享一下大神老师的人工智能教程。零基础&#xff01;通俗易懂&#xff01;风趣幽默(偶尔开开车&#xff0c;讲讲黄段子)&#xff01;大家可以看看是否对自己有帮助&#xff0c;如果你…...
+    2022/4/29 13:18:02
+    espflashdownloadtool连接串口失败_关于串口下载问题和超时
+
+    串口下载适用于mini、精英、战舰、探索者、阿波罗429不适用于阿波罗767&#xff0c;H743&#xff0c;号令者1052保证板子在独立供电状态下&#xff0c;电源灯处于亮灯状态下&#xff0c;USB线接板子上USB_232&#xff0c;RXD 和 PA9(STM32 的 TXD)TXD 和 PA10(STM32的 RXD)通过…...
+    2022/4/29 13:17:56
+    qt自定义插件creator不显示_让Qt Creator更懂我们的自定义模块
+
+    用QML模块的方式组织软件是个不错的结构设计&#xff0c;笔者的QtQuick项目都会首先考虑QML模块的划分&#xff0c;然后以搭积木的方式完成最后的开发。Qt Creator是开发QtQuick程序的首先IDE&#xff0c;因为它提供了很方便的代码提示和JS调试。但是笔者发现&#xff0c;项目中…...
+    2022/4/29 13:17:49
+    MySQL的高级运用_MYSQL之SQL高级运用（帮助你高效率编程）
+
+    小编说&#xff1a;这些知识常出现在面试题&#xff0c;但是实用价值很高。。其实也就是SQL的高级篇罢了&#xff0c;多用在统计方面&#xff0c;将行数据合并成列数据。希望读者能举一反三&#xff0c;灵活运用。1.一道SQL语句面试题&#xff0c;关于group by表内容&#xff1…...
+    2022/4/29 13:17:42
+    python mysql写入速度加快_解决python写入mysql中datetime类型遇到的问题
+
+    解决python写入mysql中datetime类型遇到的问题发布时间&#xff1a;2020-08-31 16:46:47来源&#xff1a;脚本之家阅读&#xff1a;89作者&#xff1a;WilliamDescant刚开始使用python&#xff0c;还不太熟练&#xff0c;遇到一个datetime数据类型的问题&#xff1a;在mysql数据…...
+    2022/4/29 13:17:36
+    mysql怎么模糊查询名字_mysql中模糊查询的四种用法：
+
+    一.%&#xff1a;表示任意0个或多个字符。可匹配任意类型和长度的字符&#xff0c;有些情况下若是中文&#xff0c;请使用两个百 分号(%%)表示。*注&#xff1a;like %龙%&#xff1a;查询出所有含有“龙”的记录1. 所查询字段 like %龙%eg:select * from user where realname…...
+    2022/4/29 13:17:30
+    aspose java_Aspose.Cells for Java
+
+    总体特性&#xff1a;呈现特性:可将图表转化为图像可将工作表转换为图像可将电子表格转换为PDF打印数据处理特性:应用格式化创建图表应用公式总结智能化标记Aspose.Cells for JavaAspose.Cells GridWeb 控件:支持JSP Web应用程序支持加载Excel文件提供编辑功能与现代浏览器兼容…...
+    2022/4/29 13:17:23
+    java激励_激励---201218（激励总结）
+
+    激励---201218(激励总结)一、总结一句话总结&#xff1a;1、最近 缺的就是认可 的实例&#xff1f;【为什么近期玩游戏】&#xff1a;这可以解释为什么近期你会比较多的玩游戏【为什么玩游戏喜欢装逼】&#xff1a;所以甚至玩游戏的时候&#xff0c;玩的好的话&#xff0c;队友…...
+    2022/4/29 13:17:17
+    java常用的统计_常用统计函数Java版[转]
+
+    Tag&#xff1a; Java 统计函数 方差 标准差public class TestStatistics {public static void main(String[] args) {double [] testDatanew double[]{1,2,3,4,5,6,7,8,9};System.out.println(最大值&#xff1a;getMax(testData));System.out.println(最小值&#x…...
+    2022/4/29 13:17:10
+    java grpc protobuf_protobuf+grpc+examples
+
+    从下载后的grpc-java-master中的examplespom.xml是有问题的以下是修改后的pom.xml,注意JDK版本要在1.6或以上xsi:schemaLocation"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">4.0.0com.qifanqfgrpc0.0.1-qfgrpcjarqfgrpchtt…...
+    2022/4/29 13:17:02
+    java中catalina.out_如何控制Tomcat的catalina.out的大小
+
+    catalina.out文件&#xff0c;数据主要来源为&#xff1a;System.out 和 System.err 在控制台上直接输出的信息。编码时应避免使用System.out.println()和e.printStackTrace()&#xff0c;尽量采用logging机制记录日志。本文主要说的是采用cronolog工具来分割catalina.out文件1…...
+    2022/4/29 13:16:50
+    layui数据表格自定义复选框表头_layui中table表头样式修改方法
+
+    如下所示&#xff1a;layui.use(table, function () {var table layui.table;table.render({elem: #desTable, url: ${ctx}/alarm/queryEventShowScatter, even: true, page: { //支持传入 laypage 组件的所有参数(某些参数除外&#xff0c;如&#xff1a;jump/elem) - 详见文…...
+    2022/4/29 13:16:43
+    redis和mysql实现原理_redis和mysql结合数据一致性方案
+
+    缓存读&#xff1a;缓存由于高并发高性能&#xff0c;已经被广泛的应用。在读取缓存方面做法一致。流程如下&#xff1a;写缓存&#xff1a;1.先更新数据库&#xff0c;再更新缓存2.先更新数据库&#xff0c;再删除缓存。(1).先更新数据库&#xff0c;再更新缓存这套方案&#…...
+    2022/4/29 13:16:25
+    ebs和java哪个前景好_EBS与实例存储的好处（反之亦然）[关闭]
+
+    我不清楚我在Amazon EC2上为我的实例从EBS和实例存储中获得了什么好处。 如果有的话&#xff0c;似乎EBS在成本相对较小的差异方面更有用(停止&#xff0c;开始&#xff0c;持续更好的速度)......&#xff1f; 此外&#xff0c;是否有更多人正在使用EBS&#xff0c;因为它仍然相…...
+    2022/4/29 13:16:18
+    java final 方法重载_java方法重载和覆写的定义,static和final修饰符的讲解,java面试题...
+
+    方法重载的规则&#xff1a;1、必须发生在同一个类的下面2、必须保证方法名字相同3、参数列表不同参数的类型不同参数的个数不同参数的顺序不同4、返回值&#xff1a;和返回值无关5、修饰符&#xff1a;和修饰符无关6、抛出异常&#xff1a;无关例子:public void add(int i);pu…...
+    2022/4/29 13:16:12
+
+最新文章
+
+    实验3.1 简单实现Intent带返回值的跳转
+
+    在这里实现的功能是当点击listview的某一子项是&#xff0c;启动一个确认删除相应记录的子Activity。 所以用到了带返回值的intent 父界面和子界面的前台代码 activity_main <?xml version"1.0" encoding"utf-8"?> <LinearLayoutxmlns:android…...
+    2022/5/12 22:08:31
+    JQuery快速入门-选择器
+
+    JQuery选择器 JQuery 选择器继承了CSS 与Path 语言的部分语法&#xff0c;允许通过标签名、属性名或内容对DOM 元素进行快速、准确的选择&#xff0c;而不必担心浏览器的兼容性&#xff0c;通过jQuery 选择器对页面元素的精准定位&#xff0c;才能完成元素属性和行为的处理。 一…...
+    2022/5/12 22:08:23
+    网页设计工具
+
+    下载地址&#xff1a;https://pan.baidu.com/s/1nwmBHLv#list/path%2FAX8.0%E6%AD%A3%E5%BC%8F%E7%89%88转载于:https://www.cnblogs.com/txfsheng/p/9116181.html...
+    2022/5/12 22:08:14
+    事件总线模式辨析
+
+    事件总线定义&#xff1a;事件总线是对发布-订阅模式的一种实现。它是一种集中式事件处理机制&#xff0c;允许不同的组件之间进行彼此通信而又不需要相互依赖&#xff0c;达到一种解耦的目的。 事件总线的处理流程&#xff1a; 发布订阅模式主要有两个角色&#xff1a; 发布方…...
+    2022/5/12 22:08:06
+    在虚拟机上安装redis集群，redis使用版本为4.0.5,本机通过命令客户端可以连接访问，外部主机一直访问不了...
+
+    在虚拟机上安装了redis 4 &#xff0c;启动后本机客户端可以连接访问&#xff0c;但是外部主机一直访问不了&#xff0c;在使用java代码连接redis集群时报:no reachable node in cluster,原因&#xff1a;在redis3.2.0版本以后redis.conf配置文件中增加了protected-mode保护模式…...
+    2022/5/12 22:07:59
+    Spring（十九）：Spring AOP（三）：切面的优先级、重复使用切入点表达式
+
+    背景&#xff1a; 1&#xff09;指定切面优先级示例&#xff1a;有的时候需要对一个方法指定多个切面&#xff0c;而这多个切面有时又需要按照不同顺序执行&#xff0c;因此&#xff0c;切面执行优先级别指定功能就变得很实用。 2&#xff09;重复使用切入点表达式&#xff1a;…...
+    2022/5/12 22:07:52
+    20165221 实验五 网络编程与安全
+
+    实验封面 课程&#xff1a;Java程序设计班级&#xff1a;1652班姓名&#xff1a;谭笑学号&#xff1a;20165221指导教师&#xff1a;娄嘉鹏实验日期&#xff1a;2018年5月28日实验时间&#xff1a;15:25 - 17:15实验序号&#xff1a;实验五实验名称&#xff1a;网络编程与安全 …...
+    2022/5/12 22:07:44
+    Springboot第二篇：与前端fetch通信（附springboot解决跨域方法）
+
+    说到与前端通信&#xff0c;明白人都知道这章肯定会写两部分的东西啦。 关于后台 ①首先回顾前文&#xff0c;上一章环境搭建如图&#xff1a; ②我们在maven.example.controller下添加一个文件&#xff0c;并附上如图代码&#xff1a; ③&#xff1a;上面又多出了两个注解&…...
+    2022/5/12 22:07:37
+    VMware12提示 已将该虚拟机配置为使用 64 位客户机操作系统。但是，无法执行 64 位操作...
+
+    VMware12提示 已将该虚拟机配置为使用 64 位客户机操作系统。但是&#xff0c;无法执行 64 位操作。此主机支持 Intel VT-x&#xff0c;但 Intel VT-x 处于禁用状态解决办法&#xff1a;下载LeoMoon CPU-V 检查一下CPU VT-x状态是否启用地址&#xff1a;https://leomoon.com/st…...
+    2022/5/12 22:07:30
+    [UE4]子控件Child Widget顶层容器选择
+
+    如果父级容器是Canvas&#xff0c;则可以直接设置尺寸。放到其他widget的时候也会保持设定好的尺寸&#xff08;而不管父容器是什么类型&#xff09;。 转载于:https://www.cnblogs.com/timy/p/9146243.html...
+    2022/5/12 22:07:21
+    用Vue来实现购物车功能（二）
+
+    这个小demo具有添加商品进购物车 、增加购物车内商品的数量、减少购物车内商品的数量、计算一类商品的总价、以及计算所有商品的总价 首先看目录结构 因为我们的Tab.vue Car.vue 以及Carinfo.vue中的数据有关联 所以用到了vuex 在store文件夹下的index.js中 import Vue from…...
+    2022/5/12 22:07:09
+    列表和字典循环遍历时的删除问题,集合
+
+    1.for 循环的问题 : for 循环后面也有else,也可以使用break和continue(使用方法跟while一样). while 条件: for 变量 in 迭代器: 循环体 代码块 else: else: 代码块 …...
+    2022/5/12 22:07:02
+    loadrunner中并发数与迭代的区别
+
+    loadrunner中并发数与迭代的区别 网友问题&#xff1a; 例如在LR里&#xff0c;我要测100个用户同时并发登陆所用时间&#xff0c;那我是不是在录制好脚本后&#xff0c;需要参数化“用户名”&#xff0c;“密码”以及在那个记事本里构造100个真实的用户名和密码&#xff1f; 然…...
+    2022/5/12 22:06:52
+    分区分表(一)
+
+    一、概念 1.为什么要分表和分区&#xff1f;日常开发中我们经常会遇到大表的情况&#xff0c;所谓的大表是指存储了百万级乃至千万级条记录的表。这样的表过于庞大&#xff0c;导致数据库在查询和插入的时候耗时太长&#xff0c;性能低下&#xff0c;如果涉及联合查询的情况&am…...
+    2022/5/12 22:06:45
+    各类型数据的导入与导出
+
+    ******* 导出到excel exec master..xp_cmdshell bcp settledb.dbo.shanghu out c:\temp1.xls -c -q -s"gnetdata/gnetdata" -u"sa" -p""/*********** 导入excel select * from openrowset(microsoft.jet.oledb.4.0, excel 5.0;hdryes;database c…...
+    2022/5/12 22:06:38
+    zookeeper 安装及集群
+
+    一、zookeeper介绍 zookeeper是一个中间件&#xff0c;为分布式系统提供协调服务&#xff0c;可以为大数据服务&#xff0c;也可以为java服务。 分布式系统&#xff0c;很多计算机组成一个整体&#xff0c;作为一个整体一致对外并处理同一请求&#xff0c;内部每台计算机都可以…...
+    2022/5/12 22:06:31
+    关于HashSet
+
+    HashSet存储数据原理&#xff1a;当HashSet调用add方法时&#xff0c;有返回值&#xff0c;返回值是boolean类型&#xff0c;表示是否添加成功&#xff08;如果对象不存在&#xff0c;则添加成功&#xff0c;否则添加失败&#xff09;但是&#xff0c;添加的过程并不是一个个去…...
+    2022/5/12 22:06:25
+    【dp 贪心】bzoj4391: [Usaco2015 dec]High Card Low Card
+
+    巧妙的贪心 Description Bessie the cow is a huge fan of card games, which is quite surprising, given her lack of opposable thumbs. Unfortunately, none of the other cows in the herd are good opponents. They are so bad, in fact, that they always play in a com…...
+    2022/5/12 22:06:18
+    HTML 选择目录
+
+    <input type"file" webkitdirectory directory multiple/> 转载于:https://www.cnblogs.com/tujia/p/9160683.html...
+    2022/5/12 22:06:10
+    Bootstrap 学习笔记4 巨幕页头略缩图警告框
+
+    转载于:https://www.cnblogs.com/lixuchun/p/9165151.html创作挑战赛新人创作奖励来咯，坚持创作打卡瓜分现金大奖...
+    2022/5/12 22:06:03
+    简练软考知识点整理-控制范围
+
+    控制范围是监督项目和产品的范围状态&#xff0c;管理范围基准变更的过程。本过程的主要作用是&#xff0c;在整个项目期间保持对范围基准的维护。控制项目范围确保所有变更请求、推荐的纠正措施或预防措施都通过实施整体变更控制过程进行处理。在变更实际发生时&#xff0c;也…...
+    2022/5/12 22:05:53
+    vue项目条形码和二维码生成工具试用
+
+    项目开发需要&#xff0c;优惠券分不同类型&#xff0c;简单的使用id生成条形码供店铺使用&#xff0c;麻烦点的需要多个字段的就需要使用二维码来展示了&#xff0c;对应的效果如下 条形码&#xff08;一维码&#xff09;使用工具code128 需引入code128.js 和对应的 code123.c…...
+    2022/5/12 22:05:46
+    rest framework错误笔记——身份验证和权限
+
+    按照官网教程&#xff08;http://www.django-rest-framework.org/tutorial/4-authentication-and-permissions/&#xff09;走到最后一步验证时&#xff0c;命令窗口执行http POST http://127.0.0.1:8000/snippets/ code"print 123"后 {"detail": "Au…...
+    2022/5/12 22:05:28
+    【learning】洲阁筛
+
+    问题描述 快速求素数处点值比较好求的积性函数前缀和 大致过程 Step1、求出一定范围内的素数处点值之和&#xff08;\(g\)&#xff09; Step2、利用上面的\(g\)求出一个\(f\)然后用\(f\)求出前缀和 具体过程 &#xff08;这里约定一下&#xff0c;在下面的内容中用\(p\)表示一个…...
+    2022/5/12 22:05:14
+    windows上使用的免费连接linux终端xshell6,xftp6下载
+
+    xshell 6 https://www.netsarang.com/download/down_form.html?code622 xftp 6 https://www.netsarang.com/download/down_form.html?code623 注意&#xff1a;国外官网网站使用xshell,xftp 有免费版本&#xff0c;但国内的代理网站下载没有免费版本&#xff0c;只有评估版本…...
+    2022/5/12 22:04:25
+    Linux学习之十二-Linux文件属性
+
+    Linux文件属性 在Linux中&#xff0c;对于每个文件都有相应属性&#xff0c;以Linux中root用户家目录下新建文件a.txt为例&#xff0c;在a.txt中输入几个字符 使用命令ls -ild a.txt查看文件的权限等 [rootlocalhost ~]# ls -ild a.txt 1057689 -rw-r--r--. 1 root root 8 Apr …...
+    2022/5/12 22:02:47
+    动态追踪技术漫谈
+
+    转载 https://openresty.org/posts/dynamic-tracing/转载于:https://www.cnblogs.com/shhnwangjian/p/9223996.html创作挑战赛新人创作奖励来咯，坚持创作打卡瓜分现金大奖...
+    2022/5/12 22:02:41
+    猜数字游戏的提示（UVa340）
+
+    题目具体描述见&#xff1a;https://uva.onlinejudge.org/index.php?optioncom_onlinejudge&Itemid8&pageshow_problem&problem276 C11代码如下&#xff1a; 1 #include<iostream>2 using namespace std;3 #define maxn 10104 int main() {5 int n;6 …...
+    2022/5/12 22:02:31
+    select标签中option的显示隐藏控制(兼容IE)
+
+    问题描述&#xff1a; 在有些功能切换的时候&#xff0c;select标签中的某些option是要被隐藏的。但通过设置option的样式为 display:none根本无法隐藏option标签。&#xff08;ie浏览器中option不支持display:none;&#xff09; 解决方案&#xff1a; <script> /*参数说…...
+    2022/5/12 22:02:24
+    Emacs简单配置
+
+    在~/.emacs.d/lisp中编辑init.el文件 ;加载color-theme ;themes文件夹和color-theme.el存放在~/.emacs.d/lisp中 (add-to-list load-path "~/.emacs.d/lisp") (require color-theme) (color-theme-initialize) (color-theme-emacs-nw) ;更改字体 (set-default-font &…...
+    2022/5/12 22:02:04
+
+Home
+
+Powered By betheme
+

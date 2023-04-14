@@ -1,0 +1,59 @@
+
+./external/canutils-4.0.6
+/system/lib/libsocketcan.so
+
+root@aimb_r200:/ # cansend can0 0x01 0x02
+root@aimb_r200:/ # candump
+
+     Set bit-timing
+
+Set the bit-rate to 50Kbits/sec with triple sampling using the following command
+
+$ ip link set can0 type can bitrate 50000 triple-sampling on
+
+or
+
+$ canconfig can0 bitrate 50000 ctrlmode triple-sampling on
+
+    Device bring up
+
+Bring up the device using the command:
+
+$ ip link set can0 up
+
+or
+
+$ canconfig can0 start 
+
+    Transfer packets
+
+Packet transmission can be achieve by using cansend and cansequence utilities.
+
+a. Transmit 8 bytes with standard packet id number as 0x10
+
+$ cansend can0 -i 0x10 0x11 0x22 0x33 0x44 0x55 0x66 0x77 0x88
+
+b. Transmit 8 bytes with extended packet id number as 0x800
+
+$ cansend can0 -i 0x800 0x11 0x22 0x33 0x44 0x55 0x66 0x77 0x88 -e
+
+c. Transmit 20 packets of 8 bytes each with same extended packet id number as 0xFFFFF
+
+$ cansend can0 -i 0xFFFFF 0x11 0x22 0x33 0x44 0x55 0x66 0x77 0x88 -e --loop=20
+
+d. Transmit a sequence of numbers from 0x00-0xFF, till the buffer availability
+
+$ cansequence can0
+
+e. Transmit a sequence of numbers from 0x00-0xFF and roll-back in a continuous loop
+
+$ cansequence can0 -p
+
+    Receive packets
+
+Packet reception can be achieve by using candump utility
+
+$ candump can0
+
+
+

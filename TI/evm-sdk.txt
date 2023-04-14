@@ -1,0 +1,321 @@
+adv@4b9a28e284a7:~/yocto_bsp$ git clone https://git.ti.com/git/arago-project/oe-layersetup.git tisdk
+Cloning into 'tisdk'...
+remote: Enumerating objects: 1886, done.
+remote: Counting objects: 100% (1886/1886), done.
+remote: Compressing objects: 100% (738/738), done.
+remote: Total 1886 (delta 1443), reused 1515 (delta 1139), pack-reused 0
+Receiving objects: 100% (1886/1886), 227.86 KiB | 404.00 KiB/s, done.
+Resolving deltas: 100% (1443/1443), done.
+adv@4b9a28e284a7:~/yocto_bsp$ cd tisdk
+adv@4b9a28e284a7:~/yocto_bsp/tisdk$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.04.01.03-config.txt
+/home/adv/yocto_bsp/tisdk
+
+
+cloning repo bitbake
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/bitbake'...
+remote: Counting objects: 61360, done.
+remote: Compressing objects: 100% (13396/13396), done.
+remote: Total 61360 (delta 46775), reused 60824 (delta 46391)
+Receiving objects: 100% (61360/61360), 12.49 MiB | 1.28 MiB/s, done.
+Resolving deltas: 100% (46775/46775), done.
+Branch '1.46' set up to track remote branch '1.46' from 'origin'.
+Switched to a new branch '1.46'
+Already up to date.
+Note: checking out '0784db7'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 0784db7d server/process: Disable gc around critical section
+
+
+cloning repo meta-processor-sdk
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-processor-sdk'...
+remote: Counting objects: 16431, done.
+remote: Compressing objects: 100% (7143/7143), done.
+remote: Total 16431 (delta 8698), reused 15655 (delta 8278)
+Receiving objects: 100% (16431/16431), 38.03 MiB | 1.03 MiB/s, done.
+Resolving deltas: 100% (8698/8698), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out '7860b1b97635205ebe7af9d3128e8f6dec50e819'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 7860b1b9 Revert "recipes-kernel: linux: Fix WiFi out of board demo failure in RT Linux SDK"
+
+
+cloning repo meta-arago
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-arago'...
+remote: Enumerating objects: 41152, done.
+remote: Counting objects: 100% (24/24), done.
+remote: Compressing objects: 100% (22/22), done.
+remote: Total 41152 (delta 4), reused 0 (delta 0), pack-reused 41128
+Receiving objects: 100% (41152/41152), 13.05 MiB | 1.02 MiB/s, done.
+Resolving deltas: 100% (28654/28654), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out '08.04.01.005'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 4061de84 ltp-ddt: CI/CD Auto-Merger: cicd.2022.09.16.17:39:59
+
+
+cloning repo meta-qt5
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-qt5'...
+
+
+fatal: unable to access 'https://github.com/meta-qt5/meta-qt5.git/': gnutls_handshake() failed: The TLS connection was non-properly terminated.
+git failed... remaining attempts: 4
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-qt5'...
+remote: Enumerating objects: 15650, done.
+remote: Counting objects: 100% (1390/1390), done.
+remote: Compressing objects: 100% (414/414), done.
+remote: Total 15650 (delta 1024), reused 1217 (delta 957), pack-reused 14260
+Receiving objects: 100% (15650/15650), 3.94 MiB | 1.36 MiB/s, done.
+Resolving deltas: 100% (11105/11105), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out '5ef3a0f'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 5ef3a0f qtdeclarative: Fix build with gcc-11
+
+
+cloning repo meta-virtualization
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-virtualization'...
+remote: Enumerating objects: 14023, done.
+remote: Counting objects: 100% (162/162), done.
+remote: Compressing objects: 100% (41/41), done.
+remote: Total 14023 (delta 139), reused 120 (delta 120), pack-reused 13861
+Receiving objects: 100% (14023/14023), 3.41 MiB | 1.15 MiB/s, done.
+Resolving deltas: 100% (8482/8482), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out 'beea119eb529b4a11f266004aee8b548427aea39'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at beea119 openvswitch: CVE-2021-3905 External triggered memory leak
+
+
+cloning repo meta-openembedded
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-openembedded'...
+remote: Counting objects: 194510, done.
+remote: Compressing objects: 100% (66280/66280), done.
+remote: Total 194510 (delta 122196), reused 190322 (delta 119565)
+Receiving objects: 100% (194510/194510), 47.57 MiB | 1.22 MiB/s, done.
+Resolving deltas: 100% (122196/122196), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out '6792ebdd966aa0fb662989529193a0940fbfee00'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at 6792ebdd9 c-ares: upgrade 1.17.2 -> 1.18.1
+
+
+cloning repo meta-ti
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-ti'...
+remote: Enumerating objects: 41058, done.
+remote: Counting objects: 100% (159/159), done.
+remote: Compressing objects: 100% (69/69), done.
+remote: Total 41058 (delta 120), reused 88 (delta 88), pack-reused 40899
+Receiving objects: 100% (41058/41058), 9.98 MiB | 1.14 MiB/s, done.
+Resolving deltas: 100% (28221/28221), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out '08.04.01.005'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at e84c0aea linux-ti-staging-rt: RC Auto-Merger: 08.04.01.005
+
+
+cloning repo meta-arm
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/meta-arm'...
+remote: Enumerating objects: 17446, done.
+remote: Total 17446 (delta 0), reused 0 (delta 0), pack-reused 17446
+Receiving objects: 100% (17446/17446), 4.17 MiB | 487.00 KiB/s, done.
+Resolving deltas: 100% (10903/10903), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out 'c4f04f3fb66f8f4365b08b553af8206372e90a63'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at c4f04f3f arm/trusted-firmware-a: add branch name for mbedtls
+
+
+cloning repo oe-core
+
+Cloning into '/home/adv/yocto_bsp/tisdk/sources/oe-core'...
+remote: Counting objects: 466851, done.
+remote: Compressing objects: 100% (119332/119332), done.
+remote: Total 466851 (delta 342168), reused 464529 (delta 340433)
+Receiving objects: 100% (466851/466851), 136.37 MiB | 1.33 MiB/s, done.
+Resolving deltas: 100% (342168/342168), done.
+Branch 'dunfell' set up to track remote branch 'dunfell' from 'origin'.
+Switched to a new branch 'dunfell'
+Already up to date.
+Note: checking out 'ef38f7acee3f0ae400138fa60f4695a86dffc16e'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at ef38f7acee linux-yocto/5.4: update to v5.4.213
+
+
+################################################################################
+The bblayers.conf configuration file has been created for you with some
+default values.  Please verify the contents of your conf/bblayers.conf
+file for correctness.
+
+NOTE: Any additional entries to this file will be lost if the ./oe-layertool-setup.sh
+      script is run again.  To add entries permanently to this file
+      please add them to the config file used and rerun the
+      ./oe-layertool-setup.sh script.
+
+
+
+################################################################################
+The local.conf configuration file has been created for you with some
+default values.  Please verify the contents of your conf/local.conf
+file for correctness.
+
+By default the number of threads used by the build is set to the number
+of CPUs found on your system.
+
+NOTE: You will probably want to change the default MACHINE setting in the
+      local.conf file to the machine you are trying to build.
+
+
+
+################################################################################
+A setenv file has been created for you in the conf directory.  Please verify
+The contents of this file.  Once you have verified the contents please source
+this file to configure your environment for building:
+
+    . conf/setenv
+
+You can then start building using the bitbake command.  You will likely want
+to set the MACHINE option if you have not done so in your local.conf file.
+
+For example:
+    MACHINE=xxxxx bitbake <target>
+
+Common targets are:
+From oe-core:
+    core-image-minimal: A small image just capable of allowing a device to boot.
+    core-image-minimal-initramfs: No Summary available
+    core-image-base: A console-only image that fully supports the target device 
+    core-image-minimal-mtdutils: No Summary available
+    core-image-tiny-initramfs: No Summary available
+    build-appliance-image_15.0.0: An image containing the build system itself
+    core-image-minimal-dev: No Summary available
+From meta-processor-sdk:
+    tisdk-docker-rootfs-image: No Summary available
+From meta-openembedded:
+    meta-oe-ptest-image: meta-oe ptest test image
+    meta-oe-image: meta-oe build test image
+    meta-oe-image-base: meta-oe build test image
+    initramfs-kexecboot-image: Initramfs image for kexecboot kernel
+    initramfs-debug-image: No Summary available
+    meta-initramfs-image: meta-initramfs build test image
+    initramfs-kexecboot-klibc-image: Initramfs image for kexecboot kernel (klibc-static binaries)
+    meta-webserver-image-base: meta-webserver build test image
+    meta-webserver-image: No Summary available
+    meta-python-image-base: meta-python build test image
+    meta-python-image: meta-python build test image
+    meta-python-ptest-image: meta-python ptest test image
+    core-image-minimal-xfce: No Summary available
+    meta-networking-image: No Summary available
+    meta-networking-image-base: meta-networking build test image
+From meta-arm:
+    arm-autonomy-host-image-minimal: No Summary available
+From meta-arago[recommended]:
+    tisdk-default-image: Arago TI SDK full filesystem image
+    tisdk-tiny-image: Arago TI SDK super minimal base image for initramfs
+    tisdk-core-bundle: Installer package for TI SDK - NOT for direct use on target
+    tisdk-bootstrap-image: Arago TI SDK bootstrap image usable for board bringup
+    tisdk-base-image: Arago TI SDK base image with test tools
+    tisdk-thinlinux-image: Arago TI SDK Thin Linux image
+    tisdk-bootstrap-base-image: Arago TI SDK bootstrap base image for initramfs

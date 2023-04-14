@@ -1,0 +1,66 @@
+
+DDR********************************************
+
+board/ti/gf33/board.c   修改DDR
+
+/media/rootfs/lib/modules/4.1.13-g8dc6617/kernel/drivers/spi
+
+
+TI-EVM-调测USB OTG********************************************
+
+mount -t debugfs debugfs /mnt
+
+echo "device" > /mnt/48890000.usb/mode
+echo "device" > /mnt/488d0000.usb/mode
+
+echo "host" > /mnt/48890000.usb/mode
+echo "host" > /mnt/488d0000.usb/mode
+
+cat /mnt/48890000.usb/mode
+cat /mnt/488d0000.usb/mode
+
+../source/linux-4.1.13/arch/arm/boot/dts/dra7-evm.dts
+
+insmod /lib/modules/4.1.13-g8dc6617/kernel/drivers/usb/gadget/libcomposite.ko
+
+insmod /lib/modules/4.1.13-g8dc6617/kernel/drivers/usb/gadget/legacy/g_zero.ko
+
+insmod /lib/modules/4.1.13-g8dc6617/kernel/drivers/usb/gadget/legacy/g_mass_storage.ko file=/dev/ram0 stall=0
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+http://processors.wiki.ti.com/index.php/USB_General_Guide_Linux_v3.8#Dual_Role_Device_.28DRD.29_support
+
+l   USB Device Mode à Mass Storage Gadget
+
+http://processors.wiki.ti.com/index.php/Linux_Core_DWC3_User%27s_Guide#Device_Mode
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+McASP -> I2S********************************************
+
+Ø   Documentation
+
+                                Linux/Documentation/devicetree/bindings/sound/davinci-mcasp-audio.txt
+
+Ø   Processor SDK Linux Audio
+
+                                http://processors.wiki.ti.com/index.php/Processor_SDK_Linux_Audio
+ 
+l   Simple Audio Card
+
+https://git.ti.com/ti-linux-kernel/ti-linux-kernel/blobs/ti-linux-4.1.y/Documentation/devicetree/bindings/sound/simple-card.txt
+
+http://www.ti.com/lit/ds/slas510d/slas510d.pdf
+
+Audio Serial Data Bus Supports I2S, Left- and Right-Justified, DSP, and TDM Modes.
+
+
+********************************************
+UBOOT
+am57xx_evm_defconfig
+
+Kernel
+am57xx-evm_defconfig
+
+
+

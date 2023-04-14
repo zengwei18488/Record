@@ -1,0 +1,89 @@
+
+有一个PRUSS（Programmable Real time Unit Subsystem），可独立编程实现一些实时性要求高的个性化需求，实现产品的差异化
+
+1、Code
+
+git init
+git checkout -b ti-u-boot-2021.01
+git add -f .
+git commit -m "Initial commit"
+git remote add origin git@github.com:ADVANTECH-Corp/uboot-ti.git
+git push --set-upstream origin ti-u-boot-2021.01
+
+git clone git@github.com:ADVANTECH-Corp/uboot-ti.git -b ti-u-boot-2021.01
+ti-u-boot-2018.01
+
+git init
+git checkout -b linux-ti-staging-08.02.00.24
+git add -f .
+git commit -m "Initial commit"
+git remote add origin git@github.com:ADVANTECH-Corp/linux-ti.git
+git push --set-upstream origin linux-ti-staging-08.02.00.24
+
+git clone git@github.com:ADVANTECH-Corp/linux-ti.git -b linux-ti-staging-08.02.00.24
+linux-ti-staging-05.03.00
+
+
+2、Building uboot and kernel
+
+执行sdk本地文件，直接安装ti sdk，指定好安装路径（编译环境自动配置好）
+./ti-processor-sdk-linux-am335x-evm-08.02.00.24-Linux-x86-Install.bin
+
+sudo apt-get install bison
+sudo apt-get install flex
+
+./sdk-install.sh
+make u-boot
+make linux
+
+编译配置文件Rules.make,Makefile
+
+bin/
+作卡，sdcard image
+./create-sdcard.sh
+../board-support/prebuilt-images/
+
+3、Building yocto
+
+docker pull advrisc/u18.04-imx8lbv1
+
+docker run -it --name am335x-TI-yocto3.1 -v /media/store/ti-processor-sdk-linux-am335x-evm-08.02.00.24:/home/adv/TI:rw advrisc/u18.04-imx8lbv1 /bin/bash
+
+sudo dpkg-reconfigure dash
+
+$ tar -Jxvf gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz -C $HOME
+
+$ git clone https://git.ti.com/git/arago-project/oe-layersetup.git tisdk
+$ cd tisdk
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.02.00.24-config.txt
+$ cd build
+$ . conf/setenv
+$ export TOOLCHAIN_PATH_ARMV7=$HOME/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf
+$ export TOOLCHAIN_PATH_ARMV8=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu
+
+$ MACHINE=am335x-evm bitbake tisdk-base-image
+$ MACHINE=am335x-evm bitbake arago-core-tisdk-bundle
+
+
+4、Create Sdcard image
+注意目录名字为ti-sdk-000
+
+
+5、file system
+解压至rootfs分区
+tisdk-default-image-am335x-evm.tar.xz
+
+tisdk-rootfs-image-am335xepcr3220a1.tar.xz
+
+6、dts把不用的功能全部disabled
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+Kernel
+
+1、sdk makefile配置dtb信息
+2、Rule.make修改defconfig
+
+sudo cp arch/arm/boot/dts/am335x-epcr3220a1.dtb /media/zengwei/rootfs/boot/
+sudo cp arch/arm/boot/zImage /media/zengwei/rootfs/boot/zImage-5.10.100-g7a7a3af903 
+

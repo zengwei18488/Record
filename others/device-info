@@ -1,0 +1,20 @@
+zengwei@advantech-TY510Pro:~$ lspci
+00:00.0 Host bridge: Intel Corporation Device 3ec2 (rev 07)
+00:01.0 PCI bridge: Intel Corporation Skylake PCIe Controller (x16) (rev 07)
+00:02.0 Display controller: Intel Corporation Device 3e92
+00:08.0 System peripheral: Intel Corporation Skylake Gaussian Mixture Model
+00:14.0 USB controller: Intel Corporation Device a36d (rev 10)
+00:14.2 RAM memory: Intel Corporation Device a36f (rev 10)
+00:16.0 Communication controller: Intel Corporation Device a360 (rev 10)
+00:17.0 SATA controller: Intel Corporation Device a352 (rev 10)
+00:1b.0 PCI bridge: Intel Corporation Device a32c (rev f0)
+00:1c.0 PCI bridge: Intel Corporation Device a33d (rev f0)
+00:1f.0 ISA bridge: Intel Corporation Device a308 (rev 10)
+00:1f.3 Audio device: Intel Corporation Device a348 (rev 10)
+00:1f.4 SMBus: Intel Corporation Device a323 (rev 10)
+00:1f.5 Serial bus controller [0c80]: Intel Corporation Device a324 (rev 10)
+00:1f.6 Ethernet controller: Intel Corporation Ethernet Connection (7) I219-V (rev 10)
+01:00.0 VGA compatible controller: NVIDIA Corporation GK208 [GeForce GT 730] (rev a1)
+01:00.1 Audio device: NVIDIA Corporation GK208 HDMI/DP Audio Controller (rev a1)
+02:00.0 Non-Volatile memory controller: Intel Corporation Device f1a5 (rev 03)
+03:00.0 Network controller: Realtek Semiconductor Co., Ltd. RTL8821CE 802.11ac PCIe Wireless Network Adapter

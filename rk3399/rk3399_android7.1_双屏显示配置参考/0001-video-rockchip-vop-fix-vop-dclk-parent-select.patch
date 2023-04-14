@@ -1,0 +1,27 @@
+From 045595d451d49422c38977ae831a1b062dfd935e Mon Sep 17 00:00:00 2001
+From: Wyon Bi <bivvy.bi@rock-chips.com>
+Date: Thu, 8 Feb 2018 16:35:11 +0800
+Subject: [PATCH] video/rockchip: vop: fix vop dclk parent select
+
+Change-Id: I7da3fe1c90b4da7b32a8a339fd9d612f2c6077fe
+Signed-off-by: Wyon Bi <bivvy.bi@rock-chips.com>
+---
+ drivers/video/rockchip_vop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/video/rockchip_vop.c b/drivers/video/rockchip_vop.c
+index ecef853..50b8092 100644
+--- a/drivers/video/rockchip_vop.c
++++ b/drivers/video/rockchip_vop.c
+@@ -224,7 +224,7 @@ static int rockchip_vop_init(struct display_state *state)
+ 	if (conn_state->type == DRM_MODE_CONNECTOR_HDMIA)
+ 		rkclk_lcdc_dclk_pll_sel(crtc_state->crtc_id, 0);
+ 	else
+-		rkclk_lcdc_dclk_pll_sel(crtc_state->crtc_id, 1);
++		rkclk_lcdc_dclk_pll_sel(crtc_state->crtc_id, crtc_state->crtc_id);
+ #endif
+ 
+ 	/* Set aclk hclk and dclk */
+-- 
+1.9.1
+

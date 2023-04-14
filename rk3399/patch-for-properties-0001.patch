@@ -1,0 +1,360 @@
+diff --git a/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java b/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java
+index f55d1f7f83..f330f32baf 100755
+--- a/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java
++++ b/frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java
+@@ -754,6 +754,11 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
+         updateResources();
+ 
+         inflateStatusBarWindow(context);
++        if(!SystemProperties.getBoolean("persist.statusbar", true)){
++            mStatusBarWindow.setVisibility(View.INVISIBLE);
++        } else {
++            mStatusBarWindow.setVisibility(View.VISIBLE);
++        }
+         mStatusBarWindow.setService(this);
+         mStatusBarWindow.setOnTouchListener(new View.OnTouchListener() {
+             @Override
+@@ -3167,6 +3172,12 @@ public class PhoneStatusBar extends BaseStatusBar implements DemoMode,
+                 mSystemUiVisibility &= ~View.NAVIGATION_BAR_UNHIDE;
+             }
+ 
++            boolean prop = SystemProperties.getBoolean("persist.statusbar", true);
++            mStatusBarWindow.setVisibility(prop ? View.VISIBLE : View.GONE);
++            mStatusBarView.setVisibility(prop ? View.VISIBLE : View.GONE);
++            if(!prop){
++                return;
++            }
+             // send updated sysui visibility to window manager
+             notifyUiVisibilityChanged(mSystemUiVisibility);
+         }
+diff --git a/frameworks/base/services/core/java/com/android/server/policy/PhoneWindowManager.java b/frameworks/base/services/core/java/com/android/server/policy/PhoneWindowManager.java
+index c0a9b31f25..d76c2b30ae 100755
+--- a/frameworks/base/services/core/java/com/android/server/policy/PhoneWindowManager.java
++++ b/frameworks/base/services/core/java/com/android/server/policy/PhoneWindowManager.java
+@@ -4386,6 +4386,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                 // It's a system nav bar or a portrait screen; nav bar goes on bottom.
+                 int top = displayHeight - overscanBottom
+                         - getNavigationBarHeight(displayRotation, uiMode);
++                if (!SystemProperties.getBoolean("persist.navbar", true)){
++                    top = displayHeight - overscanBottom;
++                }
+                 mTmpNavigationFrame.set(0, top, displayWidth, displayHeight - overscanBottom);
+                 mStableBottom = mStableFullscreenBottom = mTmpNavigationFrame.top;
+                 if (transientNavBarShowing) {
+@@ -4412,6 +4415,9 @@ public class PhoneWindowManager implements WindowManagerPolicy {
+                 // Landscape screen; nav bar goes to the right.
+                 int left = displayWidth - overscanRight
+                         - getNavigationBarWidth(displayRotation, uiMode);
++                if (!SystemProperties.getBoolean("persist.navbar", true)){
++                    left = displayHeight - overscanBottom;
++                }
+                 mTmpNavigationFrame.set(left, 0, displayWidth - overscanRight, displayHeight);
+                 mStableRight = mStableFullscreenRight = mTmpNavigationFrame.left;
+                 if (transientNavBarShowing) {
+diff --git a/hardware/rockchip/librga/version.h b/hardware/rockchip/librga/version.h
+index d45b21556b..a0288ca628 100644
+--- a/hardware/rockchip/librga/version.h
++++ b/hardware/rockchip/librga/version.h
+@@ -1,6 +1,6 @@
+ #ifndef _rk_graphics_version_h_
+ #define _rk_graphics_version_h_
+ 
+-#define RK_GRAPHICS_VER "version:08e7f83+2019-09-23 17:08:38"
++#define RK_GRAPHICS_VER "version:3f98dfd+2020-01-14 11:53:48"
+ 
+ #endif // VERSION_H
+diff --git a/hardware/rockchip/omx_il/include/rockchip/git_info.h b/hardware/rockchip/omx_il/include/rockchip/git_info.h
+index da18c0a359..fa91855d80 100644
+--- a/hardware/rockchip/omx_il/include/rockchip/git_info.h
++++ b/hardware/rockchip/omx_il/include/rockchip/git_info.h
+@@ -1 +1 @@
+-#define OMX_COMPILE_INFO      "author:  zengwei\n time: Mon, 23 Sep 2019 17:08:38 +0800 git commit 08e7f83e8e7d53a50338545e107f07ff57b698f8 "
++#define OMX_COMPILE_INFO      "author:  zengwei\n time: Tue, 14 Jan 2020 11:53:48 +0800 git commit 3f98dfdb9764a4c46375fbb9628ba09f172cfbd1 "
+diff --git a/packages/apps/Settings/res/values-zh-rCN/strings.xml b/packages/apps/Settings/res/values-zh-rCN/strings.xml
+index cb6c8a3886..70539cbd0c 100755
+--- a/packages/apps/Settings/res/values-zh-rCN/strings.xml
++++ b/packages/apps/Settings/res/values-zh-rCN/strings.xml
+@@ -3276,6 +3276,12 @@
+    <string name="screen_full_vh">满屏显示</string>
+    <string name="hdmi_dual_screen_Ver_hor">副屏显示方向</string>
+ 
++   <string name="show_statusbar_str">状态栏</string>
++   <string name="show_navbar_str">导航栏</string>
++   <string name="show_statusbar_summary">是否显示状态栏</string>
++   <string name="show_navbar_summary">是否显示导航栏y</string>
++   <string name="ethernet_0_mac_address">以太网MAC地址(eth0)</string>
++   <string name="ethernet_1_mac_address">以太网MAC地址(eth1)</string>
+     <!-- for hdmi/dp -->
+     <string name="system_rotation">"系统方向"</string>
+     <string name="screen_title">"屏幕设置"</string>
+diff --git a/packages/apps/Settings/res/values/strings.xml b/packages/apps/Settings/res/values/strings.xml
+index d7a38b8095..17572c3196 100755
+--- a/packages/apps/Settings/res/values/strings.xml
++++ b/packages/apps/Settings/res/values/strings.xml
+@@ -7963,6 +7963,12 @@
+     <string name="screen_full_vh">screen full display</string>
+     <string name="hdmi_dual_screen_Ver_hor">Second display rotation</string>
+ 
++    <string name="show_statusbar_str">StatusBar</string>
++    <string name="show_navbar_str">NavigationBar</string>
++    <string name="show_statusbar_summary">Control status bar display</string>
++    <string name="show_navbar_summary">Control navigation bar display</string>
++    <string name="status_ethernet_0_mac_address">Ethernet MAC address(eth0)</string>
++    <string name="status_ethernet_1_mac_address">Ethernet MAC address(eth1)</string>
+     <!-- for hdmi/dp -->
+     <string name="system_rotation">System Direction</string>
+     <string name="screen_title">Screen Setting</string>
+diff --git a/packages/apps/Settings/res/xml/device_info_status.xml b/packages/apps/Settings/res/xml/device_info_status.xml
+index a0b7590509..59c5493e8c 100644
+--- a/packages/apps/Settings/res/xml/device_info_status.xml
++++ b/packages/apps/Settings/res/xml/device_info_status.xml
+@@ -59,6 +59,18 @@
+         android:title="@string/status_bt_address"
+         android:summary="@string/device_info_not_available"
+         android:persistent="false" />
++    <com.android.settings.CopyablePreference android:key="ethernet_0_mac_address"
++        android:enabled="false"
++        android:shouldDisableView="false"
++        android:title="@string/status_ethernet_0_mac_address"
++        android:summary="@string/device_info_not_available"
++        android:persistent="false" />
++    <com.android.settings.CopyablePreference android:key="ethernet_1_mac_address"
++        android:enabled="false"
++        android:shouldDisableView="false"
++        android:title="@string/status_ethernet_1_mac_address"
++        android:summary="@string/device_info_not_available"
++        android:persistent="false" />
+     <com.android.settings.CopyablePreference android:key="serial_number"
+         android:enabled="false"
+         android:shouldDisableView="false"
+diff --git a/packages/apps/Settings/res/xml/display_settings.xml b/packages/apps/Settings/res/xml/display_settings.xml
+index ad57326386..a4aeb7755a 100755
+--- a/packages/apps/Settings/res/xml/display_settings.xml
++++ b/packages/apps/Settings/res/xml/display_settings.xml
+@@ -117,6 +117,16 @@
+                 settings:keywords="@string/hdmi_settings"
+                 android:fragment="com.android.settings.HdmiSettings" />
+ 
++        <SwitchPreference
++                 android:key="show_statusbar"
++                 android:title="@string/show_statusbar_str"
++                 android:summary="@string/show_statusbar_summary" />
++
++        <SwitchPreference
++                 android:key="show_navbar"
++                 android:title="@string/show_navbar_str"
++                 android:summary="@string/show_navbar_summary" />
++
+         <DropDownPreference
+                 android:key="vr_display_pref"
+                 android:summary="%s"
+diff --git a/packages/apps/Settings/src/com/android/settings/DisplaySettings.java b/packages/apps/Settings/src/com/android/settings/DisplaySettings.java
+index 78e0647448..09abda23da 100755
+--- a/packages/apps/Settings/src/com/android/settings/DisplaySettings.java
++++ b/packages/apps/Settings/src/com/android/settings/DisplaySettings.java
+@@ -43,6 +43,7 @@ import android.support.v7.preference.Preference;
+ import android.support.v7.preference.Preference.OnPreferenceChangeListener;
+ import android.text.TextUtils;
+ import android.util.Log;
++import android.view.View;
+ 
+ import com.android.internal.app.NightDisplayController;
+ import com.android.internal.logging.MetricsLogger;
+@@ -88,6 +89,8 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
+     private static final String KEY_WALLPAPER = "wallpaper";
+     private static final String KEY_VR_DISPLAY_PREF = "vr_display_pref";
+     private static final String KEY_HDMI_SETTINGS = "hdmi_settings";
++    private static final String KEY_SHOW_STATUSBAR = "show_statusbar";
++    private static final String KEY_SHOW_NAVBAR = "show_navbar";
+ 
+     private Preference mFontSizePref;
+ 
+@@ -101,6 +104,9 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
+     private SwitchPreference mCameraGesturePreference;
+     private Preference mHDMIPreference;
+     private String mProduct;
++    private SwitchPreference mShowStatusbarPreference;
++    private SwitchPreference mShowNavbarPreference;
++    public View decorView;
+ 
+     @Override
+     protected int getMetricsCategory() {
+@@ -115,8 +121,21 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
+         String supportHDMI = SystemProperties.get("ro.rk.hdmi_enable", "false");
+         final Activity activity = getActivity();
+         final ContentResolver resolver = activity.getContentResolver();
++        decorView = getActivity().getWindow().getDecorView();
+ 
+         addPreferencesFromResource(R.xml.display_settings);
++
++        mShowStatusbarPreference = (SwitchPreference) findPreference(KEY_SHOW_STATUSBAR);
++        mShowStatusbarPreference.setOnPreferenceChangeListener(this);
++        mShowNavbarPreference = (SwitchPreference) findPreference(KEY_SHOW_NAVBAR);
++        mShowNavbarPreference.setOnPreferenceChangeListener(this);
++
++        String StrShowStatusBar = SystemProperties.get("persist.statusbar", "true");
++        mShowStatusbarPreference.setChecked("true".equals(StrShowStatusBar));
++
++        String StrShowNavBar = SystemProperties.get("persist.navbar", "true");
++        mShowNavbarPreference.setChecked("true".equals(StrShowNavBar));
++
+         mHDMIPreference = findPreference(KEY_HDMI_SETTINGS);
+         if(!"tablet".equals(mProduct) || !"true".equals(supportHDMI)){
+             getPreferenceScreen().removePreference(mHDMIPreference);
+@@ -462,9 +481,43 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
+                 Log.e(TAG, "could not persist night mode setting", e);
+             }
+         }
++
++        if (preference == mShowStatusbarPreference) {
++            boolean isShow = (Boolean)objValue;
++            ShowStatusBar(isShow);
++        }
++
++        if (preference == mShowNavbarPreference) {
++            boolean isShow = (Boolean)objValue;
++            ShowNavBar(isShow);
++        }
+         return true;
+     }
+ 
++    public void ShowStatusBar(boolean isShow) {
++        SystemProperties.set("persist.statusbar", "" + isShow);
++        if(!isShow){
++            decorView.setSystemUiVisibility(
++                    View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
++                    | View.SYSTEM_UI_FLAG_IMMERSIVE);
++            } else {
++                decorView.setSystemUiVisibility(
++                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
++            }
++    }
++
++    public void ShowNavBar(boolean isShow) {
++        SystemProperties.set("persist.navbar", "" + isShow);
++        if(!isShow){
++            decorView.setSystemUiVisibility(
++                    View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
++                    | View.SYSTEM_UI_FLAG_IMMERSIVE);
++            } else {
++                decorView.setSystemUiVisibility(
++                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
++            }
++    }
++
+     @Override
+     public boolean onPreferenceTreeClick(Preference preference) {
+         if (preference == mDozePreference) {
+diff --git a/packages/apps/Settings/src/com/android/settings/deviceinfo/Status.java b/packages/apps/Settings/src/com/android/settings/deviceinfo/Status.java
+index 1ba3978dfe..37c058361c 100644
+--- a/packages/apps/Settings/src/com/android/settings/deviceinfo/Status.java
++++ b/packages/apps/Settings/src/com/android/settings/deviceinfo/Status.java
+@@ -28,6 +28,7 @@ import android.content.res.Resources;
+ import android.net.ConnectivityManager;
+ import android.net.wifi.WifiInfo;
+ import android.net.wifi.WifiManager;
++import android.net.EthernetManager;
+ import android.os.Build;
+ import android.os.Bundle;
+ import android.os.Handler;
+@@ -46,6 +47,7 @@ import com.android.settings.Utils;
+ 
+ import java.lang.ref.WeakReference;
+ 
++
+ /**
+  * Display the following information
+  * # Battery Strength  : TODO
+@@ -65,6 +67,8 @@ public class Status extends SettingsPreferenceFragment {
+     private static final String KEY_WIMAX_MAC_ADDRESS = "wimax_mac_address";
+     private static final String KEY_SIM_STATUS = "sim_status";
+     private static final String KEY_IMEI_INFO = "imei_info";
++    private static final String KEY_ETHERNET_0_MAC_ADDRESS = "ethernet_0_mac_address";
++    private static final String KEY_ETHERNET_1_MAC_ADDRESS = "ethernet_1_mac_address";
+ 
+     // Broadcasts to listen to for connectivity changes.
+     private static final String[] CONNECTIVITY_INTENTS = {
+@@ -80,6 +84,7 @@ public class Status extends SettingsPreferenceFragment {
+ 
+     private ConnectivityManager mCM;
+     private WifiManager mWifiManager;
++    private EthernetManager mEthernetManager;
+ 
+     private Resources mRes;
+ 
+@@ -93,6 +98,8 @@ public class Status extends SettingsPreferenceFragment {
+     private Preference mIpAddress;
+     private Preference mWifiMacAddress;
+     private Preference mWimaxMacAddress;
++    private Preference mEthernet0MacAddress;
++	private Preference mEthernet1MacAddress;
+ 
+     private Handler mHandler;
+ 
+@@ -154,6 +161,10 @@ public class Status extends SettingsPreferenceFragment {
+         return  mCM.getNetworkInfo(ConnectivityManager.TYPE_WIMAX) != null;
+     }
+ 
++    private boolean showEthernetMacAddress() {
++        return SystemProperties.getBoolean("persist.ethernetmacaddr", true);
++    }
++
+     @Override
+     public void onCreate(Bundle icicle) {
+         super.onCreate(icicle);
+@@ -162,6 +173,7 @@ public class Status extends SettingsPreferenceFragment {
+ 
+         mCM = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+         mWifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
++        mEthernetManager =(EthernetManager) getSystemService(Context.ETHERNET_SERVICE);
+ 
+         addPreferencesFromResource(R.xml.device_info_status);
+         mBatteryLevel = findPreference(KEY_BATTERY_LEVEL);
+@@ -170,6 +182,8 @@ public class Status extends SettingsPreferenceFragment {
+         mWifiMacAddress = findPreference(KEY_WIFI_MAC_ADDRESS);
+         mWimaxMacAddress = findPreference(KEY_WIMAX_MAC_ADDRESS);
+         mIpAddress = findPreference(KEY_IP_ADDRESS);
++        mEthernet0MacAddress = findPreference(KEY_ETHERNET_0_MAC_ADDRESS);
++		mEthernet1MacAddress = findPreference(KEY_ETHERNET_1_MAC_ADDRESS);
+ 
+         mRes = getResources();
+         mUnknown = mRes.getString(R.string.device_info_default);
+@@ -188,6 +202,13 @@ public class Status extends SettingsPreferenceFragment {
+             mWimaxMacAddress = null;
+         }
+ 
++        if (!showEthernetMacAddress()) {
++            getPreferenceScreen().removePreference(mEthernet0MacAddress);
++            mEthernet0MacAddress = null;
++			getPreferenceScreen().removePreference(mEthernet1MacAddress);
++            mEthernet1MacAddress = null;
++        }
++
+         mConnectivityIntentFilter = new IntentFilter();
+         for (String intent: CONNECTIVITY_INTENTS) {
+              mConnectivityIntentFilter.addAction(intent);
+@@ -284,6 +305,16 @@ public class Status extends SettingsPreferenceFragment {
+         mWifiMacAddress.setSummary(!TextUtils.isEmpty(macAddress) ? macAddress : mUnavailable);
+     }
+ 
++    private void setEthernetStatus() {
++        if (mEthernet0MacAddress == null || mEthernet1MacAddress == null) {
++            return;
++        }
++        String eth0Address = mEthernetManager.getEthernetMacAddress("eth0");
++        String eth1Address = mEthernetManager.getEthernetMacAddress("eth1");
++        mEthernet0MacAddress.setSummary(!TextUtils.isEmpty(eth0Address) ? eth0Address : mUnavailable);
++        mEthernet1MacAddress.setSummary(!TextUtils.isEmpty(eth1Address) ? eth1Address : mUnavailable);
++    }
++
+     private void setIpAddressStatus() {
+         String ipAddress = Utils.getDefaultIpAddresses(this.mCM);
+         if (ipAddress != null) {
+@@ -311,6 +342,7 @@ public class Status extends SettingsPreferenceFragment {
+         setWifiStatus();
+         setBtStatus();
+         setIpAddressStatus();
++        setEthernetStatus();
+     }
+ 
+     void updateTimes() {

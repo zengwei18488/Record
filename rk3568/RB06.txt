@@ -1,0 +1,18 @@
+Kernel 
+ arch/arm64/boot/dts/rockchip/rk3568-ebcrb06-a1.dts
+
+Uboot
+ arch/arm/dts/rk3568-ebcrb06a1.dts
+ include/configs/rk3568_ebcrb06.h
+ board/rockchip/advantech/Kconfig 
+ configs/rk3568_ebcrb06a1_defconfig
+ 
+Android
+ device/rockchip/rk356x/ebcrb06_s/ebcrb06_s.mk
+ device/rockchip/rk356x/ebcrb06_s/BoardConfig.mk
+ device/rockchip/rk356x/AndroidProducts.mk
+
+Building
+ source build/envsetup.sh;lunch ebcrb06_s-userdebug;
+./build.sh -AUCKu
+./build.sh -AUCKuop

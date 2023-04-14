@@ -1,0 +1,11 @@
+https://software-dl.ti.com/processor-sdk-linux/esd/AM62X/08_06_00_42/exports/docs/linux/Overview_Building_the_SDK.html#build-options
+
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.06.00-config.txt
+
+
+WARNING: ti-k3-secdev-native-git-r0 do_fetch: Failed to fetch URL git://git.ti.com/git/security-development-tools/core-secdev-k3.git;protocol=https;branch=master, attempting MIRRORS if available
+ERROR: ti-k3-secdev-native-git-r0 do_fetch: Fetcher failure: Unable to find revision d14fbab5ccb21ffeb010ce57792c56a1308ed314 in branch master even from upstream
+ERROR: ti-k3-secdev-native-git-r0 do_fetch: Bitbake Fetcher Error: FetchError('Unable to fetch URL from any source.', 'git://git.ti.com/git/security-development-tools/core-secdev-k3.git;protocol=https;branch=master')
+ERROR: Logfile of failure stored in: /home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/x86_64-linux/ti-k3-secdev-native/git-r0/temp/log.do_fetch.8282
+ERROR: Task (virtual:native:/home/adv/yocto_bsp/tisdk/sources/meta-ti/recipes-ti/secdev/ti-k3-secdev_git.bb:do_fetch) failed with exit code '1'
+

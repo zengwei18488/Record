@@ -1,0 +1,26 @@
+eGTouch 支持
+
+1、CONFIG_TOUCHSCREEN_USB_COMPOSITE 去除
+Device Drivers->Input device support->Touchscreens->USB Touchscreen Driver
+2、eGTouchD eCalib（校准程序）放在/usr/bin
+3、eGTouchL.ini 放在/etc
+4、修改/etc/rc.local，添加/usr/bin/eGTouchD
+5、52-egalax-virtual.conf放在/usr/share/X11/xorg.conf.d目录
+
+
+调试lvds
+
+//setenv use_env_screen 1
+setenv prmry_screen hdmi-default
+setenv extend_screen lvds-am1024600k2tmqw
+
+1、excel中调试V、H，调试DSI Clock得到LVDS CLOCK
+2、注意LVDS数据格式是VESA还是JEIDA标准对应不同的clock
+3、soucre的值是位置倒置填入
+
+
+gpio-keys
+
+./arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator-linux-for-rk1808-cascade.dts
+
+./include/dt-bindings/input/rk-input.h

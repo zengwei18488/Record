@@ -1,0 +1,647 @@
+https://software-dl.ti.com/processor-sdk-linux/esd/AM62X/latest/exports/docs/devices/AM62X/index.html
+
+AM623 处理器专门针对的是物联网应用和网关，这类应用和网关通常可能受益于对象和手势识别,
+而配备3D GPU的AM625，则可以为 HMI 应用程序提供边缘 AI 和多达两个全高清显示器接口。
+ Sitara AM62x 入门套件 (SK-AM62) 来评估该全新的解决方案：
+ AM62x 入门套件 (SK) 评估模块 (EVM) 是一个围绕 AM62x 片上系统 (SoC) 构建的独立测试和开发平台。AM62x 处理器由一个四核 64 位 Arm®-Cortex®-A53 微处理器、单核 Arm Cortex-R5F 微处理器 (MCU) 和一个 Arm Cortex-M4F MCU 组成。
+SK-AM62 允许用户通过高清多媒体接口 (HDMI) [每英寸点数 (DPI)] 和低压差分信号 (LVDS)，以及使用串行、以太网、USB 等接口的行业通信解决方案来体验双显示功能。
+SK-AM62 可用于具有分辨率高达 2K 的 HDMI 显示或外部 LVDS 
+    SoC – TI Sitara AM6254，具有四个 Arm Cortex-A53 内核、一个 Cortex-M4F、3D GPU 和 2x PRU-SS
+    系统内存 – 2GB DDR4
+    存储 – QSPI 闪存、microSD 卡插槽
+    显示+音频
+        1x 双通道 LVDS
+        1 个基于 DPI/RGB444 的 HDMI 连接器，带有音频编解码器 TLV320AIC3106
+        支持双显，显示分辨率高达 2K
+    连接
+        2 个千兆以太网 RJ45 端口，支持时间敏感网络 (TSN)
+        双频 Wi-Fi、蓝牙 5.1 Classic + LE，通过 WiLink 8 WL1837MOD 模块
+    USB – 1x USB 2.0 Type-A 端口，1x USB 2.0 Type-C 双角色设备 (DRD)，支持 USB 启动
+    串行 – 通过 USB 2.0-B 端口的 4 个 UART
+    调试 – 板载 XDS110 联合测试行动组 (JTAG) 仿真器
+LP--Low Power--低功耗
+********************************************************************************************************************
+DDR
+uboot/arch/arm/dts/k3-am62x-rs10-ddr4-1600MTs.dtsi
+
+Uboot下，地址对应TRM 9.1.4
+=> md.l 0x0f308098
+
+MMC 操作
+先mmc dev 0选定当前操作盘符
+
+date -s "20230321 16:28:50"
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+EVM SK-AM62 eMMC
+
+booting from eMMC(boot分区)
+0 0 0 0 0 0 0 0    1 1 0 1 0 0 1 0
+0 0 0 0 0 0 0 0    1 1 0 1 0 0 1 1(用网页烧录方式bit7（fs/raw）要置1)
+
+1 2 3 4 5 6 7 8    1 2 3 4 5 6 7 8
+8------------15----0-------------7
+booting from SDcard
+0 1 0 0 0 0 0 0    1 1 0 0 0 0 1 0
+
+1 2 3 4 5 6 7 8    1 2 3 4 5 6 7 8
+8------------15----0-------------7
+
+booting from eMMC(UDA)
+0 0 0 0 0 0 0 0    1 1 0 0 0 0 1 0
+
+1 2 3 4 5 6 7 8    1 2 3 4 5 6 7 8
+8------------15----0-------------7
+
+
+mkfs.vfat -F 32 -n "boot" /dev/mmcblk0p1
+mkfs.ext4 -L "root" /dev/mmcblk0p2
+
+Disk /dev/sdc：29.55 GiB，31719424000 字节，61952000 个扇区
+Disk model: Storage Device  
+单元：扇区 / 1 * 512 = 512 字节
+扇区大小(逻辑/物理)：512 字节 / 512 字节
+I/O 大小(最小/最佳)：512 字节 / 512 字节
+磁盘标签类型：dos
+磁盘标识符：0x7f00581c
+
+设备       启动   起点    末尾    扇区   大小 Id 类型
+/dev/sdc1  *      2048  273605  271558 132.6M  c W95 FAT32 (LBA)
+/dev/sdc2       274432 6055311 5780880   2.8G 83 Linux
+
+sudo dfu-util -R -a bootloader -D tiboot3.bin
+sudo dfu-util -R -a tispl.bin -D tispl.bin
+sudo dfu-util -R -a u-boot.img -D u-boot.img
+
+mmc erase 0 
+U-Boot # printenv partitions
+U-Boot # setenv uuid_gpt_disk f1949731-d8a8-4f21-b545-31e3aee43add
+U-Boot # setenv uuid_gpt_rootfs 90fd3206-0a57-4639-93fe-7ae0b797ef63
+U-Boot # gpt write mmc 0 ${partitions}
+=> mmc dev 0 1
+
+=> fatload mmc 1 ${loadaddr} tiboot3.bin
+=> mmc write ${loadaddr} 0x0 0x400
+=> fatload mmc 1 ${loadaddr} tispl.bin
+=> mmc write ${loadaddr} 0x400 0x1000
+=> fatload mmc 1 ${loadaddr} u-boot.img
+=> mmc write ${loadaddr} 0x1400 0x2000
+
+=> mmc partconf 0 1 1 1
+=> mmc bootbus 0 2 0 0
+=> setenv mmcdev 0
+=> setenv bootpart 0
+=> boot
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+PINMUX   (ALW BALL NUMBER) 
+
+GPIO
+
+gpiochip3: GPIOs 311-398, parent: platform/601000.gpio, 601000.gpio:
+
+gpiochip2: GPIOs 399-485, parent: platform/600000.gpio, 600000.gpio:
+ gpio-430 (                    |tlv71033            ) out lo
+ gpio-431 (                    |regulator-3         ) out lo
+
+gpiochip1: GPIOs 486-509, parent: platform/4201000.gpio, 4201000.gpio:
+
+gpiochip0: GPIOs 510-511, parent: platform/3b000000.memory-controller, omap-gpmc:
+
+rs232_loop: rs232_loop.c
+	${CROSS_COMPILE}gcc -static -o rs232_loop rs232_loop.c -I${LINUX_DIR}/arch/${ARCH}/include
+
+********************************************************************************************************************
+RS485 or usb hub
+
+16C750-compatible
+
+./uart_test_64 /dev/ttyS3 -rsoa -b 115200 -c n81 -z 40 -h 600
+
+./uart_test_64 /dev/ttyS1 -rsoa -b 115200 -c n81 -z 40 -h 600 &
+
+./drivers/mmc/mmc_write.c
+
+********************************************************************************************************************
+
+git init
+git checkout -b am62x-u-boot-2021.01_08.06.00.007
+git add -f .
+git commit -m "Initial commit from TI"
+git remote add origin git@github.com:ADVANTECH-Corp/uboot-ti.git
+git push --set-upstream origin am62x-u-boot-2021.01_08.06.00.007
+
+git clone git@github.com:ADVANTECH-Corp/uboot-ti.git -b am62x-u-boot-2021.01_08.06.00.007
+
+
+git init
+git checkout -b linux-am623x-staging-08.06.00.42
+git add -f .
+git commit -m "Initial commit from TI"
+git remote add origin git@github.com:ADVANTECH-Corp/linux-ti.git
+git push --set-upstream origin linux-am623x-staging-08.06.00.42
+
+git clone git@github.com:ADVANTECH-Corp/linux-ti.git -b linux-am623x-staging-08.06.00.42
+
+********************************************************************************************************************
+
+https://software-dl.ti.com/processor-sdk-linux/esd/AM62X/latest/exports/docs/linux/How_to_Guides/Target/How_to_flash_emmc_device.html
+
+https://dev.ti.com/tirex/explore/content/linux-academy-AM62X-8.3.0.0.v2/ch-develop/dev-host.html#development-host
+
+https://dev.ti.com/tirex/explore/content/linux-academy-AM62X-8.3.0.0.v2/ch-develop/dev-build-uboot.html
+
+*********************************************************************************************************************
+
+文件新增RS10
+Uboot--------------------------------------------------------------------------------------
+
+arch/arm/dts/Makefile
+arch/arm/dts/k3-am623x-rs10.dts
+arch/arm/dts/k3-am62x-r5-rs10.dtb
+configs/am62x_rs10_a53_defconfig    CONFIG_TARGET_AM62x_A53_RS10=y
+configs/am62x_rs10_r5_defconfig     CONFIG_TARGET_AM62x_R5_RS10=y
+include/configs/am62x_rs10.h
+board/ti/am62x_adv/
+arch/arm/mach-k3/Kconfig       board/ti/am62x/Kconfig
+
+k3-am625-sk-u-boot.dtsi   ----   k3-am62x-sk-common-u-boot.dtsi
+k3-am62x-rs10-u-boot.dtsi  ----  k3-am62x-rs10-common-u-boot.dtsi
+./k3-am625-r5-sk.dts ---- k3-am62x-r5-sk-common.dtsi
+./k3-am62x-r5-rs10.dts ---- k3-am62x-r5-rs10-common.dtsi
+./k3-am62x-rs10.dts  ----- k3-am62x-rs10-common.dtsi
+./k3-am625-sk.dts ----  k3-am62x-sk-common.dtsi
+k3-am62x-sk-ddr4-1600MTs.dtsi
+
+**********************************************************************
+
+arch/arm/dts/k3-am625-sk-u-boot.dtsi
+arch/arm/mach-k3/am625_init.c
+arch/arm/mach-k3/include/mach/am62_hardware.h
+arch/arm/mach-k3/include/mach/am62_spl.h
+drivers/firmware/ti_sci_static_data.h
+
+Kernel--------------------------------------------------------------------------------------
+
+k3-am625.dtsi --> k3-am62.dtsi --> k3-am62-main.dtsi
+
+dtc -I dtb -O dts arch/arm64/boot/dts/ti/k3-am625-sk.dtb > k3-am625-sk-22.dts
+
+arch/arm64/boot/dts/ti/k3-am62x-rs10.dts
+arch/arm64/boot/dts/ti/Makefile
+arch/arm64/configs/tisdk_am62xx-rs10_defconfig
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+docker run -it --name am623x-TI-yocto3.1 --privileged  -v /media/store/ti-am62x-sdk:/home/adv/TI:rw advrisc/u18.04-imx8lbv1 /bin/bash
+
+docker run -it --name am623x-TI-yocto3.1 --privileged  -v /media/store/am623X:/home/adv/TI:rw advrisc/u18.04-imx8lbv1 /bin/bash
+
+docker run -it --name am623x-TI-yocto3.1 --privileged  -v /home/yanwei/link/ti/am623x:/home/adv/TI:rw advrisc/u18.04-imx8lbv1 /bin/bash
+
+docker编译
+Rules.make  源码需要在docker中解压
+linux-devkit.sh
+
+$ sudo apt update
+$ sudo apt install build-essential bison flex libssl-dev libncurses-dev u-boot-tools
+
+$ sudo chmod -R a+rw TI/
+$ export TI_SECURE_DEV_PKG=/home/adv/TI/ti-sdk/board-support/core-secdev-k3
+$ export PATH=$HOME/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf/bin:$PATH
+$ export PATH=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu/bin:$PATH
+
+$ export UBOOT_DIR=/home/adv/TI/ti-sdk/board-support/uboot-ti
+$ export K3IG_DIR=/home/adv/TI/ti-sdk/board-support/k3-image-gen-2022.01
+$ export SYSFW_DIR=/home/adv/TI/ti-sdk/linux-devkit/sysroots/aarch64-linux/lib/firmware/ti-sysfw
+$ export TFA_DIR=/home/adv/TI/ti-sdk/board-support/trusted-firmware-a-2.8+gitAUTOINC+2fcd408bb3
+
+$ export OPTEE_DIR=<path-to-ti-optee-os>
+
+R5
+To build u-boot-spl.bin for tiboot3.bin. Saved in $UBOOT_DIR/out/r5.
+$ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- am62x_rs10_r5_defconfig O=$UBOOT_DIR/out/r5
+$ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean O=$UBOOT_DIR/out/r5
+$ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=$UBOOT_DIR/out/r5
+
+To build tiboot3-am62x-gp-evm.bin. Saved in $K3IG_DIR. Requires u-boot-spl.bin and ti-fs-firmware-am62x-gp.bin.
+$ cd $K3IG_DIR
+$ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- SOC=am62x SOC_TYPE=gp SBL=$UBOOT_DIR/out/r5/spl/u-boot-spl.bin SYSFW_PATH=../prebuilt-images/ti-fs-firmware-am62x-gp.bin
+
+A53
+To build tispl.bin and u-boot.img. Saved in $UBOOT_DIR/out/a53. Requires bl31.bin, tee-pager_v2.bin, and ipc_echo_testb_mcu1_0_release_strip.xer5f.
+$ cd $UBOOT_DIR
+$ make ARCH=arm CROSS_COMPILE=aarch64-none-linux-gnu- distclean O=$UBOOT_DIR/out/a53
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- menuconfig
+$ make ARCH=arm CROSS_COMPILE=aarch64-none-linux-gnu- am62x_rs10_a53_defconfig O=$UBOOT_DIR/out/a53
+$ make ARCH=arm CROSS_COMPILE=aarch64-none-linux-gnu- am62x_evm_a53_defconfig O=$UBOOT_DIR/out/a53
+$ make ARCH=arm CROSS_COMPILE=aarch64-none-linux-gnu- ATF=$(pwd)/../prebuilt-images/bl31.bin TEE=$(pwd)/../prebuilt-images/bl32.bin DM=$(pwd)/../prebuilt-images/ipc_echo_testb_mcu1_0_release_strip.xer5f O=$UBOOT_DIR/out/a53
+
+
+/home/adv/TI/board-support/prebuilt-images
+
+
+U-BOOT ---------------------------------------------------------------------------------
+
+https://dev.ti.com/tirex/explore/content/linux-academy-AM62X-8.4.1.3.v2/ch-develop/dev-build-uboot.html
+https://software-dl.ti.com/processor-sdk-linux/esd/AM62X/08_06_00_42/exports/docs/linux/Foundational_Components/U-Boot/UG-General-Info.html#build-u-boot
+
+export PATH=$PATH:/home/adv/TI/linux-devkit/sysroots/x86_64-arago-linux/usr/bin
+
+Compile R5 Image
+
+$ cd <UBOOT_DIR>/
+$ export ARCH=arm
+$ export CROSS_COMPILE=arm-none-linux-gnueabihf-
+$ make distclean O=build/r5
+$ make am62x_evm_r5_defconfig O=build/r5
+$ make am62x_rs10_r5_defconfig O=build/r5
+$ make O=build/r5
+$ cd ../k3-image-gen-<version>/
+$ cd ../k3-image-gen-2022.01/
+$ make SOC=am62x SBL=<UBOOT_DIR>/build/r5/spl/u-boot-spl.bin SYSFW_PATH=../prebuilt-images/<TI-SYSFW.bin>
+$ make SOC=am62x SBL=/home/adv/TI/board-support/u-boot-2021.01-ti/build/r5/spl/u-boot-spl.bin SYSFW_PATH=../prebuilt-images/ti-fs-firmware-am62x-gp.bin
+
+Compile ARM64 Image
+
+$ cd <UBOOT_DIR>/
+$ export ARCH=arm
+$ export CROSS_COMPILE=aarch64-none-linux-gnu-
+$ make distclean O=build/arm64
+$ make am62x_evm_a53_defconfig O=build/arm64
+$ make am62x_rs10_a53_defconfig O=build/arm64
+$ make ATF=$(pwd)/../prebuilt-images/bl31.bin TEE=$(pwd)/../prebuilt-images/bl32.bin DM=$(pwd)/../prebuilt-images/ipc_echo_testb_mcu1_0_release_strip.xer5f O=build/arm64
+
+Target Images
+The steps above will generate the following U-Boot images.
+    tiboot3.bin
+        Located under folder <SDK_INSTALL_DIR>/board-support/k3-image-gen-<version>/. This is the first stage of the boot loader running on R5F core.
+    tispl.bin
+        Located under folder <UBOOT_DIR>/build/arm64/. This is the first stage of the boot loader running on A53 core.
+    u-boot.img
+        Located under folder <UBOOT_DIR>/build/arm64/. This is the second stage of the boot loader running on A53 core.
+
+Update U-Boot on SD Card----------------------------------------------------------------------
+$ ls /media/<username>/boot
+  tiboot3.bin  tispl.bin  uboot.env  u-boot.img  uEnv.txt  wificfg
+$ cd <UBOOT_DIR>
+$ sudo cp ../k3-image-gen-<version>/tiboot3.bin /media/<username>/boot/
+sudo cp ../k3-image-gen-2022.01/tiboot3.bin /media/zengwei/boot/
+$ sudo cp build/arm64/tispl.bin /media/<username>/boot/
+sudo cp build/arm64/tispl.bin /media/zengwei/boot/
+sudo cp out/a53/tispl.bin /media/zengwei/boot/
+$ sudo cp build/arm64/u-boot.img /media/<username>/boot/
+sudo cp build/arm64/u-boot.img /media/zengwei/boot/
+sudo cp out/a53/u-boot.img /media/zengwei/boot/
+$ sudo umount /media/<username>/boot
+
+SDCard to eMMC
+1、直接dd wic至/dev/mmcblk0
+2、删除uEnv.txt  wificfg
+hexdump -n 10000 -s 1073741824 -C /dev/mmcblk0
+hexdump -C /dev/mmcblk0boot0
+hexdump -n 100000 -C /dev/mmcblk1
+hexdump -n 100000 -C /dev/mmcblk0
+
+CTRLMMR_MAIN_DEVSTAT寄存器受到外部bootmode pin配置决定
+mmc_get_env_dev: mmc_get_env_dev: devstat = 0x243 bootmedia = 0x8(BOOT_DEVICE_MMC2) bootindex = 0
+mmc_get_env_dev: mmc_get_env_dev: devstat = 0x43 bootmedia = 0x9(BOOT_DEVICE_MMC1) bootindex = 0
+
+*****************************************************************************************************************
+
+Kernel -----------------------------------------------------------------------------------------
+
+Yocto build改变kernel defconfig
+KBUILD_DEFCONFIG
+CONFIG_NAME ?= "tisdk_${MACHINE}${ARAGO_KERNEL_SUFFIX}_defconfig"
+meta-ti/meta-ti/meta-ti/method-kernel/linux-ti-stage-5.10/K3/defconfig 
+../build/arago-tmp-external-arm-glibc/work/am62xx_rs10-linux/linux-ti-staging/5.10.168+gitAUTOINC+03723c87e6-r0b.arago5/build/.
+
+part /boot --source bootimg-partition --ondisk mmcblk0 --fstype=vfat --label boot --active --align 1024 --extra-space 2000M --use-uuid
+part / --source rootfs --ondisk mmcblk0 --fstype=ext4 --label root --align 1024 --use-uuid
+
+https://software-dl.ti.com/processor-sdk-linux/esd/AM62X/08_03_00_19/exports/docs/linux/Foundational_Components_Kernel_Users_Guide.html
+https://software-dl.ti.com/processor-sdk-linux/esd/AM62X/08_06_00_42/exports/docs/linux/Foundational_Components_Kernel_Users_Guide.html#preparing-to-build
+
+export PATH=/home/adv/TI/ti-sdk/linux-devkit/sysroots/x86_64-arago-linux/usr/bin:$PATH
+
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- distclean
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- tisdk_am62xx-evm_defconfig
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- tisdk_am62xx-rs10_defconfig
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- tisdk_am62xx-rs10_qmi_defconfig
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- menuconfig
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- Image
+This will result in a kernel image file being created in the arch/arm64/boot/ directory called Image.
+
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- ti/k3-am625-sk.dtb
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- ti/k3-am625-sk-lpmdemo.dtb
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- ti/k3-am625-skeleton.dtb
+Alternatively, you can build every device tree binary with command
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- dtbs
+
+Installing the Kernel Image and Device Tree Binaries-------------------------------------------------------
+cd <kernel sources dir>
+sudo cp arch/arm64/boot/Image <rootfs path>/boot
+sudo cp arch/arm64/boot/dts/ti/<dt file>.dtb <rootfs path>/boot
+
+sudo cp arch/arm64/boot/Image /media/zengwei/root/boot
+sudo cp arch/arm64/boot/dts/ti/k3-am62x-rs10.dtb /media/zengwei/root/boot
+
+scp -r yanwei@172.21.170.48:/home/yanwei/link/ti/am623x/linux-ti/arch/arm64/boot/Image  /media/zengwei/root/boot
+scp -r yanwei@172.21.170.48:/home/yanwei/link/ti/am623x/linux-ti/arch/arm64/boot/dts/ti/k3-am62x-rs10.dtb  /media/zengwei/root/boot
+
+$ make ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- modules
+
+Installing the Kernel Modules--------------------------------------------------------------------------
+sudo make ARCH=arm64  INSTALL_MOD_PATH=<path to root of file system> modules_install
+"Append INSTALL_MOD_STRIP=1 to the make modules_install command to reduce the size of the resulting installation"
+
+$ sudo make ARCH=arm64 INSTALL_MOD_PATH=/media/zengwei/root modules_install
+
+*********************************************************************************************************************
+
+How to flash eMMC device -------------------------------------------------------------------------------------
+https://software-dl.ti.com/processor-sdk-linux/esd/AM62X/latest/exports/docs/linux/How_to_Guides.html
+
+Copy the mksdboot.sh from host machine <PATH_TO_INSTALLER>/bin/mksdboot.sh into the target filesystem.
+$ chmod +x mksdboot.sh
+
+SD启动内核操作
+# echo 0 > /sys/block/mmcblk0boot0/force_ro
+# echo 0 > /sys/block/mmcblk0boot1/force_ro
+# dd if=tiboot3.bin of=/dev/mmcblk0boot0 seek=0
+# dd if=tispl.bin of=/dev/mmcblk0boot0 seek=1024
+# dd if=u-boot.img of=/dev/mmcblk0boot0 seek=5120
+-----------------------------------------------------
+SD启动Uboot操作
+=> mmc dev 0 1
+=> fatload mmc 1 ${loadaddr} tiboot3.bin
+=> mmc write ${loadaddr} 0x0 0x400
+=> fatload mmc 1 ${loadaddr} tispl.bin
+=> mmc write ${loadaddr} 0x400 0x1000
+=> fatload mmc 1 ${loadaddr} u-boot.img
+=> mmc write ${loadaddr} 0x1400 0x2000
+-----------------------------------------------------
+# fdisk /dev/mmcblk0
+# mkfs.ext4 /dev/mmcblk0p1
+# mkdir -p /mnt/temp
+# mount -t ext4 /dev/mmcblk0p1 /mnt/temp
+# cd /mnt/temp
+# tar xf <Linux image file copied from the host>     （SDK目录下filesystem）
+# cd ..
+# umount temp
+   mmc partconf dev [boot_ack boot_partition partition_access] - Show or change the bits of the PARTITION_CONFIG field of the specified device
+=> mmc partconf 0 1 1 1
+   mmc bootbus dev boot_bus_width reset_boot_bus_width boot_mode - Set the BOOT_BUS_WIDTH field of the specified device
+=> mmc bootbus 0 2 0 0
+=> setenv mmcdev 0
+=> setenv bootpart 0
+=> saveenv
+
+EMMC reboot(需要开启RST_n，硬件复位信号默认未启用)
+uboot => mmc rst-function 0 1
+kernel # mmc hwreset enable /dev/mmcblk0
+
+*********************************************************************************************************************
+Yocto3.1 Building
+  
+docker run -it --name am623x-yocto3.1-SDK -v /media/store/work/AM623X-SDK:/home/adv/yocto_bsp:rw advrisc/u18.04-imx8lbv1 /bin/bash
+
+sudo apt-get install build-essential autoconf \
+      automake bison \
+      flex libssl-dev bc u-boot-tools \
+      python diffstat \
+      texinfo gawk chrpath dos2unix \
+      wget unzip socat doxygen \
+      g++-multilib \
+      git python3-distutils python3-apt
+      
+sudo apt-get install build-essential autoconf \
+      automake bison \
+      flex libssl-dev bc u-boot-tools \
+      python diffstat \
+      texinfo gawk chrpath dos2unix \
+      wget unzip socat doxygen libc6:i386 \
+      libncurses5:i386 libstdc++6:i386 \
+      libz1:i386 g++-multilib \
+      git python3-distutils python3-apt
+
+$ sudo dpkg-reconfigure dash
+Be sure to select “No” when you are asked to use dash as the default system shell.
+
+$ wget https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz
+$ tar -Jxvf gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf.tar.xz -C $HOME
+$ wget https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz
+$ tar -Jxvf gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz -C $HOME
+
+$ git clone https://git.ti.com/git/security-development-tools/core-secdev-k3.git -b master
+$ export TI_SECURE_DEV_PKG=`pwd`/core-secdev-k3
+
+# added "export TI_SECURE_DEV_PKG_K3=$TI_SECURE_DEV_PKG" to build/conf/setenv
+echo $TI_SECURE_DEV_PKG_K3 
+
+Then let bitbake know the location by adding TI_SECURE_DEV_PKG_K3=$TI_SECURE_DEV_PKG to the list of environment variables before the bitbake command.
+
+git config --global user.name zengwei18488
+git config --global user.email wei.zeng@advantech.com.cn
+git config --global http.sslverify false
+git config --global url."https://".insteadOf git://
+
+EVM
+$ git clone https://git.ti.com/git/arago-project/oe-layersetup.git tisdk
+$ cd tisdk
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.04.01.03-config.txt
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.06.00-config.txt
+$ cd build
+$ . conf/setenv
+$ export TOOLCHAIN_PATH_ARMV7=$HOME/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf
+$ export TOOLCHAIN_PATH_ARMV8=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu
+
+$ MACHINE=am62xx-evm bitbake -k tisdk-base-image  (-k 有错继续执行)
+$ MACHINE=am62xx-evm bitbake -k tisdk-default-image
+$ MACHINE=am62xx-evm bitbake -k tisdk-core-bundle
+$ MACHINE=am62xx-evm bitbake -k meta-toolchain-arago-tisdk
+$ MACHINE=am62xx-evm bitbake tisdk-base-image -c cleansstate
+$ MACHINE=am62xx-evm bitbake tisdk-default-image -c cleansstate
+
+生成文件路径
+/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-evm/
+
+EBC-RS10 (注意k3r5文件)
+docker run -it --name am623x-yocto3.1 --privileged -v /build/AM62xx:/home/adv/yocto_bsp:rw advrisc/u18.04-imx8lbv1 /bin/bash
+sudo chmod -R a+rw yocto_bsp/
+$ git clone https://github.com/ADVANTECH-Corp/adv-ti-yocto-bsp.git -b processor-sdk-am62xx-08.04.01.03 tisdk
+$ git clone https://github.com/ADVANTECH-Corp/adv-ti-yocto-bsp.git -b processor-sdk-am62xx-08.06.00.42 tisdk
+$ cd tisdk
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.04.01.03-config.txt
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.06.00-config.txt
+$ cd build
+$ . conf/setenv
+$ export TOOLCHAIN_PATH_ARMV7=$HOME/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf
+$ export TOOLCHAIN_PATH_ARMV8=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu
+
+$ MACHINE=am62xx-rs10 bitbake -k tisdk-base-image 
+$ MACHINE=am62xx-rs10 bitbake u-boot-ti-staging
+$ MACHINE=am62xx-rs10 bitbake linux-ti-staging
+$ MACHINE=am62xx-rs10 bitbake tisdk-core-bundle
+$ MACHINE=am62xx-rs10 bitbake -k tisdk-default-image
+$ MACHINE=am62xx-rs10 bitbake tisdk-default-image
+$ MACHINE=am62xx-rs10 bitbake tisdk-default-image -c cleansstate
+$ MACHINE=am62xx-rs10 bitbake tisdk-base-image -c cleansstate
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+default tiboot3.bin for GP
+~/yocto_bsp/tisdk/sources/meta-arago/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile
+./meta-arago/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile/Makefile_sysfw-image:		make SBL=$(SBL_PATH) $(SYSFW_MAKEARGS) CROSS_COMPILE=$(CROSS_COMPILE_ARMV7) PATH=$(PATH):$(LINUXKERNEL_INSTALL_DIR)/scripts/dtc SOC_TYPE=$(DEVICE_TYPE_SEC)
+./meta-ti/recipes-bsp/ti-sci-fw/ti-sci-fw_git.bb:    CROSS_COMPILE=${TARGET_PREFIX} SOC=${SYSFW_SOC} SOC_TYPE=${SYSFW_SUFFIX} \
+./meta-arago/meta-arago-distro/recipes-tisdk/ti-tisdk-makefile/ti-tisdk-makefile/Makefile_sysfw-image:PLATFORM_TYPE_am62xx-evm = $(DEVICE_TYPE_SEC)
+
+make -j 16 CROSS_COMPILE=arm-none-linux-gnueabihf- SOC=am62x SOC_TYPE=gp CONFIG=rs10 SYSFW_DIR=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_gp-linux-gnueabi/ti-sci-fw/2022.01-r3.2/git/ti-sysfw SBL=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_gp-linux-gnueabi/ti-sci-fw/2022.01-r3.2/recipe-sysroot/boot/u-boot-spl.bin
+
+make -j 16 CROSS_COMPILE=arm-none-linux-gnueabihf- SOC=am62x SOC_TYPE=hs CONFIG=rs10 SYSFW_DIR=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_hs_se-linux-gnueabi/ti-sci-fw/2022.01-r3.2/git/ti-sysfw SBL=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_hs_se-linux-gnueabi/ti-sci-fw/2022.01-r3.2/recipe-sysroot/boot/u-boot-spl.bin
+
+make -j 16 CROSS_COMPILE=arm-none-linux-gnueabihf- SOC=am62x SOC_TYPE=hs-fs CONFIG=rs10 SYSFW_DIR=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_hs_fs-linux-gnueabi/ti-sci-fw/2022.01-r3.2/git/ti-sysfw SBL=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_hs_fs-linux-gnueabi/ti-sci-fw/2022.01-r3.2/recipe-sysroot/boot/u-boot-spl.bin
+
+make -j 16 CROSS_COMPILE=arm-none-linux-gnueabihf- SOC=am62x SOC_TYPE=hs CONFIG=rs10 SYSFW_DIR=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_hs_se-linux-gnueabi/ti-sci-fw/2022.01-r3.2/git/ti-sysfw SBL=/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_hs_se-linux-gnueabi/ti-sci-fw/2022.01-r3.2/recipe-sysroot/boot/u-boot-spl.bin
+| make: *** No rule to make target 'out/soc/am62x/rs10/board-cfg.bin', needed by 'out/soc/am62x/rs10/combined-tifs-cfg.bin'.  Stop.
+
+./arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_hs_se-linux-gnueabi/ti-sci-fw/2022.01-r3.2/imggen/out/soc/am62x/evm/board-cfg.bin
+./arago-tmp-external-arm-glibc/work/am62xx_rs10_k3r5_gp-linux-gnueabi/ti-sci-fw/2022.01-r3.2/imggen/soc/am62x/evm/
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$4
+
+Azure VM
+ssh -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-evm/tisdk-base-image-am62xx-evm-20221206023221.rootfs.wic.xz .
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/build_rk3399_risc/RK3399_N7_AIV7004_2023-04-12/android/kernel/scripts/resource_tool .
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-rs10/tisdk-default-image-am62xx-rs10.wic.xz .
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-rs10/tisdk-default-image-am62xx-rs10.tar.xz .
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-rs10/tisdk-default-image-am62xx-rs10.wic.xz .
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/downloads_am62xx_5.10.140.tar.gz . 
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/downloads_am62xx_5.10.168_08.06.00.42.tar.gz .
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-evm/tisdk-base-image-am62xx-evm.wic.xz .
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/sources/meta-ti/recipes-ti/secdev/ti-k3-secdev_git.bb . 
+
+Kernel Src
+/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work-shared/am62xx-rs10/kernel-source
+
+Uboot Src
+/home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work/am62xx_rs10-linux/u-boot-ti-staging/1_2021.01+gitAUTOINC+897a360843-r33/git
+
+sudo docker start 0aad62e713c2
+sudo docker attach 0aad62e713c2
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+https://github.com/ADVANTECH-Corp/meta-advantech2
+Branch aim30-dunfell_am62xx
+
+git init
+git checkout -b aim30-dunfell_am62xx
+git add -f .
+git commit -m "Initial commit from TI"
+git remote add origin git@github.com:ADVANTECH-Corp/meta-advantech2.git
+git push --set-upstream origin aim30-dunfell
+
+------------------------------------------------------------------------------------------------------------------
+https://github.com/ADVANTECH-Corp/adv-ti-yocto-bsp
+Branch processor-sdk-am62xx-08.06.00.42
+
+git init
+git checkout -b processor-sdk-am62xx-08.06.00.42
+git add -f .
+git commit -m "Initial commit from TI"
+git remote add origin git@github.com:ADVANTECH-Corp/adv-ti-yocto-bsp.git
+git push --set-upstream origin processor-sdk-am62xx-08.06.00.42
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+am57xxrom7510a1.conf
+recipes-kernel
+recipes-bsp
+
+advantech ready's <bb.server.process.ConnectionReader object at 0x7f462eb32518>
+advantech r's True
+advantech r's r
+advantech configuration's <bb.cookerdata.CookerConfiguration object at 0x7f462eaffb70> and sockname's /home/adv/yocto_bsp/tisdk/build/bitbake.sock
+NOTE: Started PRServer with DBfile: /home/adv/yocto_bsp/tisdk/build/cache/prserv.sqlite3, IP: 127.0.0.1, PORT: 43117, PID: 34
+
+advantech ready's <bb.server.process.ConnectionReader object at 0x7f430cd38518>
+advantech r's True
+ERROR: Unable to start bitbake server (None)
+ERROR: Server log for this session (/home/adv/yocto_bsp/tisdk/build/bitbake-cookerdaemon.log):
+--- Starting bitbake server pid 19 at 2022-11-16 17:11:52.471033 ---
+ERROR: Failed to obtain external Arm toolchain version: Execution of '${DEF_TOOLCHAIN_PATH}/bin/INVALID-linux-gcc -v' failed: command not found
+ERROR: Failed to obtain external Arm toolchain version: Execution of '${DEF_TOOLCHAIN_PATH}/bin/INVALID-linux-gcc -v' failed: command not found
+ERROR: Error: EXTERNAL_TOOLCHAIN path '${DEF_TOOLCHAIN_PATH}' does not exist
+
+
+ERROR: Unable to start bitbake server (None)
+ERROR: Server log for this session (/home/adv/yocto_bsp/tisdk/build/bitbake-cookerdaemon.log):
+--- Starting bitbake server pid 17450 at 2022-11-16 15:56:31.878189 ---
+ERROR: Failed to obtain external Arm toolchain version: Execution of '${DEF_TOOLCHAIN_PATH}/bin/INVALID-linux-gcc -v' failed: command not found
+ERROR: Failed to obtain external Arm toolchain version: Execution of '${DEF_TOOLCHAIN_PATH}/bin/INVALID-linux-gcc -v' failed: command not found
+ERROR: Error: EXTERNAL_TOOLCHAIN path '${DEF_TOOLCHAIN_PATH}' does not exist
+
+../sources/bitbake/lib/bb/server/process.py
+../sources/bitbake/lib/bb/main.py
+
+./sources/meta-arm/meta-arm-toolchain/conf/distro/include/external-arm-toolchain-versions.inc
+def eat_get_version(d):
+    try:
+        stdout, stderr = eat_run(d, 'gcc', '-v')
+    except bb.process.CmdError as exc:
+        bb.error('Failed to obtain external Arm toolchain version: %s' % exc)
+        return 'UNKNOWN'
+    else:
+        last_line = stderr.splitlines()[-1]
+        return last_line
+
+
+./sources/meta-arm/meta-arm-toolchain/conf/distro/include/tcmode-external-arm.inc
+python toolchain_metadata_setup () {
+    import subprocess
+    if not isinstance(e, bb.event.ConfigParsed):
+        return
+
+    d = e.data
+    l = d.createCopy()
+    l.finalize()
+    oe_import(l)
+
+    external_toolchain = l.getVar('EXTERNAL_TOOLCHAIN', True)
+    if not external_toolchain or external_toolchain == 'UNDEFINED':
+        bb.fatal("Error: EXTERNAL_TOOLCHAIN must be set to the path to your arm toolchain")
+
+    if not os.path.exists(external_toolchain):
+        bb.fatal("Error: EXTERNAL_TOOLCHAIN path '%s' does not exist" % external_toolchain)
+        
+CREATE TABLE PRMAIN_nohist  (
+version TEXT NOT NULL,
+pkgarch TEXT NOT NULL,
+checksum TEXT NOT NULL,
+value INTEGER,
+PRIMARY KEY (version, pkgarch, checksum));
+
+adv@0aad62e713c2:~/yocto_bsp/tisdk/build/cache$ sqlite3 prserv.sqlite3
+sqlite> SELECT * FROM PRMAIN_nohist;
+     
+NOTE: Started PRServer with DBfile: /home/adv/yocto_bsp/tisdk/build/cache/prserv.sqlite3, IP: 127.0.0.1, PORT: 45937, PID: 424
+Loading cache: 100% |########################################################| Time: 0:00:02
+Loaded 3638 entries from dependency cache.
+        
+NOTE: Started PRServer with DBfile: /home/adv/yocto_bsp/tisdk/build/cache/prserv.sqlite3, IP: 127.0.0.1, PORT: 45937, PID: 424
+ WARNING: /home/adv/yocto_bsp/tisdk/sources/meta-arago/meta-arago-distro/recipes-core/meta/external-arm-secondary-sdk-toolchain.bb: Variable key PREFERRED_PROVIDER_binutils-cross-canadian-${TRANSLATED_TARGET_ARCH} (external-arm-sdk-toolchain-${TRANSLATED_TARGET_ARCH}) replaces original key PREFERRED_PROVIDER_binutils-cross-canadian-invalid (external-arm-secondary-sdk-toolchain-${SECONDARY_TARGET_ARCH}).
+WARNING: /home/adv/yocto_bsp/tisdk/sources/meta-arago/meta-arago-distro/recipes-core/meta/external-arm-secondary-sdk-toolchain.bb: Variable key PREFERRED_PROVIDER_gcc-cross-canadian-${TRANSLATED_TARGET_ARCH} (external-arm-sdk-toolchain-${TRANSLATED_TARGET_ARCH}) replaces original key PREFERRED_PROVIDER_gcc-cross-canadian-invalid (external-arm-secondary-sdk-toolchain-${SECONDARY_TARGET_ARCH}).
+       
+        
+./meta-arago/meta-arago-distro/recipes-core/meta/external-arm-secondary-sdk-toolchain.bb
+./meta-arago/meta-arago-extras/recipes-core/meta/external-arm-sdk-toolchain.bb
+
+*********************************************************************************************************************

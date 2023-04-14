@@ -1,0 +1,522 @@
+device/rockchip/common/buildspec-rsb4680.mk
+device/rockchip/rsb4680/
+
+摄像头开关千次后无法预览
+urb is deactive, this urb complete cancel!dwc_otg_hc_halt: hcchar.b.chen 1, ep_type 1
+[  962.635387] urb(db3d2c00) cann't be finded in stream->urb(  (null), db3d3800, db3d1800, db3d3400, db3d2800)
+https://dev.t-firefly.com/thread-5069-2-1.html
+--- kernel/drivers/media/usb/uvc/uvc_video.c	2016-02-03 14:32:16.392447197 +0800
++++ kernel/drivers/media/usb/uvc/uvc_video.c.new	2016-02-03 14:32:07.752447068 +0800
+@@ -1641,7 +1641,7 @@
+ #endif
+ 
+ 		stream->urb[i] = urb;
+-
++		atomic_set(&stream->urb_state[i],UrbActive);/*Active Urb while device resume @ heavenward@outlook.com*/
+ 		/* ddl@rock-chips.com  */
+ 		stream->tasklet[i] = kmalloc(sizeof(struct tasklet_struct), GFP_KERNEL);
+ 		if (stream->tasklet[i] == NULL) {
+
+.repo/repo/repo sync -l 是sdk压缩包才需要本地签出，现在不需要执行了。
+repo sync 不带下面参数会把所有的无关分支代码也同步，没必要。
+.repo/repo/repo sync -c --force-sync 这个命令同步没报错，就是同步到最新的SDK代码了。
+
+sudo update-alternatives --config javadoc
+sudo update-alternatives --config javap
+sudo update-alternatives --config java
+
+../bin/repo init -u https://github.com/ADVANTECH-Rockchip/android-rk-manifest.git -b android-8.1.0-r46
+
+./mac_write /dev/mtd/mtd0 0xe0000 C4:00:AD:31:1F:32 AKS0162346 2019-06-05 SN0123456
+
+init.rc
+mgrep init.rc
+system/core/rootdir/init.rc
+device/rockchip/rsb4680/BoardConfig.mk TARGET_PROVIDES_INIT_RC
+
+mount -rw -o remount /system
+
+logcat -v time -b main -b radio -b system
+
+display EDID
+ cat /sys/class/display/HDMI/debug
+
+OTA
+./otapackager.sh AndroidBsp 2.1.0.0 rk3288-3.10.0-6.0.1 armv7 update.zip adbspstatus.sh adbspinstall.sh 0
+
+make -j8
+./mkimage.sh ota
+make -j8 otapackage
+
+To build boot loader
+
+Perform the following command in terminal console
+
+$ cd u-boot/
+$ make rk3288_rsb4680a3_2G_defconfig
+$ make -j4
+
+The one file, RK3288UbootLoader_V2.30.10.bin, will be located in directory
+
+To build kernel image
+
+Perform the following command in terminal console
+
+$ cd kernel/ 
+$ make rk3288_adv_defconfig
+$ make -j4 rk3288-rsb4680-a3.img
+
+To build system image
+
+Perform the following command in terminal console
+
+$ make -j4
+$./mkimage.sh
+
+
+"android.hardware.usb.action.USB_STATE"
+
+SIGN
+
+LVDS
+./Documentation/devicetree/bindings/video/display-timing.txt
+./Documentation/devicetree/bindings/video/rockchip_mipidsi_lcd.txt
+drivers/video/of_display_timing.c
+include/dt-bindings/rkfb/rk_fb.h
+
+camera
+arch/arm/rockchip/rk_camera.c
+arch/arm/rockchip/rk_camera_sensor_info.c
+driver/media/video/ov5460.c
+driver/media/video/rk_camsys/camsys_drv.c
+./kernel/drivers/media/video/rk_camsys/camsys_drv.c
+./kernel/drivers/media/video/rk_camsys/camsys_internal.h
+./kernel/drivers/media/video/rk_camsys/camsys_marvin.c
+
+dumpsys media.camera
+
+Rotation
+
+ .../base/services/core/java/com/android/server/display/LocalDisplayAdapter.java      |   2 +-
+ frameworks/base/services/core/java/com/android/server/wm/WindowManagerService.java   |   2 +-
+ frameworks/base/services/core/jni/com_android_server_input_InputManagerService.cpp   |   2 +-
+ frameworks/native/services/surfaceflinger/DisplayDevice.cpp                          |   2 +-
+ frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp                         |   3 +-
+ hardware/rockchip/camera/CameraHal/CameraHal_Module.cpp                              |   4 +-
+
+ro.sf.hwrotation  主屏初始化方向
+ro.orientation.einit  副屏初始化方向
+ro.same.orientation  主副屏方向是否相同   true/false
+ro.rotation.external  副屏是否随主屏旋转  true/false
+persist.display.portrait   主屏是否变为竖屏（90度）  true/false
+persist.demo.hdmirotation  副屏是竖屏还是横屏（0或270）   true/false  
+
+kernel/arch/arm/boot/dts/include/dt-bindings/pinctrl/rockchip-rk3288.h
+
+getprop | busybox grep cam
+
+setprop sys_graphic.cam_trace 1
+echo 1 > /sys/module/rk30_camera_oneframe/parameters/debug
+
+logcat -s CameraHal 
+
+io -4 0xff770018
+io -4 0xff770080
+
+uboot读写寄存器
+mm.l 0xff770000   写long
+md 0xff770000     读
+
+cat /sys/dvfs/dvfs_tree
+
+frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+  
+persist.dual.touch        是否支持双屏异触
+persist.dual.audio        是否支持HDMI和板载audio同时开启
+persist.inputmethod.dual  是否支持当有外接键盘时同时出现软键盘
+persist.ethernetmacaddr   是否在设置界面的状态页面显示以太网MAC地址
+persist.nvg.hide          是否开启导航栏隐藏按钮（开启后默认导航栏隐藏，底部上拉动作后显示，导航栏增加隐藏按钮）
+persist.sys.hwrotation    支持旋转（0，90，180，270），改造了ro.sys.hwrotation
+将persist.setting.os_version和persist.setting.board_version改造成为ro.setting.board_version和ro.setting.os_version，board_version显示系统serial number，os_version显示系统版本
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+DDR 频率ro.setting.os_version
+
+cat /d/clk/clk_summary | busybox grep -ri ddr
+echo p > /dev/video_state   performance mode,528MHz最高频率
+echo n > /dev/video_state   normal mode
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+android 8.1.0
+
+cp phill@172.22.16.148:/home/Local_BSP/BSP/RSB-4680_Android81/rsb-4680-Android8.1-github.tar.gz /media/store/rk3288-android8.1/github-src/
+
+docker run -it --name androidO8 -v /media/org-home/zengwei/work/rk3288-android8.1/repo-src-github:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+
+docker run -it --name androidO8-SiYi -v /home/zengwei/work/rk3288-android8.1/SiYi-android8.1:/home/adv/BSP:rw advrisc/u16.04-imx6abv5:20170523 /bin/bash
+
+If you suffer "server certificate verification failed", you can use the following command to disable SSL verification in git repositories with self-signed certificates.
+$ export GIT_SSL_NO_VERIFY=1
+or
+$ git config --global http.sslverify false
+If you get "The unauthenticated git protocol on port 9418 is no longer supported.", you can try it.
+$ git config --global url."https://".insteadOf git://
+
+docker run -it --name imx8-yocto3.3 -v /home/adv/test:/home/adv/BSP:rw advrisc/u18.04-imx8lbv1 /bin/bash
+
+
+Signed
+
+java -jar signapk.jar  platform.x509.pem platform.pk8　app-debug.apk launcherApp-debug.apk
+
+java -Djava.library.path=/home/zengwei/work/rk3288-android8.1/android8.1-r46/out/host/linux-x86/lib64 -jar signapk.jar platform.x509.pem platform.pk8 
+
+docker 容器配置信息
+/var/lib/docker/containers/c8c4259911cacf6f646fd30da055e97a651b04b3b2f1d92e0e63d043c111b486/config.v2.json
+
+
+
+cat /d/dri/0/summary     //查看vop状态
+cat /d/dw-hdmi-status
+ls -l /sys/class/drm/
+persist.sys.framebuffer.main=1920x1080    //FrameBuffer分辨率设置
+persist.sys.resolution.main  3840x2160@60
+persist.sys.resolution.aux   1920x1080@60
+sys.display.timeline
+
+查询主副显示
+sys.hwc.device.main
+sys.hwc.device.aux
+设置主副显示    //设置build.prop
+sys.hwc.device.primary
+sys.hwc.device.extend
+
+hardware/rockchip/hwcomposer/drmresources.cpp
+device/rockchip/common/resolution_white.xml
+
+cat /sys/devices/platform/display-subsystem/drm/card0/card0-HDMI-A-1/mode  //当前分辨率
+
+ro.sf.hwrotation=x [0 90 180 270]
+ro.same.orientation=true
+ro.orientation.einit=x [0 90 180 270]
+ro.rotation.external=true
+
+./frameworks/base/services/core/java/com/android/server/display/LocalDisplayAdapter.java:                        
+String value = SystemProperties.get("ro.orientation.einit");
+
+./frameworks/native/services/surfaceflinger/DisplayDevice.cpp:            
+property_get("ro.orientation.einit", value, "0");
+
+./frameworks/base/services/core/java/com/android/server/display/LocalDisplayAdapter.java:                
+int tmp_rotation = SystemProperties.getInt("ro.sf.hwrotation", 0);
+
+./frameworks/native/services/surfaceflinger/DisplayDevice.cpp:       
+ property_get("ro.sf.hwrotation", value, "0");
+
+./frameworks/native/services/surfaceflinger/SurfaceFlinger_hwc1.cpp:    
+property_get("ro.sf.hwrotation", value, "0");
+
+./frameworks/native/services/surfaceflinger/SurfaceFlinger.cpp:    
+property_get("ro.sf.hwrotation", value, "0");
+
+./device/rockchip/common/system.prop:ro.sf.hwrotation=0
+
+./hardware/rockchip/camera/CameraHal/CameraHal_Module.cpp:    
+property_get("ro.sf.hwrotation", property, "0");
+./hardware/rockchip/camera/CameraHal/CameraHal_Module.cpp:    
+property_get("ro.sf.hwrotation", property, "0");
+
+
+export JACK_SERVER_VM_ARGUMENTS="-Dfile.encoding=UTF-8 -XX:+TieredCompilation -Xmx4096m" 
+prebuilts/sdk/tools/jack-admin
+
+rkboot # setenv use_env_screen 1
+rkboot # setenv extend_screen edp-1024x768
+rkboot # saveenv
+
+source build/envsetup.sh;lunch rsb4680-userdebug
+$ make -j12;./mkimage.sh
+$./mkimage.sh
+
+u-boot 编译步骤
+make rk3288_rsb4680a3_2G_defconfig
+make rk3288_usm110a2_2G_defconfig
+./mkv7.sh
+
+kernel 编译步骤
+cd kernel
+make ARCH=arm rk3288_adv_defconfig
+make ARCH=arm rk3288-rsb4680-a3.img -j8
+make ARCH=arm rk3288-usm110-a2.img -j8
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+debian9
+
+make ARCH=arm rk3288-rsb4680-a3.img -j8
+./make.sh rsb4680a3-2G-rk3288
+
+make ARCH=arm rk3288_adv_defconfig
+
+make ARCH=arm menuconfig
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+lvds-g150xgel05
+setenv prmry_screen edp-1024x768
+setenv extend_screen hdmi-720p
+
+rk3288_rsb4680a3_2G_defconfig
+rk3288_adv_defconfig
+rk3288-rsb4680-a3.img
+rk3288-rsb4680-a3-digi.img
+
+rk3288_usm110a2_2G_defconfig
+rk3288_adv_defconfig
+rk3288-usm110-a2.img
+
+rk3288_ebcrb03a2_2G_defconfig
+rk3288_adv_defconfig
+rk3288-ebcrb03-a2.img
+
+rockchip_defconfig
+rk3288-tb_8846.img
+rk3288_defconfig
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+http://blog.csdn.net/bingqingsuimeng/article/details/50765011
+scripts/setlocalversion
+res="$res${scm:+}"，即可打印不带“+”的版本号“2.6.37”
+
+/dev/block/platform/ff0f0000.rksdmmc/by-name
+
+dumpsys SurfaceFlinger
+
+echo -e "AT+QCFG=\"DBGCTL\",0" > /dev/ttyUSB2   
+echo -e "AT+CFUN=0 \r\n" > /dev/ttyUSB2
+echo -e "AT+CFUN=1 \r\n" > /dev/ttyUSB2
+
+out/target/product/rsb4680/root/drmboot.ko
+out/target/product/rsb4680/recovery/root/drmboot.ko
+vendor/rockchip/common/nand/modules/arm/drmboot.ko
+vendor/rockchip/common/nand/modules/arm64/drmboot.ko
+
+./include/dt-bindings/pinctrl/rockchip.h
+
+export JAVA_HOME=/home/adv/jdk1.6.0_45
+export JRE_HOME=/home/adv/jdk1.6.0_45/jre
+export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+
+codec RK5660
+
+Docker
+
+docker search advrisc
+
+docker ps
+
+docker attach
+
+docker pull advrisc/u14.04-rk3288abv1
+docker pull advrisc/u14.04-imx6abv4
+
+docker run -it --name rk3288-debian9 --privileged -v /home/zengwei/rk3288-debian9:/home/adv/BSP:rw  zengwei123/u16.04-rk3288lbv1:latest /bin/bash
+
+docker run -it --name rk3288-android6.0-build -v /home/zengwei/rkABV1000_2018-05-30:/home/adv/android:rw advrisc/u14.04-rk3288abv1 /bin/bash
+
+docker run -it --name android-build -v /home/adv/android6.0:/home/adv/android:rw ubuntu:14.04 /bin/bash
+
+docker run -it --name android4.4.2-build -v /media/org-home/zengwei/work/EBC-GF66/android:/home/adv/android:rw advrisc/u14.04-imx6abv4 /bin/bash
+
+docker run -it --name android6.0-build -v /home/zengwei/work/rk3288/android6.0:/home/adv/android:rw advrisc/u14.04-imx6abv4 /bin/bash
+
+docker run -it --name android10.0-build -v /home/zengwei/work/rk3399/rk3399-android10:/home/adv/android:rw advrisc/u18.04-rk3399abv10 /bin/bash
+
+docker run -it --name imx8-android9-build -v /media/org-home/zengwei/work/imx8-android9:/home/adv/android:rw advrisc/u18.04-rk3399abv10 /bin/bash
+
+docker run -it --name android_p9 -v /home/adv/myandroid:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+
+docker run -it --name android6.0-build -v /home/adv/android6.0:/home/adv/android:rw advrisc/u14.04-imx6abv4 /bin/bash
+
+docker run -it --name android-build advrisc/u14.04-imx6abv4 /bin/bash
+
+docker run -it --name androidO8.1-build -v /home/zengwei/work/rk3288-android8.1/Bak/20200529-forRUIHAO/android8.1-r46:/home/adv/android:rw advrisc/u16.04-imx6abv5:20170523 /bin/bash
+
+docker run -it --name imx6-android6.0-build -v /media/bak/android-6.0.1_2.1.0:/home/adv/android:rw advrisc/u14.04-imx6abv4 /bin/bash
+
+
+cat /sys/class/i2c-adapter/i2c-2/2-001c/codec_reg        
+cat /sys/kernel/debug/asoc/RK_RT5660/rt5660.2-001c/codec_reg
+cat /sys/kernel/debug/regmap/ff890000.rockchip-i2s/registers
+cat /proc/asound/card0/pcm0p/sub0/hw_params
+cat /proc/asound/card0/pcm0c/sub0/hw_params
+cat /proc/asound/card0/pcm0p/sub0/sw_params
+cat /proc/asound/card0/pcm0c/sub0/sw_params
+
+cat /sys/power/state 
+freeze mem
+
+i2c
+./eeprog -xf -16 -r 0x01:0xff /dev/i2c-3 0x50
+
+./eeprog -f -16 -w 0x01 /dev/i2c-3 0x50
+
+echo a | ./eeprog -f -16 -w 0x01 /dev/i2c-3 0x50
+
+./eeprog -xf -16 -r 0x1:0x1 /dev/i2c-3 0x50
+
+./sys/devices/ff150000.i2c/i2c-3/3-0050/eeprom
+
+	eeprom: eeprom@50 {
+	    compatible = "atmel,24c32";
+	    reg = <0x50>;
+	    pagesize = <32>;
+	};
+
+miniPCIE
+GPIO7_A6  USBWIFI_PWR    222
+GPIO2_A7  PCIE_DIS_B     63
+
+rtc
+com_android_server_AlarmManagerService.cpp
+drivers\staging\android\alarm-dev.c
+drivers\rtc\interface.c
+include\linux\pm_wakeup.h
+
+
+hardware/ril/rild/rild.c
+//switchUser();
+
+OTG
+OTG_ID to low -> OTG_VBUS_DRV to low
+HOST_VBUS_DRV
+
+M.2
+GPIO4_D2  M2_SDIO_WAKE#  WL_HOST_WAKE   146
+GPIO5_C2  M2_SDIO_B_RST  WL_REG_ON      170
+
+UART0 GRF_GPIO4C_IOMUX
+Address: Operational Base + offset (0x0044)
+读取寄存器值
+io -4 0xff770044
+        00005555
+配置为 uart_bt
+io -4 0xff770044 0xffff5555
+1. 配置为 gpio
+io -4 0xff770044 0xffff0000
+2. 配置为 output
+io -4 -w 0xff7b0004 0x000f0000
+3. 输出高电平 测量 RX TX CTS RTS 是否为高电平
+io -4 -w 0xff7b0000 0x000f0000
+4. 输出低电平 测量 RX TX CTS RTS 是否为低电平
+io -4 -w 0xff7b0000 0x00000000
+
+io -4 -l 0x1c 0xff1b0004
+
+COM1  DEBUG-Port  /dev/ttyS0
+COM2  /dev/ttyS4
+COM3  /dev/ttyS1
+COM4  /dev/ttyS3
+COM5  /dev/ttyUSB0
+COM6  /dev/ttyUSB1
+
+su
+mount -rw -o remount /system
+
+cp /system/vendor/firmware/bcm43438a0.hcd /system/vendor/firmware/bcm43438a0.hcd.bak
+
+cp /storage/3EA4-4D84/AWNB136NF-BT-Test/bcm43241b4.hcd /system/vendor/firmware/bcm43438a0.hcd
+
+cp /storage/3EA4-4D84/AWNB136NF-BT-Test/bcm43438a0.hcd /system/vendor/firmware/bcm43438a0.hcd
+
+cp /system/vendor/firmware/bcm43438a0.hcd.bak /system/vendor/firmware/bcm43438a0.hcd
+
+./brcm_patchram_plus -d --no2bytes --patchram /system/vendor/firmware/bcm43438a0.hcd /dev/ttyS0
+./brcm_patchram_plus -d --no2bytes --patchram ./bcm43438a0.hcd /dev/ttyS0
+./brcm_patchram_plus -d --no2bytes --patchram ./bcm43241b4.hcd /dev/ttyS0
+
+rk3288.dtsi
+
+测试记录：
+hdmi
+logcat | busybox grep -ri HdmiControllerActivity
+
+SD
+USB
+UART ttyS1 右边白色 ttyS4 海岸线 ttyS3 左边白色 ttyUSB0 ttyUSB1 ttyS0 接M.2
+     DEBUG-CONSOLE ttyFIQ0 
+     soft flow ＆ hard flow
+
+stl不能用，串口高概率性卡住（不能写可以读）
+
+./uart_test /dev/ttyS0 -rsoa -f rtscts -c n81 -b 115200 -z 40 -h 10
+./uart_test_arm /dev/ttyS4 -rsoa -f rtscts -c n81 -b 115200 -z 40 -h 10
+./uart_test_arm /dev/ttymxc2 -rsoa -c n81 -b 115200 -z 60 -h 43200 &
+./uart_test_arm /dev/ttymxc3 -rsoa -c n81 -b 115200 -z 60 -h 43200 &
+./uart_test_arm /dev/ttymxc4 -rsoa -c n81 -b 115200 -z 60 -h 43200 &
+
+./stl /dev/ttyS0 –rvoa –b 115200 –c n81 –f xonxoff –h 60
+./stl /dev/ttyS4 –svoa –b 115200 –c n81 –f xonxoff –h 60
+
+./stl /dev/ttyS1 –rsvoa –b 115200 –c n81 –f xonxoff –h 60
+
+./stl /dev/ttyS4 –rvoa –b 115200 –c n81 –f rtscts –h 60
+./stl /dev/ttyS1 –svoa –b 115200 –c n81 –f rtscts –h 60
+./stl /dev/ttyS1 –rsvoa –b 115200 –c n81 –f rtscts –h 60
+
+DEBUG-CONSOLE
+arch/arm/mach-rockchip/rk_fiq_debugger.c
+
+HW Moniter
+cat sys/devices/ff280000.tsadc/temp1_input                     
+/sys/class/hwmon/hwmon0/device # cat temp1_input
+平台上一共有四路sensor读取内部温度， 0保留，1读取cpu，2读取gpu, 3未知
+
+GPIO0  这组只有24个gpio编码，所以算法是 “编码*32-8”
+GPIO0  GPIO7_A3  F25  219
+GPIO1  GPIO7_A4  E26  220
+GPIO2  GPIO7_A5  G24  221
+GPIO3  GPIO7_C5  F26  237
+GPIO4  GPIO8_A2  G21  250
+GPIO5  GPIO8_A3  B28  251
+GPIO6  GPIO8_A0  D24  248
+GPIO7  GPIO8_A1  C27  249
+
+
+#define GPIO_A0                 0
+#define GPIO_A1                 1
+#define GPIO_A2                 2
+#define GPIO_A3                 3
+#define GPIO_A4                 4
+#define GPIO_A5                 5
+#define GPIO_A6                 6
+#define GPIO_A7                 7
+#define GPIO_B0                 8
+#define GPIO_B1                 9
+#define GPIO_B2                 10
+#define GPIO_B3                 11
+#define GPIO_B4                 12
+#define GPIO_B5                 13
+#define GPIO_B6                 14
+#define GPIO_B7                 15
+#define GPIO_C0                 16
+#define GPIO_C1                 17
+#define GPIO_C2                 18
+#define GPIO_C3                 19
+#define GPIO_C4                 20
+#define GPIO_C5                 21
+#define GPIO_C6                 22
+#define GPIO_C7                 23
+#define GPIO_D0                 24
+#define GPIO_D1                 25
+#define GPIO_D2                 26
+#define GPIO_D3                 27
+#define GPIO_D4                 28
+#define GPIO_D5                 29
+#define GPIO_D6                 30
+#define GPIO_D7                 31
+

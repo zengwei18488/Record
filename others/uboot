@@ -1,0 +1,160 @@
+adv_boot
+1.把android下的uboot-imx文件夹改名为 adv_boot，并放入linux bsp的source 目录
+2. 然后到linux bsp下的scripte目录下，执行：
+# . ./setenv.sh
+# ./cfg_advboot.sh mx6q_rom-3420_1G_64b_adv_config
+# ./mk_advboot.sh
+Note.
+Advboot和uboot是同一份源码，只是config不同而已。
+
+Recovery
+  製作u-boot.imx，再燒至SD卡:
+
+          make mx6qrsb6410a1_2G_defconfig
+          make u-boot.imx -j4
+          sudo dd if=u-boot.imx of=/dev/sdX bs=512 seek=2;sync    (sdX: your SD Card)
+
+		  製作SPL，由SD卡開機後，燒至SPI上:
+
+          make mx6qrsb6410a1_2G_defconfig
+          make -j4
+		  
+          [On RSB-6410]
+          flash_erase /dev/mtd0 0 192
+          dd if=[your path]/SPL of=/dev/mtd0 bs=512 seek=2;sync
+
+mx6q_rom-7420_2G_64b_adv_samsung_config
+mx6q_rom-7420_1G_64b_adv_samsung_config
+mx6q_rom-7420_android_config
+mx6q_rom7420_2G_recovery_config
+
+mx6q_rom-7420_1G_64b_adv_micron_config
+
+GF-06 android443 源码中的uboot编译出来的adv-boot不能使用
+       使用GF-16的源码uboot编译的adv-boot可以用
+
+
+android5.1
+
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video=mxcfb0:dev=ldb,800X480M@60,bpp=32,if=RGB24 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off androidboot.hardware=freescale cma=384M androidboot.selinux=disabled androidboot.dm_verity=disabled
+
+
+
+U-boot移植
+
+1、include/configs/mx6q_rom-7420_2G_64b_adv_samsung.h
+2、cpu/arm_contexa8/start.S
+3、board/freescale/mx6q_rom-7420/Makefile
+4、board/freescale/mx6q_rom-7420/u-boot.lds
+（对于.lds文件，决定一个可执行程序的各个段的存储位置,以及入口地址，这也是链接定位的作用。）
+
+
+
+lvds双通道21寸    ＊＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayLDC video=mxcfb0:dev=ldb,LDB-1080P60,if=RGB24 bpp=32 ldb=spl0 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+            ldb_data.ipu_id = 0;
+            ldb_data.disp_id = 1;
+            ldb_data.ext_ref = 1;
+            ldb_data.mode = LDB_SPL_DI0;
+
+lvds单通道15寸        ＊＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayLSC video=mxcfb0:dev=ldb,LDB-1024X768,if=RGB24 bpp=32 ldb=sin0 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+            ldb_data.ipu_id = 0;
+            ldb_data.disp_id = 1;
+            ldb_data.ext_ref = 1;
+            ldb_data.mode = LDB_SEP0;
+            ldb_data.sec_ipu_id = 0;
+            ldb_data.sec_disp_id = 0;
+
+lvds单通道7寸touch
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayLSC video=mxcfb0:dev=ldb,LDB-800X480,if=RGB666 bpp=24 ldb=sin0 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayLSC video=mxcfb0:dev=ldb,LDB-1024X600,if=RGB666 bpp=24 ldb=sin0 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+
+lvds单通道7寸touch与HDMI扩展模式双显（一个操作一个播广告）
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayL7 video=mxcfb0:dev=ldb,LDB-800X480,if=RGB666,bpp=24 ldb=sin0 video=mxcfb1:dev=hdmi,1920x1080M@60,bpp=24 video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+三显7寸+hdmi+VGA
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video=mxcfb0:dev=ldb,LDB-800X480,if=RGB666,bpp=24 video=mxcfb1:dev=hdmi,1920x1080M@60 fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+三显15寸+hdmi+VGA
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video=mxcfb0:dev=ldb,LDB-1024X768,if=RGB24,bpp=32 ldb=sin0 video=mxcfb1:dev=hdmi,1920x1080M@60,bpp=32 fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+
+lvds-单通道clone双显   *＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayLSCC video=mxcfb0:dev=ldb,LDB-1024X768,if=RGB24 bpp=32 ldb=sep0 video=mxcfb1:dev=ldb,LDB-1024X768,if=RGB24 bpp=32 ldb=sep1 video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+            ldb_data.ipu_id = 0;
+            ldb_data.disp_id = 1;
+            ldb_data.ext_ref = 1;
+            ldb_data.mode = LDB_SEP0;
+            ldb_data.sec_ipu_id = 0;
+            ldb_data.sec_disp_id = 0;
+
+HDMI+VGA-clone双显      ＊＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=extension video=mxcfb0:dev=lcd,1920x1080M@60,bpp=32 video=mxcfb1:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+
+
+VGA单显
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=extension video=mxcfb0:dev=lcd,1920x1080M@60,bpp=32 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+static struct fsl_mxc_hdmi_core_platform_data ext_hdmi_core_data = {
+	.ipu_id = 1,
+	.disp_id = 1,
+};
+
+static struct fsl_mxc_ldb_platform_data ext_ldb_data = {
+	.ipu_id = 1,
+	.disp_id = 0,
+	.ext_ref = 1,
+	.mode = LDB_SEP0,
+	.sec_ipu_id = 0,
+	.sec_disp_id = 1,
+};
+
+HDMI单显
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=extension video=mxcfb0:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+lvds(双通道)+VGA双显    ＊＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=extension video=mxcfb0:dev=ldb,LDB-1080P60,if=RGB24,bpp=32 ldb=spl0 video=mxcfb1:dev=lcd,1920x1080M@60,bpp=32 video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+ 
+lvds(双通道)+HDMI双显    ＊＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayLDCH video=mxcfb0:dev=ldb,LDB-1080P60,if=RGB24,bpp=32 ldb=spl0 video=mxcfb1:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+            hdmi_core_data.ipu_id = 1;
+            hdmi_core_data.disp_id = 0;
+            ldb_data.ipu_id = 0;
+            ldb_data.disp_id = 1;
+            ldb_data.ext_ref = 1;
+            ldb_data.mode = LDB_SPL_DI0;
+
+lvds(单通道)+VGA双显      ＊＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=displayLSCV video=mxcfb0:dev=ldb,LDB-1024X768,if=RGB24 bpp=32 ldb=sin0 video=mxcfb1:dev=lcd,1920x1080M@60,bpp=32 video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+            ldb_data.ipu_id = 0;
+            ldb_data.disp_id = 1;
+            ldb_data.ext_ref = 1;
+            ldb_data.mode = LDB_SEP0;
+            ldb_data.sec_ipu_id = 0;
+            ldb_data.sec_disp_id = 0;
+ 
+lvds(单通道)+HDMI双显    ＊＊
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video_mode=extension video=mxcfb0:dev=ldb,LDB-1024X768,if=RGB24,bpp=32 ldb=sin0 video=mxcfb1:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb2:off video=mxcfb3:off fbmem=28M,28M androidboot.hardware=freescale pcie_testmode=off
+
+DDR
+IMX6DQRM,3873page,3959page
+
+
+PCIE
+ pcie_testmode=off  CONFIG_REALTEK_PHY(fec.c)  mx6_sabresd_pcie_data(board_mx6q-advantech.c)
+
+SATA
+mx6q_rom-7420.c  setup_sata reg |= 0x0593e4c6;
+
+
+
+

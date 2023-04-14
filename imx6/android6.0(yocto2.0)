@@ -1,0 +1,243 @@
+out/host/linux-x86/bin/simg2img out/target/product/rsb_6410_a2/system.img out/target/product/rsb_6410_a2/system_raw.img
+out/host/linux-x86/bin/simg2img out/target/product/rsb_4411_a1/system.img out/target/product/rsb_4411_a1/system_raw.img
+out/host/linux-x86/bin/simg2img out/target/product/rom_7421_a1/system.img out/target/product/rom_7421_a1/system_raw.img
+
+#Enable adb security for JB4.2.2
+- setprop ro.adb.secure 1
++ setprop ro.adb.secure 0
++ setprop ro.debuggable 1
+
+android-manifest
+Android Manifest file for Advantech RISC Devices boards
+
+android_mksd_script
+android_mksd_script
+
+android_mk_sd_emmc_script
+This is a shell script for create android sd card or emmc.
+
+Android_Patch
+Android_Patch for uboot and kernel
+
+git clone https://github.com/ADVANTECH-Corp/meta-advantech
+
+git clone https://github.com/ADVANTECH-Corp/build_scripts
+git clone https://github.com/ADVANTECH-Corp/android_risc_build -b android-6.0.1_r22
+
+android_risc_device       ~/work/android-6.0.1_2.1.0/device
+android source code device
+
+android_risc_frameworks     ~/work/android-6.0.1_2.1.0/frameworks
+android source code frameworks
+
+android_risc_system        ~/work/android-6.0.1_2.1.0/system
+android source code system
+
+android_risc_packages      ~/work/android-6.0.1_2.1.0/packages
+android source code packages
+ 
+android_risc_build         ~/work/android-6.0.1_2.1.0/build
+android source code build
+
+android_risc_bootable      ~/work/android-6.0.1_2.1.0/bootable
+android source code bootable
+
+android_risc_external     ~/work/android-6.0.1_2.1.0/external
+android source code external
+
+android_risc_libcore      ~/work/android-6.0.1_2.1.0/libcore
+android source code libcore
+
+android_risc_hardware     ~/work/android-6.0.1_2.1.0/hardware
+android source code hardware
+
+android_risc_bionic      ~/work/android-6.0.1_2.1.0/bionic
+android source code bionic
+
+android_risc_vendor      ~/work/android-6.0.1_2.1.0/vendor
+android_risc_vendor
+  
+android_risc_prebuilts    ~/work/android-6.0.1_2.1.0/prebuilts
+android source code prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9
+
+
+ADD device rsb6410
+
+1、added bootable/bootloader/uboot-imx/config/configs/mx6qrsb6410a1android_1G_defconfig
+
+2、modified device/fsl/imx6/AndroidProducts.mk
+
+   $(LOCAL_DIR)/rsb_6410_a1.mk
+
+3、modified device/fsl/imx6/vendorsetup.sh
+
+   add_lunch_combo rsb_6410_a1-eng
+   add_lunch_combo rsb_6410_a1-user
+
+4、modified build/envsetup.sh  
+
+   rsb_6410_a1
+
+5、added device/fsl/imx6/rsb_6410_a1.mk
+
+GPIO
+GPIO0  4 10 96+10  106       GPIO10 7 1   192+1  193
+GPIO1  6 11 160+11 171       GPIO11 7 13  192+13 195
+GPIO2  6 14 160+14 174       GPIO12 2 4   32+4   36
+GPIO3  6 15 160+15 175       GPIO13 2 5   32+5   37
+GPIO4  6 16 160+16 176       GPIO14 2 6   32+6   38
+GPIO5  2 25 32+25  57        GPIO15 2 7   32+7   39
+GPIO6  2 23 32+23  55        GPIO16 4 6   96+6   102
+GPIO7  2 24 32+24  56        GPIO17 4 7   96+7   103
+GPIO8  5 2  128+2  130
+GPIO9  1 2  0+2    2
+
+./drivers/pci/host/pci-imx6.c
+
+锁屏时十秒内suspend（开发者选项 -> 不锁定屏幕 或 去除锁屏）
+ “GF16出现开机后快速进入suspend（write /sys/power/wake_lock wake）”
+setprop ro.kernel.qemu 1
+setprop ro.lockscreen.disable.default true
+
+frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+
+
+长按关机键上传
+A、老版本内核由内核发出key值至gpio-keys上报
+   static struct gpio_keys_button imx6q_buttons[] = {
+#ifdef CONFIG_INPUT_SLEEP_BUTTON
+	GPIO_BUTTON(SABRESD_SLEEP, KEY_SUSPEND, 1, "sleep", 1, 1),
+#elif CONFIG_INPUT_ANDROID_POWER_KEY
+	GPIO_BUTTON(SABRESD_SLEEP, KEY_POWER, 1, "power-key", 1, 1),
+#endif
+};
+
+B、新版本由设备树文件配置
+   sleep {
+     label = "Sleep Button";
+     gpios = <&gpio1 1 1>;
+     linux,input-type = <1>; /* EV_KEY */
+     linux,code = <116>; /* KEY_POWER:116 */
+     debounce_interval = <1>;
+     gpio-key,wakeup;
+   };
+
+
+DISPLAY
+
+setenv bootargs console=ttymxc0,115200 androidboot.console=ttymxc0 vmalloc=400M init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,bpp=32,if=RGB24 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off androidboot.hardware=freescale cma=384M androidboot.selinux=disabled androidboot.dm_verity=disabled
+
+/*默认HDMI与VGA双显*/
+setenv bootargs console=ttymxc0,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb1:dev=lcd,1920x1080M@60,bpp=32 video=mxcfb2:off video=mxcfb3:off vmalloc=384M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=384M
+ 
+/*lvds 单显*/
+setenv bootargs console=ttymxc0,115200 init=/init video=mxcfb0:dev=ldb,bpp=32 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off vmalloc=384M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=384M 
+
+/*VGA*/
+setenv bootargs console=ttymxc0,115200 init=/init video=mxcfb0:dev=lcd,1920x1080M@60,bpp=32 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off vmalloc=384M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=384M 
+
+/*HDMI*/
+setenv bootargs console=ttymxc0,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb1:off video=mxcfb2:off video=mxcfb3:off vmalloc=384M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=384M
+
+/*HDMI clone to LVDS single channel*/
+setenv bootargs console=ttymxc0,115200 init=/init video=mxcfb0:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb1:dev=ldb,bpp=32 video=mxcfb2:off video=mxcfb3:off vmalloc=384M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=384M 
+
+/*VGA clone to LVDS single channel*/
+setenv bootargs console=ttymxc0,115200 init=/init video=mxcfb0:dev=lcd,1920x1080M@60,bpp=32 video=mxcfb1:dev=ldb,bpp=32 video=mxcfb2:off video=mxcfb3:off vmalloc=384M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=384M 
+
+/*LVDS single channel clone to HDMI*/
+setenv bootargs console=ttymxc0,115200 init=/init video=mxcfb0:dev=ldb,bpp=32 video=mxcfb1:dev=hdmi,bpp=32 video=mxcfb2:off video=mxcfb3:off vmalloc=384M androidboot.console=ttymxc0 consoleblank=0 androidboot.hardware=freescale cma=384M
+
+/*dual channel*/
+&ldb {
+   split-mode;
+
+ lvds-channel@1 {
+                   crtc = "ipu1-di0";
+                   status = "okay"
+         };
+
+yocto2.1
+
+
+HDMI
+setenv mmcargs setenv bootargs console=${console},${baudrate} ${smp} root=${mmcroot} video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24 video=mxcfb1:off video=mxcfb2:off;boot
+
+VGA
+setenv mmcargs setenv bootargs console=${console},${baudrate} ${smp} root=${mmcroot} video=mxcfb1:dev=lcd,1280x960M@60,if=RGB24 video=mxcfb0:off video=mxcfb2:off;boot
+
+LVDS
+
+setenv mmcargs setenv bootargs console=${console},${baudrate} ${smp} root=${mmcroot} video=mxcfb2:dev=ldb video=mxcfb0:off video=mxcfb1:off;boot
+
+HDMI+VGA
+setenv mmcargs setenv bootargs console=${console},${baudrate} ${smp} root=${mmcroot} video=mxcfb0:dev=hdmi,1920x1080M@60,if=RGB24 video=mxcfb1:dev=lcd,1280x960M@60,if=RGB24 video=mxcfb2:0ff;boot
+
+HDMI+LVDS
+setenv mmcargs setenv bootargs console=${console},${baudrate} ${smp} root=${mmcroot} video=mxcfb0:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb2:dev=ldb video=mxcfb1:off;boot
+
+VGA+LVDS
+setenv mmcargs setenv bootargs console=${console},${baudrate} ${smp} root=${mmcroot} video=mxcfb0:off video=mxcfb2:dev=ldb,800x600M@60,if=RGB24 video=mxcfb1:dev=lcd,1280x960M@60,if=RGB24;boot
+gst-launch-1.0 playbin uri=file:///Advantech/Advantech.avi  video-sink="imxv4l2sink device=/dev/video17"&
+
+audio
+gst-launch-1.0 playbin uri=file:///run/media/sda1/2014_A+TC.mp4 video-sink="imxv4l2sink device=/dev/video17" audio-sink="alsasink device=plughw:1" &
+
+/etc/asound.conf
+
+/etc/X11/xorg.conf这里配置默认显示界面fb，例如默认值fb0代表hdmi，fb2代表VGA，fb4代表lvds
+
+
+HDMI+VGA+LVDS
+setenv mmcargs setenv bootargs console=${console},${baudrate} ${smp} root=${mmcroot} video=mxcfb0:dev=hdmi,1920x1080M@60,bpp=32 video=mxcfb2:dev=ldb video=mxcfb1:dev=lcd,1024x768M@60,if=RGB24;boot
+
+gst-launch-1.0 playbin uri=file:///run/media/sda1/2014_A+TC.mp4  video-sink="imxv4l2sink device=/dev/video17"&
+gst-launch-1.0 playbin uri=file:///run/media/sda1/2014_A+TC.mp4 video-sink="imxv4l2sink device=/dev/video18" &
+gst-launch-1.0 playbin uri=file:///Advantech/Advantech.avi  video-sink="imxv4l2sink device=/dev/video20"&
+
+本地编译步骤：
+export ARCH=arm
+export CROSS_COMPILE=/home/jinlong_tan/am335x-02.00.00.00.00/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf-
+make imx_v7_adv_defconfig
+make mx6qrsb4411a1_1G_defconfig
+make mx6qrsb6410a2_1G_defconfig
+make imx6q-rsb6410-a2.dtb
+
+make menuconfig ARCH=arm
+make savedefconfig
+defconfig copy to imx_v7_adv_defconfig
+make
+
+3G\4G 
+driver/usb/serial/usb_wwan.c
+driver/usb/serial/option.c
+arch/arm/configs/imx_v7_adv_defconfig
+drivers/input/misc/Makefile
+drivers/input/misc/Kconfig
+arch/arm/boot/dts/imx6q-rsb6410-a1.dts
+
+docker build image
+
+su
+docker ps -a
+docker start servername
+docker attach servername
+
+EULA=1 MACHINE=imx6qrsb6410a2 source fsl-setup-release.sh -b imx6qrsb6410a2_20170511 -e x11
+"sources/meta-advantech/meta-fsl-imx6/conf/machine/imx6qrsb6410a2.conf"
+bitbake fsl-image-qt5
+
+
+
+
+
+
+
+
+
+
+
+
+
+

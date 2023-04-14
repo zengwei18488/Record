@@ -1,0 +1,402 @@
+Debian
+
+$ cd kernel
+$ make ARCH=arm64 rk3568_adv_defconfig -j8
+$ make ARCH=arm64 rk3568-rsb4810-a2.img -j12
+
+source envsetup.sh rockchip_rk356x_recovery
+make rkwifibt
+文件生成在 buildroot/output/rockchip_rk356x_recovery/build/rkwifibt-1.0.0/src/
+
+$ rm buildroot/output/rockchip_rk356x_recovery -rf
+$ source envsetup.sh rockchip_rk356x_recovery
+$ ./build.sh recovery
+
+文件系统
+$ source envsetup.sh rockchip_rk3568
+$ sudo BUILD_IN_DOCKER=TRUE ./mk-debian.sh
+
+debian/mk-image.sh
+
+debian/rk356x_azure/debian_adv/overlay-adv/lib/firmware
+
+fw_setenv disable_quiet
+
+drivers/bluetooth/rtk_btusb.c
+drivers/bluetooth/rtk_misc.c
+/lib/firmware/rtl8822bu_config
+/lib/firmware/rtl8822bu_fw
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+AI
+
+SSD Single Shot MultiBox Detector（Single shot指明了SSD算法属于one-stage方法，MultiBox指明了SSD是多框预测）
+one-stage目标检测方法
+
+4G quectel EC20 CEFAG
+抓log：setenforce 0
+       stop vendor.ril-daemon
+       getprop | grep ril
+       start vendor.ril-daemon
+       logcat -b radio -b main -b system -v time > /data/logcat-radio.txt
+       logcat -b all > /data/logcat-All.txt
+       logcat > /data/logcat.txt
+       dmesg > /data/dmesg.txt
+       
+       hardware/ril/rild/rild.rc
+       
+tcpdump -i eth0 icmp
+tcpdump -i any -p -vv -s 0 -w /sdcard/capture.pcap
+       
+
+wifi(276)       
+out/target/product/rsb4810_s/vendor_dlkm/lib/modules/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+out/soong/host/linux-x86/lib64/libconscrypt_openjdk_jni.so
+out/host/linux-x86/framework/signapk.jar
+build/target/product/security/platform.x509.pem
+build/target/product/security/platform.pk8
+java -Djava.library.path=. -jar signapk.jar platform.x509.pem platform.pk8 app-debug.apk app-debug-singed.apk
+
+################################################################################################
+can 测试
+https://github.com/linux-can/can-utils
+拷贝到项目app目录，在android studio界面点击app右键添加c++ cmake编译
+
+CAN 测试loopback手法：
+Connect CAN0 and CAN1
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 dbitrate 8000000 fd on
+ip link set can0 up
+ip -details link show can0
+candump can0 &
+
+ip link set can1 down
+ip link set can1 type can bitrate 1000000 dbitrate 8000000 fd on
+ip link set can1 up
+ip -details link show can1
+cansend can1 123##155
+
+################################################################################################
+recovery
+bootable/recovery/otautil/sysutil.cpp
+/bootable/recovery/recovery_main.cpp
+
+
+################################################################################################
+common/BoardConfig.mk   BOARD_AVB_ENABLE
+
+mmc erase 0 40960(停在uboot删除bootloader)
+
+./device/rockchip/common/rootdir/init.insmod.cfg
+/sys/kernel/debug/gpio   状态
+getevent       查看事件状态
+
+命令原意：gnu zip
+命令路径：/bin/gzip
+压缩后文件格式：.gz
+语法：gzip [选项] [文件]；值得注意的是：gzip不能压缩目录！
+常用选项：
+    -v ：可以显示压缩比，文件名等信息
+    -# ：#为数字，代表压缩等级，-1 压缩效率最高，压缩比最高；-9 压缩效率最低，压缩比最低！默认是 -6
+    -d ：解压缩参数；可以代替 gunzip 进行解压缩
+    -c ：将压缩的过程产生的数据显示出来；gzip对文件压缩后，产生一个.gz的压缩文件，不保留原文件。但可以通过-c将压缩产生的数据重定向到一个文件中，模拟"保存原文件压缩"
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+git config --global http.postBuffer 524288000
+git config --global http.postBuffer 1048576000
+    export GIT_TRACE_PACKET=1
+    export GIT_TRACE=1
+    export GIT_CURL_VERBOSE=1
+    (加入～/.bashrc)
+
+git clone --mirror https://gitlab.edgecenter.io/risc/rk3568/android-bsp.git
+git remote add origin https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Android/_git/android-bsp-part1
+git remote add origin https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Android/_git/android-bsp-part2
+git fetch -p origin
+git remote -v
+git push --mirror
+
+git@ssh.dev.azure.com:v3/AIM-Linux/
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+烧录失败问题
+./bootable/recovery/recovery_main.cpp:        ui->Print("Rebooting to bootloader...\n");
+./bootable/recovery/recovery_main.cpp:        ui->Print("Rebooting to recovery/fastboot...\n");
+./bootable/recovery/recovery_main.cpp:        ui->Print("Rebooting to recovery...\n");
+./bootable/recovery/recovery_main.cpp:        ui->Print("Rebooting to recovery/rescue...\n");
+./bootable/recovery/recovery_main.cpp:        ui->Print("Rebooting...\n");
+./bootable/recovery/recovery_main.cpp:        ui->Print("Rebooting...\n");
+./bootable/recovery/recovery_main.cpp:        ui->Print("Rebooting...\n");
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+AndroidS12   "refs/tags/android-12.0-mid-rkr1"
+
+git clone ssh://git@www.rockchip.com.cn:2222/repo-release/tools/repo
+
+代码下载
+../bin/repo/repo init --repo-url=ssh://git@www.rockchip.com.cn:2222/repo-release/tools/repo.git -u ssh://git@www.rockchip.com.cn:2222/Android_S/manifests.git -m Android12.xml
+
+镜像
+../bin/repo/repo init --repo-url=ssh://git@www.rockchip.com.cn:2222/repo-release/tools/repo.git -u ssh://git@www.rockchip.com.cn:2222/Android_S/manifests.git -m Android12.xml --mirror
+
+../bin/repo/repo sync -c
+
+error: vendor/rockchip/hardware/interfaces/codec2/Android.bp:1:1: module "c2_version": module source path "vendor/rockchip/hardware/interfaces/codec2/.git/HEAD" does not exist
+error: hardware/rockchip/librga/Android.bp:18:1: module "gen_rga_api_version": module source path "hardware/rockchip/librga/.git" does not exist
+packages/services/Iwlan/res
+
+
+ubuntu升级git版本
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt update;sudo apt install git
+
+docker run --privileged -it --name rk3568-rsb4810-androidS12 -v /home/zengwei/work/rk3568/docker-bsp:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+$ sudo chown adv:adv -R BSP
+$ cd ~/BSP
+$ sudo git clone https://github.com/rockchip-linux/repo.git
+$ mkdir rk3568_android_S12
+$ cd rk3568_android_S12
+$ git config --global user.name "Your Name"
+$ git config --global user.email you@example.com
+
+git config --global http.postBuffer 52428800000 # httpBuffer加大 
+git config --global http.maxRequestBuffer 100M
+git config --global core.compression 0 # 压缩配置
+
+# 修改配置文件
+export GIT_TRACE_PACKET=1
+export GIT_TRACE=1
+export GIT_CURL_VERBOSE=1
+
+$ ../repo/repo init -u https://dev.azure.com/AIM-Linux/RISC-RK3568-Android/_git/android-manifest -b rk3568-androidS12 -m RK3568_S12_AIV0001.xml
+$ ../repo/repo sync -c -f --no-clone-bundle -j`nproc`
+$ ../repo/repo forall -c git checkout -b local --track advantech-azure/rk3568-androidS12
+
+lrwxrwxrwx 1 zengwei   zengwei      74 Dec  7 17:49 adv_utils.c -> /home/zengwei/work/rk3568/rk3568_linux_u-boot_priv/board/rockchip/advantech/adv_utils.c
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+source build/envsetup.sh;lunch rsb4810_s-userdebug;
+./build.sh -AUCKu
+./build.sh -AUCKuop
+
+uboot
+./make.sh rk3568_rsb4810a2
+
+./make.sh env(编译工具)
+
+kernel
+make ARCH=arm64 rk3568_adv_defconfig
+make ARCH=arm64 rk3568-rsb4810-a2.img -j12
+
+kernel/configs/android-4.19/android-base-conditional.xml
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+arch/arm/mach-rockchip/rk3568/Kconfig
+configs/rk3568_rsb4810a2_defconfig
+include/configs/rk3568_rsb4810.h
+
+arch/arm64/Kconfig.platforms
+arch/arm64/boot/dts/rockchip/rk3568-android.dtsi
+arch/arm64/boot/dts/rockchip/rk3568-rsb4810-a2.dts
+arch/arm64/configs/rk3568_adv_defconfig
+
+rkbin/tools/ddrbin_param.txt
+rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.11.bin
+rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.14.bin
+./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.11.bin
+./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.14.bin
+
+ MINOR=1
+ [CODE471_OPTION]
+ NUM=1
+ Path1=bin/rk35/rk3568_ddr_1560MHz_v1.14.bin
+ Sleep=1
+ [CODE472_OPTION]
+ NUM=1
+ Path1=bin/rk35/rk356x_usbplug_v1.16.bin
+ [LOADER_OPTION]
+ NUM=2
+ LOADER1=FlashData
+ LOADER2=FlashBoot
+ FlashData=bin/rk35/rk3568_ddr_1560MHz_v1.14.bin
+ FlashBoot=bin/rk35/rk356x_spl_v1.12.bin
+ [OUTPUT]
+ PATH=rk356x_spl_loader_v1.11.111.bin
+ [SYSTEM]
+
+
+device/rockchip/common/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+device/rockchip/common/ueventd.rockchip.rc
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+uboot DVT
+./drivers/power/pmic/rk8xx.c   (PMIC:  RK8090 (on=0x10, off=0x00))
+./include/power/rk8xx_pmic.h
+
+@@@@@@@@@@@@@@@@@@@@ TESTING  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+RS485 支持                                                      @
+uboot 设置参数                                                  @
+kernel 创建节点，设置模式，改gpio（电压）                                                       @
+android 用工具改固件（firmware）                                                                          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+CAN
+IP配置、cansend、candump
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+GPIO
+PORT_GPIO=(96 98 99 100 101 102)
+echo 96 > /sys/class/gpio/export
+echo out > /sys/class/gpio/gpio96/direction
+echo 1 > /sys/class/gpio/gpio96/value
+echo 0 > /sys/class/gpio/gpio96/value
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Serial
+./serial_test /dev/ttyS4 115200 n 10 10
+./serial_test /dev/ttyS7 115200 h 10 10
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+LAN(暂无设置)
+"android.settings.NETWORK_PROVIDER_SETTINGS"
+./src/com/android/settings/network/NetworkProviderSettings.java
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+4G
+device/rockchip/common/device.mk:ifeq ($(strip $(BOARD_HAS_RK_4G_MODEM)),true)
+device/rockchip/common/BoardConfig.mk:BOARD_HAS_RK_4G_MODEM ?= false
+device/rockchip/common/modules/4g_modem.mk
+device/rockchip/common/4g_modem/manifest.xml
+device/rockchip/common/sepolicy/vendor/file_contexts
+hardware/interfaces/compatibility_matrices/compatibility_matrix.6.xml
+hardware/ril/rild/rild.rc
+device/rockchip/common/rootdir/ueventd.rockchip.rc
+
+/system/core/init/devices.cpp
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+编译公板EVB1-DDR4-V10
+
+Android
+
+source build/envsetup.sh;lunch rk3568_s-userdebug;
+./build.sh -AUCKu
+
+Kernel 
+
+make ARCH=arm64 rockchip_defconfig rk356x_evb.config android-11.config;
+make ARCH=arm64 rk3568-evb1-ddr4-v10.img -j12
+
+U-BOOT
+
+./make.sh rk3568
+
+
+git pull origin rk3568-androidS12 --allow-unrelated-histories
+git push origin rk3568-androidS12:rk3568-androidS12
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
+
+AndroidR11
+
+
+/home/zengwei/work/rk3568/rk3568-androidR11/rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.10.bin
+
+SELinux
+
+cat /proc/kmsg | grep avc > /data/avc_log.txt
+audit2allow -i avc_log.txt
+获取编译环境变量值
+(get_build_var BOARD_SEPOLICY_DIRS)   “get_build_var BOARD_PLAT_PRIVATE_SEPOLICY_DIR“
+device/rockchip/common/sepolicy/vendor 
+device/rockchip/common/sepolicy/split 
+vendor/rockchip/hardware/interfaces/neuralnetworks/1.0/default/sepolicy 
+device/rockchip/rk356x/sepolicy_vendor
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+公板
+source build/envsetup.sh;lunch rk3568_r-userdebug;
+
+uboot
+./make.sh rk3568
+
+kernel
+
+make ARCH=arm64 rockchip_defconfig rk356x_evb.config android-11.config rk356x.config;
+make ARCH=arm64 rk3568-evb1-ddr4-v10.img -j12
+
+RSB4810
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+./build.sh -AUCKu
+
+source build/envsetup.sh;lunch rsb4810_r-userdebug;
+
+uboot
+./make.sh rk3568_rsb4810a2
+
+kernel
+make ARCH=arm64 rk3568_adv_defconfig android-11.config rk356x.config;
+make ARCH=arm64 rk3568-rsb4810-a2.img -j12
+
+make installclean
+make -j8
+./mkimage.sh
+
+./build.sh -A
+
+git init
+git checkout -b rk3568-androidS12
+git add .
+git commit -m "Initial commit"
+git remote add origin https://gitlab.edgecenter.io/risc/rk3568/android-uboot.git
+git remote add origin https://gitlab.edgecenter.io/risc/rk3568/android-kernel.git
+git remote add origin https://gitlab.edgecenter.io/risc/rk3568/android-bsp.git
+git remote add origin https://gitlab.edgecenter.io/risc/rk3568/android-manifest.git
+
+git remote add origin https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Android/_git/android-bsp
+
+git push --set-upstream origin rk3568-androidS12
+
+android-11.0-mid-rkr10
+
+source build/envsetup.sh;lunch rk3568_r-userdebug;./build.sh -AUCKu
+
+新增远程标记
+git tag -f RK3568_S12_AIV0001
+git push origin --tags
+ 
+远程分支更名
+git push --delete origin rk3399-androidR11
+git branch -m rk3399-androidR11 rk3568-androidR11
+git push origin rk3568-androidR11
+
+
+远程标记变更
+git tag -d RK3568_S12_AIV0001
+git push origin :refs/tags/RK3568_S12_AIV0001
+git tag -a v0.1.2 -m “0.1.2版本”
+git push origin --tags

@@ -1,0 +1,29 @@
+Kernel
+
+make rk3399_rc03_defconfig
+make ARCH=arm64 rk3399-rc03-b1.img
+
+UBOOT
+
+./make.sh rk3399_rc03b1_4G
+
+=> setenv prmry_screen hdmi-default
+=> setenv extend_screen mipi-tv080ll
+=> saveenv
+
+放视频
+gst-launch-1.0 playbin uri=file:///media/root
+
+
+Micro USB接口自动切换数据模式和OTG模式
+设置OTG模式：fw_setenv downing yes
+            fw_setenv downing(默认模式，关掉usb 5v电，不能传送数据，使能mini type C)
+            
+      5V
+echo 0 > /sys/class/gpio/gpio88/value      //打开
+echo 1 > /sys/class/gpio/gpio88/value      //关闭
+cat /sys/class/gpio/gpio88/value
+
+
+
+

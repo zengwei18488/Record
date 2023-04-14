@@ -1,0 +1,6 @@
+1.合入dts中mipi和edp部分的修改(可以搜索关键字“mipi”，“edp”)。
+2.edp,mipi的屏参请按实际的屏参配置。
+3.build.prop中添加下面两个属性：
+sys.hwc.device.primary=eDP
+sys.hwc.device.extend=DSI
+4.uboot中打入补丁0001-video-rockchip-vop-fix-vop-dclk-parent-select.patch

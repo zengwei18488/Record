@@ -1,0 +1,97 @@
+1、删除过期检测
+删除<TCheckForUpdatesState>节点（即<TCheckForUpdatesState>到</TCheckForUpdatesState>之间的部分）
+ vim /home/zengwei/.wine/drive_c/users/zengwei/Application\ Data/Scooter\ Software/Beyond\ Compare\ 3/BCState.xml
+
+ubuntu 18.04 添加新硬盘
+  超过2t使用 parted分区（GPT）
+  自动挂载配置/etc/fstab   (uuuid使用blkid查看)，挂载失败会导致系统无法引导进入emergency mode
+
+2、auto power on off
+dmesg | busybox grep -ri "alm is"
+logcat | busybox grep -ri "advantech"
+cat /sys/class/rtc/rtc0/since_epoch
+dmesg | busybox grep -ri rtc_alm_set
+
+        modified:   frameworks/base/services/core/java/com/android/server/AlarmManagerService.java
+        modified:   frameworks/base/services/core/jni/com_android_server_AlarmManagerService.cpp
+        modified:   packages/apps/Settings/src/com/android/settings/AutoPowerBroadcastReceive.java
+        modified:   packages/apps/Settings/src/com/android/settings/DateTimeSettings.java
+
+3、
+Android10 编译报错 error='Not enough space' (errno=12)
+
+重启失效：sudo sh -c 'echo 2000000 > /proc/sys/vm/max_map_count'
+建议使用以下方式彻底解决：vm.max_map_count=2000000 写入到 /etc/sysctl.conf 文件,
+    然后 sudo sysctl -p 命令从配置文件重新读取属性值;
+    然后还可以使用 sudo sysctl -a|grep max_map_count 命令查看是否设置成功
+
+Build sandboxing disabled due to nsjail error. This may become fatal in the future.
+swap分区没有设定
+
+ frameworks/base/api/current.txt                                                      |   2 +
+ frameworks/base/api/system-current.txt                                               |   2 +
+ frameworks/base/core/java/android/provider/Settings.java                             |  15 +++
+ frameworks/base/packages/SystemUI/res/layout/system_icons.xml                        |  10 +-
+ .../SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarTransitions.java |   2 +-
+ frameworks/base/services/core/java/com/android/server/AlarmManagerService.java       |  16 ++++
+ frameworks/base/services/core/jni/com_android_server_AlarmManagerService.cpp         |  98 +++++++++++++++++++
+ packages/apps/Settings/AndroidManifest.xml                                           |  30 ++++--
+ packages/apps/Settings/res/values/strings.xml                                        |  13 ++-
+ packages/apps/Settings/res/xml/dashboard_categories.xml                              |   4 +-
+ packages/apps/Settings/res/xml/date_time_prefs.xml                                   |  18 ++++
+ packages/apps/Settings/res/xml/device_info_status.xml                                |   4 +-
+ packages/apps/Settings/src/com/android/settings/DateTimeSettings.java                | 205 +++++++++++++++++++++++++++++++++++++++-
+ packages/apps/Settings/src/com/android/settings/DeviceInfoSettings.java              |   3 +-
+ packages/apps/Settings/src/com/android/settings/SettingsActivity.java                |  10 +-
+ packages/apps/Settings/src/com/android/settings/deviceinfo/Status.java               |   4 +-
+
+当前   关    开
+关    当前   开
+关     开    当前（开     关    当前）
+当前   开    关
+开    当前   关
+
+3、navigation bar hide
+
+https://blog.csdn.net/zuo_er_lyf/article/details/82254316
+https://blog.csdn.net/way_ping_li/article/details/45727335
+
+ frameworks/base/packages/SystemUI/res/drawable-hdpi/ic_sysbar_hide.png
+ frameworks/base/packages/SystemUI/res/drawable-mdpi/ic_sysbar_hide.png
+ frameworks/base/packages/SystemUI/res/values/strings.xml
+.../SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarView.java
+frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBar.java
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+无法repo sync
+1、升级python，比如升级到3.6
+sudo apt-get install python3.6
+删除旧的
+sudo apt-get remove python
+rm /usr/bin/python
+sudo ln -s /usr/bin/python /usr/bin/python3.6
+2、替换repo
+curl https://storage.googleapis.com/git-repo-downloads/repo-1 > ./repo
+curl http://commondatastorage.googleapis.com/git-repo-downloads/repo  > ~/bin/repo
+git clone https://gerrit-googlesource.lug.ustc.edu.cn/git-repo
+
+#######################################################################################
+
+error: src refspec xxx does not match any.
+error: failed to push some refs to 'ssh://git@'
+解决方法：git push origin HEAD:branchName
+
+
+git分支重命名并推送到远程
+1、修改本地分支名称
+git branch -m oldBranchName newBranchName
+
+2、将本地分支的远程分支删除
+git push origin :oldBranchName
+
+3、将改名后的本地分支推送到远程，并将本地分支与之关联
+git push --set-upstream origin newBranchName
+
+
+

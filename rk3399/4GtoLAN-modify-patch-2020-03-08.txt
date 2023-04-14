@@ -1,0 +1,824 @@
+diff --git a/build/tools/releasetools/blockimgdiff.pyc b/build/tools/releasetools/blockimgdiff.pyc
+index fe693e81b4..b886f1d5e4 100644
+Binary files a/build/tools/releasetools/blockimgdiff.pyc and b/build/tools/releasetools/blockimgdiff.pyc differ
+diff --git a/build/tools/releasetools/rangelib.pyc b/build/tools/releasetools/rangelib.pyc
+index 71b22060e0..3871ae6cb1 100644
+Binary files a/build/tools/releasetools/rangelib.pyc and b/build/tools/releasetools/rangelib.pyc differ
+diff --git a/build/tools/releasetools/sparse_img.pyc b/build/tools/releasetools/sparse_img.pyc
+index 9563545730..e922c994d5 100644
+Binary files a/build/tools/releasetools/sparse_img.pyc and b/build/tools/releasetools/sparse_img.pyc differ
+diff --git a/device/rockchip/common/init.rk30board.rc b/device/rockchip/common/init.rk30board.rc
+index 8554efbd6d..6a598f899f 100755
+--- a/device/rockchip/common/init.rk30board.rc
++++ b/device/rockchip/common/init.rk30board.rc
+@@ -233,6 +233,16 @@ on property:sys.boot_completed=1
+     # if data is encrypt, when start gps too early, gpsd crashed
+     start gpsd
+ 
++# for share Ethernet
++service upeth /system/bin/upeth.sh
++     user root
++     group root
++     seclabel u:r:upeth:s0
++     disabled
++     oneshot
++
++on property:net.eth.up=1
++     start upeth
+ 
+ # for Internet adb
+ on property:persist.internet.adb.enable=1
+diff --git a/device/rockchip/common/sepolicy/file_contexts b/device/rockchip/common/sepolicy/file_contexts
+index c1106b9c82..c02167a8b0 100755
+--- a/device/rockchip/common/sepolicy/file_contexts
++++ b/device/rockchip/common/sepolicy/file_contexts
+@@ -165,3 +165,6 @@
+ 
+ #adv_autorun
+ /system/bin/adv_autorun.sh u:object_r:adv_autorun_exec:s0
++
++#eth0 up
++/system/bin/upeth.sh u:object_r:upeth_exec:s0
+diff --git a/device/rockchip/rk3399/rk3399_rsb4710.mk b/device/rockchip/rk3399/rk3399_rsb4710.mk
+index 89d25c2685..925562b0e5 100644
+--- a/device/rockchip/rk3399/rk3399_rsb4710.mk
++++ b/device/rockchip/rk3399/rk3399_rsb4710.mk
+@@ -105,7 +105,8 @@ PRODUCT_COPY_FILES += \
+    device/rockchip/rk3399/rockchip_test/dvfs/dvfs_test.sh:/system/bin/dvfs_test.sh \
+    device/rockchip/rk3399/rockchip_test/system_monitor/memory_monitor.sh:/system/bin/memory_monitor.sh \
+    device/rockchip/rk3399/rockchip_test/system_monitor/hardware_monitor.sh:/system/bin/hardware_monitor.sh \
+-   device/rockchip/rk3399/rockchip_test/rockchip_test.sh:/system/bin/rockchip_test.sh
++   device/rockchip/rk3399/rockchip_test/rockchip_test.sh:/system/bin/rockchip_test.sh \
++   device/rockchip/rk3399/upeth.sh:system/bin/upeth.sh
+ 
+ PRODUCT_COPY_FILES += \
+    device/rockchip/rk3399/top:/system/bin/top
+diff --git a/frameworks/base/api/current.txt b/frameworks/base/api/current.txt
+index 6e4d3e6bf5..977cff73f1 100644
+--- a/frameworks/base/api/current.txt
++++ b/frameworks/base/api/current.txt
+@@ -23630,6 +23630,7 @@ package android.net {
+     method public deprecated int getNetworkPreference();
+     method public static deprecated android.net.Network getProcessDefaultNetwork();
+     method public int getRestrictBackgroundStatus();
++    method public java.lang.String[] getTetherableEthernetRegexs();
+     method public boolean isActiveNetworkMetered();
+     method public boolean isDefaultNetworkActive();
+     method public static deprecated boolean isNetworkTypeValid(int);
+@@ -23644,6 +23645,7 @@ package android.net {
+     method public void requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback);
+     method public void requestNetwork(android.net.NetworkRequest, android.app.PendingIntent);
+     method public deprecated boolean requestRouteToHost(int, int);
++    method public int setEthernetTethering(boolean);
+     method public deprecated void setNetworkPreference(int);
+     method public static deprecated boolean setProcessDefaultNetwork(android.net.Network);
+     method public deprecated int startUsingNetworkFeature(int, java.lang.String);
+diff --git a/frameworks/base/api/system-current.txt b/frameworks/base/api/system-current.txt
+index 7a5890c4ae..0369750844 100644
+--- a/frameworks/base/api/system-current.txt
++++ b/frameworks/base/api/system-current.txt
+@@ -25417,6 +25417,7 @@ package android.net {
+     method public deprecated int getNetworkPreference();
+     method public static deprecated android.net.Network getProcessDefaultNetwork();
+     method public int getRestrictBackgroundStatus();
++    method public java.lang.String[] getTetherableEthernetRegexs();
+     method public boolean isActiveNetworkMetered();
+     method public boolean isDefaultNetworkActive();
+     method public static deprecated boolean isNetworkTypeValid(int);
+@@ -25432,6 +25433,7 @@ package android.net {
+     method public void requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback);
+     method public void requestNetwork(android.net.NetworkRequest, android.app.PendingIntent);
+     method public deprecated boolean requestRouteToHost(int, int);
++    method public int setEthernetTethering(boolean);
+     method public deprecated void setNetworkPreference(int);
+     method public static deprecated boolean setProcessDefaultNetwork(android.net.Network);
+     method public void startTethering(int, boolean, android.net.ConnectivityManager.OnStartTetheringCallback);
+@@ -25461,6 +25463,7 @@ package android.net {
+     field public static final int RESTRICT_BACKGROUND_STATUS_ENABLED = 3; // 0x3
+     field public static final int RESTRICT_BACKGROUND_STATUS_WHITELISTED = 2; // 0x2
+     field public static final int TETHERING_BLUETOOTH = 2; // 0x2
++    field public static final int TETHERING_ETHERNET = 3; // 0x3
+     field public static final int TETHERING_USB = 1; // 0x1
+     field public static final int TETHERING_WIFI = 0; // 0x0
+     field public static final int TYPE_BLUETOOTH = 7; // 0x7
+diff --git a/frameworks/base/api/test-current.txt b/frameworks/base/api/test-current.txt
+index e2a4752595..666318c5aa 100644
+--- a/frameworks/base/api/test-current.txt
++++ b/frameworks/base/api/test-current.txt
+@@ -23704,6 +23704,7 @@ package android.net {
+     method public deprecated int getNetworkPreference();
+     method public static deprecated android.net.Network getProcessDefaultNetwork();
+     method public int getRestrictBackgroundStatus();
++    method public java.lang.String[] getTetherableEthernetRegexs();
+     method public boolean isActiveNetworkMetered();
+     method public boolean isDefaultNetworkActive();
+     method public static deprecated boolean isNetworkTypeValid(int);
+@@ -23718,6 +23719,7 @@ package android.net {
+     method public void requestNetwork(android.net.NetworkRequest, android.net.ConnectivityManager.NetworkCallback);
+     method public void requestNetwork(android.net.NetworkRequest, android.app.PendingIntent);
+     method public deprecated boolean requestRouteToHost(int, int);
++    method public int setEthernetTethering(boolean);
+     method public deprecated void setNetworkPreference(int);
+     method public static deprecated boolean setProcessDefaultNetwork(android.net.Network);
+     method public deprecated int startUsingNetworkFeature(int, java.lang.String);
+diff --git a/frameworks/base/core/java/android/net/ConnectivityManager.java b/frameworks/base/core/java/android/net/ConnectivityManager.java
+index 2b5afa725d..3dc4bc91ce 100644
+--- a/frameworks/base/core/java/android/net/ConnectivityManager.java
++++ b/frameworks/base/core/java/android/net/ConnectivityManager.java
+@@ -395,6 +395,14 @@ public class ConnectivityManager {
+      */
+     @SystemApi
+     public static final int TETHERING_BLUETOOTH = 2;
++    
++    /**
++     * Ethernet tethering type.
++     * @see #startTethering(int, OnStartTetheringCallback, boolean)
++     * @hide
++     */
++    @SystemApi
++    public static final int TETHERING_ETHERNET = 3;
+ 
+     /**
+      * Extra used for communicating with the TetherService. Includes the type of tethering to
+@@ -2129,6 +2137,14 @@ public class ConnectivityManager {
+             throw e.rethrowFromSystemServer();
+         }
+     }
++    
++    public String[] getTetherableEthernetRegexs() {
++        try {
++            return mService.getTetherableEthernetRegexs();
++        } catch (RemoteException e) {
++            throw e.rethrowFromSystemServer();
++        }
++    }
+ 
+     /**
+      * Get the list of regular expressions that define any tetherable
+@@ -2214,6 +2230,14 @@ public class ConnectivityManager {
+             throw e.rethrowFromSystemServer();
+         }
+     }
++    
++    public int setEthernetTethering(boolean enable) {
++        try {
++            return mService.setEthernetTethering(enable);
++        } catch (RemoteException e) {
++            throw e.rethrowFromSystemServer();
++        }
++    }
+ 
+     /** {@hide} */
+     public static final int TETHER_ERROR_NO_ERROR           = 0;
+diff --git a/frameworks/base/core/java/android/net/IConnectivityManager.aidl b/frameworks/base/core/java/android/net/IConnectivityManager.aidl
+index 4aabda9eb0..10007a048d 100644
+--- a/frameworks/base/core/java/android/net/IConnectivityManager.aidl
++++ b/frameworks/base/core/java/android/net/IConnectivityManager.aidl
+@@ -94,8 +94,12 @@ interface IConnectivityManager
+     String[] getTetherableWifiRegexs();
+ 
+     String[] getTetherableBluetoothRegexs();
++    
++    String[] getTetherableEthernetRegexs();
+ 
+     int setUsbTethering(boolean enable);
++    
++    int setEthernetTethering(boolean enable);
+ 
+     void reportInetCondition(int networkType, int percentage);
+ 
+diff --git a/frameworks/base/core/java/android/net/NetworkFactory.java b/frameworks/base/core/java/android/net/NetworkFactory.java
+index cab88b9972..2d18c16e03 100644
+--- a/frameworks/base/core/java/android/net/NetworkFactory.java
++++ b/frameworks/base/core/java/android/net/NetworkFactory.java
+@@ -48,7 +48,7 @@ import java.io.PrintWriter;
+  **/
+ public class NetworkFactory extends Handler {
+     private static final boolean DBG = true;
+-    private static final boolean VDBG = false;
++    private static final boolean VDBG = true;
+ 
+     private static final int BASE = Protocol.BASE_NETWORK_FACTORY;
+     /**
+diff --git a/frameworks/base/core/java/android/provider/Settings.java b/frameworks/base/core/java/android/provider/Settings.java
+index ba61dff29d..60e092ab41 100755
+--- a/frameworks/base/core/java/android/provider/Settings.java
++++ b/frameworks/base/core/java/android/provider/Settings.java
+@@ -8270,6 +8270,13 @@ public final class Settings {
+          */
+         public static final String
+                 GLOBAL_HTTP_PROXY_PAC = "global_proxy_pac_url";
++        
++        /**
++        * share ethernet
++        * @hide
++        */
++        public static final String
++               GLOBAL_TETHER_ETHERNET = "global_tether_ethernet";
+ 
+         /**
+          * Enables the UI setting to allow the user to specify the global HTTP
+diff --git a/frameworks/base/core/res/res/values/config.xml b/frameworks/base/core/res/res/values/config.xml
+index e4839d7248..6c043bcfef 100644
+--- a/frameworks/base/core/res/res/values/config.xml
++++ b/frameworks/base/core/res/res/values/config.xml
+@@ -305,6 +305,10 @@
+     <string-array translatable="false" name="config_tether_bluetooth_regexs">
+         <item>"bt-pan"</item>
+     </string-array>
++    
++    <string-array translatable="false" name="config_tether_ethernet_regexs">
++        <item>"eth0"</item>
++    </string-array>
+ 
+     <!-- Max number of Bluetooth tethering connections allowed. If this is
+          updated config_tether_dhcp_range has to be updated appropriately. -->
+diff --git a/frameworks/base/core/res/res/values/symbols.xml b/frameworks/base/core/res/res/values/symbols.xml
+index 81d06afa8d..9ad11ff987 100644
+--- a/frameworks/base/core/res/res/values/symbols.xml
++++ b/frameworks/base/core/res/res/values/symbols.xml
+@@ -1663,6 +1663,7 @@
+   <java-symbol type="array" name="config_protectedNetworks" />
+   <java-symbol type="array" name="config_statusBarIcons" />
+   <java-symbol type="array" name="config_tether_bluetooth_regexs" />
++  <java-symbol type="array" name="config_tether_ethernet_regexs" />
+   <java-symbol type="array" name="config_tether_dhcp_range" />
+   <java-symbol type="array" name="config_tether_upstream_types" />
+   <java-symbol type="array" name="config_tether_apndata" />
+@@ -2752,4 +2753,5 @@
+   <java-symbol type="bool" name="use_lock_pattern_drawable" />
+   <java-symbol type="drawable" name="lockscreen_notselected" />
+   <java-symbol type="drawable" name="lockscreen_selected" />
++  <java-symbol type="drawable" name="stat_sys_tether_ethernet" />
+ </resources>
+diff --git a/frameworks/base/services/core/java/com/android/server/ConnectivityService.java b/frameworks/base/services/core/java/com/android/server/ConnectivityService.java
+index 020495f3af..5f34d423ef 100644
+--- a/frameworks/base/services/core/java/com/android/server/ConnectivityService.java
++++ b/frameworks/base/services/core/java/com/android/server/ConnectivityService.java
+@@ -182,7 +182,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
+     private static final boolean DBG = true;
+     private static final boolean VDBG = true;
+ 
+-    private static final boolean LOGD_RULES = false;
++    private static final boolean LOGD_RULES = true;
+     private static final boolean LOGD_BLOCKED_NETWORKINFO = true;
+ 
+     // if true:
+@@ -527,7 +527,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
+     private class LegacyTypeTracker {
+ 
+         private static final boolean DBG = true;
+-        private static final boolean VDBG = false;
++        private static final boolean VDBG = true;
+ 
+         /**
+          * Array of lists, one per legacy network type (e.g., TYPE_MOBILE_MMS).
+@@ -3075,6 +3075,26 @@ public class ConnectivityService extends IConnectivityManager.Stub
+             return new String[0];
+         }
+     }
++    
++    @Override
++    public String[] getTetherableEthernetRegexs() {
++        enforceTetherAccessPermission();
++        if (isTetheringSupported()) {
++            return mTethering.getTetherableEthernetRegexs();
++        } else {
++            return new String[0];
++        }
++    }
++
++    @Override
++    public int setEthernetTethering(boolean enable) {
++        ConnectivityManager.enforceTetherChangePermission(mContext);
++        if (isTetheringSupported()) {
++            return mTethering.setEthernetTethering(enable);
++        } else {
++            return ConnectivityManager.TETHER_ERROR_UNSUPPORTED;
++        }
++    }
+ 
+     @Override
+     public int setUsbTethering(boolean enable) {
+@@ -3132,6 +3152,7 @@ public class ConnectivityService extends IConnectivityManager.Stub
+     @Override
+     public void startTethering(int type, ResultReceiver receiver,
+             boolean showProvisioningUi) {
++    	log("startTethering:"+type);
+         ConnectivityManager.enforceTetherChangePermission(mContext);
+         if (!isTetheringSupported()) {
+             receiver.send(ConnectivityManager.TETHER_ERROR_UNSUPPORTED, null);
+diff --git a/frameworks/base/services/core/java/com/android/server/connectivity/Tethering.java b/frameworks/base/services/core/java/com/android/server/connectivity/Tethering.java
+index 5a5dc31752..5fcc3e4318 100644
+--- a/frameworks/base/services/core/java/com/android/server/connectivity/Tethering.java
++++ b/frameworks/base/services/core/java/com/android/server/connectivity/Tethering.java
+@@ -98,7 +98,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+     private final Context mContext;
+     private final static String TAG = "Tethering";
+     private final static boolean DBG = true;
+-    private final static boolean VDBG = false;
++    private final static boolean VDBG = true;
+ 
+     private static final Class[] messageClasses = {
+             Tethering.class, TetherMasterSM.class, TetherInterfaceStateMachine.class
+@@ -110,6 +110,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+     private String[] mTetherableUsbRegexs;
+     private String[] mTetherableWifiRegexs;
+     private String[] mTetherableBluetoothRegexs;
++    private String[] mTetherableEthernetRegexs;
+     private Collection<Integer> mUpstreamIfaceTypes;
+ 
+     // used to synchronize public access to members
+@@ -239,6 +240,8 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+                 com.android.internal.R.array.config_tether_wifi_regexs);
+         String[] tetherableBluetoothRegexs = mContext.getResources().getStringArray(
+                 com.android.internal.R.array.config_tether_bluetooth_regexs);
++       String[] tetherableEthernetRegexs = mContext.getResources().getStringArray(
++                com.android.internal.R.array.config_tether_ethernet_regexs);
+ 
+         int ifaceTypes[] = mContext.getResources().getIntArray(
+                 com.android.internal.R.array.config_tether_upstream_types);
+@@ -251,6 +254,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+             mTetherableUsbRegexs = tetherableUsbRegexs;
+             mTetherableWifiRegexs = tetherableWifiRegexs;
+             mTetherableBluetoothRegexs = tetherableBluetoothRegexs;
++            mTetherableEthernetRegexs = tetherableEthernetRegexs; 
+             mUpstreamIfaceTypes = upstreamIfaceTypes;
+         }
+ 
+@@ -275,7 +279,9 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+                     trackNewTetherableInterface(iface, interfaceType);
+                 }
+             } else {
+-                if (interfaceType == ConnectivityManager.TETHERING_BLUETOOTH) {
++                if (interfaceType == ConnectivityManager.TETHERING_BLUETOOTH || 
++                		(interfaceType == ConnectivityManager.TETHERING_ETHERNET && 
++                		"0".equals(SystemProperties.get("persist.tchip.iproute")))) {
+                     tetherState.mStateMachine.sendMessage(
+                             TetherInterfaceStateMachine.CMD_INTERFACE_DOWN);
+                     mTetherStates.remove(iface);
+@@ -303,6 +309,15 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+             return false;
+         }
+     }
++    
++    private boolean isEthernet(String iface) {
++        synchronized (mPublicSync) {
++            for (String regex : mTetherableEthernetRegexs) {
++                if (iface.matches(regex)) return true;
++            }
++            return false;
++        }
++    }
+ 
+     private boolean isWifi(String iface) {
+         synchronized (mPublicSync) {
+@@ -329,6 +344,8 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+             return ConnectivityManager.TETHERING_USB;
+         } else if (isBluetooth(iface)) {
+             return ConnectivityManager.TETHERING_BLUETOOTH;
++        } else if (isEthernet(iface)) {
++            return ConnectivityManager.TETHERING_ETHERNET;
+         }
+         return ConnectivityManager.TETHERING_INVALID;
+     }
+@@ -443,6 +460,13 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+                 }
+                 sendTetherResult(receiver, result);
+                 break;
++            case ConnectivityManager.TETHERING_ETHERNET:
++                result = setEthernetTethering(enable);
++                if (isProvisioningRequired && result == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
++                    scheduleProvisioningRechecks(type);
++                }
++                sendTetherResult(receiver, result);
++                break;
+             case ConnectivityManager.TETHERING_BLUETOOTH:
+                 setBluetoothTethering(enable, receiver);
+                 break;
+@@ -596,6 +620,9 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+ 
+     public int tether(String iface) {
+         if (DBG) Log.d(TAG, "Tethering " + iface);
++        if(isEthernet(iface)){
++    	    interfaceAdded(iface);
++    	}
+         synchronized (mPublicSync) {
+             TetherState tetherState = mTetherStates.get(iface);
+             if (tetherState == null) {
+@@ -659,6 +686,7 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+         boolean wifiTethered = false;
+         boolean usbTethered = false;
+         boolean bluetoothTethered = false;
++        boolean ethernetTethered = false;
+ 
+         synchronized (mPublicSync) {
+             for (int i = 0; i < mTetherStates.size(); i++) {
+@@ -675,6 +703,8 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+                         wifiTethered = true;
+                     } else if (isBluetooth(iface)) {
+                         bluetoothTethered = true;
++                    } else if (isEthernet(iface)){
++                        ethernetTethered = true;
+                     }
+                     activeList.add(iface);
+                 }
+@@ -712,6 +742,9 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+             }
+         } else if (bluetoothTethered) {
+             showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_bluetooth);
++        } else if(ethernetTethered){
++        	Log.e(TAG,"showTetheredNotification: eth0");
++            showTetheredNotification(com.android.internal.R.drawable.stat_sys_tether_ethernet);
+         } else {
+             clearTetheredNotification();
+         }
+@@ -887,6 +920,10 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+     public String[] getTetherableBluetoothRegexs() {
+         return mTetherableBluetoothRegexs;
+     }
++    
++    public String[] getTetherableEthernetRegexs() {
++        return mTetherableEthernetRegexs;
++    }
+ 
+     public int setUsbTethering(boolean enable) {
+         if (VDBG) Log.d(TAG, "setUsbTethering(" + enable + ")");
+@@ -920,6 +957,39 @@ public class Tethering extends BaseNetworkObserver implements IControlsTethering
+         }
+         return ConnectivityManager.TETHER_ERROR_NO_ERROR;
+     }
++    
++    private void tetherEthernet(boolean enable) {
++        
++        String[] ifaces = new String[0];
++
++        try {
++            ifaces = mNMService.listInterfaces();
++        } catch (Exception e) {
++            Log.e(TAG, "Error listing Interfaces", e);
++            return;
++        }
++        for (String iface : ifaces) {
++            if (isEthernet(iface)) {
++                int result = (enable ? tether(iface) : untether(iface));
++                if (result == ConnectivityManager.TETHER_ERROR_NO_ERROR) {
++                    return;
++                }
++            }
++        }
++        Log.e(TAG, "unable start or stop ethernet tethering");
++    }
++
++    public int setEthernetTethering(boolean enable) {
++        if (VDBG) Log.d(TAG, "setEthernetTethering(" + enable + ")");
++        synchronized (mPublicSync) {
++	        if (enable) {
++	            tetherEthernet(true);
++	        } else {
++		        tetherEthernet(false);
++	        }
++	    }
++	    return ConnectivityManager.TETHER_ERROR_NO_ERROR;
++    }
+ 
+     public int[] getUpstreamIfaceTypes() {
+         int values[];
+diff --git a/frameworks/base/services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java b/frameworks/base/services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java
+index 9e7cb939cd..11a630c1d4 100644
+--- a/frameworks/base/services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java
++++ b/frameworks/base/services/core/java/com/android/server/connectivity/tethering/TetherInterfaceStateMachine.java
+@@ -45,10 +45,12 @@ public class TetherInterfaceStateMachine extends StateMachine {
+     private static final int USB_PREFIX_LENGTH = 24;
+     private static final String WIFI_HOST_IFACE_ADDR = "192.168.43.1";
+     private static final int WIFI_HOST_IFACE_PREFIX_LENGTH = 24;
++    private static final String ETHERNET_NEAR_IFACE_ADDR      = "192.168.49.129";
++    private static final int ETHERNET_PREFIX_LENGTH        = 24;
+ 
+     private final static String TAG = "TetherInterfaceSM";
+-    private final static boolean DBG = false;
+-    private final static boolean VDBG = false;
++    private final static boolean DBG = true;
++    private final static boolean VDBG = true;
+     private static final Class[] messageClasses = {
+             TetherInterfaceStateMachine.class
+     };
+@@ -130,6 +132,9 @@ public class TetherInterfaceStateMachine extends StateMachine {
+         } else if (mInterfaceType == ConnectivityManager.TETHERING_WIFI) {
+             ipAsString = WIFI_HOST_IFACE_ADDR;
+             prefixLen = WIFI_HOST_IFACE_PREFIX_LENGTH;
++        } else if (mInterfaceType == ConnectivityManager.TETHERING_ETHERNET) {
++            ipAsString = ETHERNET_NEAR_IFACE_ADDR;
++            prefixLen = ETHERNET_PREFIX_LENGTH;
+         } else {
+             // Nothing to do, BT does this elsewhere.
+             return true;
+diff --git a/frameworks/opt/net/ethernet/java/com/android/server/ethernet/EthernetNetworkFactory.java b/frameworks/opt/net/ethernet/java/com/android/server/ethernet/EthernetNetworkFactory.java
+index 4acf1d144e..38b7ff7615 100755
+--- a/frameworks/opt/net/ethernet/java/com/android/server/ethernet/EthernetNetworkFactory.java
++++ b/frameworks/opt/net/ethernet/java/com/android/server/ethernet/EthernetNetworkFactory.java
+@@ -95,6 +95,7 @@ class EthernetNetworkFactory {
+     private static final String NETWORK_TYPE = "Ethernet";
+     private static final String TAG = "EthernetNetworkFactory";
+     private static final int NETWORK_SCORE = 70;
++    private static final int NETWORK_SCORE_SHARE = 30;
+     private static final boolean DBG = true;
+     private static final String ETHMODE_MULTI = "multi";
+     private static final String ETHMODE_BRIDGE = "bridge";
+@@ -264,9 +265,19 @@ class EthernetNetworkFactory {
+             // set our score lower than any network could go
+             // so we get dropped.  TODO - just unregister the factory
+             // when link goes down.
+-            mFactory.setScoreFilter(up ? NETWORK_SCORE : -1);
++            mFactory.setScoreFilter(up ? getNetworkScore() : -1);
+         }
+     }
++    
++    private int getNetworkScore() {
++    	if ("1".equals(SystemProperties.get("persist.tchip.iproute"))) {
++    		Log.e(TAG, "advantech NETWORK_SCORE_SHARE");
++    		return NETWORK_SCORE_SHARE;
++    	} else {
++    		Log.e(TAG, "advantech NETWORK_SCORE");
++    		return NETWORK_SCORE;
++    	}
++    }
+ 
+     // first disconnect, then connect
+     public void reconnect(String iface) {
+@@ -430,7 +441,7 @@ class EthernetNetworkFactory {
+             mNetworkAgent.sendNetworkInfo(mNetworkInfo);
+             mNetworkAgent.sendLinkProperties(mLinkProperties);
+             // never set the network score below 0.
+-            mNetworkAgent.sendNetworkScore(mLinkUp? NETWORK_SCORE : 0);
++            mNetworkAgent.sendNetworkScore(mLinkUp? getNetworkScore() : 0);
+         }
+     }
+ 
+@@ -573,7 +584,7 @@ class EthernetNetworkFactory {
+                     // Create our NetworkAgent.
+                     mNetworkAgent = new NetworkAgent(mFactory.getLooper(), mContext,
+                             NETWORK_TYPE, mNetworkInfo, mNetworkCapabilities, mLinkProperties,
+-                            NETWORK_SCORE) {
++                            getNetworkScore()) {
+                         public void unwanted() {
+                             synchronized(EthernetNetworkFactory.this) {
+                                 if (this == mNetworkAgent) {
+diff --git a/frameworks/opt/telephony/tests/telephonytests/src/com/android/internal/telephony/mocks/ConnectivityServiceMock.java b/frameworks/opt/telephony/tests/telephonytests/src/com/android/internal/telephony/mocks/ConnectivityServiceMock.java
+index 47fc31dbec..30f45c9d92 100644
+--- a/frameworks/opt/telephony/tests/telephonytests/src/com/android/internal/telephony/mocks/ConnectivityServiceMock.java
++++ b/frameworks/opt/telephony/tests/telephonytests/src/com/android/internal/telephony/mocks/ConnectivityServiceMock.java
+@@ -623,6 +623,10 @@ public class ConnectivityServiceMock extends IConnectivityManager.Stub
+     public String[] getTetherableUsbRegexs() {
+         throw new RuntimeException("not implemented");
+     }
++    
++    public String[] getTetherableEthernetRegexs() {
++        throw new RuntimeException("not implemented");
++    }
+ 
+     public String[] getTetherableWifiRegexs() {
+         throw new RuntimeException("not implemented");
+@@ -635,6 +639,10 @@ public class ConnectivityServiceMock extends IConnectivityManager.Stub
+     public int setUsbTethering(boolean enable) {
+         throw new RuntimeException("not implemented");
+     }
++    
++    public int setEthernetTethering(boolean enable) {
++         throw new RuntimeException("not implemented");
++    }
+ 
+     public String[] getTetherableIfaces() {
+         throw new RuntimeException("not implemented");
+diff --git a/hardware/rockchip/librga/version.h b/hardware/rockchip/librga/version.h
+index d45b21556b..eb1e7e9211 100644
+--- a/hardware/rockchip/librga/version.h
++++ b/hardware/rockchip/librga/version.h
+@@ -1,6 +1,6 @@
+ #ifndef _rk_graphics_version_h_
+ #define _rk_graphics_version_h_
+ 
+-#define RK_GRAPHICS_VER "version:08e7f83+2019-09-23 17:08:38"
++#define RK_GRAPHICS_VER "version:3bc7caf+2020-03-08 09:50:16"
+ 
+ #endif // VERSION_H
+diff --git a/hardware/rockchip/omx_il/include/rockchip/git_info.h b/hardware/rockchip/omx_il/include/rockchip/git_info.h
+index da18c0a359..5514d98643 100644
+--- a/hardware/rockchip/omx_il/include/rockchip/git_info.h
++++ b/hardware/rockchip/omx_il/include/rockchip/git_info.h
+@@ -1 +1 @@
+-#define OMX_COMPILE_INFO      "author:  zengwei\n time: Mon, 23 Sep 2019 17:08:38 +0800 git commit 08e7f83e8e7d53a50338545e107f07ff57b698f8 "
++#define OMX_COMPILE_INFO      "author:  zengwei\n time: Sun, 08 Mar 2020 09:50:16 +0800 git commit 3bc7caf14ab75d54cc78cc7b5612e155d9eed519 "
+diff --git a/packages/apps/Settings/res/values-zh-rCN/strings.xml b/packages/apps/Settings/res/values-zh-rCN/strings.xml
+index 70539cbd0c..eb9d9ae5c6 100755
+--- a/packages/apps/Settings/res/values-zh-rCN/strings.xml
++++ b/packages/apps/Settings/res/values-zh-rCN/strings.xml
+@@ -3320,4 +3320,5 @@
+     <string name="confirm_dialog_message">将会取消</string>
+     <string name="color_temperature_mode_desc">色温调节</string>
+     <string name="select_color_temperature_dialog_title">选择色温模式 </string>
++    <string name="ethernet_tethering_button_text">"以太网共享"</string>
+ </resources>
+diff --git a/packages/apps/Settings/res/values/strings.xml b/packages/apps/Settings/res/values/strings.xml
+index 17572c3196..eee0fa0cfb 100755
+--- a/packages/apps/Settings/res/values/strings.xml
++++ b/packages/apps/Settings/res/values/strings.xml
+@@ -7999,4 +7999,5 @@
+     <string name="color_temperature_mode_desc">Color temperature mode</string>
+     <!-- temperature of the color for the display [CHAR LIMIT=60] -->
+     <string name="select_color_temperature_dialog_title">Select Color temperature </string>
++    <string name="ethernet_tethering_button_text">ETHERNET tethering</string>
+ </resources>
+diff --git a/packages/apps/Settings/res/xml/tether_prefs.xml b/packages/apps/Settings/res/xml/tether_prefs.xml
+index 22a474717c..74dfa648ad 100644
+--- a/packages/apps/Settings/res/xml/tether_prefs.xml
++++ b/packages/apps/Settings/res/xml/tether_prefs.xml
+@@ -39,4 +39,8 @@
+             android:summary="@string/tether_settings_disabled_on_data_saver"
+             android:selectable="false"
+             settings:allowDividerAbove="true" />
++    
++     <SwitchPreference
++         android:key="ethernet_tether_settings"
++         android:title="@string/ethernet_tethering_button_text" />
+ </PreferenceScreen>
+diff --git a/packages/apps/Settings/src/com/android/settings/HdmiReceiver.java b/packages/apps/Settings/src/com/android/settings/HdmiReceiver.java
+index 6129f78b6f..ca3eaee486 100644
+--- a/packages/apps/Settings/src/com/android/settings/HdmiReceiver.java
++++ b/packages/apps/Settings/src/com/android/settings/HdmiReceiver.java
+@@ -33,6 +33,9 @@ import android.widget.Toast;
+ import android.os.DisplayOutputManager;
+ import com.android.settings.R;
+ 
++import android.net.ConnectivityManager;
++import static android.net.ConnectivityManager.TETHERING_ETHERNET;
++
+ public class HdmiReceiver extends BroadcastReceiver {
+    private final String HDMI_ACTION = "android.intent.action.HDMI_PLUG";
+    private final String BOOT_ACTION="android.intent.action.BOOT_COMPLETED";
+@@ -92,6 +95,13 @@ public class HdmiReceiver extends BroadcastReceiver {
+                            + String.valueOf(resol)+"resol_length=" +resol.length());*/
+        }else if(action.equals(BOOT_ACTION)){
+                          Log.d(TAG,"BOOT_COMPLETED");
++                         
++                         String tetherEthernet = Settings.Global.getString(context.getContentResolver(), Settings.Global.GLOBAL_TETHER_ETHERNET);  
++                         if("1".equals(tetherEthernet)){
++                             ConnectivityManager mCm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
++                             mCm.startTethering(TETHERING_ETHERNET, false, null, null);
++                         }
++                         
+                          preferences = context.getSharedPreferences("HdmiSettings",
+                                 Context.MODE_PRIVATE);
+                          String enable = null;
+diff --git a/packages/apps/Settings/src/com/android/settings/TetherService.java b/packages/apps/Settings/src/com/android/settings/TetherService.java
+index 6d359f2de1..55e8081183 100644
+--- a/packages/apps/Settings/src/com/android/settings/TetherService.java
++++ b/packages/apps/Settings/src/com/android/settings/TetherService.java
+@@ -48,7 +48,7 @@ import java.util.List;
+ 
+ public class TetherService extends Service {
+     private static final String TAG = "TetherService";
+-    private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
++    private static final boolean DEBUG = true;//Log.isLoggable(TAG, Log.DEBUG);
+ 
+     @VisibleForTesting
+     public static final String EXTRA_RESULT = "EntitlementResult";
+@@ -91,6 +91,8 @@ public class TetherService extends Service {
+         mPendingCallbacks.put(ConnectivityManager.TETHERING_USB, new ArrayList<ResultReceiver>());
+         mPendingCallbacks.put(
+                 ConnectivityManager.TETHERING_BLUETOOTH, new ArrayList<ResultReceiver>());
++        mPendingCallbacks.put(
++                ConnectivityManager.TETHERING_ETHERNET, new ArrayList<ResultReceiver>());
+         if (mUsageManagerWrapper == null) {
+             mUsageManagerWrapper = new UsageStatsManagerWrapper(this);
+         }
+@@ -216,6 +218,12 @@ public class TetherService extends Service {
+                 (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+         cm.setUsbTethering(false);
+     }
++    
++    private void disableEthernetTethering() {
++        ConnectivityManager cm =
++                 (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
++    	cm.setEthernetTethering(false);
++    }
+ 
+     private void disableBtTethering() {
+         final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+@@ -353,6 +361,9 @@ public class TetherService extends Service {
+                         case ConnectivityManager.TETHERING_USB:
+                             disableUsbTethering();
+                             break;
++                        case ConnectivityManager.TETHERING_ETHERNET:
++                            disableEthernetTethering();
++                            break;
+                     }
+                 }
+                 fireCallbacksForType(checkType, result);
+diff --git a/packages/apps/Settings/src/com/android/settings/TetherSettings.java b/packages/apps/Settings/src/com/android/settings/TetherSettings.java
+index 31246721bf..74480af785 100644
+--- a/packages/apps/Settings/src/com/android/settings/TetherSettings.java
++++ b/packages/apps/Settings/src/com/android/settings/TetherSettings.java
+@@ -34,7 +34,9 @@ import android.net.wifi.WifiManager;
+ import android.os.Bundle;
+ import android.os.Environment;
+ import android.os.Handler;
++import android.os.SystemProperties;
+ import android.os.UserManager;
++import android.provider.Settings;
+ import android.support.v14.preference.SwitchPreference;
+ import android.support.v7.preference.Preference;
+ import android.support.v7.preference.PreferenceScreen;
+@@ -53,6 +55,7 @@ import java.util.concurrent.atomic.AtomicReference;
+ import static android.net.ConnectivityManager.TETHERING_BLUETOOTH;
+ import static android.net.ConnectivityManager.TETHERING_USB;
+ import static android.net.ConnectivityManager.TETHERING_WIFI;
++import static android.net.ConnectivityManager.TETHERING_ETHERNET;
+ 
+ /*
+  * Displays preferences for Tethering.
+@@ -62,6 +65,7 @@ public class TetherSettings extends RestrictedSettingsFragment
+         DataSaverBackend.Listener {
+ 
+     private static final String USB_TETHER_SETTINGS = "usb_tether_settings";
++    private static final String ETHERNET_TETHER_SETTINGS = "ethernet_tether_settings";
+     private static final String ENABLE_WIFI_AP = "enable_wifi_ap";
+     private static final String ENABLE_BLUETOOTH_TETHERING = "enable_bluetooth_tethering";
+     private static final String TETHER_CHOICE = "TETHER_TYPE";
+@@ -72,6 +76,7 @@ public class TetherSettings extends RestrictedSettingsFragment
+     private static final String TAG = "TetheringSettings";
+ 
+     private SwitchPreference mUsbTether;
++    private SwitchPreference mEthernetTether;
+ 
+     private WifiApEnabler mWifiApEnabler;
+     private SwitchPreference mEnableWifiAp;
+@@ -157,6 +162,7 @@ public class TetherSettings extends RestrictedSettingsFragment
+         Preference wifiApSettings = findPreference(WIFI_AP_SSID_AND_SECURITY);
+         mUsbTether = (SwitchPreference) findPreference(USB_TETHER_SETTINGS);
+         mBluetoothTether = (SwitchPreference) findPreference(ENABLE_BLUETOOTH_TETHERING);
++        mEthernetTether = (SwitchPreference) findPreference(ETHERNET_TETHER_SETTINGS);
+ 
+         mDataSaverBackend.addListener(this);
+ 
+@@ -193,9 +199,20 @@ public class TetherSettings extends RestrictedSettingsFragment
+                 mBluetoothTether.setChecked(false);
+             }
+         }
++        updateTetherEthernetUI();
+         // Set initial state based on Data Saver mode.
+         onDataSaverChanged(mDataSaverBackend.isDataSaverEnabled());
+     }
++    
++    private void updateTetherEthernetUI() {
++    	String tetherEthernet = Settings.Global.getString(
++                getActivity().getContentResolver(), Settings.Global.GLOBAL_TETHER_ETHERNET);
++        if("1".equals(tetherEthernet)){
++            mEthernetTether.setChecked(true);
++        } else{
++            mEthernetTether.setChecked(false);
++        }        
++    }
+ 
+     @Override
+     public void onDestroy() {
+@@ -257,6 +274,7 @@ public class TetherSettings extends RestrictedSettingsFragment
+         @Override
+         public void onReceive(Context content, Intent intent) {
+             String action = intent.getAction();
++            Log.d(TAG, "onReceive's action " + action);
+             if (action.equals(ConnectivityManager.ACTION_TETHER_STATE_CHANGED)) {
+                 // TODO - this should understand the interface types
+                 ArrayList<String> available = intent.getStringArrayListExtra(
+@@ -570,6 +588,18 @@ public class TetherSettings extends RestrictedSettingsFragment
+             }
+         } else if (preference == mCreateNetwork) {
+             showDialog(DIALOG_AP_SETTINGS);
++        } else if (preference == mEthernetTether){
++             if (mEthernetTether.isChecked()) {
++            	 SystemProperties.set("persist.tchip.iproute", "1");//Reduce Ethernet priority
++            	 startTethering(TETHERING_ETHERNET);
++             } else {
++            	 SystemProperties.set("persist.tchip.iproute", "0");//recovery Ethernet priority
++            	 mCm.stopTethering(TETHERING_ETHERNET);
++            	 mEthernetTether.setEnabled(false);
++            	 mHandler.postDelayed(upEthRunnable, 5000);
++            	 //SystemProperties.set("net.eth.up","1");//pull up eth0
++             }
++             Settings.Global.putString(getActivity().getContentResolver(), Settings.Global.GLOBAL_TETHER_ETHERNET,mEthernetTether.isChecked() ? "1":"0");         
+         }
+ 
+         return super.onPreferenceTreeClick(preference);
+@@ -639,4 +669,12 @@ public class TetherSettings extends RestrictedSettingsFragment
+             }
+         }
+     }
++    
++    private Runnable upEthRunnable = new Runnable() {
++    	 @Override
++    	 public void run() {
++    	     SystemProperties.set("net.eth.up","1");//pull up eth0
++    	     mEthernetTether.setEnabled(true);
++    	 }
++    };
+ }

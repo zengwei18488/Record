@@ -1,0 +1,358 @@
+kernel/init/version.c
+kernel/fs/proc/version.c
+
+arm-linux-gnueabi-gcc  -static -o rs485_test rs485_test.c -I/home/zengwei/work/EBC-GF66/android/kernel_imx/include
+
+inter 82574
+make KSRC=/home/zengwei/work/R200/imx6/android_kk4.4.2_1.0.0/android/kernel_imx/ ARCH=arm CC=arm-none-linux-gnueabi-gcc
+
+make KSRC=/home/zengwei/work/R200/imx6/android_kk4.4.2_1.0.0/android/kernel_imx ARCH=arm CC=arm-none-linux-gnueabi-gcc LD=arm-none-linux-gnueabi-ld
+
+rlt8186
+make KERNELDIR=/home/zengwei/work/R200/imx6/android_kk4.4.2_1.0.0/android/kernel_imx/
+
+Device Drivers                                                                                                                                                                             x
+  x       -> Network device support (NETDEVICES [=y])                                                                                                                                                 x
+  x         -> Ethernet (10 or 100Mbit) (NET_ETHERNET [=y])                                                                                                                                           x
+  x   Selects: PHYLIB [=y] && MDIO_OCTEON [=n] 
+
+EULA=1 MACHINE=imx6qrsb6410a1 source fsl-setup-release.sh –b imx6qrsb6410a1_20170427 -e x11
+
+#define machine_core_initcall(mach,fn)		__define_machine_initcall(mach,"1",fn,1)
+#define machine_core_initcall_sync(mach,fn)	__define_machine_initcall(mach,"1s",fn,1s)
+#define machine_postcore_initcall(mach,fn)	__define_machine_initcall(mach,"2",fn,2)
+#define machine_postcore_initcall_sync(mach,fn)	__define_machine_initcall(mach,"2s",fn,2s)
+#define machine_arch_initcall(mach,fn)		__define_machine_initcall(mach,"3",fn,3)
+#define machine_arch_initcall_sync(mach,fn)	__define_machine_initcall(mach,"3s",fn,3s)
+#define machine_subsys_initcall(mach,fn)	__define_machine_initcall(mach,"4",fn,4)
+#define machine_subsys_initcall_sync(mach,fn)	__define_machine_initcall(mach,"4s",fn,4s)
+#define machine_fs_initcall(mach,fn)		__define_machine_initcall(mach,"5",fn,5)
+#define machine_fs_initcall_sync(mach,fn)	__define_machine_initcall(mach,"5s",fn,5s)
+#define machine_rootfs_initcall(mach,fn)	__define_machine_initcall(mach,"rootfs",fn,rootfs)
+#define machine_device_initcall(mach,fn)	__define_machine_initcall(mach,"6",fn,6)
+#define machine_device_initcall_sync(mach,fn)	__define_machine_initcall(mach,"6s",fn,6s)
+#define machine_late_initcall(mach,fn)		__define_machine_initcall(mach,"7",fn,7)
+#define machine_late_initcall_sync(mach,fn)	__define_machine_initcall(mach,"7s",fn,7s)
+
+
+UART i.MX6 DQRM  
+36 chapter -- 2685 page  IOMUXC_UART4_UART_RTS_B_SELECT_INPUT
+64 chapter -- 64.15.8  -- 5238 page UARTx_UFCR
+5179 page
+
+defaut DCE
+
+static const struct imxuart_platform_data imxuart_data[]
+.flags    = IMXUART_SDMA | IMXUART_HAVE_RTSCTS | IMXUART_USE_DCEDTE,
+
+mx6q_sabresd_init_uart()
+
+tx rx rts cts都要设置反向（select input）
+
+./UART_test -b115200 /dev/ttymxc3 -lf hard   //回环测试
+
+
+/dev/ttymxc3    /dev/ttymxc4对测
+./UART_test -b115200 /dev/ttymxc3 -sf hard      //send
+./UART_test -b115200 /dev/ttymxc4 -rf hard       //recevie
+
+Usage: ./UART_test  /dev/ttySn -b speed [options]
+-h    show this help page.
+-b    baudrate.
+-r    receive.
+-s    send.
+-l    loop.
+-t    sleep time.before send and receive sleep N secend.(default N=1)
+-f    chose flow control mode.
+                'hard'---hardware flow control
+                'soft'---software flow control
+
+Linux启动执行项
+/etc/rc.d/rc.local
+
+linux system power event suspend drivers/input/apm-power.c
+
+Linux 测试bluetooth
+
+root@am335x-adv:~# insmod /unit_tests/Marverll_8897_driver/bt8xxx.ko
+[28.790453] BT: Loading driver
+[30.144483] BT FW is active(3)
+[30.219309] BT: Create /dev/mnfcchar0
+[30.369097] BT: Driver loaded successfully
+3. Look the mac address of your Bluetooth device:
+root@am335x-adv:~# hciconfig hci0
+hci0:
+Type: BR/EDR Bus: SDIO
+BD Address: 28:C2:DD:95:56:92 ACL MTU: 1021:7 SCO MTU: 120:6
+UP RUNNING PSCAN
+RX bytes:984 acl:0 sco:0 events:35 errors:0
+TX bytes:794 acl:0 sco:0 commands:35 errors:0
+Note. Mac address of rsb4221 marverllBluetooth is 28:C2:DD:95:56:92!
+4.
+Send file throughtBluetooth
+root@am335x-adv:~#ussp-push --debug --timeo 25 58:2A:F7:FE:4C:8F@ bt-
+readme bt-readme
+Note. 58:2A:F7:FE:4C:8F is the opposite device!
+5.
+Receive file throught Bluetooth
+obexpushd -B
+
+SPL
+
+          make mx6qrsb6410a1_2G_defconfig
+          make u-boot.imx -j4
+          sudo dd if=u-boot.imx of=/dev/sdX bs=512 seek=2;sync    (sdX: your SD Card)
+
+		  製作SPL，由SD卡開機後，燒至SPI上:
+
+          make mx6qrsb6410a1_2G_defconfig
+          make -j4
+		  
+          [On RSB-6410]
+          flash_erase /dev/mtd0 0 192
+          dd if=[your path]/SPL of=/dev/mtd0 bs=512 seek=2;sync
+
+EMMC
+
+1. boot from SD Card
+2. umount /dev/mmcblk0p1
+   umount /dev/mmcblk0p2
+3. e2fsck -f -y /dev/mmcblk0p2
+4. resize2fs /dev/mmcblk0p2 [your size]
+5. fdisk /dev/mmcblk0 --> [your size]
+6. dd if=/dev/mmcblk0 of=./emmc.bin bs=1024KB count=2200
+＊    [your size] & Count的大小須參考：從EMMC開機後，下df –h 指令-，查看已佔用多少空間
+我一般會讓Count 比 [your size] 大一些些
+7. 將dump出來的bin檔 ( emmc.bin ) 複製到SD Card上的/image/fsl-image-*.sdcard  ( 或是取代原本的.sdcard )
+8. 如此，SD Card就能使用cd /mkinand ; ./mksd-linux.sh /dev/mmcblk0 的方式燒回EMMC.
+
+debug wifi mac address
+    doStringCommand("DRIVER MACADDR")
+# wpa_cli  进入wpacilient命令模式
+/sys/class/net/wlan0/address
+
+imx_v7_adv_defconfig
+imx6q-rsb6410-a1.dtb
+imx6q-rsb6410-a2.dtb
+
+cp ~/work/RSB-6410-Linux/yocto_1.7_1.0.0/image/zImage .
+cp ~/work/RSB-6410-Linux/yocto_1.7_1.0.0/image/imx6q-rsb6410-a1.dtb .
+cp ~/work/RSB-6410-Linux/yocto_1.7_1.0.0/image/rootfs/lib/modules/3.14.28-1.0.0_ga/kernel/drivers/net/wireless/bcmdhd/bcmdhd.ko rootfs/lib/modules/3.14.28-1.0.0_ga/kernel/drivers/net/wireless/bcmdhd/
+
+sudo cp rootfs/lib/modules/3.14.28-1.0.0_ga/kernel/drivers/net/wireless/bcmdhd/bcmdhd.ko /media/rootfs/lib/modules/3.14.28-1.0.0_ga/kernel/drivers/net/wireless/bcmdhd/bcmdhd.ko
+cp imx6q-rsb6410-a1.dtb /media/kernel/
+cp zImage /media/kernel/
+
+ regulators {
+  wlreg_on: fixedregulator@100 {
+   compatible = "regulator-fixed";
+   regulator-min-microvolt = <5000000>;
+   regulator-max-microvolt = <5000000>;
+   regulator-name = "wlreg_on";
+   gpio = <&gpio4 9 0>;
+   startup-delay-us = <100>;
+   enable-active-high;
+  };
+ };
+
+ bcmdhd_wlan_0: bcmdhd_wlan@0 {
+  compatible = "android,bcmdhd_wlan";
+  gpios = <&gpio7 8 0>;
+  wlreg_on-supply = <&wlreg_on>;
+ };
+
+cd src/dhd/linux/
+
+make ARCH=arm CROSS_COMPILE=/home/zhengguang/svn_project/RSB6410/yocto_1.7_1.0.0/gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux/bin/arm-linux-gnueabihf- LINUXDIR=/home/zhengguang/svn_project/RSB6410/yocto_1.7_1.0.0/source/linux/ dhd-cdc-sdmmc-p2p-android-cfg80211
+
+make ARCH=arm CROSS_COMPILE=/home/zhengguang/svn_project/RSB6410/yocto_1.7_1.0.0/gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux/bin/arm-linux-gnueabihf- LINUXDIR=/home/zhengguang/svn_project/RSB6410/yocto_1.7_1.0.0/source/linux/ dhd-cdc-sdmmc-p2p-android-cfg80211-oob-debug
+
+make ARCH=arm CROSS_COMPILE=/home/zengwei/work/yocto1.7/gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux/bin/arm-linux-gnueabihf- LINUXDIR=/home/zengwei/work/yocto1.7/fsl-yocto-3.14.28_1.0.0/linux-imx/ dhd-cdc-sdmmc-p2p-android-cfg80211-oob-debug
+
+make ARCH=arm CROSS_COMPILE=/home/zengwei/work/yocto1.7/gcc-linaro-arm-linux-gnueabihf-4.7-2012.11-20121123_linux/bin/arm-linux-gnueabihf- LINUXDIR=/home/zengwei/work/yocto1.7/fsl-yocto-3.14.28_1.0.0/linux-imx/ dhd-cdc-sdmmc-p2p-android-cfg80211-debug
+
+make ARCH=arm CROSS_COMPILE=/home/jinlong_tan/work/ti-processor-sdk-linux-am335x-evm-02.00.00.00/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf- LINUXDIR=/home/jinlong_tan/yocto_2.1/linux-imx6.modify/ dhd-cdc-sdmmc-p2p-android-cfg80211-debug
+
+make ARCH=arm CROSS_COMPILE=/home/jinlong_tan/work/ti-processor-sdk-linux-am335x-evm-02.00.00.00/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-linux-gnueabihf- LINUXDIR=/home/jinlong_tan/yocto_2.1/linux-imx6.modify/ dhd-cdc-sdmmc-p2p-android-cfg80211-oob-debug
+
+source /opt/fsl-imx-x11/4.1.15-2.0.0/environment-setup-cortexa9hf-neon-poky-linux-gnueabi
+
+make ARCH=arm CROSS_COMPILE=/opt/fsl-imx-x11/4.1.15-2.0.0/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- LINUXDIR=/home/zengwei/rsb6410_a2_yocto2.1_v8280/linux-imx6/ dhd-cdc-sdmmc-p2p-android-cfg80211-debug
+
+make ARCH=arm CROSS_COMPILE=/opt/fsl-imx-x11/4.1.15-2.0.0/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi- LINUXDIR=/home/zengwei/rsb6410_a2_yocto2.1_v8280/linux-imx6/ dhd-cdc-sdmmc-p2p-android-cfg80211
+
+
+./brcm_patchram_plus2 -d --enable_hci --no2bytes --tosleep 200000 --baudrate 115200 --patchram /etc/bluetooth/bcm43241b4.hcd /dev/ttymxc3
+
+./brcm_patchram_plus -d --enable_hci --no2bytes --tosleep 200000 --baudrate 115200 --patchram bcm43241b4.hcd /dev/ttymxc3
+./brcm_patchram_plus -d --enable_hci --no2bytes --baudrate 115200 --patchram bcm43241b4.hcd /dev/ttymxc3
+
+./brcm_patchram_plus -d --no2bytes --patchram bcm.hcd /dev/ttymxc3
+ sdio-ag-p2p-aoe-pktfilter-keepalive-pktctx-proptxstatus-ampduhostreorder-txbf-sr-swdiv-aibss-relmcast.bin
+
+insmod bcmdhd.ko "firmware_path=/etc/firmware/fw_bcmdhd.bin nvram_path=/etc/firmware/nvram.txt iface_name=wlan0"
+
+insmod bcmdhd.ko "firmware_path=/etc/firmware/43241b4.bin nvram_path=/etc/firmware/bcm943241ng1630_p252.txt iface_name=wlan0"
+
+insmod bcmdhd.ko "firmware_path=43241b4.bin nvram_path=bcm943241ng1630_p252.txt iface_name=wlan0"
+
+insmod bcmdhd.ko "firmware_path=fw_bcm43438a1.bin nvram_path=bcm943241ng1630_p252.txt iface_name=wlan0"
+
+insmod bcmdhd.ko "firmware_path=sdio-ag-p2p-aoe-pktfilter-keepalive-pktctx-proptxstatus-ampduhostreorder-txbf-sr-swdiv-aibss-relmcast.bin nvram_path=bcm943241ng1630_p252.txt iface_name=wlan0"
+
+hciattach [-n] [-p] [-b] [-r] [-t timeout] [-s initial_speed] <tty> <type | id> [speed] [flow|noflow] [sleep|nosleep] [bdaddr]
+
+./brcm_patchram_plus -d --no2bytes --patchram /etc/firmware/bcm43241b4.hcd /dev/ttymxc3
+
+hciattach /dev/ttymxc3 bcm43xx 115200 flow 
+rfkill unblock all
+hciconfig hci0 up pscan
+hcitool scan
+
+CONFIG_BT_HCIUART
+CONFIG_BT_HCIUART_H4
+CONFIG_TTY
+
+hciattach /dev/ttymxc3 any 115200 flow
+
+hciattach /dev/ttymxc3 bcm43xx 115200 flow 24:0A:64:4C:4A:EC
+
+rfkill list              ---查看下当前wlan0是否block
+rfkill unblock all   ---解除所有block
+ifconfig wlan0 up  ---拉起wlan0
+iwlist wlan0 scanning  ---扫描当前AP
+iwconfig wlan0 essid "AP_NAME" ---链接无线网络，必须没有密码
+dhcpd wlan0   ---使用dhcp获取ip 
+
+iwconfig wlan0 essid any
+iw dev wlan0 connect dlink-2104
+ifconfig wlan0 192.168.0.102 broadcast 192.168.0.1 netmask 255.255.255.0 up
+udhcpc -b -i wlan0
+
+wpc_cli
+>scan
+>scan_result
+>add_network   
+>set_network 1 ssid "dlink-2104"  
+>save_config
+>list_network
+>enable_network 1
+
+
+rfkill list
+rfkill unblock all
+hciconfig hci0 up
+obexpushd -dB
+root@imx6qrsb6410a1:/unit_tests/Mrvl-8897# hciconfig hci0 -h
+hciconfig - HCI device configuration utility
+Usage:
+        hciconfig
+        hciconfig [-a] hciX [command ...]
+Commands:
+        up                      Open and initialize HCI device
+        down                    Close HCI device
+        reset                   Reset HCI device
+        rstat                   Reset statistic counters
+        auth                    Enable Authentication
+        noauth                  Disable Authentication
+        encrypt                 Enable Encryption
+        noencrypt               Disable Encryption
+        piscan                  Enable Page and Inquiry scan
+        noscan                  Disable scan
+        iscan                   Enable Inquiry scan
+        pscan                   Enable Page scan
+        ptype      [type]       Get/Set default packet type
+        lm         [mode]       Get/Set default link mode
+        lp         [policy]     Get/Set default link policy
+        name       [name]       Get/Set local name
+        class      [class]      Get/Set class of device
+        voice      [voice]      Get/Set voice setting
+        iac        [iac]        Get/Set inquiry access code
+        inqtpl     [level]      Get/Set inquiry transmit power level
+        inqmode    [mode]       Get/Set inquiry mode
+        inqdata    [data]       Get/Set inquiry data
+        inqtype    [type]       Get/Set inquiry scan type
+        inqparms   [win:int]    Get/Set inquiry scan window and interval
+        pageparms  [win:int]    Get/Set page scan window and interval
+        pageto     [to]         Get/Set page timeout
+        afhmode    [mode]       Get/Set AFH mode
+        sspmode    [mode]       Get/Set Simple Pairing Mode
+        aclmtu     <mtu:pkt>    Set ACL MTU and number of packets
+        scomtu     <mtu:pkt>    Set SCO MTU and number of packets
+        delkey     <bdaddr>     Delete link key from the device
+        oobdata                 Get local OOB data
+        commands                Display supported commands
+        features                Display device features
+        version                 Display version information
+        revision                Display revision information
+        block      <bdaddr>     Add a device to the blacklist
+        unblock    <bdaddr>     Remove a device from the blacklist
+        lerandaddr <bdaddr>     Set LE Random Address
+        leadv      [type]       Enable LE advertising
+                        0 - Connectable undirected advertising (default)
+                        3 - Non connectable undirected advertising
+        noleadv                 Disable LE advertising
+        lestates                Display the supported LE states
+
+ ussp-push --debug --timeo 25 E0:2C:B2:
+pushing file bt-test
+name=bt-test, size=8
+__obex_connect: client_context_t = 0x1d3f040
+        Found "" (0x1132)
+        Found "Phonebook Access - PSE" (0x112f)
+        Found "OBEX Object Push" (0x1105)
+Found channel 23
+Remote OBEX channel: 23
+Registered transport
+Set user data
+Created new objext
+cobex_write
+Local device 28:C2:DD:95:56:DE
+Remote device E0:2C:B2:61:46:DC (23)
+Wrote 7 fragment
+Wrote 7 bytes (expected 7)
+obex_event: client_context_t = 0x1d3f040
+Made some progress...
+Started a new request
+cobex_handle_input
+expect 12 bytes
+Read 12 bytes
+obex_event: client_context_t = 0x1d3f040
+ReqDone
+Command (00) has now finished, rsp: 20
+Connected!
+Connection return code: 0, id: 0
+Connection established
+Connected to server
+obex_push: client_context_t = 0x1d3f040
+Sending file: bt-test, path: bt-test, size: 8
+cobex_write
+Wrote 38 fragment
+Wrote 38 bytes (expected 38)
+obex_event: client_context_t = 0x1d3f040
+Made some progress...
+cobex_handle_input
+expect 8 bytes
+Read 8 bytes
+obex_event: client_context_t = 0x1d3f040
+ReqDone
+Command (02) has now finished, rsp: 40
+cobex_write
+Wrote 3 fragment
+Wrote 3 bytes (expected 3)
+obex_event: client_context_t = 0x1d3f040
+Made some progress...
+cobex_handle_input
+expect 8 bytes
+Read 8 bytes
+obex_event: client_context_t = 0x1d3f040
+ReqDone
+Command (01) has now finished, rsp: 20
+Disconnect done!
+cobex_disconnect
+cobex_close
+Pushed!!
+root@imx6qrsb6410a1:/unit_tests/Mrvl-8897#
+
+
+
