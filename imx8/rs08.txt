@@ -1,0 +1,30 @@
+,"developmentMode":true
+
+/media/org-home/zengwei/documents/EBC-RS08/RS-485Modbus/test
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/data/test/modbus-test/lib/
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/data/test/iperf/
+export PATH=$PATH:/mnt/data/test/iperf/
+
+./iperf3 -s > /dev/null &
+
+./iperf3 -c 10.217.222.1 -u -p 5201 -i 1 -b 100M -t 86400 > /dev/null &
+
+./modbus_rtu_test /dev/ttymxc2 200
+
+cat /mnt/boot/config.json 找uuid
+
+old "uuid":"4cc8c080591efc7db07f893ff29ab570"
+new "uuid":"4bdd36f41db2f0d4afebc7aae727b58b"
+0512 new
+"uuid":"0f73be95edab267e3ac358230b26c2be"
+
+./modbus-test-0417/rs485-modbus /dev/ttymxc2 9600 11 200
+
+ping -I wwan0 8.8.8.8
+
+
+scp -r yanwei@172.21.170.48:/home/yanwei/svn/test/ebc-rs08/lab/mm-test .
+scp -r zengwei@172.21.171.105:/media/org-home/zengwei/documents/EBC-RS08/EC21-DFOAT-To07.sh .
+scp -r zengwei@172.21.171.105:/media/org-home/zengwei/documents/EBC-RS08/EC21-DFOAT-04and06.sh .
+

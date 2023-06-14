@@ -1,3 +1,70 @@
+AndroidS12
+
+git init
+git checkout -b rk3399-androidS12
+git add -f .
+git commit -m "Initial commit"
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-uboot
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-kernel
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-cts
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-test
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-tools
+git remote add origin https://AIM-Cocreation@dev.azure.com/AIM-Cocreation/RK3399-Android/_git/android-s12-bsp-tools
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-developers
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-system
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-device
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-frameworks
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-packages
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-vendor
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp
+
+git remote rm origin
+
+git push --set-upstream origin rk3399-androidS12
+
+prmry_screen=edp-1366x768 extend_screen=hdmi-default
+
+image烧录，parameter.txt随时注意更新更新
+
+docker run --privileged -it --name rk3399-rsb3710-androidS12 -v /media/store/work/rk3399-androidS12/rk3399-androidS12-Git:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+$ sudo chown adv:adv -R BSP
+$ cd ~/BSP
+
+source build/envsetup.sh;lunch rk3399_Android12-userdebug
+./build.sh -AUCKu
+
+source build/envsetup.sh;lunch rsb3710_Android12-userdebug
+source build/envsetup.sh;lunch rsb4710_Android12-userdebug
+source build/envsetup.sh;lunch ppc1xx_Android12-userdebug
+./build.sh -AUCKu
+
+uboot
+cd uboot
+./make.sh rk3399_rsb3710a2_2G
+
+kernel 
+
+make ARCH=arm64 rockchip_defconfig android-11.config;
+
+make ARCH=arm64 BOOT_IMG=..rockdev/Image-rsb3710_Android12/boot.img rk3399-rsb3710-a2.img -j24
+
+CONFIG_ARCH_ADVANTECH=y
+#
+# Bluetooth device drivers
+#
+CONFIG_BT_RTKBTUSB=y
+
+vendor属性本身重启就不会保存，这不是问题。
+你如果只是调试的话，setprop 属性后只要重启hwc服务即可，kill `pgrep composer`
+setprop vendor.hwc.device.primary HDMI-A-1
+setprop vendor.hwc.device.extend DSI
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 eGTouch 支持
 
 1、CONFIG_TOUCHSCREEN_USB_COMPOSITE 去除

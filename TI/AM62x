@@ -30,7 +30,109 @@ Uboot下，地址对应TRM 9.1.4
 MMC 操作
 先mmc dev 0选定当前操作盘符
 
-date -s "20230321 16:28:50"
+date -s "20230417 17:45:40"
+
+/proc/device-tree/bus@f0000/mmc@fa00000/   SDCard只支持3.3v，50Mhz工作
+
+LAN LED phy mac
+
+./mdio-tool w eth0 0x1e 0xa000
+./mdio-tool w eth0 0x1f 0
+./mdio-tool w eth0 0x1e 0x57
+./mdio-tool r eth0 0x1f
+./mdio-tool w eth0 0x1f 0x254c
+./mdio-tool r eth0 0x1f
+
+./mdio-tool w eth1 0x1e 0xa000
+./mdio-tool w eth1 0x1f 0
+./mdio-tool w eth1 0x1e 0x57
+./mdio-tool r eth1 0x1f
+
+./mdio-tool w eth1 0x1e 0xa000
+./mdio-tool w eth1 0x1f 0
+./mdio-tool w eth1 0x1e 0xa00c
+./mdio-tool r eth1 0x1f
+./mdio-tool w eth1 0x1f 0xe600
+./mdio-tool r eth1 0x1f
+
+./mdio-tool w eth1 0x1e 0xa000
+./mdio-tool w eth1 0x1f 0
+./mdio-tool w eth1 0x1e 0xa00d
+./mdio-tool r eth1 0x1f
+./mdio-tool w eth1 0x1f 0xc020
+./mdio-tool r eth1 0x1f
+
+./mdio-tool w eth1 0x1e 0xa000
+./mdio-tool w eth1 0x1f 0
+./mdio-tool w eth1 0x1e 0xa00e
+./mdio-tool r eth1 0x1f
+./mdio-tool w eth1 0x1f 0xc040
+./mdio-tool r eth1 0x1f
+
+./mdio-tool r eth0 0x00
+./mdio-tool r eth1 0x00
+
+寄存器修改
+./mdio-tool w eth1 0x1e 0xa000
+./mdio-tool w eth1 0x1f 0
+./mdio-tool w eth1 0x1e 0xa012
+./mdio-tool r eth1 0x1f
+./mdio-tool w eth1 0x1f 0x00a8
+./mdio-tool r eth1 0x1f
+
+./mdio-tool w eth1 0x1e 0xa000
+./mdio-tool w eth1 0x1f 0
+./mdio-tool w eth1 0x1e 0xa00a
+./mdio-tool r eth1 0x1f
+./mdio-tool w eth1 0x1f 0x0082
+./mdio-tool r eth1 0x1f
+
+./mdio-tool w eth1 0x1e 0xa000
+./mdio-tool w eth1 0x1f 0
+./mdio-tool w eth1 0x1e 0xa010
+./mdio-tool r eth1 0x1f
+./mdio-tool w eth1 0x1f 0x0bcf
+./mdio-tool r eth1 0x1f
+
+查看phy状态
+./mdio-tool r eth0 0x01;./mdio-tool r eth1 0x01
+
+[  202.534442] genphy_update_link bmcr 0x1000
+[  202.538549] genphy_update_link phy_polling_mode status 0x7949
+[  202.544301] genphy_update_link status 0x7949   0111100101001001
+
+[  202.544301] genphy_update_link status 0x796D   0111100101101101
+
+driver/net/phy/phylink.c         phylink_resolve
+driver/net/phy/phy.c             phy_state_machine
+driver/net/phy/phy_device.c      genphy_update_link
+driver/net/ethernet/ti/davinci_mdio.c    davinci_mdio_probe
+include/linux/phy.h
+include/uapi/linux/mii.h
+include/uapi/linux/ethtool.h
+
+4G minipcie reset
+
+echo 1 > /sys/bus/platform/devices/misc-adv-gpio/minipcie_reset
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+arago-image.inc
+./meta-ti-adv/meta-ti-adv/recipes-core/images/tisdk-default-image.bbappend
+./meta-processor-sdk/recipes-core/images/tisdk-default-image.bbappend
+./meta-arago/meta-arago-distro/recipes-core/images/tisdk-default-image.bb
+
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-graphics"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-gtk"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-qte"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-opencl"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-matrix"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-matrix-extra"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-multimedia"
+IMAGE_INSTALL_remove = "chromium-ozone-wayland"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-hmi"
+IMAGE_INSTALL_remove = "packagegroup-arago-tisdk-opencl-extra"
+inc : DISTRO_FEATURES_remove = "x11 wayland opengl opencl opencv openmp"
+      MACHINE_FEATURES_remove = "gpu"
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 EVM SK-AM62 eMMC
@@ -102,6 +204,8 @@ gpiochip3: GPIOs 311-398, parent: platform/601000.gpio, 601000.gpio:
 gpiochip2: GPIOs 399-485, parent: platform/600000.gpio, 600000.gpio:
  gpio-430 (                    |tlv71033            ) out lo
  gpio-431 (                    |regulator-3         ) out lo
+ gpio-432 (                    |adv_wdt.wdt_ping    ) out lo
+ gpio-433 (                    |adv_wdt.wdt_en      ) out lo
 
 gpiochip1: GPIOs 486-509, parent: platform/4201000.gpio, 4201000.gpio:
 
@@ -109,6 +213,11 @@ gpiochip0: GPIOs 510-511, parent: platform/3b000000.memory-controller, omap-gpmc
 
 rs232_loop: rs232_loop.c
 	${CROSS_COMPILE}gcc -static -o rs232_loop rs232_loop.c -I${LINUX_DIR}/arch/${ARCH}/include
+	
+~/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-gcc -static -o seril_test seril_test.c -I$~/TI/ti-processor-sdk-linux-am62xx-evm-08.06.00.42/board-support/linux-ti/include -I~/TI/ti-processor-sdk-linux-am62xx-evm-08.06.00.42/board-support/linux-ti/arch/arm64/include
+
+~/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-gcc -static -o rs232_loop rs232_loop.c -I$~/TI/ti-processor-sdk-linux-am62xx-evm-08.06.00.42/board-support/linux-ti/include -I~/TI/ti-processor-sdk-linux-am62xx-evm-08.06.00.42/board-support/linux-ti/arch/arm64/include
+
 
 ********************************************************************************************************************
 RS485 or usb hub
@@ -120,6 +229,24 @@ RS485 or usb hub
 ./uart_test_64 /dev/ttyS1 -rsoa -b 115200 -c n81 -z 40 -h 600 &
 
 ./drivers/mmc/mmc_write.c
+
+./mac_write CC:82:7F:2E:11:CA,CC:82:7F:2E:11:CB AKS0211599 2023-04-23 Testing
+./mac_write CC:82:7F:2E:11:C7,CC:82:7F:2E:11:C8 AKS0211592 2023-04-23 Testing
+./mac_write CC:82:7F:2E:11:D6,CC:82:7F:2E:11:D7 AKS0211594 2023-04-23 Testing
+./mac_tool /dev/mtd0 0x2000 CC:82:7F:2E:11:CB,CC:82:7F:2E:11:CA AKS0211599 2023-04-21 Testing
+海岸线位置信息：USB LAN1(eth1) LAN0(eth0)
+
+serialcheck -b 115200 -d /dev/ttyS1 -f /etc/init.d/README -l 10000 -m r
+serialcheck -b 115200 -d /dev/ttyS3 -f /etc/init.d/README -l 10000 -m t
+
+serialcheck -b 115200 -d /dev/ttyS1 -f /etc/init.d/README -l 3000 -m d & serialcheck -b 115200 -d /dev/ttyS3 -f /etc/init.d/README -l 3000 -m d
+
+serialcheck -b 115200 -d /dev/ttyS1 -f /etc/init.d/README -l 1 -m d & serialcheck -b 115200 -d /dev/ttyS3 -f /etc/init.d/README -l 1 -m d
+
+serialcheck -b 115200 -d /dev/ttyS1 -f /etc/init.d/README -l 3 -m d > ttyS1.log & serialcheck -b 115200 -d /dev/ttyS3 -f /etc/init.d/README -l 3 -m d > ttyS3.log
+
+./serial-test -b 115200 -p /dev/ttyS1 -s -S -A &
+./serial-test -b 115200 -p /dev/ttyS3 -s -S -A
 
 ********************************************************************************************************************
 
@@ -402,7 +529,7 @@ uboot => mmc rst-function 0 1
 kernel # mmc hwreset enable /dev/mmcblk0
 
 *********************************************************************************************************************
-Yocto3.1 Building
+VM Yocto3.1 Building
   
 docker run -it --name am623x-yocto3.1-SDK -v /media/store/work/AM623X-SDK:/home/adv/yocto_bsp:rw advrisc/u18.04-imx8lbv1 /bin/bash
 
@@ -453,8 +580,9 @@ $ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.04.01.03-con
 $ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-08.06.00-config.txt
 $ cd build
 $ . conf/setenv
-$ export TOOLCHAIN_PATH_ARMV7=$HOME/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf
-$ export TOOLCHAIN_PATH_ARMV8=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu
+export TOOLCHAIN_PATH_ARMV7=$HOME/gcc-arm-9.2-2019.12-x86_64-arm-none-linux-gnueabihf
+export TOOLCHAIN_PATH_ARMV8=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu
+export TI_SECURE_DEV_PKG_K3=$TI_SECURE_DEV_PKG
 
 $ MACHINE=am62xx-evm bitbake -k tisdk-base-image  (-k 有错继续执行)
 $ MACHINE=am62xx-evm bitbake -k tisdk-default-image
@@ -466,8 +594,10 @@ $ MACHINE=am62xx-evm bitbake tisdk-default-image -c cleansstate
 生成文件路径
 /build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-evm/
 
+/home/adv/yocto_bsp/tisdk/build/conf/bblayers.conf  配置文件
+
 EBC-RS10 (注意k3r5文件)
-docker run -it --name am623x-yocto3.1 --privileged -v /build/AM62xx:/home/adv/yocto_bsp:rw advrisc/u18.04-imx8lbv1 /bin/bash
+docker run -it --name am623x-yocto3.1-SDK --privileged -v /build/AM62xx:/home/adv/yocto_bsp:rw advrisc/u18.04-imx8lbv1 /bin/bash
 sudo chmod -R a+rw yocto_bsp/
 $ git clone https://github.com/ADVANTECH-Corp/adv-ti-yocto-bsp.git -b processor-sdk-am62xx-08.04.01.03 tisdk
 $ git clone https://github.com/ADVANTECH-Corp/adv-ti-yocto-bsp.git -b processor-sdk-am62xx-08.06.00.42 tisdk
@@ -487,6 +617,17 @@ $ MACHINE=am62xx-rs10 bitbake -k tisdk-default-image
 $ MACHINE=am62xx-rs10 bitbake tisdk-default-image
 $ MACHINE=am62xx-rs10 bitbake tisdk-default-image -c cleansstate
 $ MACHINE=am62xx-rs10 bitbake tisdk-base-image -c cleansstate
+$ MACHINE=am62xx-rs10 bitbake -s  用于显示所有可以bitbake的包
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+文件系统 filesystems 
+ ecsd
+ systemctl status ModemManager
+ systemctl status cellular-guard
+ cat /lib/systemd/system/cellular-guard.service
+ /tools/cellular-guard.sh
+ /tools/emmc_lifetime.sh
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -514,6 +655,8 @@ Azure VM
 ssh -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153
 scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-evm/tisdk-base-image-am62xx-evm-20221206023221.rootfs.wic.xz .
 
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/downloads_am62xx_5.10.168-20230515.tar.gz .
+
 scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/build_rk3399_risc/RK3399_N7_AIV7004_2023-04-12/android/kernel/scripts/resource_tool .
 
 scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-rs10/tisdk-default-image-am62xx-rs10.wic.xz .
@@ -527,6 +670,8 @@ scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/
 scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-evm/tisdk-base-image-am62xx-evm.wic.xz .
 
 scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/sources/meta-ti/recipes-ti/secdev/ti-k3-secdev_git.bb . 
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem  /media/store/work/RS08-imx-5.4.70/meta-advantech2/meta-tools.tar.xz azureuser@20.212.36.153:/build/AM62xx/tisdk/sources/meta-ti-adv/
 
 Kernel Src
 /home/adv/yocto_bsp/tisdk/build/arago-tmp-external-arm-glibc/work-shared/am62xx-rs10/kernel-source

@@ -70,7 +70,56 @@ tar zcvf android8.1-r46-fromRK-20221206.tar.gz --exclude=".git" --exclude=".repo
 Quectel EC21 DFOTA
 
 cat /dev/ttyUSB2
-cat /dev/ttyUSB3
+cat /dev/ttyUSB3 &
+cat /dev/ttyUSB6 &
+
+echo -e "AT+CPIN? \r\n" > /dev/ttyUSB6
+echo -e "AT+CFUN? \r\n" > /dev/ttyUSB6
+echo -e "AT+CSQ=? \r\n" > /dev/ttyUSB6
+
+echo -e "AT+QENG=\"servingcell\" \r\n" > /dev/ttyUSB6
+
+echo -e "AT+CPIN? \r\n" > /dev/ttyUSB3
+echo -e "AT+CFUN? \r\n" > /dev/ttyUSB3
+echo -e "AT+QENG=\"servingcell\" \r\n" > /dev/ttyUSB3
+
+echo -e "AT+QGMR \r\n" > /dev/ttyUSB3
+echo -e "AT+QFLDS=? \r\n" > /dev/ttyUSB3
+echo -e "AT+QFLST=\"*\" \r\n" > /dev/ttyUSB3
+
+echo -e "AT+QFDEL=\"*\" \r\n" > /dev/ttyUSB3
+echo -e "AT+QFUPL=? \r\n" > /dev/ttyUSB3
+echo -e "AT+QFUPL=\"/mnt/data/ec21/Update_EC21EUXGAR08A06_20.002.20.002-R08A04_20.002.20.002.zip\",6175332,5,1 \r\n" > /dev/ttyUSB3
+echo -e "AT+QFOTADL=\"/data/ufs/Update_EC21EUXGAR08A06_20.002.20.002-R08A04_20.002.20.002.zip\" \r\n" > /dev/ttyUSB3
+
+FTP
+echo -e "AT+QIACT? \r\n" > /dev/ttyUSB3
+
+cat /dev/ttyUSB3 &
+echo -e "AT+QICSGP=1,1,\"datamobile.ag\",\"\",\"\",1 \r\n" > /dev/ttyUSB3
+echo -e "AT+QIACT=1 \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPCFG=\"contextid\",1 \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPCFG=\"account\",\"test\",\"test\" \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPCFG=\"filetype\",1 \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPCFG=\"transmode\",1 \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPCFG=\"rsptimeout\",90 \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPOPEN=\"ftp2.quectel.com\",21 \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPCWD=\"/Peng\" \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPCWD=\"/xiaodong\" \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPPWD \r\n" > /dev/ttyUSB3
+
+echo -e "AT+QFTPSIZE=\"Update_EC21EUXGAR08A04_20.002.20.002-R08A06_20.002.20.002.zip\" \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPSIZE=\"Update_EC21EUXGAR08A06_20.002.20.002-R08A07_20.200.20.200.zip\" \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPGET=\"Update_EC21EUXGAR08A06_20.002.20.002-R08A07_20.200.20.200.zip\",\"UFS:Update_EC21EUXGAR08A06_20.002.20.002-R08A07_20.200.20.200.zip\" \r\n" > /dev/ttyUSB3
+
+echo -e "AT+QFTPSIZE=\"Update_EC21EUXGAR08A06_20.002.20.002-R08A04_20.002.20.002.zip\" \r\n" > /dev/ttyUSB3
+echo -e "AT+QFTPGET=\"Update_EC21EUXGAR08A06_20.002.20.002-R08A04_20.002.20.002.zip\",\"UFS:Update_EC21EUXGAR08A06_20.002.20.002-R08A04_20.002.20.002.zip\" \r\n" > /dev/ttyUSB3
+
+echo -e "AT+QFLST=\"UFS:*\" \r\n" > /dev/ttyUSB3
+
+echo -e "AT+QFOTADL=\"/data/ufs/Update_EC21EUXGAR08A06_20.002.20.002-R08A04_20.002.20.002.zip\" \r\n" > /dev/ttyUSB3
+
+**************************************************************************************8
 
 echo -e "AT+QGMR \r\n" > /dev/ttyUSB2
 echo -e "AT+QFOTADL=? \r\n" > /dev/ttyUSB2

@@ -1,5 +1,89 @@
+phy TI DP83867  debian9 ------  linaro:123456;sudo su
+
+May be the problem is with register read write procedure. If the address of the register is greater than 1F, it has to written and read as follows :
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x0
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+./mdio-tool w eth0 0x000E 0x9140
+./mdio-tool r eth0 0x000E
+
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x0014
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+./mdio-tool w eth0 0x000E 0x2bc7
+./mdio-tool r eth0 0x000E
+
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x0018
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+./mdio-tool w eth0 0x000E 0x665b
+./mdio-tool r eth0 0x000E
+
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x001e
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+./mdio-tool w eth0 0x000E 0x0202
+./mdio-tool r eth0 0x000E
+
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x0032
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+./mdio-tool w eth0 0x000D 0x00d3
+./mdio-tool r eth0 0x000E
+
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x0086
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+./mdio-tool w eth0 0x000D 0x0044
+./mdio-tool r eth0 0x000E
+
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x0170
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+./mdio-tool w eth0 0x000D 0x000e
+./mdio-tool r eth0 0x000E
+
+./mdio-tool w eth0 0x000D 0x001F
+./mdio-tool w eth0 0x000E 0x006e
+./mdio-tool w eth0 0x000D 0x401F
+./mdio-tool r eth0 0x000E
+
+
+
+./drivers/net/ethernet/rockchip/gmac/stmmac_platform.c
+
+iperf.exe -s -i 5
+ifconfig eth0 192.168.1.111 up
+iperf -c 192.168.1.5 -i 5 -d -t 43200 &
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 device/rockchip/common/buildspec-rsb4680.mk
 device/rockchip/rsb4680/
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+drivers/net/ethernet/rockchip/gmac/stmmac_main.c
+echo 6 > /proc/net_testmode
+
+[  194.017300] Basic Register:
+[  194.017319] 0x00~0x0f:0x0140 0x7949 0x2000 0xa231 0x01e1 0x0000 0x0064 0x2001 0x0000 0x0300 0x0000 0x0000 0x0000 0x401f 0x0c0e 0x3000
+[  194.017319] 0x10~0x1f:0x5008 0xa802 0x0000 0x0000 0x29c7 0x0000 0x0000 0x0040 0x6150 0x4444 0x0002 0x0000 0x0000 0x0000 0x0002 0x0000
+[  194.019358] PHY REG 0x0031=0x10b0
+[  194.019585] PHY REG 0x0032=0xd3
+[  194.019810] PHY REG 0x006e=0x0
+[  194.020035] PHY REG 0x006f=0x100
+[  194.020261] PHY REG 0x0086=0x77
+[  194.020486] PHY REG 0x0170=0xc0e
+
+**********************************************************************************************************
 
 摄像头开关千次后无法预览
 urb is deactive, this urb complete cancel!dwc_otg_hc_halt: hcchar.b.chen 1, ep_type 1
