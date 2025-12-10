@@ -1,0 +1,313 @@
+Secure Boot
+
+git clone git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3588-Linux/rkbin -b rk3588_linux6.1_v110_risc
+git clone git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3588-Linux/device -b rk3588_linux6.1_v110_risc
+
+./build.sh lunch
+./build.sh adv_rk3588_asra501a2_eg90_defconfig
+./build.sh kernel
+./build.sh uboot
+
+make ARCH=arm64 rk3588_adv_defconfig
+make ARCH=arm64 rk3588-asra501-eg90-a2.img -j8
+
+lrwxrwxrwx  1 zengwei zengwei   39  2月 25 23:57 build.sh -> device/rockchip/common/scripts/build.sh
+drwxr-xr-x  3 zengwei zengwei 4096  2月 25 23:57 device
+drwxr-xr-x 27 zengwei zengwei 4096  2月 25 23:56 kernel
+lrwxrwxrwx  1 zengwei zengwei   31  2月 25 23:57 Makefile -> device/rockchip/common/Makefile
+drwxr-xr-x  3 zengwei zengwei 4096  2月 25 23:57 prebuilts
+drwxr-xr-x  9 zengwei zengwei 4096  2月 25 23:56 rkbin
+lrwxrwxrwx  1 zengwei zengwei   41  2月 25 23:57 rkflash.sh -> device/rockchip/common/scripts/rkflash.sh
+drwxr-xr-x 25 zengwei zengwei 4096  2月 25 23:56 u-boot
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+https://gitlab.com/etherlab.org/ethercat/-/tree/stable-1.6?ref_type=heads
+
+git@gitlab.com:etherlab.org/ethercat.git
+https://gitlab.com/etherlab.org/ethercat.git
+
+git clone https://gitlab.com/etherlab.org/ethercat.git -b stable-1.5 ethercat-1.5
+
+git clone git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3588-Linux/kernel -b rk3588_rockchip RISC-RK3588-Linux-Rockchip
+git clone git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3588-Linux/prebuilts -b rk3588_rockchip
+
+方法一
+./build.sh lunch
+
+./build.sh adv_rk3588_rom6881a1_defconfig
+./build.sh rockchip_rk3588_evb1_lp4_v10_defconfig
+
+./build.sh uboot
+./build.sh kernel
+
+sudo docker run -it --name rk3588_debian12_linux6 -v /home/zhihao/zhihao/rk3588_linux/rk3588_linux6.1_v110_risc/:/home/adv/BSP:rw --privileged advrisc/u20.04-rklbv1 /bin/bash
+
+方法二
+
+make ARCH=arm64 rockchip_linux_defconfig rk3588_linux.config
+
+
+cd kernel/
+export CROSS_COMPILE=../prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
+make ARCH=arm64 rockchip_linux_defconfig rockchip_rt.config rk3588_linux.config;
+make ARCH=arm64 rk3588-evb1-lp4-v10-linux.img -j8
+
+export CROSS_COMPILE=/home/zengwei/data_8T2/rk3588-debian12-from-Azure/prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
+export CROSS_COMPILE=../prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
+make ARCH=arm64 rockchip_linux_defconfig rk3588_linux.config;
+make ARCH=arm64 rk3588-evb1-lp4-v10-linux.img -j24
+
+
+arch/arm64/boot/dts/rockchip/rk3588-evb1-lp4-v10-linux.dts
+&gmac0 {
+    status = "disabled";
+};
+
+arch/arm64/boot/dts/rockchip/rk3588s.dtsi
+//cpu-idle-states = <&CPU_SLEEP>;
+
+arch/arm64/boot/dts/rockchip/rk3588-linux.dtsi
+isolcpus=3 nohz_full=3
+
+arch/arm64/configs/rockchip_linux_defconfig
+CONFIG_NO_HZ_FULL=y
+
+
+arch/arm64/boot/dts/rockchip/rk3588-evb1-lp4-v10-linux.dts
+arch/arm64/boot/dts/rockchip/rk3588s.dtsi 
+arch/arm64/boot/dts/rockchip/rk3588-linux.dtsi 
+arch/arm64/configs/rockchip_linux_defconfig
+
+
+scp aka@172.21.171.106:/home/aka/work/code/rk3588/debian/rkcode/kernel/ethcat-org.tar.gz .
+
+cp disk/rk_ethercat_release_2024_6_25/lib/* /usr/lib/
+cp disk/rk_ethercat_release_2024_6_25/bin/* /usr/bin/
+cp disk/rk_ethercat_release_2024_6_25/driver/5.10/* /userdata/
+
+insmod /userdata/phylink.ko
+insmod /userdata/pcs-xpcs.ko
+insmod /userdata/ec_master.ko main_devices=86:29:bf:2f:05:83
+insmod /userdata/ec_stmmac.ko
+
+echo performance > /sys/class/devfreq/dmc/governor
+
+echo performance | tee $(find /sys/ -name *governor)
+
+GPU loading
+
+cat /sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu/load
+
+
+cp /run/media/sda1/rk_ethercat_release/lib/* /usr/lib/
+cp /run/media/sda1/rk_ethercat_release/bin/* /usr/bin/
+cp /run/media/sda1/rk_ethercat_release/driver/6.1/* /userdata/
+
+insmod /userdata/phylink.ko
+insmod /userdata/pcs-xpcs.ko
+insmod /userdata/ec_master.ko main_devices=cc:82:7f:6a:75:6a
+insmod /userdata/ec_stmmac.ko
+
+
+ps aux | grep ethercat
+
+[  433.371570] ec_master: loading out-of-tree module taints kernel.
+[  433.375135] EtherCAT: Master driver 1.6.0-rc1 unknown
+[  433.375380] EtherCAT: 1 master waiting for devices.
+
+
+echo performance | tee $(find /sys/ -name *governor)
+
+
+# 安装编译所需的依赖
+sudo apt update
+sudo apt install build-essential libc6-dev
+
+sudo apt update
+sudo apt upgrade
+sudo apt install libc6
+sudo apt-get install gawk
+sudo apt-get install bison 
+ 
+# 下载 glibc 2.32 源代码
+cd /usr/local/src
+sudo wget http://ftp.gnu.org/gnu/glibc/glibc-2.32.tar.gz
+sudo tar -xzf glibc-2.32.tar.gz
+cd glibc-2.32
+ 
+# 配置、编译和安装
+mkdir build && cd build
+sudo ../configure --disable-sanity-checks
+百度查的有问题 sudo ../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin
+sudo make -j4
+sudo make install
+ 
+# 更新系统库缓存
+sudo ldconfig
+
+# 查看版本号
+ldd --version
+ldd --version | grep libc
+
+
+cma: cma_alloc: cma: alloc failed, req-size: 129 pages, ret: -12
+
+***************************************************************************
+cp /wlan_firmware/* /lib/firmware
+cp qcom_cfg.ini /lib/firmware/wlan
+
+
+insmod wlan_cnss_core_pcie.ko
+insmod wlan.ko country_code=CN
+
+docker image save and load
+
+sudo docker save -o rkdebian.tar advrisc/u20.04-rklbv1:latest
+
+
+
+
+sudo docker run -it --name rk3588_debian12_linux6 -v /home/zengwei/work/rk3588/rk3588-debian12:/home/adv/BSP:rw --privileged advrisc/u20.04-rklbv1 /bin/bash
+
+repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3588-Linux/_git/manifest -b rk3588_v130_risc -m default.xml
+
+repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3588-Linux/_git/manifest -b rk3588_linux6.1_v110_risc -m RK3588_RISC_DIV110037.xml
+
+sudo docker run -it --name rk3588_debian11 -v /home/zengwei/work/rk3588/rk3588-debian11:/home/adv/BSP:rw --privileged advrisc/u20.04-rklbv1 /bin/bash
+sudo chown adv:adv -R BSP
+cd ~/BSP
+git clone https://github.com/ADVANTECH-Rockchip/repo.git
+mkdir rk3588_v106_risc
+cd rk3588_v106_risc/
+git config --global user.name "wei.zeng"
+git config --global user.email wei.zeng@advantech.com.cn
+../repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3588-Linux/_git/manifest -b rk3588_v106_risc -m default.xml
+../repo/repo sync
+../repo/repo forall -c git checkout -b local --track advantech-azure/rk3588_v106_risc
+../repo/repo forall -c "git checkout -b rk3588_v106_risc_for_ISG"
+../repo/repo forall -c "git push -u advantech-azure rk3588_v106_risc_for_ISG"
+../repo/repo forall -c "git status"
+git config --global credential.helper 'store --file=.git-credentials'
+
+./build.sh lunch
+./build.sh kernel
+./build.sh uboot
+sudo dpkg -i debian/ubuntu-build-service/packages/*
+sudo apt-get install -f -y
+./build.sh debian
+rm buildroot/output/rockchip_rk3588_recovery  -rf
+./build.sh recovery
+source device/rockchip/.BoardConfig.mk
+./mkfirmware.sh
+
+
+
+export KERNELPATH=/home/aka/work/code/rk3588/debian/rk3588_azure/kernel
+export TOOLCHAIN=/home/aka/work/code/rk3588/debian/rk3588_azure/prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
+export CONFIG_KERNEL_SYMBOL_DIR=/home/aka/work/code/rk3588/debian/rk3588_azure/kernel
+
+/home/aka/170/AIO/build/scripts/ve-f10/config.ve-f10s
+
+/home/aka/170/AIO/build
+sudo make drivers
+/home/aka/170/AIO/rootfs-ve-f10.build/lib/modules
+
+/home/aka/work/code/rk3588/debian/rk3588_azure
+
+
+[    2.297390] Reserved memory: created CMA memory pool at 0x00000000c8000000, size 512 MiB
+[    2.305986] OF: reserved mem: initialized node cma, compatible id shared-dma-pool
+[    2.382085] Zone ranges:
+[    2.384804]   DMA      [mem 0x0000000000200000-0x00000000ffffffff]
+[    2.391384]   DMA32    empty
+[    2.394458]   Normal   [mem 0x0000000100000000-0x00000001ffffffff]
+[    2.401035] Movable zone start for each node
+[    2.405580] Early memory node ranges
+[    2.409379]   node   0: [mem 0x0000000000200000-0x00000000083fffff]
+[    2.416024]   node   0: [mem 0x0000000009400000-0x00000000efffffff]
+[    2.422695]   node   0: [mem 0x00000001f0000000-0x00000001ffffffff]
+[    2.429383] Initmem setup node 0 [mem 0x0000000000200000-0x00000001ffffffff]
+
+
+[    2.305986] OF: reserved mem: initialized node cma, compatible id shared-dma-pool
+[    2.681641] Memory: 3458628K/4175872K available (22784K kernel code, 4068K rwdata, 7920K rodata, 8320K init, 687K bss, 192956K reserved, 524288K cma-reserved)
+
+
+
+###########################################################################################################################################
+sudo su
+cp /run/media/sda1/default.pa /etc/pulse/
+cp /run/media/sda1/alsa.conf /usr/share/alsa/
+reboot
+
+sudo su
+tar zxvf /run/media/sda1/audio.tar.gz -C /
+reboot
+
+cat /proc/asound/cards
+
+aplay -l
+arecord -l
+
+pactl list short sinks
+0       alsa_output.platform-rt5640-sound.stereo-fallback       module-alsa-card.c      s16le 2ch 44100Hz       SUSPENDED
+1       alsa_output.platform-hdmi0-sound.HDMI__hw_rockchiphdmi0__sink   module-alsa-card.c      s16le 2ch 44100Hz       SUSPENDED
+
+~/.config/pulse/default.pa
+/etc/pulse/default.pa
+set-default-sink alsa_output.platform-rt5640-sound.stereo-fallback
+
+pactl set-default-sink alsa_output.platform-rt5640-sound.stereo-fallback
+
+编辑 ALSA 配置文件：
+
+ALSA 的配置文件通常位于 /usr/share/alsa/alsa.conf 或 /etc/asound.conf。你可以编辑这些文件来指定默认的音频设备。例如，要设置默认的音频输出为特定的硬件设备，可以添加或修改以下行：
+
+pcm.!default {
+    type hw
+    card 0
+}
+
+ctl.!default {
+    type hw
+    card 0
+}
+
+    这里的 card 0 表示第一个声卡，你需要根据 aplay -l 的输出调整 card 的值。
+
+3. 使用 PulseAudio 或 PipeWire（如果已安装）
+
+Debian Bullseye 默认使用 PipeWire 作为音频服务器，取代了之前常用的 PulseAudio。如果你需要更改音频输出设备，可以通过以下方式：
+
+  列出所有可用的输出设备：
+
+pactl list short sinks
+
+或者对于 PipeWire：
+
+pactl list short sinks
+
+更改默认输出设备：
+
+pactl set-default-sink [sink_name_or_index]
+
+或者对于 PipeWire：
+
+pactl set-default-sink [sink_name_or_index]
+
+例如，如果你想要将默认输出改为名为 alsa_output.pci-0000_00_1f.3.analog-stereo 的设备，可以使用：
+
+pactl set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo
+
+
+
+
+
+
+
+
+
+
+
+

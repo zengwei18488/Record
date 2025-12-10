@@ -1,0 +1,1440 @@
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+Manufacturer ID:0x6
+CH0 RX Vref:37.3%, TX Vref:13.2%,13.2%DQ rds:
+h5 l0, h2 l0, h2 l0, h0 l0, h3 l0, h5 l0, h5 l0, h3 l0,
+h3 l0, h3 l0, h1 l0, h5 l0, h1 l0, h3 l0, h3 l0, h1 l0,
+
+CH1 RX Vref:36.9%, TX Vref:13.2%,13.2%DQ rds:
+h3 l0, h5 l0, h7 l0, h2 l0, h3 l0, h1 l0, h2 l0, h4 l0,
+h2 l0, h1 l0, h1 l0, h0 l0, h4 l0, h2 l0, h3 l0, h2 l0,
+
+CH2 RX Vref:37.7%, TX Vref:13.2%,13.2%DQ rds:
+h5 l0, h3 l0, h1 l0, h2 l0, h1 l0, h4 l0, h3 l0, h1 l0,
+h2 l0, h2 l0, h2 l0, h1 l0, h1 l0, h6 l0, h0 l0, h1 l0,
+
+CH3 RX Vref:39.4%, TX Vref:13.2%,13.2%DQ rds:
+h2 l0, h7 l0, h7 l0, h2 l0, h2 l0, h1 l0, h2 l0, h2 l0,
+h3 l0, h3 l0, h7 l0, h5 l0, h7 l0, h3 l0, h3 l0, h3 l0,
+
+stride=0x2, ddr_config=0x4
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x401000
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 0
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(67a6ef499b...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(4750628c36...) + sha256(943c260a02...) + OK
+## Checking fdt 0x00348400 ... sha256(a434b1c4fe...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(ec44ab6634...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 89.928/312.739 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0x1
+INFO:    code: 0x88
+INFO:    ext 32k is valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09-231221 #wxt (Jul 03 2024 - 08:08:07 +0800)
+
+Model: Rockchip RK3588 Evaluation Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  8 GiB
+Sysmem: init
+Relocation Offset: eda15000
+Relocation fdt: eb9fa0e0 - eb9fece0
+CR: M/C/I
+Using default environment
+
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+TEEC: Waring: Could not find security partition
+DM: v2
+boot mode: None
+RESC: 'boot', blk@0x00015bcc
+lib/avb/libavb_user/avb_ops_user.c: trusty_read_lock_state failed
+Error determining whether device is unlocked.
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+usb dr_mode not found
+usb dr_mode not found
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_npu_s0 750000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 750000 uV
+vdd_gpu_mem_s0 750000 uV
+vdd_npu_mem_s0 750000 uV
+vdd_vdenc_mem_s0 750000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_cpu_big1_s0 init 800000 uV
+vdd_cpu_big0_s0 init 800000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_cpu_big1_mem_s0 init 800000 uV
+vdd_cpu_big0_mem_s0 init 800000 uV
+vdd_cpu_lit_mem_s0 init 800000 uV
+vdd_ddr_s0 850000 uV
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Could not find baseparameter partition
+Model: Rockchip RK3588 EVB1 LP4 V10 Board
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Using display timing dts
+dsi@fde20000:  detailed mode clock 132000 kHz, flags[a]
+    H: 1080 1095 1099 1129
+    V: 1920 1935 1937 1952
+bus_format: 100e
+VOP update mode to: 1080x1920p60, type: MIPI0 for VP3
+VP3 set crtc_clock to 132000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@213x825] fmt[0] addr[0xedf00000]
+final DSI-Link bandwidth: 880000 Kbps x 4
+hdmi@fde80000 disconnected
+hdmi@fdea0000 disconnected
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 24000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   No ethernet found.
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "(none)"
+Not AVB images, AVB skip
+ANDROID: sha1(9c04b085be...) + OK
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff800 ...
+Kernel: 0x00400000 - 0x01f78a00 (28131 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x01f78a00
+   Using Device Tree in place at 0000000008300000, end 000000000834a3ea
+## reserved-memory:
+  cma: addr=10000000 size=10000000
+  drm-logo@00000000: addr=edf00000 size=15a000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x100000000 - 0x200000000 (size: 0x100000000)
+Adding bank: 0x2f0000000 - 0x300000000 (size: 0x10000000)
+Total: 718.10/793.429 ms
+
+Starting kernel ...
+
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x412fd050]
+[    0.000000] Linux version 5.10.209-rt89 (zengwei@AKTC-RISC) (aarch64-none-linux-gnu-gcc (GNU Toolchain for the A-profile Architecture 10.3-2021.07 (arm-10.29)) 10.3.1 20210621, GNU ld (GNU Toolchain for the A-profile Architecture 10.3-2021.07 (arm-10.29)) 2.36.1.20210621) #2 SMP PREEMPT_RT Mon Jul 15 10:40:50 CST 2024
+[    0.000000] random: crng init done
+[    0.000000] Machine model: Rockchip RK3588 EVB1 LP4 V10 Board
+[    0.000000] earlycon: uart8250 at MMIO32 0x00000000feb50000 (options '')
+[    0.000000] printk: bootconsole [uart8250] enabled
+[    0.000000] efi: UEFI not found.
+[    0.000000] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@00000000': base 0x0000000000000000, size 0 MiB
+[    0.000000] Reserved memory: created CMA memory pool at 0x0000000010000000, size 256 MiB
+[    0.000000] OF: reserved mem: initialized node cma, compatible id shared-dma-pool
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x0000000000200000-0x00000000ffffffff]
+[    0.000000]   DMA32    empty
+[    0.000000]   Normal   [mem 0x0000000100000000-0x00000002ffffffff]
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000200000-0x00000000083fffff]
+[    0.000000]   node   0: [mem 0x0000000009400000-0x00000000efffffff]
+[    0.000000]   node   0: [mem 0x0000000100000000-0x00000001ffffffff]
+[    0.000000]   node   0: [mem 0x00000002f0000000-0x00000002ffffffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000200000-0x00000002ffffffff]
+[    0.000000] On node 0 totalpages: 2092544
+[    0.000000]   DMA zone: 15288 pages used for memmap
+[    0.000000]   DMA zone: 0 pages reserved
+[    0.000000]   DMA zone: 978432 pages, LIFO batch:63
+[    0.000000]   Normal zone: 17408 pages used for memmap
+[    0.000000]   Normal zone: 1114112 pages, LIFO batch:63
+[    0.000000] psci: probing for conduit method from DT.
+[    0.000000] psci: PSCIv1.1 detected in firmware.
+[    0.000000] psci: Using standard PSCI v0.2 function IDs
+[    0.000000] psci: Trusted OS migration not required
+[    0.000000] psci: SMC Calling Convention v1.2
+[    0.000000] percpu: Embedded 17 pages/cpu s30144 r8192 d31296 u69632
+[    0.000000] pcpu-alloc: s30144 r8192 d31296 u69632 alloc=17*4096
+[    0.000000] pcpu-alloc: [0] 0 [0] 1 [0] 2 [0] 3 [0] 4 [0] 5 [0] 6 [0] 7
+[    0.000000] Detected VIPT I-cache on CPU0
+[    0.000000] CPU features: detected: GIC system register CPU interface
+[    0.000000] CPU features: detected: Virtualization Host Extensions
+[    0.000000] CPU features: detected: ARM errata 1165522, 1319367, or 1530923
+[    0.000000] alternatives: patching kernel code
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 2059848
+[    0.000000] Kernel command line: storagemedia=emmc androidboot.storagemedia=emmc androidboot.mode=normal  androidboot.verifiedbootstate=orange androidboot.serialno=cd118cbd7c8b8626  rw rootwait earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 irqchip.gicv3_pseudo_nmi=0 root=PARTUUID=614e0000-0000 isolcpus=7 nohz_full=7 rcupdate.rcu_expedited=1 rcu_nocbs=all #wxt-07/03/2024 androidboot.fwver=ddr-v1.17-3488111f83,spl-v1.13,bl31-v1.46,bl32-v1.16,uboot-31221
+[    0.000000] Housekeeping: nohz unsupported. Build with CONFIG_NO_HZ_FULL
+[    0.000000] Dentry cache hash table entries: 1048576 (order: 11, 8388608 bytes, linear)
+[    0.000000] Inode-cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+[    0.000000] mem auto-init: stack:off, heap alloc:off, heap free:off
+[    0.000000] software IO TLB: mapped [mem 0x00000000e9f00000-0x00000000edf00000] (64MB)
+[    0.000000] Memory: 7850084K/8370176K available (16000K kernel code, 2402K rwdata, 6092K rodata, 3520K init, 576K bss, 257948K reserved, 262144K cma-reserved)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1
+[    0.000000] rcu: Preemptible hierarchical RCU implementation.
+[    0.000000] rcu:     RCU event tracing is enabled.
+[    0.000000] rcu:     RCU priority boosting: priority 1 delay 500 ms.
+[    0.000000] rcu:     RCU_SOFTIRQ processing moved to rcuc kthreads.
+[    0.000000]  No expedited grace period (rcu_normal_after_boot).
+[    0.000000]  Trampoline variant of Tasks RCU enabled.
+[    0.000000] rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+[    0.000000] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000] GICv3: 480 SPIs implemented
+[    0.000000] GICv3: 0 Extended SPIs implemented
+[    0.000000] GICv3: Distributor has no Range Selector support
+[    0.000000] GICv3: 16 PPIs implemented
+[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x00000000fe680000
+[    0.000000] ITS [mem 0xfe640000-0xfe65ffff]
+[    0.000000] ITS@0x00000000fe640000: allocated 8192 Devices @100050000 (indirect, esz 8, psz 64K, shr 0)
+[    0.000000] ITS@0x00000000fe640000: allocated 32768 Interrupt Collections @100060000 (flat, esz 2, psz 64K, shr 0)
+[    0.000000] ITS: using cache flushing for cmd queue
+[    0.000000] ITS [mem 0xfe660000-0xfe67ffff]
+[    0.000000] ITS@0x00000000fe660000: allocated 8192 Devices @100080000 (indirect, esz 8, psz 64K, shr 0)
+[    0.000000] ITS@0x00000000fe660000: allocated 32768 Interrupt Collections @100090000 (flat, esz 2, psz 64K, shr 0)
+[    0.000000] ITS: using cache flushing for cmd queue
+[    0.000000] GICv3: using LPI property table @0x00000001000a0000
+[    0.000000] GIC: using cache flushing for LPI property table
+[    0.000000] GICv3: CPU0: using allocated LPI pending table @0x00000001000b0000
+[    0.000000] rcu:     Offload RCU callbacks from CPUs: 0-7.
+[    0.000000] arch_timer: cp15 timer(s) running at 24.00MHz (phys).
+[    0.000000] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x588fe9dc0, max_idle_ns: 440795202592 ns
+[    0.000000] sched_clock: 56 bits at 24MHz, resolution 41ns, wraps every 4398046511097ns
+[    0.001849] Console: colour dummy device 80x25
+[    0.002288] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=24000)
+[    0.003240] pid_max: default: 32768 minimum: 301
+[    0.003782] Mount-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.004511] Mountpoint-cache hash table entries: 16384 (order: 5, 131072 bytes, linear)
+[    0.006380] rcu: Hierarchical SRCU implementation.
+[    0.007676] Platform MSI: msi-controller@fe640000 domain created
+[    0.008250] Platform MSI: msi-controller@fe660000 domain created
+[    0.009109] PCI/MSI: /interrupt-controller@fe600000/msi-controller@fe640000 domain created
+[    0.009890] PCI/MSI: /interrupt-controller@fe600000/msi-controller@fe660000 domain created
+[    0.010830] EFI services will not be available.
+[    0.011489] smp: Bringing up secondary CPUs ...
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+[    0.013068] Detected VIPT I-cache on CPU1
+[    0.013458] GICv3: CPU1: found redistributor 100 region 0:0x00000000fe6a0000
+[    0.014118] GICv3: CPU1: using allocated LPI pending table @0x00000001000c0000
+[    0.014815] CPU1: Booted secondary processor 0x0000000100 [0x412fd050]
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+[    0.016621] Detected VIPT I-cache on CPU2
+[    0.017010] GICv3: CPU2: found redistributor 200 region 0:0x00000000fe6c0000
+[    0.017670] GICv3: CPU2: using allocated LPI pending table @0x00000001000d0000
+[    0.018363] CPU2: Booted secondary processor 0x0000000200 [0x412fd050]
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[    0.020190] Detected VIPT I-cache on CPU3
+[    0.020576] GICv3: CPU3: found redistributor 300 region 0:0x00000000fe6e0000
+[    0.021235] GICv3: CPU3: using allocated LPI pending table @0x00000001000e0000
+[    0.021925] CPU3: Booted secondary processor 0x0000000300 [0x412fd050]
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+[    0.023757] CPU features: detected: Spectre-v4
+[    0.024165] CPU features: detected: Spectre-BHB
+[    0.024580] Detected PIPT I-cache on CPU4
+[    0.024955] GICv3: CPU4: found redistributor 400 region 0:0x00000000fe700000
+[    0.025606] GICv3: CPU4: using allocated LPI pending table @0x00000001000f0000
+[    0.026283] CPU4: Booted secondary processor 0x0000000400 [0x414fd0b0]
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+[    0.028047] Detected PIPT I-cache on CPU5
+[    0.028425] GICv3: CPU5: found redistributor 500 region 0:0x00000000fe720000
+[    0.029077] GICv3: CPU5: using allocated LPI pending table @0x0000000100100000
+[    0.029757] CPU5: Booted secondary processor 0x0000000500 [0x414fd0b0]
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+[    0.031517] Detected PIPT I-cache on CPU6
+[    0.031895] GICv3: CPU6: found redistributor 600 region 0:0x00000000fe740000
+[    0.032545] GICv3: CPU6: using allocated LPI pending table @0x0000000100110000
+[    0.033221] CPU6: Booted secondary processor 0x0000000600 [0x414fd0b0]
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+[    0.034978] Detected PIPT I-cache on CPU7
+[    0.035356] GICv3: CPU7: found redistributor 700 region 0:0x00000000fe760000
+[    0.036007] GICv3: CPU7: using allocated LPI pending table @0x0000000100120000
+[    0.036685] CPU7: Booted secondary processor 0x0000000700 [0x414fd0b0]
+[    0.037336] smp: Brought up 1 node, 8 CPUs
+[    0.037734] SMP: Total of 8 processors activated.
+[    0.038169] CPU features: detected: Privileged Access Never
+[    0.038681] CPU features: detected: LSE atomic instructions
+[    0.039197] CPU features: detected: User Access Override
+[    0.039686] CPU features: detected: 32-bit EL0 Support
+[    0.040176] CPU features: detected: Common not Private translations
+[    0.040758] CPU features: detected: RAS Extension Support
+[    0.041254] CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+[    0.042055] CPU features: detected: CRC32 instructions
+[    0.042527] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[    0.043170] CPU features: detected: RCpc load-acquire (LDAPR)
+[    0.057970] CPU: All CPU(s) started at EL2
+[    0.059585] devtmpfs: initialized
+[    0.071581] Registered cp15_barrier emulation handler
+[    0.072047] Registered setend emulation handler
+[    0.072529] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+[    0.073421] futex hash table entries: 2048 (order: 6, 262144 bytes, linear)
+[    0.076121] pinctrl core: initialized pinctrl subsystem
+[    0.076790] DMI not present or invalid.
+[    0.077249] NET: Registered protocol family 16
+[    0.078288] DMA: preallocated 1024 KiB GFP_KERNEL pool for atomic allocations
+[    0.079020] DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+[    0.080141] Registered FIQ tty driver
+[    0.080582] thermal_sys: Registered thermal governor 'fair_share'
+[    0.080584] thermal_sys: Registered thermal governor 'step_wise'
+[    0.080585] thermal_sys: Registered thermal governor 'user_space'
+[    0.080586] thermal_sys: Registered thermal governor 'power_allocator'
+[    0.080698] thermal thermal_zone1: power_allocator: sustainable_power will be estimated
+[    0.083696] thermal thermal_zone2: power_allocator: sustainable_power will be estimated
+[    0.084448] thermal thermal_zone3: power_allocator: sustainable_power will be estimated
+[    0.085198] thermal thermal_zone4: power_allocator: sustainable_power will be estimated
+[    0.085946] thermal thermal_zone5: power_allocator: sustainable_power will be estimated
+[    0.086696] thermal thermal_zone6: power_allocator: sustainable_power will be estimated
+[    0.087456] cpuidle: using governor menu
+[    0.087936] ASID allocator initialised with 65536 entries
+[    0.089664] ramoops: dmesg-0 0x18000@0x0000000000110000
+[    0.090147] ramoops: dmesg-1 0x18000@0x0000000000128000
+[    0.090632] ramoops: console 0x80000@0x0000000000140000
+[    0.091113] ramoops: pmsg    0x30000@0x00000000001c0000
+[    0.091589] printk: console [ramoops-1] enabled
+[    0.092004] pstore: Registered ramoops as persistent store backend
+[    0.092568] ramoops: using 0xe0000@0x110000, ecc: 0
+[    0.127949] rockchip-gpio fd8a0000.gpio: probed /pinctrl/gpio@fd8a0000
+[    0.128718] rockchip-gpio fec20000.gpio: probed /pinctrl/gpio@fec20000
+[    0.129460] rockchip-gpio fec30000.gpio: probed /pinctrl/gpio@fec30000
+[    0.130198] rockchip-gpio fec40000.gpio: probed /pinctrl/gpio@fec40000
+[    0.130959] rockchip-gpio fec50000.gpio: probed /pinctrl/gpio@fec50000
+[    0.131593] rockchip-pinctrl pinctrl: probed pinctrl
+[    0.143517] fiq_debugger fiq_debugger.0: IRQ fiq not found
+[    0.144033] fiq_debugger fiq_debugger.0: IRQ wakeup not found
+[    0.144560] fiq_debugger_probe: could not install nmi irq handler
+[    0.145224] printk: console [ttyFIQ0] enabled
+[    0.145622] printk: bootconsole [uart8250] disabled
+[    0.145224] printk: console [ttyFIQ0] enabled
+[    0.145622] printk: bootconsole [uart8250] disabled
+[    0.146130] Registered fiq debugger ttyFIQ0
+[    0.146390] vcc5v0_sys: supplied by vcc12v_dcin
+[    0.146477] vcc5v0_usbdcin: supplied by vcc12v_dcin
+[    0.146554] vcc5v0_usb: supplied by vcc5v0_usbdcin
+[    0.146722] vbus5v0_typec: supplied by vcc5v0_usb
+[    0.146810] vcc3v3_pcie30: supplied by vcc12v_dcin
+[    0.146897] vcc5v0_host: supplied by vcc5v0_usb
+[    0.147489] iommu: Default domain type: Translated
+[    0.150867] SCSI subsystem initialized
+[    0.150928] usbcore: registered new interface driver usbfs
+[    0.150940] usbcore: registered new interface driver hub
+[    0.150950] usbcore: registered new device driver usb
+[    0.150975] mc: Linux media interface: v0.10
+[    0.150982] videodev: Linux video capture interface: v2.00
+[    0.151003] pps_core: LinuxPPS API ver. 1 registered
+[    0.151004] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.151008] PTP clock support registered
+[    0.151021] EDAC MC: Ver: 3.0.0
+[    0.151189] arm-scmi firmware:scmi: SCMI Notifications - Core Enabled.
+[    0.151215] arm-scmi firmware:scmi: SCMI Protocol v2.0 'rockchip:' Firmware version 0x0
+[    0.152072] Advanced Linux Sound Architecture Driver Initialized.
+[    0.152226] Bluetooth: Core ver 2.22
+[    0.152235] NET: Registered protocol family 31
+[    0.152236] Bluetooth: HCI device and connection manager initialized
+[    0.152240] Bluetooth: HCI socket layer initialized
+[    0.152242] Bluetooth: L2CAP socket layer initialized
+[    0.152247] Bluetooth: SCO socket layer initialized
+[    0.153488] rockchip-cpuinfo cpuinfo: SoC            : 35880000
+[    0.153491] rockchip-cpuinfo cpuinfo: Serial         : cd118cbd7c8b8626
+[    0.153702] clocksource: Switched to clocksource arch_sys_counter
+[    0.155846] NET: Registered protocol family 2
+[    0.156038] IP idents hash table entries: 131072 (order: 8, 1048576 bytes, linear)
+[    0.158036] tcp_listen_portaddr_hash hash table entries: 4096 (order: 6, 262144 bytes, linear)
+[    0.158113] TCP established hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.158463] TCP bind hash table entries: 65536 (order: 9, 3670016 bytes, linear)
+[    0.159255] TCP: Hash tables configured (established 65536 bind 65536)
+[    0.159314] UDP hash table entries: 4096 (order: 7, 524288 bytes, linear)
+[    0.159458] UDP-Lite hash table entries: 4096 (order: 7, 524288 bytes, linear)
+[    0.159650] NET: Registered protocol family 1
+[    0.159816] RPC: Registered named UNIX socket transport module.
+[    0.159818] RPC: Registered udp transport module.
+[    0.159819] RPC: Registered tcp transport module.
+[    0.159820] RPC: Registered tcp NFSv4.1 backchannel transport module.
+[    0.160078] PCI: CLS 0 bytes, default 64
+[    0.160636] rockchip-thermal fec00000.tsadc: Missing rockchip,grf property
+[    0.161043] rockchip-thermal fec00000.tsadc: tsadc is probed successfully!
+[    0.162334] Initialise system trusted keyrings
+[    0.162369] workingset: timestamp_bits=62 max_order=21 bucket_order=0
+[    0.163994] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[    0.164195] NFS: Registering the id_resolver key type
+[    0.164201] Key type id_resolver registered
+[    0.164203] Key type id_legacy registered
+[    0.164214] ntfs: driver 2.1.32 [Flags: R/O].
+[    0.164276] jffs2: version 2.2. (NAND) © 2001-2006 Red Hat, Inc.
+[    0.164364] fuse: init (API version 7.32)
+[    0.164423] SGI XFS with security attributes, no debug enabled
+[    0.184809] NET: Registered protocol family 38
+[    0.184813] Key type asymmetric registered
+[    0.184816] Asymmetric key parser 'x509' registered
+[    0.184826] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 242)
+[    0.184828] io scheduler mq-deadline registered
+[    0.184830] io scheduler kyber registered
+[    0.185158] rockchip-csi2-dphy-hw fedc0000.csi2-dphy0-hw: csi2 dphy hw probe successfully!
+[    0.185218] rockchip-csi2-dphy-hw fedc8000.csi2-dphy1-hw: csi2 dphy hw probe successfully!
+[    0.191738] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy init success
+[    0.192311] rockchip-hdptx-phy-hdmi fed70000.hdmiphy: hdptx phy init success
+[    0.194486] rk-pcie fe180000.pcie: invalid prsnt-gpios property in node
+[    0.194497] rk-pcie fe180000.pcie: no vpcie3v3 regulator found
+[    0.194691] rk-pcie fe150000.pcie: invalid prsnt-gpios property in node
+[    0.194818] rk-pcie fe170000.pcie: invalid prsnt-gpios property in node
+[    0.194836] rk-pcie fe170000.pcie: no vpcie3v3 regulator found
+[    0.194848] rk-pcie fe180000.pcie: IRQ msi not found
+[    0.194854] rk-pcie fe180000.pcie: use outband MSI support
+[    0.194858] rk-pcie fe180000.pcie: Missing *config* reg space
+[    0.194869] rk-pcie fe180000.pcie: host bridge /pcie@fe180000 ranges:
+[    0.194891] rk-pcie fe180000.pcie:      err 0x00f3000000..0x00f30fffff -> 0x00f3000000
+[    0.194905] rk-pcie fe180000.pcie:       IO 0x00f3100000..0x00f31fffff -> 0x00f3100000
+[    0.194917] rk-pcie fe180000.pcie:      MEM 0x00f3200000..0x00f3ffffff -> 0x00f3200000
+[    0.194927] rk-pcie fe180000.pcie:      MEM 0x09c0000000..0x09ffffffff -> 0x09c0000000
+[    0.194936] pwm-backlight backlight: supply power not found, using dummy regulator
+[    0.194954] rk-pcie fe180000.pcie: Missing *config* reg space
+[    0.194976] rk-pcie fe180000.pcie: invalid resource
+[    0.195153] iep: Module initialized.
+[    0.195176] mpp_service mpp-srv: unknown mpp version for missing VCS info
+[    0.195178] mpp_service mpp-srv: probe start
+[    0.195212] rk-pcie fe170000.pcie: IRQ msi not found
+[    0.195217] rk-pcie fe170000.pcie: use outband MSI support
+[    0.195221] rk-pcie fe170000.pcie: Missing *config* reg space
+[    0.195227] rk-pcie fe170000.pcie: host bridge /pcie@fe170000 ranges:
+[    0.195243] rk-pcie fe170000.pcie:      err 0x00f2000000..0x00f20fffff -> 0x00f2000000
+[    0.195256] rk-pcie fe170000.pcie:       IO 0x00f2100000..0x00f21fffff -> 0x00f2100000
+[    0.195268] rk-pcie fe170000.pcie:      MEM 0x00f2200000..0x00f2ffffff -> 0x00f2200000
+[    0.195276] rk-pcie fe170000.pcie:      MEM 0x0980000000..0x09bfffffff -> 0x0980000000
+[    0.195300] rk-pcie fe170000.pcie: Missing *config* reg space
+[    0.195320] rk-pcie fe170000.pcie: invalid resource
+[    0.195938] mpp_vdpu1 fdb51000.avsd-plus: Adding to iommu group 1
+[    0.196098] mpp_vdpu1 fdb51000.avsd-plus: probe device
+[    0.196182] mpp_vdpu1 fdb51000.avsd-plus: reset_group->rw_sem_on=0
+[    0.196186] mpp_vdpu1 fdb51000.avsd-plus: reset_group->rw_sem_on=0
+[    0.196263] mpp_vdpu1 fdb51000.avsd-plus: probing finish
+[    0.196511] mpp_vdpu2 fdb50400.vdpu: Adding to iommu group 1
+[    0.196543] mpp_vdpu2 fdb50400.vdpu: probe device
+[    0.196606] mpp_vdpu2 fdb50400.vdpu: reset_group->rw_sem_on=0
+[    0.196608] mpp_vdpu2 fdb50400.vdpu: reset_group->rw_sem_on=0
+[    0.196648] mpp_vdpu2 fdb50400.vdpu: probing finish
+[    0.196765] mpp_vepu2 jpege-ccu: probing start
+[    0.196767] mpp_vepu2 jpege-ccu: probing finish
+[    0.196844] mpp_vepu2 fdb50000.vepu: Adding to iommu group 1
+[    0.196872] mpp_vepu2 fdb50000.vepu: probing start
+[    0.196932] mpp_vepu2 fdb50000.vepu: reset_group->rw_sem_on=0
+[    0.196934] mpp_vepu2 fdb50000.vepu: reset_group->rw_sem_on=0
+[    0.196984] mpp_vepu2 fdb50000.vepu: probing finish
+[    0.197041] mpp_vepu2 fdba0000.jpege-core: Adding to iommu group 5
+[    0.197102] mpp_vepu2 fdba0000.jpege-core: probing start
+[    0.197178] mpp_vepu2 fdba0000.jpege-core: attach ccu success
+[    0.197230] mpp_vepu2 fdba0000.jpege-core: probing finish
+[    0.197277] mpp_vepu2 fdba4000.jpege-core: Adding to iommu group 6
+[    0.197336] mpp_vepu2 fdba4000.jpege-core: probing start
+[    0.197407] mpp_vepu2 fdba4000.jpege-core: attach ccu success
+[    0.197454] mpp_vepu2 fdba4000.jpege-core: probing finish
+[    0.197502] mpp_vepu2 fdba8000.jpege-core: Adding to iommu group 7
+[    0.197560] mpp_vepu2 fdba8000.jpege-core: probing start
+[    0.197632] mpp_vepu2 fdba8000.jpege-core: attach ccu success
+[    0.197681] mpp_vepu2 fdba8000.jpege-core: probing finish
+[    0.197732] mpp_vepu2 fdbac000.jpege-core: Adding to iommu group 8
+[    0.197791] mpp_vepu2 fdbac000.jpege-core: probing start
+[    0.197863] mpp_vepu2 fdbac000.jpege-core: attach ccu success
+[    0.197911] mpp_vepu2 fdbac000.jpege-core: probing finish
+[    0.198097] mpp-iep2 fdbb0000.iep: Adding to iommu group 9
+[    0.198156] mpp-iep2 fdbb0000.iep: probe device
+[    0.198247] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    0.198295] mpp-iep2 fdbb0000.iep: probing finish
+[    0.198431] mpp_jpgdec fdb90000.jpegd: Adding to iommu group 4
+[    0.198551] mpp_jpgdec fdb90000.jpegd: probe device
+[    0.198686] mpp_jpgdec fdb90000.jpegd: probing finish
+[    0.198966] mpp_rkvdec2 fdc30000.rkvdec-ccu: rkvdec-ccu, probing start
+[    0.199007] mpp_rkvdec2 fdc30000.rkvdec-ccu: ccu-mode: 1
+[    0.199009] mpp_rkvdec2 fdc30000.rkvdec-ccu: probing finish
+[    0.199074] mpp_rkvdec2 fdc38100.rkvdec-core: Adding to iommu group 12
+[    0.199246] mpp_rkvdec2 fdc38100.rkvdec-core: rkvdec-core, probing start
+[    0.199331] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    0.199333] rkvdec2_init:1024: No niu aclk reset resource define
+[    0.199336] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    0.199337] rkvdec2_init:1027: No niu hclk reset resource define
+[    0.199351] mpp_rkvdec2 fdc38100.rkvdec-core: no regulator, devfreq is disabled
+[    0.199398] mpp_rkvdec2 fdc38100.rkvdec-core: core_mask=00010001
+[    0.199400] mpp_rkvdec2 fdc38100.rkvdec-core: attach ccu as core 0
+[    0.199625] mpp_rkvdec2 fdc38100.rkvdec-core: sram_start 0x00000000ff001000
+[    0.199628] mpp_rkvdec2 fdc38100.rkvdec-core: rcb_iova 0x00000000fff00000
+[    0.199630] mpp_rkvdec2 fdc38100.rkvdec-core: sram_size 491520
+[    0.199632] mpp_rkvdec2 fdc38100.rkvdec-core: rcb_size 1048576
+[    0.199635] mpp_rkvdec2 fdc38100.rkvdec-core: min_width 512
+[    0.199638] mpp_rkvdec2 fdc38100.rkvdec-core: rcb_info_count 20
+[    0.199639] mpp_rkvdec2 fdc38100.rkvdec-core: [136, 24576]
+[    0.199642] mpp_rkvdec2 fdc38100.rkvdec-core: [137, 49152]
+[    0.199644] mpp_rkvdec2 fdc38100.rkvdec-core: [141, 90112]
+[    0.199645] mpp_rkvdec2 fdc38100.rkvdec-core: [140, 49152]
+[    0.199647] mpp_rkvdec2 fdc38100.rkvdec-core: [139, 180224]
+[    0.199649] mpp_rkvdec2 fdc38100.rkvdec-core: [133, 49152]
+[    0.199651] mpp_rkvdec2 fdc38100.rkvdec-core: [134, 8192]
+[    0.199653] mpp_rkvdec2 fdc38100.rkvdec-core: [135, 4352]
+[    0.199654] mpp_rkvdec2 fdc38100.rkvdec-core: [138, 13056]
+[    0.199656] mpp_rkvdec2 fdc38100.rkvdec-core: [142, 291584]
+[    0.199721] mpp_rkvdec2 fdc38100.rkvdec-core: probing finish
+[    0.199779] mpp_rkvdec2 fdc48100.rkvdec-core: Adding to iommu group 13
+[    0.199953] mpp_rkvdec2 fdc48100.rkvdec-core: rkvdec-core, probing start
+[    0.200047] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    0.200048] rkvdec2_init:1024: No niu aclk reset resource define
+[    0.200051] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    0.200052] rkvdec2_init:1027: No niu hclk reset resource define
+[    0.200065] mpp_rkvdec2 fdc48100.rkvdec-core: no regulator, devfreq is disabled
+[    0.200101] mpp_rkvdec2 fdc48100.rkvdec-core: core_mask=00020002
+[    0.200115] mpp_rkvdec2 fdc48100.rkvdec-core: attach ccu as core 1
+[    0.200369] mpp_rkvdec2 fdc48100.rkvdec-core: sram_start 0x00000000ff079000
+[    0.200371] mpp_rkvdec2 fdc48100.rkvdec-core: rcb_iova 0x00000000ffe00000
+[    0.200373] mpp_rkvdec2 fdc48100.rkvdec-core: sram_size 487424
+[    0.200375] mpp_rkvdec2 fdc48100.rkvdec-core: rcb_size 1048576
+[    0.200377] mpp_rkvdec2 fdc48100.rkvdec-core: min_width 512
+[    0.200381] mpp_rkvdec2 fdc48100.rkvdec-core: rcb_info_count 20
+[    0.200382] mpp_rkvdec2 fdc48100.rkvdec-core: [136, 24576]
+[    0.200384] mpp_rkvdec2 fdc48100.rkvdec-core: [137, 49152]
+[    0.200386] mpp_rkvdec2 fdc48100.rkvdec-core: [141, 90112]
+[    0.200388] mpp_rkvdec2 fdc48100.rkvdec-core: [140, 49152]
+[    0.200389] mpp_rkvdec2 fdc48100.rkvdec-core: [139, 180224]
+[    0.200391] mpp_rkvdec2 fdc48100.rkvdec-core: [133, 49152]
+[    0.200393] mpp_rkvdec2 fdc48100.rkvdec-core: [134, 8192]
+[    0.200395] mpp_rkvdec2 fdc48100.rkvdec-core: [135, 4352]
+[    0.200397] mpp_rkvdec2 fdc48100.rkvdec-core: [138, 13056]
+[    0.200398] mpp_rkvdec2 fdc48100.rkvdec-core: [142, 291584]
+[    0.200466] mpp_rkvdec2 fdc48100.rkvdec-core: probing finish
+[    0.200632] mpp_rkvenc2 rkvenc-ccu: probing start
+[    0.200634] mpp_rkvenc2 rkvenc-ccu: probing finish
+[    0.201090] mpp_av1dec: Adding child /av1d@fdc70000
+[    0.201259] mpp_av1dec: register device av1d-master
+[    0.201270] mpp_av1dec av1d-master: av1_iommu_of_xlate,784
+[    0.201284] av1_iommu_probe_device,736, consumer : av1d-master, supplier : fdca0000.iommu
+[    0.201289] mpp_av1dec av1d-master: Adding to iommu group 17
+[    0.201443] mpp_av1dec av1d-master: probing start
+[    0.201587] mpp_av1dec av1d-master: probing finish
+[    0.201605] mpp_service mpp-srv: probe success
+[    0.209030] dma-pl330 fea10000.dma-controller: Loaded driver for PL330 DMAC-241330
+[    0.209034] dma-pl330 fea10000.dma-controller:       DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    0.209766] dma-pl330 fea30000.dma-controller: Loaded driver for PL330 DMAC-241330
+[    0.209769] dma-pl330 fea30000.dma-controller:       DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    0.210497] dma-pl330 fed10000.dma-controller: Loaded driver for PL330 DMAC-241330
+[    0.210500] dma-pl330 fed10000.dma-controller:       DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    0.210979] rockchip-pvtm fda40000.pvtm: pvtm@0 probed
+[    0.211023] rockchip-pvtm fda50000.pvtm: pvtm@1 probed
+[    0.211042] rk-pcie fe150000.pcie: IRQ msi not found
+[    0.211050] rk-pcie fe150000.pcie: use outband MSI support
+[    0.211055] rk-pcie fe150000.pcie: Missing *config* reg space
+[    0.211061] rockchip-pvtm fda60000.pvtm: pvtm@2 probed
+[    0.211069] rk-pcie fe150000.pcie: host bridge /pcie@fe150000 ranges:
+[    0.211096] rk-pcie fe150000.pcie:      err 0x00f0000000..0x00f00fffff -> 0x00f0000000
+[    0.211100] rockchip-pvtm fdaf0000.pvtm: pvtm@3 probed
+[    0.211116] rk-pcie fe150000.pcie:       IO 0x00f0100000..0x00f01fffff -> 0x00f0100000
+[    0.211134] rk-pcie fe150000.pcie:      MEM 0x00f0200000..0x00f0ffffff -> 0x00f0200000
+[    0.211136] rockchip-pvtm fdb30000.pvtm: pvtm@4 probed
+[    0.211147] rk-pcie fe150000.pcie:      MEM 0x0900000000..0x093fffffff -> 0x0900000000
+[    0.211189] rk-pcie fe150000.pcie: Missing *config* reg space
+[    0.211217] rk-pcie fe150000.pcie: invalid resource
+[    0.211539] rockchip-system-monitor rockchip-system-monitor: system monitor probe
+[    0.212169] Serial: 8250/16550 driver, 10 ports, IRQ sharing disabled
+[    0.212635] febb0000.serial: ttyS8 at MMIO 0xfebb0000 (irq = 103, base_baud = 1500000) is a 16550A
+[    0.214193] rockchip-vop2 fdd90000.vop: Adding to iommu group 16
+[    0.221372] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp0 assign plane mask: 0x5, primary plane phy id: 2
+[    0.221382] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp1 assign plane mask: 0xa, primary plane phy id: 3
+[    0.221387] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp2 assign plane mask: 0x140, primary plane phy id: 8
+[    0.221391] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp3 assign plane mask: 0x280, primary plane phy id: 9
+[    0.221612] [drm] failed to init overlay plane Cluster0-win1
+[    0.221633] [drm] failed to init overlay plane Cluster1-win1
+[    0.221654] [drm] failed to init overlay plane Cluster2-win1
+[    0.221675] [drm] failed to init overlay plane Cluster3-win1
+[    0.229424] rockchip-drm display-subsystem: bound fdd90000.vop (ops 0xffffffc009097ac0)
+[    0.229803] dwhdmi-rockchip fde80000.hdmi: registered ddc I2C bus driver
+[    0.230171] rockchip-drm display-subsystem: bound fde80000.hdmi (ops 0xffffffc0090a6658)
+[    0.230548] dwhdmi-rockchip fdea0000.hdmi: registered ddc I2C bus driver
+[    0.230906] rockchip-drm display-subsystem: bound fdea0000.hdmi (ops 0xffffffc0090a6658)
+[    0.230935] dw-mipi-dsi2 fde20000.dsi: [drm:dw_mipi_dsi2_bind] *ERROR* Failed to find panel or bridge: -517
+[    0.237527] brd: module loaded
+[    0.240033] loop: module loaded
+[    0.240147] lkdtm: No crash points registered, enable through debugfs
+[    0.240454] system_heap: orders[0] = 6
+[    0.240456] system_heap: orders[1] = 4
+[    0.240458] system_heap: orders[2] = 0
+[    0.241195] ahci fe210000.sata: supply ahci not found, using dummy regulator
+[    0.241242] ahci fe210000.sata: supply phy not found, using dummy regulator
+[    0.241339] ahci fe210000.sata: supply target not found, using dummy regulator
+[    0.241395] ahci fe210000.sata: forcing port_map 0x0 -> 0x1
+[    0.241411] ahci fe210000.sata: AHCI 0001.0300 32 slots 1 ports 6 Gbps 0x1 impl platform mode
+[    0.241417] ahci fe210000.sata: flags: ncq sntf pm led clo only pmp fbs pio slum part ccc apst
+[    0.241427] ahci fe210000.sata: port 0 can do FBS, forcing FBSCP
+[    0.241993] scsi host0: ahci
+[    0.242103] ata1: SATA max UDMA/133 mmio [mem 0xfe210000-0xfe210fff] port 0x100 irq 92
+[    0.242949] rockchip-spi feb20000.spi: no high_speed pinctrl state
+[    0.244016] rk806 spi2.0: chip id: RK806,ver:0x2, 0x0
+[    0.244188] rk806 spi2.0: ON: 0x40 OFF:0x0
+[    0.245963] vdd_gpu_s0: supplied by vcc5v0_sys
+[    0.246981] vdd_npu_s0: supplied by vcc5v0_sys
+[    0.247553] vdd_log_s0: supplied by vcc5v0_sys
+[    0.248131] vdd_vdenc_s0: supplied by vcc5v0_sys
+[    0.248695] vdd_gpu_mem_s0: supplied by vcc5v0_sys
+[    0.249661] vdd_npu_mem_s0: supplied by vcc5v0_sys
+[    0.250177] vdd_2v0_pldo_s3: supplied by vcc5v0_sys
+[    0.250678] vdd_vdenc_mem_s0: supplied by vcc5v0_sys
+[    0.251104] vdd2_ddr_s3: supplied by vcc5v0_sys
+[    0.251834] vcc_1v1_nldo_s3: supplied by vcc5v0_sys
+[    0.252436] vdd_0v75_s3: supplied by vcc_1v1_nldo_s3
+[    0.253040] vdd2l_0v9_ddr_s3: supplied by vcc_1v1_nldo_s3
+[    0.253645] vdd_0v75_hdmi_edp_s0: supplied by vcc_1v1_nldo_s3
+[    0.254261] avdd_0v75_s0: supplied by vcc_1v1_nldo_s3
+[    0.254872] vdd_0v85_s0: supplied by vcc_1v1_nldo_s3
+[    0.255570] avcc_1v8_s0: supplied by vdd_2v0_pldo_s3
+[    0.256182] vdd1_1v8_ddr_s3: supplied by vdd_2v0_pldo_s3
+[    0.256789] avcc_1v8_codec_s0: supplied by vdd_2v0_pldo_s3
+[    0.257407] vcc_3v3_s3: supplied by vcc5v0_sys
+[    0.257872] vccio_sd_s0: supplied by vcc5v0_sys
+[    0.258353] vccio_1v8_s3: supplied by vcc5v0_sys
+[    0.258547] rk806 spi2.0: no sleep-setting state
+[    0.258550] rk806 spi2.0: no reset-setting pinctrl state
+[    0.258552] rk806 spi2.0: no dvs-setting pinctrl state
+[    0.260561] rk806 spi2.1: chip id: RK806,ver:0x2, 0x0
+[    0.260737] rk806 spi2.1: ON: 0x40 OFF:0x0
+[    0.260741] rk806 spi2.1: low_voltage_threshold missing!
+[    0.260743] rk806 spi2.1: shutdown_voltage_threshold missing!
+[    0.260746] rk806 spi2.1: shutdown_temperture_threshold missing!
+[    0.260748] rk806 spi2.1: hotdie_temperture_threshold missing!
+[    0.262320] vdd_cpu_big1_s0: supplied by vcc5v0_sys
+[    0.262839] vdd_cpu_big0_s0: supplied by vcc5v0_sys
+[    0.263342] vdd_cpu_lit_s0: supplied by vcc5v0_sys
+[    0.263853] vcc_3v3_s0: supplied by vcc5v0_sys
+[    0.264353] vdd_cpu_big1_mem_s0: supplied by vcc5v0_sys
+[    0.264848] vdd_cpu_big0_mem_s0: supplied by vcc5v0_sys
+[    0.265371] vcc_1v8_s0: supplied by vcc5v0_sys
+[    0.265883] vdd_cpu_lit_mem_s0: supplied by vcc5v0_sys
+[    0.266325] vddq_ddr_s0: supplied by vcc5v0_sys
+[    0.266938] vdd_ddr_s0: supplied by vcc5v0_sys
+[    0.267442] vdd_0v75_pll_s0: supplied by vcc_1v1_nldo_s3
+[    0.267957] vdd_ddr_pll_s0: supplied by vcc_1v1_nldo_s3
+[    0.268464] avdd_0v85_s0: supplied by vcc_1v1_nldo_s3
+[    0.268926] avdd_1v2_cam_s0: supplied by vdd_2v0_pldo_s3
+[    0.269435] avdd_1v2_s0: supplied by vdd_2v0_pldo_s3
+[    0.269956] vcc_1v8_cam_s0: supplied by vdd_2v0_pldo_s3
+[    0.270460] avdd1v8_ddr_pll_s0: supplied by vdd_2v0_pldo_s3
+[    0.270966] vdd_1v8_pll_s0: supplied by vdd_2v0_pldo_s3
+[    0.271473] vcc_3v3_sd_s0: supplied by vcc5v0_sys
+[    0.271876] vcc_2v8_cam_s0: supplied by vcc5v0_sys
+[    0.272337] pldo6_s3: supplied by vcc5v0_sys
+[    0.272460] rk806 spi2.1: no power-off pinctrl state
+[    0.272462] rk806 spi2.1: no sleep-setting state
+[    0.272464] rk806 spi2.1: no reset-setting pinctrl state
+[    0.272467] rk806 spi2.1: no dvs-setting pinctrl state
+[    0.272715] rockchip-spi feb20000.spi: probed, poll=0, rsd=0, cs-inactive=0, ready=0
+[    0.273545] usbcore: registered new interface driver rtl8150
+[    0.273557] usbcore: registered new interface driver r8152
+[    0.286878] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    0.286884] ehci-pci: EHCI PCI platform driver
+[    0.286907] ehci-platform: EHCI generic platform driver
+[    0.289093] ehci-platform fc800000.usb: EHCI Host Controller
+[    0.289147] ehci-platform fc800000.usb: new USB bus registered, assigned bus number 1
+[    0.289242] ehci-platform fc800000.usb: irq 20, io mem 0xfc800000
+[    0.296706] ehci-platform fc800000.usb: USB 2.0 started, EHCI 1.00
+[    0.296771] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.10
+[    0.296776] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.296780] usb usb1: Product: EHCI Host Controller
+[    0.296782] usb usb1: Manufacturer: Linux 5.10.209-rt89 ehci_hcd
+[    0.296785] usb usb1: SerialNumber: fc800000.usb
+[    0.296964] hub 1-0:1.0: USB hub found
+[    0.296972] hub 1-0:1.0: 1 port detected
+[    0.299289] ehci-platform fc880000.usb: EHCI Host Controller
+[    0.299347] ehci-platform fc880000.usb: new USB bus registered, assigned bus number 2
+[    0.299452] ehci-platform fc880000.usb: irq 22, io mem 0xfc880000
+[    0.306705] ehci-platform fc880000.usb: USB 2.0 started, EHCI 1.00
+[    0.306755] usb usb2: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.10
+[    0.306760] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.306763] usb usb2: Product: EHCI Host Controller
+[    0.306765] usb usb2: Manufacturer: Linux 5.10.209-rt89 ehci_hcd
+[    0.306767] usb usb2: SerialNumber: fc880000.usb
+[    0.306911] hub 2-0:1.0: USB hub found
+[    0.306918] hub 2-0:1.0: 1 port detected
+[    0.307230] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    0.307237] ohci-platform: OHCI generic platform driver
+[    0.307363] ohci-platform fc840000.usb: Generic Platform OHCI controller
+[    0.307413] ohci-platform fc840000.usb: new USB bus registered, assigned bus number 3
+[    0.307493] ohci-platform fc840000.usb: irq 21, io mem 0xfc840000
+[    0.363764] usb usb3: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 5.10
+[    0.363770] usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.363774] usb usb3: Product: Generic Platform OHCI controller
+[    0.363776] usb usb3: Manufacturer: Linux 5.10.209-rt89 ohci_hcd
+[    0.363779] usb usb3: SerialNumber: fc840000.usb
+[    0.363982] hub 3-0:1.0: USB hub found
+[    0.363991] hub 3-0:1.0: 1 port detected
+[    0.364209] ohci-platform fc8c0000.usb: Generic Platform OHCI controller
+[    0.364278] ohci-platform fc8c0000.usb: new USB bus registered, assigned bus number 4
+[    0.364404] ohci-platform fc8c0000.usb: irq 23, io mem 0xfc8c0000
+[    0.398823] rk-pcie fe170000.pcie: PCIe Linking... LTSSM is 0x3
+[    0.398825] rk-pcie fe180000.pcie: PCIe Linking... LTSSM is 0x3
+[    0.414832] rk-pcie fe150000.pcie: PCIe Linking... LTSSM is 0x1
+[    0.420826] usb usb4: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 5.10
+[    0.420837] usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.420844] usb usb4: Product: Generic Platform OHCI controller
+[    0.420849] usb usb4: Manufacturer: Linux 5.10.209-rt89 ohci_hcd
+[    0.420854] usb usb4: SerialNumber: fc8c0000.usb
+[    0.421287] hub 4-0:1.0: USB hub found
+[    0.421311] hub 4-0:1.0: 1 port detected
+[    0.421707] rk-pcie fe170000.pcie: PCIe Linking... LTSSM is 0x3
+[    0.422662] phy phy-fd5d4000.syscon:usb2-phy@4000.3: illegal mode
+[    0.422678] xhci-hcd xhci-hcd.8.auto: xHCI Host Controller
+[    0.422863] xhci-hcd xhci-hcd.8.auto: new USB bus registered, assigned bus number 5
+[    0.422999] xhci-hcd xhci-hcd.8.auto: hcc params 0x0220fe64 hci version 0x110 quirks 0x0000800002010010
+[    0.423134] xhci-hcd xhci-hcd.8.auto: irq 151, io mem 0xfc400000
+[    0.423288] xhci-hcd xhci-hcd.8.auto: xHCI Host Controller
+[    0.423418] xhci-hcd xhci-hcd.8.auto: new USB bus registered, assigned bus number 6
+[    0.423429] xhci-hcd xhci-hcd.8.auto: Host supports USB 3.0 SuperSpeed
+[    0.423533] usb usb5: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 5.10
+[    0.423542] usb usb5: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.423548] usb usb5: Product: xHCI Host Controller
+[    0.423553] usb usb5: Manufacturer: Linux 5.10.209-rt89 xhci-hcd
+[    0.423558] usb usb5: SerialNumber: xhci-hcd.8.auto
+[    0.423994] hub 5-0:1.0: USB hub found
+[    0.424018] hub 5-0:1.0: 1 port detected
+[    0.424346] usb usb6: We don't know the algorithms for LPM for this host, disabling LPM.
+[    0.424435] usb usb6: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 5.10
+[    0.424444] usb usb6: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.424451] usb usb6: Product: xHCI Host Controller
+[    0.424456] usb usb6: Manufacturer: Linux 5.10.209-rt89 xhci-hcd
+[    0.424461] usb usb6: SerialNumber: xhci-hcd.8.auto
+[    0.424888] hub 6-0:1.0: USB hub found
+[    0.424910] hub 6-0:1.0: 1 port detected
+[    0.425314] usbcore: registered new interface driver cdc_acm
+[    0.425318] cdc_acm: USB Abstract Control Model driver for USB modems and ISDN adapters
+[    0.425445] usbcore: registered new interface driver uas
+[    0.425536] usbcore: registered new interface driver usb-storage
+[    0.425606] usbcore: registered new interface driver usbserial_generic
+[    0.425626] usbserial: USB Serial support registered for generic
+[    0.425664] usbcore: registered new interface driver cp210x
+[    0.425681] usbserial: USB Serial support registered for cp210x
+[    0.425786] usbcore: registered new interface driver ftdi_sio
+[    0.425810] usbserial: USB Serial support registered for FTDI USB Serial Device
+[    0.425927] usbcore: registered new interface driver keyspan
+[    0.425946] usbserial: USB Serial support registered for Keyspan - (without firmware)
+[    0.425963] usbserial: USB Serial support registered for Keyspan 1 port adapter
+[    0.425980] usbserial: USB Serial support registered for Keyspan 2 port adapter
+[    0.425996] usbserial: USB Serial support registered for Keyspan 4 port adapter
+[    0.426036] usbcore: registered new interface driver option
+[    0.426054] usbserial: USB Serial support registered for GSM modem (1-port)
+[    0.426224] usbcore: registered new interface driver oti6858
+[    0.426247] usbserial: USB Serial support registered for oti6858
+[    0.426286] usbcore: registered new interface driver pl2303
+[    0.426304] usbserial: USB Serial support registered for pl2303
+[    0.426348] usbcore: registered new interface driver qcserial
+[    0.426366] usbserial: USB Serial support registered for Qualcomm USB modem
+[    0.426415] usbcore: registered new interface driver sierra
+[    0.426433] usbserial: USB Serial support registered for Sierra USB modem
+[    0.427488] usbcore: registered new interface driver usbtouchscreen
+[    0.429178] input: rk805 pwrkey as /devices/platform/feb20000.spi/spi_master/spi2/spi2.0/rk805-pwrkey.3.auto/input/input0
+[    0.429450] rk805-pwrkey rk805-pwrkey.6.auto: device is disabled
+[    0.429461] rk805-pwrkey: probe of rk805-pwrkey.6.auto failed with error -22
+[    0.429798] i2c /dev entries driver
+[    0.437717] rk-pcie fe150000.pcie: PCIe Linking... LTSSM is 0x0
+[    0.444705] rk-pcie fe170000.pcie: PCIe Linking... LTSSM is 0x3
+[    0.459254] rtc-hym8563 2-0051: rtc information is invalid
+[    0.460715] rk-pcie fe150000.pcie: PCIe Linking... LTSSM is 0x0
+[    0.466383] rtc-hym8563 2-0051: registered as rtc0
+[    0.467415] rtc-hym8563 2-0051: setting system clock to 2021-01-01T12:00:00 UTC (1609502400)
+[    0.467709] rk-pcie fe170000.pcie: PCIe Linking... LTSSM is 0x3
+[    0.472556] ircut cam_ircut: driver version: 00.01.00
+[    0.472609] ircut cam_ircut: failed get pulse-width,use dafult value 100
+[    0.472642] ircut cam_ircut: probe successful!
+[    0.473067] rkcifhw fdce0000.rkcif: Adding to iommu group 15
+[    0.473874] rkcifhw fdce0000.rkcif: No reserved memory region assign to CIF
+[    0.473942] rkcif rkcif-mipi-lvds: Adding to iommu group 15
+[    0.473952] rkcif rkcif-mipi-lvds: rkcif driver version: v00.02.00
+[    0.474009] rkcif rkcif-mipi-lvds: attach to cif hw node
+[    0.474011] rkcif rkcif-mipi-lvds: rkcif wait line 0
+[    0.474013] rkcif rkcif-mipi-lvds: rkcif fastboot reserve bufs num 3
+[    0.474018] : terminal subdev does not exist
+[    0.474020] : terminal subdev does not exist
+[    0.474022] : terminal subdev does not exist
+[    0.474023] : terminal subdev does not exist
+[    0.474026] : get_remote_sensor: video pad[0] is null
+[    0.474027] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    0.474031] : rkcif_scale_set_fmt: req(40, 30) src out(0, 0)
+[    0.474034] : get_remote_sensor: video pad[0] is null
+[    0.474035] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    0.474037] : rkcif_scale_set_fmt: req(40, 30) src out(0, 0)
+[    0.474040] : get_remote_sensor: video pad[0] is null
+[    0.474041] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    0.474043] : rkcif_scale_set_fmt: req(40, 30) src out(0, 0)
+[    0.474046] : get_remote_sensor: video pad[0] is null
+[    0.474047] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    0.474048] : rkcif_scale_set_fmt: req(40, 30) src out(0, 0)
+[    0.474643] rkcif rkcif-mipi-lvds: No memory-region-thunderboot specified
+[    0.474709] rk-pcie fe180000.pcie: PCIe Link up, LTSSM is 0x30011
+[    0.474907] rk-pcie fe180000.pcie: PCI host bridge to bus 0003:30
+[    0.474915] pci_bus 0003:30: root bus resource [bus 30-3f]
+[    0.474923] pci_bus 0003:30: root bus resource [??? 0xf3000000-0xf30fffff flags 0x0]
+[    0.474932] pci_bus 0003:30: root bus resource [io  0x0000-0xfffff] (bus address [0xf3100000-0xf31fffff])
+[    0.474939] pci_bus 0003:30: root bus resource [mem 0xf3200000-0xf3ffffff]
+[    0.474946] pci_bus 0003:30: root bus resource [mem 0x9c0000000-0x9ffffffff pref]
+[    0.474981] pci 0003:30:00.0: [1d87:3588] type 01 class 0x060400
+[    0.475006] pci 0003:30:00.0: reg 0x38: [mem 0x00000000-0x0000ffff pref]
+[    0.475068] pci 0003:30:00.0: supports D1 D2
+[    0.475072] pci 0003:30:00.0: PME# supported from D0 D1 D3hot
+[    0.483713] rk-pcie fe150000.pcie: PCIe Linking... LTSSM is 0x1
+[    0.486100] pci 0003:30:00.0: Primary bus is hard wired to 0
+[    0.486107] pci 0003:30:00.0: bridge configuration invalid ([bus 01-ff]), reconfiguring
+[    0.486129] rockchip-mipi-csi2-hw fdd10000.mipi0-csi2-hw: enter mipi csi2 hw probe!
+[    0.486288] rockchip-mipi-csi2-hw fdd10000.mipi0-csi2-hw: probe success, v4l2_dev:mipi0-csi2-hw!
+[    0.486314] rockchip-mipi-csi2-hw fdd20000.mipi1-csi2-hw: enter mipi csi2 hw probe!
+[    0.486329] pci 0003:31:00.0: [10ec:8168] type 00 class 0x020000
+[    0.486403] pci 0003:31:00.0: reg 0x10: initial BAR value 0x00000000 invalid
+[    0.486410] pci 0003:31:00.0: reg 0x10: [io  size 0x0100]
+[    0.486444] rockchip-mipi-csi2-hw fdd20000.mipi1-csi2-hw: probe success, v4l2_dev:mipi1-csi2-hw!
+[    0.486466] rockchip-mipi-csi2-hw fdd30000.mipi2-csi2-hw: enter mipi csi2 hw probe!
+[    0.486497] pci 0003:31:00.0: reg 0x18: [mem 0x00000000-0x00000fff 64bit]
+[    0.486556] pci 0003:31:00.0: reg 0x20: [mem 0x00000000-0x00003fff 64bit]
+[    0.486591] rockchip-mipi-csi2-hw fdd30000.mipi2-csi2-hw: probe success, v4l2_dev:mipi2-csi2-hw!
+[    0.486612] rockchip-mipi-csi2-hw fdd40000.mipi3-csi2-hw: enter mipi csi2 hw probe!
+[    0.486742] rockchip-mipi-csi2-hw fdd40000.mipi3-csi2-hw: probe success, v4l2_dev:mipi3-csi2-hw!
+[    0.486763] rockchip-mipi-csi2-hw fdd50000.mipi4-csi2-hw: enter mipi csi2 hw probe!
+[    0.486888] rockchip-mipi-csi2-hw fdd50000.mipi4-csi2-hw: probe success, v4l2_dev:mipi4-csi2-hw!
+[    0.486910] rockchip-mipi-csi2-hw fdd60000.mipi5-csi2-hw: enter mipi csi2 hw probe!
+[    0.487008] pci 0003:31:00.0: supports D1 D2
+[    0.487014] pci 0003:31:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+[    0.487032] rockchip-mipi-csi2-hw fdd60000.mipi5-csi2-hw: probe success, v4l2_dev:mipi5-csi2-hw!
+[    0.487479] rockchip-mipi-csi2 mipi0-csi2: attach to csi2 hw node
+[    0.487497] rkcif rkcif-mipi-lvds: Entity type for entity rockchip-mipi-csi2 was not initialized!
+[    0.487502] rockchip-mipi-csi2: Async registered subdev
+[    0.487505] rockchip-mipi-csi2: probe success, v4l2_dev:rkcif-mipi-lvds!
+[    0.488206] rkisp_hw fdcb0000.rkisp: Adding to iommu group 14
+[    0.488327] rkisp_hw fdcb0000.rkisp: is_thunderboot: 0
+[    0.488330] rkisp_hw fdcb0000.rkisp: Missing rockchip,grf property
+[    0.488343] rkisp_hw fdcb0000.rkisp: max input:0x0@0fps
+[    0.488529] rkisp_hw fdcb0000.rkisp: no find phandle sram
+[    0.488731] rkisp rkisp0-vir0: rkisp driver version: v02.05.01
+[    0.488808] rkisp rkisp0-vir0: No memory-region-thunderboot specified
+[    0.488875] rkisp rkisp0-vir0: Entity type for entity rkisp-isp-subdev was not initialized!
+[    0.489722] rk-pcie fe170000.pcie: PCIe Linking... LTSSM is 0x3
+[    0.500427] pci_bus 0003:31: busn_res: [bus 31-3f] end is updated to 31
+[    0.500457] pci 0003:30:00.0: BAR 8: assigned [mem 0xf3200000-0xf32fffff]
+[    0.500469] pci 0003:30:00.0: BAR 6: assigned [mem 0xf3300000-0xf330ffff pref]
+[    0.500478] pci 0003:30:00.0: BAR 7: assigned [io  0x1000-0x1fff]
+[    0.500490] pci 0003:31:00.0: BAR 4: assigned [mem 0xf3200000-0xf3203fff 64bit]
+[    0.500541] pci 0003:31:00.0: BAR 2: assigned [mem 0xf3204000-0xf3204fff 64bit]
+[    0.500589] pci 0003:31:00.0: BAR 0: assigned [io  0x1000-0x10ff]
+[    0.500608] pci 0003:30:00.0: PCI bridge to [bus 31]
+[    0.500614] pci 0003:30:00.0:   bridge window [io  0x1000-0x1fff]
+[    0.500622] pci 0003:30:00.0:   bridge window [mem 0xf3200000-0xf32fffff]
+[    0.500674] rk_hdmirx fdee0000.hdmirx-controller: No reserved memory for HDMIRX, use default CMA
+[    0.500693] rk_hdmirx fdee0000.hdmirx-controller: hdmirx_get_phy_cpuid_func: mpidr: 0x0000000500, phy_cpuid:0x5
+[    0.500703] rk_hdmirx fdee0000.hdmirx-controller: hdmirx_probe: cpu_aff:0x500, Bound_cpu:5, wdt_cfg_bound_cpu:2, phy_cpuid:5
+[    0.501199] rk_hdmirx fdee0000.hdmirx-controller: hdmirx_audio_interrupts_setup: 0
+[    0.502780] rk_hdmirx fdee0000.hdmirx-controller: rk_hdmirx_hdcp_register success
+[    0.502800] rk_hdmirx fdee0000.hdmirx-controller: fdee0000.hdmirx-controller driver probe ok!
+[    0.503147] usbcore: registered new interface driver uvcvideo
+[    0.503149] USB Video Class driver (1.1.1)
+[    0.504166] Bluetooth: HCI UART driver ver 2.3
+[    0.504170] Bluetooth: HCI UART protocol H4 registered
+[    0.504172] Bluetooth: HCI UART protocol ATH3K registered
+[    0.504191] usbcore: registered new interface driver bfusb
+[    0.504207] usbcore: registered new interface driver btusb
+[    0.504285] pcieport 0003:30:00.0: PME: Signaling with IRQ 163
+[    0.504409] r8168 Gigabit Ethernet driver 8.049.02-NAPI loaded
+[    0.504443] r8168 0003:31:00.0: enabling device (0000 -> 0003)
+[    0.505000] cpu cpu0: bin=0
+[    0.505175] cpu cpu0: leakage=9
+[    0.506641] cpu cpu0: pvtm=1409
+[    0.506872] cpu cpu0: pvtm-volt-sel=0
+[    0.507607] cpu cpu4: bin=0
+[    0.507778] cpu cpu4: leakage=8
+[    0.509231] cpu cpu4: pvtm=1634
+[    0.509409] cpu cpu4: pvtm-volt-sel=2
+[    0.510105] cpu cpu6: bin=0
+[    0.510276] cpu cpu6: leakage=8
+[    0.511729] cpu cpu6: pvtm=1644
+[    0.511902] cpu cpu6: pvtm-volt-sel=3
+[    0.513064] cpu cpu0: avs=0
+[    0.514199] cpu cpu4: avs=0
+[    0.515183] cpu cpu6: avs=0
+[    0.515406] cpu cpu0: EM: created perf domain
+[    0.515432] cpu cpu0: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=1608000000 h_table=0
+[    0.516249] cpu cpu4: EM: created perf domain
+[    0.516268] cpu cpu4: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=2208000000 h_table=0
+[    0.517026] cpu cpu6: EM: created perf domain
+[    0.517150] cpu cpu6: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=2208000000 h_table=0
+[    0.517817] sdhci: Secure Digital Host Controller Interface driver
+[    0.517818] sdhci: Copyright(c) Pierre Ossman
+[    0.517819] Synopsys Designware Multimedia Card Interface Driver
+[    0.517945] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.518337] arm-scmi firmware:scmi: Failed. SCMI protocol 17 not active.
+[    0.518355] SMCCC: SOC_ID: ARCH_SOC_ID not implemented, skipping ....
+[    0.518582] cryptodev: driver 1.12 loaded.
+[    0.518591] hid: raw HID events driver (C) Jiri Kosina
+[    0.518648] usbcore: registered new interface driver usbhid
+[    0.518649] usbhid: USB HID core driver
+[    0.519744] optee: probing for conduit method.
+[    0.519752] optee: revision 3.13 (185dc3c9)
+[    0.519817] optee: dynamic shared memory is enabled
+[    0.519866] optee: initialized driver
+[    0.520023] usbcore: registered new interface driver snd-usb-audio
+[    0.520639] r8168 0003:31:00.0 (unnamed net_device) (uninitialized): Invalid ether addr 00:00:00:00:00:00
+[    0.520642] r8168 0003:31:00.0 (unnamed net_device) (uninitialized): Random ether addr 72:b3:f8:e6:5b:4c
+[    0.520837] r8168: This product is covered by one or more of the following patents: US6,570,884, US6,115,776, and US6,327,625.
+[    0.521477] rockchip-i2s-tdm fddf0000.i2s: CLK-ALWAYS-ON: mclk: 12288000, bclk: 3072000, fsync: 48000
+[    0.521821] rockchip-i2s-tdm fe470000.i2s: Register PCM for TRCM mode
+[    0.522008] rockchip-i2s-tdm fddf4000.i2s: CLK-ALWAYS-ON: mclk: 12288000, bclk: 3072000, fsync: 48000
+[    0.522844] debugfs: File 'Capture' in directory 'dapm' already present!
+[    0.522860] r8168  Copyright (C) 2021 Realtek NIC software team <nicfae@realtek.com>
+[    0.522860]  This program comes with ABSOLUTELY NO WARRANTY; for details, please see <http://www.gnu.org/licenses/>.
+[    0.522860]  This is free software, and you are welcome to redistribute it under certain conditions; see <http://www.gnu.org/licenses/>.
+[    0.523179] input: rockchip-dp0 rockchip-dp0 as /devices/platform/dp0-sound/sound/card0/input1
+[    0.534411] debugfs: File 'Capture' in directory 'dapm' already present!
+[    0.534624] input: rockchip,hdmiin rockchip,hdmiin as /devices/platform/hdmiin-sound/sound/card1/input2
+[    0.534930] input: headset-keys as /devices/platform/es8388-sound/input/input3
+[    0.544308] ES8323 7-0011: ASoC: error at soc_component_write_no_lock on ES8323.7-0011: -5
+[    0.546205] ata1: SATA link down (SStatus 0 SControl 300)
+[    0.548593] mmc0: SDHCI controller on fe2e0000.mmc [fe2e0000.mmc] using ADMA
+[    0.582649] mmc0: Host Software Queue enabled
+[    0.582656] mmc0: new HS400 Enhanced strobe MMC card at address 0001
+[    0.582939] mmcblk0: mmc0:0001 BJTD4R 29.1 GiB
+[    0.583040] mmcblk0boot0: mmc0:0001 BJTD4R partition 1 4.00 MiB
+[    0.583139] mmcblk0boot1: mmc0:0001 BJTD4R partition 2 4.00 MiB
+[    0.583212] mmcblk0rpmb: mmc0:0001 BJTD4R partition 3 4.00 MiB, chardev (236:0)
+[    0.584764]  mmcblk0: p1 p2 p3 p4 p5 p6 p7 p8
+[    0.592188] input: rockchip-es8388 Headset as /devices/platform/es8388-sound/sound/card2/input4
+[    0.592951] Initializing XFRM netlink socket
+[    0.593195] NET: Registered protocol family 10
+[    0.593656] Segment Routing with IPv6
+[    0.593685] NET: Registered protocol family 17
+[    0.593705] NET: Registered protocol family 15
+[    0.593766] Bluetooth: RFCOMM socket layer initialized
+[    0.593775] Bluetooth: RFCOMM ver 1.11
+[    0.593781] Bluetooth: HIDP (Human Interface Emulation) ver 1.2
+[    0.593786] Bluetooth: HIDP socket layer initialized
+[    0.593809] [BT_RFKILL]: Enter rfkill_rk_init
+[    0.593811] [WLAN_RFKILL]: Enter rfkill_wlan_init
+[    0.594209] [WLAN_RFKILL]: Enter rfkill_wlan_probe
+[    0.594227] [WLAN_RFKILL]: can't find rockchip,grf property
+[    0.594229] [WLAN_RFKILL]: wlan_platdata_parse_dt: wifi_chip_type = ap6255
+[    0.594231] [WLAN_RFKILL]: wlan_platdata_parse_dt: enable wifi power control.
+[    0.594233] [WLAN_RFKILL]: wlan_platdata_parse_dt: wifi power controled by gpio.
+[    0.594242] [WLAN_RFKILL]: wlan_platdata_parse_dt: WIFI,poweren_gpio = 105 flags = 0.
+[    0.594255] [WLAN_RFKILL]: wlan_platdata_parse_dt: WIFI,host_wake_irq = 103, flags = 0.
+[    0.594259] [WLAN_RFKILL]: wlan_platdata_parse_dt: The ref_wifi_clk not found !
+[    0.594261] [WLAN_RFKILL]: rfkill_wlan_probe: init gpio
+[    0.594263] [WLAN_RFKILL]: rfkill_set_wifi_bt_power: 1
+[    0.594267] [WLAN_RFKILL]: Exit rfkill_wlan_probe
+[    0.594903] [BT_RFKILL]: bluetooth_platdata_parse_dt: get property: uart_rts_gpios = 100.
+[    0.594916] [BT_RFKILL]: bluetooth_platdata_parse_dt: get property: BT,reset_gpio = 102.
+[    0.594923] [BT_RFKILL]: bluetooth_platdata_parse_dt: get property: BT,wake_gpio = 97.
+[    0.594929] [BT_RFKILL]: bluetooth_platdata_parse_dt: get property: BT,wake_host_irq = 96.
+[    0.594979] [BT_RFKILL]: Request irq for bt wakeup host
+[    0.595085] [BT_RFKILL]: ** disable irq
+[    0.595139] [BT_RFKILL]: bt_default device registered.
+[    0.595212] input: bt-powerkey as /devices/platform/wireless-bluetooth/input/input5
+[    0.595338] Key type dns_resolver registered
+[    0.595665] imx415 5-001a: driver version: 00.01.08
+[    0.595670] imx415 5-001a:  Get hdr mode failed! no hdr default
+[    0.595674] imx415 5-001a: detect imx415 lane 4
+[    0.595681] imx415 5-001a: Failed to get reset-gpios
+[    0.595685] imx415 5-001a: Failed to get power-gpios
+[    0.595686] imx415 5-001a: could not get default pinstate
+[    0.595687] imx415 5-001a: could not get sleep pinstate
+[    0.595711] imx415 5-001a: supply dvdd not found, using dummy regulator
+[    0.595742] imx415 5-001a: supply dovdd not found, using dummy regulator
+[    0.596307] vendor storage:20190527 ret = 0
+[    0.666616] imx415 5-001a: Detected imx415 id 0000e0
+[    0.667074] printk: console [ttyFIQ0]: printing thread started
+[    0.667131] printk: console [ramoops-1]: printing thread started
+[    0.667159] Loading compiled-in X.509 certificates
+[    0.667793] pstore: Using crash dump compression: deflate
+[    0.668073] rga3 fdb60000.rga: Adding to iommu group 2
+[    0.668505] rga3 fdb60000.rga: probe successfully, irq = 34, hw_version:3.0.76831
+[    0.668590] rga3 fdb70000.rga: Adding to iommu group 3
+[    0.668999] rga3 fdb70000.rga: probe successfully, irq = 35, hw_version:3.0.76831
+[    0.669612] rga2 fdb80000.rga: probe successfully, irq = 36, hw_version:3.2.63318
+[    0.669844] rga_iommu: IOMMU binding successfully, default mapping core[0x1]
+[    0.669959] rga: Module initialized. v1.3.3
+[    0.679702] rk-pcie fe170000.pcie: PCIe Link up, LTSSM is 0x30011
+[    0.679734] rk-pcie fe170000.pcie: PCI host bridge to bus 0002:20
+[    0.679736] pci_bus 0002:20: root bus resource [bus 20-2f]
+[    0.679738] pci_bus 0002:20: root bus resource [??? 0xf2000000-0xf20fffff flags 0x0]
+[    0.679740] pci_bus 0002:20: root bus resource [io  0x100000-0x1fffff] (bus address [0xf2100000-0xf21fffff])
+[    0.679742] pci_bus 0002:20: root bus resource [mem 0xf2200000-0xf2ffffff]
+[    0.679744] pci_bus 0002:20: root bus resource [mem 0x980000000-0x9bfffffff pref]
+[    0.679756] pci 0002:20:00.0: [1d87:3588] type 01 class 0x060400
+[    0.679768] pci 0002:20:00.0: reg 0x38: [mem 0x00000000-0x0000ffff pref]
+[    0.679798] pci 0002:20:00.0: supports D1 D2
+[    0.679800] pci 0002:20:00.0: PME# supported from D0 D1 D3hot
+[    0.682492] pci 0002:20:00.0: Primary bus is hard wired to 0
+[    0.682493] pci 0002:20:00.0: bridge configuration invalid ([bus 01-ff]), reconfiguring
+[    0.682631] pci 0002:21:00.0: [14e4:449d] type 00 class 0x028000
+[    0.682717] pci 0002:21:00.0: reg 0x10: [mem 0x00000000-0x0000ffff 64bit]
+[    0.682763] pci 0002:21:00.0: reg 0x18: [mem 0x00000000-0x003fffff 64bit]
+[    0.683229] pci 0002:21:00.0: supports D1 D2
+[    0.683230] pci 0002:21:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+[    0.692550] pci_bus 0002:21: busn_res: [bus 21-2f] end is updated to 21
+[    0.692571] pci 0002:20:00.0: BAR 8: assigned [mem 0xf2200000-0xf27fffff]
+[    0.692577] pci 0002:20:00.0: BAR 6: assigned [mem 0xf2800000-0xf280ffff pref]
+[    0.692584] pci 0002:21:00.0: BAR 2: assigned [mem 0xf2400000-0xf27fffff 64bit]
+[    0.692626] pci 0002:21:00.0: BAR 0: assigned [mem 0xf2200000-0xf220ffff 64bit]
+[    0.692666] pci 0002:20:00.0: PCI bridge to [bus 21]
+[    0.692671] pci 0002:20:00.0:   bridge window [mem 0xf2200000-0xf27fffff]
+[    0.694391] pcieport 0002:20:00.0: PME: Signaling with IRQ 176
+[    0.698973] pcie20_avdd0v85: supplied by avdd_0v85_s0
+[    0.699120] mali fb000000.gpu: Kernel DDK version g21p0-01eac0
+[    0.699152] mali fb000000.gpu: GPU metrics tracepoint support enabled
+[    0.699413] pcie20_avdd1v8: supplied by avcc_1v8_s0
+[    0.699784] mali fb000000.gpu: bin=0
+[    0.699791] pcie30_avdd0v75: supplied by avdd_0v75_s0
+[    0.699963] mali fb000000.gpu: leakage=12
+[    0.700024] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    0.700122] pcie30_avdd1v8: supplied by avcc_1v8_s0
+[    0.700455] vcc3v3_lcd0_n: supplied by vcc_1v8_s0
+[    0.701059] mpp_rkvenc2 fdbd0000.rkvenc-core: Adding to iommu group 10
+[    0.701317] mpp_rkvenc2 fdbd0000.rkvenc-core: probing start
+[    0.701356] mali fb000000.gpu: pvtm=833
+[    0.701499] mali fb000000.gpu: pvtm-volt-sel=1
+[    0.702068] mpp_rkvenc2 fdbd0000.rkvenc-core: bin=0
+[    0.702278] mpp_rkvenc2 fdbd0000.rkvenc-core: leakage=10
+[    0.702285] mpp_rkvenc2 fdbd0000.rkvenc-core: leakage-volt-sel=0
+[    0.702775] mali fb000000.gpu: avs=0
+[    0.702788] W : [File] : drivers/gpu/arm/bifrost/platform/rk/mali_kbase_config_rk.c; [Line] : 143; [Func] : kbase_platform_rk_init(); power-off-delay-ms not available.
+[    0.703080] mali fb000000.gpu: Register LUT 00090200 initialized for GPU arch 0x000a0806
+[    0.703098] mali fb000000.gpu: r0p0 status 5 not found in HW issues table;
+[    0.703102] mali fb000000.gpu: falling back to closest match: r0p0 status 0
+[    0.703105] mali fb000000.gpu: Execution proceeding normally with fallback match
+[    0.703108] mali fb000000.gpu: GPU identified as 0x7 arch 10.8.6 r0p0 status 0
+[    0.703250] mpp_rkvenc2 fdbd0000.rkvenc-core: avs=0
+[    0.703266] mpp_rkvenc2 fdbd0000.rkvenc-core: l=-2147483648 h=2147483647 hyst=0 l_limit=0 h_limit=0 h_table=0
+[    0.703404] mali fb000000.gpu: No priority control manager is configured
+[    0.703409] mali fb000000.gpu: Large page allocation set to false after hardware feature check
+[    0.703503] mali fb000000.gpu: No memory group manager is configured
+[    0.703655] mpp_rkvenc2 fdbd0000.rkvenc-core: attach ccu as core 0
+[    0.703692] mpp_rkvenc2 fdbd0000.rkvenc-core: probing finish
+[    0.703894] mpp_rkvenc2 fdbe0000.rkvenc-core: Adding to iommu group 11
+[    0.704162] mpp_rkvenc2 fdbe0000.rkvenc-core: probing start
+[    0.704764] mpp_rkvenc2 fdbe0000.rkvenc-core: bin=0
+[    0.704941] mpp_rkvenc2 fdbe0000.rkvenc-core: leakage=10
+[    0.704947] mpp_rkvenc2 fdbe0000.rkvenc-core: leakage-volt-sel=0
+[    0.705532] mpp_rkvenc2 fdbe0000.rkvenc-core: avs=0
+[    0.705545] mpp_rkvenc2 fdbe0000.rkvenc-core: l=-2147483648 h=2147483647 hyst=0 l_limit=0 h_limit=0 h_table=0
+[    0.705845] mpp_rkvenc2 fdbe0000.rkvenc-core: attach ccu as core 1
+[    0.705882] mpp_rkvenc2 fdbe0000.rkvenc-core: probing finish
+[    0.706504] rockchip-csi2-dphy csi2-dcphy0: dphy0 matches m00_b_imx415 5-001a:bus type 5
+[    0.706918] rkcif-mipi-lvds: Async subdev notifier completed
+[    0.706923] rockchip-csi2-dphy csi2-dcphy0: csi2 dphy0 probe successfully!
+[    0.707202] rkisp0-vir0: Async subdev notifier completed
+[    0.711074] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp0 assign plane mask: 0x5, primary plane phy id: 2
+[    0.711086] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp1 assign plane mask: 0xa, primary plane phy id: 3
+[    0.711091] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp2 assign plane mask: 0x140, primary plane phy id: 8
+[    0.711096] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp3 assign plane mask: 0x280, primary plane phy id: 9
+[    0.711398] [drm] failed to init overlay plane Cluster0-win1
+[    0.711423] [drm] failed to init overlay plane Cluster1-win1
+[    0.711449] [drm] failed to init overlay plane Cluster2-win1
+[    0.711473] [drm] failed to init overlay plane Cluster3-win1
+[    0.726221] rockchip-drm display-subsystem: bound fdd90000.vop (ops 0xffffffc009097ac0)
+[    0.726696] dwhdmi-rockchip fde80000.hdmi: registered ddc I2C bus driver
+[    0.727228] dw-hdmi-qp-hdcp dw-hdmi-qp-hdcp.13.auto: dw_hdcp_qp_hdcp_probe success
+[    0.727283] rockchip-drm display-subsystem: bound fde80000.hdmi (ops 0xffffffc0090a6658)
+[    0.727718] dwhdmi-rockchip fdea0000.hdmi: registered ddc I2C bus driver
+[    0.727942] dw-hdmi-qp-hdcp dw-hdmi-qp-hdcp.16.auto: dw_hdcp_qp_hdcp_probe success
+[    0.727965] rockchip-drm display-subsystem: bound fdea0000.hdmi (ops 0xffffffc0090a6658)
+[    0.727981] dw-mipi-dsi2 fde20000.dsi: [drm:dw_mipi_dsi2_bind] *ERROR* Failed to find panel or bridge: -517
+[    0.730146] input: adc-keys as /devices/platform/adc-keys/input/input6
+[    0.730510] <<GTP-INF>>[gt1x_ts_probe:560] GTP Driver Version: V1.4<2015/07/10>
+[    0.730515] <<GTP-INF>>[gt1x_ts_probe:561] GTP I2C Address: 0x14
+[    0.730626] <<GTP-ERR>>[gt1x_parse_dt:341] vdd_ana not specified, fallback to power-supply
+[    0.730753] <<GTP-INF>>[gt1x_parse_dt:348] Power Invert,no
+[    0.730798] <<GTP-INF>>[gt1x_reset_guitar:788] GTP RESET!
+[    0.731974] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp0 assign plane mask: 0x5, primary plane phy id: 2
+[    0.731980] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp1 assign plane mask: 0xa, primary plane phy id: 3
+[    0.731982] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp2 assign plane mask: 0x140, primary plane phy id: 8
+[    0.731984] rockchip-vop2 fdd90000.vop: [drm:vop2_bind] vp3 assign plane mask: 0x280, primary plane phy id: 9
+[    0.732139] [drm] failed to init overlay plane Cluster0-win1
+[    0.732149] [drm] failed to init overlay plane Cluster1-win1
+[    0.732158] [drm] failed to init overlay plane Cluster2-win1
+[    0.732167] [drm] failed to init overlay plane Cluster3-win1
+[    0.736038] rockchip-drm display-subsystem: bound fdd90000.vop (ops 0xffffffc009097ac0)
+[    0.736336] dwhdmi-rockchip fde80000.hdmi: registered ddc I2C bus driver
+[    0.736737] dw-hdmi-qp-hdcp dw-hdmi-qp-hdcp.13.auto: dw_hdcp_qp_hdcp_probe success
+[    0.736757] rockchip-drm display-subsystem: bound fde80000.hdmi (ops 0xffffffc0090a6658)
+[    0.737077] dwhdmi-rockchip fdea0000.hdmi: registered ddc I2C bus driver
+[    0.737415] dw-hdmi-qp-hdcp dw-hdmi-qp-hdcp.16.auto: dw_hdcp_qp_hdcp_probe success
+[    0.737430] rockchip-drm display-subsystem: bound fdea0000.hdmi (ops 0xffffffc0090a6658)
+[    0.737451] rockchip-drm display-subsystem: bound fde20000.dsi (ops 0xffffffc0090a8ef0)
+[    0.737479] rockchip-drm display-subsystem: bound fde50000.dp (ops 0xffffffc0090a92d0)
+[    0.737501] rockchip-drm display-subsystem: bound fde60000.dp (ops 0xffffffc0090a92d0)
+[    0.737881] rockchip-drm display-subsystem: route-hdmi0: failed to get logo,offset
+[    0.737888] rockchip-drm display-subsystem: route-hdmi1: failed to get logo,offset
+[    0.748646] rockchip-drm display-subsystem: [drm] fb0: rockchipdrmfb frame buffer device
+[    0.818284] <<GTP-INF>>[gt1x_get_chip_type:907] Chip Type: GT1X
+[    0.827235] <<GTP-INF>>[gt1x_read_version:863] IC VERSION:GT1158_00012A(Patch)_0102(Mask)_00(SensorID)
+[    0.827241] <<GTP-INF>>[gt1x_init_panel:606] Config group0 used, length:239
+[    0.827245] <<GTP-INF>>[gt1x_init_panel:657] X_MAX=720,Y_MAX=1280,TRIGGER=0x01,WAKEUP_LEVEL=1
+[    1.052934] input: goodix-ts as /devices/virtual/input/input7
+[    2.544746] rk_hdmirx fdee0000.hdmirx-controller: hdmirx_cancel_cpu_limit_freq freq qos nod add
+[    2.707700] rk-pcie fe150000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+[    2.707704] rk-pcie fe150000.pcie: failed to initialize host
+[   60.705697] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+[   60.705701] rcu:     3-...0: (1 GPs behind) idle=b1a/1/0x4000000000000000 softirq=0/0 fqs=12115
+[   60.705709]  (detected by 1, t=60002 jiffies, g=-963, q=1088)
+[   60.705713] Task dump for CPU 3:
+[   60.705715] task:kworker/u16:2   state:R  running task     stack:    0 pid:  265 ppid:     2 flags:0x0000000a
+[   60.705723] Workqueue: events_unbound async_run_entry_fn
+[   60.705732] Call trace:
+[   60.705733]  __switch_to+0xdc/0x130
+[   60.705739]  enqueue_task_rt+0x58/0x314
+[   60.705744]  enqueue_task+0x34/0x1a0
+[   60.705749]  ttwu_do_activate.isra.0+0x64/0xf0
+[   60.705755] CPU0 online:1
+[   60.705758]  EL2(NS) PC: <0xffffffc008f946e4> __cpu_do_idle+0x4/0x10
+[   60.705870]
+[   60.705871] CPU1 online:1
+[   60.705874]  EL2(NS) PC: <0xffffffc0085b0354> rockchip_panic_notify+0x300/0x43c
+[   60.705882]  EL2(NS) PC: <0xffffffc0085b0350> rockchip_panic_notify+0x2fc/0x43c
+[   60.705989]
+[   60.705990] CPU2 online:1
+[   60.705993]  EL2(NS) PC: <0xffffffc008f946e4> __cpu_do_idle+0x4/0x10
+[   60.706102]
+[   60.706103] CPU3 online:1
+[   60.706106]  EL2(NS) PC: <0xffffffc00808cee4> queued_spin_lock_slowpath+0x1e4/0x360
+[   60.706217]
+[   60.706218] CPU4 online:1
+[   60.706221]  EL2(NS) PC: <0xffffffc008f946e0> __cpu_do_idle+0x0/0x10
+[   60.706332]
+[   60.706332] CPU5 online:1
+[   60.706335]  EL2(NS) PC: <0xffffffc008f946e0> __cpu_do_idle+0x0/0x10
+[   60.706446]
+[   60.706447] CPU6 online:1
+[   60.706450]  EL2(NS) PC: <0xffffffc008f946e0> __cpu_do_idle+0x0/0x10
+[   60.706560]
+[   60.706561] CPU7 online:1
+[   60.706564]  EL2(NS) PC: <0xffffffc008f946e0> __cpu_do_idle+0x0/0x10
+[   60.706674]
+[   60.706679]            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7
+[   60.706690]  13:      60720      61096      61165        752      60703      60695      61275      60667     GICv3  26 Level     arch_timer
+[   60.706696]  14:          0          0          0          0          0          0          0          0     GICv3 321 Level     rk_timer
+[   60.706705]  17:          0          0          0          0          0          0          0          0     GICv3 126 Level     fb000000.gpu
+[   60.706711]  18:          0          0          0          0          0          0          0          0     GICv3 125 Level     fb000000.gpu
+[   60.706717]  19:          0          0          0          0          0          0          0          0     GICv3 124 Level     fb000000.gpu
+[   60.706724]  20:          0          0          0          0          0          0          0          0     GICv3 247 Level     ehci_hcd:usb1
+[   60.706731]  21:          0          0          0          0          0          0          0          0     GICv3 248 Level     ohci_hcd:usb3
+[   60.706737]  22:          0          0          0          0          0          0          0          0     GICv3 250 Level     ehci_hcd:usb2
+[   60.706743]  23:          0          0          0          0          0          0          0          0     GICv3 251 Level     ohci_hcd:usb4
+[   60.706750]  24:          0          0          0          0          0          0          0          0     GICv3 425 Level     rockchip_usb2phy
+[   60.706756]  25:          1          0          0          0          0          0          0          0     GICv3 423 Level     rockchip_usb2phy
+[   60.706762]  26:          1          0          0          0          0          0          0          0     GICv3 424 Level     rockchip_usb2phy
+[   60.706770]  28:          0          0          0          0          0          0          0          0     GICv3 142 Level     fdab9000.iommu
+[   60.706776]  29:          0          0          0          0          0          0          0          0     GICv3 143 Level     fdab9000.iommu
+[   60.706782]  30:          0          0          0          0          0          0          0          0     GICv3 144 Level     fdab9000.iommu
+[   60.706789]  31:          0          0          0          0          0          0          0          0     GICv3 152 Level     fdb50000.vepu
+[   60.706796]  32:          0          0          0          0          0          0          0          0     GICv3 151 Level     fdb51000.avsd-plus, fdb50400.vdpu
+[   60.706802]  33:          0          0          0          0          0          0          0          0     GICv3 150 Level     fdb50800.iommu
+[   60.706809]  34:          0          0          0          0          0          0          0          0     GICv3 146 Level     fdb60f00.iommu, rga3
+[   60.706816]  35:          0          0          0          0          0          0          0          0     GICv3 147 Level     fdb70f00.iommu, rga3
+[   60.706822]  36:          0          0          0          0          0          0          0          0     GICv3 148 Level     rga2
+[   60.706828]  37:          0          0          0          0          0          0          0          0     GICv3 161 Level     fdb90000.jpegd
+[   60.706834]  38:          0          0          0          0          0          0          0          0     GICv3 162 Level     fdb90480.iommu
+[   60.706840]  39:          0          0          0          0          0          0          0          0     GICv3 154 Level     fdba0000.jpege-core
+[   60.706846]  40:          0          0          0          0          0          0          0          0     GICv3 153 Level     fdba0800.iommu
+[   60.706852]  41:          0          0          0          0          0          0          0          0     GICv3 156 Level     fdba4000.jpege-core
+[   60.706860]  42:          0          0          0          0          0          0          0          0     GICv3 155 Level     fdba4800.iommu
+[   60.706866]  43:          0          0          0          0          0          0          0          0     GICv3 158 Level     fdba8000.jpege-core
+[   60.706872]  44:          0          0          0          0          0          0          0          0     GICv3 157 Level     fdba8800.iommu
+[   60.706878]  45:          0          0          0            fdbac000.jpege-core
+[   60.706885]  46:          0          0          0          0          0          0          0          0     GICv3 159 Level     fdbac800.iommu
+[   60.706891]  47:          0          0          0          0          0          0          0          0     GICv3 149 Level     fdbb0800.iommu, fdbb0000.iep
+[   60.706897]  48:          0          0          0          0          0          0          0          0     GICv3 133 Level     fdbd0000.rkvenc-core
+[   60.706903]  49:          0          0          0          0          0          0          0          0     GICv3 131 Level     fdbdf000.iommu
+[   60.706910]  50:          0          0          0          0          0          0          0          0     GICv3 132 Level     fdbdf000.iommu
+[   60.706916]  51:          0          0          0          0          0          0          0          0     GICv3 136 Level     fdbe0000.rkvenc-core
+[   60.706923]  52:          0          0          0          0          0          0          0          0     GICv3 134 Level     fdbef000.iommu
+[   60.706929]  53:          0          0          0          0          0          0          0          0     GICv3 135 Level     fdbef000.iommu
+[   60.706934]  54:          0          0          0          0          0          0          0          0     GICv3 127 Level     fdc38100.rkvdec-core
+[   60.706940]  55:          0          0          0          0          0          0          0          0     GICv3 128 Level     fdc38700.iommu
+[   60.706946]  56:          0          0          0          0          0          0          0          0     GICv3 129 Level     fdc48100.rkvdec-core
+[   60.706952]  57:          0          0          0          0          0          0          0          0     GICv3 130 Level     fdc48700.iommu
+[   60.706958]  58:          0          0          0          0          0          0          0          0     GICv3 141 Level     fdca0000.iommu
+[   60.706964]  59:          0          0          0          0          0          0          0          0     GICv3 163 Level     rkisp_hw
+[   60.706970]  60:          0          0          0          0          0          0          0          0     GICv3 165 Level     rkisp_hw
+[   60.706976]  61:          0          0          0          0          0          0          0          0     GICv3 166 Level     rkisp_hw
+[   60.706982]  62:          0          0          0          0          0          0          0          0     GICv3 164 Level     fdcb7f00.iommu
+[   60.706988]  63:          0          0          0          0          0          0          0          0     GICv3 187 Level     rkcifhw
+[   60.706994]  64:          0          0          0          0          0          0          0          0     GICv3 145 Level     fdce0800.iommu
+[   60.707000]  65:          0          0          0          0          0          0          0          0     GICv3 175 Level     rockchip-mipi-csi2-hw
+[   60.707006]  66:          0          0          0          0          0          0          0          0     GICv3 176 Level     rockchip-mipi-csi2-hw
+[   60.707012]  67:          0          0          0          0          0          0          0          0     GICv3 177 Level     rockchip-mipi-csi2-hw
+[   60.707019]  68:          0          0          0          0          0          0          0          0     GICv3 178 Level     rockchip-mipi-csi2-hw
+[   60.707025]  69:          0          0          0          0          0          0          0          0     GICv3 179 Level     rockchip-mipi-csi2-hw
+[   60.707031]  70:          0          0          0          0          0          0          0          0     GICv3 180 Level     rockchip-mipi-csi2-hw
+[   60.707036]  71:          0          0          0          0          0          0          0          0     GICv3 181 Level     rockchip-mipi-csi2-hw
+[   60.707042]  72:          0          0          0          0          0          0          0          0     GICv3 182 Level     rockchip-mipi-csi2-hw
+[   60.707048]  73:          0          0          0          0          0          0          0          0     GICv3 183 Level     rockchip-mipi-csi2-hw
+[   60.707054]  74:          0          0          0          0          0          0          0          0     GICv3 184 Level     rockchip-mipi-csi2-hw
+[   60.707060]  75:          0          0          0          0          0          0          0          0     GICv3 185 Level     rockchip-mipi-csi2-hw
+[   60.707067]  76:          0          0          0          0          0          0          0          0     GICv3 186 Level     rockchip-mipi-csi2-hw
+[   60.707073]  77:        322          0          0          0          0          0          0          0     GICv3 188 Level     fdd97e00.iommu, fdd90000.vop
+[   60.707079]  79:          0          0          0          0          0          0          0          0     GICv3 217 Level     i2s
+[   60.707085]  80:          0          0          0          0          0          0          0          0     GICv3 199 Level     fde20000.dsi
+[   60.707092]  81:          0          0          0          0          0          0          0          0     GICv3 193 Level     fde50000.dp
+[   60.707098]  82:          0          0          0          0          0          0          0          0     GICv3 201 Level     fde80000.hdmi
+[   60.707105]  84:          0          0          0          0          0          0          0          0     GICv3 203 Level     fde80000.hdmi
+[   60.707111]  85:          0          0          0          0          0          0          0          0     GICv3 204 Level     fde80000.hdmi
+[   60.707117]  86:          0          0          0          0          0          0          0          0     GICv3 392 Level     dw-hdmi-qp-hpd
+[   60.707123]  87:          0          0          0          0          0          0          0          0     GICv3 280 Level     pcie-sys
+[   60.707130]  90:          0          0          0          0          0          0          0          0     GICv3 277 Level     (null)
+[   60.707136]  92:          0          0          0          0          0          0          0          0     GICv3 305 Level     ahci[fe210000.sata]
+[   60.707142]  93:         82          0          0          0          0          0          0          0     GICv3 237 Level     mmc0
+[   60.707148]  95:          0          0          0          0          0          0          0          0     GICv3 212 Level     i2s
+[   60.707154]  96:          0          0          0          0          0          0          0          0     GICv3 118 Level     fea10000.dma-controller
+[   60.707160]  97:          0          0          0          0          0          0          0          0     GICv3 119 Level     fea10000.dma-controller
+[   60.707166]  98:          0          0          0          0          0          0          0          0     GICv3 120 Level     fea30000.dma-controller
+[   60.707172]  99:          0          0          0          0          0          0          0          0     GICv3 121 Level     fea30000.dma-controller
+[   60.707179] 100:        224          0          0          0          0          0          0          0     GICv3 351 Level     feaa0000.i2c
+[   60.707184] 101:          1          0          0          0          0          0          0          0     GICv3 354 Level     fead0000.i2c
+[   60.707190] 102:        737          0          0          0          0          0          0          0     GICv3 360 Level     feb20000.spi
+[   60.707197] 105:          0          0          0          0          0          0          0          0     GICv3 429 Level     rockchip_thermal
+[   60.707203] 106:        577          0          0          0          0          0          0          0     GICv3 430 Level     fec10000.saradc
+[   60.707209] 107:         18          0          0          0          0          0          0          0     GICv3 355 Level     fec80000.i2c
+[   60.707215] 108:         49          0          0          0          0          0          0          0     GICv3 356 Level     fec90000.i2c
+[   60.707222] 109:          0          0          0          0          0          0          0          0     GICv3 122 Level     fed10000.dma-controller
+[   60.707228] 110:          0          0          0          0          0          0          0          0     GICv3 123 Level     fed10000.dma-controller
+[   60.707233] 111:          0          0          0          0          0          0          0          0     GICv3 309 Level     (null)
+[   60.707239] 112:          0          0          0          0          0          0          0          0     GICv3 310 Level     (null)
+[   60.707245] 113:          0          0          0          0          0          0          0          0     GICv3 311 Level     (null)
+[   60.707250] 114:          0          0          0          0          0          0          0          0     GICv3 312 Level     (null)
+[   60.707256] 115:          0          0          0          0          0          0          0          0     GICv3 313 Level     (null)
+[   60.707263] 116:          0          0          0          0          0          0          0          0     GICv3 426 Level     rockchip_usb2phy
+[   60.707269] 117:          0          0          0          0          0          0          0          0     GICv3 218 Level     i2s
+[   60.707275] 118:          0          0          0          0          0          0          0          0     GICv3 219 Level     i2s
+[   60.707281] 119:          0          0          0          0          0          0          0          0     GICv3 194 Level     fde60000.dp
+[   60.707287] 120:          0          0          0          0          0          0          0          0     GICv3 205 Level     fdea0000.hdmi
+[   60.707293] 122:          0          0          0          0          0          0          0          0     GICv3 207 Level     fdea0000.hdmi
+[   60.707299] 123:          0          0          0          0          0          0          0          0     GICv3 208 Level     fdea0000.hdmi
+[   60.707305] 124:          0          0          0          0          0          0          0          0     GICv3 393 Level     dw-hdmi-qp-hpd
+[   60.707311] 126:          0          0          0          0          0          2          0          0     GICv3 468 Level     rk_hdmirx-hdmi
+[   60.707317] 127:          0          0          0          0          0          0          0          0     GICv3 211 Level     rk_hdmirx-dma
+[   60.707324] 131:          0          0          0          0          0          0          0          0     GICv3 292 Level     (null)
+[   60.707331] 133:          0          0          0          0          0          0          0          0     GICv3 275 Level     pcie-sys
+[   60.707337] 136:          0          0          0          0          0          0          0          0     GICv3 272 Level     (null)
+[   60.707344] 138:          0          0          0          0          0          0          0          0     GICv3 455 Edge      debug-signal
+[   60.707351] 139:          0          0          0          0          0          0          0          0     GICv3 365 Level     debug
+[   60.707358] 140:          0          0          0          0          0          0          0          0     GICv3 140 Level     av1d-master
+[   60.707366] 143:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  13 Edge      dw-dp-hpd
+[   60.707374] 144:          0          0          0          0          0          0          0          0  rockchip_gpio_irq   7 Level     rk806, rk806
+[   60.707381] 145:          0          0          0          0          0          0          0          0     rk806   0 Edge      rk805_pwrkey_fall
+[   60.707388] 146:          0          0          0          0          0          0          0          0     rk806   1 Edge      rk805_pwrkey_rise
+[   60.707394] 147:          0          0          0          0          0          0          0          0     rk806   7 Level     rk806_vb_low
+[   60.707402] 151:          0          0          0          0          0          0          0          0     GICv3 253 Level     xhci-hcd:usb5
+[   60.707409] 152:          8          0          0          0          0          0          0          0  rockchip_gpio_irq  12 Level     fsc_interrupt_int_n
+[   60.707415] 153:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  28 Level     hym8563
+[   60.707427] 163:          0          0          0          0          0          0          0          0   ITS-MSI 427819016 Edge      PCIe PME
+[   60.707435] 165:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  29 Edge      headset_detect
+[   60.707442] 166:          0          0          0          0          0          0          0          0  rockchip_gpio_irq   0 Edge      bt_default_wake_host_irq
+[   60.707453] 176:          0          0          0          0          0          0          0          0   ITS-MSI 285212680 Edge      PCIe PME
+[   60.707459] 177:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  27 Edge      gt1x
+[   60.707467] 187:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  13 Edge      rk_hdmirx-5v
+[   61.707598]            CPU0       CPU1       CPU2       CPU3       CPU4       CPU5       CPU6       CPU7
+[   61.707606]  13:      61721      61096      62167        752      61704      61696      62286      61668     GICv3  26 Level     arch_timer
+[   61.707612]  14:          0          0          0          0          0          0          0          0     GICv3 321 Level     rk_timer
+[   61.707618]  17:          0          0          0          0          0          0          0          0     GICv3 126 Level     fb000000.gpu
+[   61.707624]  18:          0          0          0          0          0          0          0          0     GICv3 125 Level     fb000000.gpu
+[   61.707629]  19:          0          0          0          0          0          0          0          0     GICv3 124 Level     fb000000.gpu
+[   61.707635]  20:          0          0          0          0          0          0          0          0     GICv3 247 Level     ehci_hcd:usb1
+[   61.707640]  21:          0          0          0          0          0          0          0          0     GICv3 248 Level     ohci_hcd:usb3
+[   61.707646]  22:          0          0          0          0          0          0          0          0     GICv3 250 Level     ehci_hcd:usb2
+[   61.707651]  23:          0          0          0          0          0          0          0          0     GICv3 251 Level     ohci_hcd:usb4
+[   61.707657]  24:          0          0          0          0          0          0          0          0     GICv3 425 Level     rockchip_usb2phy
+[   61.707663]  25:          1          0          0          0          0          0          0          0     GICv3 423 Level     rockchip_usb2phy
+[   61.707668]  26:          1          0          0          0          0          0          0          0     GICv3 424 Level     rockchip_usb2phy
+[   61.707674]  28:          0          0          0          0          0          0          0          0     GICv3 142 Level     fdab9000.iommu
+[   61.707679]  29:          0          0          0          0          0          0          0          0     GICv3 143 Level     fdab9000.iommu
+[   61.707685]  30:          0          0          0          0          0          0          0          0     GICv3 144 Level     fdab9000.iommu
+[   61.707690]  31:          0          0          0          0          0          0          0          0     GICv3 152 Level     fdb50000.vepu
+[   61.707696]  32:          0          0          0          0          0          0          0          0     GICv3 151 Level     fdb51000.avsd-plus, fdb50400.vdpu
+[   61.707702]  33:          0          0          0          0          0          0          0          0     GICv3 150 Level     fdb50800.iommu
+[   61.707708]  34:          0          0          0          0          0          0          0          0     GICv3 146 Level     fdb60f00.iommu, rga3
+[   61.707714]  35:          0          0          0          0          0          0          0          0     GICv3 147 Level     fdb70f00.iommu, rga3
+[   61.707719]  36:          0          0          0          0          0          0          0          0     GICv3 148 Level     rga2
+[   61.707725]  37:          0          0          0          0          0          0          0          0     GICv3 161 Level     fdb90000.jpegd
+[   61.707731]  38:          0          0          0          0          0          0          0          0     GICv3 162 Level     fdb90480.iommu
+[   61.707736]  39:          0          0          0          0          0          0          0          0     GICv3 154 Level     fdba0000.jpege-core
+[   61.707742]  40:          0          0          0          0          0          0          0          0     GICv3 153 Level     fdba0800.iommu
+[   61.707747]  41:          0          0          0          0          0          0          0          0     GICv3 156 Level     fdba4000.jpege-core
+[   61.707753]  42:          0          0          0          0          0          0          0          0     GICv3 155 Level     fdba4800.iommu
+[   61.707759]  43:          0          0          0          0          0          0          0          0     GICv3 158 Level     fdba8000.jpege-core
+[   61.707764]  44:          0          0          0          0          0          0          0          0     GICv3 157 Level     fdba8800.iommu
+[   61.707770]  45:          0          0          0          0          0          0          0          0     GICv3 160 Level     fdbac000.jpege-core
+[   61.707775]  46:          0          0          0          0          0          0          0          0     GICv3 159 Level     fdbac800.iommu
+[   61.707781]  47:          0          0          0          0          0          0          0          0     GICv3 149 Level     fdbb0800.iommu, fdbb0000.iep
+[   61.707787]  48:          0          0          0          0          0          0          0          0     GICv3 133 Level     fdbd0000.rkvenc-core
+[   61.707792]  49:          0          0          0          0          0          0          0          0     GICv3 131 Level     fdbdf000.iommu
+[   61.707798]  50:          0          0          0          0          0          0          0          0     GICv3 132 Level     fdbdf000.iommu
+[   61.707803]  51:          0          0          0          0          0          0          0          0     GICv3 136 Level     fdbe0000.rkvenc-core
+[   61.707809]  52:          0          0          0          0          0          0          0          0     GICv3 134 Level     fdbef000.iommu
+[   61.707815]  53:          0          0          0          0          0          0          0          0     GICv3 135 Level     fdbef000.iommu
+[   61.707820]  54:          0          0          0          0          0          0          0          0     GICv3 127 Level     fdc38100.rkvdec-core
+[   61.707826]  55:          0          0          0          0          0          0          0          0     GICv3 128 Level     fdc38700.iommu
+[   61.707831]  56:          0          0          0          0          0          0          0          0     GICv3 129 Level     fdc48100.rkvdec-core
+[   61.707837]  57:          0          0          0          0          0          0          0          0     GICv3 130 Level     fdc48700.iommu
+[   61.707843]  58:          0          0          0          0          0          0          0          0     GICv3 141 Level     fdca0000.iommu
+[   61.707848]  59:          0          0          0          0          0          0          0          0     GICv3 163 Level     rkisp_hw
+[   61.707853]  60:          0          0          0          0          0          0          0          0     GICv3 165 Level     rkisp_hw
+[   61.707859]  61:          0          0          0          0          0          0          0          0     GICv3 166 Level     rkisp_hw
+[   61.707864]  62:          0          0          0          0          0          0          0          0     GICv3 164 Level     fdcb7f00.iommu
+[   61.707870]  63:          0          0          0          0          0          0          0          0     GICv3 187 Level     rkcifhw
+[   61.707875]  64:          0          0          0          0          0          0          0          0     GICv3 145 Level     fdce0800.iommu
+[   61.707881]  65:          0          0          0          0          0          0          0          0     GICv3 175 Level     rockchip-mipi-csi2-hw
+[   61.707887]  66:          0          0          0          0          0          0          0          0     GICv3 176 Level     rockchip-mipi-csi2-hw
+[   61.707893]  67:          0          0          0          0          0          0          0          0     GICv3 177 Level     rockchip-mipi-csi2-hw
+[   61.707899]  68:          0          0          0          0          0          0          0          0     GICv3 178 Level     rockchip-mipi-csi2-hw
+[   61.707904]  69:          0          0          0          0          0          0          0          0     GICv3 179 Level     rockchip-mipi-csi2-hw
+[   61.707909]  70:          0          0          0          0          0          0          0          0     GICv3 180 Level     rockchip-mipi-csi2-hw
+[   61.707915]  71:          0          0          0          0          0          0          0          0     GICv3 181 Level     rockchip-mipi-csi2-hw
+[   61.707920]  72:          0          0          0          0          0          0          0          0     GICv3 182 Level     rockchip-mipi-csi2-hw
+[   61.707926]  73:          0          0          0          0          0          0          0          0     GICv3 183 Level     rockchip-mipi-csi2-hw
+[   61.707931]  74:          0          0          0          0          0          0          0          0     GICv3 184 Level     rockchip-mipi-csi2-hw
+[   61.707937]  75:          0          0          0          0          0          0          0          0     GICv3 185 Level     rockchip-mipi-csi2-hw
+[   61.707943]  76:          0          0          0          0          0          0          0          0     GICv3 186 Level     rockchip-mipi-csi2-hw
+[   61.707948]  77:        322          0          0          0          0          0          0          0     GICv3 188 Level     fdd97e00.iommu, fdd90000.vop
+[   61.707955]  79:          0          0          0          0          0          0          0          0     GICv3 217 Level     i2s
+[   61.707960]  80:          0          0          0          0          0          0          0          0     GICv3 199 Level     fde20000.dsi
+[   61.707966]  81:          0          0          0          0          0          0          0          0     GICv3 193 Level     fde50000.dp
+[   61.707971]  82:          0          0          0          0          0          0          0          0     GICv3 201 Level     fde80000.hdmi
+[   61.707977]  84:          0          0          0          0          0          0          0          0     GICv3 203 Level     fde80000.hdmi
+[   61.707982]  85:          0          0          0          0          0          0          0          0     GICv3 204 Level     fde80000.hdmi
+[   61.707988]  86:          0          0          0          0          0          0          0          0     GICv3 392 Level     dw-hdmi-qp-hpd
+[   61.707993]  87:          0          0          0          0          0          0          0          0     GICv3 280 Level     pcie-sys
+[   61.707999]  90:          0          0          0          0          0          0          0          0     GICv3 277 Level     (null)
+[   61.708005]  92:          0          0          0          0          0          0          0          0     GICv3 305 Level     ahci[fe210000.sata]
+[   61.708011]  93:         82          0          0          0          0          0          0          0     GICv3 237 Level     mmc0
+[   61.708016]  95:          0          0          0          0          0          0          0          0     GICv3 212 Level     i2s
+[   61.708022]  96:          0          0          0          0          0          0          0          0     GICv3 118 Level     fea10000.dma-controller
+[   61.708027]  97:          0          0          0          0          0          0          0          0     GICv3 119 Level     fea10000.dma-controller
+[   61.708033]  98:          0          0          0          0          0          0          0          0     GICv3 120 Level     fea30000.dma-controller
+[   61.708039]  99:          0          0          0          0          0          0          0          0     GICv3 121 Level     fea30000.dma-controller
+[   61.708045] 100:        224          0          0          0          0          0          0          0     GICv3 351 Level     feaa0000.i2c
+[   61.708050] 101:          1          0          0          0          0          0          0          0     GICv3 354 Level     fead0000.i2c
+[   61.708056] 102:        737          0          0          0          0          0          0          0     GICv3 360 Level     feb20000.spi
+[   61.708062] 105:          0          0          0          0          0          0          0          0     GICv3 429 Level     rockchip_thermal
+[   61.708068] 106:        587          0          0          0          0          0          0          0     GICv3 430 Level     fec10000.saradc
+[   61.708074] 107:         18          0          0          0          0          0          0          0     GICv3 355 Level     fec80000.i2c
+[   61.708079] 108:         49          0          0          0          0          0          0          0     GICv3 356 Level     fec90000.i2c
+[   61.708085] 109:          0          0          0          0          0          0          0          0     GICv3 122 Level     fed10000.dma-controller
+[   61.708091] 110:          0          0          0          0          0          0          0          0     GICv3 123 Level     fed10000.dma-controller
+[   61.708097] 111:          0          0          0          0          0          0          0          0     GICv3 309 Level     (null)
+[   61.708102] 112:          0          0          0          0          0          0          0          0     GICv3 310 Level     (null)
+[   61.708108] 113:          0          0          0          0          0          0          0          0     GICv3 311 Level     (null)
+[   61.708113] 114:          0          0          0          0          0          0          0          0     GICv3 312 Level     (null)
+[   61.708118] 115:          0          0          0          0          0          0          0          0     GICv3 313 Level     (null)
+[   61.708124] 116:          0          0          0          0          0          0          0          0     GICv3 426 Level     rockchip_usb2phy
+[   61.708130] 117:          0          0          0          0          0          0          0          0     GICv3 218 Level     i2s
+[   61.708135] 118:          0          0          0          0          0          0          0          0     GICv3 219 Level     i2s
+[   61.708141] 119:          0          0          0          0          0          0          0          0     GICv3 194 Level     fde60000.dp
+[   61.708146] 120:          0          0          0          0          0          0          0          0     GICv3 205 Level     fdea0000.hdmi
+[   61.708152] 122:          0          0          0          0          0          0          0          0     GICv3 207 Level     fdea0000.hdmi
+[   61.708157] 123:          0          0          0          0          0          0          0          0     GICv3 208 Level     fdea0000.hdmi
+[   61.708163] 124:          0          0          0          0          0          0          0          0     GICv3 393 Level     dw-hdmi-qp-hpd
+[   61.708169] 126:          0          0          0          0          0          2          0          0     GICv3 468 Level     rk_hdmirx-hdmi
+[   61.708174] 127:          0          0          0          0          0          0          0          0     GICv3 211 Level     rk_hdmirx-dma
+[   61.708181] 131:          0          0          0          0          0          0          0          0     GICv3 292 Level     (null)
+[   61.708187] 133:          0          0          0          0          0          0          0          0     GICv3 275 Level     pcie-sys
+[   61.708193] 136:          0          0          0          0          0          0          0          0     GICv3 272 Level     (null)
+[   61.708198] 138:          0          0          0          0          0          0          0          0     GICv3 455 Edge      debug-signal
+[   61.708204] 139:          0          0          0          0          0          0          0          0     GICv3 365 Level     debug
+[   61.708210] 140:          0          0          0          0          0          0          0          0     GICv3 140 Level     av1d-master
+[   61.708216] 143:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  13 Edge      dw-dp-hpd
+[   61.708222] 144:          0          0          0          0          0          0          0          0  rockchip_gpio_irq   7 Level     rk806, rk806
+[   61.708228] 145:          0          0          0          0          0          0          0          0     rk806   0 Edge      rk805_pwrkey_fall
+[   61.708233] 146:          0          0          0          0          0          0          0          0     rk806   1 Edge      rk805_pwrkey_rise
+[   61.708239] 147:          0          0          0          0          0          0          0          0     rk806   7 Level     rk806_vb_low
+[   61.708245] 151:          0          0          0          0          0          0          0          0     GICv3 253 Level     xhci-hcd:usb5
+[   61.708251] 152:          8          0          0          0          0          0          0          0  rockchip_gpio_irq  12 Level     fsc_interrupt_int_n
+[   61.708256] 153:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  28 Level     hym8563
+[   61.708265] 163:          0          0          0          0          0          0          0          0   ITS-MSI 427819016 Edge      PCIe PME
+[   61.708270] 165:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  29 Edge      headset_detect
+[   61.708277] 166:          0          0          0          0          0          0          0          0  rockchip_gpio_irq   0 Edge      bt_default_wake_host_irq
+[   61.708285] 176:          0          0          0          0          0          0          0          0   ITS-MSI 285212680 Edge      PCIe PME
+[   61.708290] 177:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  27 Edge      gt1x
+[   61.708296] 187:          0          0          0          0          0          0          0          0  rockchip_gpio_irq  13 Edge      rk_hdmirx-5v
+[   62.437709] rcu: INFO: rcu_preempt detected expedited stalls on CPUs/tasks: { 3-... } 61690 jiffies s: 17 root: 0x8/.
+[   62.437713] rcu: blocking rcu_node structures:
+[   62.437714] Task dump for CPU 3:
+[   62.437715] task:kworker/u16:2   state:R  running task     stack:    0 pid:  265 ppid:     2 flags:0x0000000a
+[   62.437719] Workqueue: events_unbound async_run_entry_fn
+[   62.437722] Call trace:
+[   62.437723]  __switch_to+0xdc/0x130
+[   62.437725]  enqueue_task_rt+0x58/0x314
+[   62.437728]  enqueue_task+0x34/0x1a0
+[   62.437730]  ttwu_do_activate.isra.0+0x64/0xf0
+

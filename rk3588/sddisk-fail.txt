@@ -1,0 +1,1008 @@
+DDR V1.13 25cee80c4f cym 23/08/11-09:31:58
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%
+CH2 RX Vref:29.7%, TX Vref:22.8%,0.0%
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-g5f53abfa1e-221223 #zzz (Dec 26 2022 - 09:10:09)
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 ... sha256(241ea1f321...) + OK
+## Checking uboot 0x00200000 ... sha256(a1838105c3...) + OK
+## Checking fdt 0x003481c8 ... sha256(9c34034df0...) + OK
+## Checking atf-2 0x000f0000 ... sha256(aa71013e72...) + OK
+## Checking atf-3 0xff100000 ... sha256(af08976afd...) + OK
+## Checking optee 0x08400000 ... sha256(66e30bf9e8...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 296.738 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-627-gb7c5102a2:derrick.huang
+NOTICE:  BL31: Built : 14:52:40, Aug 10 2023
+INFO:    spec: 0xa
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-743-gb5340fd65 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #6 Mon Aug 28 18:01:38 CST 2023 aarch64
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V13001 (Feb 04 2024 - 15:06:10 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x81000000
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba15000
+Relocation fdt: e99f9ea0 - e99fecd8
+CR: M/C/I
+optee api revision: 2.0
+no mmc device at slot 1
+mmc@fe2c0000: 1 (SD), mmc@fe2e0000: 0
+Bootdev(atags): mmc 1
+MMC1: Legacy, 52Mhz
+PartType: EFI
+Repair the Primary gpt table OK!
+*** Warning - bad CRC, using default environment
+
+DM: v2
+Android 13.0, Build 2023.8, v2
+boot mode: recovery (misc)
+RESC: 'recovery', blk@0x00036bd4
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+ANDROID: fdt overlay OK
+swversion = V13001
+Error: failed to select boot_part
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0000000000
+model[2]         V13001
+model[3]         A1
+----------------------------------------------------------------
+Read board id : 13,  adcval = 2224
+ROM-6881 hw_id = 13
+Info : display use env settings
+env_display[0] = NULL
+env_display[1] = NULL
+env_display[2] = NULL
+env_display[3] = NULL
+Info : display get default from dts settings
+dts_display[0] = hdmi0-default
+dts_display[1] = <NULL>
+dts_display[2] = dp0-default
+dts_display[3] = <NULL>
+----------------------------------------------------------------
+display0         HDMI0   default
+display1         UNKNOWN         none
+display2         DP0     default
+display3         UNKNOWN         none
+----------------------------------------------------------------
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 750000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+warning: bad baseparameter
+Model: ROM-6881 AKS0000000000 V13001 A1
+MPIDR: 0x81000000
+Device 'gpio@fd8a0000': seq 0 is in use by 'gpio@fd8a0000'
+load_bmp_logo: Failed to get oem part info, blknum=-1
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+dp@fde50000 disconnected
+Monitor has basic audio support
+hdmi info isn't saved in main block
+color_format:1
+hdmi_select_link_config use tmds mode
+mode:3840x2160 bus_format:0x2025
+hdmi@fde80000:  detailed mode clock 297000 kHz, flags[5]
+    H: 3840 4016 4104 4400
+    V: 2160 2168 2178 2250
+bus_format: 2025
+VOP update mode to: 3840x2160p30, type: HDMI0 for VP0
+dclk:297000,if_pixclk_div;2,if_dclk_div:4
+VP0 set crtc_clock to 297000KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP0 enable Esmart0[654x258->654x258@1593x951] fmt[2] addr[0xebf2a000]
+CEA mode used vic=95
+mtmdsclock:297000000
+hdptx_ropll_cmn_config bus_width:2d5190 rate:2970000
+hdptx phy pll locked!
+dw_hdmi_setup HDMI mode
+don't use dsc mode
+dw hdmi qp use tmds mode
+bus_width:0x2d5190,bit_rate:2970000
+hdptx phy lane locked!
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 24000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth0: ethernet@fe1b0000, eth1: ethernet@fe1c0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_footer.c:41: ERROR: Footer magic is incorrect.
+avb_vbmeta_image.c:65: ERROR: Magic is incorrect.
+avb_slot_verify.c:774: ERROR: recovery: Error verifying vbmeta image: invalid vbmeta header
+Verify recovery with vbmeta.
+avb_slot_verify.c:763: ERROR: vbmeta: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'recovery
+ANDROID: Hash OK
+Could not find "system" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff800 ...
+Kernel: 0x00400000 - 0x024e2808 (33675 KiB)
+ramdisk:    0x0a200000 - 0x0ad96c74 (11868 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x024e2808
+   Using Device Tree in place at 0000000008300000, end 000000000834ad92
+load_bmp_logo: Failed to get oem part info, blknum=-1
+## reserved-memory:
+  cma: addr=10000000 size=8000000
+  drm-logo@00000000: addr=ebf00000 size=175000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 6115.516/6884.865 ms
+
+Starting kernel ...
+
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+[    7.487823][    T1] fiq_debugger fiq_debugger.0: IRQ fiq not found
+[    7.494397][    T1] fiq_debugger fiq_debugger.0: IRQ wakeup not found
+[    7.501286][    T1] fiq_debugger_probe: could not install nmi irq handler
+[    7.578208][    T1] rockchip-usb2phy fd5d8000.syscon:usb2-phy@8000: failed to create phy
+[    7.578660][    T1] rockchip-usb2phy fd5dc000.syscon:usb2-phy@c000: failed to create phy
+[    7.579131][    T1] rockchip-usb2phy fd5d4000.syscon:usb2-phy@4000: failed to create phy
+[    7.594380][   T79] rk-pcie fe180000.pcie: IRQ msi not found
+[    7.594400][   T79] rk-pcie fe180000.pcie: Missing *config* reg space
+[    7.594499][   T79] rk-pcie fe180000.pcie: Missing *config* reg space
+[    7.594532][   T79] rk-pcie fe180000.pcie: invalid resource
+[    7.594554][   T81] rk-pcie fe160000.pcie: IRQ msi not found
+[    7.594573][   T81] rk-pcie fe160000.pcie: Missing *config* reg space
+[    7.594615][   T80] rk-pcie fe150000.pcie: IRQ msi not found
+[    7.594639][   T80] rk-pcie fe150000.pcie: Missing *config* reg space
+[    7.594669][   T81] rk-pcie fe160000.pcie: Missing *config* reg space
+[    7.594689][   T82] rk-pcie fe170000.pcie: IRQ msi not found
+[    7.594702][   T81] rk-pcie fe160000.pcie: invalid resource
+[    7.594725][   T82] rk-pcie fe170000.pcie: Missing *config* reg space
+[    7.594750][   T80] rk-pcie fe150000.pcie: Missing *config* reg space
+[    7.594782][   T80] rk-pcie fe150000.pcie: invalid resource
+[    7.594819][   T82] rk-pcie fe170000.pcie: Missing *config* reg space
+[    7.594848][   T82] rk-pcie fe170000.pcie: invalid resource
+[    7.598414][    T1] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    7.599827][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    7.599833][    T1] rkvdec2_init:1022: No niu aclk reset resource define
+[    7.599838][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    7.599841][    T1] rkvdec2_init:1025: No niu hclk reset resource define
+[    7.600530][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    7.600535][    T1] rkvdec2_init:1022: No niu aclk reset resource define
+[    7.600539][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    7.600542][    T1] rkvdec2_init:1025: No niu hclk reset resource define
+[    7.657526][    T1] rk806 spi2.0: no sleep-setting state
+[    7.657536][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    7.657541][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    7.663104][    T1] rk_gmac-dwmac fe1b0000.ethernet: no regulator found
+[    7.663129][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    7.663135][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    7.663145][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    7.828263][    T1] rk_gmac-dwmac fe1c0000.ethernet: no regulator found
+[    7.828288][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    7.828294][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    7.828304][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    8.048853][    T1] : terminal subdev does not exist
+[    8.048868][    T1] : terminal subdev does not exist
+[    8.048872][    T1] : terminal subdev does not exist
+[    8.048876][    T1] : terminal subdev does not exist
+[    8.048881][    T1] : get_remote_sensor: video pad[0] is null
+[    8.048885][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.048893][    T1] : get_remote_sensor: video pad[0] is null
+[    8.048897][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.048903][    T1] : get_remote_sensor: video pad[0] is null
+[    8.048907][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.048913][    T1] : get_remote_sensor: video pad[0] is null
+[    8.048916][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.049815][    T1] : terminal subdev does not exist
+[    8.049820][    T1] : terminal subdev does not exist
+[    8.049823][    T1] : terminal subdev does not exist
+[    8.049827][    T1] : terminal subdev does not exist
+[    8.049831][    T1] : get_remote_sensor: video pad[0] is null
+[    8.049835][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.049841][    T1] : get_remote_sensor: video pad[0] is null
+[    8.049845][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.049851][    T1] : get_remote_sensor: video pad[0] is null
+[    8.049854][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.049860][    T1] : get_remote_sensor: video pad[0] is null
+[    8.049864][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.050507][    T1] : terminal subdev does not exist
+[    8.050512][    T1] : terminal subdev does not exist
+[    8.050516][    T1] : terminal subdev does not exist
+[    8.050519][    T1] : terminal subdev does not exist
+[    8.050523][    T1] : get_remote_sensor: video pad[0] is null
+[    8.050527][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.050533][    T1] : get_remote_sensor: video pad[0] is null
+[    8.050537][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.050543][    T1] : get_remote_sensor: video pad[0] is null
+[    8.050546][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.050552][    T1] : get_remote_sensor: video pad[0] is null
+[    8.050556][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.051312][    T1] : terminal subdev does not exist
+[    8.051317][    T1] : terminal subdev does not exist
+[    8.051320][    T1] : terminal subdev does not exist
+[    8.051324][    T1] : terminal subdev does not exist
+[    8.051328][    T1] : get_remote_sensor: video pad[0] is null
+[    8.051331][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.051338][    T1] : get_remote_sensor: video pad[0] is null
+[    8.051341][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.051347][    T1] : get_remote_sensor: video pad[0] is null
+[    8.051351][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.051357][    T1] : get_remote_sensor: video pad[0] is null
+[    8.051360][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    8.053548][    T1] rockchip-mipi-csi2: Async registered subdev
+[    8.053682][    T1] rockchip-mipi-csi2: Async registered subdev
+[    8.053808][    T1] rockchip-mipi-csi2: Async registered subdev
+[    8.053933][    T1] rockchip-mipi-csi2: Async registered subdev
+[    8.223798][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 17 not active.
+[    8.247133][    T1] rt5640 5-001c: Device with ID register 0x0 is not rt5640/39
+[    8.262571][    T1] ov8858 3-0036: could not get default pinstate
+[    8.262581][    T1] ov8858 3-0036: could not get sleep pinstate
+[    8.268554][    T1] ov8858 3-0036: Unexpected sensor id(000000), ret(-5)
+[    8.276332][    T1] ov8858 4-0036: Unexpected sensor id(000000), ret(-5)
+[    8.279161][    T1] ov8858 5-0036: could not get default pinstate
+[    8.279168][    T1] ov8858 5-0036: could not get sleep pinstate
+[    8.285078][    T1] ov8858 5-0036: Unexpected sensor id(000000), ret(-5)
+[    8.287466][    T1] ov8858 8-0036: could not get default pinstate
+[    8.287473][    T1] ov8858 8-0036: could not get sleep pinstate
+[    8.293008][    T1] ov8858 8-0036: Unexpected sensor id(000000), ret(-5)
+[    8.320774][    T9] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    8.333640][    T7] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    8.333650][    T7] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    8.333748][    T7] rockchip-dmc dmc: could not find power_model node
+[    8.385983][    T7] ov8858 5-0036: could not get default pinstate
+[    8.386009][    T7] ov8858 5-0036: could not get sleep pinstate
+[    8.392499][    T7] ov8858 5-0036: Unexpected sensor id(000000), ret(-5)
+[    8.402345][    T7] ov8858 4-0036: Unexpected sensor id(000000), ret(-5)
+[    8.406071][    T7] ov8858 3-0036: could not get default pinstate
+[    8.406086][    T7] ov8858 3-0036: could not get sleep pinstate
+[    8.412801][    T7] ov8858 3-0036: Unexpected sensor id(000000), ret(-5)
+[    8.618187][    T7] rockchip-drm display-subsystem: route-dp0: failed to get logo,offset
+[    8.808514][    T7] dwhdmi-rockchip fde80000.hdmi: i2c read err!
+[    8.886462][    T7] debugfs: File 'Capture' in directory 'dapm' already present!
+[    8.892328][    T1] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.892374][    T1] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.892384][    T1] rkcif-mipi-lvds: There is not terminal subdev, not synchronized with ISP
+[    8.892844][    T1] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.892888][    T1] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.892898][    T1] rkcif-mipi-lvds1: There is not terminal subdev, not synchronized with ISP
+[    8.893267][    T1] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893311][    T1] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893320][    T1] rkcif-mipi-lvds2: There is not terminal subdev, not synchronized with ISP
+[    8.893702][    T1] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893745][    T1] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893754][    T1] rkcif-mipi-lvds4: There is not terminal subdev, not synchronized with ISP
+[    8.893798][  T137] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893810][  T137] rkcif-mipi-lvds: There is not terminal subdev, not synchronized with ISP
+[    8.893835][  T140] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893846][  T140] rkcif-mipi-lvds4: There is not terminal subdev, not synchronized with ISP
+[    8.893913][  T138] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893924][  T138] rkcif-mipi-lvds1: There is not terminal subdev, not synchronized with ISP
+[    8.893967][  T139] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    8.893977][  T139] rkcif-mipi-lvds2: There is not terminal subdev, not synchronized with ISP
+[    8.896939][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    8.896971][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    8.896989][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    8.901611][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    8.923373][    T1] RKNPU fdab0000.npu: failed to find power_model node
+[    8.923389][    T1] RKNPU fdab0000.npu: RKNPU: failed to initialize power model
+[    8.923401][    T1] RKNPU fdab0000.npu: RKNPU: failed to get dynamic-coefficient
+[    9.020355][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    9.163194][    T1] init: Could not read properties from '/dev/selinux/apex_property_contexts': No such file or directory
+[    9.174227][    T1] init: Init cannot set 'ro.boot.console' to 'ttyFIQ0': Read-only property was already set
+[    9.174248][    T1] init: Init cannot set 'ro.boot.wificountrycode' to 'CN': Read-only property was already set
+[    9.174258][    T1] init: Init cannot set 'ro.boot.hardware' to 'rk30board': Read-only property was already set
+[    9.174269][    T1] init: Init cannot set 'ro.boot.boot_devices' to 'fe2e0000.mmc': Read-only property was already set
+[    9.174280][    T1] init: Init cannot set 'ro.boot.selinux' to 'permissive': Read-only property was already set
+# recovery filesystem table
+=========================
+  0 /mnt/internal_sd  vfat /dev/block/platform/ff0f0000.dwmmc/by-name/user 0
+[    9.555845][  T204] recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+  1 /mnt/external_sd  vfat /dev/block/mmcblk0p1 0
+[    9.557068][  T204] FAT-fs (mmcblk1p1): codepage cp936 not found
+  2 /system  ext4 /dev/block/by-name/system 0
+[    9.557147][  T204] recovery: trying mount /dev/block/mmcblk0p1 to ntfs.
+  3 /vendor  ext4 /dev/block/by-name/vendor 0
+[    9.557536][  T204] ntfs: (device mmcblk1p1): read_ntfs_boot_sector(): Primary boot sector is invalid.
+  4 /odm  ext4 /dev/block/by-name/odm 0
+[    9.557540][  T204] ntfs: (device mmcblk1p1): read_ntfs_boot_sector(): Mount option errors=recover not used. Aborting without trying to recover.
+  5 /product  ext4 /dev/block/by-name/product 0
+[    9.557545][  T204] ntfs: (device mmcblk1p1): ntfs_fill_super(): Not an NTFS volume.
+  6 /system_ext  ext4 /dev/block/by-name/system_ext 0
+[    9.557919][  T204] FAT-fs (mmcblk1): bogus number of reserved sectors
+  7 /vendor_dlkm  ext4 /dev/block/by-name/vendor_dlkm 0
+[    9.557943][  T204] recovery: tring mount /dev/block/mmcblk1 ntfs.
+  8 /odm_dlkm  ext4 /dev/block/by-name/odm_dlkm 0
+[    9.558286][  T204] ntfs: (device mmcblk1): read_ntfs_boot_sector(): Primary boot sector is invalid.
+  9 /system_dlkm  ext4 /dev/block/by-name/system_dlkm 0
+[    9.558291][  T204] ntfs: (device mmcblk1): read_ntfs_boot_sector(): Mount option errors=recover not used. Aborting without trying to recover.
+  10 /init_boot  ext4 /dev/block/by-name/init_boot 0
+[    9.558294][  T204] ntfs: (device mmcblk1): ntfs_fill_super(): Not an NTFS volume.
+  11 /cache  ext4 /dev/block/by-name/cache 0
+[    9.558314][  T204] recovery: failed to mount /mnt/external_sd error: Invalid argument
+  12 /metadata  ext4 /dev/block/by-name/metadata 0
+  13 /data  f2fs /dev/block/by-name/userdata 0
+  14 /cust  ext4 /dev/block/by-name/cust 0
+  15 /custom  ext4 /dev/block/by-name/custom 0
+  16 /radical_update  ext4 /dev/block/by-name/radical_update 0
+  17 /misc  emmc /dev/block/by-name/misc 0
+  18 /uboot  emmc /dev/block/by-name/uboot 0
+  19 /charge  emmc /dev/block/by-name/charge 0
+  20 /resource  emmc /dev/block/by-name/resource 0
+  21 /parameter  emmc /dev/block/by-name/parameter 0
+  22 /boot  emmc /dev/block/by-name/boot 0
+  23 /recovery  emmc /dev/block/by-name/recovery 0
+  24 /backup  emmc /dev/block/by-name/backup 0
+  25 /frp  emmc /dev/block/by-name/frp 0
+  26 /trust  emmc /dev/block/by-name/trust 0
+  27 /baseparamer  emmc /dev/block/by-name/baseparamer 0
+  28 /vbmeta  emmc /dev/block/by-name/vbmeta 0
+  29 /dtbo  emmc /dev/block/by-name/dtbo 0
+  30 /vendor_boot  emmc /dev/block/by-name/vendor_boot 0
+  31 /tmp  ramdisk ramdisk 0
+
+exit=================
+result_point[1] is ----/dev/block/mmcblk1
+result_point[0] is ----/dev/block/mmcblk0
+111
+emmc_point is /dev/block/mmcblk0
+sd_point is /dev/block/mmcblk1p1
+sd_point_2 is /dev/block/mmcblk1
+read cmdline
+in get_args_from_sd
+ensure_path_mounted path=/mnt/external_sd
+ensure_path_mounted sdcard, path=/mnt/external_sd
+v->blk_device is /dev/block/mmcblk0p1
+v->blk_device is /dev/block/mmcblk0p1 to vfat.
+E:trying mount fs/dev/block/mmcblk1p1 to vfat.
+blk_device is /dev/block/mmcblk1p1
+E:trying mount /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk1 to fs_type=vfat.
+E:tring mount /dev/block/mmcblk1 ntfs.
+v->blk_device is /dev/block/mmcblk1 to ntfs.
+E:failed to mount /mnt/external_sd error: Invalid argument
+failed to mount mount_point=/mnt/external_sd, error:Invalid argument
+delay 1sec
+[   10.472690][   T82] rk-pcie fe170000.pcie: PCIe Link Fail
+[   10.472795][   T82] rk-pcie fe170000.pcie: failed to initialize host
+[   10.482471][   T79] rk-pcie fe180000.pcie: PCIe Link Fail
+[   10.482484][   T79] rk-pcie fe180000.pcie: failed to initialize host
+[   10.485941][   T80] rk-pcie fe150000.pcie: PCIe Link Fail
+[   10.485952][   T80] rk-pcie fe150000.pcie: failed to initialize host
+[   10.495943][   T81] rk-pcie fe160000.pcie: PCIe Link Fail
+[   10.495982][   T81] rk-pcie fe160000.pcie: failed to initialize host
+ensure_path_mounted path=/mnt/external_sd
+ensure_path_mounted sdcard, path=/mnt/external_sd
+[   10.559052][  T204] recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+v->blk_device is /dev/block/mmcblk0p1
+[   10.560528][  T204] FAT-fs (mmcblk1p1): codepage cp936 not found
+v->blk_device is /dev/block/mmcblk0p1 to vfat.
+[   10.560590][  T204] recovery: trying mount /dev/block/mmcblk0p1 to ntfs.
+E:trying mount fs/dev/block/mmcblk1p1 to vfat.
+[   10.561362][  T204] FAT-fs (mmcblk1): bogus number of reserved sectors
+blk_device is /dev/block/mmcblk1p1
+[   10.561389][  T204] recovery: tring mount /dev/block/mmcblk1 ntfs.
+E:trying mount /dev/block/mmcblk0p1 to ntfs.
+[   10.561768][  T204] recovery: failed to mount /mnt/external_sd error: Invalid argument
+v->blk_device is /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk1 to fs_type=vfat.
+E:tring mount /dev/block/mmcblk1 ntfs.
+v->blk_device is /dev/block/mmcblk1 to ntfs.
+E:failed to mount /mnt/external_sd error: Invalid argument
+failed to mount mount_point=/mnt/external_sd, error:Invalid argument
+delay 1sec
+ensure_path_mounted path=/mnt/external_sd
+ensure_path_mounted sdcard, path=/mnt/external_sd
+[   11.562645][  T204] recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+v->blk_device is /dev/block/mmcblk0p1
+[   11.563750][  T204] FAT-fs (mmcblk1p1): codepage cp936 not found
+v->blk_device is /dev/block/mmcblk0p1 to vfat.
+[   11.563830][  T204] recovery: trying mount /dev/block/mmcblk0p1 to ntfs.
+E:trying mount fs/dev/block/mmcblk1p1 to vfat.
+[   11.564778][  T204] FAT-fs (mmcblk1): bogus number of reserved sectors
+blk_device is /dev/block/mmcblk1p1
+E:trying mount /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk1 to fs_type=vfat.
+E:tring mount /dev/block/mmcblk1 ntfs.
+v->blk_device is /dev/block/mmcblk1 to ntfs.
+E:failed to mount /mnt/external_sd error: Invalid argument
+failed to mount mount_point=/mnt/external_sd, error:Invalid argument
+delay 1sec
+enter sdboot_get_bUpdateModel !
+out get_args_from_sd:bSDMounted
+ensure_path_mounted path=/cache/recovery/last_locale
+E:[libfs_mgr]Failed to open '/dev/block/by-name/cache': No such file or directory
+I:[libfs_mgr]__mount(source=/dev/block/by-name/cache(missing),target=/cache,type=ext4)=-1: No such file or directory
+E:[libfs_mgr]Failed to mount /cache: No such file or directory
+E:[libfs_mgr]Failed to mount for path [/cache/recovery/last_locale]
+E:Can't mount /cache/recovery/last_locale
+Loading make_device from librecovery_ui_ext.so
+W:Failed to read max brightness: No such file or directory
+I:Screensaver disabled
+Display Mode 0 resolution: 3840 x 2160 @ 30 FPS
+Choosing display mode #0
+Allocating buffer with resolution 3840 x 2160 pitch: 15360 bpp: 32, size: 33177600
+Framebuffer of size 33177600 allocated @ 0x7bd777e000
+Allocating buffer with resolution 3840 x 2160 pitch: 15360 bpp: 32, size: 33177600
+Framebuffer of size 33177600 allocated @ 0x7bd57da000
+          erasing_text: en (47 x 19 @ 700)
+       no_command_text: en (83 x 19 @ 700)
+            error_text: en (33 x 19 @ 700)
+W:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+W:Failed to load bitmap factory_data_reset_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+W:Failed to load bitmap try_again_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap try_again_text for locale en-US (error -1)
+W:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+W:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+I:Starting recovery (pid 204) on Sun Feb  4 07:33:25 2024
+
+I:locale is [en-US]
+SELinux: Loaded file_contexts
+stage is []
+reason is []
+       installing_text: en (156 x 19 @ 700)
+ensure_path_mounted path=/metadata
+ERROR:   recovery: [libfs_mgr]Failed to open '/dev/block/by-name/metadata': No such file or directory
+I:[libfs_mgr]__mount(source=/dev/block/by-name/metadata(missing),target=/metadata,type=ext4)=-1: No such file or directory
+ERROR:   recovery: [libfs_mgr]Failed to mount /metadata: No such file or directory
+ERROR:   recovery: [libfs_mgr]Failed to mount for path [/metadata]
+mount metadata fail,so formate...
+mke2fs 1.46.2 (28-Feb-2021)
+The file /dev/block/by-name/metadata does not exist and no size was specified.
+ERROR:   recovery: /system/bin/mke2fs failed with status 1
+ERROR:   recovery: format_volume: Failed to make ext4 on /dev/block/by-name/metadata: Success
+ensure_path_mounted path=/metadata
+ERROR:   recovery: [libfs_mgr]Failed to open '/dev/block/by-name/metadata': No such file or directory
+I:[libfs_mgr]__mount(source=/dev/block/by-name/metadata(missing),target=/metadata,type=ext4)=-1: No such file or directory
+libc: Unable to set property "ro.boottime.init.mount.metadata" to "0": error code: 0xb
+ERROR:   recovery: [libfs_mgr]Failed to mount /metadata: No such file or directory
+ERROR:   recovery: [libfs_mgr]Failed to mount for path [/metadata]
+Command:
+
+bluetooth.profile.bas.client.enabled=true
+bluetooth.profile.hfp.ag.enabled=true
+bluetooth.profile.hid.host.enabled=true
+bluetooth.profile.hid.device.enabled=true
+bluetooth.profile.map.server.enabled=true
+bluetooth.profile.opp.enabled=true
+bluetooth.profile.pan.nap.enabled=true
+bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.sap.server.enabled=true
+bluetooth.profile.a2dp.source.enabled=true
+bluetooth.profile.asha.central.enabled=true
+bluetooth.profile.gatt.enabled=true
+bluetooth.profile.pbap.server.enabled=true
+bluetooth.profile.avrcp.target.enabled=true
+persist.bluetooth.rtkcoex=true
+persist.bluetooth.btsnooppath=/sdcard/btsnoop_hci.cfa
+persist.bluetooth.btsnoopsize=0xffff
+bluetooth.enable_timeout_ms=11000
+ro.boot.vr=0
+ro.boot.mode=normal
+ro.boot.flash.locked=0
+ro.boot.console=ttyFIQ0
+ro.boot.dtb_idx=0
+ro.boot.selinux=permissive
+ro.boot.dtbo_idx=0
+ro.boot.hardware=rk30board
+ro.boot.boot_devices=fe2e0000.mmc
+ro.boot.storagemedia=sd
+ro.boot.verifiedbootstate=orange
+ro.baseband=unknown
+ro.bootmode=normal
+ro.hardware=rk30board
+ro.revision=0
+ro.bootloader=unknown
+ro.boottime.adbd=5596546202
+[   13.314692][  T204] FAT-fs (mmcblk1p1): codepage cp936 not found
+ro.boottime.init=1732333814
+ro.boottime.init.mount.cache=0
+ro.boottime.init.mount.metadata=0
+ro.boottime.init.selinux=141466848
+ro.boottime.init.first_stage=27108377
+ro.boottime.init.cold_boot_wait=309
+ro.boottime.vendor.health-default=2272736743
+ro.boottime.console=2263167450
+ro.boottime.ueventd=1929306875
+[   13.347668][  T204] FAT-fs (mmcblk1): bogus number of reserved sectors
+ro.boottime.recovery=2269501284
+ro.boottime.servicemanager=2248731699
+ro.boottime.rockchip_udc_detector=2251240324
+ro.odm.build.date=Sun Feb  4 15:10:52 CST 2024
+ro.odm.build.date.utc=1707030652
+ro.odm.build.version.incremental=eng.zengwe.20240204.142902
+ro.odm.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/zengwei02041510:userdebug/release-keys
+ro.product.odm.name=rom6881_t
+ro.product.odm.brand=rockchip
+ro.product.odm.model=rom6881_t
+ro.product.odm.device=rom6881_t
+ro.product.odm.manufacturer=rockchip
+ro.build.id=TQ3C.230805.001.B2
+ro.build.date=Sun Feb  4 15:10:52 CST 2024
+ro.build.date.utc=1707030652
+ro.build.host=AKTC-RISC
+ro.build.tags=release-keys
+ro.build.type=userdebug
+ro.build.user=zengwei
+ro.build.flavor=rom6881_t-userdebug
+ro.build.display.id=rom6881_t-userdebug 13 TQ3C.230805.001.B2 eng.zengwe.20240204.142902 release-keys
+ro.build.product=rom6881_t
+ro.build.version.sdk=33
+ro.build.version.base_os=
+ro.build.version.release=13
+ro.build.version.codename=REL
+ro.build.version.incremental=eng.zengwe.20240204.142902
+ro.build.version.preview_sdk=0
+ro.build.version.all_codenames=REL
+ro.build.version.security_patch=2023-08-05
+ro.build.version.release_or_codename=13
+ro.build.version.preview_sdk_fingerprint=REL
+ro.build.version.min_supported_target_sdk=23
+ro.build.description=rom6881_t-userdebug 13 TQ3C.230805.001.B2 eng.zengwe.20240204.142902 release-keys
+ro.build.characteristics=tablet
+ro.system.build.id=TQ3C.230805.001.B2
+ro.system.build.date=Sun Feb  4 15:10:52 CST 2024
+ro.system.build.date.utc=1707030652
+ro.system.build.tags=release-keys
+ro.system.build.type=userdebug
+ro.system.build.version.sdk=33
+ro.system.build.version.release=13
+ro.system.build.version.incremental=eng.zengwe.20240204.142902
+ro.system.build.version.release_or_codename=13
+ro.system.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/zengwei02041510:userdebug/release-keys
+ro.treble.enabled=true
+ro.product.cpu.abi=arm64-v8a
+ro.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.product.cpu.abilist64=arm64-v8a
+ro.product.name=rom6881_t
+ro.product.brand=rockchip
+ro.product.build.id=TQ3C.230805.001.B2
+ro.product.build.date=Sun Feb  4 15:10:52 CST 2024
+ro.product.build.date.utc=1707030652
+ro.product.build.tags=release-keys
+ro.product.build.type=userdebug
+ro.product.build.version.sdk=33
+ro.product.build.version.release=13
+ro.product.build.version.incremental=eng.zengwe.20240204.142902
+ro.product.build.version.release_or_codename=13
+ro.product.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/zengwei02041510:userdebug/release-keys
+ro.product.model=rom6881_t
+ro.product.device=rom6881_t
+ro.product.system.name=rom6881_t
+ro.product.system.brand=rockchip
+ro.product.system.model=rom6881_t
+ro.product.system.device=rom6881_t
+ro.product.system.manufacturer=rockchip
+ro.product.product.name=rom6881_t
+ro.product.product.brand=rockchip
+ro.product.product.model=rom6881_t
+ro.product.product.device=rom6881_t
+ro.product.product.manufacturer=rockchip
+ro.product.system_ext.name=rom6881_t
+ro.product.system_ext.brand=rockchip
+ro.product.system_ext.model=rom6881_t
+ro.product.system_ext.device=rom6881_t
+ro.product.system_ext.manufacturer=rockchip
+ro.product.manufacturer=rockchip
+ro.system_ext.build.id=TQ3C.230805.001.B2
+ro.system_ext.build.date=Sun Feb  4 15:10:52 CST 2024
+ro.system_ext.build.date.utc=1707030652
+ro.system_ext.build.tags=release-keys
+ro.system_ext.build.type=userdebug
+ro.system_ext.build.version.sdk=33
+ro.system_ext.build.version.release=13
+ro.system_ext.build.version.incremental=eng.zengwe.20240204.142902
+ro.system_ext.build.version.release_or_codename=13
+ro.system_ext.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/zengwei02041510:userdebug/release-keys
+ro.actionable_compatible_property.enabled=true
+ro.vendor.build.id=TQ3C.230805.001.B2
+ro.vendor.build.date=Sun Feb  4 15:10:52 CST 2024
+ro.vendor.build.date.utc=1707030652
+ro.vendor.build.tags=release-keys
+ro.vendor.build.type=userdebug
+ro.vendor.build.version.sdk=33
+ro.vendor.build.version.release=13
+ro.vendor.build.version.incremental=eng.zengwe.20240204.142902
+ro.vendor.build.version.release_or_codename=13
+ro.vendor.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/zengwei02041510:userdebug/release-keys
+ro.vendor.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist64=arm64-v8a
+ro.vendor.api_level=33
+ro.product.board=rk30sdk
+ro.product.vendor.name=rom6881_t
+ro.product.vendor.brand=rockchip
+ro.product.vendor.model=rom6881_t
+ro.product.vendor.device=rom6881_t
+ro.product.vendor.manufacturer=rockchip
+ro.product.first_api_level=33
+ro.enable_boot_charger_mode=0
+ro.cold_boot_done=true
+ro.bionic.arch=arm64
+ro.bionic.2nd_arch=arm
+ro.bionic.cpu_variant=cortex-a76
+ro.bionic.2nd_cpu_variant=cortex-a76
+ro.dalvik.vm.native.bridge=0
+ro.zygote=zygote64_32
+dalvik.vm.isa.arm.variant=cortex-a76
+dalvik.vm.isa.arm.features=default
+dalvik.vm.isa.arm64.variant=cortex-a76
+dalvik.vm.isa.arm64.features=default
+dalvik.vm.dexopt.secondary=true
+dalvik.vm.dexopt.thermal-cutoff=2
+dalvik.vm.usejit=true
+dalvik.vm.madvise.artfile.size=4294967295
+dalvik.vm.madvise.odexfile.size=104857600
+dalvik.vm.madvise.vdexfile.size=104857600
+dalvik.vm.heapsize=512m
+dalvik.vm.lockprof.threshold=500
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
+dalvik.vm.heapmaxfree=8m
+dalvik.vm.heapminfree=512k
+dalvik.vm.heapstartsize=16m
+dalvik.vm.minidebuginfo=true
+dalvik.vm.appimageformat=lz4
+dalvik.vm.usejitprofiles=true
+dalvik.vm.dex2oat-threads=8
+dalvik.vm.heapgrowthlimit=192m
+dalvik.vm.image-dex2oat-Xms=64m
+dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.boot-dex2oat-threads=8
+dalvik.vm.dex2oat-minidebuginfo=true
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.dex2oat-max-image-block-size=524288
+dalvik.vm.dex2oat-resolve-startup-strings=true
+persist.sys.dalvik.vm.lib.2=libart.so
+ro.rk.bt_enable=true
+ro.rk.hdmi_enable=true
+ro.rk.flash_enable=true
+ro.rk.screenoff_time=60000
+ro.rk.ethernet_settings=true
+ro.rk.screenshot_enable=true
+ro.boot.noril=true
+ro.wifi.sleep.power.down=true
+ro.rksdk.version=ANDROID13_RKR6
+ro.config.enable.remotecontrol=false
+ro.tether.denied=false
+ro.factory.tool=0
+ro.factory.hasGPS=false
+ro.factory.hasUMS=false
+ro.factory.without_battery=false
+ro.factory.storage_suppntfs=true
+ro.safemode.disabled=true
+sf.power.control=2073600
+ril.function.dataonly=1
+sys.resolution.changed=false
+debug.nfc.se=false
+debug.nfc.fw_download=false
+debug.hwui.use_partial_updates=false
+debug.atrace.tags.enableflags=0
+persist.bt.power.down=true
+persist.sys.strictmode.visual=false
+persist.wifi.sleep.delay.ms=0
+ro.product.debugfs_restrictions.enabled=true
+ro.sf.fakerotation=false
+ro.sys.host_unhide_charge_notify=true
+ro.wifi.channels=
+ro.allow.mock.location=0
+ro.audio.monitorOrientation=true
+ro.build.version.known_codenames=Base,Base11,Cupcake,Donut,Eclair,Eclair01,EclairMr1,Froyo,Gingerbread,GingerbreadMr1,Honeycomb,HoneycombMr1,HoneycombMr2,IceCreamSandwich,IceCreamSandwichMr1,JellyBean,JellyBeanMr1,JellyBeanMr2,Kitkat,KitkatWatch,Lollipop,LollipopMr1,M,N,NMr1,O,OMr1,P,Q,R,S,Sv2,Tiramisu
+ro.build.version.release_or_preview_display=13
+ro.build.shutdown_timeout=6
+ro.kernel.android.checkjni=0
+ro.kernel.version=5.10
+ro.system.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.system.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.system.product.cpu.abilist64=arm64-v8a
+ro.target.product=tablet
+ro.default.size=100
+ro.product.ota.host=192.168.1.1:8888
+ro.product.locale=en-US
+ro.product.usbfactory=rockchip_usb
+ro.flash_img.enable=false
+ro.postinstall.fstab.prefix=/system
+persist.dbg.keep_debugfs_mounted=1
+persist.enable_task_snapshots=false
+testing.mediascanner.skiplist=/mnt/shell/emulated/Android/
+rt_retriever_enable=1
+drm.service.enabled=true
+persist.bluetooth.btsnoopenable=false
+ro.frp.pst=/dev/block/by-name/frp
+ro.boot.dynamic_partitions=true
+ro.hwui.use_vulkan=
+ro.board.platform=rk3588
+ro.carrier=unknown
+ro.hardware.egl=mali
+pm.dexopt.ab-ota=speed-profile
+pm.dexopt.shared=speed
+pm.dexopt.cmdline=verify
+pm.dexopt.install=speed-profile
+pm.dexopt.inactive=verify
+pm.dexopt.bg-dexopt=speed-profile
+pm.dexopt.first-boot=verify
+pm.dexopt.install-bulk=speed-profile
+pm.dexopt.install-fast=skip
+pm.dexopt.install-bulk-secondary=verify
+pm.dexopt.install-bulk-downgraded=verify
+pm.dexopt.install-bulk-secondary-downgraded=extract
+sys.usb.ffs.ready=1
+ro.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/eng.zengwe.20240204.142902:userdebug/release-keys
+ro.opengles.version=196610
+graphics.gpu.profiler.support=true
+ro.gsid.image_running=0
+gsid.image_installed=0
+ro.incremental.enable=yes
+sys.init.perf_lsm_hooks=1
+init.svc.ueventd=running
+init.svc.recovery=running
+init.svc.fastbootd=stopped
+init.svc.servicemanager=running
+init.svc.rockchip_udc_detector=stopped
+init.svc.adbd=running
+init.svc.console=running
+init.svc_debug_pid.adbd=210
+init.svc_debug_pid.vendor.health-default=205
+init.svc_debug_pid.console=203
+init.svc_debug_pid.ueventd=191
+init.svc_debug_pid.recovery=204
+init.svc_debug_pid.fastbootd=
+init.svc_debug_pid.servicemanager=201
+init.svc_debug_pid.rockchip_udc_detector=
+keyguard.no_require_sim=true
+log.tag.stats_log=I
+ro.logd.size.stats=64K
+ro.logd.kernel=1
+ro.oem_unlock_supported=1
+persist.debug.dalvik.vm.core_platform_api_policy=just-warn
+pm.dexopt.post-boot=extract
+pm.dexopt.boot-after-ota=verify
+ro.property_service.version=2
+ro.ril.ecclist=112,911
+ro.minui.pixel_format=RGBX_8888
+ro.minui.default_rotation=ROTATION_NONE
+ro.boot.serialno=8e5b64b9f2c4fdc8
+ro.serialno=8e5b64b9f2c4fdc8
+security.perf_harden=1
+ro.soc.model=RK3588
+ro.soc.manufacturer=Rockchip
+external_storage.projid.enabled=1
+external_storage.casefold.enabled=1
+external_storage.sdcardfs.enabled=0
+persist.sys.sf.color_saturation=1.0
+ro.sf.lcd_density=320
+ro.surface_flinger.has_HDR_display=false
+net.bt.name=Android
+sys.rkadb.root=0
+sys.status.hidebar_enable=false
+sys.wallpaper.rgb565=0
+persist.sys.usb.config=adb
+persist.sys.fuse.passthrough.enable=true
+ro.config.ringtone=Ring_Synth_04.ogg
+ro.config.alarm_alert=Alarm_Classic.ogg
+ro.config.notification_sound=OnTheHunt.ogg
+ro.com.android.dataroaming=true
+tombstoned.max_tombstone_count=50
+persist.traced.enable=1
+sys.usb.state=adb
+sys.usb.config=adb
+sys.usb.configfs=1
+sys.usb.controller=fc000000.usb
+ro.secure=1
+ro.debuggable=1
+ro.vendor.udisk.visible=true
+ro.odm.build.id=TQ3C.230805.001.B2
+ro.odm.build.tags=release-keys
+ro.odm.build.type=userdebug
+ro.odm.build.version.sdk=33
+ro.odm.build.version.release=13
+ro.odm.build.version.release_or_codename=13
+ro.odm.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist64=arm64-v8a
+init.svc.vendor.health-default=running
+vendor.hwc.device.extend=HDMI-A,eDP
+vendor.hwc.device.primary=DSI
+vendor.hwc.compose_policy=1
+ro.vendor.build.security_patch=2023-08-05
+ro.vendor.rk_sdk=1
+ro.vendor.sdkversion=rk3588_ANDROID13.0_MID_V1.0
+ro.vendor.frameratelock=true
+ro.vendor.hdmi_settings=true
+vendor.gralloc.disable_afbc=0
+ro.vndk.version=33
+ro.product.vndk.version=33
+ro.boot.wificountrycode=CN
+wifi.interface=wlan0
+wifi.supplicant_scan_interval=15
+persist.sys.zram_enabled=1
+
+
+enter try_do_sdcard_boot
+enter try_do_sdcard_boot
+is_boot_from_sd is_sd_boot=1
+ensure_path_mounted path=/mnt/external_sd
+ensure_path_mounted sdcard, path=/mnt/external_sd
+v->blk_device is /dev/block/mmcblk0p1
+v->blk_device is /dev/block/mmcblk0p1 to vfat.
+ERROR:   recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+blk_device is /dev/block/mmcblk1p1
+ERROR:   recovery: trying mount /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk1 to fs_type=vfat.
+ERROR:   recovery: tring mount /dev/block/mmcblk1 ntfs.
+v->blk_device is /dev/block/mmcblk1 to ntfs.
+ERROR:   recovery: failed to mount /mnt/external_sd error: Invalid argument
+failed to mount mount_point=/mnt/external_sd, error:Invalid argument
+try_do_sdcard_boot delay 1sec
+try_do_sdcard_boot delay 1sec
+ensure_path_mounted path=/mnt/external_sd
+ensure_path_mounted sdcard, path=/mnt/external_sd
+v->blk_device is /dev/block/mmcblk0p1
+v->blk_device is /dev/block/mmcblk0p1 to vfat.
+ERROR:   recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+[   14.481984][  T204] FAT-fs (mmcblk1p1): codepage cp936 not found
+blk_device is /dev/block/mmcblk1p1
+ERROR:   recovery: trying mount /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk0p1 to ntfs.
+[   14.514780][  T204] FAT-fs (mmcblk1): bogus number of reserved sectors
+v->blk_device is /dev/block/mmcblk1 to fs_type=vfat.
+ERROR:   recovery: tring mount /dev/block/mmcblk1 ntfs.
+v->blk_device is /dev/block/mmcblk1 to ntfs.
+ERROR:   recovery: failed to mount /mnt/external_sd error: Invalid argument
+failed to mount mount_point=/mnt/external_sd, error:Invalid argument
+try_do_sdcard_boot delay 1sec
+try_do_sdcard_boot delay 1sec
+ensure_path_mounted path=/mnt/external_sd
+ensure_path_mounted sdcard, path=/mnt/external_sd
+[   15.614084][  T204] recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+v->blk_device is /dev/block/mmcblk0p1
+v->blk_device is /dev/block/mmcblk0p1 to vfat.
+ERROR:   recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+[   15.648677][  T204] FAT-fs (mmcblk1p1): codepage cp936 not found
+blk_device is /dev/block/mmcblk1p1
+[   15.649046][  T204] recovery: trying mount /dev/block/mmcblk0p1 to ntfs.
+ERROR:   recovery: trying mount /dev/block/mmcblk0p1 to ntfs.
+v->blk_device is /dev/block/mmcblk0p1 to ntfs.
+[   15.681431][  T204] FAT-fs (mmcblk1): bogus number of reserved sectors
+v->blk_device is /dev/block/mmcblk1 to fs_type=vfat.
+[   15.681554][  T204] recovery: tring mount /dev/block/mmcblk1 ntfs.
+ERROR:   recovery: tring mount /dev/block/mmcblk1 ntfs.
+[   15.714036][  T204] recovery: failed to mount /mnt/external_sd error: Invalid argument
+v->blk_device is /dev/block/mmcblk1 to ntfs.
+ERROR:   recovery: failed to mount /mnt/external_sd error: Invalid argument
+failed to mount mount_point=/mnt/external_sd, error:Invalid argument
+try_do_sdcard_boot delay 1sec
+try_do_sdcard_boot delay 1sec
+try_do_sdcard_boot is_sd_mounted=0
+try_do_sdcard_boot is_sd_mounted=0
+try_do_sdcard_boot is done,  is_sdupdate=0 *stat=0
+try_do_sdcard_boot is done,  is_sdupdate=0 *stat=0
+I:Saving locale "en-US"
+ensure_path_mounted path=/cache/recovery/last_locale
+[   17.180105][  T204] recovery: [libfs_mgr]Failed to open '/dev/block/by-name/cache': No such file or directory
+ERROR:   recovery: [libfs_mgr]Failed to open '/dev/block/by-name/cache': No such file or directory
+I:[libfs_mgr]__mount(source=/dev/block/by-name/cache(missing),target=/cache,type=ext4)=-1: No such file or directory
+[   17.346998][  T189] init: Unable to set property 'ro.boottime.init.mount.cache' from uid:0 gid:0 pid:204: Read-only property was already set
+libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb
+[   17.347155][  T204] recovery: [libfs_mgr]Failed to mount /cache: No such file or directory
+ERROR:   recovery: [libfs_mgr]Failed to mount /cache: No such file or directory
+[   17.513237][  T204] recovery: [libfs_mgr]Failed to mount for path [/cache/recovery/last_locale]
+ERROR:   recovery: [libfs_mgr]Failed to mount for path [/cache/recovery/last_locale]
+[   17.679905][  T204] recovery: Failed to mount /cache/recovery/last_locale
+ERROR:   recovery: Failed to mount /cache/recovery/last_locale
+ERROR:   recovery: Failed to clear BCB message: failed to open /dev/block/by-name/misc: No such file or directory
+ensure_path_mounted path=/cache/recovery/command
+ERROR:   recovery: [libfs_mgr]Failed to open '/dev/block/by-name/cache': No such file or directory
+I:[libfs_mgr]__mount(source=/dev/block/by-name/cache(missing),target=/cache,type=ext4)=-1: No such file or directory
+[   18.246895][  T189] init: Unable to set property 'ro.boottime.init.mount.cache' from uid:0 gid:0 pid:204: Read-only property was already set
+libc: Unable to set property "ro.boottime.init.mount.cache" to "0": error code: 0xb
+ERROR:   recovery: [libfs_mgr]Failed to mount /cache: No such file or directory
+ERROR:   recovery: [libfs_mgr]Failed to mount for path [/cache/recovery/command]
+W:Can't unlink /cache/recovery/command
+

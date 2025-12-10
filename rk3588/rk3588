@@ -1,0 +1,440 @@
+Debian（RS11）
+./build.sh lunch
+./build.sh uboot
+
+
+
+Image：
+ls -l output/firmware/
+Tools：
+ls -l tools/windows/RKDevTool/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+代码下载
+$ cd ~/BSP $ mkdir rk3588_linux_risc $ cd rk3588_linux_risc 
+$ git config --global user.name "yanwei" 
+$ git config --global yanwei.cao@advantech.com.cn
+$ repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3588-Linux/_git/manifest -b rk3588_v106_risc -m RK3568_RISC_DIV106011.xml
+$ repo sync;repo forall -c git checkout -b local --track advantech-azure/rk3588_v106_risc
+
+https://AIM-Linux:xxxxxxxxxxxx@dev.azure.com
+
+设置token
+git config --global credential.helper 'store --file ~/.git-credentials';
+
+
+./build.sh lunch
+./build.sh -h
+
+
+***********************************************************************************************************************************************************
+android13
+
+./vendor/rockchip/hardware/interfaces/codec2/Android.bp:        ".git/HEAD",
+./kernel-5.10/tools/perf/Makefile.perf:$(OUTPUT)PERF-VERSION-FILE: ../../.git/HEAD
+./kernel-5.10/tools/perf/Makefile.perf:ifeq ($(wildcard ../../.git/HEAD),)
+./kernel-5.10/tools/perf/Makefile.perf:    GIT-HEAD-PHONY = ../../.git/HEAD
+./hardware/rockchip/libmpimmz/Android.bp:        ".git/HEAD"
+./hardware/rockchip/libhwjpeg/Android.bp:        ".git/HEAD",
+
+
+******************************************************************************************************************
+预装软件
+./odm/bundled_uninstall_back-app/PowerSuite/PowerSuite.apk
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+source build/envsetup.sh;lunch rk3588_t-userdebug
+./build.sh -AUCKu
+
+du -sh * | sort -hr
+
+
+git init
+git add -f .
+git commit -m "Initial commit"
+
+
+u-boot   kernel   external    cts   test   tools   developers   system   device   frameworks   packages   vendor   bsp  hardware
+
+external-deqp   external-camera_engine_rkaiq   external-libabigail   external-swiftshader   external-python   external-jackson-databind   external-vixl   external-icu   external-tensorflow   external-cldr   external-chromium-webview   external-exoplayer   external-angle   external-autotest   external-rust   external-llvm
+
+mv deqp ../../      
+mv camera_engine_rkaiq ../../
+mv  libabigail  ../../
+mv  swiftshader ../../ 
+mv  python ../../ 
+mv  jackson-databind ../../ 
+mv  vixl ../../ 
+mv  icu ../../ 
+mv  tensorflow ../../ 
+mv  cldr ../../ 
+mv  chromium-webview ../../ 
+mv  exoplayer ../../ 
+mv  angle ../../ 
+mv  autotest ../../ 
+mv  rust ../../ 
+mv  llvm ../../ 
+
+mv deqp android13-rkr6.1-src/external      
+mv camera_engine_rkaiq android13-rkr6.1-src/external
+mv  libabigail  android13-rkr6.1-src/external
+mv  swiftshader android13-rkr6.1-src/external 
+mv  python android13-rkr6.1-src/external 
+mv  jackson-databind android13-rkr6.1-src/external 
+mv  vixl android13-rkr6.1-src/external 
+mv  icu android13-rkr6.1-src/external 
+mv  tensorflow android13-rkr6.1-src/external 
+mv  cldr android13-rkr6.1-src/external 
+mv  chromium-webview android13-rkr6.1-src/external 
+mv  exoplayer android13-rkr6.1-src/external 
+mv  angle android13-rkr6.1-src/external 
+mv  autotest android13-rkr6.1-src/external 
+mv  rust android13-rkr6.1-src/external 
+mv  llvm android13-rkr6.1-src/external
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/u-boot
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/kernel
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-deqp
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-camera_engine_rkaiq
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-libabigail
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-swiftshader
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-python
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-jackson-databind
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-vixl
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-icu
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-tensorflow
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-cldr
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-chromium-webview
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-exoplayer
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-angle
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-autotest
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-rust
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/external-llvm
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/packages
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/hardware
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/frameworks
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/cts
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/vendor
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/tools
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/device
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/system
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/developers
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/test
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/android-manifest
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android13/bsp
+
+mv u-boot ../      
+mv kernel-5.10 ../
+mv  packages ../
+mv  hardware ../ 
+mv  frameworks ../ 
+mv  cts ../ 
+mv  vendor ../ 
+mv  tools ../ 
+mv  device ../ 
+mv  system ../ 
+mv  developers ../ 
+mv  test ../ 
+mv external ../
+
+mv u-boot android13-rkr6.1-src/      
+mv kernel-5.10 android13-rkr6.1-src/
+mv  packages  android13-rkr6.1-src/
+mv  hardware android13-rkr6.1-src/ 
+mv  frameworks android13-rkr6.1-src/ 
+mv  cts android13-rkr6.1-src/ 
+mv  vendor android13-rkr6.1-src/ 
+mv  tools android13-rkr6.1-src/ 
+mv  device android13-rkr6.1-src/ 
+mv  system android13-rkr6.1-src/ 
+mv  developers android13-rkr6.1-src/ 
+mv  test android13-rkr6.1-src/ 
+mv external android13-rkr6.1-src/ 
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
+
+git push origin master:rockchip-androidT13
+git push origin master:adv-rk-androidT13
+
+git checkout -b adv-rk-androidT13 --track origin/adv-rk-androidT13
+
+
+#############################################################################################################################
+
+git config --global user.signingkey xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+git clone https://github.com/ADVANTECH-Rockchip/repo.git
+repo/repo init -u https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android13/_git/android-manifest -b adv-rk-androidT13 -m RK3588_T13_AIV13008.xml
+repo/repo sync
+
+安装相关编译包
+sudo apt-get install openjdk-8-jdk git gnupg flex bison gperf  zip curl gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses-dev x11proto-core-dev libx11-dev lib32z1-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip python3-pyelftools device-tree-compiler libfdt-dev libfdt1 libssl-dev liblz4-tool python2-dev make build-essential python-is-python3 binutils
+sudo apt install docker.io
+sudo apt install m4
+
+https://www.dropbox.com/scl/fo/893teclrry5jvahs0ez2z/h?rlkey=gxfg40hd8jvy13fn27n394od2&dl=0
+
+sudo docker pull advrisc/u18.04-rk3399abv10
+sudo docker pull advrisc/u20.04-imx8lbv1
+sudo docker run --privileged -it --name rk3588-androidT13-rkr6.1 -v /home/zengwei/data_8T2/work/rk3588/code/android13-rkr6.1-src:/home/adv/BSP:rw advrisc/u20.04-imx8lbv1 /bin/bash
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+rk3588-evb1-lp4-v10
+
+source build/envsetup.sh;lunch rom6881_t-userdebug
+./build.sh -AUCKu
+
+./ddrbin_tool rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.13.bin
+
+repo/repo forall -c "git checkout advantech-azure/rk3588_v130_risc"
+repo/repo forall -c "git status"
+
+#############################################################################
+console:/ # fw_printenv
+Error opening lock file /var/lock/fw_printenv.lock
+*************************************************************************************************************************
+ssh -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu2004-KS01_key.pem azureuser@172.183.42.172
+
+sudo docker run -itd --name build_rk3399_android10_risc -v /mnt/build/rk3588_android13:/home/adv/BSP:rw --privileged advrisc/u18.04-rk3399abv10:latest /bin/bash
+
+../repo/repo init -u git@ssh.dev.azure.com:v3/AIM-Linsetenv display1ux/RISC-Rockchip-Android13/android-manifest -b adv-rk-androidT13 -m default.xml
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sudo docker run -itd --name build_rk3399_android10_risc -v /home/zengwei/data_8T2/work/rk3588/code/android13-rkr6.1-src:/home/adv/BSP:rw --privileged advrisc/u18.04-rk3399abv10:latest /bin/bash
+
+****************************************************************
+核心板卡3个bom选择 display
+1、eDP+LVDS
+2、eDP+Mipi
+3、dual channel lvds
+
+setting display
+
+"vendor.hwc.device.primary"
+"vendor.hwc.device.extend"
+prmry_screen
+extend_screen
+"DSI","eDP","HDMI-A","DP"
+
+display Rotation
+
+device/rockchip/common/BoardConfig.mk
+TARGET_RECOVERY_DEFAULT_ROTATION ?= ROTATION_LEFT
+SF_PRIMARY_DISPLAY_ORIENTATION ?= 270
+
+device/rockchip/rk356x/BoardConfig.mk
+SF_PRIMARY_DISPLAY_ORIENTATION := 270
+对应如下：
+ro.surface_flinger.primary_display_orientation
+
+device/rockchip/rk356x/device.mk
+    persist.sys.app.rotation=original
+
+解释如下：
+行为	配置值
+强制固定方向，横向拉扯APP	force_land
+显示屏幕中间，比例不对时左右区域是黑色	middle_port
+按APP要求旋转方向显示	original
+
+./device/rockchip/rk3328/rk3328_box_32/system.prop:persist.sys.app.rotation=force_land
+./device/rockchip/rk3328/rk3328_box/system.prop:persist.sys.app.rotation=force_land
+./frameworks/base/services/core/java/com/android/server/wm/DisplayRotation.java:            String rot = SystemProperties.get("persist.sys.app.rotation", "middle_port");
+./frameworks/base/services/core/java/com/android/server/wm/DisplayRotation.java:        String rot = SystemProperties.get("persist.sys.app.rotation", "middle_port");
+
+powersuite 设置显示及快速开机
+setprop persist.adv.display_zero hdmi0-default
+setprop persist.adv.display_one edp1-1366x768
+setprop persist.adv.display_two dp0-default
+setprop persist.adv.display_three mipi1-gl0uan
+setprop persist.adv.quiet 1
+setprop persist.adv.quiet ""
+
+getprop persist.adv.display_one
+getprop persist.adv.display_two
+getprop persist.adv.display_three
+getprop persist.adv.display_zero
+getprop persist.adv.quiet
+getprop persist.adv.cputemp
+getprop persist.adv.trigger
+
+fw_printenv disable_quiet
+fw_printenv display0
+fw_printenv display1
+fw_printenv display2
+fw_printenv display3
+
+setprop persist.adv.display_zero ""
+setprop persist.adv.display_one ""
+setprop persist.adv.display_two ""
+setprop persist.adv.display_three ""
+
+*************************************************************************************************************
+
+PHY
+cat /sys/devices/platform/fe1b0000.ethernet/rgmii_delayline
+cat /sys/devices/platform/fe1c0000.ethernet/rgmii_delayline
+
+
+GPIO
+GPIO0-4  P00-P04   485-489
+GPIO5    GPIO4_B5    141
+GPIO6-8  P05-P07   490-492
+GPIO9    GPIO4_A0    128
+GPIO10   GPIO3_C0    112
+GPIO11   GPIO3_C1    113
+
+GPIO的命令规则
+
+    控制器和GPIO控制器数量一致
+    端口固定 A、B、C和D
+    索引序号固定 0、1、2、3、4、5、6、7
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+K3588的cpu是4个A55+4个A76，分为3组单独管理，节点分别是：
+
+/sys/devices/system/cpu/cpufreq/policy0（对应四个A55:CPU0-CPU3）
+/sys/devices/system/cpu/cpufreq/policy4（对应2个A76:CPU4-CPU5）
+/sys/devices/system/cpu/cpufreq/policy6（对应2个A76:CPU6-CPU7）​
+
+以上3个CPU是独立控制，下面以设置CPU6-7为例说明如何设置CPU6-7的频率。
+2. 获取当前CPU支持的频点
+cat /sys/devices/system/cpu/cpufreq/policy6/scaling_available_frequencies
+408000 600000 816000 1008000 1200000 1416000 1608000 1800000 2016000 2208000 2304000
+
+3. 获取cpu运行的模式
+cat /sys/devices/system/cpu/cpufreq/policy6/scaling_available_governors
+conservative ondemand userspace powersave performance schedutil
+默认是自动变频模式：schedutil（恢复的话设置为该模式即可）。
+
+4. 设置手动定频模式：userspace
+echo userspace > /sys/devices/system/cpu/cpufreq/policy6/scaling_governor
+
+5. 设置频率为2016000
+echo 2016000 > /sys/devices/system/cpu/cpufreq/policy6/scaling_setspeed
+确认是否设置成功
+cat /sys/devices/system/cpu/cpufreq/policy6/cpuinfo_cur_freq
+2016000
+二．GPU定频
+1. GPU的节点路径
+ls /sys/class/devfreq/fb000000.gpu/
+available_frequencies cur_freq governor max_freq name power target_freq trans_stat
+available_governors device load min_freq polling_interval subsystem timer uevent
+
+2. 获取GPU支持的频点
+cat /sys/class/devfreq/fb000000.gpu/available_frequencies
+1000000000 900000000 800000000 700000000 600000000 500000000 400000000 300000000
+
+3. 获取GPU运行的模式
+cat /sys/class/devfreq/fb000000.gpu/available_governors
+userspace powersave performance simple_ondemand
+默认是自动变频模式：simple_ondemand（恢复的话设置为该模式即可）。
+
+4. 设置手动定频模式：userspace
+echo userspace > /sys/class/devfreq/fb000000.gpu/governor
+
+5. 设置频率为1000000000
+echo 1000000000 > /sys/class/devfreq/fb000000.gpu/userspace/set_freq
+cat /sys/class/devfreq/fb000000.gpu/cur_freq
+
+6. 查看GPU的负载
+cat /sys/class/devfreq/fb000000.gpu/load
+0@1000000000Hz
+
+三．NPU定频
+1. NPU的节点路径
+ls /sys/class/devfreq/fdab0000.npu/
+available_frequencies device max_freq polling_interval target_freq uevent
+available_governors governor min_freq power timer userspace
+cur_freq load name subsystem trans_stat
+
+2. 获取NPU支持的频点
+cat /sys/class/devfreq/fdab0000.npu/available_frequencies
+300000000 400000000 500000000 600000000 700000000 800000000 900000000 1000000000
+
+3. 获取NPU运行的模式
+cat /sys/class/devfreq/fdab0000.npu/available_governors
+userspace powersave performance simple_ondemand
+
+默认是自动变频模式：simple_ondemand（恢复的话设置为该模式即可）。
+
+4. 设置手动定频模式：userspace
+echo userspace > /sys/class/devfreq/fdab0000.npu/governor
+
+5. 设置频率为1000000000
+echo 1000000000 > /sys/class/devfreq/fdab0000.npu/userspace/set_freq
+cat /sys/class/devfreq/fdab0000.npu/cur_freq
+
+6. 查看NPU的负载
+cat /sys/kernel/debug/rknpu/load
+NPU load: Core0: 0%, Core1: 0%, Core2: 0%
+
+四．RK3588 CPU GPU NPU 温度监控
+CPU利用率95%以上时的CPU温升情况，通过使用cpuburn来打满cpu，记录cpu各个核的温度，主要针对一下的cpu
+RK3588的芯片有7路TS-ADC分别对应：芯片中心位置、A76_0/1、A76_2/3、DSU 、A55_0/1/2/3、PD_CENTER、 NPU、GPU。
+（1）芯片中心位置温度：soc-thermal
+（2）CPU大核A76_0/1 即CPU4和CPU5的温度：
+（3）CPU大核A76_2/3 即CPU6和CPU7的温度：
+（4）CPU小核A55_0/12/3 即CPU0、CPU1、CPU2、CPU3的温度
+（5）PD_CENTER的温度：
+（6）GPU的温度
+（7) NPU的温度
+可先运行cpuburn，指定压测核数：
+cpuburn -n=4
+然后执行下面的附件脚本，每十分钟记录一次，记录24小时，一共24*6=144次。
+#!/bin/bash
+if [ -f /tmp/cpu_temper.log ];then
+	rm -rf /tmp/cpu_temper.log
+fi
+for i in {1..144}do
+	echo  "$(date +%Y-%m-%d\ %H:%M:%S)" >> /tmp/cpu_temper.log
+	soc_thermal=`cat /sys/class/thermal/thermal_zone0/temp`
+	soc_thermal_interger=${soc_thermal:0:2}
+	soc_thermal_decimal=${soc_thermal:2:3}
+	soc_thermal_float="soc_thermal="${soc_thermal_interger}"."${soc_thermal_decimal}
+	CPU_A76_01=`cat /sys/class/thermal/thermal_zone1/temp`
+	CPU_A76_01_interger=${CPU_A76_01:0:2}
+	CPU_A76_01_decimal=${CPU_A76_01:2:3}
+	CPU_A76_01_float="CPU_A76_01="${CPU_A76_01_interger}"."${CPU_A76_01_decimal}
+        CPU_A76_23=`cat /sys/class/thermal/thermal_zone2/temp`
+	CPU_A76_23_interger=${CPU_A76_23:0:2}
+        CPU_A76_23_decimal=${CPU_A76_23:2:3}
+        CPU_A76_23_float="CPU_A76_23="${CPU_A76_23_interger}"."${CPU_A76_23_decimal}
+	CPU_A55_0123=`cat /sys/class/thermal/thermal_zone3/temp`
+	CPU_A55_0123_interger=${CPU_A55_0123:0:2}
+        CPU_A55_0123_decimal=${CPU_A55_0123:2:3}
+        CPU_A55_0123_float="CPU_A55_0123="${CPU_A55_0123_interger}"."${CPU_A55_0123_decimal}
+	PD_CENTER=`cat /sys/class/thermal/thermal_zone4/temp`
+        PD_CENTER_interger=${PD_CENTER:0:2}
+        PD_CENTER_decimal=${PD_CENTER:2:3}
+        PD_CENTER_float="PD_CENTER="${PD_CENTER_interger}"."${PD_CENTER_decimal}
+	GPU=`cat /sys/class/thermal/thermal_zone5/temp`
+        GPU_interger=${GPU:0:2}
+        GPU_decimal=${GPU:2:3}
+        GPU_float="GPU="${GPU_interger}"."${GPU_decimal}
+	NPU=`cat /sys/class/thermal/thermal_zone6/temp`
+        NPU_interger=${NPU:0:2}
+        NPU_decimal=${NPU:2:3}
+        NPU_float="NPU="${NPU_interger}"."${NPU_decimal}
+	line=${soc_thermal_float}"  "${CPU_A76_01_float}"  "${CPU_A76_23_float}"  "${CPU_A55_0123_float}"  "${PD_CENTER_float}"  "${GPU_float}"  "${NPU_float}
+	echo $line >> /tmp/cpu_temper.log
+	sync
+	sleep 600s
+done
+
+
+

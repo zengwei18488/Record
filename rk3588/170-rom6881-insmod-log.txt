@@ -1,0 +1,399 @@
+root@linaro-alip:~# insmod wlan_cnss_core_pcie.ko
+[ 1556.405328] wlan_cnss_core_pcie: loading out-of-tree module taints kernel.
+[ 1556.408713] NET: Registered PF_IB protocol family
+[ 1556.408995] [enable_bb_ctxt] 0x1000
+[ 1556.409010] [enable_bb_ctxt] 0x1000
+[ 1556.409015] cnss: wlan en pin is not supported
+root@linaro-alip:~# [ 1556.409019] cnss: PCI device not probed yet
+[ 1556.409021] cnss: cnss SYSFS create success
+[ 1556.409247] cnss: cnss qmi init success
+[ 1556.409273] cnss: wlan en pin is not supported
+[ 1556.409369] cnss: PCI is probing, vendor ID: 0x17cb, device ID: 0x1103
+[ 1556.409388] cnss_pci 0002:21:00.0: BAR 0: assigned [mem 0xf2200000-0xf23fffff 64bit]
+[ 1556.409423] cnss_pci 0002:21:00.0: enabling device (0000 -> 0002)
+[ 1556.409455] cnss: lnkctl 0x10130040
+[ 1556.409598] cnss: Current L1SS status: 0x0
+[ 1556.409602] cnss: Current ASPM status: 0x40
+[ 1556.410217] cnss: MSI base data is 0
+[ 1556.410225] cnss: BAR start is 0xffffffc00f800000, BAR end is 0xffffffc00fa00000
+[ 1556.410230] cnss: IRQ start is 0x0000000000000097, IRQ end is 0x0000000000000098
+[ 1556.410233] rddm size 420000
+[ 1556.411918] IPC_RTR: ipc_router_mhi_xprt_cb: Invalid cb reason 6
+[ 1556.411930] IPC_RTR: ipc_router_mhi_xprt_cb: Invalid cb reason 6
+[ 1556.411935] cnss: MSI base data is 0
+[ 1556.423394] cnss: wlan en pin is not supported
+[ 1556.423465] cnss: Platform driver probed successfully.
+[ 1556.423469] diagchar initializing ..
+[ 1556.423473] diagchar initialized now..
+[ 1556.423809] [enable_bb_ctxt] 0x800
+[ 1556.423822] [enable_bb_ctxt] 0x800
+
+root@linaro-alip:~# insmod wlan.ko country_code=CN
+[ 1560.743066] wlan: Loading driver v5.2.0.220S.093 +TIMER_MANAGER +MEMORY_DEBUG +PANIC_ON_BUG
+[ 1560.745472] wlan_hdd_state wlan major(234) initialized
+[ 1560.745486] cnss: Posting event: REGISTER_DRIVER(7)-sync, state: 0x2000
+[ 1560.745501] cnss: PM stay awake, state: 0x2000, count: 1
+[ 1560.745504] cnss_pm_stay_awake: NAP-TODO
+[ 1560.745580] cnss: cnss_driver_event_work
+[ 1560.745588] cnss: Processing driver event: REGISTER_DRIVER-sync(7), state: 0x2000
+[ 1560.745595] cnss: wlan en pin is not supported
+[ 1560.756817] cnss: lnkctl 0x10130040
+[ 1560.756835] cnss: QMI timeout is 10000 ms
+[ 1560.756840] cnss: Setting MHI state: INIT(0)
+[ 1560.823297] [bhi_probe] jtagid:0x1016d0e1
+[ 1560.873916] patch-1: clear rx-vec, bhi_base as 0x0000000000000000
+[ 1560.873930] cnss: Setting MHI state: POWER_ON(5)
+[ 1561.620021] cnss: Completed event: REGISTER_DRIVER(7), state: 0x2010, ret: 0/0
+root@linaro-alip:~# [ 1561.620040] cnss: PM relax, state: 0x2010, count: 0
+[ 1561.620044] cnss_pm_relax: NAP-TODO
+[ 1561.628133] cnss: Received QMI WLFW service event: 2
+[ 1561.628145] cnss: Posting event: SERVER_ARRIVE(0), state: 0x2010
+[ 1561.628150] cnss: PM stay awake, state: 0x2010, count: 1
+[ 1561.628154] cnss_pm_stay_awake: NAP-TODO
+[ 1561.628158] cnss: PM relax, state: 0x2010, count: 0
+[ 1561.628162] cnss_pm_relax: NAP-TODO
+[ 1561.628165] cnss: cnss_driver_event_work
+[ 1561.628169] cnss: PM stay awake, state: 0x2010, count: 1
+[ 1561.628172] cnss_pm_stay_awake: NAP-TODO
+[ 1561.628175] cnss: Processing driver event: SERVER_ARRIVE(0), state: 0x2010
+[ 1561.628521] cnss: QMI WLFW service connected, state: 0x2011
+[ 1561.628530] cnss: Sending indication register message, state: 0x2011
+[ 1561.629804] cnss: Received QMI WLFW event: 1
+[ 1561.629819] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.629832] cnss: Receiving QMI event completed
+[ 1561.629839] cnss: Sending host capability message, state: 0x2011
+[ 1561.629847] cnss: Number of clients is 1
+[ 1561.629852] cnss: Assign MSI to user: WAKE, num_vectors: 1, user_base_data: 13, base_vector: 13
+[ 1561.629867] cnss: WAKE MSI base data is 13
+[ 1561.629871] cnss: Calibration done is 0
+[ 1561.629875] cnss: nm_modem is 2
+[ 1561.631219] cnss: Received QMI WLFW event: 1
+[ 1561.631228] cnss: Received QMI WLFW event: 1
+[ 1561.631234] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.631245] cnss: Received QMI WLFW indication, msg_id: 0x35, msg_len: 22
+[ 1561.631251] cnss: FW memory segment count is 2
+[ 1561.631255] cnss: Posting event: REQUEST_MEM(2), state: 0x2011
+[ 1561.631262] cnss: Receiving QMI event completed
+[ 1561.631322] cnss: Processing driver event: REQUEST_MEM(2), state: 0x2011
+[ 1561.633402] cnss: pre_aligned 00000000df282bfc, phys_addr c9600000
+[ 1561.633409] cnss: pa c9600000
+[ 1561.635375] cnss: pre_aligned 00000000dd9e1c49, phys_addr c9d00000
+[ 1561.635380] cnss: pa c9d00000
+[ 1561.635383] cnss: Sending respond memory message, state: 0x2011
+[ 1561.635389] cnss: Memory for FW, va: 0x00000000df282bfc, pa: 0x00000000c9600000, size: 0x67c000, type: 1
+[ 1561.635396] cnss: Memory for FW, va: 0x00000000dd9e1c49, pa: 0x00000000c9d00000, size: 0x454000, type: 12
+[ 1561.645626] cnss: Received QMI WLFW event: 1
+[ 1561.645635] cnss: Received QMI WLFW event: 1
+[ 1561.645640] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.645659] cnss: Received QMI WLFW indication, msg_id: 0x37, msg_len: 0
+[ 1561.645663] cnss: Posting event: FW_MEM_READY(3), state: 0x2011
+[ 1561.645669] cnss: Receiving QMI event completed
+[ 1561.645720] cnss: Processing driver event: FW_MEM_READY(3), state: 0x2011
+[ 1561.645729] cnss: Sending target capability message, state: 0x2013
+[ 1561.659812] cnss: Received QMI WLFW event: 1
+[ 1561.659824] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.659837] cnss: Receiving QMI event completed
+[ 1561.659904] cnss: Target capability: chip_id: 0x12, chip_family: 0xb, board_id: 0xff, soc_id: 0x400c1211, otp_version: 0x440102
+[ 1561.659921] cnss: fw_version: 0x110e9125, fw_build_timestamp: 2024-05-29 08:21
+[ 1561.659924] cnss: Sending BDF download message, state: 0x2013, type: 4
+[ 1561.661827] cnss: Downloading BDF: regdb.bin, size: 24278
+[ 1561.663467] cnss: Received QMI WLFW event: 1
+[ 1561.663477] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.663486] cnss: Receiving QMI event completed
+[ 1561.665113] cnss: Received QMI WLFW event: 1
+[ 1561.665123] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.665130] cnss: Receiving QMI event completed
+[ 1561.666676] cnss: Received QMI WLFW event: 1
+[ 1561.666686] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.666693] cnss: Receiving QMI event completed
+[ 1561.668483] cnss: Received QMI WLFW event: 1
+[ 1561.668492] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.668508] cnss: Receiving QMI event completed
+[ 1561.668586] cnss: Sending BDF download message, state: 0x2013, type: 1
+[ 1561.669725] cnss: Downloading BDF: bdwlang.elf, size: 59908
+[ 1561.672751] cnss: Received QMI WLFW event: 1
+[ 1561.672759] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.672766] cnss: Receiving QMI event completed
+[ 1561.674572] cnss: Received QMI WLFW event: 1
+[ 1561.674581] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.674588] cnss: Receiving QMI event completed
+[ 1561.676311] cnss: Received QMI WLFW event: 1
+[ 1561.676316] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.676321] cnss: Receiving QMI event completed
+[ 1561.678125] cnss: Received QMI WLFW event: 1
+[ 1561.678136] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.678143] cnss: Receiving QMI event completed
+[ 1561.679873] cnss: Received QMI WLFW event: 1
+[ 1561.679883] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.679895] cnss: Receiving QMI event completed
+[ 1561.681215] cnss: Received QMI WLFW event: 1
+[ 1561.681225] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.681232] cnss: Receiving QMI event completed
+[ 1561.682960] cnss: Received QMI WLFW event: 1
+[ 1561.682966] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.682971] cnss: Receiving QMI event completed
+[ 1561.684712] cnss: Received QMI WLFW event: 1
+[ 1561.684723] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.684730] cnss: Receiving QMI event completed
+[ 1561.686466] cnss: Received QMI WLFW event: 1
+[ 1561.686476] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.686482] cnss: Receiving QMI event completed
+[ 1561.688157] cnss: Received QMI WLFW event: 1
+[ 1561.688168] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.688181] cnss: Receiving QMI event completed
+[ 1561.691550] cnss: Sending M3 information message, state: 0x2013
+[ 1561.691562] cnss: M3 memory, va: 0x00000000a1c3af38, pa: 0x00000000c9c80000, size: 0x411bc
+[ 1561.692836] cnss: Received QMI WLFW event: 1
+[ 1561.692845] cnss: Received QMI WLFW event: 1
+[ 1561.692850] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.692857] cnss: Received QMI WLFW indication, msg_id: 0x38, msg_len: 0
+[ 1561.692862] cnss: Posting event: FW_READY(4), state: 0x2013
+[ 1561.692867] cnss: Receiving QMI event completed
+[ 1561.692871] cnss: Processing driver event: FW_READY(4), state: 0x2013
+[ 1561.692883] cnss: cnss_fw_ready_hdlr 647
+[ 1561.922761] cnss: Sending ini sync request, state: 0x2017, fw_log_mode: 1
+[ 1561.924066] cnss: Received QMI WLFW event: 1
+[ 1561.924084] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.924096] cnss: Receiving QMI event completed
+[ 1561.924108] [kworke][0x5ce7399c][02:20:05.359169] wlan: [4451:I:HIF] hif_open: bus_type:0 bus_context_size 9864
+[ 1561.924133] [kworke][0x5ce739b6][02:20:05.359195] wlan: [4451:I:HIF] hif_pci_enable_bus: con_mode = 0x0, WLAN_SOC_device_id = 0x1103
+[ 1561.924142] [kworke][0x5ce739bf][02:20:05.359204] wlan: [4451:I:HIF] hif_pci_enable_bus: hif_enable_pci done
+[ 1561.924162] [kworke][0x5ce739d3][02:20:05.359224] wlan: [4451:I:HIF] hif_get_device_type:  *********** QCA6490 *************
+[ 1561.924167] [kworke][0x5ce739d8][02:20:05.359229] wlan: [4451:I:HIF] hif_pci_enable_bus: hif_type = 0x16, target_type = 0x1b
+[ 1561.924175] [kworke][0x5ce739df][02:20:05.359235] wlan: [4451:I:HIF] hif_register_tbl_attach: HIF_TYPE_QCA6490
+[ 1561.924181] [kworke][0x5ce739e6][02:20:05.359243] wlan: [4451:I:HIF] hif_target_register_tbl_attach: TARGET_TYPE_QCA6490
+[ 1561.924187] [kworke][0x5ce739ec][02:20:05.359249] wlan: [4451:I:HIF] hif_pci_enable_bus: Skip tgt_wake up for srng devices
+[ 1561.924319] [kworke][0x5ce73a70][02:20:05.359381] wlan: [4451:E:TXRX] hif_print_hal_shadow_register_cfg: num_config 28
+[ 1561.924325] [kworke][0x5ce73a76][02:20:05.359387] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 0, val a3b034
+[ 1561.924330] [kworke][0x5ce73a7b][02:20:05.359391] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 1, val a3b03c
+[ 1561.924335] [kworke][0x5ce73a7f][02:20:05.359396] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 2, val a3b044
+[ 1561.924339] [kworke][0x5ce73a84][02:20:05.359401] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 3, val a3b04c
+[ 1561.924345] [kworke][0x5ce73a89][02:20:05.359406] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 4, val a3b064
+[ 1561.924349] [kworke][0x5ce73a8f][02:20:05.359412] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 5, val a3b028
+[ 1561.924354] [kworke][0x5ce73a93][02:20:05.359416] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 6, val a3b020
+[ 1561.924359] [kworke][0x5ce73a98][02:20:05.359421] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 7, val a3b07c
+[ 1561.924364] [kworke][0x5ce73a9d][02:20:05.359426] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 8, val a46000
+[ 1561.924368] [kworke][0x5ce73aa1][02:20:05.359430] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 9, val a46008
+[ 1561.924373] [kworke][0x5ce73aa6][02:20:05.359435] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 10, val a46010
+[ 1561.924378] [kworke][0x5ce73aab][02:20:05.359440] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 11, val a46018
+[ 1561.924383] [kworke][0x5ce73ab0][02:20:05.359445] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 12, val a46034
+[ 1561.924388] [kworke][0x5ce73ab5][02:20:05.359450] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 13, val a370b0
+[ 1561.924393] [kworke][0x5ce73aba][02:20:05.359455] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 14, val a37018
+[ 1561.924397] [kworke][0x5ce73abf][02:20:05.359459] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 15, val a370c4
+[ 1561.924402] [kworke][0x5ce73ac3][02:20:05.359464] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 16, val a370cc
+[ 1561.924406] [kworke][0x5ce73ac8][02:20:05.359468] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 17, val a370d4
+[ 1561.924411] [kworke][0x5ce73acc][02:20:05.359473] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 18, val a370dc
+[ 1561.924415] [kworke][0x5ce73ad0][02:20:05.359478] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 19, val 1b80400
+[ 1561.924421] [kworke][0x5ce73ad5][02:20:05.359482] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 20, val 1b83400
+[ 1561.924425] [kworke][0x5ce73ada][02:20:05.359487] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 21, val 1b8340c
+[ 1561.924429] [kworke][0x5ce73adf][02:20:05.359492] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 22, val 1b85400
+[ 1561.924434] [kworke][0x5ce73ae3][02:20:05.359496] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 23, val 1b8540c
+[ 1561.924438] [kworke][0x5ce73ae7][02:20:05.359500] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 24, val 1b86400
+[ 1561.924443] [kworke][0x5ce73aec][02:20:05.359505] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 25, val 1b88400
+[ 1561.924447] [kworke][0x5ce73af0][02:20:05.359509] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 26, val 1b8b400
+[ 1561.924451] [kworke][0x5ce73af4][02:20:05.359513] wlan: [4451:I:TXRX] hif_print_hal_shadow_register_cfg: i 27, val 1b8b40c
+[ 1561.924456] cnss: Mode: 0, config: 00000000f31f0468, host_version: 5.2.0.220S.093
+[ 1561.924462] cnss: Sending WLAN config message, state: 0x2017
+[ 1561.925730] cnss: Received QMI WLFW event: 1
+[ 1561.925737] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.925744] cnss: Receiving QMI event completed
+[ 1561.925746] cnss: EMULDBG USB cnss_wlan_enable 469
+[ 1561.925752] cnss: Sending mode message, mode: MISSION(0), state: 0x2017
+[ 1561.946025] cnss: Received QMI WLFW event: 1
+[ 1561.946034] cnss: Received QMI WLFW event: 1
+[ 1561.946038] cnss: Receiving QMI WLFW event in work queue context
+[ 1561.946059] cnss: Received QMI WLFW indication, msg_id: 0x2c, msg_len: 7
+[ 1561.946064] cnss: Pin connect Result: pwr_pin: 0x1 phy_io_pin: 0xffffffc0 rf_io_pin: 0xffffff81
+[ 1561.946069] cnss: Receiving QMI event completed
+[ 1561.946094] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.946110] cnss: msi low addr fe650040 high addr 0
+[ 1561.946757] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.946768] cnss: msi low addr fe650040 high addr 0
+[ 1561.946820] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.946829] cnss: msi low addr fe650040 high addr 0
+[ 1561.946881] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.946890] cnss: msi low addr fe650040 high addr 0
+[ 1561.946944] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.946953] cnss: msi low addr fe650040 high addr 0
+[ 1561.946992] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.947002] cnss: msi low addr fe650040 high addr 0
+[ 1561.948228] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948239] cnss: msi low addr fe650040 high addr 0
+[ 1561.948290] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948299] cnss: msi low addr fe650040 high addr 0
+[ 1561.948349] [kworke][0x5ce7984e][02:20:05.383411] wlan: [4451:I:HIF] hif_configure_irq: E
+[ 1561.948354] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948359] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948398] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948420] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948439] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948460] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948474] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948491] cnss: Assign MSI to user: CE, num_vectors: 11, user_base_data: 2, base_vector: 2
+[ 1561.948685] [kworke][0x5ce7999c][02:20:05.383745] wlan: [4451:E:QDF] __cds_get_context: Module ID 66 context is Null (via hdd_update_ol_config)
+[ 1561.951209] [kworke][0x5ce7a37b][02:20:05.386271] wlan: [4451:E:QDF] __cds_get_context: Module ID 66 context is Null (via cds_open)
+[ 1561.951753] [kworke][0x5ce7a59a][02:20:05.386815] wlan: [4451:F:WMA] WMA --> wmi_unified_attach - success
+[ 1561.957884] [kworke][0x5ce7bd87][02:20:05.392940] wlan: [4451:E:QDF] htc_wait_target: Target Ready! TX resource : 1 size:2176, MaxMsgsPerHTCBundle = 1
+[ 1561.957912] [kworke][0x5ce7bda8][02:20:05.392973] wlan: [4451:E:QDF] htc_setup_target_buffer_assignments: SVS Index : 1 TX : 0x100 : alloc:1
+[ 1561.957977] [kworke][0x5ce7bdea][02:20:05.393039] wlan: [4451:E:DP] dp_srng_get_str_from_hal_ring_type: Invalid ring type
+[ 1561.958003] [kworke][0x5ce7bdfc][02:20:05.393057] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type tcl_cmd_credit (6) size 16384
+[ 1561.958051] [kworke][0x5ce7be34][02:20:05.393113] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type tcl_status (7) size 16384
+[ 1561.958070] [kworke][0x5ce7be47][02:20:05.393132] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type Reo_reinject (2) size 16384
+[ 1561.959008] [kworke][0x5ce7c1f0][02:20:05.394068] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type Reo_cmd (3) size 16384
+[ 1561.959468] [kworke][0x5ce7c3bb][02:20:05.394528] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type Reo_status (4) size 16384
+[ 1561.959839] [kworke][0x5ce7c530][02:20:05.394901] wlan: [4451:I:DP] dp_soc_tx_desc_sw_pools_alloc Tx Desc Alloc num_pool = 4, descs = 4096
+[ 1561.959974] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.960543] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.960672] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962551] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962589] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962617] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962651] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962712] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962728] cnss: msi low addr fe650040 high addr 0
+[ 1561.962767] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962777] cnss: msi low addr fe650040 high addr 0
+[ 1561.962811] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962872] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.962881] cnss: msi low addr fe650040 high addr 0
+[ 1561.962938] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.963016] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.963026] cnss: msi low addr fe650040 high addr 0
+[ 1561.963101] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.963111] cnss: msi low addr fe650040 high addr 0
+[ 1561.963176] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.963218] cnss: msi low addr fe650040 high addr 0
+[ 1561.963286] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.963296] cnss: msi low addr fe650040 high addr 0
+[ 1561.963359] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.963370] cnss: msi low addr fe650040 high addr 0
+[ 1561.964743] [kworke][0x5ce7d858][02:20:05.399805] wlan: [4451:I:HAL] hal_reo_set_err_dst_remap_6490: HWIO_REO_R0_ERROR_DESTINATION_MAPPING_IX_0 0x55555
+[ 1561.964765] [kworke][0x5ce7d86f][02:20:05.399828] wlan: [4451:I:HAL] hal_reo_set_err_dst_remap_6490: HWIO_REO_R0_ERROR_DESTINATION_MAPPING_IX_1 0x5555550
+[ 1561.965334] [kworke][0x5ce7daa8][02:20:05.400397] wlan: [4451:I:scan] scm_channel_list_db_init: min_freq 5935 max_freq 7115
+[ 1561.965425] [kworke][0x5ce7db02][02:20:05.400487] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type Rxdma_monitor_status (17) size 16384
+[ 1561.965981] [kworke][0x5ce7dd2e][02:20:05.401043] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type Rxdma_monitor_status (17) size 16384
+[ 1561.966409] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.966431] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.966442] cnss: msi low addr fe650040 high addr 0
+[ 1561.966453] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.966463] cnss: msi low addr fe650040 high addr 0
+[ 1561.966478] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.966487] cnss: msi low addr fe650040 high addr 0
+[ 1561.966508] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.966540] cnss: msi low addr fe650040 high addr 0
+[ 1561.966671] [kworke][0x5ce7dfe1][02:20:05.401734] wlan: [4451:I:DP] Peer pool init
+[ 1561.966747] [kworke][0x5ce7e02d][02:20:05.401810] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type Rxdma_buf (14) size 16384
+[ 1561.967004] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.967012] [kworke][0x5ce7e136][02:20:05.402075] wlan: [4451:E:DP] dp_prealloc_get_coherent: unable to allocate memory for ring type Rxdma_buf (14) size 16384
+[ 1561.967196] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985684] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985710] [kworke][0x5ce82a3f][02:20:05.420772] wlan: [4451:I:HIF] hif_event_history_init: SRNG events history initialized for group: 0
+[ 1561.985715] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985721] [kworke][0x5ce82a4b][02:20:05.420784] wlan: [4451:I:HIF] hif_event_history_init: SRNG events history initialized for group: 1
+[ 1561.985725] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985731] [kworke][0x5ce82a55][02:20:05.420794] wlan: [4451:I:HIF] hif_event_history_init: SRNG events history initialized for group: 2
+[ 1561.985735] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985745] [kworke][0x5ce82a63][02:20:05.420808] wlan: [4451:I:HIF] hif_event_history_init: SRNG events history initialized for group: 3
+[ 1561.985749] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985756] [kworke][0x5ce82a6e][02:20:05.420819] wlan: [4451:I:HIF] hif_event_history_init: SRNG events history initialized for group: 4
+[ 1561.985759] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985766] [kworke][0x5ce82a78][02:20:05.420829] wlan: [4451:I:HIF] hif_event_history_init: SRNG events history initialized for group: 5
+[ 1561.985769] cnss: Assign MSI to user: DP, num_vectors: 18, user_base_data: 14, base_vector: 14
+[ 1561.985776] [kworke][0x5ce82a82][02:20:05.420839] wlan: [4451:I:HIF] hif_event_history_init: SRNG events history initialized for group: 6
+[ 1561.986270] [kworke][0x5ce82c70][02:20:05.421333] wlan: [4451:E:QDF] hif_pci_irq_set_affinity_hint: Offline CPU: Set affinity fails for IRQ: 165
+[ 1561.986277] [kworke][0x5ce82c77][02:20:05.421340] wlan: [4451:E:QDF] hif_pci_irq_set_affinity_hint: Offline CPU: Set affinity fails for IRQ: 166
+[ 1561.986281] [kworke][0x5ce82c7c][02:20:05.421345] wlan: [4451:E:QDF] hif_pci_irq_set_affinity_hint: Offline CPU: Set affinity fails for IRQ: 167
+[ 1561.986286] [kworke][0x5ce82c80][02:20:05.421349] wlan: [4451:E:QDF] hif_pci_irq_set_affinity_hint: Offline CPU: Set affinity fails for IRQ: 168
+[ 1561.986290] [kworke][0x5ce82c84][02:20:05.421354] wlan: [4451:E:QDF] hif_pci_irq_set_affinity_hint: Offline CPU: Set affinity fails for IRQ: 169
+[ 1561.986294] [kworke][0x5ce82c89][02:20:05.421358] wlan: [4451:E:QDF] hif_pci_irq_set_affinity_hint: Offline CPU: Set affinity fails for IRQ: 170
+[ 1561.986298] [kworke][0x5ce82c8c][02:20:05.421361] wlan: [4451:E:QDF] hif_pci_irq_set_affinity_hint: Offline CPU: Set affinity fails for IRQ: 171
+[ 1561.986303] [kworke][0x5ce82c92][02:20:05.421367] wlan: [4451:E:HIF] hif_pci_ce_irq_set_affinity_hint: Unable to set cpu mask for offline CPU 0
+[ 1561.986308] [kworke][0x5ce82c96][02:20:05.421372] wlan: [4451:E:HIF] hif_pci_ce_irq_set_affinity_hint: Empty cpu_mask, unable to set CE IRQ affinity
+[ 1561.987268] [kworke][0x5ce83056][02:20:05.422331] wlan: [4915:I:WMA] wma_rx_service_ready_event: Firmware build version : 110e9125
+[ 1561.987280] [kworke][0x5ce83062][02:20:05.422343] wlan: [4915:I:WMA] wma_rx_service_ready_event: Board id: 0, Board version: 8 0 0 0 1
+[ 1561.988186] [kworke][0x5ce833ec][02:20:05.423249] wlan: [4915:I:WMA] wma_is_dbs_mandatory: MAC0 does not support both bands 2 DBS is mandatory
+[ 1561.988240] [kworke][0x5ce83422][02:20:05.423303] wlan: [4915:E:QDF] copy_fw_abi_version_tlv: copy_fw_abi_version_tlv: INIT_CMD version: 1, 0, 0x5f414351, 0x4c4d, 0x0, 0x0
+[ 1562.233865] [kworke][0x5cebf39e][02:20:05.668931] wlan: [67:E:QDF] ready_extract_init_status_tlv: ready_extract_init_status_tlv:0
+[ 1562.235105] [kworke][0x5cebf876][02:20:05.670171] wlan: [67:I:dfs] WLAN_DEBUG_DFS_ALWAYS : wlan_dfs_pdev_obj_create_notification: dfs_offload 1
+[ 1562.235138] [kworke][0x5cebf897][02:20:05.670204] wlan: [67:I:SPECTRAL] null_get_capability: SPECTRAL : get_capability not registered
+[ 1562.235138]
+[ 1562.235155] [kworke][0x5cebf8a5][02:20:05.670218] wlan: [67:I:SPECTRAL] target_if_pdev_spectral_init: HAL_CAP_PHYDIAG : Capable
+[ 1562.235168] [kworke][0x5cebf8b5][02:20:05.670234] wlan: [67:I:SPECTRAL] null_get_capability: SPECTRAL : get_capability not registered
+[ 1562.235168]
+[ 1562.235180] [kworke][0x5cebf8c2][02:20:05.670247] wlan: [67:I:SPECTRAL] target_if_pdev_spectral_init: HAL_CAP_RADAR   : Capable
+[ 1562.235193] [kworke][0x5cebf8ce][02:20:05.670259] wlan: [67:I:SPECTRAL] null_get_capability: SPECTRAL : get_capability not registered
+[ 1562.235193]
+[ 1562.235205] [kworke][0x5cebf8db][02:20:05.670272] wlan: [67:I:SPECTRAL] target_if_pdev_spectral_init: HAL_CAP_SPECTRAL_SCAN : Capable
+[ 1562.235219] [kworke][0x5cebf8e9][02:20:05.670286] wlan: [67:I:SPECTRAL] null_get_tsf64: SPECTRAL : get_tsf64 not registered
+[ 1562.235219]
+[ 1562.235243] [kworke][0x5cebf900][02:20:05.670309] wlan: [67:I:GREEN_AP] wlan_green_ap_pdev_obj_create_notification: Green AP creation successful, green ap ctx: 000000005e31c134, pdev: 0000000044027f78
+[ 1562.235271] [kworke][0x5cebf91d][02:20:05.670338] wlan: [67:I:CFR] wlan_cfr_is_ini_disabled: cfr is disabled for pdev[0]
+[ 1562.235434] [kworke][0x5cebf9bf][02:20:05.670500] wlan: [67:E:CFR] wlan_cfr_pdev_open: cfr is disabled
+[ 1562.235573] [kworke][0x5cebfa4b][02:20:05.670639] wlan: [67:I:REGULATORY] reg_set_band: same band 7
+[ 1562.235919] [kworke][0x5cebfba4][02:20:05.670986] wlan: [67:I:GREEN_AP] target_if_green_ap_register_egap_event_handler: Set the Enhance Green AP event handler
+[ 1562.235939] [kworke][0x5cebfbb9][02:20:05.671006] wlan: [67:E:QDF] dp_peer_map_attach_wifi3: dp_peer_map_attach_wifi3 max_peers 39, max_ast_index: 144
+[ 1562.235939]
+[ 1562.235983] [kworke][0x5cebfbe6][02:20:05.671051] wlan: [4451:I:WMA] wma_wait_for_ready_event: FW ready event received
+[ 1562.236935] [kworke][0x5cebff9f][02:20:05.672004] wlan: [4451:E:WMI] send_action_oui_cmd_tlv: Invalid action id
+[ 1562.236944] [kworke][0x5cebffa7][02:20:05.672012] wlan: [4451:E:action_oui] ucfg_action_oui_send: Failed to send: 7
+[ 1562.237322] [kworke][0x5cec0122][02:20:05.672391] wlan: [4451:E:TXRX] dp_rxdma_ring_config: DBS enabled max_mac_rings 2
+[ 1562.237328] [kworke][0x5cec0127][02:20:05.672396] wlan: [4451:E:TXRX] dp_rxdma_ring_config: pdev_id 0 max_mac_rings 2
+[ 1562.237333] [kworke][0x5cec012c][02:20:05.672401] wlan: [4451:E:TXRX] dp_rxdma_ring_config: mac_id 0
+[ 1562.237382] [kworke][0x5cec015d][02:20:05.672450] wlan: [4451:E:TXRX] dp_rxdma_ring_config: mac_id 1
+[ 1562.237772] [kworke][0x5cec02e2][02:20:05.672839] wlan: [4451:E:REGULATORY] reg_freq_width_to_chan_op_class: no op class for frequency 5660
+[ 1562.238284] [soft_i][0x5cec04e4][02:20:05.673353] wlan: [0:I:GREEN_AP] target_if_green_ap_enable_egap: enhanced green ap support is not present
+[ 1562.238546] cnss_utils: WLAN MAC address is not set, type 0
+[ 1562.238633] cnss_pci 0002:21:00.0: Direct firmware load for wlan/wlan_mac.bin failed with error -2
+[ 1562.238647] [kworke][0x5cec064e][02:20:05.673715] wlan: [4451:I:HDD] hdd_initialize_mac_address: using default MAC address
+[ 1562.239995] cnss: Freeing memory for M3, va: 0x00000000a1c3af38, pa: 0x00000000c9c80000, size: 0x411bc
+[ 1562.240040] cnss: PM relax, state: 0x2047, count: 0
+[ 1562.240045] cnss_pm_relax: NAP-TODO
+[ 1562.240050] cnss: cnss_driver_event_work
+[ 1562.240054] cnss: PM stay awake, state: 0x2047, count: 1
+[ 1562.240057] cnss_pm_stay_awake: NAP-TODO
+[ 1562.240060] cnss: PM relax, state: 0x2047, count: 0
+[ 1562.240064] cnss_pm_relax: NAP-TODO
+[ 1562.249742] [kworke][0x5cec31a5][02:20:05.684810] wlan: [4451:E:REGULATORY] reg_run_11d_state_machine: Invalid vdev
+[ 1562.249782] [kworke][0x5cec31ce][02:20:05.684851] wlan: [4451:E:REGULATORY] reg_is_fcc_regdmn: Failed to get reg domain
+[ 1562.250148] [kworke][0x5cec3338][02:20:05.685213] wlan: [4904:E:REGULATORY] reg_get_chan_enum_for_freq: invalid channel center frequency 0
+[ 1562.283331] cnss_pci 0002:21:00.0 wlP2p33s0: renamed from wifi-aware0
+[ 1562.319402] [Networ][0x5ced41c2][02:20:05.754471] wlan: [1557:I:DP] 00000000: b5 68 16 4a 57 44 ae fb d4 0b 7d 16 46 cd 81 34
+[ 1562.319424] [Networ][0x5ced41d9][02:20:05.754494] wlan: [1557:I:DP] 00000010: 4d 8a 66 32
+[ 1562.319431] [Networ][0x5ced41e0][02:20:05.754501] wlan: [1557:I:DP] 00000000: 79 ce 33 21 94 a6 c9 25 33 88 37 ec cb 25 da c6
+[ 1562.319436] [Networ][0x5ced41e6][02:20:05.754507] wlan: [1557:I:DP] 00000010: aa 93 ca d7 bc 25 da ce da 5d 84 3d 6c 5d ae 63
+[ 1562.319442] [Networ][0x5ced41eb][02:20:05.754512] wlan: [1557:I:DP] 00000020: 8a 53 bc 03 18 13 fa e1 1c b0 d5 0f
+[ 1562.319978] [Networ][0x5ced4402][02:20:05.755047] wlan: [1557:I:CFR] wlan_cfr_peer_obj_create_handler: cfr is disabled
+[ 1562.518908] [schedu][0x5cf04d18][02:20:05.953981] wlan: [4916:I:OSIF] scan start scan id 40961
+[ 1563.777126] [schedu][0x5d038019][02:20:07.212221] wlan: [4916:I:OSIF] vdev 0, scan id 40961 type COMPLETED(1) reason COMPLETED(1) scan found 45 bss
+[ 1563.880453] [wpa_su][0x5d0513ba][02:20:07.315551] wlan: [1562:I:SME] csr_fill_filter_from_vdev_crypto: rsn_cap 80 80
+[ 1563.896963] [wpa_su][0x5d05543a][02:20:07.332063] wlan: [1562:I:SME] vdev-0: Connecting to Advantech for guest 70:ca:97:41:67:98 rssi: -55 freq: 2442 akm 9 cipher: uc 6 mc 6, CC:
+[ 1563.897329] [schedu][0x5d0555ab][02:20:07.332432] wlan: [4916:I:CFR] wlan_cfr_peer_obj_create_handler: cfr is disabled
+[ 1563.901299] [soft_i][0x5d05652a][02:20:07.336399] wlan: [0:I:TXRX] HTT_T2H_MSG_TYPE_PEER_MAP msg for peer id 2 vdev id 0 n
+[ 1563.902237] [schedu][0x5d0568d6][02:20:07.337339] wlan: [4916:E:REGULATORY] reg_chan_band_to_freq: Invalid channel 0
+[ 1563.902286] [schedu][0x5d056907][02:20:07.337388] wlan: [4916:I:WMI] send_vdev_start_cmd_tlv: vdev_id 0 freq 2442 chanmode 21 ch_info: 0x15 is_dfs 0 beacon interval 100 dtim 0 center_chan 2442 center_freq2 0 reg_info_1: 0x140000 reg_info_2: 0x1400, req->max_txpow: 0x14 Tx SS 2, Rx SS 2, ldpc_rx: 0, cac 0, regd 4, HE ops: 0req->dis_hw_ack: 0
+[ 1564.007710] [schedu][0x5d0704d8][02:20:07.442813] wlan: [4916:I:PE] Auth TX: seq 1 seq num 2049 status 0 WEP 0 to 70:ca:97:41:67:98
+[ 1564.011434] [schedu][0x5d071363][02:20:07.446536] wlan: [4916:I:PE] Auth TX: success (0)
+[ 1564.012683] [schedu][0x5d071846][02:20:07.447787] wlan: [4916:I:PE] Auth RX: vdev 0 sys role 2 lim_state 5 from 70:ca:97:41:67:98 rssi -59 auth_alg 0 seq 0
+[ 1564.012770] [schedu][0x5d07189e][02:20:07.447875] wlan: [4916:I:PE] Assoc req TX: vdev 0 to 70:ca:97:41:67:98 seq num 2050
+[ 1564.016195] [schedu][0x5d0725fe][02:20:07.451300] wlan: [4916:I:PE] Assoc req TX: success (0)
+[ 1564.018892] [schedu][0x5d073087][02:20:07.453996] wlan: [4916:I:PE] Assoc rsp RX: subtype 0 vdev 0 sys role 2 lim state 10 rssi -59 from 70:ca:97:41:67:98
+[ 1564.025091] [soft_i][0x5d0748bf][02:20:07.460195] wlan: [0:E:DP] dp_tx_initialize_threshold: tx flow control threshold is set, pool size is 4096
+[ 1564.025134] [schedu][0x5d0748ea][02:20:07.460239] wlan: [4916:I:HDD] wlan0(vdevid-0): 00:0e:8e:bf:8b:9b connected to 70:ca:97:41:67:98
+[ 1564.025603] [dp_rx_][0x5d074abd][02:20:07.460706] wlan: [4925:I:QDF] EAPOL-1 RX: SA:70:ca:97:41:67:98 DA:00:0e:8e:bf:8b:9b
+[ 1564.040765] [schedu][0x5d0785f9][02:20:07.475870] wlan: [4916:E:HDD] hdd_tsf_is_initialized: TSF is not initialized
+[ 1564.040778] [schedu][0x5d078606][02:20:07.475883] wlan: [4916:E:HDD] hdd_get_tsf_cb: tsf is not init, ignore tsf event
+[ 1564.068814] [soft_i][0x5d07f386][02:20:07.503915] wlan: [0:I:QDF] EAPOL-2 TX: SA:00:0e:8e:bf:8b:9b DA:70:ca:97:41:67:98 msdu_id:0 status: succ
+[ 1564.071814] [dp_rx_][0x5d07ff42][02:20:07.506918] wlan: [4925:I:QDF] EAPOL-3 RX: SA:70:ca:97:41:67:98 DA:00:0e:8e:bf:8b:9b
+[ 1564.073480] [schedu][0x5d0805c5][02:20:07.508586] wlan: [4916:I:WMI] wmi_fill_rso_tlvs: RSO_CFG: vdev:0 pmk_len = 32 pmksa caching:1 OKC:1 sae_same_pmk:0 key_mgmt_offload:1
+[ 1564.086948] IPv6: ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+[ 1564.088776] [soft_i][0x5d084182][02:20:07.523879] wlan: [0:I:QDF] EAPOL-4 TX: SA:00:0e:8e:bf:8b:9b DA:70:ca:97:41:67:98 msdu_id:0 status: succ
+[ 1564.211615] [soft_i][0x5d0a2158][02:20:07.646717] wlan: [0:I:QDF] DHCP-R TX: SA:00:0e:8e:bf:8b:9b DA:ff:ff:ff:ff:ff:ff msdu_id:0 status: succ
+[ 1564.214957] [schedu][0x5d0a2e6c][02:20:07.650066] wlan: [4916:E:PE] lim_process_addba_req: Failed to process addba request
+[ 1566.123262] [soft_i][0x5d274cdd][02:20:09.558403] wlan: [0:I:QDF] DHCP-D TX: SA:00:0e:8e:bf:8b:9b DA:ff:ff:ff:ff:ff:ff msdu_id:2 status: succ
+[ 1567.247851] [dp_rx_][0x5d3875e0][02:20:10.683014] wlan: [4927:I:QDF] DHCP-O RX: SA:58:0a:20:8b:e5:00 DA:00:0e:8e:bf:8b:9b
+[ 1567.281095] [soft_i][0x5d38f7bf][02:20:10.716260] wlan: [0:I:QDF] DHCP-R TX: SA:00:0e:8e:bf:8b:9b DA:ff:ff:ff:ff:ff:ff msdu_id:2 status: succ
+[ 1570.265228] [soft_i][0x5d6680bf][02:20:13.700452] wlan: [0:I:QDF] DHCP-R TX: SA:00:0e:8e:bf:8b:9b DA:ff:ff:ff:ff:ff:ff msdu_id:2 status: succ
+[ 1570.267444] [dp_rx_][0x5d66896b][02:20:13.702672] wlan: [4927:I:QDF] DHCP-A RX: SA:58:0a:20:8b:e5:00 DA:00:0e:8e:bf:8b:9b
+[ 1573.274028] [dp_rx_][0x5d946a22][02:20:16.709319] wlan: [4928:I:QDF] DHCP-D RX: SA:c8:94:02:f7:f7:47 DA:00:0e:8e:bf:8b:9b
+[ 1577.333602] [dp_rx_][0x5dd25c2a][02:20:20.768975] wlan: [4928:I:QDF] DHCP-D RX: SA:c8:94:02:f7:f7:47 DA:00:0e:8e:bf:8b:9b
+

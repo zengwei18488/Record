@@ -1,0 +1,1777 @@
+DDR V1.13 25cee80c4f cym 23/08/11-09:31:58
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.3%, TX Vref:21.8%,0.0%
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%
+CH2 RX Vref:29.7%, TX Vref:22.8%,0.0%
+CH3 RX Vref:28.5%, TX Vref:21.8%,0.0%
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-g5f53abfa1e-221223 #zzz (Dec 26 2022 - 09:10:09)
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 ... sha256(241ea1f321...) + OK
+## Checking uboot 0x00200000 ... sha256(1f5ccebd44...) + OK
+## Checking fdt 0x003481c8 ... sha256(9c34034df0...) + OK
+## Checking atf-2 0x000f0000 ... sha256(aa71013e72...) + OK
+## Checking atf-3 0xff100000 ... sha256(af08976afd...) + OK
+## Checking optee 0x08400000 ... sha256(66e30bf9e8...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 181.427 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-627-gb7c5102a2:derrick.huang
+NOTICE:  BL31: Built : 14:52:40, Aug 10 2023
+INFO:    spec: 0xa
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-743-gb5340fd65 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #6 Mon Aug 28 18:01:38 CST 2023 aarch64
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V13007 (Feb 24 2024 - 03:36:39 +0000)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x81000000
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba15000
+Relocation fdt: e99f9ea0 - e99fecd8
+CR: M/C/I
+Hotkey: ctrl+c
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+DM: v2
+Android 13.0, Build 2023.8, v2
+boot mode: normal
+RESC: 'boot', blk@0x0001da8c
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+ANDROID: fdt overlay OK
+swversion = V13007
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0222170
+model[2]         V13007
+model[3]         A1
+----------------------------------------------------------------
+Read board id : 13,  adcval = 3538
+ROM-6881 hw_id = 13
+Info : display use env settings
+env_display[0] = hdmi0-default
+env_display[1] = edp1-1366x768
+env_display[2] = NULL
+env_display[3] = NULL
+----------------------------------------------------------------
+display0         HDMI0   default
+display1         EDP1    1366x768
+display2         UNKNOWN         none
+display3         UNKNOWN         none
+----------------------------------------------------------------
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 750000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 750000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 812500 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 750000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Model: ROM-6881 AKS0222170 V13007 A1
+MPIDR: 0x81000000
+Device 'gpio@fd8a0000': seq 0 is in use by 'gpio@fd8a0000'
+## Error: Can't overwrite "ethaddr"
+## Error inserting "ethaddr" variable, errno=1
+## Error: Can't overwrite "eth1addr"
+## Error inserting "eth1addr" variable, errno=1
+load_bmp_logo: Failed to get oem part info, blknum=-1
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP1
+VP1 set crtc_clock to 84857KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP1 enable Esmart1[654x258->654x258@357x255] fmt[2] addr[0xebf2a000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+disp info 0, type:11, id:0
+Monitor has basic audio support
+base_parameter.mode:1920x1080
+color_format:0
+hdmi_select_link_config use tmds mode
+mode:1920x1080 bus_format:0x100a
+hdmi@fde80000:  detailed mode clock 148500 kHz, flags[5]
+    H: 1920 2008 2052 2200
+    V: 1080 1084 1089 1125
+bus_format: 100a
+VOP update mode to: 1920x1080p60, type: HDMI0 for VP0
+dclk:148500,if_pixclk_div;2,if_dclk_div:4
+VP0 set crtc_clock to 148500KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP0 enable Esmart0[654x258->654x258@633x411] fmt[2] addr[0xebf2a000]
+CEA mode used vic=16
+mtmdsclock:148500000
+hdptx_ropll_cmn_config bus_width:16a8c8 rate:1485000
+hdptx phy pll locked!
+dw_hdmi_setup HDMI mode
+don't use dsc mode
+dw hdmi qp use tmds mode
+bus_width:0x16a8c8,bit_rate:1485000
+hdptx phy lane locked!
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 24000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth0: ethernet@fe1b0000, eth1: ethernet@fe1c0000
+Hit key to stop autoboot('CTRL+C'):  0
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> <INTERRUPT>
+=> rbrom
+DDR V1.13 25cee80c4f cym 23/08/11-09:31:58
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.3%, TX Vref:21.8%,0.0%
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%
+CH3 RX Vref:28.5%, TX Vref:21.8%,0.0%
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+Boot1 Release Time: Nov 22 2022 14:37:46, version: 1.10
+Emmc IO init.
+Emmc IO init.
+mmc_set_bus_width: 1
+SetEmmcClk: 375000, 2, 64
+SetEmmcClk: 375000, 2, 64
+mmc_set_bus_width: 8
+SetEmmcClk: 200000000, 0, 3
+Enable PHY CLK: 200000000, timing: 9
+SdmmcInit=2 0
+BootCapSize=100000
+UserCapSize=29600MB
+FwPartOffset=2000 , 100000
+UsbBoot ...65061
+powerOn 67323
+SoftReset, 18770428 us
+DDR V1.13 25cee80c4f cym 23/08/11-09:31:58
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%
+CH2 RX Vref:30.1%, TX Vref:21.8%,0.0%
+CH3 RX Vref:28.5%, TX Vref:21.8%,0.0%
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-g5f53abfa1e-221223 #zzz (Dec 26 2022 - 09:10:09)
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+Magic is incorrect.
+Error validating A/B metadata from disk. Resetting and writing new A/B metadata to disk.
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 ... sha256(241ea1f321...) + OK
+## Checking uboot 0x00200000 ... sha256(1f5ccebd44...) + OK
+## Checking fdt 0x003481c8 ... sha256(9c34034df0...) + OK
+## Checking atf-2 0x000f0000 ... sha256(aa71013e72...) + OK
+## Checking atf-3 0xff100000 ... sha256(af08976afd...) + OK
+## Checking optee 0x08400000 ... sha256(66e30bf9e8...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 240.180 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-627-gb7c5102a2:derrick.huang
+NOTICE:  BL31: Built : 14:52:40, Aug 10 2023
+INFO:    spec: 0xa
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-743-gb5340fd65 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #6 Mon Aug 28 18:01:38 CST 2023 aarch64
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V13007 (Feb 24 2024 - 03:36:39 +0000)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x81000000
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba15000
+Relocation fdt: e99f9ea0 - e99fecd8
+CR: M/C/I
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+DM: v2
+Android 13.0, Build 2023.8, v2
+boot mode: recovery (misc)
+RESC: 'recovery', blk@0x00036ce4
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+ANDROID: fdt overlay OK
+swversion = V13007
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0222170
+model[2]         V13007
+model[3]         A1
+----------------------------------------------------------------
+Read board id : 13,  adcval = 3547
+ROM-6881 hw_id = 13
+Info : display use env settings
+env_display[0] = hdmi0-default
+env_display[1] = edp1-1366x768
+env_display[2] = NULL
+env_display[3] = NULL
+----------------------------------------------------------------
+display0         HDMI0   default
+display1         EDP1    1366x768
+display2         UNKNOWN         none
+display3         UNKNOWN         none
+----------------------------------------------------------------
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 750000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 750000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 812500 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 750000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Model: ROM-6881 AKS0222170 V13007 A1
+MPIDR: 0x81000000
+Device 'gpio@fd8a0000': seq 0 is in use by 'gpio@fd8a0000'
+## Error: Can't overwrite "ethaddr"
+## Error inserting "ethaddr" variable, errno=1
+## Error: Can't overwrite "eth1addr"
+## Error inserting "eth1addr" variable, errno=1
+load_bmp_logo: Failed to get oem part info, blknum=-1
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP1
+VP1 set crtc_clock to 84857KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP1 enable Esmart1[654x258->654x258@357x255] fmt[2] addr[0xebf2a000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+disp info 0, type:11, id:0
+Monitor has basic audio support
+base_parameter.mode:1920x1080
+color_format:0
+hdmi_select_link_config use tmds mode
+mode:1920x1080 bus_format:0x100a
+hdmi@fde80000:  detailed mode clock 148500 kHz, flags[5]
+    H: 1920 2008 2052 2200
+    V: 1080 1084 1089 1125
+bus_format: 100a
+VOP update mode to: 1920x1080p60, type: HDMI0 for VP0
+dclk:148500,if_pixclk_div;2,if_dclk_div:4
+VP0 set crtc_clock to 148500KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP0 enable Esmart0[654x258->654x258@633x411] fmt[2] addr[0xebf2a000]
+CEA mode used vic=16
+mtmdsclock:148500000
+hdptx_ropll_cmn_config bus_width:16a8c8 rate:1485000
+hdptx phy pll locked!
+dw_hdmi_setup HDMI mode
+don't use dsc mode
+dw hdmi qp use tmds mode
+bus_width:0x16a8c8,bit_rate:1485000
+hdptx phy lane locked!
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 24000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth0: ethernet@fe1b0000, eth1: ethernet@fe1c0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_footer.c:41: ERROR: Footer magic is incorrect.
+avb_vbmeta_image.c:65: ERROR: Magic is incorrect.
+avb_slot_verify.c:774: ERROR: recovery: Error verifying vbmeta image: invalid vbmeta header
+Verify recovery with vbmeta.
+avb_slot_verify.c:763: ERROR: vbmeta: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'recovery
+ANDROID: Hash OK
+Could not find "system" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff800 ...
+Kernel: 0x00400000 - 0x02504808 (33811 KiB)
+ramdisk:    0x0a200000 - 0x0ad96cd3 (11868 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x02504808
+   Using Device Tree in place at 0000000008300000, end 000000000834ad92
+load_bmp_logo: Failed to get oem part info, blknum=-1
+## reserved-memory:
+  cma: addr=10000000 size=8000000
+  drm-logo@00000000: addr=ebf00000 size=175000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 2029.204/2679.828 ms
+
+Starting kernel ...
+
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+[    3.290215][    T1] fiq_debugger fiq_debugger.0: IRQ fiq not found
+[    3.296737][    T1] fiq_debugger fiq_debugger.0: IRQ wakeup not found
+[    3.303575][    T1] fiq_debugger_probe: could not install nmi irq handler
+[    3.385759][    T1] rockchip-usb2phy fd5d8000.syscon:usb2-phy@8000: failed to create phy
+[    3.386208][    T1] rockchip-usb2phy fd5dc000.syscon:usb2-phy@c000: failed to create phy
+[    3.386744][    T1] rockchip-usb2phy fd5d4000.syscon:usb2-phy@4000: failed to create phy
+[    3.402453][   T79] rk-pcie fe180000.pcie: IRQ msi not found
+[    3.402463][   T79] rk-pcie fe180000.pcie: Missing *config* reg space
+[    3.402516][   T79] rk-pcie fe180000.pcie: Missing *config* reg space
+[    3.402541][   T79] rk-pcie fe180000.pcie: invalid resource
+[    3.402692][   T81] rk-pcie fe160000.pcie: IRQ msi not found
+[    3.402712][   T81] rk-pcie fe160000.pcie: Missing *config* reg space
+[    3.402729][   T82] rk-pcie fe170000.pcie: IRQ msi not found
+[    3.402737][   T82] rk-pcie fe170000.pcie: Missing *config* reg space
+[    3.402792][   T80] rk-pcie fe150000.pcie: IRQ msi not found
+[    3.402801][   T82] rk-pcie fe170000.pcie: Missing *config* reg space
+[    3.402806][   T80] rk-pcie fe150000.pcie: Missing *config* reg space
+[    3.402839][   T81] rk-pcie fe160000.pcie: Missing *config* reg space
+[    3.402845][   T82] rk-pcie fe170000.pcie: invalid resource
+[    3.402865][   T81] rk-pcie fe160000.pcie: invalid resource
+[    3.402906][   T80] rk-pcie fe150000.pcie: Missing *config* reg space
+[    3.402935][   T80] rk-pcie fe150000.pcie: invalid resource
+[    3.416658][    T1] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    3.418144][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    3.418149][    T1] rkvdec2_init:1022: No niu aclk reset resource define
+[    3.418154][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    3.418158][    T1] rkvdec2_init:1025: No niu hclk reset resource define
+[    3.418881][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    3.418886][    T1] rkvdec2_init:1022: No niu aclk reset resource define
+[    3.418890][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    3.418894][    T1] rkvdec2_init:1025: No niu hclk reset resource define
+[    3.481703][    T1] rk806 spi2.0: no sleep-setting state
+[    3.481713][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    3.481718][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    3.484506][    T1] spi-nor spi3.0: unrecognized JEDEC id bytes: ff ff ff ff ff ff
+[    3.487605][    T1] rk_gmac-dwmac fe1b0000.ethernet: no regulator found
+[    3.487633][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    3.487640][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    3.487651][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    3.651225][    T1] rk_gmac-dwmac fe1c0000.ethernet: no regulator found
+[    3.651257][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    3.651263][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    3.651274][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    3.870604][    T1] : terminal subdev does not exist
+[    3.870629][    T1] : terminal subdev does not exist
+[    3.870640][    T1] : terminal subdev does not exist
+[    3.870650][    T1] : terminal subdev does not exist
+[    3.870661][    T1] : get_remote_sensor: video pad[0] is null
+[    3.870672][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.870689][    T1] : get_remote_sensor: video pad[0] is null
+[    3.870699][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.870714][    T1] : get_remote_sensor: video pad[0] is null
+[    3.870724][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.870740][    T1] : get_remote_sensor: video pad[0] is null
+[    3.870749][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.872749][    T1] : terminal subdev does not exist
+[    3.872762][    T1] : terminal subdev does not exist
+[    3.872773][    T1] : terminal subdev does not exist
+[    3.872783][    T1] : terminal subdev does not exist
+[    3.872793][    T1] : get_remote_sensor: video pad[0] is null
+[    3.872803][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.872820][    T1] : get_remote_sensor: video pad[0] is null
+[    3.872829][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.872845][    T1] : get_remote_sensor: video pad[0] is null
+[    3.872854][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.872869][    T1] : get_remote_sensor: video pad[0] is null
+[    3.872879][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.874882][    T1] : terminal subdev does not exist
+[    3.874896][    T1] : terminal subdev does not exist
+[    3.874906][    T1] : terminal subdev does not exist
+[    3.874916][    T1] : terminal subdev does not exist
+[    3.874926][    T1] : get_remote_sensor: video pad[0] is null
+[    3.874936][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.874952][    T1] : get_remote_sensor: video pad[0] is null
+[    3.874962][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.874978][    T1] : get_remote_sensor: video pad[0] is null
+[    3.874987][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.875003][    T1] : get_remote_sensor: video pad[0] is null
+[    3.875012][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.876932][    T1] : terminal subdev does not exist
+[    3.876938][    T1] : terminal subdev does not exist
+[    3.876942][    T1] : terminal subdev does not exist
+[    3.876946][    T1] : terminal subdev does not exist
+[    3.876951][    T1] : get_remote_sensor: video pad[0] is null
+[    3.876955][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.876963][    T1] : get_remote_sensor: video pad[0] is null
+[    3.876967][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.876973][    T1] : get_remote_sensor: video pad[0] is null
+[    3.876978][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.876984][    T1] : get_remote_sensor: video pad[0] is null
+[    3.876988][    T1] : rkcif_update_sensor_info: stream[0] get remote s[ensor_sd failed!
+[    3.883087][    T1] rockchip-mipi-csi2: Async registered subdev
+[    3.883507][    T1] rockchip-mipi-csi2: Async registered subdev
+[    3.883926][    T1] rockchip-mipi-csi2: Async registered subdev
+[    3.884348][    T1] rockchip-mipi-csi2: Async registered subdev
+[    4.038508][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 17 not active.
+[    4.051589][    T1] rt5640 5-001c: Device with ID register 0x0 is not rt5640/39
+[    4.069722][    T1] ov8858 3-0036: could not get default pinstate
+[    4.069736][    T1] ov8858 3-0036: could not get sleep pinstate
+[    4.076106][    T1] ov8858 3-0036: Unexpected sensor id(000000), ret(-5)
+[    4.084856][    T1] ov8858 4-0036: Unexpected sensor id(000000), ret(-5)
+[    4.088437][    T1] ov8858 5-0036: could not get default pinstate
+[    4.088447][    T1] ov8858 5-0036: could not get sleep pinstate
+[    4.094696][    T1] ov8858 5-0036: Unexpected sensor id(000000), ret(-5)
+[    4.097432][    T1] ov8858 8-0036: could not get default pinstate
+[    4.097441][    T1] ov8858 8-0036: co[uld not get sleep pinstate
+[    4.102811][    T1] ov8858 8-0036: Unexpected sensor id(000000), ret(-5)
+[    4.145356][  T109] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    4.162434][    T7] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    4.162447][    T7] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    4.162596][    T7] rockchip-dmc dmc: could not find power_model node
+[    4.252186][    T7] rockchip-dmc dmc: Get wrong frequency, Request 528000000, Current 2112000000
+ddr_m0]E: waiting_vop_line_flag-1958: vop_post=0 unsupported!
+[    4.338062][    T7] rockchip-dp fded0000.edp: failed to read downspread -110
+[    4.355712][    T7] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[ddr_m0]E: waiting_vop_line_flag-1958: vop_post=0 unsupported!
+[    4.610255][    T7] dwhdmi-rockchip fde80000.hdmi: i2c read err!
+[    4.650918][    T7] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.748947][    T7] ov8858 5-0036: could not get default pinstate
+[    4.749051][    T7] ov8858 5-0036: could not get sleep pinstate
+[    4.756923][    T7] ov8858 5-0036: Unexpected sensor id(000000), ret(-5)
+[    4.769876][    T7] ov8858 4-0036: Unexpected sensor id(000000), ret(-5)
+[    4.774697][    T7] ov8858 3-0036: could not get default pinstate
+[    4.774729][    T7] ov8858 3-0036: could not get sleep pinstate
+[    4.782050][    T7] ov8858 3-0036: Unexpected sensor id(000000), ret(-5)
+[    4.962791][    T1] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.962879][    T1] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.962892][    T1] rkcif-mipi-lvds: There is not terminal subdev, not synchronized with ISP
+[    4.963719][    T1] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.963788][    T1] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.963801][    T1] rkcif-mipi-lvds1: There is not terminal subdev, not synchronized with ISP
+[    4.964536][    T1] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.964596][    T1] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.964607][    T1] rkcif-mipi-lvds2: There is not terminal subdev, not synchronized with ISP
+[    4.965334][    T1] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.965396][    T1] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.965408][    T1] rkcif-mipi-lvds4: There is not terminal subdev, not synchronized with ISP
+[    4.965481][  T137] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.965499][  T137] rkcif-mipi-lvds4: There is not terminal subdev, not synchronized with ISP
+[    4.965554][  T134] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.965570][  T134] rkcif-mipi-lvds: There is not terminal subdev, not synchronized with ISP
+[    4.965726][  T135] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.965741][  T135] rkcif-mipi-lvds1: There is not terminal subdev, not synchronized with ISP
+[    4.965888][  T136] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.965904][  T136] rkcif-mipi-lvds2: There is not terminal subdev, not synchronized with ISP
+[    4.969936][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    4.969974][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    4.970000][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    4.975340][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    5.001521][    T1] RKNPU fdab0000.npu: failed to find power_model node
+[    5.001560][    T1] RKNPU fdab0000.npu: RKNPU: failed to initialize power model
+[    5.001588][    T1] RKNPU fdab0000.npu: RKNPU: failed to get dynamic-coefficient
+[    5.091059][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    5.253014][    T1] init: Could not read properties from '/dev/selinux/apex_property_contexts': No such file or directory
+[    5.263653][    T1] init: Init cannot set 'ro.boot.console' to 'ttyFIQ0': Read-only property was already set
+[    5.263671][    T1] init: Init cannot set 'ro.boot.wificountrycode' to 'CN': Read-only property was already set
+[    5.263681][    T1] init: Init cannot set 'ro.boot.hardware' to 'rk30board': Read-only property was already set
+[    5.263692][    T1] init: Init cannot set 'ro.boot.boot_devices' to 'fe2e0000.mmc': Read-only property was already set
+[    5.263702][    T1] init: Init cannot set 'ro.boot.selinux' to 'permissive': Read-only property was already set
+[    5.263712][    T1] init: Init cannot set 'ro.boot.serialno' to 'AKS0222170': Read-only property was already set
+# recovery filesystem table
+=========================
+  0 /mnt/internal_sd  vfat /dev/block/platform/ff0f0000.dwmmc/by-name/user 0
+  1 /mnt/external_sd  vfat /dev/block/mmcblk0p1 0
+  2 /system  ext4 /dev/block/by-name/system 0
+  3 /vendor  ext4 /dev/block/by-name/vendor 0
+  4 /odm  ext4 /dev/block/by-name/odm 0
+  5 /product  ext4 /dev/block/by-name/product 0
+  6 /system_ext  ext4 /dev/block/by-name/system_ext 0
+  7 /vendor_dlkm  ext4 /dev/block/by-name/vendor_dlkm 0
+  8 /odm_dlkm  ext4 /dev/block/by-name/odm_dlkm 0
+  9 /system_dlkm  ext4 /dev/block/by-name/system_dlkm 0
+  10 /init_boot  ext4 /dev/block/by-name/init_boot 0
+[    5.704070][  T197] rockchip-dp fded0000.edp: failed to read max link rate
+  11 /cache  ext4 /dev/block/by-name/cache 0
+  12 /metadata  ext4 /dev/block/by-name/metadata 0
+  13 /data  f2fs /dev/block/by-name/userdata 0
+  14 /cust  ext4 /dev/block/by-name/cust 0
+  15 /custom  ext4 /dev/block/by-name/custom 0
+[    5.730432][  T197] rockchip-dp fded0000.edp: failed to read max link rate
+  16 /radical_update  ext4 /dev/block/by-name/radical_update 0
+  17 /misc  emmc /dev/block/by-name/misc 0
+  18 /uboot  emmc /dev/block/by-name/uboot 0
+  19 /charge  emmc /dev/block/by-name/charge 0
+  20 /resource  emmc /dev/block/by-name/resource 0
+[    5.757043][  T197] rockchip-dp fded0000.edp: failed to read max link rate
+  21 /parameter  emmc /dev/block/by-name/parameter 0
+  22 /boot  emmc /dev/block/by-name/boot 0
+  23 /recovery  emmc /dev/block/by-name/recovery 0
+[    5.783743][  T197] rockchip-dp fded0000.edp: failed to read max link rate
+  24 /backup  emmc /dev/block/by-name/backup 0
+  25 /frp  emmc /dev/block/by-name/frp 0
+  26 /trust  emmc /dev/block/by-name/trust 0
+  27 /baseparamer  emmc /dev/block/by-name/baseparamer 0
+  28 /vbmeta  emmc /dev/block/by-name/vbmeta 0
+[    5.811384][  T197] rockchip-dp fded0000.edp: failed to read max link rate
+  29 /dtbo  emmc /dev/block/by-name/dtbo 0
+  30 /vendor_boot  emmc /dev/block/by-name/vendor_boot 0
+  31 /tmp  ramdisk ramdisk 0
+
+exit=================
+result_point[0] is ----/dev/block/mmcblk0
+111
+emmc_point is /dev/block/mmcblk0
+sd_point is (null)
+sd_point_2 is (null)
+read cmdline
+I:Boot command: boot-recovery
+I:Got 2 arguments from boot message
+ensure_path_mounted path=/cache/recovery/last_locale
+I:[libfs_mgr]superblock s_max_mnt_count:65535,/dev/block/by-name/cache
+I:[libfs_mgr]Filesystem on /dev/block/by-name/cache was not cleanly shutdown; state flags: 0x1, incompat feature flags: 0x46
+I:[libfs_mgr]check_fs(): mount(/dev/block/by-name/cache,/cache,ext4)=0: Success
+I:[libfs_mgr]umount_retry(): unmount(/cache) succeeded
+I:[libfs_mgr]Not running /system/bin/e2fsck on /dev/block/mmcblk0p10 (executable not in system image)
+I:[libfs_mgr]__mount(source=/dev/block/by-name/cache,target=/cache,type=ext4)=0: Success
+Loading make_device from librecovery_ui_ext.so
+W:Failed to read max brightness: No such file or directory
+I:Screensaver disabled
+Display Mode 0 resolution: 3840 x 2160 @ 30 FPS
+[    5.912842][  T197] rockchip-dp fded0000.edp: failed to read max link rate
+Choosing display mode #0
+Allocating buffer with resolution 3840 x 2160 pitch: 15360 bpp: 32, size: 33177600
+Framebuffer of size 33177600 allocated @ 0x7cc2a9f000
+Allocating buffer with resolution 3840 x 2160 pitch: 15360 bpp: 32, size: 33177600
+Framebuffer of size 33177600 allocated @ 0x7cc0afb000
+[    6.025841][  T197] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy pll locked!
+[    6.026080][  T197] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy lane locked!
+          erasing_text: en (47 x 19 @ 700)
+       no_command_text: en (83 x 19 @ 700)
+            error_text: en (33 x 19 @ 700)
+W:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+W:Failed to load bitmap factory_data_reset_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+W:Failed to load bitmap try_again_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap try_again_text for locale en-US (error -1)
+W:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+W:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+I:Starting recovery (pid 197) on Mon Feb 26 08:24:01 2024
+
+I:locale is [en-US]
+SELinux: Loaded file_contexts
+stage is []
+reason is []
+       installing_text: en (156 x 19 @ 700)
+[    6.285497][   T81] rk-pcie fe160000.pcie: PCIe Link Fail
+[    6.285524][   T81] rk-pcie fe160000.pcie: failed to initialize host
+ensure_path_mounted path=/metadata
+[    6.292090][   T82] rk-pcie fe170000.pcie: PCIe Link Fail
+I:[libfs_mgr]superblock s_max_mnt_count:65535,/dev/block/by-name/metadata
+[    6.292102][   T82] rk-pcie fe170000.pcie: failed to initialize host
+I:[libfs_mgr]Filesystem on /dev/block/by-name/metadata was not cleanly shutdown; state flags: 0x1, incompat feature flags: 0x46
+[    6.308723][   T79] rk-pcie fe180000.pcie: PCIe Link Fail
+I:[libfs_mgr]check_fs(): mount(/dev/block/by-name/metadata,/metadata,ext4)=0: Success
+[    6.308781][   T80] rk-pcie fe150000.pcie: PCIe Link Fail
+I:[libfs_mgr]umount_retry(): unmount(/metadata) succeeded
+[    6.308788][   T80] rk-pcie fe150000.pcie: failed to initialize host
+I:[libfs_mgr]Not running /system/bin/e2fsck on /dev/block/mmcblk0p11 (executable not in system image)
+[    6.308837][   T79] rk-pcie fe180000.pcie: failed to initialize host
+I:[libfs_mgr]superblock s_max_mnt_count:65535,/dev/block/by-name/metadata
+I:[libfs_mgr]Enabling ext4 verity on /dev/block/by-name/metadata
+I:[libfs_mgr]__mount(source=/dev/block/by-name/metadata,target=/metadata,type=ext4)=0: Success
+Command: "/system/bin/recovery" "--wipe_all"
+
+bluetooth.profile.bas.client.enabled=true
+bluetooth.profile.hfp.ag.enabled=true
+bluetooth.profile.hid.host.enabled=true
+bluetooth.profile.hid.device.enabled=true
+bluetooth.profile.map.server.enabled=true
+bluetooth.profile.opp.enabled=true
+bluetooth.profile.pan.nap.enabled=true
+bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.sap.server.enabled=true
+bluetooth.profile.a2dp.source.enabled=true
+bluetooth.profile.asha.central.enabled=true
+bluetooth.profile.gatt.enabled=true
+bluetooth.profile.pbap.server.enabled=true
+bluetooth.profile.avrcp.target.enabled=true
+persist.bluetooth.rtkcoex=true
+persist.bluetooth.btsnooppath=/sdcard/btsnoop_hci.cfa
+persist.bluetooth.btsnoopsize=0xffff
+bluetooth.enable_timeout_ms=11000
+ro.boot.vr=0
+ro.boot.mode=normal
+ro.boot.flash.locked=0
+ro.boot.console=ttyFIQ0
+ro.boot.dtb_idx=0
+ro.boot.selinux=permissive
+ro.boot.dtbo_idx=0
+ro.boot.hardware=rk30board
+ro.boot.factorytime=20231022
+ro.boot.boot_devices=fe2e0000.mmc
+ro.boot.storagemedia=emmc
+ro.boot.verifiedbootstate=orange
+ro.baseband=unknown
+ro.bootmode=normal
+ro.hardware=rk30board
+ro.revision=0
+ro.bootloader=unknown
+ro.boottime.adbd=3182129583
+ro.boottime.init=2005985506
+ro.boottime.init.fsck.cache=7
+ro.boottime.init.fsck.metadata=21
+ro.boottime.init.mount.cache=2
+ro.boottime.init.mount.metadata=2
+ro.boottime.init.selinux=160792392
+ro.boottime.init.first_stage=27816836
+ro.boottime.init.cold_boot_wait=306
+ro.boottime.vendor.health-default=2573083063
+ro.boottime.console=2564440687
+ro.boottime.ueventd=2228316737
+ro.boottime.recovery=2570179813
+ro.boottime.servicemanager=2546037102
+ro.boottime.rockchip_udc_detector=2550597019
+ro.odm.build.date=Sat Feb 24 03:41:47 UTC 2024
+ro.odm.build.date.utc=1708746107
+ro.odm.build.version.incremental=7
+ro.odm.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/7:userdebug/release-keys
+ro.product.odm.name=rom6881_t
+ro.product.odm.brand=rockchip
+ro.product.odm.model=rom6881_t
+ro.product.odm.device=rom6881_t
+ro.product.odm.manufacturer=rockchip
+ro.build.id=TQ3C.230805.001.B2
+ro.build.date=Sat Feb 24 03:41:47 UTC 2024
+ro.build.date.utc=1708746107
+ro.build.host=99f6f1cac6d0
+ro.build.tags=release-keys
+ro.build.type=userdebug
+ro.build.user=adv
+ro.build.flavor=rom6881_t-userdebug
+ro.build.display.id=rom6881_t-userdebug 13 TQ3C.230805.001.B2 7 release-keys
+ro.build.product=rom6881_t
+ro.build.version.sdk=33
+ro.build.version.base_os=
+ro.build.version.release=13
+ro.build.version.codename=REL
+ro.build.version.incremental=7
+ro.build.version.preview_sdk=0
+ro.build.version.all_codenames=REL
+ro.build.version.security_patch=2023-08-05
+ro.build.version.release_or_codename=13
+ro.build.version.preview_sdk_fingerprint=REL
+ro.build.version.min_supported_target_sdk=23
+ro.build.description=rom6881_t-userdebug 13 TQ3C.230805.001.B2 7 release-keys
+ro.build.characteristics=tablet
+ro.system.build.id=TQ3C.230805.001.B2
+ro.system.build.date=Sat Feb 24 03:41:47 UTC 2024
+ro.system.build.date.utc=1708746107
+ro.system.build.tags=release-keys
+ro.system.build.type=userdebug
+ro.system.build.version.sdk=33
+ro.system.build.version.release=13
+ro.system.build.version.incremental=7
+ro.system.build.version.release_or_codename=13
+ro.system.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/7:userdebug/release-keys
+ro.treble.enabled=true
+ro.product.cpu.abi=arm64-v8a
+ro.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.product.cpu.abilist64=arm64-v8a
+ro.product.name=rom6881_t
+ro.product.brand=rockchip
+ro.product.build.id=TQ3C.230805.001.B2
+ro.product.build.date=Sat Feb 24 03:41:47 UTC 2024
+ro.product.build.date.utc=1708746107
+ro.product.build.tags=release-keys
+ro.product.build.type=userdebug
+ro.product.build.version.sdk=33
+ro.product.build.version.release=13
+ro.product.build.version.incremental=7
+ro.product.build.version.release_or_codename=13
+ro.product.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/7:userdebug/release-keys
+ro.product.model=rom6881_t
+ro.product.device=rom6881_t
+ro.product.system.name=rom6881_t
+ro.product.system.brand=rockchip
+ro.product.system.model=rom6881_t
+ro.product.system.device=rom6881_t
+ro.product.system.manufacturer=rockchip
+ro.product.product.name=rom6881_t
+ro.product.product.brand=rockchip
+ro.product.product.model=rom6881_t
+ro.product.product.device=rom6881_t
+ro.product.product.manufacturer=rockchip
+ro.product.system_ext.name=rom6881_t
+ro.product.system_ext.brand=rockchip
+ro.product.system_ext.model=rom6881_t
+ro.product.system_ext.device=rom6881_t
+ro.product.system_ext.manufacturer=rockchip
+ro.product.manufacturer=rockchip
+ro.system_ext.build.id=TQ3C.230805.001.B2
+ro.system_ext.build.date=Sat Feb 24 03:41:47 UTC 2024
+ro.system_ext.build.date.utc=1708746107
+ro.system_ext.build.tags=release-keys
+ro.system_ext.build.type=userdebug
+ro.system_ext.build.version.sdk=33
+ro.system_ext.build.version.release=13
+ro.system_ext.build.version.incremental=7
+ro.system_ext.build.version.release_or_codename=13
+ro.system_ext.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/7:userdebug/release-keys
+ro.actionable_compatible_property.enabled=true
+ro.vendor.build.id=TQ3C.230805.001.B2
+ro.vendor.build.date=Sat Feb 24 03:41:47 UTC 2024
+ro.vendor.build.date.utc=1708746107
+ro.vendor.build.tags=release-keys
+ro.vendor.build.type=userdebug
+ro.vendor.build.version.sdk=33
+ro.vendor.build.version.release=13
+ro.vendor.build.version.incremental=7
+ro.vendor.build.version.release_or_codename=13
+ro.vendor.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/7:userdebug/release-keys
+ro.vendor.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist64=arm64-v8a
+ro.vendor.api_level=33
+ro.product.board=rk30sdk
+ro.product.vendor.name=rom6881_t
+ro.product.vendor.brand=rockchip
+ro.product.vendor.model=rom6881_t
+ro.product.vendor.device=rom6881_t
+ro.product.vendor.manufacturer=rockchip
+ro.product.first_api_level=33
+ro.enable_boot_charger_mode=0
+ro.cold_boot_done=true
+ro.bionic.arch=arm64
+ro.bionic.2nd_arch=arm
+ro.bionic.cpu_variant=cortex-a76
+ro.bionic.2nd_cpu_variant=cortex-a76
+ro.dalvik.vm.native.bridge=0
+ro.zygote=zygote64_32
+dalvik.vm.isa.arm.variant=cortex-a76
+dalvik.vm.isa.arm.features=default
+dalvik.vm.isa.arm64.variant=cortex-a76
+dalvik.vm.isa.arm64.features=default
+dalvik.vm.dexopt.secondary=true
+dalvik.vm.dexopt.thermal-cutoff=2
+dalvik.vm.usejit=true
+dalvik.vm.madvise.artfile.size=4294967295
+dalvik.vm.madvise.odexfile.size=104857600
+dalvik.vm.madvise.vdexfile.size=104857600
+dalvik.vm.heapsize=512m
+dalvik.vm.lockprof.threshold=500
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
+dalvik.vm.heapmaxfree=8m
+dalvik.vm.heapminfree=512k
+dalvik.vm.heapstartsize=16m
+dalvik.vm.minidebuginfo=true
+dalvik.vm.appimageformat=lz4
+dalvik.vm.usejitprofiles=true
+dalvik.vm.dex2oat-threads=8
+dalvik.vm.heapgrowthlimit=192m
+dalvik.vm.image-dex2oat-Xms=64m
+dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.boot-dex2oat-threads=8
+dalvik.vm.dex2oat-minidebuginfo=true
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.dex2oat-max-image-block-size=524288
+dalvik.vm.dex2oat-resolve-startup-strings=true
+persist.sys.dalvik.vm.lib.2=libart.so
+ro.rk.bt_enable=true
+ro.rk.hdmi_enable=true
+ro.rk.flash_enable=true
+ro.rk.screenoff_time=60000
+ro.rk.ethernet_settings=true
+ro.rk.screenshot_enable=true
+ro.boot.noril=true
+ro.wifi.sleep.power.down=true
+ro.rksdk.version=ANDROID13_RKR6
+ro.config.enable.remotecontrol=false
+ro.tether.denied=false
+ro.factory.tool=0
+ro.factory.hasGPS=false
+ro.factory.hasUMS=false
+ro.factory.without_battery=false
+ro.factory.storage_suppntfs=true
+ro.safemode.disabled=true
+sf.power.control=2073600
+ril.function.dataonly=1
+sys.resolution.changed=false
+debug.nfc.se=false
+debug.nfc.fw_download=false
+debug.hwui.use_partial_updates=false
+debug.atrace.tags.enableflags=0
+persist.bt.power.down=true
+persist.sys.strictmode.visual=false
+persist.wifi.sleep.delay.ms=0
+ro.product.debugfs_restrictions.enabled=true
+ro.sf.fakerotation=false
+ro.sys.host_unhide_charge_notify=true
+ro.wifi.channels=
+ro.allow.mock.location=0
+ro.audio.monitorOrientation=true
+ro.build.version.known_codenames=Base,Base11,Cupcake,Donut,Eclair,Eclair01,EclairMr1,Froyo,Gingerbread,GingerbreadMr1,Honeycomb,HoneycombMr1,HoneycombMr2,IceCreamSandwich,IceCreamSandwichMr1,JellyBean,JellyBeanMr1,JellyBeanMr2,Kitkat,KitkatWatch,Lollipop,LollipopMr1,M,N,NMr1,O,OMr1,P,Q,R,S,Sv2,Tiramisu
+ro.build.version.release_or_preview_display=13
+ro.build.shutdown_timeout=6
+ro.kernel.android.checkjni=0
+ro.kernel.version=5.10
+ro.system.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.system.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.system.product.cpu.abilist64=arm64-v8a
+ro.target.product=tablet
+ro.default.size=100
+ro.product.ota.host=192.168.1.1:8888
+ro.product.locale=en-US
+ro.product.usbfactory=rockchip_usb
+ro.flash_img.enable=false
+ro.postinstall.fstab.prefix=/system
+persist.dbg.keep_debugfs_mounted=1
+persist.enable_task_snapshots=false
+testing.mediascanner.skiplist=/mnt/shell/emulated/Android/
+rt_retriever_enable=1
+drm.service.enabled=true
+persist.bluetooth.btsnoopenable=false
+ro.frp.pst=/dev/block/by-name/frp
+ro.boot.dynamic_partitions=true
+ro.hwui.use_vulkan=
+ro.board.platform=rk3588
+ro.carrier=unknown
+ro.hardware.egl=mali
+pm.dexopt.ab-ota=speed-profile
+pm.dexopt.shared=speed
+pm.dexopt.cmdline=verify
+pm.dexopt.install=speed-profile
+pm.dexopt.inactive=verify
+pm.dexopt.bg-dexopt=speed-profile
+pm.dexopt.first-boot=verify
+pm.dexopt.install-bulk=speed-profile
+pm.dexopt.install-fast=skip
+pm.dexopt.install-bulk-secondary=verify
+pm.dexopt.install-bulk-downgraded=verify
+pm.dexopt.install-bulk-secondary-downgraded=extract
+sys.usb.ffs.ready=1
+ro.build.fingerprint=rockchip/rom6881_t/rom6881_t:13/TQ3C.230805.001.B2/7:userdebug/release-keys
+ro.opengles.version=196610
+graphics.gpu.profiler.support=true
+ro.gsid.image_running=0
+gsid.image_installed=0
+ro.incremental.enable=yes
+sys.init.perf_lsm_hooks=1
+init.svc.ueventd=running
+init.svc.recovery=running
+init.svc.fastbootd=stopped
+init.svc.servicemanager=running
+init.svc.rockchip_udc_detector=stopped
+init.svc.adbd=running
+init.svc.console=running
+init.svc_debug_pid.adbd=209
+init.svc_debug_pid.vendor.health-default=198
+init.svc_debug_pid.console=196
+init.svc_debug_pid.ueventd=183
+init.svc_debug_pid.recovery=197
+init.svc_debug_pid.fastbootd=
+init.svc_debug_pid.servicemanager=194
+init.svc_debug_pid.rockchip_udc_detector=
+keyguard.no_require_sim=true
+log.tag.stats_log=I
+ro.logd.size.stats=64K
+ro.logd.kernel=1
+ro.oem_unlock_supported=1
+persist.debug.dalvik.vm.core_platform_api_policy=just-warn
+pm.dexopt.post-boot=extract
+pm.dexopt.boot-after-ota=verify
+ro.property_service.version=2
+ro.ril.ecclist=112,911
+ro.minui.pixel_format=RGBX_8888
+ro.minui.default_rotation=ROTATION_NONE
+ro.boot.serialno=8e5b64b9f2c4fdc8
+ro.serialno=8e5b64b9f2c4fdc8
+security.perf_harden=1
+ro.soc.model=RK3588
+ro.soc.manufacturer=Rockchip
+external_storage.projid.enabled=1
+external_storage.casefold.enabled=1
+external_storage.sdcardfs.enabled=0
+persist.sys.sf.color_saturation=1.0
+ro.sf.lcd_density=320
+ro.surface_flinger.has_HDR_display=false
+dev.mnt.blk.cache=mmcblk0p10
+dev.mnt.blk.metadata=mmcblk0p11
+dev.mnt.dev.cache=mmcblk0p10
+dev.mnt.dev.metadata=mmcblk0p11
+dev.mnt.rootdisk.cache=mmcblk0
+dev.mnt.rootdisk.metadata=mmcblk0
+net.bt.name=Android
+sys.rkadb.root=0
+sys.status.hidebar_enable=false
+sys.wallpaper.rgb565=0
+persist.sys.usb.config=adb
+persist.sys.fuse.passthrough.enable=true
+ro.config.ringtone=Ring_Synth_04.ogg
+ro.config.alarm_alert=Alarm_Classic.ogg
+ro.config.notification_sound=OnTheHunt.ogg
+ro.com.android.dataroaming=true
+tombstoned.max_tombstone_count=50
+persist.traced.enable=1
+sys.usb.state=adb
+sys.usb.config=adb
+sys.usb.configfs=1
+sys.usb.controller=fc000000.usb
+ro.secure=1
+ro.debuggable=1
+ro.vendor.udisk.visible=true
+ro.odm.build.id=TQ3C.230805.001.B2
+ro.odm.build.tags=release-keys
+ro.odm.build.type=userdebug
+ro.odm.build.version.sdk=33
+ro.odm.build.version.release=13
+ro.odm.build.version.release_or_codename=13
+ro.odm.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist64=arm64-v8a
+init.svc.vendor.health-default=running
+vendor.hwc.device.extend=HDMI-A,eDP
+vendor.hwc.device.primary=DSI
+vendor.hwc.compose_policy=1
+ro.vendor.build.security_patch=2023-08-05
+ro.vendor.rk_sdk=1
+ro.vendor.sdkversion=rk3588_ANDROID13.0_MID_V1.0
+ro.vendor.frameratelock=true
+ro.vendor.hdmi_settings=true
+vendor.gralloc.disable_afbc=0
+ro.vndk.version=33
+ro.product.vndk.version=33
+ro.boot.wificountrycode=CN
+wifi.interface=wlan0
+wifi.supplicant_scan_interval=15
+persist.sys.zram_enabled=1
+
+
+do WipeData
+
+-- Wiping data...
+Formatting /data...
+
+    F2FS-tools: mkfs.f2fs Ver: 1.14.0 (2020-08-24)
+
+Info: Disable heap-based policy
+Info: Debug level = 1
+Info: Trim is enabled
+Info: Set conf for android
+Info: Enable utf8 with casefolding
+Info: Enable Project quota
+Info: not exist /proc/version!
+Info: Segments per section = 1
+Info: Sections per zone = 1
+Info: sector size = 512
+Info: total sectors = 52308928 (25541 MB)
+Info: zone aligned segment0 blkaddr: 512
+Info: add quota type = 0 => 4
+Info: add quota type = 1 => 5
+Info: add quota type = 2 => 6
+Info: format version with
+  "5.10.157-ab7"
+Info: [/dev/block/by-name/userdata] Discarding device
+Info: Secure Discarded 0 MB
+[f2fs_init_sit_area: 626]       Filling sit area at offset 0x00600000
+[f2fs_init_nat_area: 660]       Filling nat area at offset 0x00a00000
+[f2fs_write_root_inode:1274]    Writing root inode (hot node), b000 0 200 at offset 0x00045056
+[f2fs_write_default_quota:1350]         Writing quota data, at offset 0000b601, 0000b602
+[f2fs_write_qf_inode:1407]      Writing quota inode (hot node), b000 0 200 at offset 0x00045057
+[f2fs_write_default_quota:1350]         Writing quota data, at offset 0000b603, 0000b604
+[f2fs_write_qf_inode:1407]      Writing quota inode (hot node), b000 0 200 at offset 0x00045058
+[f2fs_write_default_quota:1350]         Writing quota data, at offset 0000b605, 0000b606
+[f2fs_write_qf_inode:1407]      Writing quota inode (hot node), b000 0 200 at offset 0x00045059
+[f2fs_update_nat_root:1461]     Writing nat root, at offset 0x00000a00
+[f2fs_add_default_dentry_root:1658]     Writing default dentry root, at offset 0x0000b600
+Info: Overprovision ratio = 1.260%
+Info: Overprovision segments = 323 (GC reserved = 166)
+[f2fs_write_check_point_pack: 819]      Writing main segments, cp at offset 0x00000200
+[f2fs_write_check_point_pack: 975]      Writing Segment summary for HOT/WARM/COLD_DATA, at offset 0x00000201
+[f2fs_write_check_point_pack:1002]      Writing Segment summary for HOT_NODE, at offset 0x00000202
+[f2fs_write_check_point_pack:1014]      Writing Segment summary for WARM_NODE, at offset 0x00000203
+[f2fs_write_check_point_pack:1025]      Writing Segment summary for COLD_NODE, at offset 0x00000204
+[f2fs_write_check_point_pack:1033]      Writing cp page2, at offset 0x00000205
+[f2fs_write_check_point_pack:1053]      Writing NAT bits pages, at offset 0x000003ff
+[f2fs_write_check_point_pack:1074]      Writing cp page 1 of checkpoint pack 2, at offset 0x00000400
+[f2fs_write_check_point_pack:1093]      Writing cp page 2 of checkpoint pack 2, at offset 0x00000405
+[f2fs_write_super_block:1126]   Writing super block, at offset 0x00000000
+Info: format successful
+ensure_path_mounted path=/cache
+Formatting /cache...
+mke2fs 1.46.2 (28-Feb-2021)
+Discarding device blocks: done
+Creating filesystem with 98304 4k blocks and 98304 inodes
+Filesystem UUID: 7e5ca93c-3c85-4059-bef6-fb6a1552b0c4
+Superblock backups stored on blocks:
+        32768
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+ensure_path_mounted path=/cache/recovery
+I:[libfs_mgr]superblock s_max_mnt_count:65535,/dev/block/by-name/cache
+I:[libfs_mgr]__mount(source=/dev/block/by-name/cache,target=/cache,type=ext4)=0: Success
+libc: Unable to set property "ro.boottime.init.mount.cache" to "3": error code: 0xb
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_kmsg
+ensure_path_mounted path=/cache/recovery/log
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_install
+Formatting /metadata...
+mke2fs 1.46.2 (28-Feb-2021)
+Discarding device blocks: done
+Creating filesystem with 4096 4k blocks and 4096 inodes
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+Data wipe complete.
+begin to wipe frp partion!
+I:format_volume for: fs_type: emmcblk_device: /dev/block/by-name/frpmount_point: /frp
+I:format_volume:len: 524288
+I:format_volume: success to format : /dev/block/by-name/frp
+wiping frp success!
+enter sdboot_get_bSDBoot !
+enter sdboot_get_bUsbBoot !
+enter sdboot_get_bUpdateModel !
+recovery_main before finish_recovery()
+I:Saving locale "en-US"
+ensure_path_mounted path=/cache/recovery/last_locale
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_kmsg
+ensure_path_mounted path=/cache/recovery/log
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_install
+ensure_path_mounted path=/cache/recovery/command
+Rebooting...
+Failed to drmModePageFlip, active_display=0libc: Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x8 in tid 207 (recovery), pid 197 (recovery)
+[   10.025904][    T1] reboot: Restarting system with command 'userrequested,recovery'
+DDR V1.13 25cee80c4f cym 23/08/11-09:31:58
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-g5f53abfa1e-221223 #zzz (Dec 26 2022 - 09:10:09)
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 ... sha256(241ea1f321...) + OK
+## Checking uboot 0x00200000 ... sha256(1f5ccebd44...) + OK
+## Checking fdt 0x003481c8 ... sha256(9c34034df0...) + OK
+## Checking atf-2 0x000f0000 ... sha256(aa71013e72...) + OK
+## Checking atf-3 0xff100000 ... sha256(af08976afd...) + OK
+## Checking optee 0x08400000 ... sha256(66e30bf9e8...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 180.771 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-627-gb7c5102a2:derrick.huang
+NOTICE:  BL31: Built : 14:52:40, Aug 10 2023
+INFO:    spec: 0xa
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-743-gb5340fd65 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #6 Mon Aug 28 18:01:38 CST 2023 aarch64
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V13007 (Feb 24 2024 - 03:36:39 +0000)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x81000000
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba15000
+Relocation fdt: e99f9ea0 - e99fecd8
+CR: M/C/I
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+DM: v2
+Android 13.0, Build 2023.8, v2
+boot mode: normal
+RESC: 'boot', blk@0x0001da8c
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+ANDROID: fdt overlay OK
+swversion = V13007
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0222170
+model[2]         V13007
+model[3]         A1
+----------------------------------------------------------------
+Read board id : 13,  adcval = 3531
+ROM-6881 hw_id = 13
+Info : display use env settings
+env_display[0] = hdmi0-default
+env_display[1] = edp1-1366x768
+env_display[2] = NULL
+env_display[3] = NULL
+----------------------------------------------------------------
+display0         HDMI0   default
+display1         EDP1    1366x768
+display2         UNKNOWN         none
+display3         UNKNOWN         none
+----------------------------------------------------------------
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 750000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Model: ROM-6881 AKS0222170 V13007 A1
+MPIDR: 0x81000000
+Device 'gpio@fd8a0000': seq 0 is in use by 'gpio@fd8a0000'
+## Error: Can't overwrite "ethaddr"
+## Error inserting "ethaddr" variable, errno=1
+## Error: Can't overwrite "eth1addr"
+## Error inserting "eth1addr" variable, errno=1
+load_bmp_logo: Failed to get oem part info, blknum=-1
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP1
+VP1 set crtc_clock to 84857KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP1 enable Esmart1[654x258->654x258@357x255] fmt[2] addr[0xebf2a000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+disp info 0, type:11, id:0
+Monitor has basic audio support
+base_parameter.mode:1920x1080
+color_format:0
+hdmi_select_link_config use tmds mode
+mode:1920x1080 bus_format:0x100a
+hdmi@fde80000:  detailed mode clock 148500 kHz, flags[5]
+    H: 1920 2008 2052 2200
+    V: 1080 1084 1089 1125
+bus_format: 100a
+VOP update mode to: 1920x1080p60, type: HDMI0 for VP0
+dclk:148500,if_pixclk_div;2,if_dclk_div:4
+VP0 set crtc_clock to 148500KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP0 enable Esmart0[654x258->654x258@633x411] fmt[2] addr[0xebf2a000]
+CEA mode used vic=16
+mtmdsclock:148500000
+hdptx_ropll_cmn_config bus_width:16a8c8 rate:1485000
+hdptx phy pll locked!
+dw_hdmi_setup HDMI mode
+don't use dsc mode
+dw hdmi qp use tmds mode
+bus_width:0x16a8c8,bit_rate:1485000
+hdptx phy lane locked!
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 24000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth0: ethernet@fe1b0000, eth1: ethernet@fe1c0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "(none)"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot
+ANDROID: Hash OK
+Could not find "system" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff800 ...
+Kernel: 0x00400000 - 0x02504808 (33811 KiB)
+ramdisk:    0x0a200000 - 0x0a34bb83 (1327 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x02504808
+   Using Device Tree in place at 0000000008300000, end 000000000834ad92
+load_bmp_logo: Failed to get oem part info, blknum=-1
+## reserved-memory:
+  cma: addr=10000000 size=8000000
+  drm-logo@00000000: addr=ebf00000 size=175000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 1889.61/2479.699 ms
+
+Starting kernel ...
+
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+[    3.084741][    T1] fiq_debugger fiq_debugger.0: IRQ fiq not found
+[    3.091365][    T1] fiq_debugger fiq_debugger.0: IRQ wakeup not found
+[    3.098237][    T1] fiq_debugger_probe: could not install nmi irq handler
+[    3.175399][    T1] rockchip-usb2phy fd5d8000.syscon:usb2-phy@8000: failed to create phy
+[    3.175842][    T1] rockchip-usb2phy fd5dc000.syscon:usb2-phy@c000: failed to create phy
+[    3.176362][    T1] rockchip-usb2phy fd5d4000.syscon:usb2-phy@4000: failed to create phy
+[    3.191777][   T79] rk-pcie fe180000.pcie: IRQ msi not found
+[    3.191797][   T79] rk-pcie fe180000.pcie: Missing *config* reg space
+[    3.191952][   T79] rk-pcie fe180000.pcie: Missing *config* reg space
+[    3.191962][   T81] rk-pcie fe160000.pcie: IRQ msi not found
+[    3.191972][   T81] rk-pcie fe160000.pcie: Missing *config* reg space
+[    3.191994][   T82] rk-pcie fe170000.pcie: IRQ msi not found
+[    3.191996][   T79] rk-pcie fe180000.pcie: invalid resource
+[    3.192009][   T82] rk-pcie fe170000.pcie: Missing *config* reg space
+[    3.192038][   T80] rk-pcie fe150000.pcie: IRQ msi not found
+[    3.192048][   T80] rk-pcie fe150000.pcie: Missing *config* reg space
+[    3.192080][   T82] rk-pcie fe170000.pcie: Missing *config* reg space
+[    3.192101][   T82] rk-pcie fe170000.pcie: invalid resource
+[    3.192112][   T80] rk-pcie fe150000.pcie: Missing *config* reg space
+[    3.192115][   T81] rk-pcie fe160000.pcie: Missing *config* reg space
+[    3.192138][   T81] rk-pcie fe160000.pcie: invalid resource
+[    3.192143][   T80] rk-pcie fe150000.pcie: invalid resource
+[    3.213990][    T1] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    3.215377][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    3.215383][    T1] rkvdec2_init:1022: No niu aclk reset resource define
+[    3.215388][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    3.215391][    T1] rkvdec2_init:1025: No niu hclk reset resource define
+[    3.216067][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    3.216072][    T1] rkvdec2_init:1022: No niu aclk reset resource define
+[    3.216076][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    3.216079][    T1] rkvdec2_init:1025: No niu hclk reset resource define
+[    3.276348][    T1] rk806 spi2.0: no sleep-setting state
+[    3.276357][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    3.276362][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    3.279260][    T1] spi-nor spi3.0: unrecognized JEDEC id bytes: ff ff ff ff ff ff
+[    3.281991][    T1] rk_gmac-dwmac fe1b0000.ethernet: no regulator found
+[    3.282015][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    3.282021][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    3.282031][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    3.445360][    T1] rk_gmac-dwmac fe1c0000.ethernet: no regulator found
+[    3.445391][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    3.445397][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    3.445407][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    3.663219][    T1] : terminal subdev does not exist
+[    3.663230][    T1] : terminal subdev does not exist
+[    3.663235][    T1] : terminal subdev does not exist
+[    3.663239][    T1] : terminal subdev does not exist
+[    3.663243][    T1] : get_remote_sensor: video pad[0] is null
+[    3.663248][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.663255][    T1] : get_remote_sensor: video pad[0] is null
+[    3.663259][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.663265][    T1] : get_remote_sensor: video pad[0] is null
+[    3.663269][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.663275][    T1] : get_remote_sensor: video pad[0] is null
+[    3.663278][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.663956][    T1] : terminal subdev does not exist
+[    3.663961][    T1] : terminal subdev does not exist
+[    3.663966][    T1] : terminal subdev does not exist
+[    3.663969][    T1] : terminal subdev does not exist
+[    3.663973][    T1] : get_remote_sensor: video pad[0] is null
+[    3.663977][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.663984][    T1] : get_remote_sensor: video pad[0] is null
+[    3.663987][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.663993][    T1] : get_remote_sensor: video pad[0] is null
+[    3.663997][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.664003][    T1] : get_remote_sensor: video pad[0] is null
+[    3.664006][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.664636][    T1] : terminal subdev does not exist
+[    3.664642][    T1] : terminal subdev does not exist
+[    3.664645][    T1] : terminal subdev does not exist
+[    3.664649][    T1] : terminal subdev does not exist
+[    3.664653][    T1] : get_remote_sensor: video pad[0] is null
+[    3.664657][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.664663][    T1] : get_remote_sensor: video pad[0] is null
+[    3.664666][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.664673][    T1] : get_remote_sensor: video pad[0] is null
+[    3.664676][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.664682][    T1] : get_remote_sensor: video pad[0] is null
+[    3.664686][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.665437][    T1] : terminal subdev does not exist
+[    3.665442][    T1] : terminal subdev does not exist
+[    3.665446][    T1] : terminal subdev does not exist
+[    3.665450][    T1] : terminal subdev does not exist
+[    3.665453][    T1] : get_remote_sensor: video pad[0] is null
+[    3.665457][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.665463][    T1] : get_remote_sensor: video pad[0] is null
+[    3.665467][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.665473][    T1] : get_remote_sensor: video pad[0] is null
+[    3.665476][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.665482][    T1] : get_remote_sensor: video pad[0] is null
+[    3.6[65486][    T1] : rkcif_update_sensor_info: stream[0] get remote sensor_sd failed!
+[    3.667690][    T1] rockchip-mipi-csi2: Async registered subdev
+[    3.667823][    T1] rockchip-mipi-csi2: Async registered subdev
+[    3.667948][    T1] rockchip-mipi-csi2: Async registered subdev
+[    3.668074][    T1] rockchip-mipi-csi2: Async registered subdev
+[    3.834071][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 17 not active.
+[    3.846877][    T1] rt5640 5-001c: Device with ID register 0x0 is not rt5640/39
+[    3.862963][    T1] ov8858 3-0036: could not get default pinstate
+[    3.862973][    T1] ov8858 3-0036: could not get sleep pinstate
+[    3.869206][    T1] ov8858 3-0036: Unexpected sensor id(000000), ret(-5)
+[    3.877529][    T1] ov8858 4-0036: Unexpected sensor id(000000), ret(-5)
+[    3.880426][    T1] ov8858 5-0036: could not get default pinstate
+[    3.880434][    T1] ov8858 5-0036: could not get sleep pinstate
+[    3.886395][    T1] ov8858 5-0036: Unexpected sensor id(000000), ret(-5)
+[    3.889020][    T1] ov8858 8-0036: coul[d not get default pinstate
+[    3.889027][    T1] ov8858 8-0036: could not get sleep pinstate
+[    3.895298][    T1] ov8858 8-0036: Unexpected sensor id(000000), ret(-5)
+[    3.936065][  T124] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    3.950910][    T9] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    3.950922][    T9] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    3.951047][    T9] rockchip-dmc dmc: could not find power_model node
+[    4.039683][    T9] rockchip-dmc dmc: Get wrong frequency, Request 528000000, Current 2112000000
+ddr_m0]E: waiting_vop_line_flag-1958: vop_post=0 unsupported!
+[    4.135026][    T9] rockchip-dp fded0000.edp: failed to read downspread -110
+[    4.153097][    T9] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[ddr_m0]E: waiting_vop_line_flag-1958: vop_post=0 unsupported!
+[    4.411493][    T9] dwhdmi-rockchip fde80000.hdmi: i2c read err!
+[    4.453036][    T9] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.549831][    T9] ov8858 5-0036: could not get default pinstate
+[    4.549910][    T9] ov8858 5-0036: could not get sleep pinstate
+[    4.557748][    T9] ov8858 5-0036: Unexpected sensor id(000000), ret(-5)
+[    4.570834][    T9] ov8858 4-0036: Unexpected sensor id(000000), ret(-5)
+[    4.576058][    T9] ov8858 3-0036: could not get default pinstate
+[    4.576090][    T9] ov8858 3-0036: could not get sleep pinstate
+[    4.583896][    T9] ov8858 3-0036: Unexpected sensor id(000000), ret(-5)
+[    4.760702][    T1] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.760751][    T1] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.760759][    T1] rkcif-mipi-lvds: There is not terminal subdev, not synchronized with ISP
+[    4.761088][    T1] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.761122][    T1] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.761129][    T1] rkcif-mipi-lvds1: There is not terminal subdev, not synchronized with ISP
+[    4.761519][    T1] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.761552][    T1] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.761559][    T1] rkcif-mipi-lvds2: There is not terminal subdev, not synchronized with ISP
+[    4.761944][    T1] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.761978][    T1] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.761985][    T1] rkcif-mipi-lvds4: There is not terminal subdev, not synchronized with ISP
+[    4.762005][  T137] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.762015][  T137] rkcif-mipi-lvds4: There is not terminal subdev, not synchronized with ISP
+[    4.762079][  T134] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.762088][  T134] rkcif-mipi-lvds: There is not terminal subdev, not synchronized with ISP
+[    4.762130][  T135] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.762138][  T135] rkcif-mipi-lvds1: There is not terminal subdev, not synchronized with ISP
+[    4.762179][  T136] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[    4.762187][  T136] rkcif-mipi-lvds2: There is not terminal subdev, not synchronized with ISP
+[    4.765234][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    4.765255][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    4.765275][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    4.770205][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    4.800896][    T1] RKNPU fdab0000.npu: failed to find power_model node
+[    4.800934][    T1] RKNPU fdab0000.npu: RKNPU: failed to initialize power model
+[    4.800961][    T1] RKNPU fdab0000.npu: RKNPU: failed to get dynamic-coefficient
+[    4.825805][    T1] init: Failed to read vbmeta partitions.
+[    5.042017][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    5.243641][    T1] init: Init cannot set 'ro.boot.serialno' to 'AKS0222170': Read-only property was already set
+[    5.295909][    T1] cgroup: Unknown subsys name 'schedtune'
+[    5.322038][  T210] linkerconfig: Unable to access VNDK APEX at path: /apex/com.android.vndk.v33: No such file or directory
+[    5.322150][  T210] linkerconfig: Unable to access VNDK APEX at path: /apex/com.android.vndk.v33: No such file or directory
+console:/ $ [    6.069556][   T79] rk-pcie fe180000.pcie: PCIe Link Fail
+[    6.069576][   T79] rk-pcie fe180000.pcie: failed to initialize host
+[    6.092886][   T82] rk-pcie fe170000.pcie: PCIe Link Fail
+[    6.092918][   T82] rk-pcie fe170000.pcie: failed to initialize host
+[    6.092949][   T81] rk-pcie fe160000.pcie: PCIe Link Fail
+[    6.092956][   T81] rk-pcie fe160000.pcie: failed to initialize host
+[    6.093026][   T80] rk-pcie fe150000.pcie: PCIe Link Fail
+[    6.093031][   T80] rk-pcie fe150000.pcie: failed to initialize host
+I/TA: Hello Rockchip Keymaster! ver:20221212 rpmb :0
+[    6.472163][  T247] vold: keystore2 Keystore generateKey returned service specific error: -67
+[    9.326124][  T247] vold: keystore2 Keystore generateKey returned service specific error: -67
+[    9.371985][  T325] rockchip-dp fded0000.edp: failed to read max link rate
+[    9.378522][  T247] vold: keystore2 Keystore earlyBootEnded returned service specific error: -68
+[    9.396793][  T325] rockchip-dp fded0000.edp: failed to read max link rate
+[    9.513900][  T247] vold: keystore2 Keystore generateKey returned service specific error: -67
+[    9.522284][  T247] vold: keystore2 Keystore generateKey returned service specific error: -67
+[    9.728872][    T1] WARNING: Unprivileged eBPF is enabled, data leaks possible via Spectre v2 BHB attacks!
+I/TA: Hello Rockchip gatekeeper! rpmb :0
+I/TA: Hello Rockchip Weaver! rpmb :0
+[   10.479260][  T397] [dhd] _dhd_module_init: in Dongle Host Driver, version 101.10.591.33.20 (20230621-1)(gdbe2bd9)
+[   10.479260][  T397] /home/adv/BSP/RK3588_T13_AIV13007_2024-02-24/android/external/wifi_driver/bcmdhd compiled on Feb 24 2024 at 03:40:43
+[   10.479260][  T397]
+[   10.479276][  T397] [dhd] STATIC-MSG) dhd_static_buf_init : 101.10.361.31 (wlan=r892223-20230427-1)
+[   10.479376][  T397] [dhd] STATIC-MSG) dhd_init_wlan_mem : prealloc ok for index 0: 7892992(7708K)
+[   10.480244][  T397] [dhd] STATIC-MSG) dhd_static_buf_exit : Enter
+[   10.762967][    T1] init: Control message: Could not find 'android.hardware.media.c2@1.0::IComponentStore/default' for ctl.interface_start from pid: 232 (/system/bin/hwservicemanager)
+[   10.901741][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.901767][  T526] rkcif_scale_ch3: update sensor info failed -19
+[   10.902081][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.902093][  T526] rkcif_tools_id0: update sensor info failed -19
+[   10.905428][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.905440][  T526] rkcif_scale_ch1: update sensor info failed -19
+[   10.905588][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.905598][  T526] stream_cif_mipi_id2: update sensor info failed -19
+[   10.907016][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.907027][  T526] stream_cif_mipi_id1: update sensor info failed -19
+[   10.907105][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.907113][  T526] rkcif_scale_ch2: update sensor info failed -19
+[   10.911009][  T526] rkisp1-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.911050][  T526] rkisp1-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.911105][  T526] rkisp1-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.911140][  T526] rkisp1-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.912823][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.912830][  T526] stream_cif_mipi_id3: update sensor info failed -19
+[   10.912909][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.912912][  T526] stream_cif_mipi_id0: update sensor info failed -19
+[   10.912933][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.912936][  T526] rkcif_scale_ch3: update sensor info failed -19
+[   10.912985][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.912988][  T526] rkcif_scale_ch3: update sensor info failed -19
+[   10.913008][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.913010][  T526] stream_cif_mipi_id1: update sensor info failed -19
+[   10.913031][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.913034][  T526] stream_cif_mipi_id2: update sensor info failed -19
+[   10.913063][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.913066][  T526] rkcif_scale_ch1: update sensor info failed -19
+[   10.913087][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.913089][  T526] rkcif_tools_id2: update sensor info failed -19
+[   10.913110][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.913112][  T526] rkcif_scale_ch1: update sensor info failed -19
+[   10.913133][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.913135][  T526] rkcif_tools_id1: update sensor info failed -19
+[   10.913554][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.913558][  T526] stream_cif_mipi_id3: update sensor info failed -19
+[   10.914687][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.914692][  T526] rkcif_tools_id0: update sensor info failed -19
+[   10.914718][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.914721][  T526] stream_cif_mipi_id3: update sensor info failed -19
+[   10.914758][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.914760][  T526] rkcif_tools_id1: update sensor info failed -19
+[   10.914783][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.914786][  T526] rkcif_tools_id0: update sensor info failed -19
+[   10.914807][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.914810][  T526] stream_cif_mipi_id3: update sensor info failed -19
+[   10.914839][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.914841][  T526] rkcif_tools_id0: update sensor info failed -19
+[   10.915512][  T526] rkisp0-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.915555][  T526] rkisp0-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.915618][  T526] rkisp0-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.915658][  T526] rkisp0-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.916627][  T526] rkisp1-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.916664][  T526] rkisp1-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.916718][  T526] rkisp1-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.916752][  T526] rkisp1-vir1: rkisp_enum_frameintervals Not active sensor
+[   10.917217][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.917220][  T526] rkcif_scale_ch2: update sensor info failed -19
+[   10.917569][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.917572][  T526] stream_cif_mipi_id2: update sensor info failed -19
+[   10.917605][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.917607][  T526] stream_cif_mipi_id0: update sensor info failed -19
+[   10.917660][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.917662][  T526] stream_cif_mipi_id1: update sensor info failed -19
+[   10.918314][  T526] rkisp0-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.918352][  T526] rkisp0-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.918402][  T526] rkisp0-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.918436][  T526] rkisp0-vir0: rkisp_enum_frameintervals Not active sensor
+[   10.918552][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.918555][  T526] rkcif_tools_id1: update sensor info failed -19
+[   10.918579][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.918581][  T526] rkcif_scale_ch0: update sensor info failed -19
+[   10.919437][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[3] get remote terminal sensor failed!
+[   10.919441][  T526] rkcif_scale_ch3: update sensor info failed -19
+[   10.919505][  T526] rkcif-mipi-lvds1: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.919507][  T526] rkcif_tools_id2: update sensor info failed -19
+[   10.921024][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.921028][  T526] stream_cif_mipi_id2: update sensor info failed -19
+[   10.923536][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.923540][  T526] rkcif_scale_ch0: update sensor info failed -19
+[   10.924382][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.924385][  T526] stream_cif_mipi_id0: update sensor info failed -19
+[   10.924408][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.924410][  T526] rkcif_scale_ch1: update sensor info failed -19
+[   10.924436][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.924438][  T526] rkcif_scale_ch2: update sensor info failed -19
+[   10.925204][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.925207][  T526] rkcif_tools_id2: update sensor info failed -19
+[   10.925233][  T526] rkcif-mipi-lvds: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.925235][  T526] stream_cif_mipi_id1: update sensor info failed -19
+[   10.925262][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.925265][  T526] stream_cif_mipi_id0: update sensor info failed -19
+[   10.925286][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.925288][  T526] rkcif_scale_ch2: update sensor info failed -19
+[   10.925309][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[2] get remote terminal sensor failed!
+[   10.925311][  T526] rkcif_tools_id2: update sensor info failed -19
+[   10.926592][  T526] rkcif-mipi-lvds2: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.926595][  T526] rkcif_scale_ch0: update sensor info failed -19
+[   10.926620][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[1] get remote terminal sensor failed!
+[   10.926622][  T526] rkcif_tools_id1: update sensor info failed -19
+[   10.926643][  T526] rkcif-mipi-lvds4: rkcif_update_sensor_info: stream[0] get remote terminal sensor failed!
+[   10.926645][  T526] rkcif_scale_ch0: update sensor info failed -19
+[   14.234062][  T340] rockchip-dp fded0000.edp: failed to read max link rate
+[   22.223623][  T583] audit: rate limit exceeded
+[   31.018369][  T208] init: Unable to set property 'wlan.driver.status' from uid:1010 gid:1010 pid:397: Property type check failed, value doesn't match expected type 'enum ok unloaded'
+[   36.101808][ T2224] audit: rate limit exceeded
+[   38.134989][ T1286] audit: rate limit exceeded
+

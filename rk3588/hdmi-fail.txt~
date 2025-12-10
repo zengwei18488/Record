@@ -1,0 +1,114 @@
+130|console:/ # cat /d/dri/0/summary
+Video Port0: ACTIVE
+    Connector:HDMI-A-1  Encoder: TMDS-472
+        bus_format[100a]: RGB888_1X24
+        overlay_mode[0] output_mode[f] SDR[0] color-encoding[BT.709] color-range[Full]
+    Display mode: 1920x1080p60
+        clk[148500] real_clk[148500] type[40] flag[5]
+        H: 1920 2008 2052 2200
+        V: 1080 1084 1089 1125
+        Fixed H: 1920 2008 2052 2200
+        Fixed V: 1080 1084 1089 1125
+    Cluster0-win0: ACTIVE
+        win_id: 0
+        format: AB24 little-endian (0x34324241)[AFBC] pixel_blend_mode[0] glb_alpha[0xff]
+        color: SDR[0] color-encoding[BT.709] color-range[Full]
+        rotate: xmirror: 0 ymirror: 0 rotate_90: 0 rotate_270: 0
+        csc: y2r[0] r2y[0] csc mode[0]
+        zpos: 0
+        src: pos[0, 0] rect[1920 x 1080]
+        dst: pos[0, 0] rect[1920 x 1080]
+        buf[0]: addr: 0x00000000f0734000 pitch: 7680 offset: 0
+Video Port1: DISABLED
+Video Port2: DISABLED
+console:/ #
+console:/ # [  927.208777][  T132] rockchip-dp fded0000.edp: failed to read max link rate
+[  927.260654][  T333] rockchip-dp fded0000.edp: failed to read max link rate
+[  927.345869][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_disable] Crtc atomic disable vp0
+[  930.196484][  T132] rockchip-dp fded0000.edp: failed to read max link rate
+[  930.247652][  T333] rockchip-dp fded0000.edp: failed to read max link rate
+[  930.283448][  T333] dwhdmi-rockchip fde80000.hdmi: use tmds mode
+[  930.283618][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_enable] Update mode to 1920x1080p60, type: 11(if:HDMI0, flag:0x0) for vp0 dclk: 148500000
+[  930.284293][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_enable] dclk_out0 div: 0 dclk_core0 div: 2
+[  930.284344][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx_ropll_cmn_config bus_width:16a8c8 rate:1485000
+[  930.284630][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy pll locked!
+[  930.284646][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_enable] set dclk_vop0 to 148500000, get 148500000
+[  930.284722][  T333] dwhdmi-rockchip fde80000.hdmi: final tmdsclk = 148500000
+[  930.284778][  T333] dwhdmi-rockchip fde80000.hdmi: don't use dsc mode
+[  930.284794][  T333] dwhdmi-rockchip fde80000.hdmi: dw hdmi qp use tmds mode
+[  930.284812][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: bus_width:0x16a8c8,bit_rate:1485000
+[  930.285025][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy lane locked!
+[  930.337310][  T316] dwhdmi-rockchip fde80000.hdmi: use tmds mode
+[  931.204813][  T132] rockchip-dp fded0000.edp: failed to read max link rate
+[  931.256895][  T333] rockchip-dp fded0000.edp: failed to read max link rate
+[  931.321533][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_disable] Crtc atomic disable vp0
+[  931.548509][  T132] rockchip-dp fded0000.edp: failed to read max link rate
+[  931.612136][  T333] rockchip-dp fded0000.edp: failed to read max link rate
+[  931.647904][  T333] dwhdmi-rockchip fde80000.hdmi: use tmds mode
+[  931.648024][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_enable] Update mode to 1920x1080p60, type: 11(if:HDMI0, flag:0x0) for vp0 dclk: 148500000
+[  931.648624][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx_ropll_cmn_config bus_width:16a8c8 rate:1485000
+[  931.648916][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy pll locked!
+[  931.648985][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_enable] dclk_out0 div: 0 dclk_core0 div: 2
+[  931.649026][  T333] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_enable] set dclk_vop0 to 148500000, get 148500000
+[  931.649101][  T333] dwhdmi-rockchip fde80000.hdmi: final tmdsclk = 148500000
+[  931.649157][  T333] dwhdmi-rockchip fde80000.hdmi: don't use dsc mode
+[  931.649172][  T333] dwhdmi-rockchip fde80000.hdmi: dw hdmi qp use tmds mode
+[  931.649190][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: bus_width:0x16a8c8,bit_rate:1485000
+[  931.649405][  T333] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy lane locked!
+[  931.696116][  T360] dwhdmi-rockchip fde80000.hdmi: use tmds mode
+
+console:/ #
+console:/ # cat /d/dri/0/summary
+Video Port0: ACTIVE
+    Connector:HDMI-A-1  Encoder: TMDS-472
+        bus_format[100a]: RGB888_1X24
+        overlay_mode[0] output_mode[f] SDR[0] color-encoding[BT.709] color-range[Full]
+    Display mode: 1920x1080p60
+        clk[148500] real_clk[148500] type[40] flag[5]
+        H: 1920 2008 2052 2200
+        V: 1080 1084 1089 1125
+        Fixed H: 1920 2008 2052 2200
+        Fixed V: 1080 1084 1089 1125
+    Esmart0-win0: ACTIVE
+        win_id: 8
+        format: AB24 little-endian (0x34324241) pixel_blend_mode[0] glb_alpha[0xff]
+        color: SDR[0] color-encoding[BT.709] color-range[Full]
+        rotate: xmirror: 0 ymirror: 0 rotate_90: 0 rotate_270: 0
+        csc: y2r[0] r2y[0] csc mode[0]
+        zpos: 2
+        src: pos[0, 0] rect[1920 x 48]
+        dst: pos[0, 0] rect[1920 x 48]
+        buf[0]: addr: 0x00000000f1818000 pitch: 7680 offset: 0
+    Cluster0-win0: ACTIVE
+        win_id: 0
+        format: AB24 little-endian (0x34324241)[AFBC] pixel_blend_mode[0] glb_alpha[0xff]
+        color: SDR[0] color-encoding[BT.709] color-range[Full]
+        rotate: xmirror: 0 ymirror: 0 rotate_90: 0 rotate_270: 0
+        csc: y2r[0] r2y[0] csc mode[0]
+        zpos: 0
+        src: pos[58, 313] rect[1164 x 654]
+        dst: pos[0, 0] rect[1920 x 1080]
+        buf[0]: addr: 0x00000000f208a000 pitch: 5120 offset: 0
+    Cluster0-win1: ACTIVE
+        win_id: 1
+        format: AB24 little-endian (0x34324241)[AFBC] pixel_blend_mode[0] glb_alpha[0xff]
+        color: SDR[0] color-encoding[BT.709] color-range[Full]
+        rotate: xmirror: 0 ymirror: 0 rotate_90: 0 rotate_270: 0
+        csc: y2r[0] r2y[0] csc mode[0]
+        zpos: 1
+        src: pos[0, 0] rect[1920 x 1080]
+        dst: pos[0, 0] rect[1920 x 1080]
+        buf[0]: addr: 0x00000000f1872000 pitch: 7680 offset: 0
+    Esmart0-win1: ACTIVE
+        win_id: 8
+        format: AB24 little-endian (0x34324241) pixel_blend_mode[0] glb_alpha[0xff]
+        color: SDR[0] color-encoding[BT.709] color-range[Full]
+        rotate: xmirror: 0 ymirror: 0 rotate_90: 0 rotate_270: 0
+        csc: y2r[0] r2y[0] csc mode[0]
+        zpos: 2
+        src: pos[0, 0] rect[1920 x 96]
+        dst: pos[0, 984] rect[1920 x 96]
+        buf[0]: addr: 0x00000000f1764000 pitch: 7680 offset: 0
+Video Port1: DISABLED
+Video Port2: DISABLED
+

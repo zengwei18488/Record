@@ -1,0 +1,941 @@
+[  563.952984][    T1] init: starting service 'vendor.bluetooth-1-1'...
+07-07 06:19:35.519 I/init    (    1): starting service 'vendor.bluetooth-1-1'...
+[  563.974264][ T3457] libprocessgroup: SetCgroup::ExecuteForProcess: failed to open /dev/stune/foreground/cgroup.procs: No such file or directory
+07-07 06:19:35.541 W/libprocessgroup( 3457): SetCgroup::ExecuteForProcess: failed to open /dev/stune/foreground/cgroup.procs: No such file or directory
+[  563.974295][ T3457] libprocessgroup: Failed to apply HighPerformance process profile
+07-07 06:19:35.541 W/libprocessgroup( 3457): Failed to apply HighPerformance process profile
+[  563.974307][ T3457] init: failed to set task profiles
+07-07 06:19:35.541 E/init    ( 3457): failed to set task profiles
+[  563.975042][    T1] init: ... started service 'vendor.bluetooth-1-1' has pid 3457
+07-07 06:19:35.541 I/init    (    1): ... started service 'vendor.bluetooth-1-1' has pid 3457
+[  563.990338][    T1] init: Service 'vendor.bluetooth-1-1' (pid 3457) exited with status 1
+
+[  563.990410][    T1] init: Sending signal 9 to service 'vendor.bluetooth-1-1' (pid 3457) process group...
+07-07 06:19:33.460 I/hwservicemanager(  268): getTransport: Cannot find entry android.hardware.bluetooth@1.1::IBluetoothHci/default in either framework or device VINTF manifest.
+[  563.990623][    T1] libprocessgroup: Successfully killed process cgroup uid 1002 pid 3457 in 0ms
+07-07 06:19:33.461 E/HidlServiceManagement( 3457): Service android.hardware.bluetooth@1.1::IBluetoothHci/default must be in VINTF manifest in order to register/get.
+[  563.990917][    T1] init: process with updatable components 'vendor.bluetooth-1-1' exited 4 times in 4 minutes
+07-07 06:19:33.461 E/android.hardware.bluetooth@1.1-service( 3457): Cannot register Bluetooth HAL service
+[  563.992503][    T1] init: processing action (sys.init.updatable_crashing=1) from (/system/etc/init/flags_health_check.rc:10)
+07-07 06:19:35.557 I/init    (    1): Service 'vendor.bluetooth-1-1' (pid 3457) exited with status 1
+[  563.992847][    T1] init: starting service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)'...
+07-07 06:19:35.557 I/init    (    1): Sending signal 9 to service 'vendor.bluetooth-1-1' (pid 3457) process group...
+[  563.998385][    T1] init: ... started service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' has pid 3458
+07-07 06:19:35.557 I/libprocessgroup(    1): Successfully killed process cgroup uid 1002 pid 3457 in 0ms
+[  563.998473][    T1] init: SVC_EXEC service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' pid 3458 (uid 1000 gid 1000+0 context default) started; waiting...
+07-07 06:19:35.557 E/init    (    1): process with updatable components 'vendor.bluetooth-1-1' exited 4 times in 4 minutes
+[  564.008590][ T3458] audit: audit_lost=10207 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:35.559 I/init    (    1): processing action (sys.init.updatable_crashing=1) from (/system/etc/init/flags_health_check.rc:10)
+[  564.008606][ T3458] audit: rate limit exceeded
+07-07 06:19:35.559 I/init    (    1): starting service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)'...
+[  564.008979][  T280] type=1400 audit(1751869173.477:11532): avc:  denied  { open } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:35.565 I/init    (    1): ... started service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' has pid 3458
+[  564.009119][  T280] type=1400 audit(1751869173.477:11533): avc:  denied  { getattr } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:35.565 I/init    (    1): SVC_EXEC service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' pid 3458 (uid 1000 gid 1000+0 context default) started; waiting...
+[  564.009224][  T280] type=1400 audit(1751869173.477:11534): avc:  denied  { map } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:33.480 I/flags_health_check( 3458): ServerConfigurableFlagsReset reset_mode value: 1
+[  564.009327][  T280] type=1400 audit(1751869173.477:11535): avc:  denied  { open } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:33.480 I/flags_health_check( 3458): ServerConfigurableFlagsReset updatable crashing detected, resetting flags.
+[  564.009429][  T280] type=1400 audit(1751869173.477:11536): avc:  denied  { getattr } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:33.477 I/flags_health_ch( 3458): type=1400 audit(0.0:11532): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+[  564.016096][    T1] init: Service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3458) exited with status 0 waiting took 0.019000 seconds
+07-07 06:19:33.477 I/flags_health_ch( 3458): type=1400 audit(0.0:11533): avc:  denied  { getattr } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+[  564.016151][    T1] init: Sending signal 9 to service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3458) process group...
+07-07 06:19:33.477 I/flags_health_ch( 3458): type=1400 audit(0.0:11534): avc:  denied  { map } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+[  564.016412][    T1] libprocessgroup: Successfully killed process cgroup uid 1000 pid 3458 in 0ms
+07-07 06:19:33.477 I/flags_health_ch( 3458): type=1400 audit(0.0:11535): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+[  564.403786][  T267] servicemanager: VINTF HALs require names in the format type/instance (e.g. some.package.foo.IFoo/default) but got: suspend_control
+07-07 06:19:33.477 I/flags_health_ch( 3458): type=1400 audit(0.0:11536): avc:  denied  { getattr } for  path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+[  564.403984][  T267] servicemanager: Could not find android.hardware.bluetooth.IBluetoothHci/default in the VINTF manifest.
+07-07 06:19:35.575 W/audit   ( 3458): audit_lost=10207 audit_rate_limit=5 audit_backlog_limit=64
+[  564.565973][  T683] read descriptors
+07-07 06:19:35.575 E/audit   ( 3458): rate limit exceeded
+[  564.566015][  T683] read strings
+
+[  564.566582][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:35.583 I/init    (    1): Service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3458) exited with status 0 waiting took 0.019000 seconds
+[  564.568940][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:35.583 I/init    (    1): Sending signal 9 to service 'exec 117 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3458) process group...
+[  564.569435][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:35.583 I/libprocessgroup(    1): Successfully killed process cgroup uid 1000 pid 3458 in 0ms
+
+07-07 06:19:33.601 D/InputDispatcher(  709): Conflicting pointer actions: Down received while already down or hovering.
+07-07 06:19:33.603 D/VRI[NavigationBar0]( 1076): updatePointerIcon called with position out of bounds
+07-07 06:19:33.720 W/ElapsedTimeUtils( 1315): getElapsedTime: sSuwFinishedTimeStamp is null
+07-07 06:19:33.723 W/ElapsedTimeUtils( 1315): getElapsedTime: sSuwFinishedTimeStamp is null
+07-07 06:19:33.725 D/BluetoothManagerService(  709): enable(com.android.settings):  mBluetooth=null mBinding=false mState=OFF
+07-07 06:19:33.725 D/BluetoothManagerService(  709): enable returning
+07-07 06:19:33.725 D/BluetoothManagerService(  709): MESSAGE_ENABLE(0): mBluetooth =null
+07-07 06:19:33.725 D/BluetoothManagerService(  709): Persisting Bluetooth Setting: 1
+07-07 06:19:33.725 D/BluetoothManagerService(  709): binding Bluetooth service
+07-07 06:19:33.726 D/CompatibilityChangeReporter(  709): Compat change id reported: 135634846; UID 1002; state: DISABLED
+07-07 06:19:33.730 D/audioserver(  561): logFgsApiBegin: FGS Logger Transaction failed, -129
+07-07 06:19:33.732 D/modules.primary.audio_hal(  525): card0 id:rockchiphdmi0
+07-07 06:19:33.732 D/modules.primary.audio_hal(  525): card1 id:rockchipes8326c
+07-07 06:19:33.732 D/modules.primary.audio_hal(  525): dump out device info
+07-07 06:19:33.732 D/modules.primary.audio_hal(  525): dev_info HDMI  card=0, device:0
+07-07 06:19:33.732 D/modules.primary.audio_hal(  525): start_output_stream: i = 0, device = 0x400
+07-07 06:19:33.733 D/modules.primary.audio_hal(  525): out->Device[0] : 0x400
+07-07 06:19:33.733 D/modules.primary.audio_hal(  525): out->SampleRate : 48000
+07-07 06:19:33.733 D/modules.primary.audio_hal(  525): out->Channels   : 2
+07-07 06:19:33.733 D/modules.primary.audio_hal(  525): out->Format     : 0
+07-07 06:19:33.733 D/modules.primary.audio_hal(  525): out->PreiodSize : 480
+07-07 06:19:33.733 D/modules.primary.audio_hal(  525): start_output_stream:1472, out = 0xf09c1690
+07-07 06:19:33.744 D/Zygote  (  519): Forked child process 3459
+07-07 06:19:33.745 I/ActivityManager(  709): Start proc 3459:com.android.bluetooth/1002 for service {com.android.bluetooth/com.android.bluetooth.btservice.AdapterService}
+07-07 06:19:33.773 I/Zygote  ( 3459): seccomp disabled by setenforce 0
+07-07 06:19:33.777 I/droid.bluetooth( 3459): Using CollectorTypeCMC GC.
+07-07 06:19:33.781 E/droid.bluetooth( 3459): Not starting debugger since process cannot load the jdwp agent.
+07-07 06:19:33.787 D/CompatibilityChangeReporter(  709): Compat change id reported: 168419799; UID 1002; state: DISABLED
+07-07 06:19:33.787 D/CompatibilityChangeReporter(  709): Compat change id reported: 273564678; UID 1002; state: DISABLED
+07-07 06:19:33.789 D/CompatibilityChangeReporter(  709): Compat change id reported: 265195908; UID 1002; state: ENABLED
+07-07 06:19:33.790 D/CompatibilityChangeReporter( 3459): Compat change id reported: 171979766; UID 1002; state: ENABLED
+07-07 06:19:33.790 D/CompatibilityChangeReporter( 3459): Compat change id reported: 242716250; UID 1002; state: ENABLED
+07-07 06:19:33.792 D/CompatibilityChangeReporter( 3459): Compat change id reported: 3400644; UID 1002; state: ENABLED
+07-07 06:19:33.794 D/nativeloader( 3459): Configuring clns-shared-6 for other apk /apex/com.android.btservices/app/Bluetooth@UQ1A.240205.004.B1/Bluetooth.apk. target_sdk_version=34, uses_libraries=, library_path=/apex/com.android.btservices/app/Bluetooth@UQ1A.240205.004.B1/lib/arm64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user_de/0/com.android.bluetooth:/apex/com.android.btservices/app/Bluetooth@UQ1A.240205.004.B1:/system/lib64:/system_ext/lib64
+07-07 06:19:33.795 D/nativeloader( 3459): InitApexLibraries:
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_adservices: libhpke_jni.so:libtflite_support_classifiers_native.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_appsearch: libicing.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_art: libartservice.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_btservices: libbluetooth_jni.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_conscrypt: libjavacrypto.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_extservices: libhpke_jni.so:libtflite_support_classifiers_native.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_os_statsd: libstats_jni.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_tethering: libcronet.114.0.5735.84.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libandroid_net_connectivity_com_android_net_module_util_jni.so:libservice-connectivity.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_uwb: libuwb_uci_jni_rust.so
+07-07 06:19:33.795 D/nativeloader( 3459):   com_android_virt: libvirtualizationservice_jni.so:libvirtualmachine_jni.so
+07-07 06:19:33.798 V/GraphicsEnvironment( 3459): Currently set values for:
+07-07 06:19:33.799 V/GraphicsEnvironment( 3459):   angle_gl_driver_selection_pkgs=[]
+07-07 06:19:33.799 V/GraphicsEnvironment( 3459):   angle_gl_driver_selection_values=[]
+07-07 06:19:33.799 V/GraphicsEnvironment( 3459): ANGLE GameManagerService for com.android.bluetooth: false
+07-07 06:19:33.799 V/GraphicsEnvironment( 3459): com.android.bluetooth is not listed in per-application setting
+07-07 06:19:33.799 V/GraphicsEnvironment( 3459): Neither updatable production driver nor prerelease driver is supported.
+07-07 06:19:33.831 I/bt_stack_config( 3459): packages/modules/Bluetooth/system/main/stack_config.cc:199 get_pts_broadcast_audio_config_options: Config isn't ready, use default option
+07-07 06:19:33.833 I/droid.bluetooth( 3459): [0707/061933.833183:INFO:btif_config_cache.cc(67)] BtifConfigCache, capacity: 10000
+07-07 06:19:33.840 E/ActivityThread( 3459): Failed to find provider info for bluetooth_legacy.provider
+07-07 06:19:33.840 D/DataMigration( 3459): Legacy migration skiped: no migration app installed
+07-07 06:19:33.842 I/BluetoothAvrcpControllerJni( 3459): classInitNative: succeeds
+07-07 06:19:33.843 D/CompatibilityChangeReporter( 3459): Compat change id reported: 263076149; UID 1002; state: ENABLED
+07-07 06:19:33.843 I/BluetoothHidHostServiceJni( 3459): classInitNative: succeeds
+07-07 06:19:33.845 I/BluetoothPanServiceJni( 3459): classInitNative(L108): succeeds
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=A2dpService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=A2dpSinkService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=AvrcpTargetService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=AvrcpControllerService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=BassClientService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=BatteryService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=CsipSetCoordinatorService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=HapClientService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=HeadsetService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=HeadsetClientService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=HearingAidService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=HidDeviceService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=HidHostService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=GattService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=LeAudioService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=TbsService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=BluetoothMapService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=MapClientService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=McpService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=BluetoothOppService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=PanService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=BluetoothPbapService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=PbapClientService, enabled=false
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=SapService, enabled=true
+07-07 06:19:33.847 I/AdapterServiceConfig( 3459): init: profile=VolumeControlService, enabled=true
+07-07 06:19:33.852 I/BluetoothMetricsLogger( 3459): setCounterMetricsAlarm()
+07-07 06:19:33.853 D/AlarmManager(  709): setImplLocked() callingPackage=com.android.bluetooth
+07-07 06:19:33.857 D/BluetoothAdapterService( 3459): onCreate()
+07-07 06:19:33.861 D/CompatibilityChangeReporter(  709): Compat change id reported: 161145287; UID 1002; state: ENABLED
+07-07 06:19:33.866 D/AdapterState( 3459): make() - Creating AdapterState
+07-07 06:19:33.866 I/AdapterState( 3459): OFF : entered
+07-07 06:19:33.866 D/AdapterProperties( 3459): Setting state to OFF
+07-07 06:19:33.867 D/BluetoothKeystoreService( 3459): new BluetoothKeystoreService isCommonCriteriaMode: false
+07-07 06:19:33.868 D/BluetoothKeystoreService( 3459): start
+07-07 06:19:33.868 I/droid.bluetooth( 3459): [0707/061933.868314:INFO:com_android_bluetooth_btservice_BluetoothKeystore.cpp(97)] classInitNative: succeeds
+07-07 06:19:33.868 D/BluetoothKeystoreService( 3459): setBluetoothKeystoreService(): set to: com.android.bluetooth.btservice.bluetoothkeystore.BluetoothKeystoreService@4122cdf
+07-07 06:19:33.869 D/BluetoothKeystoreService( 3459): loadConfigData
+07-07 06:19:33.869 D/BluetoothKeystoreService( 3459): getCompareResult: 0
+07-07 06:19:33.871 D/CompatibilityChangeReporter( 3459): Compat change id reported: 183155436; UID 1002; state: ENABLED
+07-07 06:19:33.871 I/bt_btif ( 3459): packages/modules/Bluetooth/system/btif/src/bluetooth.cc:386 init: init: start restricted = 0 ; common criteria mode = 0, config compare result = 0
+07-07 06:19:33.871 I/bt      ( 3459): bt_common::init_flags: Flags loaded: asha_packet_drop_frequency_threshold=60asha_phy_update_retry_limit=5always_send_services_if_gatt_disc_done=truealways_use_private_gatt_for_debugging=falseasynchronously_start_l2cap_coc=truebtaa_hci=truebta_dm_clear_conn_id_on_client_close=truebtm_dm_flush_discovery_queue_on_search_cancel=falseclassic_discovery_only=falseclear_hidd_interrupt_cid_on_disconnect=truedelay_hidh_cleanup_until_hidh_ready_start=truedevice_iot_config_logging=falsedynamic_avrcp_version_enhancement=truefinite_att_timeout=truegatt_robust_caching_client=truegatt_robust_caching_server=falsegd_core=falsegd_hal_snoop_logger_socket=truegd_hal_snoop_logger_filtering=truegd_l2cap=falsegd_link_policy=falsegd_remote_name_request=falsegd_rust=falsehci_adapter=0hfp_dynamic_version=trueirk_rotation=falseleaudio_targeted_announcement_reconnection_mode=truepass_phy_update_callback=truepbap_pse_dynamic_version_upgrade=falseperiodic_advertising_adi=trueprivate_gatt=truequeue_l2cap_coc_while_encrypting=trueread_encryption_key_size=trueredact_log=truerust_event_loop=truesco_codec_select_lc3=falsesco_codec_timeout_clear=falsesdp_serialization=truesdp_skip_rnr_if_known=truebluetooth_quality_report_callback=trueset_min_encryption=truesubrating=truetrigger_advertising_callbacks_on_first_resume_after_pause=trueuse_unified_connection_manager=falsesdp_return_classic_services_when_le_discovery_fails=truedefault_log_level=4logging_explicit_tag_settings={}
+[  565.626554][  T683] read descriptors
+07-07 06:19:33.871 I/bt_osi_allocation_tracker( 3459): packages/modules/Bluetooth/system/osi/src/allocation_tracker.cc:60 allocation_tracker_init: canary initialized
+[  565.626615][  T683] read strings
+07-07 06:19:33.872 I/droid.bluetooth( 3459): [0707/061933.871968:INFO:message_loop_thread.cc(184)] Run: message loop starting for thread bt_stack_manager_thread
+[  565.627254][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:33.872 I/bt_stack_manager( 3459): packages/modules/Bluetooth/system/btif/src/stack_manager.cc:277 event_init_stack: is initializing the stack
+[  565.630771][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:33.872 I/droid.bluetooth( 3459): [0707/061933.872287:INFO:message_loop_thread.cc(184)] Run: message loop starting for thread bt_main_thread
+[  565.631349][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:33.872 I/device_iot_config( 3459): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:68 device_iot_config_module_init:
+07-07 06:19:33.872 E/droid.bluetooth( 3459): [0707/061933.872479:ERROR:config.cc(106)] config_new: unable to open file '/data/misc/bluedroid/bt_remote_dev_info.conf': No such file or directory
+07-07 06:19:33.872 W/device_iot_config( 3459): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:83 device_iot_config_module_init: Unable to load config file: /data/misc/bluedroid/bt_remote_dev_info.conf; using backup.
+07-07 06:19:33.872 E/droid.bluetooth( 3459): [0707/061933.872540:ERROR:config.cc(106)] config_new: unable to open file '/data/misc/bluedroid/bt_remote_dev_info.bak': No such file or directory
+07-07 06:19:33.872 E/device_iot_config( 3459): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:89 device_iot_config_module_init: Unable to load bak file; creating empty config.
+07-07 06:19:33.872 I/device_iot_config( 3459): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:130 device_iot_config_module_init: Devices loaded 0
+07-07 06:19:33.872 E/bt_osi_alarm( 3459): packages/modules/Bluetooth/system/osi/src/alarm.cc:683 timer_create_internal: timer_create_internal unable to create timer with clock 9: Operation not supported on transport endpoint
+07-07 06:19:33.872 E/bt_osi_alarm( 3459): packages/modules/Bluetooth/system/osi/src/alarm.cc:688 timer_create_internal: The kernel might not have support for timer_create(CLOCK_BOOTTIME_ALARM): https://lwn.net/Articles/429925/
+07-07 06:19:33.872 E/bt_osi_alarm( 3459): packages/modules/Bluetooth/system/osi/src/alarm.cc:692 timer_create_internal: See following patches: https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=CLOCK_BOOTTIME_ALARM
+07-07 06:19:33.873 I/bt_osi_thread( 3459): packages/modules/Bluetooth/system/osi/src/thread.cc:210 run_thread: run_thread: thread id 3489, thread name alarm_default_ca started
+07-07 06:19:33.873 I/bt_osi_thread( 3459): packages/modules/Bluetooth/system/osi/src/thread.cc:210 run_thread: run_thread: thread id 3490, thread name alarm_dispatcher started
+07-07 06:19:33.873 I/bt_core_module( 3459): packages/modules/Bluetooth/system/btcore/src/module.cc:86 module_start_up: module_start_up Starting module "gd_shim_module"
+07-07 06:19:33.873 I/bt_gd_shim( 3459): packages/modules/Bluetooth/system/main/shim/stack.cc:81 StartEverything: StartEverything Starting Gd stack
+07-07 06:19:33.873 I/bt_gd_shim( 3459): packages/modules/Bluetooth/system/main/shim/stack.cc:160 Start: Start Starting Gd stack
+07-07 06:19:33.873 I/BtGdWakelockNative( 3459): packages/modules/Bluetooth/system/gd/os/android/wakelock_native.cc:79 Initialize: Initializing native wake locks
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of BluetoothCounterMetrics
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of BluetoothCounterMetrics
+07-07 06:19:33.874 I/BluetoothCounterMetrics( 3459): packages/modules/Bluetooth/system/gd/metrics/counter_metrics.cc:40 Start: Counter metrics initialized
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started BluetoothCounterMetrics
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of HciHalHidl
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/common/strings.cc:153 Uint64FromString: cannot parse whole string '0xffff'
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:1432 GetBtSnoopMode: btsnoop_mode_empty: 1
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:505 SnoopLogger: Snoop Logs filtered mode enabled
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.rfcomm.enabled: 0
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.a2dp.enabled: 0
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.headers.enabled: 0
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.map: disabled
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.pbap: disabled
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:334 delete_btsnoop_files: Deleting logs if they exist
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:340 delete_btsnoop_files: Main log file does not exist at "/data/misc/bluetooth/logs/btsnoop_hci.log"
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:348 delete_btsnoop_files: Last log file does not exist at "/data/misc/bluetooth/logs/btsnoop_hci.log"
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:334 delete_btsnoop_files: Deleting logs if they exist
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:340 delete_btsnoop_files: Main log file does not exist at "/data/misc/bluetooth/logs/btsnooz_hci.log"
+07-07 06:19:33.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:348 delete_btsnoop_files: Last log file does not exist at "/data/misc/bluetooth/logs/btsnooz_hci.log"
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of SnoopLogger
+07-07 06:19:33.874 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of SnoopLogger
+07-07 06:19:33.875 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.rfcomm.enabled: 0
+07-07 06:19:33.875 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.a2dp.enabled: 0
+07-07 06:19:33.875 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.headers.enabled: 0
+07-07 06:19:33.875 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.map: disabled
+07-07 06:19:33.875 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.pbap: disabled
+07-07 06:19:33.875 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/snoop_logger_socket.cc:63 SnoopLoggerSocket: address 2130706433 port 8872
+07-07 06:19:33.875 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started SnoopLogger
+07-07 06:19:33.875 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+07-07 06:19:33.875 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of Btaa Module
+07-07 06:19:33.875 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of Btaa Module
+07-07 06:19:33.875 E/btaa    ( 3459): packages/modules/Bluetooth/system/gd/btaa/android/activity_attribution.cc:107 impl: No suspend control service available.
+07-07 06:19:33.876 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started Btaa Module
+07-07 06:19:33.876 I/BtGdModule( 3459): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of HciHalHidl
+07-07 06:19:33.876 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/hal/hci_hal_android_hidl.cc:439 start_hidl: Trying to find a HIDL interface
+07-07 06:19:33.876 I/hwservicemanager(  268): getTransport: Cannot find entry android.hardware.bluetooth@1.1::IBluetoothHci/default in either framework or device VINTF manifest.
+07-07 06:19:35.970 E/servicemanager(  267): VINTF HALs require names in the format type/instance (e.g. some.package.foo.IFoo/default) but got: suspend_control
+07-07 06:19:35.970 I/servicemanager(  267): Could not find android.hardware.bluetooth.IBluetoothHci/default in the VINTF manifest.
+07-07 06:19:33.877 I/android.hardware.bluetooth@1.0-impl(  526): BluetoothHci::initialize()
+07-07 06:19:33.878 I/android.hardware.bluetooth@1.0-impl(  526): Initialize: VendorInterface::Initialize
+07-07 06:19:33.878 W/android.hardware.bluetooth@1.0-impl(  526): VendorInterface open/close is on-going !
+07-07 06:19:33.931 D/audioserver(  561): logFgsApiEnd: FGS Logger Transaction failed, -129
+07-07 06:19:33.932 I/APM::AudioPolicyEngine(  561): getDevicesForStrategyInt no device found for strategy 9
+07-07 06:19:33.992 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:33.992 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:33.992 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:33.992 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:33.992 I/adbd    (  666): UsbFfsConnection being destroyed
+07-07 06:19:34.037 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:34.038 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:34.039 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:36.132 I/        (  683): read descriptors
+07-07 06:19:36.132 I/        (  683): read strings
+07-07 06:19:36.133 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:36.135 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:36.136 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  566.694073][  T683] read descriptors
+07-07 06:19:34.257 D/ActivityManager(  709): freezing 1916 com.android.providers.calendar
+[  566.694132][  T683] read strings
+07-07 06:19:35.040 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+[  566.694807][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:35.040 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+[  566.697978][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:35.040 I/adbd    (  666): UsbFfs: already offline
+[  566.698661][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:35.040 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:35.040 I/adbd    (  666): UsbFfsConnection being destroyed
+07-07 06:19:35.098 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:35.099 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:35.100 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:37.193 I/        (  683): read descriptors
+07-07 06:19:37.193 I/        (  683): read strings
+07-07 06:19:37.194 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.197 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.198 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:36.084 D/OomAdjuster(  709): Not killing cached processes
+07-07 06:19:36.084 W/libprocessgroup(  709): SetCgroup::ExecuteForProcess: failed to open /dev/stune/background/cgroup.procs: No such file or directory
+07-07 06:19:36.101 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:36.101 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:36.101 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:36.101 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:36.101 I/adbd    (  666): UsbFfsConnection being destroyed
+07-07 06:19:36.166 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:36.167 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:36.167 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:38.260 I/        (  683): read descriptors
+07-07 06:19:38.261 I/        (  683): read strings
+07-07 06:19:38.261 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.264 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.265 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:36.727 E/BluetoothManagerService(  709): MESSAGE_TIMEOUT_BIND
+07-07 06:19:36.874 I/bluetooth( 3459): packages/modules/Bluetooth/system/gd/stack_manager.cc:52 StartUp: init_status == 1
+07-07 06:19:36.874 F/bluetooth( 3459): assertion 'init_status == std::future_status::ready' failed - Can't start stack, last instance: starting HciHalHidl
+--------- beginning of crash
+07-07 06:19:36.874 F/libc    ( 3459): Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 3484 (bt_stack_manage), pid 3459 (droid.bluetooth)
+07-07 06:19:36.910 D/modules.primary.audio_hal(  525): do_out_standby,out = 0xf09c1690,device = 0x2, standby = 0
+07-07 06:19:36.910 D/modules.primary.audio_hal(  525): close device
+07-07 06:19:36.942 I/crash_dump64( 3500): obtaining output fd from tombstoned, type: kDebuggerdTombstoneProto
+07-07 06:19:36.942 I/tombstoned(  376): received crash request for pid 3484
+07-07 06:19:36.943 I/crash_dump64( 3500): performing dump of process 3459 (target tid = 3484)
+07-07 06:19:36.952 E/DEBUG   ( 3500): failed to read process info: failed to open /proc/3459: No such file or directory
+[  567.631947][ T3500] audit: audit_lost=10364 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:37.101 I/crash_dump64( 3500): type=1400 audit(0.0:11694): avc:  denied  { read } for  name="product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+[  567.631969][ T3500] audit: rate limit exceeded
+07-07 06:19:37.101 I/crash_dump64( 3500): type=1400 audit(0.0:11695): avc:  denied  { open } for  path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+[  567.632157][  T280] type=1400 audit(1751869177.101:11694): avc:  denied  { read } for  comm="crash_dump64" name="product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:37.101 I/crash_dump64( 3500): type=1400 audit(0.0:11696): avc:  denied  { getattr } for  path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+[  567.632302][  T280] type=1400 audit(1751869177.101:11695): avc:  denied  { open } for  comm="crash_dump64" path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:37.101 I/crash_dump64( 3500): type=1400 audit(0.0:11697): avc:  denied  { map } for  path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+[  567.632374][  T280] type=1400 audit(1751869177.101:11696): avc:  denied  { getattr } for  comm="crash_dump64" path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:37.101 I/crash_dump64( 3500): type=1400 audit(0.0:11698): avc:  denied  { read } for  name="framework-res__auto_generated_rro_vendor.apk" dev="dm-3" ino=1776 scontext=u:r:crash_dump:s0 tcontext=u:object_r:vendor_overlay_file:s0 tclass=file permissive=1
+[  567.632444][  T280] type=1400 audit(1751869177.101:11697): avc:  denied  { map } for  comm="crash_dump64" path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:39.198 W/audit   ( 3500): audit_lost=10364 audit_rate_limit=5 audit_backlog_limit=64
+[  567.632510][  T280] type=1400 audit(1751869177.101:11698): avc:  denied  { read } for  comm="crash_dump64" name="framework-res__auto_generated_rro_vendor.apk" dev="dm-3" ino=1776 scontext=u:r:crash_dump:s0 tcontext=u:object_r:vendor_overlay_file:s0 tclass=file permissive=1
+07-07 06:19:39.198 E/audit   ( 3500): rate limit exceeded
+[  567.637810][  T275] logd: logdr: UID=1002 GID=1002 PID=3500 n tail=500 logMask=8 pid=3459 start=0ns deadline=0ns
+07-07 06:19:39.204 I/logd    (  275): logdr: UID=1002 GID=1002 PID=3500 n tail=500 logMask=8 pid=3459 start=0ns deadline=0ns
+[  567.638405][  T275] logd: logdr: UID=1002 GID=1002 PID=3500 n tail=500 logMask=1 pid=3459 start=0ns deadline=0ns
+07-07 06:19:39.205 I/logd    (  275): logdr: UID=1002 GID=1002 PID=3500 n tail=500 logMask=1 pid=3459 start=0ns deadline=0ns
+[  567.668553][    T1] init: starting service 'simple_bugreportd'...
+07-07 06:19:37.114 F/DEBUG   ( 3500): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+[  567.669217][    T1] init: Created socket '/dev/socket/dumpstate', mode 660, user 2000, group 1007
+07-07 06:19:37.114 F/DEBUG   ( 3500): Build fingerprint: 'rockchip/asra501_u/asra501_u:14/UQ1A.240205.004.B1/eng.adv.20250707.102632:userdebug/release-keys'
+[  567.711494][    T1] init: ... started service 'simple_bugreportd' has pid 3507
+07-07 06:19:37.114 F/DEBUG   ( 3500): Revision: '0'
+[  567.711580][    T1] init: Control message: Processed ctl.start for 'simple_bugreportd' from pid: 709 (system_server)
+07-07 06:19:37.114 F/DEBUG   ( 3500): ABI: 'arm64'
+[  567.712123][    T1] init: Untracked pid 3500 exited with status 0
+07-07 06:19:37.114 F/DEBUG   ( 3500): Timestamp: 2025-07-07 06:19:36.952449108+0000
+[  567.712158][    T1] init: Untracked pid 3500 did not have an associated service entry and will not be reaped
+07-07 06:19:37.114 F/DEBUG   ( 3500): Process uptime: 0s
+[  567.712343][    T1] init: Untracked pid 3502 exited with status 0
+07-07 06:19:37.114 F/DEBUG   ( 3500): Cmdline: com.android.bluetooth
+[  567.712371][    T1] init: Untracked pid 3502 did not have an associated service entry and will not be reaped
+07-07 06:19:37.114 F/DEBUG   ( 3500): pid: 3459, tid: 3484, name: bt_stack_manage  >>> com.android.bluetooth <<<
+[  567.746389][  T683] read descriptors
+07-07 06:19:37.115 F/DEBUG   ( 3500): uid: 1002
+[  567.746447][  T683] read strings
+07-07 06:19:37.115 F/DEBUG   ( 3500): tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+[  567.747439][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.115 F/DEBUG   ( 3500): signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+[  567.750764][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.115 F/DEBUG   ( 3500): Abort message: 'assertion 'init_status == std::future_status::ready' failed - Can't start stack, last instance: starting HciHalHidl'
+[  567.751350][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x0  0000000000000000  x1  0000000000000d9c  x2  0000000000000006  x3  0000006e84d2bd50
+[  567.795490][  T275] logd: logdr: UID=0 GID=0 PID=3513 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x4  6539396373721f3c  x5  6539396373721f3c  x6  6539396373721f3c  x7  7f7f7f7f7f7f7f7f
+[  567.818288][  T275] logd: logdr: UID=0 GID=0 PID=3515 n tail=0 logMask=4 pid=0 start=0ns deadline=0ns
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x8  00000000000000f0  x9  00000071c2c4a090  x10 0000000000000001  x11 00000071c2c9d058
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x12 0000006e84d2ac00  x13 0000000000000074  x14 0000006e84d2bf90  x15 000000032bacf4ce
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x16 00000071c2d0ad08  x17 00000071c2cdee90  x18 0000006e840d8080  x19 0000000000000d83
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x20 0000000000000d9c  x21 00000000ffffffff  x22 b40000705a69df50  x23 b40000705a69ec70
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x24 0000006f29ce5000  x25 0000006e8fbe93a0  x26 0000006e84d2cff8  x27 00000000000fc000
+07-07 06:19:37.115 F/DEBUG   ( 3500):     x28 00000000000fe000  x29 0000006e84d2bdd0
+07-07 06:19:37.115 F/DEBUG   ( 3500):     lr  00000071c2c8e9b8  sp  0000006e84d2bd30  pc  00000071c2c8e9e4  pst 0000000000001000
+07-07 06:19:37.115 F/DEBUG   ( 3500): 22 total frames
+07-07 06:19:37.115 F/DEBUG   ( 3500): backtrace:
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #00 pc 00000000000669e4  /apex/com.android.runtime/lib64/bionic/libc.so (abort+164) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #01 pc 0000000000622bb0  /apex/com.android.art/lib64/libart.so (art::Runtime::Abort(char const*)+116) (BuildId: 5dfb7e35d1d737556ea2e4e69ebba352)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #02 pc 00000000000417d0  /apex/com.android.art/lib64/libbase.so (android::base::SetAborter(std::__1::function<void (char const*)>&&)::$_0::__invoke(char const*)+80) (BuildId: 86bef7ce19ab410597d5aa825f150404)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #03 pc 0000000000011ec8  /system/lib64/liblog.so (__android_log_assert+308) (BuildId: 89df7bea7a0c4aafd4ef1135f5c7cdfa)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #04 pc 0000000000c194d8  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::StackManager::StartUp(bluetooth::ModuleList*, bluetooth::os::Thread*)+704) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #05 pc 00000000004994dc  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::shim::Stack::Start(bluetooth::ModuleList*)+192) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #06 pc 0000000000499228  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::shim::Stack::StartEverything()+1720) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #07 pc 00000000004ae6d0  /apex/com.android.btservices/lib64/libbluetooth_jni.so (ShimModuleStartUp()+16) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #08 pc 00000000006aa420  /apex/com.android.btservices/lib64/libbluetooth_jni.so (module_start_up(module_t const*)+200) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #09 pc 00000000006a91cc  /apex/com.android.btservices/lib64/libbluetooth_jni.so (init_stack_internal(bluetooth::core::CoreInterface*)+76) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #10 pc 00000000006a909c  /apex/com.android.btservices/lib64/libbluetooth_jni.so (event_init_stack(std::__1::promise<void>, bluetooth::core::CoreInterface*)+136) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #11 pc 00000000006a9114  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::internal::Invoker<base::internal::BindState<void (*)(std::__1::promise<void>, bluetooth::core::CoreInterface*), std::__1::promise<void>, base::internal::UnretainedWrapper<bluetooth::core::CoreInterface> >, void ()>::RunOnce(base::internal::BindStateBase*)+52) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #12 pc 0000000000c500ec  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::debug::TaskAnnotator::RunTask(char const*, base::PendingTask*)+196) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #13 pc 0000000000c4f3ec  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::MessageLoop::RunTask(base::PendingTask*)+352) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #14 pc 0000000000c4f7b0  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::MessageLoop::DoWork()+452) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #15 pc 0000000000c525c0  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::MessagePumpDefault::Run(base::MessagePump::Delegate*)+100) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #16 pc 0000000000c79508  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::RunLoop::Run()+64) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #17 pc 00000000006f85ac  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::common::MessageLoopThread::Run(std::__1::promise<void>)+328) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #18 pc 00000000006f80c4  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::common::MessageLoopThread::RunThread(bluetooth::common::MessageLoopThread*, std::__1::promise<void>)+48) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #19 pc 00000000006f8b3c  /apex/com.android.btservices/lib64/libbluetooth_jni.so (void* std::__1::__thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, void (*)(bluetooth::common::MessageLoopThread*, std::__1::promise<void>), bluetooth::common::MessageLoopThread*, std::__1::promise<void> > >(void*)+84) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #20 pc 00000000000cb6a8  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+208) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+07-07 06:19:37.115 F/DEBUG   ( 3500):       #21 pc 000000000006821c  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+07-07 06:19:37.138 E/tombstoned(  376): Tombstone written to: tombstone_06
+07-07 06:19:37.139 D/RKLOG   (  709): =========generate tombstone bugreport[idx=1]: {0x714e48ed, 6, 2, 566}
+07-07 06:19:37.141 E/NativeTombstoneManager(  709): Tombstone's UID (1002) not an app, ignoring
+07-07 06:19:39.235 I/init    (    1): starting service 'simple_bugreportd'...
+07-07 06:19:39.236 I/init    (    1): Created socket '/dev/socket/dumpstate', mode 660, user 2000, group 1007
+07-07 06:19:37.143 E/NativeTombstoneManager(  709): Tombstone's UID (1002) not an app, ignoring
+07-07 06:19:37.169 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:37.169 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:37.169 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:37.169 I/adbd    (  666): destroying transport UsbFfs
+[  568.798090][  T683] read descriptors
+07-07 06:19:37.169 I/adbd    (  666): UsbFfsConnection being destroyed
+[  568.798138][  T683] read strings
+07-07 06:19:37.175 E/android.hardware.bluetooth@1.0-impl(  526): BluetoothDeathRecipient::serviceDied - Bluetooth service died
+[  568.799590][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.175 I/android.hardware.bluetooth@1.0-impl(  526): BluetoothHci::close()
+[  568.802292][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.175 I/android.hardware.bluetooth@1.0-impl(  526): Skipping unlink call, service died.
+[  568.802692][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:37.175 I/android.hardware.bluetooth@1.0-impl(  526): Shutdown: VendorInterface::Shutdown
+07-07 06:19:37.175 W/android.hardware.bluetooth@1.0-impl(  526): VendorInterface is not allow close(2)
+07-07 06:19:37.177 I/ActivityManager(  709): Process com.android.bluetooth (pid 3459) has died: psvc PER
+[  568.886976][  T267] servicemanager: VINTF HALs require names in the format type/instance (e.g. some.package.foo.IFoo/default) but got: suspend_control
+07-07 06:19:37.178 I/Zygote  (  519): Process 3459 exited due to signal 6 (Aborted)
+[  568.887233][  T267] servicemanager: Could not find android.hardware.bluetooth.IBluetoothHci/default in the VINTF manifest.
+07-07 06:19:37.178 I/libprocessgroup(  709): Successfully killed process cgroup uid 1002 pid 3459 in 0ms
+07-07 06:19:37.178 W/ActivityManager(  709): Scheduling restart of crashed service com.android.bluetooth/.btservice.AdapterService in 1000ms for connection
+07-07 06:19:37.179 D/DisplayManagerService(  709): Drop pending events for gone uid 1002
+07-07 06:19:39.278 I/init    (    1): ... started service 'simple_bugreportd' has pid 3507
+[  568.958053][    T1] init: starting service 'vendor.bluetooth-1-1'...
+07-07 06:19:39.278 I/init    (    1): Control message: Processed ctl.start for 'simple_bugreportd' from pid: 709 (system_server)
+07-07 06:19:39.279 I/init    (    1): Untracked pid 3500 exited with status 0
+07-07 06:19:39.279 I/init    (    1): Untracked pid 3500 did not have an associated service entry and will not be reaped
+[  568.986489][ T3561] libprocessgroup: SetCgroup::ExecuteForProcess: failed to open /dev/stune/foreground/cgroup.procs: No such file or directory
+07-07 06:19:39.279 I/init    (    1): Untracked pid 3502 exited with status 0
+[  568.986546][ T3561] libprocessgroup: Failed to apply HighPerformance process profile
+07-07 06:19:39.279 I/init    (    1): Untracked pid 3502 did not have an associated service entry and will not be reaped
+[  568.986573][ T3561] init: failed to set task profiles
+07-07 06:19:37.202 I/dumpstate( 3507): do_vibrate: 0 stream_to_socket: 0 progress_updates_to_socket: 0 do_screenshot: 0 is_remote_mode: 0 show_header_only: 0 telephony_only: 0 wifi_only: 0 do_progress_updates: 0 fd: -1 bugreport_mode:  limited_only: 0 args: /system/bin/dumpstate -D -q last_panic_dump: 0 android_dump_demand: 1
+[  568.986797][    T1] init: ... started service 'vendor.bluetooth-1-1' has pid 3561
+07-07 06:19:37.203 I/dumpstate( 3507): apk trigger a bugreport, reason TOMBSTONE
+[  569.015541][    T1] init: Service 'vendor.bluetooth-1-1' (pid 3561) exited with status 1
+07-07 06:19:37.203 D/dumpstate( 3507): dumpstate calling_uid = 0 ; calling package =
+[  569.015577][    T1] init: Sending signal 9 to service 'vendor.bluetooth-1-1' (pid 3561) process group...
+07-07 06:19:37.203 D/dumpstate( 3507): Loading stats from /bugreports/dumpstate-stats.txt
+[  569.015682][    T1] libprocessgroup: Successfully killed process cgroup uid 1002 pid 3561 in 0ms
+07-07 06:19:37.203 I/dumpstate( 3507): Average max progress: 259 in 3 runs; estimated max: 259
+[  569.015810][    T1] init: process with updatable components 'vendor.bluetooth-1-1' exited 4 times in 4 minutes
+07-07 06:19:37.204 D/dumpstate( 3507): Wake lock acquired.
+[  569.016594][    T1] init: processing action (sys.init.updatable_crashing=1) from (/system/etc/init/flags_health_check.rc:10)
+07-07 06:19:37.204 I/dumpstate( 3507): Running on strict-run mode, which has shorter timeouts (to disable, call 'setprop dumpstate.strict_run false')
+[  569.016814][    T1] init: starting service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)'...
+07-07 06:19:37.204 I/dumpstate( 3507): dumpstate info: id=5, args='/system/bin/dumpstate -D -q', bugreport_mode=  bugreport format version: 2.0
+[  569.019467][    T1] init: ... started service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' has pid 3562
+07-07 06:19:37.204 D/dumpstate( 3507): Bugreport dir: [/data/user_de/0/com.android.shell/files/bugreports] Base name: [2025-07-07-06-19-37] Suffix: [TOMBSTONE] Log path: [/data/user_de/0/com.android.shell/files/bugreports/2025-07-07-06-19-37-TOMBSTONE-dumpstate_log-3507.txt] Temporary path: [/data/user_de/0/com.android.shell/files/bugreports/2025-07-07-06-19-37-TOMBSTONE.tmp] Screenshot path: []
+[  569.019515][    T1] init: SVC_EXEC service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' pid 3562 (uid 1000 gid 1000+0 context default) started; waiting...
+07-07 06:19:37.204 D/dumpstate( 3507): Creating initial .zip file (/data/user_de/0/com.android.shell/files/bugreports/2025-07-07-06-19-37-TOMBSTONE.zip)
+[  569.036290][ T3562] audit: audit_lost=10371 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:37.204 D/dumpstate( 3507): Adding zip text entry version.txt
+[  569.036306][ T3562] audit: rate limit exceeded
+07-07 06:19:37.206 D/dumpstate( 3507): Module metadata package name: com.android.modulemetadata
+[  569.036368][  T280] type=1400 audit(1751869178.505:11706): avc:  denied  { open } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:37.218 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+[  569.036418][  T280] type=1400 audit(1751869178.505:11707): avc:  denied  { getattr } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:37.219 I/adbd    (  666): UsbFfsConnection constructed
+[  569.036440][  T280] type=1400 audit(1751869178.505:11708): avc:  denied  { map } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:37.219 I/adbd    (  666): UsbFfs-monitor thread spawned
+[  569.036462][  T280] type=1400 audit(1751869178.505:11709): avc:  denied  { open } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:39.313 I/        (  683): read descriptors
+[  569.036483][  T280] type=1400 audit(1751869178.505:11710): avc:  denied  { getattr } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:39.313 I/        (  683): read strings
+[  569.049937][    T1] init: Service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3562) exited with status 0 waiting took 0.031000 seconds
+07-07 06:19:39.314 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  569.049961][    T1] init: Sending signal 9 to service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3562) process group...
+07-07 06:19:39.317 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  569.050107][    T1] libprocessgroup: Successfully killed process cgroup uid 1000 pid 3562 in 0ms
+07-07 06:19:39.318 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  569.140373][    T1] init: Service 'simple_bugreportd' (pid 3507) exited with status 0 oneshot service took 1.468000 seconds in background
+07-07 06:19:39.362 I/logd    (  275): logdr: UID=0 GID=0 PID=3513 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns
+[  569.140447][    T1] init: Sending signal 9 to service 'simple_bugreportd' (pid 3507) process group...
+07-07 06:19:39.385 I/logd    (  275): logdr: UID=0 GID=0 PID=3515 n tail=0 logMask=4 pid=0 start=0ns deadline=0ns
+[  569.140661][    T1] libprocessgroup: Successfully killed process cgroup uid 0 pid 3507 in 0ms
+07-07 06:19:37.578 I/hwc-drm-two(  306): GetDisplayIdentificationData,line=3038 vendor.hwc.enable_edid_report = 0, disable GetDisplayIdentificationData support.
+07-07 06:19:37.579 E/HwcComposer(  307): getDisplayIdentificationData failed Status(-8, EX_SERVICE_SPECIFIC): '8: '
+07-07 06:19:38.181 D/CompatibilityChangeReporter(  709): Compat change id reported: 135634846; UID 1002; state: DISABLED
+07-07 06:19:38.200 D/Zygote  (  519): Forked child process 3525
+07-07 06:19:38.201 I/ActivityManager(  709): Start proc 3525:com.android.bluetooth/1002 for service {com.android.bluetooth/com.android.bluetooth.btservice.AdapterService}
+07-07 06:19:38.217 I/Zygote  ( 3525): seccomp disabled by setenforce 0
+07-07 06:19:38.220 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:38.220 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:38.220 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:38.221 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:38.221 I/adbd    (  666): UsbFfsConnection being destroyed
+07-07 06:19:38.222 I/droid.bluetooth( 3525): Using CollectorTypeCMC GC.
+07-07 06:19:38.226 E/droid.bluetooth( 3525): Not starting debugger since process cannot load the jdwp agent.
+07-07 06:19:38.234 D/CompatibilityChangeReporter(  709): Compat change id reported: 168419799; UID 1002; state: DISABLED
+07-07 06:19:38.234 D/CompatibilityChangeReporter(  709): Compat change id reported: 273564678; UID 1002; state: DISABLED
+07-07 06:19:38.236 D/CompatibilityChangeReporter(  709): Compat change id reported: 265195908; UID 1002; state: ENABLED
+07-07 06:19:38.237 D/CompatibilityChangeReporter( 3525): Compat change id reported: 171979766; UID 1002; state: ENABLED
+07-07 06:19:38.237 D/CompatibilityChangeReporter( 3525): Compat change id reported: 242716250; UID 1002; state: ENABLED
+07-07 06:19:38.239 D/CompatibilityChangeReporter( 3525): Compat change id reported: 3400644; UID 1002; state: ENABLED
+07-07 06:19:38.242 D/nativeloader( 3525): Configuring clns-shared-6 for other apk /apex/com.android.btservices/app/Bluetooth@UQ1A.240205.004.B1/Bluetooth.apk. target_sdk_version=34, uses_libraries=, library_path=/apex/com.android.btservices/app/Bluetooth@UQ1A.240205.004.B1/lib/arm64:/system/lib64:/system_ext/lib64, permitted_path=/data:/mnt/expand:/data/user_de/0/com.android.bluetooth:/apex/com.android.btservices/app/Bluetooth@UQ1A.240205.004.B1:/system/lib64:/system_ext/lib64
+07-07 06:19:38.243 D/nativeloader( 3525): InitApexLibraries:
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_adservices: libhpke_jni.so:libtflite_support_classifiers_native.so
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_appsearch: libicing.so
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_art: libartservice.so
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_btservices: libbluetooth_jni.so
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_conscrypt: libjavacrypto.so
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_extservices: libhpke_jni.so:libtflite_support_classifiers_native.so
+[  569.829932][  T683] read descriptors
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_os_statsd: libstats_jni.so
+[  569.829974][  T683] read strings
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_tethering: libcronet.114.0.5735.84.so:libframework-connectivity-jni.so:libframework-connectivity-tiramisu-jni.so:libandroid_net_connectivity_com_android_net_module_util_jni.so:libservice-connectivity.so
+[  569.830971][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_uwb: libuwb_uci_jni_rust.so
+[  569.834303][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.243 D/nativeloader( 3525):   com_android_virt: libvirtualizationservice_jni.so:libvirtualmachine_jni.so
+[  569.834725][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.248 V/GraphicsEnvironment( 3525): Currently set values for:
+07-07 06:19:38.249 V/GraphicsEnvironment( 3525):   angle_gl_driver_selection_pkgs=[]
+07-07 06:19:38.249 V/GraphicsEnvironment( 3525):   angle_gl_driver_selection_values=[]
+07-07 06:19:38.249 V/GraphicsEnvironment( 3525): ANGLE GameManagerService for com.android.bluetooth: false
+07-07 06:19:38.249 V/GraphicsEnvironment( 3525): com.android.bluetooth is not listed in per-application setting
+07-07 06:19:38.249 V/GraphicsEnvironment( 3525): Neither updatable production driver nor prerelease driver is supported.
+07-07 06:19:38.270 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:38.270 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:38.271 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:40.365 I/        (  683): read descriptors
+07-07 06:19:40.365 I/        (  683): read strings
+07-07 06:19:40.366 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:40.369 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:40.369 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.301 I/bt_stack_config( 3525): packages/modules/Bluetooth/system/main/stack_config.cc:199 get_pts_broadcast_audio_config_options: Config isn't ready, use default option
+07-07 06:19:38.303 I/droid.bluetooth( 3525): [0707/061938.303441:INFO:btif_config_cache.cc(67)] BtifConfigCache, capacity: 10000
+07-07 06:19:38.315 E/ActivityThread( 3525): Failed to find provider info for bluetooth_legacy.provider
+07-07 06:19:38.315 D/DataMigration( 3525): Legacy migration skiped: no migration app installed
+07-07 06:19:38.317 I/BluetoothAvrcpControllerJni( 3525): classInitNative: succeeds
+07-07 06:19:38.318 D/CompatibilityChangeReporter( 3525): Compat change id reported: 263076149; UID 1002; state: ENABLED
+07-07 06:19:38.319 I/BluetoothHidHostServiceJni( 3525): classInitNative: succeeds
+07-07 06:19:38.322 I/BluetoothPanServiceJni( 3525): classInitNative(L108): succeeds
+07-07 06:19:38.323 I/AdapterServiceConfig( 3525): init: profile=A2dpService, enabled=true
+07-07 06:19:38.323 I/AdapterServiceConfig( 3525): init: profile=A2dpSinkService, enabled=false
+07-07 06:19:38.323 I/AdapterServiceConfig( 3525): init: profile=AvrcpTargetService, enabled=true
+07-07 06:19:38.323 I/AdapterServiceConfig( 3525): init: profile=AvrcpControllerService, enabled=false
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=BassClientService, enabled=false
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=BatteryService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=CsipSetCoordinatorService, enabled=false
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=HapClientService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=HeadsetService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=HeadsetClientService, enabled=false
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=HearingAidService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=HidDeviceService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=HidHostService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=GattService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=LeAudioService, enabled=false
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=TbsService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=BluetoothMapService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=MapClientService, enabled=false
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=McpService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=BluetoothOppService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=PanService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=BluetoothPbapService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=PbapClientService, enabled=false
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=SapService, enabled=true
+07-07 06:19:38.324 I/AdapterServiceConfig( 3525): init: profile=VolumeControlService, enabled=true
+07-07 06:19:38.329 I/BluetoothMetricsLogger( 3525): setCounterMetricsAlarm()
+07-07 06:19:38.330 D/AlarmManager(  709): setImplLocked() callingPackage=com.android.bluetooth
+07-07 06:19:38.334 D/BluetoothAdapterService( 3525): onCreate()
+07-07 06:19:38.342 D/CompatibilityChangeReporter(  709): Compat change id reported: 161145287; UID 1002; state: ENABLED
+07-07 06:19:38.345 D/AdapterState( 3525): make() - Creating AdapterState
+07-07 06:19:38.346 I/AdapterState( 3525): OFF : entered
+07-07 06:19:38.346 D/AdapterProperties( 3525): Setting state to OFF
+07-07 06:19:38.347 D/BluetoothKeystoreService( 3525): new BluetoothKeystoreService isCommonCriteriaMode: false
+07-07 06:19:38.347 D/BluetoothKeystoreService( 3525): start
+07-07 06:19:38.347 I/droid.bluetooth( 3525): [0707/061938.347763:INFO:com_android_bluetooth_btservice_BluetoothKeystore.cpp(97)] classInitNative: succeeds
+07-07 06:19:38.347 D/BluetoothKeystoreService( 3525): setBluetoothKeystoreService(): set to: com.android.bluetooth.btservice.bluetoothkeystore.BluetoothKeystoreService@4122cdf
+07-07 06:19:38.349 D/BluetoothKeystoreService( 3525): loadConfigData
+07-07 06:19:38.349 D/BluetoothKeystoreService( 3525): getCompareResult: 0
+07-07 06:19:38.352 D/CompatibilityChangeReporter( 3525): Compat change id reported: 183155436; UID 1002; state: ENABLED
+07-07 06:19:38.352 I/bt_btif ( 3525): packages/modules/Bluetooth/system/btif/src/bluetooth.cc:386 init: init: start restricted = 0 ; common criteria mode = 0, config compare result = 0
+07-07 06:19:38.352 I/bt      ( 3525): bt_common::init_flags: Flags loaded: asha_packet_drop_frequency_threshold=60asha_phy_update_retry_limit=5always_send_services_if_gatt_disc_done=truealways_use_private_gatt_for_debugging=falseasynchronously_start_l2cap_coc=truebtaa_hci=truebta_dm_clear_conn_id_on_client_close=truebtm_dm_flush_discovery_queue_on_search_cancel=falseclassic_discovery_only=falseclear_hidd_interrupt_cid_on_disconnect=truedelay_hidh_cleanup_until_hidh_ready_start=truedevice_iot_config_logging=falsedynamic_avrcp_version_enhancement=truefinite_att_timeout=truegatt_robust_caching_client=truegatt_robust_caching_server=falsegd_core=falsegd_hal_snoop_logger_socket=truegd_hal_snoop_logger_filtering=truegd_l2cap=falsegd_link_policy=falsegd_remote_name_request=falsegd_rust=falsehci_adapter=0hfp_dynamic_version=trueirk_rotation=falseleaudio_targeted_announcement_reconnection_mode=truepass_phy_update_callback=truepbap_pse_dynamic_version_upgrade=falseperiodic_advertising_adi=trueprivate_gatt=truequeue_l2cap_coc_while_encrypting=trueread_encryption_key_size=trueredact_log=truerust_event_loop=truesco_codec_select_lc3=falsesco_codec_timeout_clear=falsesdp_serialization=truesdp_skip_rnr_if_known=truebluetooth_quality_report_callback=trueset_min_encryption=truesubrating=truetrigger_advertising_callbacks_on_first_resume_after_pause=trueuse_unified_connection_manager=falsesdp_return_classic_services_when_le_discovery_fails=truedefault_log_level=4logging_explicit_tag_settings={}
+07-07 06:19:38.352 I/bt_osi_allocation_tracker( 3525): packages/modules/Bluetooth/system/osi/src/allocation_tracker.cc:60 allocation_tracker_init: canary initialized
+07-07 06:19:38.353 I/droid.bluetooth( 3525): [0707/061938.353154:INFO:message_loop_thread.cc(184)] Run: message loop starting for thread bt_stack_manager_thread
+07-07 06:19:38.353 I/bt_stack_manager( 3525): packages/modules/Bluetooth/system/btif/src/stack_manager.cc:277 event_init_stack: is initializing the stack
+07-07 06:19:38.353 I/droid.bluetooth( 3525): [0707/061938.353796:INFO:message_loop_thread.cc(184)] Run: message loop starting for thread bt_main_thread
+07-07 06:19:38.353 I/device_iot_config( 3525): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:68 device_iot_config_module_init:
+07-07 06:19:38.354 E/droid.bluetooth( 3525): [0707/061938.354059:ERROR:config.cc(106)] config_new: unable to open file '/data/misc/bluedroid/bt_remote_dev_info.conf': No such file or directory
+07-07 06:19:38.354 W/device_iot_config( 3525): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:83 device_iot_config_module_init: Unable to load config file: /data/misc/bluedroid/bt_remote_dev_info.conf; using backup.
+07-07 06:19:38.354 E/droid.bluetooth( 3525): [0707/061938.354161:ERROR:config.cc(106)] config_new: unable to open file '/data/misc/bluedroid/bt_remote_dev_info.bak': No such file or directory
+07-07 06:19:38.354 E/device_iot_config( 3525): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:89 device_iot_config_module_init: Unable to load bak file; creating empty config.
+07-07 06:19:38.354 I/device_iot_config( 3525): packages/modules/Bluetooth/system/device/src/device_iot_config_int.cc:130 device_iot_config_module_init: Devices loaded 0
+07-07 06:19:38.354 E/bt_osi_alarm( 3525): packages/modules/Bluetooth/system/osi/src/alarm.cc:683 timer_create_internal: timer_create_internal unable to create timer with clock 9: Operation not supported on transport endpoint
+07-07 06:19:38.354 E/bt_osi_alarm( 3525): packages/modules/Bluetooth/system/osi/src/alarm.cc:688 timer_create_internal: The kernel might not have support for timer_create(CLOCK_BOOTTIME_ALARM): https://lwn.net/Articles/429925/
+07-07 06:19:38.354 E/bt_osi_alarm( 3525): packages/modules/Bluetooth/system/osi/src/alarm.cc:692 timer_create_internal: See following patches: https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/log/?qt=grep&q=CLOCK_BOOTTIME_ALARM
+07-07 06:19:38.355 I/bt_osi_thread( 3525): packages/modules/Bluetooth/system/osi/src/thread.cc:210 run_thread: run_thread: thread id 3555, thread name alarm_default_ca started
+07-07 06:19:38.355 I/bt_osi_thread( 3525): packages/modules/Bluetooth/system/osi/src/thread.cc:210 run_thread: run_thread: thread id 3556, thread name alarm_dispatcher started
+07-07 06:19:38.355 I/bt_core_module( 3525): packages/modules/Bluetooth/system/btcore/src/module.cc:86 module_start_up: module_start_up Starting module "gd_shim_module"
+07-07 06:19:38.355 I/bt_gd_shim( 3525): packages/modules/Bluetooth/system/main/shim/stack.cc:81 StartEverything: StartEverything Starting Gd stack
+07-07 06:19:38.355 I/bt_gd_shim( 3525): packages/modules/Bluetooth/system/main/shim/stack.cc:160 Start: Start Starting Gd stack
+07-07 06:19:38.355 I/BtGdWakelockNative( 3525): packages/modules/Bluetooth/system/gd/os/android/wakelock_native.cc:79 Initialize: Initializing native wake locks
+07-07 06:19:38.356 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+[  570.861906][  T683] read descriptors
+07-07 06:19:38.356 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of BluetoothCounterMetrics
+[  570.861960][  T683] read strings
+07-07 06:19:38.356 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of BluetoothCounterMetrics
+[  570.862925][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.357 I/BluetoothCounterMetrics( 3525): packages/modules/Bluetooth/system/gd/metrics/counter_metrics.cc:40 Start: Counter metrics initialized
+[  570.863570][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.357 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started BluetoothCounterMetrics
+[  570.863992][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:38.357 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+07-07 06:19:38.357 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of HciHalHidl
+07-07 06:19:38.357 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/common/strings.cc:153 Uint64FromString: cannot parse whole string '0xffff'
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:1432 GetBtSnoopMode: btsnoop_mode_empty: 1
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:505 SnoopLogger: Snoop Logs filtered mode enabled
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.rfcomm.enabled: 0
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.a2dp.enabled: 0
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.headers.enabled: 0
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.map: disabled
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.pbap: disabled
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:334 delete_btsnoop_files: Deleting logs if they exist
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:340 delete_btsnoop_files: Main log file does not exist at "/data/misc/bluetooth/logs/btsnoop_hci.log"
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:348 delete_btsnoop_files: Last log file does not exist at "/data/misc/bluetooth/logs/btsnoop_hci.log"
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:334 delete_btsnoop_files: Deleting logs if they exist
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:340 delete_btsnoop_files: Main log file does not exist at "/data/misc/bluetooth/logs/btsnooz_hci.log"
+07-07 06:19:38.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:348 delete_btsnoop_files: Last log file does not exist at "/data/misc/bluetooth/logs/btsnooz_hci.log"
+07-07 06:19:38.357 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of SnoopLogger
+07-07 06:19:38.357 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of SnoopLogger
+07-07 06:19:38.358 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.rfcomm.enabled: 0
+07-07 06:19:38.358 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.profiles.a2dp.enabled: 0
+07-07 06:19:38.358 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:588 EnableFilters: persist.bluetooth.snooplogfilter.headers.enabled: 0
+07-07 06:19:38.358 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.map: disabled
+07-07 06:19:38.358 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger.cc:597 EnableFilters: persist.bluetooth.snooplogfilter.profiles.pbap: disabled
+07-07 06:19:38.358 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/snoop_logger_socket.cc:63 SnoopLoggerSocket: address 2130706433 port 8872
+07-07 06:19:38.358 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started SnoopLogger
+07-07 06:19:38.358 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:85 Start: Constructing next module
+07-07 06:19:38.358 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:89 Start: Starting dependencies of Btaa Module
+07-07 06:19:38.358 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of Btaa Module
+07-07 06:19:38.359 E/btaa    ( 3525): packages/modules/Bluetooth/system/gd/btaa/android/activity_attribution.cc:107 impl: No suspend control service available.
+07-07 06:19:38.359 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:99 Start: Started Btaa Module
+07-07 06:19:38.359 I/BtGdModule( 3525): packages/modules/Bluetooth/system/gd/module.cc:93 Start: Finished starting dependencies and calling Start() of HciHalHidl
+07-07 06:19:38.359 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/hal/hci_hal_android_hidl.cc:439 start_hidl: Trying to find a HIDL interface
+07-07 06:19:38.360 I/hwservicemanager(  268): getTransport: Cannot find entry android.hardware.bluetooth@1.1::IBluetoothHci/default in either framework or device VINTF manifest.
+07-07 06:19:38.361 I/android.hardware.bluetooth@1.0-impl(  526): BluetoothHci::initialize()
+07-07 06:19:38.361 I/android.hardware.bluetooth@1.0-impl(  526): Initialize: VendorInterface::Initialize
+07-07 06:19:38.361 W/android.hardware.bluetooth@1.0-impl(  526): VendorInterface open/close is on-going !
+07-07 06:19:40.453 E/servicemanager(  267): VINTF HALs require names in the format type/instance (e.g. some.package.foo.IFoo/default) but got: suspend_control
+07-07 06:19:40.454 I/servicemanager(  267): Could not find android.hardware.bluetooth.IBluetoothHci/default in the VINTF manifest.
+07-07 06:19:40.524 I/init    (    1): starting service 'vendor.bluetooth-1-1'...
+07-07 06:19:40.553 W/libprocessgroup( 3561): SetCgroup::ExecuteForProcess: failed to open /dev/stune/foreground/cgroup.procs: No such file or directory
+07-07 06:19:40.553 W/libprocessgroup( 3561): Failed to apply HighPerformance process profile
+07-07 06:19:40.553 E/init    ( 3561): failed to set task profiles
+07-07 06:19:40.553 I/init    (    1): ... started service 'vendor.bluetooth-1-1' has pid 3561
+07-07 06:19:38.485 I/hwservicemanager(  268): getTransport: Cannot find entry android.hardware.bluetooth@1.1::IBluetoothHci/default in either framework or device VINTF manifest.
+07-07 06:19:38.485 E/HidlServiceManagement( 3561): Service android.hardware.bluetooth@1.1::IBluetoothHci/default must be in VINTF manifest in order to register/get.
+07-07 06:19:38.486 E/android.hardware.bluetooth@1.1-service( 3561): Cannot register Bluetooth HAL service
+07-07 06:19:40.582 I/init    (    1): Service 'vendor.bluetooth-1-1' (pid 3561) exited with status 1
+07-07 06:19:40.582 I/init    (    1): Sending signal 9 to service 'vendor.bluetooth-1-1' (pid 3561) process group...
+07-07 06:19:40.582 I/libprocessgroup(    1): Successfully killed process cgroup uid 1002 pid 3561 in 0ms
+07-07 06:19:40.582 E/init    (    1): process with updatable components 'vendor.bluetooth-1-1' exited 4 times in 4 minutes
+07-07 06:19:40.583 I/init    (    1): processing action (sys.init.updatable_crashing=1) from (/system/etc/init/flags_health_check.rc:10)
+07-07 06:19:40.583 I/init    (    1): starting service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)'...
+07-07 06:19:40.586 I/init    (    1): ... started service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' has pid 3562
+07-07 06:19:40.586 I/init    (    1): SVC_EXEC service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' pid 3562 (uid 1000 gid 1000+0 context default) started; waiting...
+07-07 06:19:38.507 I/flags_health_check( 3562): ServerConfigurableFlagsReset reset_mode value: 1
+07-07 06:19:38.508 I/flags_health_check( 3562): ServerConfigurableFlagsReset updatable crashing detected, resetting flags.
+07-07 06:19:38.505 I/flags_health_ch( 3562): type=1400 audit(0.0:11706): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:38.505 I/flags_health_ch( 3562): type=1400 audit(0.0:11707): avc:  denied  { getattr } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:38.505 I/flags_health_ch( 3562): type=1400 audit(0.0:11708): avc:  denied  { map } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:38.505 I/flags_health_ch( 3562): type=1400 audit(0.0:11709): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:38.505 I/flags_health_ch( 3562): type=1400 audit(0.0:11710): avc:  denied  { getattr } for  path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:40.603 W/audit   ( 3562): audit_lost=10371 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:40.603 E/audit   ( 3562): rate limit exceeded
+07-07 06:19:40.616 I/init    (    1): Service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3562) exited with status 0 waiting took 0.031000 seconds
+07-07 06:19:40.616 I/init    (    1): Sending signal 9 to service 'exec 118 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3562) process group...
+07-07 06:19:40.617 I/libprocessgroup(    1): Successfully killed process cgroup uid 1000 pid 3562 in 0ms
+07-07 06:19:38.531 D/dumpstate( 3507): Duration of 'CPU INFO': 0.61s
+07-07 06:19:38.531 D/dumpstate( 3507): Duration of 'DUMPSTATE': 1.28s
+07-07 06:19:38.532 D/dumpstate( 3507): Adding main entry (2025-07-07-06-19-37-TOMBSTONE.txt) from /data/user_de/0/com.android.shell/files/bugreports/2025-07-07-06-19-37-TOMBSTONE.tmp to .zip bugreport
+07-07 06:19:38.532 D/dumpstate( 3507): dumpstate id 5 finished around 2025/07/07 06:19:38 (1 s)
+07-07 06:19:38.607 D/dumpstate( 3507): Adding zip text entry main_entry.txt
+07-07 06:19:38.607 D/dumpstate( 3507): Removing temporary file /data/user_de/0/com.android.shell/files/bugreports/2025-07-07-06-19-37-TOMBSTONE.tmp
+07-07 06:19:38.608 D/dumpstate( 3507): Final progress: 255/259 (estimated 259)
+07-07 06:19:38.608 I/dumpstate( 3507): Saving stats (total=1032, runs=4, average=258) on /bugreports/dumpstate-stats.txt
+07-07 06:19:38.608 I/dumpstate( 3507): done (id 5)
+07-07 06:19:38.608 I/dumpstate( 3507): total_size (2878214), max log size is 314572800
+07-07 06:19:38.609 D/dumpstate( 3507): Duration of 'RUN INTERNAL': 1.41s
+07-07 06:19:40.707 I/init    (    1): Service 'simple_bugreportd' (pid 3507) exited with status 0 oneshot service took 1.468000 seconds in background
+07-07 06:19:40.707 I/init    (    1): Sending signal 9 to service 'simple_bugreportd' (pid 3507) process group...
+07-07 06:19:40.707 I/libprocessgroup(    1): Successfully killed process cgroup uid 0 pid 3507 in 0ms
+[  571.958151][  T683] read descriptors
+07-07 06:19:39.217 D/ActivityManager(  709): freezing 1781 com.android.printspooler
+[  571.958227][  T683] read strings
+07-07 06:19:39.272 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+[  571.959316][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:39.272 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+[  571.962619][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:39.272 I/adbd    (  666): UsbFfs: already offline
+[  571.963203][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:39.272 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:39.272 I/adbd    (  666): UsbFfsConnection being destroyed
+07-07 06:19:39.301 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:39.302 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:39.303 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:41.396 I/        (  683): read descriptors
+07-07 06:19:41.396 I/        (  683): read strings
+07-07 06:19:41.397 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:41.401 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:41.401 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:40.304 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:40.304 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:40.304 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:40.304 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:40.304 I/adbd    (  666): UsbFfsConnection being destroyed
+07-07 06:19:40.333 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+[  572.119500][ T3567] audit: audit_lost=10896 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:40.334 I/adbd    (  666): UsbFfsConnection constructed
+[  572.119521][ T3567] audit: rate limit exceeded
+07-07 06:19:40.335 I/adbd    (  666): UsbFfs-monitor thread spawned
+[  572.119751][  T280] type=1400 audit(1751869181.589:12236): avc:  denied  { read } for  comm="crash_dump64" name="product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:42.428 I/        (  683): read descriptors
+[  572.119896][  T280] type=1400 audit(1751869181.589:12237): avc:  denied  { open } for  comm="crash_dump64" path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:42.428 I/        (  683): read strings
+[  572.119967][  T280] type=1400 audit(1751869181.589:12238): avc:  denied  { getattr } for  comm="crash_dump64" path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:42.429 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  572.120036][  T280] type=1400 audit(1751869181.589:12239): avc:  denied  { map } for  comm="crash_dump64" path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:42.430 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  572.120102][  T280] type=1400 audit(1751869181.589:12240): avc:  denied  { read } for  comm="crash_dump64" name="framework-res__auto_generated_rro_vendor.apk" dev="dm-3" ino=1776 scontext=u:r:crash_dump:s0 tcontext=u:object_r:vendor_overlay_file:s0 tclass=file permissive=1
+07-07 06:19:42.430 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  572.127658][  T275] logd: logdr: UID=1002 GID=1002 PID=3567 n tail=500 logMask=8 pid=3525 start=0ns deadline=0ns
+07-07 06:19:41.336 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+[  572.128170][  T275] logd: logdr: UID=1002 GID=1002 PID=3567 n tail=500 logMask=1 pid=3525 start=0ns deadline=0ns
+07-07 06:19:41.336 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+[  572.162324][    T1] init: Untracked pid 3567 exited with status 0
+07-07 06:19:41.336 I/adbd    (  666): UsbFfs: already offline
+[  572.162386][    T1] init: Untracked pid 3567 did not have an associated service entry and will not be reaped
+07-07 06:19:41.336 I/adbd    (  666): destroying transport UsbFfs
+[  572.178666][    T1] init: Untracked pid 3569 exited with status 0
+07-07 06:19:41.336 I/adbd    (  666): UsbFfsConnection being destroyed
+[  572.178712][    T1] init: Untracked pid 3569 did not have an associated service entry and will not be reaped
+07-07 06:19:41.357 I/bluetooth( 3525): packages/modules/Bluetooth/system/gd/stack_manager.cc:52 StartUp: init_status == 1
+07-07 06:19:41.357 F/bluetooth( 3525): assertion 'init_status == std::future_status::ready' failed - Can't start stack, last instance: starting HciHalHidl
+07-07 06:19:41.357 F/libc    ( 3525): Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 3550 (bt_stack_manage), pid 3525 (droid.bluetooth)
+07-07 06:19:41.423 I/crash_dump64( 3567): obtaining output fd from tombstoned, type: kDebuggerdTombstoneProto
+07-07 06:19:41.423 I/tombstoned(  376): received crash request for pid 3550
+07-07 06:19:43.525 I/        (  683): read descriptors
+07-07 06:19:43.525 I/        (  683): read strings
+07-07 06:19:43.526 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:43.529 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:43.530 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:41.424 I/crash_dump64( 3567): performing dump of process 3525 (target tid = 3550)
+07-07 06:19:41.430 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:41.431 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:41.431 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:41.435 E/DEBUG   ( 3567): failed to read process info: failed to open /proc/3525: No such file or directory
+07-07 06:19:41.589 I/crash_dump64( 3567): type=1400 audit(0.0:12236): avc:  denied  { read } for  name="product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:41.589 I/crash_dump64( 3567): type=1400 audit(0.0:12237): avc:  denied  { open } for  path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:41.589 I/crash_dump64( 3567): type=1400 audit(0.0:12238): avc:  denied  { getattr } for  path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:41.589 I/crash_dump64( 3567): type=1400 audit(0.0:12239): avc:  denied  { map } for  path="/data/resource-cache/product@overlay@RockchipPinnerService.apk@idmap" dev="dm-40" ino=387 scontext=u:r:crash_dump:s0 tcontext=u:object_r:resourcecache_data_file:s0 tclass=file permissive=1
+07-07 06:19:41.589 I/crash_dump64( 3567): type=1400 audit(0.0:12240): avc:  denied  { read } for  name="framework-res__auto_generated_rro_vendor.apk" dev="dm-3" ino=1776 scontext=u:r:crash_dump:s0 tcontext=u:object_r:vendor_overlay_file:s0 tclass=file permissive=1
+07-07 06:19:43.686 W/audit   ( 3567): audit_lost=10896 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:43.686 E/audit   ( 3567): rate limit exceeded
+07-07 06:19:43.694 I/logd    (  275): logdr: UID=1002 GID=1002 PID=3567 n tail=500 logMask=8 pid=3525 start=0ns deadline=0ns
+07-07 06:19:43.695 I/logd    (  275): logdr: UID=1002 GID=1002 PID=3567 n tail=500 logMask=1 pid=3525 start=0ns deadline=0ns
+07-07 06:19:41.603 F/DEBUG   ( 3567): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+07-07 06:19:41.603 F/DEBUG   ( 3567): Build fingerprint: 'rockchip/asra501_u/asra501_u:14/UQ1A.240205.004.B1/eng.adv.20250707.102632:userdebug/release-keys'
+07-07 06:19:41.603 F/DEBUG   ( 3567): Revision: '0'
+07-07 06:19:41.603 F/DEBUG   ( 3567): ABI: 'arm64'
+07-07 06:19:41.603 F/DEBUG   ( 3567): Timestamp: 2025-07-07 06:19:41.435096068+0000
+07-07 06:19:41.603 F/DEBUG   ( 3567): Process uptime: 0s
+07-07 06:19:41.603 F/DEBUG   ( 3567): Cmdline: com.android.bluetooth
+07-07 06:19:41.603 F/DEBUG   ( 3567): pid: 3525, tid: 3550, name: bt_stack_manage  >>> com.android.bluetooth <<<
+07-07 06:19:41.603 F/DEBUG   ( 3567): uid: 1002
+07-07 06:19:41.604 F/DEBUG   ( 3567): tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+07-07 06:19:41.604 F/DEBUG   ( 3567): signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+07-07 06:19:41.604 F/DEBUG   ( 3567): Abort message: 'assertion 'init_status == std::future_status::ready' failed - Can't start stack, last instance: starting HciHalHidl'
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x0  0000000000000000  x1  0000000000000dde  x2  0000000000000006  x3  0000006e858e3d50
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x4  6539396373721f3c  x5  6539396373721f3c  x6  6539396373721f3c  x7  7f7f7f7f7f7f7f7f
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x8  00000000000000f0  x9  00000071c2c4a090  x10 0000000000000001  x11 00000071c2c9d058
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x12 0000006e858e2c00  x13 0000000000000074  x14 0000006e858e3f90  x15 0000000332169eef
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x16 00000071c2d0ad08  x17 00000071c2cdee90  x18 0000006e849c8080  x19 0000000000000dc5
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x20 0000000000000dde  x21 00000000ffffffff  x22 b40000705a69da10  x23 b40000705a69e730
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x24 0000006f29ce5000  x25 0000006e8cba53a0  x26 0000006e858e4ff8  x27 00000000000fc000
+07-07 06:19:41.604 F/DEBUG   ( 3567):     x28 00000000000fe000  x29 0000006e858e3dd0
+07-07 06:19:41.604 F/DEBUG   ( 3567):     lr  00000071c2c8e9b8  sp  0000006e858e3d30  pc  00000071c2c8e9e4  pst 0000000000001000
+07-07 06:19:41.604 F/DEBUG   ( 3567): 22 total frames
+07-07 06:19:41.604 F/DEBUG   ( 3567): backtrace:
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #00 pc 00000000000669e4  /apex/com.android.runtime/lib64/bionic/libc.so (abort+164) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #01 pc 0000000000622bb0  /apex/com.android.art/lib64/libart.so (art::Runtime::Abort(char const*)+116) (BuildId: 5dfb7e35d1d737556ea2e4e69ebba352)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #02 pc 00000000000417d0  /apex/com.android.art/lib64/libbase.so (android::base::SetAborter(std::__1::function<void (char const*)>&&)::$_0::__invoke(char const*)+80) (BuildId: 86bef7ce19ab410597d5aa825f150404)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #03 pc 0000000000011ec8  /system/lib64/liblog.so (__android_log_assert+308) (BuildId: 89df7bea7a0c4aafd4ef1135f5c7cdfa)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #04 pc 0000000000c194d8  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::StackManager::StartUp(bluetooth::ModuleList*, bluetooth::os::Thread*)+704) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #05 pc 00000000004994dc  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::shim::Stack::Start(bluetooth::ModuleList*)+192) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #06 pc 0000000000499228  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::shim::Stack::StartEverything()+1720) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+[  572.994163][  T683] read descriptors
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #07 pc 00000000004ae6d0  /apex/com.android.btservices/lib64/libbluetooth_jni.so (ShimModuleStartUp()+16) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+[  572.994230][  T683] read strings
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #08 pc 00000000006aa420  /apex/com.android.btservices/lib64/libbluetooth_jni.so (module_start_up(module_t const*)+200) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+[  572.995284][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #09 pc 00000000006a91cc  /apex/com.android.btservices/lib64/libbluetooth_jni.so (init_stack_internal(bluetooth::core::CoreInterface*)+76) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+[  572.998651][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #10 pc 00000000006a909c  /apex/com.android.btservices/lib64/libbluetooth_jni.so (event_init_stack(std::__1::promise<void>, bluetooth::core::CoreInterface*)+136) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+[  572.999227][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #11 pc 00000000006a9114  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::internal::Invoker<base::internal::BindState<void (*)(std::__1::promise<void>, bluetooth::core::CoreInterface*), std::__1::promise<void>, base::internal::UnretainedWrapper<bluetooth::core::CoreInterface> >, void ()>::RunOnce(base::internal::BindStateBase*)+52) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #12 pc 0000000000c500ec  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::debug::TaskAnnotator::RunTask(char const*, base::PendingTask*)+196) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #13 pc 0000000000c4f3ec  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::MessageLoop::RunTask(base::PendingTask*)+352) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #14 pc 0000000000c4f7b0  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::MessageLoop::DoWork()+452) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #15 pc 0000000000c525c0  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::MessagePumpDefault::Run(base::MessagePump::Delegate*)+100) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #16 pc 0000000000c79508  /apex/com.android.btservices/lib64/libbluetooth_jni.so (base::RunLoop::Run()+64) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #17 pc 00000000006f85ac  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::common::MessageLoopThread::Run(std::__1::promise<void>)+328) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #18 pc 00000000006f80c4  /apex/com.android.btservices/lib64/libbluetooth_jni.so (bluetooth::common::MessageLoopThread::RunThread(bluetooth::common::MessageLoopThread*, std::__1::promise<void>)+48) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #19 pc 00000000006f8b3c  /apex/com.android.btservices/lib64/libbluetooth_jni.so (void* std::__1::__thread_proxy<std::__1::tuple<std::__1::unique_ptr<std::__1::__thread_struct, std::__1::default_delete<std::__1::__thread_struct> >, void (*)(bluetooth::common::MessageLoopThread*, std::__1::promise<void>), bluetooth::common::MessageLoopThread*, std::__1::promise<void> > >(void*)+84) (BuildId: b9a36b2e2558b8beae1c2165c4af6334)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #20 pc 00000000000cb6a8  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+208) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+07-07 06:19:41.604 F/DEBUG   ( 3567):       #21 pc 000000000006821c  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+07-07 06:19:41.623 E/tombstoned(  376): Tombstone written to: tombstone_07
+07-07 06:19:41.623 D/RKLOG   (  709): TOMBSTONE hash[0x714e48ed] is same as [1], dont gen bugreport
+07-07 06:19:41.625 E/NativeTombstoneManager(  709): Tombstone's UID (1002) not an app, ignoring
+07-07 06:19:41.627 E/NativeTombstoneManager(  709): Tombstone's UID (1002) not an app, ignoring
+07-07 06:19:43.729 I/init    (    1): Untracked pid 3567 exited with status 0
+07-07 06:19:43.729 I/init    (    1): Untracked pid 3567 did not have an associated service entry and will not be reaped
+07-07 06:19:43.745 I/init    (    1): Untracked pid 3569 exited with status 0
+07-07 06:19:43.745 I/init    (    1): Untracked pid 3569 did not have an associated service entry and will not be reaped
+07-07 06:19:41.651 E/android.hardware.bluetooth@1.0-impl(  526): BluetoothDeathRecipient::serviceDied - Bluetooth service died
+07-07 06:19:41.651 I/android.hardware.bluetooth@1.0-impl(  526): BluetoothHci::close()
+07-07 06:19:41.651 I/android.hardware.bluetooth@1.0-impl(  526): Skipping unlink call, service died.
+07-07 06:19:41.651 I/android.hardware.bluetooth@1.0-impl(  526): Shutdown: VendorInterface::Shutdown
+07-07 06:19:41.651 W/android.hardware.bluetooth@1.0-impl(  526): VendorInterface is not allow close(2)
+07-07 06:19:41.652 I/ActivityManager(  709): Process com.android.bluetooth (pid 3525) has died: psvc PER
+07-07 06:19:41.652 W/ActivityManager(  709): Scheduling restart of crashed service com.android.bluetooth/.btservice.AdapterService in 12600000ms for connection
+07-07 06:19:41.653 I/Zygote  (  519): Process 3525 exited due to signal 6 (Aborted)
+07-07 06:19:41.653 I/libprocessgroup(  709): Successfully killed process cgroup uid 1002 pid 3525 in 0ms
+07-07 06:19:41.655 D/OomAdjuster(  709): Not killing cached processes
+07-07 06:19:41.655 D/DisplayManagerService(  709): Drop pending events for gone uid 1002
+07-07 06:19:42.432 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:42.433 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:42.433 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:42.433 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:42.433 I/adbd    (  666): UsbFfsConnection being destroyed
+07-07 06:19:42.466 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:42.467 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:42.468 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:44.561 I/        (  683): read descriptors
+07-07 06:19:44.561 I/        (  683): read strings
+07-07 06:19:44.562 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:44.565 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:44.566 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+[  573.961931][    T1] init: starting service 'vendor.bluetooth-1-1'...
+07-07 06:19:45.528 I/init    (    1): starting service 'vendor.bluetooth-1-1'...
+[  573.986291][ T3576] libprocessgroup: SetCgroup::ExecuteForProcess: failed to open /dev/stune/foreground/cgroup.procs: No such file or directory
+07-07 06:19:45.553 W/libprocessgroup( 3576): SetCgroup::ExecuteForProcess: failed to open /dev/stune/foreground/cgroup.procs: No such file or directory
+[  573.986322][ T3576] libprocessgroup: Failed to apply HighPerformance process profile
+07-07 06:19:45.553 W/libprocessgroup( 3576): Failed to apply HighPerformance process profile
+[  573.986333][ T3576] init: failed to set task profiles
+07-07 06:19:45.553 E/init    ( 3576): failed to set task profiles
+[  573.986909][    T1] init: ... started service 'vendor.bluetooth-1-1' has pid 3576
+07-07 06:19:45.553 I/init    (    1): ... started service 'vendor.bluetooth-1-1' has pid 3576
+[  574.002738][    T1] init: Service 'vendor.bluetooth-1-1' (pid 3576) exited with status 1
+07-07 06:19:43.469 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+[  574.002804][    T1] init: Sending signal 9 to service 'vendor.bluetooth-1-1' (pid 3576) process group...
+07-07 06:19:43.469 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+[  574.003009][    T1] libprocessgroup: Successfully killed process cgroup uid 1002 pid 3576 in 0ms
+07-07 06:19:43.469 I/adbd    (  666): UsbFfs: already offline
+[  574.003301][    T1] init: process with updatable components 'vendor.bluetooth-1-1' exited 4 times in 4 minutes
+07-07 06:19:43.469 I/adbd    (  666): destroying transport UsbFfs
+[  574.004719][    T1] init: processing action (sys.init.updatable_crashing=1) from (/system/etc/init/flags_health_check.rc:10)
+07-07 06:19:43.469 I/adbd    (  666): UsbFfsConnection being destroyed
+[  574.005091][    T1] init: starting service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)'...
+07-07 06:19:43.473 I/hwservicemanager(  268): getTransport: Cannot find entry android.hardware.bluetooth@1.1::IBluetoothHci/default in either framework or device VINTF manifest.
+[  574.010768][    T1] init: ... started service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' has pid 3577
+07-07 06:19:43.473 E/HidlServiceManagement( 3576): Service android.hardware.bluetooth@1.1::IBluetoothHci/default must be in VINTF manifest in order to register/get.
+[  574.010848][    T1] init: SVC_EXEC service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' pid 3577 (uid 1000 gid 1000+0 context default) started; waiting...
+07-07 06:19:43.473 E/android.hardware.bluetooth@1.1-service( 3576): Cannot register Bluetooth HAL service
+[  574.020663][ T3577] audit: audit_lost=10899 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:45.569 I/init    (    1): Service 'vendor.bluetooth-1-1' (pid 3576) exited with status 1
+[  574.020678][ T3577] audit: rate limit exceeded
+07-07 06:19:45.569 I/init    (    1): Sending signal 9 to service 'vendor.bluetooth-1-1' (pid 3576) process group...
+[  574.021070][  T280] type=1400 audit(1751869183.489:12244): avc:  denied  { open } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:45.569 I/libprocessgroup(    1): Successfully killed process cgroup uid 1002 pid 3576 in 0ms
+[  574.021392][  T280] type=1400 audit(1751869183.489:12245): avc:  denied  { getattr } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:45.570 E/init    (    1): process with updatable components 'vendor.bluetooth-1-1' exited 4 times in 4 minutes
+[  574.021488][  T280] type=1400 audit(1751869183.489:12246): avc:  denied  { map } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+07-07 06:19:45.571 I/init    (    1): processing action (sys.init.updatable_crashing=1) from (/system/etc/init/flags_health_check.rc:10)
+[  574.021600][  T280] type=1400 audit(1751869183.489:12247): avc:  denied  { open } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:45.572 I/init    (    1): starting service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)'...
+[  574.021726][  T280] type=1400 audit(1751869183.489:12248): avc:  denied  { getattr } for  comm="flags_health_ch" path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:45.577 I/init    (    1): ... started service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' has pid 3577
+[  574.029141][    T1] init: Service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3577) exited with status 0 waiting took 0.020000 seconds
+07-07 06:19:45.577 I/init    (    1): SVC_EXEC service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' pid 3577 (uid 1000 gid 1000+0 context default) started; waiting...
+[  574.029192][    T1] init: Sending signal 9 to service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3577) process group...
+07-07 06:19:43.489 I/flags_health_ch( 3577): type=1400 audit(0.0:12244): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+[  574.029445][    T1] libprocessgroup: Successfully killed process cgroup uid 1000 pid 3577 in 0ms
+07-07 06:19:43.489 I/flags_health_ch( 3577): type=1400 audit(0.0:12245): avc:  denied  { getattr } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+[  574.058078][  T683] read descriptors
+07-07 06:19:43.489 I/flags_health_ch( 3577): type=1400 audit(0.0:12246): avc:  denied  { map } for  path="/dev/__properties__/u:object_r:aac_drc_prop:s0" dev="tmpfs" ino=58 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:aac_drc_prop:s0 tclass=file permissive=1
+[  574.058113][  T683] read strings
+07-07 06:19:43.492 I/flags_health_check( 3577): ServerConfigurableFlagsReset reset_mode value: 1
+[  574.059086][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:43.492 I/flags_health_check( 3577): ServerConfigurableFlagsReset updatable crashing detected, resetting flags.
+[  574.062405][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:43.489 I/flags_health_ch( 3577): type=1400 audit(0.0:12247): avc:  denied  { open } for  path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+[  574.062977][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:45.587 W/audit   ( 3577): audit_lost=10899 audit_rate_limit=5 audit_backlog_limit=64
+07-07 06:19:45.587 E/audit   ( 3577): rate limit exceeded
+07-07 06:19:43.489 I/flags_health_ch( 3577): type=1400 audit(0.0:12248): avc:  denied  { getattr } for  path="/dev/__properties__/u:object_r:ab_update_gki_prop:s0" dev="tmpfs" ino=60 scontext=u:r:flags_health_check:s0 tcontext=u:object_r:ab_update_gki_prop:s0 tclass=file permissive=1
+07-07 06:19:45.596 I/init    (    1): Service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3577) exited with status 0 waiting took 0.020000 seconds
+07-07 06:19:45.596 I/init    (    1): Sending signal 9 to service 'exec 119 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 3577) process group...
+07-07 06:19:45.596 I/libprocessgroup(    1): Successfully killed process cgroup uid 1000 pid 3577 in 0ms
+07-07 06:19:43.530 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+07-07 06:19:43.530 I/adbd    (  666): UsbFfsConnection constructed
+07-07 06:19:43.531 I/adbd    (  666): UsbFfs-monitor thread spawned
+07-07 06:19:45.624 I/        (  683): read descriptors
+07-07 06:19:45.625 I/        (  683): read strings
+07-07 06:19:45.626 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:45.629 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:45.629 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:44.532 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:44.532 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:44.532 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:44.532 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:44.532 I/adbd    (  666): UsbFfsConnection being destroyed
+[  575.097862][  T683] read descriptors
+[  575.097891][  T683] read strings
+07-07 06:19:44.569 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+[  575.098542][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:44.570 I/adbd    (  666): UsbFfsConnection constructed
+[  575.098922][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:44.571 I/adbd    (  666): UsbFfs-monitor thread spawned
+[  575.103017][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:46.664 I/        (  683): read descriptors
+07-07 06:19:46.664 I/        (  683): read strings
+07-07 06:19:46.665 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:46.665 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:46.669 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:45.572 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:45.572 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:45.572 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:45.573 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:45.573 I/adbd    (  666): UsbFfsConnection being destroyed
+[  576.129848][  T683] read descriptors
+07-07 06:19:45.601 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+[  576.129877][  T683] read strings
+07-07 06:19:45.602 I/adbd    (  666): UsbFfsConnection constructed
+[  576.130515][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:45.602 I/adbd    (  666): UsbFfs-monitor thread spawned
+[  576.130892][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:47.696 I/        (  683): read descriptors
+[  576.131511][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:47.696 I/        (  683): read strings
+07-07 06:19:47.697 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:47.697 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:47.698 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:46.113 D/ActivityManager(  709): freezing 1099 com.android.permissioncontroller
+07-07 06:19:46.604 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:46.604 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+07-07 06:19:46.604 I/adbd    (  666): UsbFfs: already offline
+07-07 06:19:46.604 I/adbd    (  666): destroying transport UsbFfs
+07-07 06:19:46.604 I/adbd    (  666): UsbFfsConnection being destroyed
+[  577.161918][  T683] read descriptors
+[  577.161972][  T683] read strings
+07-07 06:19:46.633 I/adbd    (  666): opening control endpoint /dev/usb-ffs/adb/ep0
+[  577.162899][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:46.634 I/adbd    (  666): UsbFfsConnection constructed
+[  577.165973][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:46.635 I/adbd    (  666): UsbFfs-monitor thread spawned
+[  577.166584][ T1560] UDC core: g1: couldn't find an available UDC or it's busy
+07-07 06:19:48.728 I/        (  683): read descriptors
+07-07 06:19:48.728 I/        (  683): read strings
+07-07 06:19:48.729 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:48.732 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:48.733 W/UDC core( 1560): g1: couldn't find an available UDC or it's busy
+07-07 06:19:47.636 W/adbd    (  666): timed out while waiting for FUNCTIONFS_BIND, trying again
+07-07 06:19:47.636 I/adbd    (  666): UsbFfs: connection terminated: monitor thread finished
+
