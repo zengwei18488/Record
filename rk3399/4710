@@ -1,3 +1,162 @@
+buildroot
+……………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+./build.sh cleanall
+source envsetup.sh rockchip_rk3399
+./build.sh rootfs
+
+/BSP/buildroot/output/rockchip_rk3399/images
+
+make chromium-wayland
+
+/home/adv/BSP/buildroot/output/rockchip_rk3399/target/
+output/rockchip_rk3399/.config
+make menuconfig
+  libnss
+  atk
+  
+[root@rk3399:/]# cat /etc/os-release
+NAME=Buildroot
+VERSION=2018.02-rc3-dirty
+ID=buildroot
+VERSION_ID=2018.02-rc3
+PRETTY_NAME="Buildroot 2018.02-rc3"
+
+root@rk3399-buildroot:/# cat /etc/os-release 
+NAME=Buildroot
+VERSION=linux-5.10-gen-rkr8
+ID=buildroot
+VERSION_ID=2021.11
+PRETTY_NAME="Buildroot 2021.11"
+ID_LIKE="buildroot"
+
+$ cd kernel
+$ make ARCH=arm64 rk3399_adv_defconfig -j8 
+$ make ARCH=arm64 rk3399-rsb4710-a2.img -j12
+
+确认gpu使用率有用起来。另外也可以设置性能模式
+echo performance | tee $(find /sys/ -name *governor) > /dev/null 2>&1 || true
+
+cpu A53
+./sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+cpu A72
+./sys/devices/system/cpu/cpufreq/policy4/scaling_governor
+./sys/devices/platform/dmc/devfreq/dmc/governor
+GPU
+./sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu/governor
+
+    echo -n A53 freq:
+    awk '{printf "%3.1fM\n", $1/1000}'  /sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq
+    echo -n A72 freq:
+    awk '{printf "%3.1fM\n", $1/1000}'  /sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq
+
+    echo -n ddr freq:
+    awk '{printf " %3.1fM\n", $1/1000000}' /sys/class/devfreq/dmc/cur_freq
+
+    echo -n gpu freq:
+    awk '{printf " %3.1fM\n", $1/1000000}' /sys/class/devfreq/ff9a0000.gpu/cur_freq
+    echo -n gpu used:
+    awk '{printf " %4d\n", $1}' /sys/devices/platform/ff9a0000.gpu/utilisation
+
+    echo -n cpu temp:
+    awk '{printf " %3.1f°C\n",$1/1000}' /sys/class/thermal/thermal_zone0/temp
+    echo -n gpu temp:
+    awk '{printf " %3.1f°C\n",$1/1000}' /sys/class/thermal/thermal_zone1/temp
+
+
+开机自启动
+1）打开编辑 /etc/inittab
+2）追加 ::sysinit:/root/test.sh，即在系统初始化后启动对应路径的脚本
+3）创建文件 /root/test.sh
+4）在 test.sh 中添加脚本 ，头文件不要写成 #!/bin/bash，文件系统可能不识别 bash 
+
+#!/bin/sh
+echo "Hello Auto StartUp ${0}"
+
+____________________________________________________________________________________________
+debian 跑马灯
+
+chromium index.html --kiosk --window-position=0,0 --user-data-dir="/home/linaro/0" &
+
+1、首先确保安装了qemu-user-static
+
+sudo apt-get install qemu-user-static
+
+2、确保qemu-arm-static复制到正确目录
+
+sudo cp /usr/bin/qemu-arm-static binary/usr/bin/
+
+sudo apt install qemu-user-binfmt
+
+显示当前环境下执行文件系统架构支持情况
+
+update-binfmts --display
+
+设置qemu-arm为enabled，启用qemu-arm
+
+sudo update-binfmts --enable qemu-arm
+
+
+sudo mkdir binary
+sudo mount rootfs.img binary
+sudo cp /usr/bin/qemu-arm-static binary/usr/bin/
+./mk-qt5.sh -m binary/
+
+
+./mk-qt5.sh -u binary/
+
+mkdir rootfs
+sudo mount rootfs.img binary
+./mk-image.sh
+
+su
+dd if=/dev/zero of=/dev/block/mmcblk1 bs=1M count=4;sync;
+
+
+userdata:grow checking...update.img Installation success.
+update.img Installation success.
+
+Please remove SD CARD!!!, wait for reboot.
+
+
+line in(line-in)
+
+使用line in线对接
+amixer -c0 cset name="RECMIXL BST3 Switch" 1
+amixer -c0 cset name="RECMIXR BST3 Switch" 1
+
+debian10指令   arecord -v -f dat | aplay -Dplughw:0,0 -t wav
+                               arecord -v -f dat | aplay -V mono
+                               arecord -D hw:0,0 -f cd -t wav | aplay -Dplughw:0,0 -t wav
+                  debian 9指令   arecord -f cd -t wav -d 10 | aplay -Dplughw:0,0 -t wav
+                               arecord -f cd -t wav | aplay -Dplughw:0,0 -t wav
+arecord --list-formats
+alsamixer --card=0
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+……………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+rk3399_rsb4710:/ # cat /data/BurnIn/ForTest.sh
+#!/system/bin/sh
+i=`cat /data/count`
+let "i = $i + 1"
+echo $i >/data/count
+echo $i
+
+ifconfig eth1 192.168.0.101 netmask 255.255.255.0
+route add default gw 192.168.0.1
+
+sleep 1
+
+
+
+ifconfig eth1 down
+sysctl -w net.ipv4.ip_forward=1
+ip rule add from all lookup main pref 0
+ifconfig eth1 172.22.169.136 netmask 255.255.254.0 up
+
+/data/misc/ethernet/ipconfig.txt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 pipeline
 
 $ sudo docker run -itd --name build_rk3399_android7_risc -v /build/build_rk3399_risc:/home/adv/BSP:rw --privileged advrisc/u18.04-rk3399abv10:latest /bin/bash
@@ -33,7 +192,7 @@ update.zip 拷贝到 USB、SD 卡根目录，或/data/media/0/ 目录下
 
 ########################################################################################################
 
-docker run -it --name android_n7 -v /media/org-home/zengwei/work/rsb4710-android7.1/android:/home/adv/BSP:rw advrisc/u16.04-imx6abv5:20170523 /bin/bash
+docker run -it --name android_n7 -v /home/zengwei/data_2T/zengwei/work/rsb4710-android7.1/android:/home/adv/BSP:rw advrisc/u16.04-imx6abv5:20170523 /bin/bash
 
 make clobber
 make distclean
@@ -157,6 +316,7 @@ repo init --repo-url=ssh://git@www.rockchip.com.cn:2222/repo-release/tools/repo.
 cd u-boot/
 ./make.sh rk3399
 ./make.sh rk3399_rsb4710a2_2G
+./make.sh rk3399_rsb3710a1_2G
 ./make.sh rk3399_rom5780a3_2G
 
 
@@ -173,9 +333,9 @@ make ARCH=arm64 rk3399-rom5780-a3.img
 make ARCH=arm64 rk3399-ppc115w-a2.img
 
 source build/envsetup.sh
+lunch rsb4710_Android10-userdebug
 lunch rk3399_Android10-userdebug
 lunch rsb3710_Android10-userdebug
-lunch rsb4710_Android10-userdebug
 lunch rom5780_Android10-userdebug
 lunch ppc115w_Android10-userdebug
 make -j12;./mkimage.sh;
@@ -214,15 +374,135 @@ getprop persist.vendor.framebuffer.main
 hardware/realtek/rtkbt/vendor/etc/bluetooth/rtkbt.conf
 hardware/realtek/rtkbt/code/libbt-vendor/src/hardware_usb.c
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+sudo docker run -itd --name build_rk3399_android10_risc -v /media/store/rk3399-android10:/home/adv/BSP:rw --privileged advrisc/u18.04-rk3399abv10:latest /bin/bash
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cat /sys/kernel/debug/dw-hdmi/phy
+
+
+usb  lan7500 phy
+
+/sys/devices/platform/fe300000.ethernet/mdio_bus/stmmac-0/stmmac-0:00/phy_registers
+
+[ 3962.892358] smsc75xx 1-1:1.0 eth1: link down
+[ 3967.538977] smsc75xx 1-1:1.0 eth1: link down
+[ 3969.858938] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+[ 3969.861474] smsc75xx 1-1:1.0 eth1: link up, 100Mbps, full-duplex, lpa 0x4DE1
+[ 4121.114857] smsc75xx 1-1:1.0 eth1: link down
+
+drivers/net/usb/smsc75xx.c
+
+smsc75xx_phy_initialize
+
+#ifdef CONFIG_ARCH_ADVANTECH
+       ret = smsc75xx_mdio_read(dev->net, dev->mii.phy_id, 0x11);
+       ret |= 1<<7;
+       smsc75xx_mdio_write(dev->net, dev->mii.phy_id, 0x11, ret);
+#endif
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+rtc
+
+frameworks/base/services/core/java/com/android/server/AlarmManagerService.java
+frameworks/base/services/core/jni/com_android_server_AlarmManagerService.cpp
+
+./common/sepolicy/vendor/genfs_contexts:genfscon sysfs /devices/platform/ff110000.i2c/i2c-1/1-0068/rtc/rtc0/hctosys                u:object_r:sysfs_hctosys:s0
+/sys/devices/platform/ff110000.i2c/i2c-1/1-0068/rtc/rtc0/hctosys 
+
+
+driver/rtc/hctosys.c
+
+该文件中只有一个函数：rtc_hctosys,该函数通过宏定义late_initcall放在特殊的段，在系统启动时会调用该函数.
+该函数主要有两个动作：
+
+1. rtc_read_time，通过该函数读硬件RTC芯片的时间
+2. do_settimeofday，将读回的RTC时间设置时间，xtime变量
+
+简单网络时间协议（Simple Network Time Protocol），由 NTP 改编而来，主要用来同步因特网中的计算机时钟。
+网络标识和时区（Network Identity and Time Zone，NITZ）是一种通过无线网络向移动设备提供本地日期和时间、时区、夏时制偏移，以及网络提供商身份信息的机制，这通常用于移动电话自动更新系统时间。
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+python for ubuntu 22.04 building
+
+zengwei@zengwei-Precision-3660:~/data_8T2/rk3399-android10$ git diff build/make/tools/releasetools/build_image.py
+diff --git a/build/make/tools/releasetools/build_image.py b/build/make/tools/releasetools/build_image.py
+index 4136ed432e..8ae9b77f2f 100755
+--- a/build/make/tools/releasetools/build_image.py
++++ b/build/make/tools/releasetools/build_image.py
+@@ -74,7 +74,7 @@ def GetInodeUsage(path):
+   cmd = ["find", path, "-print"]
+   output = common.RunAndCheckOutput(cmd, verbose=False)
+   # increase by > 4% as number of files and directories is not whole picture.
+-  inodes = output.count('\n')
++  inodes = output.count('\n'.encode())
+   spare_inodes = inodes * 4 // 100
+   min_spare_inodes = 12
+   if spare_inodes < min_spare_inodes:
+@@ -104,7 +104,7 @@ def GetFilesystemCharacteristics(image_path, sparse_image=True):
+       os.remove(unsparse_image_path)
+   fs_dict = {}
+   for line in output.splitlines():
+-    fields = line.split(":")
++    fields = line.split(":".encode())
+     if len(fields) == 2:
+       fs_dict[fields[0].strip()] = fields[1].strip()
+   return fs_dict
+@@ -213,7 +213,7 @@ def CheckHeadroom(ext4fs_output, prop_dict):
+   ext4fs_stats = re.compile(
+       r'Created filesystem with .* (?P<used_blocks>[0-9]+)/'
+       r'(?P<total_blocks>[0-9]+) blocks')
+-  last_line = ext4fs_output.strip().split('\n')[-1]
++  last_line = ext4fs_output.strip().split('\n'.encode())[-1]
+   m = ext4fs_stats.match(last_line)
+   used_blocks = int(m.groupdict().get('used_blocks'))
+   total_blocks = int(m.groupdict().get('total_blocks'))
+
+---------------------------------------------------------------------------
+
+/kernel/scripts/dtc/dtc-parser.tab.c
+
+/* Location data for the lookahead symbol.  */
+extern YYLTYPE yylloc
+
+
+***************************************************************************************************************
+2025/09  api
+
+framework.jar会生成在out/target/common/obj/JAVA_LIBRARIES/framework_intermediates/classes.jar路径下
+mkdir ~/temp
+cd ~/temp
+jar xf ../../../../out/target/common/obj/JAVA_LIBRARIES/framework_intermediates/classes.jar
+
+mkdir StNvaCtl-api
+cd StNvaCtl-api/
+cp -r ../android/StNvaCtllib/* .
+
+jar cvf custom-core-api.jar StNvaCtl-api/
+jar cvf javalib.jar stnvctllib/
+
+frameworks/basestnvactllib/java/android/stnvactllib/StNvaCtllib.java
+frameworks/base/api/current.txt
+frameworks/base/api/system-current.txt
+art/runtime/mem_map.cc
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+make rk3399_rsb3710a2_2G_defconfig
 make rk3399_rsb4710a2_2G_defconfig
 make ARCHV=aarch64
 
 make ARCH=arm64 rk3399_adv_defconfig
 make ARCH=arm64 rk3399-rsb4710-a2.img -j12
+make ARCH=arm64 rk3399-rsb3710-a2.img -j12
 
+sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches
+
+make update-api
 source build/envsetup.sh;lunch rk3399_rsb4710-userdebug;make -j8;./mkimage.sh
+source build/envsetup.sh;lunch rk3399_rsb3710-userdebug;make -j8;./mkimage.sh
 
 adb.exe root
 adb.exe disable-verity
@@ -306,6 +586,19 @@ PhysicalKeyboardFragment.java  Secure.SHOW_IME_WITH_HARD_KEYBOARD
 ./out/target/product/rk3399_rsb4710/recovery/root/default.prop:persist.sys.rotation.einit=1
 ./out/target/product/rk3399_rsb4710/obj/ETC/system_build_prop_intermediates/build.prop:persist.sys.rotation.einit=1
 
+************************************************************************************************************************
 
+webview
 
+LOCAL_PREBUILT_JNI_LIBS_arm := @lib/armeabi-v7a/libwebviewchromium.so
+LOCAL_PREBUILT_JNI_LIBS_arm64 := @lib/arm64-v8a/libwebviewchromium.so
+LOCAL_PREBUILT_JNI_LIBS_x86 := @lib/x86/libwebviewchromium.so
+LOCAL_PREBUILT_JNI_LIBS_x86_64 := @lib/x86_64/libwebviewchromium.so
+
+external/chromium-webview/prebuilt/arm64/
+
+libplaceholder.so
+
+git clone https://android.googlesource.com/platform/external/chromium-webview --depth 1 -b android-14.0.0_r75
+out/target/product/rsb4710_Android10/product/app/webview/webview.apk
 

@@ -1,0 +1,86 @@
+将块 blob 上载到 blob 存储 失败。 详细信息: StatusCode = 403，StatusText = Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.
+
+
+Pipe Line 
+
+sudo docker run -itd --name build_imx8_android11_risc_${DATE_TIME} -v ${BUILD_WORK_PATH}:/home/adv/BSP:rw --privileged ${DOCKER_IMAGE_NAME}:latest /bin/bash
+
+sudo docker run -itd --name build_imx8_android11_risc -v /build/build_imx8_risc:/home/adv/BSP:rw --privileged advrisc/u18.04-rk3399abv10:latest /bin/bash
+
+sudo azcopy copy --recursive "${PUB_BLOB_PREBULIT_ROOT}/${BLOB_PREBUILT_OFFSET}?${PUB_BLOB_PREBUILT_ROOT_TOKEN}" "${BUILD_WORK_PATH}" 
+
+sudo azcopy copy --recursive=true "https://riscsw.blob.core.windows.net/android-prebuilts/imx8-android11/prebuilts-imx8-android11-20220316.tar.gz?sp=racwdli&st=2023-02-15T02:30:52Z&se=2030-02-15T10:30:52Z&sv=2021-06-08&sr=c&sig=Am64li44c8E0L2YRfrBJ52bHoaGcQ1n6FCmJL59x6yI%3D" "/build/build_imx8_risc"
+
+
+Android R11
+
+yocto SRC
+git@github.com:ADVANTECH-Corp/linux-imx.git  -b  adv_5.10.35_2.0.0
+git@github.com:ADVANTECH-Corp/uboot-imx.git -b  adv_v2021.04_5.10.35_2.0.0
+
+curl https://storage.googleapis.com/git-repo-downloads/repo > ../bin/repo 
+repo init -u https://dev.azure.com/AIM-Linux/RISC-IMX-Android11/_git/android-manifest -b android-11.0.0_2.6.0
+
+[Uboot]
+arch/arm/dts/Makefile
+arch/arm/mach-imx/imx8m/Kconfig
+
+configs/imx8mp_rom5722a1_android_6G_defconfig
+configs/imx8mp_rom5722a1_android_6G_uuu_defconfig
+
+include/configs/imx8mp_rom5722.h
+include/configs/imx8mp_rom5722_android.h
+
+arch/arm/dts/imx8mp-rom5722-a1.dts
+arch/arm/dts/imx8mp-rom5722-a1-u-boot.dtsi
+
+board/freescale/imx8mp_rom5722a1
+
+
+[Kernel]
+arch/arm64/boot/dts/freescale/imx8mp-rom5722-a1-android.dts
+arch/arm64/boot/dts/freescale/imx8mp-rom5722-a1.dts
+
+arch/arm64/boot/dts/freescale/Makefile
+
+
+[Android]
+devices/nxp/imx8m/AndroidProducts.mk
+devices/nxp/imx8m/rsb3720_a1/
+device/nxp/common/tools/imx-make.sh
+
+hardware/nxp/libbt/Android.mk
+
+vendor/nxp-opensource/arm-trusted-firmware/plat/imx/imx8m/imx8mp/imx8mp_bl31_setup.c
+vendor/nxp-opensource/arm-trusted-firmware/plat/imx/imx8m/imx8mp/platform.mk
+ifeq ($(TARGET_PRODUCT), rsb3720_a1)
+ IMX_BOOT_UART_BASE     ?=      0x30880000
+endif
+ifeq ($(TARGET_PRODUCT), rom5722_a1)
+ IMX_BOOT_UART_BASE      ?=      0x30890000
+endif
+
+vendor/nxp-opensource/imx/alsa/tinyalsa_hal.cpp
+
+sd启动 1-off 2-on 3-on 4-off
+emmc   1-on 2-off 3-off 4-off
+
+[Building]
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin/aarch64-linux-gnu-
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-elf/bin/aarch64-elf-
+
+export CLANG_PATH=/opt/prebuilt-android-clang
+
+source build/envsetup.sh; lunch rom5722_a1-userdebug;./imx-make.sh -j12
+
+./imx-make.sh bootloader -j8
+./imx-make.sh bootloader kernel -j8;./imx-make.sh -j12
+./imx-make.sh kernel -j8
+./imx-make.sh bootimage -j8;./imx-make.sh dtboimage -j8
+./imx-make.sh -j12
+
+./imx-make.sh -j12 2>&1 | tee build-log.txt
+./imx-make.sh -j12 2>&1 | tee build-log-evk.txt
+
+
+sudo ./imx-sdcard-partition.sh -f imx8mp -c 28 /dev/sdx

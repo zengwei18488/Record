@@ -1,0 +1,80 @@
+
+
+debian11 QT 5.15
+
+
+E: Package 'qml-module-qtgraphicaleffects' has no installation candidate
+E: Package 'qml-module-qtqml' has no installation candidate
+E: Package 'qml-module-qtqml-models2' has no installation candidate
+E: Package 'qml-module-qtquick-layouts' has no installation candidate
+E: Package 'qml-module-qtquick-window2' has no installation candidate
+qml-module-qtquick-controls_5.15.2-2_arm64.deb
+qml-module-qtbluetooth_5.15.2-2_arm64.deb
+qml-module-qtbluetooth_5.15.2-2_arm64.deb
+qml-module-qttest_5.15.2+dfsg-6_arm64.deb
+
+qml-module-qt-labs-settings
+qml-module-qtquick-privatewidgets
+
+
+
+cp /run/media/sda/qt/Qt/* /root/qt/
+sudo dpkg -i /root/qt/qml-module-*
+ 
+ 
+export QTDIR=/opt/qt5.15.2 ;export LD_LIBRARY_PATH=$QTDIR/lib:$LD_LIBRARY_PATH ;export QT_QPA_PLATFORM_PLUGIN_PATH=$QTDIR/plugins ;export QT_QPA_PLATFORM=eglfs ;export QML2_IMPORT_PATH=$QTDIR/qml;
+
+
+mv /etc/apt/sources.list.cn /etc/apt/sources.list
+sudo apt install libqt6*
+sudo apt install qt6*
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+
+
+
+uboot
+
+board/rockchip/advantech/Kconfig
+cp arch/arm/dts/rk3568-rsb4810a2.dts arch/arm/dts/rk3568-rom5880a1.dts
+cp configs/rk3568_rsb4810a2_defconfig configs/rk3568_rom5880a1_defconfig
+cp include/configs/rk3568_rsb4810.h include/configs/rk3568_rom5880.h
+
+
+Kernel
+
+
+
+
+building
+
+./build.sh adv_rk3568_rom5880a1_defconfig
+
+./build.sh uboot
+./build.sh kernel
+./build.sh recovery
+./build.sh firmware
+./build.sh updateimg
+
+./build.sh debian
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+Testing
+
+scp aka@172.21.171.106:/home/aka/work/temp/4k.mp4 /home/linaro/Desktop
+cd /home/linaro/Desktop
+/tools/test/rockchip/video/test_gst_video.sh "./4k.mp4"
+
+
+￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥￥
+
+sudo date -s "2025-04-17 14:51:00"
+timedatectl
+hwclock -w
+hwclock --systohc
+hwclock -s
+hwclock --hctosys
+
+

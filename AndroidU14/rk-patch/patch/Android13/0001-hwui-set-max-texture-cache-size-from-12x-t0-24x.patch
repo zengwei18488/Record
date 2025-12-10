@@ -1,0 +1,33 @@
+From a13250fe3421f74bca35a169f360c8ae820a434f Mon Sep 17 00:00:00 2001
+From: dzy <dzy@rock-chips.com>
+Date: Mon, 15 Jul 2024 10:43:24 +0800
+Subject: [PATCH] hwui: set max texture cache size from 12x t0 24x
+
+Type: Fix
+Redmine ID: https://redmine.rock-chips.com/issues/489272#change-4974512
+Associated modifications: N/A
+Test: N/A
+
+Change-Id: I08872f1ece9a126d3dc6145b8e791dc2da5f488e
+---
+ libs/hwui/renderthread/CacheManager.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libs/hwui/renderthread/CacheManager.cpp b/libs/hwui/renderthread/CacheManager.cpp
+index ded2b06fb3cf..b6b5bf21ff81 100644
+--- a/libs/hwui/renderthread/CacheManager.cpp
++++ b/libs/hwui/renderthread/CacheManager.cpp
+@@ -42,8 +42,8 @@ namespace renderthread {
+ // to the screen resolution. This is meant to be a conservative default based on
+ // that analysis. The 4.0f is used because the default pixel format is assumed to
+ // be ARGB_8888.
+-#define SURFACE_SIZE_MULTIPLIER (12.0f * 4.0f)
+-#define BACKGROUND_RETENTION_PERCENTAGE (0.5f)
++#define SURFACE_SIZE_MULTIPLIER (24.0f * 4.0f)
++#define BACKGROUND_RETENTION_PERCENTAGE (1.0f)
+ 
+ CacheManager::CacheManager()
+         : mMaxSurfaceArea(DeviceInfo::getWidth() * DeviceInfo::getHeight())
+-- 
+2.25.1
+

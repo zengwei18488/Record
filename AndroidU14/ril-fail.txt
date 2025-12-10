@@ -1,0 +1,73 @@
+[   58.969161][  T277] logd: logdr: UID=0 GID=0 PID=2366 b tail=0 logMask=2 pid=0 start=0ns deadline=0ns
+--------- beginning of radio
+12-17 03:59:16.308   819   819 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:16.333   819   986 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:16.502   819   999 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:16.762   819   967 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:16.855   819   819 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:16.858   819   969 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:16.872   819   819 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:16.874   819   819 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+[   59.063961][    T1] init: Control message: Could not find 'android.hardware.radio@1.5::IRadio/slot1' for ctl.interface_start from pid: 272 (/system/bin/hwservicemanager)
+12-17 03:59:16.888   819   819 D TelephonyRegistry: systemRunning register for intents
+[   59.075444][    T1] init: starting service 'vendor.ril-daemon'...
+12-17 03:59:16.944   819   864 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+[   59.080058][    T1] init: ... started service 'vendor.ril-daemon' has pid 2369
+12-17 03:59:17.123   819   903 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+[   59.084502][    T1] init: Service 'vendor.ril-daemon' (pid 2369) exited with status 1
+12-17 03:59:17.153   819   819 D TelephonyRegistry: notifyCellLocationForSubscriber: subId=2147483647 cellIdentity=null
+[   59.084541][    T1] init: Sending signal 9 to service 'vendor.ril-daemon' (pid 2369) process group...
+12-17 03:59:17.515  1142  1142 W CarrierConfigManager: Error getting config for subId -1 ICarrierConfigLoader is null
+[   59.084672][    T1] libprocessgroup: Successfully killed process cgroup uid 1001 pid 2369 in 0ms
+12-17 03:59:17.549  1046  1046 W CarrierConfigManager: Error getting config for subId -1 ICarrierConfigLoader is null
+[   59.084840][    T1] init: process with updatable components 'vendor.ril-daemon' exited 4 times in 4 minutes
+12-17 03:59:17.554   819   853 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+[   59.085827][    T1] init: processing action (sys.init.updatable_crashing=1) from (/system/etc/init/flags_health_check.rc:10)
+12-17 03:59:17.561   819   903 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+[   59.086093][    T1] init: starting service 'exec 27 (/system/bin/flags_health_check UPDATABLE_CRASHING)'...
+12-17 03:59:17.624  1162  1162 D TelephonyComponentFactory: validated paths: null
+[   59.089718][    T1] init: ... started service 'exec 27 (/system/bin/flags_health_check UPDATABLE_CRASHING)' has pid 2370
+12-17 03:59:17.624  1162  1162 D TelephonyComponentFactory: Total components injected: 0
+[   59.089826][    T1] init: SVC_EXEC service 'exec 27 (/system/bin/flags_health_check UPDATABLE_CRASHING)' pid 2370 (uid 1000 gid 1000+0 context default) started; waiting...
+12-17 03:59:17.625  1162  1162 D TDC     : updateOrInsert: inserting: Modem { uuid=modem, state=0, rilModel=0, rat={}, maxActiveVoiceCall=1, maxActiveDataCall=1, maxStandby=1 }
+[   59.099874][    T1] init: Service 'exec 27 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 2370) exited with status 0 waiting took 0.011000 seconds
+12-17 03:59:17.625  1162  1162 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+[   59.099916][    T1] init: Sending signal 9 to service 'exec 27 (/system/bin/flags_health_check UPDATABLE_CRASHING)' (pid 2370) process group...
+12-17 03:59:17.626  1162  1162 D PersistAtomsStorage: PersistAtoms file not found
+[   59.100071][    T1] libprocessgroup: Successfully killed process cgroup uid 1000 pid 2370 in 0ms
+12-17 03:59:17.627  1162  1162 D PersistAtomsStorage: created new PersistAtoms
+12-17 03:59:17.631  1162  1162 D MetricsCollector: registered
+12-17 03:59:17.632  1162  1162 D CdmaSSM : subscriptionSource from settings: 0
+12-17 03:59:17.632  1162  1162 I PhoneFactory: Cdma Subscription set to 0
+12-17 03:59:17.633  1162  1162 I PhoneFactory: Network Mode set to 9
+12-17 03:59:17.633  1162  1162 D RILJ    : RIL: init allowedNetworkTypes=316295 cdmaSubscription=0) [PHONEnull]
+12-17 03:59:17.640  1046  1046 W CarrierConfigManager: Error getting config for subId -1 ICarrierConfigLoader is null
+12-17 03:59:17.645  1046  1046 W CarrierConfigManager: Error getting config for subId -1 ICarrierConfigLoader is null
+12-17 03:59:17.655   819   852 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:17.865  1142  1282 W CarrierConfigManager: Error getting config for subId -1 ICarrierConfigLoader is null
+12-17 03:59:17.904  1142  1282 W CarrierConfigManager: Error getting config for subId -1 ICarrierConfigLoader is null
+12-17 03:59:37.227   819   852 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:37.235  2199  2199 D TelephonyComponentFactory: validated paths: null
+12-17 03:59:37.235  2199  2199 D TelephonyComponentFactory: Total components injected: 0
+12-17 03:59:37.236  2199  2199 D TDC     : updateOrInsert: inserting: Modem { uuid=modem, state=0, rilModel=0, rat={}, maxActiveVoiceCall=1, maxActiveDataCall=1, maxStandby=1 }
+12-17 03:59:37.236  2199  2199 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+12-17 03:59:37.236  2199  2199 D PersistAtomsStorage: PersistAtoms file not found
+12-17 03:59:37.236  2199  2199 D PersistAtomsStorage: created new PersistAtoms
+12-17 03:59:37.239  2199  2199 D MetricsCollector: registered
+12-17 03:59:37.243  2199  2199 D CdmaSSM : subscriptionSource from settings: 0
+12-17 03:59:37.243  2199  2199 I PhoneFactory: Cdma Subscription set to 0
+12-17 03:59:37.243  2199  2199 I PhoneFactory: Network Mode set to 9
+12-17 03:59:37.243  2199  2199 D RILJ    : RIL: init allowedNetworkTypes=316295 cdmaSubscription=0) [PHONEnull]
+12-17 03:59:57.374   819   902 D TelephonyRegistry: listen oscl: mHasNotifySubscriptionInfoChangedOccurred==false no callback
+12-17 03:59:57.380  2325  2325 D TelephonyComponentFactory: validated paths: null
+12-17 03:59:57.380  2325  2325 D TelephonyComponentFactory: Total components injected: 0
+12-17 03:59:57.381  2325  2325 D TDC     : updateOrInsert: inserting: Modem { uuid=modem, state=0, rilModel=0, rat={}, maxActiveVoiceCall=1, maxActiveDataCall=1, maxStandby=1 }
+12-17 03:59:57.381  2325  2325 D TDC     : updateOrInsert: inserting: Sim { uuid=sim, modemUuid=modem, state=0 }
+12-17 03:59:57.381  2325  2325 D PersistAtomsStorage: PersistAtoms file not found
+12-17 03:59:57.381  2325  2325 D PersistAtomsStorage: created new PersistAtoms
+12-17 03:59:57.384  2325  2325 D MetricsCollector: registered
+12-17 03:59:57.385  2325  2325 D CdmaSSM : subscriptionSource from settings: 0
+12-17 03:59:57.385  2325  2325 I PhoneFactory: Cdma Subscription set to 0
+12-17 03:59:57.385  2325  2325 I PhoneFactory: Network Mode set to 9
+12-17 03:59:57.385  2325  2325 D RILJ    : RIL: init allowedNetworkTypes=316295 cdmaSubscription=0) [PHONEnull]
+

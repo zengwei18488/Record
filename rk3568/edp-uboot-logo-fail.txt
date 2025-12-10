@@ -1,0 +1,320 @@
+DDR fdeec6f4fc typ 23/09/25-19:41:25,fwver: v1.19
+In
+LP4/4x derate en, other dram:1x trefi
+SRX
+ddrconfig:0
+LPDDR4, 324MHz
+BW=32 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=2048MB
+tdqss: cs0 dqs0: -24ps, dqs1: -120ps, dqs2: -72ps, dqs3: -168ps,
+
+change to: 324MHz
+clk skew:0x63
+
+change to: 528MHz
+clk skew:0x58
+
+change to: 780MHz
+clk skew:0x58
+
+change to: 1560MHz(final freq)
+PHY drv:clk:38,ca:38,DQ:30,odt:60
+vrefinner:16%, vrefout:29%
+dram drv:40,odt:80
+vref_ca:00000068
+clk skew:0x21
+cs 0:
+the read training result:
+DQS0:0x33, DQS1:0x32, DQS2:0x36, DQS3:0x2c,
+min  :0x10 0x11 0x13 0x10  0x1  0x6  0x7  0x2 , 0xc  0x9  0x2  0x1  0xc  0xa  0xa  0x5 ,
+      0x15 0x16 0x10  0xe  0x5  0x1  0x4  0x6 , 0xd  0xa  0x8  0x2  0xe 0x10  0xa  0xe ,
+mid  :0x2b 0x2b 0x2c 0x29 0x1c 0x20 0x22 0x1d ,0x26 0x24 0x1d 0x1c 0x28 0x24 0x25 0x21 ,
+      0x2d 0x30 0x28 0x26 0x1f 0x1b 0x1c 0x1f ,0x26 0x23 0x21 0x1c 0x28 0x29 0x24 0x26 ,
+max  :0x47 0x46 0x46 0x43 0x37 0x3a 0x3d 0x39 ,0x41 0x3f 0x38 0x37 0x44 0x3f 0x40 0x3d ,
+      0x46 0x4a 0x40 0x3f 0x3a 0x36 0x35 0x38 ,0x3f 0x3d 0x3a 0x36 0x42 0x42 0x3e 0x3f ,
+range:0x37 0x35 0x33 0x33 0x36 0x34 0x36 0x37 ,0x35 0x36 0x36 0x36 0x38 0x35 0x36 0x38 ,
+      0x31 0x34 0x30 0x31 0x35 0x35 0x31 0x32 ,0x32 0x33 0x32 0x34 0x34 0x32 0x34 0x31 ,
+the write training result:
+DQS0:0x1d, DQS1:0xa, DQS2:0x13, DQS3:0x0,
+min  :0x62 0x66 0x67 0x65 0x55 0x57 0x5c 0x5b 0x5b ,0x4c 0x4b 0x45 0x47 0x50 0x4d 0x4e 0x4c 0x47 ,
+      0x5a 0x5a 0x54 0x53 0x4b 0x47 0x4a 0x4e 0x50 ,0x47 0x47 0x45 0x3f 0x4b 0x4b 0x47 0x4c 0x3e ,
+mid  :0x7e 0x80 0x82 0x7f 0x6f 0x72 0x76 0x75 0x75 ,0x68 0x67 0x5d 0x60 0x6a 0x66 0x68 0x66 0x61 ,
+      0x76 0x76 0x6f 0x6e 0x66 0x60 0x63 0x68 0x6c ,0x63 0x60 0x5d 0x59 0x64 0x66 0x5f 0x67 0x59 ,
+max  :0x9a 0x9b 0x9e 0x9a 0x89 0x8d 0x91 0x8f 0x8f ,0x84 0x83 0x75 0x79 0x85 0x80 0x82 0x80 0x7c ,
+      0x92 0x93 0x8b 0x89 0x82 0x79 0x7d 0x83 0x88 ,0x80 0x79 0x76 0x74 0x7e 0x81 0x78 0x82 0x74 ,
+range:0x38 0x35 0x37 0x35 0x34 0x36 0x35 0x34 0x34 ,0x38 0x38 0x30 0x32 0x35 0x33 0x34 0x34 0x35 ,
+      0x38 0x39 0x37 0x36 0x37 0x32 0x33 0x35 0x38 ,0x39 0x32 0x31 0x35 0x33 0x36 0x31 0x36 0x36 ,
+CA Training result:
+cs:0 min  :0x45 0x42 0x3a 0x33 0x3d 0x35 0x3a ,0x45 0x3e 0x3f 0x35 0x3c 0x33 0x3c ,
+cs:0 mid  :0x82 0x82 0x75 0x73 0x77 0x72 0x68 ,0x84 0x7f 0x77 0x74 0x77 0x73 0x69 ,
+cs:0 max  :0xc0 0xc2 0xb0 0xb4 0xb2 0xaf 0x96 ,0xc4 0xc1 0xb0 0xb3 0xb2 0xb4 0x97 ,
+cs:0 range:0x7b 0x80 0x76 0x81 0x75 0x7a 0x5c ,0x7f 0x83 0x71 0x7e 0x76 0x81 0x5b ,
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-gaaca6ffec1-211203 #zzz (Dec 03 2021 - 18:42:16)
+unknown raw ID phN
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC error: The cmd index is 1, ret is -110
+Card did not respond to voltage select!
+mmc_init: -95, time 16
+spl: mmc init failed with error: -95
+Trying to boot from MMC1
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 ... sha256(b5946ac63d...) + OK
+## Checking uboot 0x00a00000 ... sha256(5478afe787...) + OK
+## Checking fdt 0x00b45e38 ... sha256(a7745b78ed...) + OK
+## Checking atf-2 0xfdcc1000 ... sha256(b8dca786b4...) + OK
+## Checking atf-3 0x0006b000 ... sha256(2f91089eb7...) + OK
+## Checking atf-4 0xfdcd0000 ... sha256(0b2b146c60...) + OK
+## Checking atf-5 0xfdcce000 ... sha256(86ef885748...) + OK
+## Checking atf-6 0x00069000 ... sha256(a9a1e63bef...) + OK
+## Checking optee 0x08400000 ... sha256(af414b9c9f...) + OK
+Jumping to U-Boot(0x00a00000) via ARM Trusted Firmware(0x00040000)
+Total: 317.304 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-645-g8cea6ab0b:cl, fwver: v1.44
+NOTICE:  BL31: Built : 16:36:43, Sep 19 2023
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    pmu v1 is valid 220114
+INFO:    l3 cache partition cfg-0
+INFO:    dfs DDR fsp_param[0].freq_mhz= 1560MHz
+INFO:    dfs DDR fsp_param[1].freq_mhz= 324MHz
+INFO:    dfs DDR fsp_param[2].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_param[3].freq_mhz= 780MHz
+INFO:    Using opteed sec cpu_context!
+INFO:    boot cpu mask: 0
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-651-gd84087907 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #5 Fri Sep 16 15:39:33 CST 2022 aarch64
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0xa00000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V12012 (Jan 26 2024 - 15:48:01 +0800)
+
+Model: Advantech RK3568 ROM5880 Board
+PreSerial: 2, raw, 0xfe660000
+DRAM:  2 GiB
+Sysmem: init
+Relocation Offset: 7d219000
+Relocation fdt: 7b9f8b00 - 7b9fecc8
+CR: M/C/I
+dwmmc@fe2b0000: 1, dwmmc@fe2c0000: 2, sdhci@fe310000: 0
+Bootdev(atags): mmc 0
+MMC0: HS200, 200Mhz
+PartType: EFI
+DM: v1
+boot mode: recovery (misc)
+boot mode: normal
+Android 12.0, Build 2022.7, v2
+Found DTB in boot part
+DTB: rk-kernel.dtb
+HASH(c): OK
+ANDROID: fdt overlay OK
+swversion = V12012
+----------------------------------------------------------------
+model[0]         ROM-5880
+model[1]         AKS0218839
+model[2]         V12012
+model[3]         A1
+----------------------------------------------------------------
+Info : not configurate display in uboot
+----------------------------------------------------------------
+display0         5880
+display1
+display2
+----------------------------------------------------------------
+I2c0 speed: 100000Hz
+vsel-gpios- not found! Error: -2
+vdd_cpu 1000000 uV
+PMIC:  RK8090 (on=0x40, off=0x00)
+vdd_logic init 900000 uV
+vdd_gpu init 900000 uV
+vdd_npu init 900000 uV
+io-domain: OK
+Model: ROM-5880 AKS0218839 V12012 A1
+## Error: Can't overwrite "ethaddr"
+## Error inserting "ethaddr" variable, errno=1
+## Error: Can't overwrite "eth1addr"
+## Error inserting "eth1addr" variable, errno=1
+Rockchip UBOOT DRM driver version: v1.0.1
+VOP have 2 active VP
+vp0 have layer nr:3[1 3 5 ], primary plane: 5
+vp1 have layer nr:3[0 2 4 ], primary plane: 4
+vp2 have layer nr:0[], primary plane: 0
+disp info 2, type:14, id:0
+base2_disp_info couldn't be found, screen_info type[0] or id[0] mismatched
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to get edid
+disp info 0, type:11, id:0
+hdmi@fe0a0000 disconnected
+CLK: (sync kernel. arm: enter 816000 KHz, init 816000 KHz, kernel 0N/A)
+  apll 1416000 KHz
+  dpll 780000 KHz
+  gpll 1200000 KHz
+  cpll 1000000 KHz
+  npll 1200000 KHz
+  vpll 24000 KHz
+  hpll 24000 KHz
+  ppll 200000 KHz
+  armclk 1416000 KHz
+  aclk_bus 150000 KHz
+  pclk_bus 100000 KHz
+  aclk_top_high 500000 KHz
+  aclk_top_low 400000 KHz
+  hclk_top 150000 KHz
+  pclk_top 100000 KHz
+  aclk_perimid 300000 KHz
+  hclk_perimid 150000 KHz
+  pclk_pmu 100000 KHz
+Net:   FEC: can't find phy-handle
+eth0: ethernet@fe2a0000FEC: can't find phy-handle
+, eth1: ethernet@fe010000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "(none)"
+optee api revision: 2.0
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:762: ERROR: vbmeta: Error verifying vbmeta image: OK_NOT_SIGNED
+get image from preloaded partition...
+ANDROID: Hash OK
+Could not find "system" partition
+Booting IMAGE kernel at 0x00280000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x0027f800 ...
+Kernel: 0x00280000 - 0x01f03810 (29199 KiB)
+ramdisk:    0x0a200000 - 0x0a3483f9 (1313 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00280000 to 0x00280000 ... OK
+   kernel loaded at 0x00280000, end = 0x01f03810
+  'reserved-memory' cma: addr=10000000 size=800000
+  'reserved-memory' ramoops@110000: addr=110000 size=f0000
+   Using Device Tree in place at 0000000008300000, end 0000000008326683
+vp1 adjust cursor plane from 0 to 1
+vp0, plane_mask:0x2a, primary-id:5, curser-id:1
+vp1 adjust cursor plane from 1 to 0
+vp1, plane_mask:0x15, primary-id:4, curser-id:0
+vp2, plane_mask:0x0, primary-id:0, curser-id:-1
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0x80000000 (size: 0x76c00000)
+rockchip_otp_wait_status: wait init status timeout
+rockchip_otp_ecc_enable timeout during ecc_enable
+rockchip_rk3568_otp_read rockchip_otp_ecc_enable err
+adv_get_cpu_type: misc_read failed
+Total: 1243.281 ms
+
+Starting kernel ...
+
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[    0.279998] extcon extcon1: failed to create extcon usb2-phy link
+[    0.289083] rkvenc_init:1199: failed to add venc devfreq
+[    0.292107] mpp-iep2 fdef0000.iep: allocate roi buffer failed
+[    0.293945] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_a is not found!
+[    0.293969] rkvdec2_init:925: No niu aclk reset resource define
+[    0.293983] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_h is not found!
+[    0.293995] rkvdec2_init:928: No niu hclk reset resource define
+[    0.294035] rkvdec2_init:942: failed to add vdec devfreq
+[    0.294226] mpp_rkvdec2 fdf80200.rkvdec: probe sub driver failed
+[    0.308099] rk-pcie 3c0400000.pcie: Missing *config* reg space
+[    0.308774] rk-pcie 3c0800000.pcie: Missing *config* reg space
+[    0.339226] rk_gmac-dwmac fe2a0000.ethernet: no regulator found
+[    0.339260] rk_gmac-dwmac fe2a0000.ethernet: TX delay(0x0).
+[    0.339274] rk_gmac-dwmac fe2a0000.ethernet: RX delay(0x0).
+[    0.486796] rk_gmac-dwmac fe010000.ethernet: no regulator found
+[    0.486829] rk_gmac-dwmac fe010000.ethernet: TX delay(0x0).
+[    0.486837] rk_gmac-dwmac fe010000.ethernet: RX delay(0x0).
+[    0.635137] dwc3 fcc00000.dwc3: Failed to get clk 'ref': -2
+[    0.638924] dwc3 fd000000.dwc3: Failed to get clk 'ref': -2
+[    0.837702] rk817-battery rk817-battery: Failed to find matching dt id
+[    0.837926] rk817-charger rk817-charger: Failed to find matching dt id
+[    0.846955] rkcifhw fdfe0000.rkcif: can't request region for resource [mem 0xfdfe0000-0xfdfe7fff]
+[    0.848958] rockchip-mipi-csi2: Async registered subdev
+[    0.849819] rkisp_hw fdff0000.rkisp: can't request region for resource [mem 0xfdff0000-0xfdffffff]
+[    0.960609] cpu cpu0: failed to find power_model node
+[    0.990189] mmc2: Unknown controller version (5). You may experience problems.
+[    1.026809] rockchip,bus bus-npu: Failed to get leakage
+[    1.031865] rknandbase v1.2 2021-01-07
+[    1.034434] rk817-codec rk817-codec: rk817_codec_parse_dt_property() Can not get child: codec
+[    1.034459] rk817-codec rk817-codec: rk817_platform_probe() parse device tree property error -19
+[    1.035656] rt5640 4-001c: Device with ID register 0xffffff80 is not rt5640/39
+[    1.048411] ov8858 2-0036: could not get default pinstate
+[    1.048438] ov8858 2-0036: could not get sleep pinstate
+[    1.053558] ov8858 2-0036: Unexpected sensor id(000000), ret(-5)
+[    1.058311] ov8858 3-0036: Unexpected sensor id(000000), ret(-5)
+[    1.086693] mpp_rkvenc fdf40000.rkvenc: Failed to get leakage
+[    1.087050] mpp_rkvenc fdf40000.rkvenc: failed to find power_model node
+[    1.087070] mpp_rkvenc fdf40000.rkvenc: failed to initialize power model
+[    1.087083] mpp_rkvenc fdf40000.rkvenc: failed to get dynamic-coefficient
+[    1.088185] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_a is not found!
+[    1.088210] rkvdec2_init:925: No niu aclk reset resource define
+[    1.088226] mpp_rkvdec2 fdf80200.rkvdec: shared_niu_h is not found!
+[    1.088239] rkvdec2_init:928: No niu hclk reset resource define
+[    1.088706] mpp_rkvdec2 fdf80200.rkvdec: failed to find power_model node
+[    1.088725] mpp_rkvdec2 fdf80200.rkvdec: failed to initialize power model
+[    1.088738] mpp_rkvdec2 fdf80200.rkvdec: failed to get dynamic-coefficient
+[    1.094452] get_framebuffer_by_node: failed to get logo,offset
+[    1.094473] get_framebuffer_by_node: failed to get logo,offset
+[    1.094493] rockchip-drm display-subsystem: failed to show loader logo
+[    1.101074] mali fde60000.gpu: dev_pm_opp_set_regulators: no regulator (shadercores) found: -19
+[    1.102662] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    1.102817] rockchip-dmc dmc: could not find power_model node
+[    1.543056] rkisp-vir1: Invalid mipi data type
+[    1.543098] rkisp-vir1: update sensor failed
+[    1.547686] RKNPU fde40000.npu: can't request region for resource [mem 0xfde40000-0xfde4ffff]
+[    1.550273] RKNPU fde40000.npu: failed to find power_model node
+[    1.550302] RKNPU fde40000.npu: RKNPU: failed to initialize power model
+[    1.550314] RKNPU fde40000.npu: RKNPU: failed to get dynamic-coefficient
+[    1.560505] rkisp-vir0: update sensor failed
+[    2.296042] init: Init cannot set 'ro.boot.serialno' to 'AKS0218839': Read-only property was already set
+[    2.707263] ueventd: /vendor/etc/ueventd.rc: 87: Invalid section keyword found
+[    3.301680] sdio: host isn't  initialization successfully.
+[    3.635675] Trying to create more than 6 SchedTune boosting groups
+console:/ $ I/TA: Hello Rockchip Keymaster! rpmb :0
+[    5.204906] devfreq fde60000.gpu: Couldn't update frequency transition information.
+I/TA: Hello Rockchip gatekeeper! rpmb :0
+I/TA: Hello Rockchip Weaver! rpmb :0
+[    7.331576] [dhd] _dhd_module_init: in Dongle Host Driver, version 101.10.361.24 (wlan=r892223-20220913-1)
+[    7.331576] drivers/net/wireless/rockchip_wlan/rkwifi/bcmdhd compiled on Jan 26 2024 at 15:50:46
+[    7.331576]
+[    7.332716] [dhd] STATIC-MSG) dhd_static_buf_init : 101.10.361.24 (wlan=r892223-20220916-1)
+[    7.333054] [dhd] STATIC-MSG) dhd_init_wlan_mem : prealloc ok for index 0: 8137728(7947K)
+[    7.334434] [dhd] STATIC-MSG) dhd_static_buf_exit : Enter
+[   11.467449] rk-pcie 3c0800000.pcie: PCIe Link Fail
+[   11.467490] rk-pcie 3c0800000.pcie: failed to initialize host
+[   11.470951] rk-pcie 3c0400000.pcie: PCIe Link Fail
+[   11.470974] rk-pcie 3c0400000.pcie: failed to initialize host
+[   28.014971] init: Unable to set property 'wlan.driver.status' from uid:1010 gid:1010 pid:307: Property type check failed, value doesn't match expected type 'enum ok unloaded'
+

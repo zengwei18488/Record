@@ -1,3 +1,8 @@
+
+dialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick();
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 AndroidS12
 
 git init
@@ -30,11 +35,12 @@ prmry_screen=edp-1366x768 extend_screen=hdmi-default
 
 image烧录，parameter.txt随时注意更新更新
 
-docker run --privileged -it --name rk3399-rsb3710-androidS12 -v /media/store/work/rk3399-androidS12/rk3399-androidS12-Git:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+sudo docker run --privileged -it --name rk3399-androidS12 -v /home/zengwei/data_8T2/work/rk3399-androidS12/rk3399-androidS12-Git:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
 $ sudo chown adv:adv -R BSP
 $ cd ~/BSP
 
 source build/envsetup.sh;lunch rk3399_Android12-userdebug
+source build/envsetup.sh;lunch rk3568_s-userdebug
 ./build.sh -AUCKu
 
 source build/envsetup.sh;lunch rsb3710_Android12-userdebug
@@ -52,18 +58,42 @@ make ARCH=arm64 rockchip_defconfig android-11.config;
 
 make ARCH=arm64 BOOT_IMG=..rockdev/Image-rsb3710_Android12/boot.img rk3399-rsb3710-a2.img -j24
 
+-----------------------------------------------------------------------------------------
 CONFIG_ARCH_ADVANTECH=y
 #
 # Bluetooth device drivers
 #
 CONFIG_BT_RTKBTUSB=y
 
+Kernl\frameworks\hardware\devices
+
+wifi 驱动打印日志
+
+注释 CONFIG_RTW_DEBUG
+方式二：echo 0 > /sys/module/8852be/parameters/rtw_drv_log_level
+方式三：修改驱动源码把rtw_drv_log_level的默认值改0
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem external-rk3399-AndroidS12-20230522.tar.gz azureuser@20.212.36.153:/home/azureuser
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem prebuilts-rk3399-AndroidS12-20230518.tar.gz azureuser@20.212.36.153:/home/azureuser
+
+sudo azcopy copy --recursive "rk3399-android12" "https://riscsw.blob.core.windows.net/android-prebuilts/rk3399-android12/?sp=racwdli&st=2023-06-29T07:16:02Z&se=2028-11-01T15:16:02Z&sv=2022-11-02&sr=c&sig=5CsR8kCKdWSrMtqVa%2FxYg2K%2F3CGIdphW43muFH8qXrk%3D"
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 vendor属性本身重启就不会保存，这不是问题。
 你如果只是调试的话，setprop 属性后只要重启hwc服务即可，kill `pgrep composer`
 setprop vendor.hwc.device.primary HDMI-A-1
 setprop vendor.hwc.device.extend DSI
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+********************************************************************************************
+poweroff/reboot debug log
+
+echo 1 > /sys/module/kernel/parameters/initcall_debug
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+HDMI2.0 4Kx2Kp 60Hz:DATA Mask Test Fail issue for 新旧料
+
+cat /sys/kernel/debug/dw-hdmi/phy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&&&
 
 eGTouch 支持
 

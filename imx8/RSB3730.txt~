@@ -1,0 +1,74 @@
+yocto3.0
+
+scp jt@172.21.171.102:/home/jt/5710/adv3.0_kernel/arch/arm64/boot/Image .
+scp jt@172.21.171.102:/home/jt/5710/adv3.0_kernel/arch/arm64/boot/dts/freescale/imx8mm-rsb3730-a2.dtb .
+scp jt@172.21.171.102:/home/jt/5710/adv3.0_kernel/arch/arm64/boot/dts/freescale/imx8mm-rsb3730-a2-dsi2lvds-800x480.dtb .
+
+/home/jt/5710/adv3.0_kernel
+
+/home/jt/yocto_share/imx8mp-5710/uboot/uboot-imx
+
+
+scp -r jt@172.21.171.102:/home/jt/yocto_share/imx8mp-5710/uboot/flash.bin_* .
+
+dd if=flash.bin of=/dev/mmcblk1 bs=1k seek=33 conv=fsync;
+
+sudo dd if=flash.bin_3730a2_4G_lvds of=/dev/mmcblk2 bs=1k seek=33 conv=fsync;
+
+sudo dd if=flash.bin_3730_y30_2g_lvds of=/dev/sde bs=1k seek=33 conv=fsync;
+
+ scp -r jt@172.21.171.102:/media/jt/8T/kh/os_image/3730a2/4G/230508/imx-image-full-imx8mmrsb3730a2-20230506105547.rootfs.sdcard . ; sync
+ 
+ scp -r jt@172.21.171.102:/media/jt/8T/kh/os_image/3730a2/2G/230424/imx-image-full-imx8mmrsb3730a2-20230423123854.rootfs.sdcard . ; sync
+
+
+uboot 设定屏幕：
+setenv fdt_file imx8mm-rsb3730-a2-dsi2lvds-800x480.dtb
+setenv fdt_file imx8mm-rsb3730-a2-dsi2lvds-1920x1080.dtb
+setenv fdt_file imx8mm-rsb3730-a2-dsi-auog101uan02.dtb
+
+
+
+**********************************************************************************************************************************
+
+sudo docker run --privileged -it --name rsb3730-y3.0 -v /home/zengwei/data_8T2/work/rsb3730/yocto3.0:/home/adv/adv-release-bsp -v /dev:/dev -v /lib/modules:/lib/modules -v /usr/src:/usr/src advrisc/u18.04-imx8lbv1 /bin/bash  
+
+../bin/repo init -u git://github.com/ADVANTECH-Corp/adv-arm-yocto-bsp.git -b imx-linux-zeus -m imx8LBVA1045.xml
+../bin/repo sync
+
+
+MACHINE=imx8mpepcr5710a1  UBOOT_CONFIG=4G  DISTRO=fsl-imx-xwayland source imx-setup-release.sh -b 5710_4g
+MACHINE=imx8mmebcrs08a2 UBOOT_CONFIG=2G DISTRO=fsl-imx-wayland source imx-setup-release.sh -b rs08a2_20230105
+
+
+sudo scp -r -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/R5710/5710_4g/tmp/deploy/images/imx8mpepcr5710a1/imx-image-full-imx8mpepcr5710a1*.sdcard.tar.gz . ; sync
+
+
+sudo docker run -it --name R5710 -v /build/R5710:/home/adv/BSP:rw --privileged advrisc/u18.04-imx8lbv1:latest /bin/bash
+
+
+sudo docker start y30_8T
+Azure docker e4295e3f2ad7
+
+
+MACHINE=imx8mmrsb3730a2  UBOOT_CONFIG=2G  DISTRO=fsl-imx-xwayland source imx-setup-release.sh -b 3730a2_2g    //第一次
+    source setup-environment 3730a2_2g    //第二次以后
+bitbake imx-image-full
+
+bitbake u-boot-imx -c cleansstate -f
+bitbake u-boot-imx
+bitbake linux-imx -c cleansstate -f
+bitbake linux-imx
+bitbake initramfs-debug-image -c cleansstate -f
+bitbake initramfs-debug-image
+bitbake -c compile -f imx-image-full
+bitbake imx-image-full
+
+
+bitbake -c compile -f imx-boot
+bitbake imx-boot
+bitbake -c compile -f linux-imx
+bitbake linux-imx
+
+
+

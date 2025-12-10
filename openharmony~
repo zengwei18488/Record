@@ -1,0 +1,258 @@
+一、BSP下载：
+repo地址：repo init -u https://KAG-SW@dev.azure.com/KAG-SW/RK3568-OpenHarmony/_git/rk3568-openharmony502-manifest -b main
+其他文件地址：链接: https://pan.baidu.com/s/1CdssTOT8YH8eIbog8UOTXg?pwd=9jk5提取码: 9jk5
+其他文件存放的是鸿蒙源码中的third_party目录，因文件太大未向repo托管，下载完成后解压到repo源码顶层目录
+ 
+二、编译环境搭建
+apt-get install -y apt-utils binutils bison flex bc build-essential make mtd-utils gcc-arm-linux-gnueabi u-boot-tools python3.9 python3-pip git zip unzip curl wget gcc g++ ruby dosfstools mtools default-jre default-jdk scons python3-distutils perl openssl libssl-dev cpio git-lfs m4 ccache zlib1g-dev tar rsync liblz4-tool genext2fs binutils-dev device-tree-compiler e2fsprogs git-core gnupg gnutls-bin gperf lib32ncurses5-dev libffi-dev zlib* libelf-dev libx11-dev libgl1-mesa-dev lib32z1-dev xsltproc x11proto-core-dev libc6-dev-i386 libxml2-dev lib32z-dev libdwarf-dev 
+ 
+apt-get install -y grsync xxd libglib2.0-dev libpixman-1-dev kmod jfsutils reiserfsprogs xfsprogs squashfs-tools  pcmciautils quota ppp libtinfo-dev libtinfo5 libncurses5 libncurses5-dev libncursesw5 libstdc++6  gcc-arm-none-eabi vim ssh locales doxygen
+ 
+apt-get install -y libxinerama-dev libxcursor-dev libxrandr-dev libxi-dev
+ 
+pip3 install --trusted-host https://repo.huaweicloud.com -i https://repo.huaweicloud.com/repository/pypi/simple requests setuptools pymongo kconfiglib pycryptodome ecdsa ohos-build pyyaml prompt_toolkit==1.0.14 redis json2html yagmail python-jenkins
+ 
+pip3 install esdk-obs-python --trusted-host pypi.org 
+ 
+pip3 install six --upgrade --ignore-installed six
+ 
+三、编译
+依次执行下面两条命令
+       ./build/prebuilts_download.sh
+       ./build.sh --product-name rk3568 --ccache
+
+
+ssh -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153
+
+sudo docker run -itd --name build_rockchip_openharmony_risc_2025-05-26 -v /mnt/build/Rockchip_OpenHarmony5.0:/home/adv/BSP:rw --privileged swr.cn-south-1.myhuaweicloud.com/openharmony-docker/docker_oh_standard:3.2 /bin/bash
+
+
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+源码下载
+
+git config --global user.name "yanwei.cao"
+git config --global user.email "yanwei.cao@advantech.com.cn"
+git config --global credential.helper store
+
+
+curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 > /usr/local/bin/repo  #如果没有权限，可下载至其他目录，并将其配置到环境变量中chmod a+x /usr/local/bin/repo
+pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests
+
+/usr/local/bin/repo init -u git@gitee.com:openharmony/manifest.git -b OpenHarmony-5.0.0-Release --no-repo-verify
+/usr/local/bin/repo sync -c
+/usr/local/bin/repo forall -c 'git lfs pull'
+
+
+locale
+
+vim ~/.bashrc
+source  ~/.bashrc
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+源码编译
+
+sudo docker pull swr.cn-south-1.myhuaweicloud.com/openharmony-docker/docker_oh_standard:3.2
+sudo docker run -it -v $(pwd):/home/openharmony swr.cn-south-1.myhuaweicloud.com/openharmony-docker/docker_oh_standard:3.2
+./build/prebuilts_download.sh
+
+[notice] To update, run: /home/openharmony/prebuilts/python/linux-x86/current/bin/python3 -m pip install --upgrade pip
+======copy inside cxx finished!======
+======update llvm ndk finished!======
+
+./build.sh --product-name rk3568 --ccache               //编译成功
+./build.sh --product-name rk3568 --ccache --no-prebuilt-sdk
+
+编译所生成的文件都归档在out/{device_name}/目录下，结果镜像输出在out/{device_name}/packages/phone/images/目录下。
+
+apt update
+apt install ninja-build
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Ubuntu/Debian 系统
+
+    添加 Git LFS 的 APT 仓库：
+
+    打开终端并运行以下命令：
+
+    bash
+
+curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+
+安装 Git LFS：
+
+运行以下命令来安装 Git LFS：
+
+bash
+
+sudo apt-get install git-lfs
+
+初始化 Git LFS：
+
+安装完成后，执行以下命令来初始化 Git LFS：
+
+bash
+
+git lfs install
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+在使用 Git LFS（Git Large File Storage）时，上传大文件的过程与普通 Git 文件的操作类似，但 Git LFS 会将大文件上传到一个专门的 LFS 存储位置，而 Git 仓库中只会存储指向这些大文件的引用。下面是如何使用 Git LFS 上传文件的步骤：
+步骤 1：安装和初始化 Git LFS
+
+    安装 Git LFS：
+    如果你还没有安装 Git LFS，请首先进行安装。根据你的操作系统，使用以下命令：
+
+        Linux：
+
+        bash
+
+sudo apt-get install git-lfs
+
+macOS（使用 Homebrew）：
+
+bash
+
+    brew install git-lfs
+
+    Windows：
+    可以通过 Git LFS 官网 下载 Windows 安装包进行安装。
+
+初始化 Git LFS：
+安装完毕后，使用以下命令初始化 Git LFS：
+
+bash
+
+    git lfs install
+
+    这会为你的 Git 环境配置 LFS。
+
+步骤 2：配置 Git LFS 追踪大文件
+
+在 Git LFS 中，你需要明确告诉 Git 哪些类型的文件应该由 LFS 管理。你可以使用 git lfs track 命令来指定文件类型或特定文件。
+
+例如，假设你希望上传 .mp4 和 .zip 文件，你可以通过以下命令进行配置：
+
+bash
+
+git lfs track "*.mp4"
+git lfs track "*.zip"
+
+这会在仓库根目录下创建或更新 .gitattributes 文件，告诉 Git LFS 追踪这类文件。
+步骤 3：添加并提交大文件
+
+    添加文件：
+    将你需要上传的大文件添加到 Git 仓库中。假设你有一个大文件 video.mp4，可以使用 git add 将它添加到 Git 暂存区：
+
+    bash
+
+git add video.mp4
+
+提交文件：
+提交文件到本地 Git 仓库。在提交时，Git 会把大文件转换成 LFS 文件指针，并将这些指针保存在 Git 仓库中：
+
+bash
+
+    git commit -m "Add video file"
+
+步骤 4：推送到远程仓库
+
+一旦文件被提交到本地仓库，你可以将这些文件（包括 LFS 文件指针）推送到远程仓库。Git LFS 会自动处理大文件的上传，确保它们被存储在 LFS 服务器中。
+
+bash
+
+git push origin main
+
+推送时，Git 会将大文件的指针上传到 Git 仓库，而文件的实际内容会被上传到 Git LFS 存储服务。
+步骤 5：确认文件上传
+
+你可以通过以下命令确认 LFS 文件已经正确上传：
+
+bash
+
+git lfs ls-files
+
+这会列出所有正在由 Git LFS 管理的文件。
+小提示
+
+    上传进度：上传文件时，如果文件较大，Git LFS 会显示上传进度。在上传过程中，文件的实际内容会传输到 Git LFS 存储服务器。
+    存储和带宽限制：Git LFS 存储和带宽可能会受到限制。GitHub、GitLab 等平台为 LFS 提供有限的免费存储和带宽，超过后可能需要付费。
+
+总结
+
+    安装和初始化 Git LFS。
+    配置 Git LFS 追踪大文件。
+    将大文件添加到仓库并提交。
+    推送到远程仓库，Git LFS 会自动上传大文件。
+
+使用 Git LFS 可以有效地管理和上传大文件，避免 Git 仓库因为大文件而膨胀，同时保留文件的版本控制能力。如果你的项目涉及到大文件的管理，Git LFS 是一个非常有用的工具。
+
+在 Git 中，.gitattributes 文件用于配置 Git 对特定文件的处理方式。如果你想要使用 Git LFS (Git Large File Storage) 来追踪某些类型的文件，你需要手动编辑 .gitattributes 文件，或者使用 git lfs track 命令来自动添加这些配置。
+手动编写 .gitattributes 文件
+
+假设你想要追踪特定类型的文件（例如 .mp4、.zip、.png 等），可以在仓库的根目录下创建或修改 .gitattributes 文件，添加如下内容：
+
+bash
+
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+
+解释 .gitattributes 文件配置：
+
+    *.mp4: 表示所有扩展名为 .mp4 的文件。
+    filter=lfs: 这告诉 Git 使用 Git LFS 进行处理。
+    diff=lfs: 指定 Git 在比较文件差异时使用 LFS。
+    merge=lfs: 指定 Git 在合并操作时使用 LFS。
+    -text: 这个标志告诉 Git 不要对这些文件执行文本处理（比如换行符转换）。
+
+使用 git lfs track 命令自动更新 .gitattributes
+
+如果你不想手动编辑 .gitattributes 文件，可以使用 git lfs track 命令让 Git LFS 自动为你配置文件类型的追踪规则。
+
+例如：
+
+bash
+
+git lfs track "*.mp4"
+git lfs track "*.zip"
+git lfs track "*.png"
+
+这会自动在 .gitattributes 文件中添加以下内容：
+
+bash
+
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.zip filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+
+提交 .gitattributes 文件
+
+在你配置好 .gitattributes 文件后，不要忘记将它添加到 Git 仓库中并进行提交：
+
+bash
+
+git add .gitattributes
+git commit -m "Add Git LFS tracking for mp4, zip, png files"
+
+然后，推送到远程仓库：
+
+bash
+
+git push origin main
+
+结论
+
+    .gitattributes 文件用于配置哪些文件类型由 Git LFS 跟踪。
+    你可以手动编辑 .gitattributes 文件，或使用 git lfs track 命令自动完成此配置。
+    一旦配置完成，你可以将文件添加、提交并推送，Git LFS 会处理这些文件的上传和存储。
+
+这样，你的仓库中的大文件就可以通过 Git LFS 来管理了，避免了直接将大文件存储在 Git 仓库中，从而避免仓库过于庞大。
+
+
+
+

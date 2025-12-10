@@ -1,0 +1,84 @@
+Kernel
+
+make rk3399_rc03_defconfig
+make ARCH=arm64 rk3399-rc03-b1.img
+
+UBOOT
+
+./make.sh rk3399_rc03b1_4G
+
+=> setenv prmry_screen hdmi-default
+=> setenv extend_screen mipi-tv080ll
+=> setenv extend_screen mipi-tv080wxm
+=> saveenv
+
+放视频
+gst-launch-1.0 playbin uri=file:///media/root
+
+
+Micro USB接口自动切换数据模式和OTG模式
+设置OTG模式：fw_setenv downing yes
+            fw_setenv downing(默认模式，关掉usb 5v电，不能传送数据，使能mini type C)
+            
+      5V
+echo 0 > /sys/class/gpio/gpio88/value      //打开
+echo 1 > /sys/class/gpio/gpio88/value      //关闭
+cat /sys/class/gpio/gpio88/value
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+/home/zengwei/data_8T2/work/rk3399-linux/guangyou/rk3399_linux_risc
+vim /var/lib/docker/containers/a9866fac47ef29f76deac5e8c19d3f70d5e0283312e29df3b0559880c41e4e65/config.v2.json 
+
+
+git clone git@github.com:ADVANTECH-Rockchip/linux_kernel-rk.git -b rk3399_linux_v231_risc
+
+
+git checkout -b rk3399_linux_v231_risc --track origin/rk3399_linux_v231_risc
+
+解压boot.img方式
+
+kernel/scripts
+./unpack_bootimg --boot_img boot.img
+默认输出在out目录中
+
+把out目录中的second文件改名为resource.img
+cp out/second resource.img
+u-boot/tools/resource_tool
+./resource_tool --unpack --image=./resource.img
+
+adv@a9866fac47ef:~/BSP/kernel/scripts$ ls -l out/
+total 17660
+-rw-r--r-- 1 adv adv 17780744 Nov 10 02:43 kernel
+-rw-r--r-- 1 adv adv    12936 Nov 10 06:15 logo.bmp
+-rw-r--r-- 1 adv adv    22364 Nov 10 06:15 logo_kernel.bmp
+-rw-r--r-- 1 adv adv        0 Nov 10 02:43 ramdisk
+-rw-r--r-- 1 adv adv   108573 Nov 10 06:15 rk-kernel.dtb
+-rw-r--r-- 1 adv adv   146944 Nov 10 02:43 second
+
+mv rk3399-rc03-a1.dtb rk-kernel.dtb
+
+make rk3399_rc03_defconfig
+make ARCH=arm64 rk3399-rc03-a1.img
+
+重新生成resource.img
+./resource_tool --pack out/logo.bmp out/logo_kernel.bmp out/rk-kernel.dtb
+直接替换编译好的resource.img为second也可以
+mv resource.img out/second
+
+rm out/logo* out/rk-kernel.dtb
+
+重新生成boot.img
+./mkbootimg --kernel ./out/kernel --ramdisk ./out/ramdisk --second ./out/second -o new_boot.img
+
+git checkout -b rk3399_linux_v231_risc --track advantech-github/rk3399_linux_v231_risc
+
+0902c26e4caadc5e523e6dba52870547242d1fa2
+
+fd8d11e0320729c1c242d56f19bf8cb3ef360f11   (tag: ubuntu16.04_V1009_20220617_RC03)
+
+
+
+
+
+

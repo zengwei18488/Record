@@ -216,31 +216,77 @@ git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-IMX-Android10/rsb3
 git push --set-upstream origin android-11.0.0_2.6.0
 
 sudo git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 /opt/prebuilt-android-clang -b master-kernel-build-2021
+cd /opt/prebuilt-android-clang
+sudo git checkout bceb7274dda5bb587a5473058bd9f52e678dde98
 
 
-export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin/aarch64-linux-gnu-
 export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-elf/bin/aarch64-elf-
+export AARCH64_GCC_CROSS_COMPILE=/opt/gcc-arm-8.3-2019.03-x86_64-aarch64-linux-gnu/bin/aarch64-linux-gnu-
 
 export CLANG_PATH=/opt/prebuilt-android-clang
 
 source build/envsetup.sh; lunch rsb3720_a1-userdebug;./imx-make.sh -j12
 source build/envsetup.sh; lunch evk_8mp-userdebug 
 
-./imx-make.sh bootloader -j8
-./imx-make.sh bootloader kernel -j8
-./imx-make.sh kernel -j8
-./imx-make.sh bootimage -j8;./imx-make.sh dtboimage -j8
-./imx-make.sh -j12
+source build/envsetup.sh; lunch rsb3720_a1-userdebug;
+./imx-make.sh bootloader -j8;
+./imx-make.sh kernel -j8;
+
+source build/envsetup.sh; lunch rsb3720_a1-userdebug;
+./imx-make.sh bootloader kernel -j8;
+./imx-make.sh bootimage -j8;./imx-make.sh dtboimage -j8;
+./imx-make.sh -j12;
 
 ./imx-make.sh -j12 2>&1 | tee build-log.txt
 ./imx-make.sh -j12 2>&1 | tee build-log-evk.txt
 
-sudo ./imx-sdcard-partition.sh -f imx8mp -c 28 /dev/sdx
 
-sudo dd if=dtbo-imx8mp.img of=/dev/sdc1 bs=10M conv=fsync,nocreat;
-sudo dd if=dtbo-imx8mp.img of=/dev/sdc2 bs=10M conv=fsync,nocreat;
-sudo dd if=boot.img of=/dev/sdc2 bs=10M conv=fsync,nocreat;
-sudo dd if=boot.img of=/dev/sdc2 bs=10M conv=fsync,nocreat;
+getprop | grep ril
+getprop | grep vendor.rild.libargs
+
+4G quectel EC20 CEFAG
+抓log：setenforce 0
+       stop vendor.ril-daemon
+       getprop | grep ril
+       start vendor.ril-daemon
+       logcat -b radio -b main -b system -v time > /data/logcat-radio.txt
+       logcat -b all > /data/logcat-All.txt
+       logcat > /data/logcat.txt
+       dmesg > /data/dmesg.txt
+
+查看路由表:
+ cat /proc/net/route
+ ip route
+ 
+ 
+exec u:r:vendor_modprobe:s0 root root -- /vendor/bin/toybox_vendor insmod /vendor/lib/modules/wlan.ko ifname=wlan0 if2name=p2p0
+exec u:r:vendor_modprobe:s0 root root -- /vendor/bin/toybox_vendor insmod /vendor/lib/modules/wlan.ko ifname=wlan0
+
+
+sudo ./imx-sdcard-partition.sh -f imx8mp -c 28 /dev/sdx
+./imx-emmc-partition.sh -f imx8mp /dev/block/mmcblk2
+sudo dd if=dtbo-imx8mp.img of=/dev/sdx1 bs=10M conv=fsync,nocreat;
+sudo dd if=dtbo-imx8mp.img of=/dev/sdx2 bs=10M conv=fsync,nocreat;
+sudo dd if=boot.img of=/dev/sdx2 bs=10M conv=fsync,nocreat;
+sudo dd if=boot.img of=/dev/sdx2 bs=10M conv=fsync,nocreat;
+
+############################################################################################################################
+
+./device/nxp/imx8m/rsb3720_a1/audio_policy_configuration.xml
+vendor/nxp-opensource/imx/alsa/tinyalsa_hal.cpp          select_output_device     start_output_stream
+
+AUDIO_DEVICE_OUT_AUX_DIGITAL
+
+cat /proc/asound/cards
+
+
+gedit ./native/services/surfaceflinger/SurfaceFlinger.cpp
+gedit ./native/services/surfaceflinger/DisplayDevice.cpp
+gedit ./base/services/core/java/com/android/server/wm/DisplayPolicy.java
+gedit ./base/services/core/java/com/android/server/wm/ScreenRotationAnimation.java
+gedit ./base/services/core/java/com/android/server/wm/DisplayRotation.java
+gedit ./base/services/core/java/com/android/server/wm/WindowManagerService.java
+
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 ######################################################################################################
@@ -284,15 +330,15 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 sd启动 1-on 2-on 3-off 4-off
 emmc   1-off 2-on 3-off 4-off
 
-sudo ./fsl-sdcard-partition.sh -super -f imx8mp /dev/sdc
-sudo ./mk-sdcard-mmc-partition.sh -super -f imx8mp /dev/sdc
+sudo ./fsl-sdcard-partition.sh -super -f imx8mp /dev/sdx
+sudo ./mk-sdcard-mmc-partition.sh -super -f imx8mp /dev/sdx
 ./mk-emmc-mmc-partition.sh -super -f imx8mp /dev/block/mmcblk2
 
 
 dd of=/data/u-boot.imx if=/dev/block/mmcblk2 bs=1k conv=fsync count=8192
 
-dd if=/dev/zero of=/dev/sdc bs=1k seek=32 conv=fsync count=8160
-dd if=u-boot-imx8mp.imx of=/dev/sdc bs=1k seek=32 conv=fsync
+dd if=/dev/zero of=/dev/sdx bs=1k seek=32 conv=fsync count=8160
+dd if=u-boot-imx8mp.imx of=/dev/sdx bs=1k seek=32 conv=fsync
 
 ./dd if=/dev/zero of=/dev/block/mmcblk2 bs=1k seek=32 conv=fsync count=8160
 ./dd if=u-boot-imx8mp.imx of=/dev/block/mmcblk2 bs=1k seek=32 conv=fsync
@@ -303,6 +349,15 @@ i2c_imx subsys_initcall
 wifi
 
 ./vendor/nxp/imx-firmware/nxp/FwImage_8997/pcieuart8997_combo_v4.bin
+
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/boot.img .
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/super.img .
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/dtbo-imx8mp.img .
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/u-boot-imx8mp.imx .
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/vbmeta.img .
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/vbmeta-imx8mp.img .
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/vendor.img .
+scp larry@172.22.28.165:/home/larry/RSB-3720/imx8_android11/android/out/target/product/rsb3720_a1/vendor_boot.img .
 
 GPU
 
@@ -355,8 +410,8 @@ source build/envsetup.sh;lunch rsb3720_a1-userdebug
 lunch evk_8mp-userdebug 
 lunch evk_8mq-userdebug 
 ./imx-make.sh bootloader -j8
-./imx-make.sh bootloader kernel -j8
 ./imx-make.sh kernel -j8
+./imx-make.sh bootloader kernel -j8
 ./imx-make.sh bootimage -j8
 ./imx-make.sh dtboimage -j8
 ./imx-make.sh -j8
@@ -380,3 +435,171 @@ cp configs/imx8mp_evk_android_trusty_defconfig configs/imx8mp_rsb3720_android_tr
 cp configs/imx8mp_evk_android_trusty_dual_defconfig configs/imx8mp_rsb3720_android_trusty_dual_defconfig
 cp configs/imx8mp_evk_android_trusty_secure_unlock_defconfig configs/imx8mp_rsb3720_android_trusty_secure_unlock_defconfig
 cp configs/imx8mp_evk_android_uuu_defconfig configs/imx8mp_rsb3720_android_uuu_defconfig
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^6
+diff --git a/nxp/imx8m/rsb3720_a1/system.prop b/nxp/imx8m/rsb3720_a1/system.prop
+index 88bc5da1..f1ac7561 100644
+--- a/nxp/imx8m/rsb3720_a1/system.prop
++++ b/nxp/imx8m/rsb3720_a1/system.prop
+@@ -1 +1,3 @@
+ vendor.rild.libpath=/vendor/lib64/hw/libreference-ril.so
++ro.sf.default_orientation=portrait
++persist.sys.orientation=1
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cat 0001-rotation-90-frameworks-20250212.patch
+diff --git a/base/cmds/bootanimation/BootAnimation.cpp b/base/cmds/bootanimation/BootAnimation.cpp
+index cdd80150f..23780cb3d 100644
+--- a/base/cmds/bootanimation/BootAnimation.cpp
++++ b/base/cmds/bootanimation/BootAnimation.cpp
+@@ -391,7 +391,7 @@ status_t BootAnimation::readyToRun() {
+ 
+     SurfaceComposerClient::Transaction t;
+     Rect displayRect(resolution.getWidth(),resolution.getHeight());
+-    t.setDisplayProjection(mDisplayToken, ui::ROTATION_0, displayRect, displayRect);
++    t.setDisplayProjection(mDisplayToken, ui::ROTATION_90, displayRect, displayRect);
+ 
+     // this guest property specifies multi-display IDs to show the boot animation
+     // multiple ids can be set with comma (,) as separator, for example:
+@@ -1259,7 +1259,7 @@ void BootAnimation::handleViewport(nsecs_t timestep) {
+         SurfaceComposerClient::Transaction t;
+         t.setPosition(mFlingerSurfaceControl, 0, -mTargetInset)
+                 .setCrop(mFlingerSurfaceControl, Rect(0, mTargetInset, mWidth, mHeight));
+-        t.setDisplayProjection(mDisplayToken, ui::ROTATION_0, layerStackRect, displayRect);
++        t.setDisplayProjection(mDisplayToken, ui::ROTATION_90, layerStackRect, displayRect);
+         t.apply();
+ 
+         mTargetInset = mCurrentInset = 0;
+diff --git a/base/services/core/java/com/android/server/wm/DisplayRotation.java b/base/services/core/java/com/android/server/wm/DisplayRotation.java
+index 1284e009e..6a903b612 100644
+--- a/base/services/core/java/com/android/server/wm/DisplayRotation.java
++++ b/base/services/core/java/com/android/server/wm/DisplayRotation.java
+@@ -177,7 +177,7 @@ public class DisplayRotation {
+     private int mUserRotationMode = WindowManagerPolicy.USER_ROTATION_FREE;
+ 
+     @Surface.Rotation
+-    private int mUserRotation = Surface.ROTATION_0;
++    private int mUserRotation = Surface.ROTATION_90;
+ 
+     /**
+      * Flag that indicates this is a display that may run better when fixed to user rotation.
+diff --git a/base/services/core/java/com/android/server/wm/ScreenRotationAnimation.java b/base/services/core/java/com/android/server/wm/ScreenRotationAnimation.java
+index c34956c13..885d416f4 100644
+--- a/base/services/core/java/com/android/server/wm/ScreenRotationAnimation.java
++++ b/base/services/core/java/com/android/server/wm/ScreenRotationAnimation.java
+@@ -326,7 +326,7 @@ class ScreenRotationAnimation {
+         // Compute the transformation matrix that must be applied
+         // to the snapshot to make it stay in the same original position
+         // with the current screen rotation.
+-        int delta = DisplayContent.deltaRotation(rotation, Surface.ROTATION_0);
++        int delta = DisplayContent.deltaRotation(rotation, Surface.ROTATION_90);
+         RotationAnimationUtils.createRotationMatrix(delta, mWidth, mHeight, mSnapshotInitialMatrix);
+ 
+         setRotationTransform(t, mSnapshotInitialMatrix);
+diff --git a/native/services/inputflinger/reader/mapper/TouchInputMapper.cpp b/native/services/inputflinger/reader/mapper/TouchInputMapper.cpp
+index decbea4c3..82ec3bd79 100644
+--- a/native/services/inputflinger/reader/mapper/TouchInputMapper.cpp
++++ b/native/services/inputflinger/reader/mapper/TouchInputMapper.cpp
+@@ -674,6 +674,7 @@ void TouchInputMapper::configureSurface(nsecs_t when, bool* outResetNeeded) {
+             int32_t naturalPhysicalWidth, naturalPhysicalHeight;
+             int32_t naturalPhysicalLeft, naturalPhysicalTop;
+             int32_t naturalDeviceWidth, naturalDeviceHeight;
++            mViewport.orientation = (mViewport.orientation + DISPLAY_ORIENTATION_90) % 4;
+             switch (mViewport.orientation) {
+                 case DISPLAY_ORIENTATION_90:
+                     naturalLogicalWidth = mViewport.logicalBottom - mViewport.logicalTop;
+diff --git a/native/services/surfaceflinger/DisplayDevice.cpp b/native/services/surfaceflinger/DisplayDevice.cpp
+index 730f29744..3e94fe048 100644
+--- a/native/services/surfaceflinger/DisplayDevice.cpp
++++ b/native/services/surfaceflinger/DisplayDevice.cpp
+@@ -47,7 +47,7 @@ namespace hal = hardware::graphics::composer::hal;
+ 
+ using android::base::StringAppendF;
+ 
+-ui::Transform::RotationFlags DisplayDevice::sPrimaryDisplayRotationFlags = ui::Transform::ROT_0;
++ui::Transform::RotationFlags DisplayDevice::sPrimaryDisplayRotationFlags = ui::Transform::ROT_90;
+ 
+ DisplayDeviceCreationArgs::DisplayDeviceCreationArgs(
+         const sp<SurfaceFlinger>& flinger, const wp<IBinder>& displayToken,
+@@ -91,7 +91,7 @@ DisplayDevice::DisplayDevice(DisplayDeviceCreationArgs& args)
+     setPowerMode(args.initialPowerMode);
+ 
+     // initialize the display orientation transform.
+-    setProjection(ui::ROTATION_0, Rect::INVALID_RECT, Rect::INVALID_RECT);
++    setProjection(ui::ROTATION_90, Rect::INVALID_RECT, Rect::INVALID_RECT);
+ }
+ 
+ DisplayDevice::~DisplayDevice() = default;
+diff --git a/native/services/surfaceflinger/SurfaceFlinger.cpp b/native/services/surfaceflinger/SurfaceFlinger.cpp
+index 93f2629bd..3c1bd1824 100644
+--- a/native/services/surfaceflinger/SurfaceFlinger.cpp
++++ b/native/services/surfaceflinger/SurfaceFlinger.cpp
+@@ -274,7 +274,7 @@ int64_t SurfaceFlinger::maxFrameBufferAcquiredBuffers;
+ uint32_t SurfaceFlinger::maxGraphicsWidth;
+ uint32_t SurfaceFlinger::maxGraphicsHeight;
+ bool SurfaceFlinger::hasWideColorDisplay;
+-ui::Rotation SurfaceFlinger::internalDisplayOrientation = ui::ROTATION_0;
++ui::Rotation SurfaceFlinger::internalDisplayOrientation = ui::ROTATION_90;
+ bool SurfaceFlinger::useColorManagement;
+ bool SurfaceFlinger::useContextPriority;
+ Dataspace SurfaceFlinger::defaultCompositionDataspace = Dataspace::V0_SRGB;
+@@ -2544,7 +2544,7 @@ sp<DisplayDevice> SurfaceFlinger::setupNewDisplayDeviceInternal(
+     }
+ 
+     creationArgs.physicalOrientation =
+-            isInternalDisplay ? internalDisplayOrientation : ui::ROTATION_0;
++            isInternalDisplay ? internalDisplayOrientation : ui::ROTATION_90;
+ 
+     // virtual displays are always considered enabled
+     creationArgs.initialPowerMode = state.isVirtual() ? hal::PowerMode::ON : hal::PowerMode::OFF;
+@@ -4186,7 +4186,7 @@ void SurfaceFlinger::onInitializeDisplays() {
+              DisplayState::eLayerStackChanged;
+     d.token = token;
+     d.layerStack = 0;
+-    d.orientation = ui::ROTATION_0;
++    d.orientation = ui::ROTATION_90;
+     d.frame.makeInvalid();
+     d.viewport.makeInvalid();
+     d.width = 0;
+
+cat 0002-dual-audio-hdmi-and-speaker-20250212.patch 
+diff --git a/av/services/audiopolicy/enginedefault/src/Engine.cpp b/av/services/audiopolicy/enginedefault/src/Engine.cpp
+index b14d2bbb0..08333b9d0 100755
+--- a/av/services/audiopolicy/enginedefault/src/Engine.cpp
++++ b/av/services/audiopolicy/enginedefault/src/Engine.cpp
+@@ -423,7 +423,7 @@ DeviceVector Engine::getDevicesForStrategyInt(legacy_strategy strategy,
+         if (strategy == STRATEGY_MEDIA) {
+             // ARC, SPDIF and AUX_LINE can co-exist with others.
+             devices3 = availableOutputDevices.getDevicesFromTypes({
+-                    AUDIO_DEVICE_OUT_HDMI_ARC, AUDIO_DEVICE_OUT_SPDIF, AUDIO_DEVICE_OUT_AUX_LINE});
++                    AUDIO_DEVICE_OUT_HDMI_ARC, AUDIO_DEVICE_OUT_SPDIF, AUDIO_DEVICE_OUT_AUX_LINE, AUDIO_DEVICE_OUT_SPEAKER, AUDIO_DEVICE_OUT_AUX_DIGITAL});
+         }
+ 
+         devices2.add(devices3);
+@@ -432,20 +432,20 @@ DeviceVector Engine::getDevicesForStrategyInt(legacy_strategy strategy,
+         devices.add(devices2);
+ 
+         // If hdmi system audio mode is on, remove speaker out of output list.
+-        if ((strategy == STRATEGY_MEDIA) &&
++        /*if ((strategy == STRATEGY_MEDIA) &&
+             (getForceUse(AUDIO_POLICY_FORCE_FOR_HDMI_SYSTEM_AUDIO) ==
+                 AUDIO_POLICY_FORCE_HDMI_SYSTEM_AUDIO_ENFORCED)) {
+             devices.remove(devices.getDevicesFromType(AUDIO_DEVICE_OUT_SPEAKER));
+-        }
++        }*/
+ 
+         // for STRATEGY_SONIFICATION:
+         // if SPEAKER was selected, and SPEAKER_SAFE is available, use SPEAKER_SAFE instead
+-        if (strategy == STRATEGY_SONIFICATION) {
++        /*if (strategy == STRATEGY_SONIFICATION) {
+             devices.replaceDevicesByType(
+                     AUDIO_DEVICE_OUT_SPEAKER,
+                     availableOutputDevices.getDevicesFromType(
+                             AUDIO_DEVICE_OUT_SPEAKER_SAFE));
+-        }
++        }*/
+         } break;
+ 
+     case STRATEGY_CALL_ASSISTANT:
+

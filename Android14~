@@ -1,0 +1,1136 @@
+sudo docker run -itd --name build_rk_all_android14_risc_${DATE_TIME} -v ${BUILD_WORK_PATH}:/home/adv/BSP:rw --privileged ${DOCKER_IMAGE_NAME}:latest /bin/bash
+
+git clone https://github.com/ADVANTECH-Rockchip/repo.git
+
+sudo docker run -itd --name build_rk_all_android14_risc_20241125 -v /mnt/build/rk_all_android14:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+
+../repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-Rockchip-Android14/_git/android-manifest -b adv-rk-androidU14
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+git config --global core.autocrlf false
+
+这会禁用自动转换功能，使 Git 不对所有文件进行行结束符转换。可以根据需要将 false 改为 true 或 input 以启用其他转换规则。
+
+git config --global core.autocrlf true
+
+这个设置的作用是将仓库中的 LF 转换为工作区中的 CRLF，而将工作区中的 CRLF 转换为 LF 在提交时。
+
+.gitattributes 文件：可以在项目中添加 .gitattributes 文件来强制所有文本文件使用 LF 结束符。例如：
+
+* text=auto
+
+在项目的根目录下创建或修改 .gitattributes 文件，以明确指定文件类型应保留 CRLF 行结束符。例如：
+
+*.txt text eol=crlf
+*.md text eol=crlf
+
+这将确保所有 .txt 和 .md 文件在版本控制中使用 CRLF 行结束符。你可以根据需要添加更多文件类型。
+
+Git 配置：可以设置 Git 自动将 CRLF 转换为 LF：
+
+git config --global core.autocrlf input
+
+***********************************************************************************************************************************8
+
+git init
+git add -f .
+git commit -m "Initial commit"
+
+如果使用以换行（LF）作为行结束符的 Linux 或 Mac，你不需要 Git 在检出文件时进行自动的转换。然而当一个以回车（CR）和换行（LF）作为行结束符的文件不小心被引入时，你肯定想让 Git 修正。 所以，你可以把 core.autocrlf 设置成 input 来告诉 Git 在提交时把回车和换行转换成换行，检出时不转换：（这样在 Windows 上的检出文件中会保留回车和换行，而在 Mac 和 Linux 上，以及版本库中会保留换行。）
+
+git config --global core.autocrlf input
+
+
+bsp  u-boot   kernel   external  packages  hardware  frameworks  cts  vendor   tools   system   device   test   developers
+
+mv  u-boot ../      
+mv  kernel-6.1 ../
+mv  packages ../
+mv  hardware ../ 
+mv  frameworks ../ 
+mv  cts ../ 
+mv  vendor ../ 
+mv  tools ../ 
+mv  system ../
+mv  device ../  
+mv  test ../ 
+mv  developers ../
+mv  external ../
+mv  prebuilts ../
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/u-boot
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/kernel
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/packages
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/hardware
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/frameworks
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/cts
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/vendor
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/tools
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/system
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/device
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/test
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/developers
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/bsp
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/android-manifest
+
+mv  u-boot Android14/      
+mv  kernel-6.1 Android14/
+mv  external Android14/ 
+mv  packages  Android14/
+mv  hardware Android14/ 
+mv  frameworks Android14/ 
+mv  cts Android14/ 
+mv  vendor Android14/ 
+mv  tools Android14/ 
+mv  system Android14/
+mv  device Android14/ 
+mv  test Android14/ 
+mv  developers Android14/ 
+mv  prebuilts Android14/ 
+
+external-deqp  external-swiftshader   external-cronet  external-camera_engine_rkaiq   external-libabigail   external-chromium-webview    external-python   
+external-jackson-databind   external-vixl  external-tensorflow   external-icu    external-cldr    external-angle   external-rust   external-exoplayer
+external-llvm   external-webrtc  external-mesa3d  external-skia
+
+
+mv  deqp ../../     
+mv  swiftshader ../../  
+mv  cronet ../../  
+mv  camera_engine_rkaiq ../../
+mv  libabigail  ../../
+mv  chromium-webview ../../ 
+mv  python ../../ 
+mv  jackson-databind ../../ 
+mv  vixl ../../ 
+mv  tensorflow ../../ 
+mv  icu ../../ 
+mv  cldr ../../ 
+mv  angle ../../ 
+mv  rust ../../
+mv  exoplayer ../../ 
+mv  llvm ../../ 
+mv  webrtc ../../ 
+mv  mesa3d ../../ 
+mv  skia ../../ 
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-deqp
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-swiftshader
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-cronet
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-camera_engine_rkaiq
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-libabigail
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-chromium-webview
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-python
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-jackson-databind
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-vixl
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-tensorflow
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-icu
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-cldr
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-angle
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-rust
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-exoplayer
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-llvm
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-webrtc
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-mesa3d
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android14/external-skia
+
+
+
+mv  deqp Android14/external 
+mv  swiftshader Android14/external 
+mv  cronet Android14/external 
+mv  camera_engine_rkaiq Android14/external
+mv  libabigail  Android14/external
+mv  chromium-webview Android14/external 
+mv  python Android14/external 
+mv  jackson-databind Android14/external 
+mv  vixl Android14/external 
+mv  tensorflow Android14/external
+mv  icu Android14/external 
+mv  cldr Android14/external 
+mv  angle Android14/external
+mv  rust Android14/external
+mv  exoplayer Android14/external 
+mv  llvm Android14/external
+mv  webrtc Android14/external
+mv  mesa3d Android14/external
+mv  skia Android14/external
+
+
+git push origin master:rockchip-androidU14
+git push origin master:adv-rk-androidU14
+git checkout -b adv-rk-androidU14 --track origin/adv-rk-androidU14
+
+******************************************************************************************************************************************
+git clone git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3588-Linux/kernel -b rk3588_linux6.1_v110_risc
+git clone git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3588-Linux/u-boot -b rk3588_linux6.1_v110_risc
+
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+
+sudo docker build -t advrisc/u22.04-rkabv14:1.0.0 .
+sudo docker login
+sudo docker tag advrisc/u22.04-rkabv14:1.0.0 advrisc/u22.04-rkabv14:1.0.0
+sudo docker push advrisc/u22.04-rkabv14:1.0.0
+sudo docker pull advrisc/u22.04-rkabv14:1.0.0
+
+sudo docker save -o u22.04-rkabv14_latest.tar advrisc/u22.04-rkabv14:latest
+sudo docker load -i u22.04-rkabv14_latest.tar
+
+sudo docker run -it --name mycontainer advrisc/u22.04-rkabv14:1.0.0 /bin/bash
+sudo docker run -it --name mycontainer advrisc/u22.04-rkabv14:1.0.0 /bin/bash
+
+sudo docker commit mycontainer advrisc/u22.04-rkabv14:latest
+sudo docker push advrisc/u22.04-rkabv14:latest
+sudo docker pull advrisc/u22.04-rkabv14:latest
+
+scp -i /home/zengwei/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem prebuilts-rk3568-android12-20220126.tar.gz azureuser@20.212.36.153:/home/azureuser
+
+scp -i /home/zengwei/.ssh/RISCSW-AIM-Linux-Ubuntu2004-KS01_key.pem azureuser@172.183.42.172:/home/azureuser/zw/u22.04-rkabv14_latest.tar .
+
+../repo/repo init -u https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android14/_git/android-manifest -b adv-rk-androidU14 -m default.xml
+../repo/repo sync
+
+sudo apt-get update
+
+sudo apt-get install libelf-dev
+sudo apt-get install dwarves
+
+sudo apt-get install libncurses5
+sudo apt-get install zip
+
+sudo apt-get install bc device-tree-compiler
+
+
+
+sudo docker run -it --name build_rk_androidU14_risc -v /home/zengwei/work/rk-all-android14/Reop-from-azure-Android14:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+
+sudo docker run -it --name local_rk_androidU14_risc -v /home/zengwei/work/rk-all-android14/Android14:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+
+sudo chown adv:adv -R BSP
+
+        cts/
+        developers/
+        device/
+        external/
+        frameworks/
+        hardware/
+        kernel-6.1/
+        packages/
+        system/
+        test/
+        tools/
+        u-boot/
+        vendor/
+
+git config --global user.name "wei.zeng"
+git config --global user.email wei.zeng@advantech.com.cn
+git config --global http.postBuffer 52428800000
+git config --global http.maxRequestBuffer 100M
+git config --global core.compression 0
+../bin/repo init -u https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android14/_git/android-manifest -b adv-rk-androidU14 -m default.xml
+../bin/repo sync
+
+source build/envsetup.sh;lunch rk3588_u-userdebug;
+./build.sh -ACUKup
+
+source build/envsetup.sh;lunch rk3399_u-userdebug;
+./build.sh -ACUKup
+
+make clean
+
+*************************************************************************************************************
+uboot
+
+cp arch/arm/dts/rk3588-evb.dts arch/arm/dts/rk3588-rom6881a1.dts 
+configs/rk3588_rom6881a1_defconfig
+configs/rk3588_defconfig_bak
+cp include/configs/evb_rk3588.h include/configs/rk3588_rom6881.h
+arch/arm/mach-rockchip/rk3588/Kconfig
+
+mmc dev 0 b
+fstype mmc 0:b
+ext2ls mmc 0:b customization/logo/logo.bmp
+ext4size mmc 0:b customization/logo/logo.bmp
+ext4load mmc 0:b 0x00000000e9d3f6c0 customization/logo/logo.bmp
+
+
+tinymix  -D 1
+tinymix  -D 1  "ALC Capture Switch" 1
+
+tinymix  -D 1 "ADC Capture Volume" 192 192
+
+tinymix  -D 1 "ADC PGA Volume" 5 5
+
+tinymix  -D 1 "ALC Capture Recovery Level" 4
+
+tinymix  -D 1 "ALC Capture Target Level" 15
+
+    {
+        .ctl_name = "ADC PGA Volume",
+        .int_val = {5,5},
+    },
+    {
+        .ctl_name = "ALC Capture Recovery Level",
+        .int_val = {4},
+    },
+    {
+        .ctl_name = "ALC Capture Target Level",
+        .int_val = {15},
+    },
+
+kernel
+*************************************************************************************************************************
+CONFIG_LOG_BUF_SHIFT设为21时，缓冲区大小为2MB，17表示128KB，选择16表示64KB
+
+cp arch/arm64/configs/rockchip_linux_defconfig_back arch/arm64/configs/rk3588_adv_defconfig
+
+arch/arm64/boot/dts/rockchip/rk3588-evb1-lp4-v10.dts
+
+
+arch/arm64/boot/dts/rockchip/rk3588-rom6881-a1.dts
+
+arch/arm64/Kconfig.platforms
+
+source build/envsetup.sh;lunch rom6881_u-userdebug;
+./build.sh -ACUKu
+
+source build/envsetup.sh;lunch asra501_u-userdebug;
+./build.sh -ACUKu
+
+source build/envsetup.sh;lunch aom3821_u-userdebug;
+./build.sh -ACUKu
+
+./ddrbin_tool rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
+./ddrbin_tool rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.19.bin
+
+sudo apt-get install clang
+
+cd kernel-6.1
+export PATH=../prebuilts/clang/host/linux-x86/clang-r487747c/bin:$PATH 
+alias msk='make CROSS_COMPILE=aarch64-linux-gnu- LLVM=1 LLVM_IAS=1'
+
+msk ARCH=arm64 rk3588_adv_defconfig && msk ARCH=arm64 BOOT_IMG=../rockdev/Image-rom6881_u/boot.img rk3588-rom6881-a1.img -j32
+
+
+./kernel/prebuilts/6.1/arm64/usbserial.ko
+
+/kernel-6.1/net/rfkill
+rfkill_rk_set_power
+CONFIG_RFKILL_RESET
+bt shut off power
+        CONFIG_USB_SERIAL_WWAN         usb_wwan.o  
+	CONFIG_USB_SERIAL_OPTION                 option.o
+	CONFIG_USB_SERIAL_QUALCOMM               qcserial.o
+	                 
+repo init -u https://android.googlesource.com/kernel/manifest -b common-android14-6.1
+
+drivers/watchdog/watchdog_gd32e2.c
+
+************************************************************************************************************
+cat /d/dri/0/summary
+Video Port0: ACTIVE
+    Connector:HDMI-A-1  Encoder: TMDS-472
+        bus_format[100a]: RGB888_1X24
+        overlay_mode[0] output_mode[f] SDR[0] color-encoding[BT.709] color-range[Full]
+    Display mode: 1920x1080p60
+        clk[148500] real_clk[148500] type[40] flag[5]
+        H: 1920 2008 2052 2200
+        V: 1080 1084 1089 1125
+        Fixed H: 1920 2008 2052 2200
+        Fixed V: 1080 1084 1089 1125
+    Cluster0-win0: ACTIVE
+        win_id: 0
+        format: AB24 little-endian (0x34324241)[AFBC] pixel_blend_mode[0] glb_alpha[0xff]
+        color: SDR[0] color-encoding[BT.709] color-range[Full]
+        rotate: xmirror: 0 ymirror: 0 rotate_90: 0 rotate_270: 0
+        csc: y2r[0] r2y[0] csc mode[0]
+        zpos: 0
+        src: pos[0, 0] rect[1920 x 1080]
+        dst: pos[0, 0] rect[1920 x 1080]
+        buf[0]: addr: 0x00000000ec817000 pitch: 7680 offset: 0
+Video Port1: DISABLED
+Video Port2: DISABLED
+
+
+cat /d/dw-hdmi0/ctrl
+
+echo "00b0 00000255 00009105 00009105 00009105" > /d/dw-hdmi0/ctrl
+
+echo "0x00b4 0x00009105" | sudo tee /d/dw-hdmi0/ctrl
+
+
+**********************************************************************************************************
+androidboot.serialno
+
+[persist.board.info.serialnumber]: [AKKB705348]
+[ro.boot.serialno]: [4e1ac94a617b0a34]
+[ro.serialno]: [4e1ac94a617b0a34]
+
+
+"./u-boot/arch/arm/mach-rockchip/board.c"
+
+setenv combphy0 sata
+setenv combphy1 sata
+
+setenv combphy0 pcie
+setenv combphy1 pcie
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+cat /dev/ttyUSB2 &
+EM05CNFDR08A03M1G_ND
+console:/ # AT+CPIN?
++CPIN: READY
+
+OK
+getprop | grep ril
+getprop | grep vendor.rild.libargs
+
+4G quectel EC20 CEFAG
+抓log：setenforce 0
+       stop vendor.ril-daemon
+       getprop | grep ril
+       start vendor.ril-daemon
+       logcat -b radio -b main -b system -v time > /data/logcat-radio.txt
+       logcat -b all > /data/logcat-All.txt
+       logcat > /data/logcat.txt
+       dmesg > /data/dmesg.txt
+
+查看路由表:
+ cat /proc/net/route
+ ip route
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+git init
+git config --global core.autocrlf input
+git add -f .
+git commit -m "Initial commit"
+
+find . -type d -empty
+find . -type d -empty -not -path './.git*' -exec touch {}/.gitkeep \;
+
+bsp  u-boot   kernel   packages  hardware  frameworks  cts  vendor   tools   system   device   test   developers
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/u-boot
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/kernel
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/packages
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/hardware
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/frameworks
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/cts
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/vendor
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/tools
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/system
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/device
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/test
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/developers
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/bsp
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK-All-Android14/android-manifest
+
+git push origin master:androidU14-rkr8
+
+git checkout -b  --track advantech-azure/androidU14-rkr8
+
+
+repo init -u https://dev.azure.com/KAG-SW/RK-All-Android14/_git/android-manifest -b androidU14-rkr8 -m default.xml
+repo sync
+
+vendor/rockchip/hardware/interfaces/rockit/hw/1.0/IRockitHwInterface.hal
+
+************************************************************************************************************************************
+
+service list | grep bluetooth
+
+logcat | grep -iE "bluetooth|IBluetoothHci"
+
+Bus 005 Device 007: ID 0bda:b85b
+
+rtk_btusb
+bt_hwcfg_usb
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+SDDisk 1.79 
+UPGRADE_PROGRAM_PARTITION=boot_b
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+kernel-6.1/drivers/rtc/rtc-rs5c372.c
+CONFIG_RTC_DRV_RS5C372
+ricoh,rs5c372a
+
+kernel-6.1/drivers/ata/ahci_platform.c
+CONFIG_SATA_AHCI_PLATFORM
+rockchip,rk-ahci
+
+kernel-6.1/drivers/pinctrl/pinctrl-rockchip.c
+CONFIG_PINCTRL_ROCKCHIP
+
+cat /sys/kernel/debug/gpio
+Android 可能通过 /dev/gpiochipX（比如 /dev/gpiochip0）来管理 GPIO。你可以使用 libgpiod 库来操作 GPIO，而不是通过 /sys/class/gpio
+git clone https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
+gpiod 提供了多个命令行工具来与 GPIO 进行交互
+CONFIG_GPIOLIB，CONFIG_GPIO_SYSFS  gpiolib-sysfs.ko
+
+adv_set_factory_info
+
+libahci.ko
+ahci_platform.ko
+libahci_platform.ko
+ahci.ko
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    vendor.hwc.device.primary
+    vendor.hwc.device.extend
+    persist.sys.rotation.efull-n（n是一个数字，譬如1、2、3）
+    persist.sys.rotation.einit-n（n是一个数字，譬如1、2、3）
+    
+    vendor.hwc.device.primary
+
+该属性用于设置主屏，譬如：
+
+    vendor.hwc.device.primary=DSI                 #设置MIPI屏为主屏
+    vendor.hwc.device.primary=HDMI-A          #设置HDMI显示屏为主屏
+    vendor.hwc.device.primary=LVDS             #设置LVDS屏为主屏
+    vendor.hwc.device.primary=eDP                #设置eDP显示屏为主屏
+    vendor.hwc.device.primary=DP                  #设置DP显示屏为主屏
+该属性用于设置副屏，譬如：
+
+    vendor.hwc.device.extend=DSI                   #设置MIPI屏为副屏
+    vendor.hwc.device.extend=HDMI-A            #设置HDMI显示屏为副屏
+    vendor.hwc.device.extend=LVDS                #设置LVDS屏为副屏
+    vendor.hwc.device.extend=eDP                  #设置eDP屏为副屏
+    vendor.hwc.device.extend=DP                    #设置DP显示屏为副屏
+    vendor.hwc.device.extend=DSI,HDMI-A     #设置MIPI屏和HDMI显示屏为副屏
+主屏的显示方向可通过SF_PRIMARY_DISPLAY_ORIENTATION变量控制，该变量可取值为0、90、180、270，分别表示将主屏显示方向旋转（顺时针旋转）0度、90度、180度以及270度。
+
+打开device/rockchip/rk3588/ATK_DLRK3588/BoardConfig.mk文件：
+
+    vi device/rockchip/rk3588/ATK_DLRK3588/BoardConfig.mk
+
+如果我们要将主屏的显示方向旋转90度，可以在该文件末尾添加如下内容：
+
+    SF_PRIMARY_DISPLAY_ORIENTATION := 90             #旋转90度
+Recovery模式下屏幕的显示方向可通过TARGET_RECOVERY_DEFAULT_ROTATION变量控制，该变量可取值为：ROTATION_NONE、ROTATION_RIGHT、ROTATION_DOWN、ROTATION_LEFT，分别表示recovery模式下屏幕显示方向将旋转0度、90度、180度、270度。
+
+打开device/rockchip/rk3588/ATK_DLRK3588/BoardConfig.mk文件，然后添加如下内容：
+
+    TARGET_RECOVERY_DEFAULT_ROTATION := ROTATION_RIGHT   #旋转90度
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+out/soong/installs-rom6881_u.mk
+
+
+
+[  896.607556][ T4936] qmi_wwan: Protected symbol: usbnet_get_ethernet_addr (err -13)
+[  896.607709][ T4936] qmi_wwan: Unknown symbol netdev_upper_get_next_dev_rcu (err -2)
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+FAILED: out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwInterface_inheritance_hierarchy.json
+rm -f 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwInterface_inheritance_hierarchy.json' && out/host/linux-x86/bin/hidl-gen -L inheritance-hierarchy -rrockchip.hardware:vendor/rockchip/hardware/interfaces -randroid.hidl:system/libhidl/transport rockchip.hardware.rockit.hw@1.0::IRockitHwInterface > 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwInterface_inheritance_hierarchy.json'
+ERROR: rockchip.hardware.rockit.hw@1.0::IRockitHwInterface has hash 5523f2c135562ba0140a3922fe0a4ce26c23d00100ec5d710c0868547c9ec9ba which does not match hash on record. This interface has been frozen. Do not change it!
+ERROR: Could not parse rockchip.hardware.rockit.hw@1.0::IRockitHwInterface. Aborting.
+[ 53% 90579/168073] HIDL inheritance hierarchy: rockchip.hardware.rockit.hw@1.0::IRockitHwService => 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockch
+FAILED: out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwService_inheritance_hierarchy.json
+rm -f 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwService_inheritance_hierarchy.json' && out/host/linux-x86/bin/hidl-gen -L inheritance-hierarchy -rrockchip.hardware:vendor/rockchip/hardware/interfaces -randroid.hidl:system/libhidl/transport rockchip.hardware.rockit.hw@1.0::IRockitHwService > 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwService_inheritance_hierarchy.json'
+ERROR: rockchip.hardware.rockit.hw@1.0::IRockitHwInterface has hash 5523f2c135562ba0140a3922fe0a4ce26c23d00100ec5d710c0868547c9ec9ba which does not match hash on record. This interface has been frozen. Do not change it!
+ERROR: Could not parse rockchip.hardware.rockit.hw@1.0::IRockitHwService. Aborting.
+[ 53% 90580/168073] HIDL c++-sources: vendor/rockchip/hardware/interfaces/rockit/hw/1.0/types.hal vendor/rockchip/hardware/interfaces/rockit/hw/1.0/IRockitHwInterface.hal vendor/rockc
+FAILED: out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0_genc++/gen/rockchip/hardware/rockit/hw/1.0/RockitHwInterfaceAll.cpp out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0_genc++/gen/rockchip/hardware/rockit/hw/1.0/RockitHwServiceAll.cpp out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0_genc++/gen/rockchip/hardware/rockit/hw/1.0/types.cpp
+rm -rf out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0_genc++/gen && out/host/linux-x86/bin/hidl-gen -R -p . -d out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0_genc++/gen/rockchip/hardware/rockit/hw/1.0/RockitHwInterfaceAll.cpp.d -o out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0_genc++/gen -L c++-sources -rrockchip.hardware:vendor/rockchip/hardware/interfaces -randroid.hidl:system/libhidl/transport rockchip.hardware.rockit.hw@1.0
+ERROR: rockchip.hardware.rockit.hw@1.0::IRockitHwInterface has hash 5523f2c135562ba0140a3922fe0a4ce26c23d00100ec5d710c0868547c9ec9ba which does not match hash on record. This interface has been frozen. Do not change it!
+ERROR: Could not parse rockchip.hardware.rockit.hw@1.0::types. Aborting.
+15:49:39 ninja failed with: exit status 1
+
+
+[ 53% 90571/168073] HIDL inheritance hierarchy: rockchip.hardware.rockit.hw@1.0::IRockitHwInterface => 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rock
+FAILED: out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwInterface_inheritance_hierarchy.json
+rm -f 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwInterface_inheritance_hierarchy.json' && out/host/linux-x86/bin/hidl-gen -L inheritance-hierarchy -rrockchip.hardware:vendor/rockchip/hardware/interfaces -randroid.hidl:system/libhidl/transport rockchip.hardware.rockit.hw@1.0::IRockitHwInterface > 'out/soong/.intermediates/vendor/rockchip/hardware/interfaces/rockit/hw/1.0/rockchip.hardware.rockit.hw@1.0-inheritance-hierarchy/gen/IRockitHwInterface_inheritance_hierarchy.json'
+ERROR: rockchip.hardware.rockit.hw@1.0::IRockitHwInterface has hash 5523f2c135562ba0140a3922fe0a4ce26c23d00100ec5d710c0868547c9ec9ba which does not match hash on record. This interface has been frozen. Do not change it!
+ERROR: Could not parse rockchip.hardware.rockit.hw@1.0::IRockitHwInterface. Aborting.
+14:32:31 ninja failed with: exit status 1
+
+**************************************************************************************************************************************************************
+
+4G修改保留
+
+framework
+
+diff --git a/opt/telephony/src/java/com/android/internal/telephony/ServiceStateTracker.java b/opt/telephony/src/java/com/android/internal/telephony/ServiceStateTracker.java
+index 8a4967085..c6be40197 100644
+--- a/opt/telephony/src/java/com/android/internal/telephony/ServiceStateTracker.java
++++ b/opt/telephony/src/java/com/android/internal/telephony/ServiceStateTracker.java
+@@ -3445,8 +3445,7 @@ public class ServiceStateTracker extends Handler {
+         }
+
+         boolean hasRegistered =
+-                mSS.getState() != ServiceState.STATE_IN_SERVICE
+-                        && mNewSS.getState() == ServiceState.STATE_IN_SERVICE;
++               mNewSS.getState() == ServiceState.STATE_IN_SERVICE;
+
+         boolean hasDeregistered =
+                 mSS.getState() == ServiceState.STATE_IN_SERVICE
+
+system
+diff --git a/core/init/devices.cpp b/core/init/devices.cpp
+index d29ffd6..afc4ebf 100644
+--- a/core/init/devices.cpp
++++ b/core/init/devices.cpp
+@@ -552,7 +552,7 @@ void DeviceHandler::HandleUevent(const Uevent& uevent) {
+                    std::find(subsystems_.cbegin(), subsystems_.cend(), uevent.subsystem);
+                subsystem != subsystems_.cend()) {
+         devpath = subsystem->ParseDevPath(uevent);
+-    } else if (uevent.subsystem == "usb") {
++    } else if ((uevent.subsystem == "usb") || (uevent.subsystem == "usbmisc")) {
+         if (!uevent.device_name.empty()) {
+             devpath = "/dev/" + uevent.device_name;
+         } else {
+diff --git a/core/init/selinux.cpp b/core/init/selinux.cpp
+index 907eb80..185e7f7 100644
+--- a/core/init/selinux.cpp
++++ b/core/init/selinux.cpp
+@@ -123,6 +123,7 @@ EnforcingStatus StatusFromProperty() {
+ }
+
+ bool IsEnforcing() {
++    return false;
+     if (ALLOW_PERMISSIVE_SELINUX) {
+         return StatusFromProperty() == SELINUX_ENFORCING;
+     }
+diff --git a/sepolicy/vendor/rild.te b/sepolicy/vendor/rild.te
+index fc84ef7..33a336f 100644
+--- a/sepolicy/vendor/rild.te
++++ b/sepolicy/vendor/rild.te
+@@ -1,5 +1,6 @@
+ # rild - radio interface layer daemon
+ type rild, domain;
++permissive rild;
+ hal_server_domain(rild, hal_telephony)
+ net_domain(rild)
+
+vendor
+
+diff --git a/rockchip/common/phone/bin/chat b/rockchip/common/phone/bin/chat
+index 486ce25..e7a1b03 100755
+Binary files a/rockchip/common/phone/bin/chat and b/rockchip/common/phone/bin/chat differ
+diff --git a/rockchip/common/phone/phone.mk b/rockchip/common/phone/phone.mk
+index 61881e4..f494582 100755
+--- a/rockchip/common/phone/phone.mk
++++ b/rockchip/common/phone/phone.mk
+@@ -27,7 +27,7 @@ PRODUCT_PACKAGES += \
+
+ PRODUCT_PROPERTY_OVERRIDES +=ro.boot.noril=false
+ else
+-PRODUCT_PROPERTY_OVERRIDES +=ro.boot.noril=true
++#PRODUCT_PROPERTY_OVERRIDES +=ro.boot.noril=true
+ endif
+
+
+@@ -35,3 +35,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
+     keyguard.no_require_sim=true \
+     ro.com.android.dataroaming=true \
+        ril.function.dataonly=1
++
++#for modem
++BOARD_HAS_MODEM ?= true
++
++ifeq ($(strip $(BOARD_HAS_MODEM)),true)
++$(call inherit-product, vendor/rockchip/common/phone/quectel/modem.mk)
++endif
+
+rockchip/common/phone/quectel/
+
+
+device
+
+diff --git a/rockchip/common/overlay/frameworks/base/core/res/res/values/config.xml b/rockchip/common/overlay/frameworks/base/core/res/res/values/config.xml
+index 32d04ce..71f04e4 100644
+--- a/rockchip/common/overlay/frameworks/base/core/res/res/values/config.xml
++++ b/rockchip/common/overlay/frameworks/base/core/res/res/values/config.xml
+@@ -20,16 +20,16 @@
+ <resources>
+
+     <!-- This device is not "voice capable"; it's data-only. -->
+-    <bool name="config_voice_capable">false</bool>
++    <bool name="config_voice_capable">true</bool>
+
+     <!-- This device does not allow sms service. -->
+-    <bool name="config_sms_capable">false</bool>
++    <bool name="config_sms_capable">true</bool>
+
+     <!-- Flag indicating whether the current device allows data.
+         If true, this means that the device supports data connectivity through
+         the telephony network.
+         This can be overridden to false for devices that support voice and/or sms . -->
+-    <bool name="config_mobile_data_capable">false</bool>
++    <bool name="config_mobile_data_capable">true</bool>
+
+     <!-- If this is true, the screen will come on when you unplug usb/power/whatever. -->
+     <bool name="config_unplugTurnsOnScreen">true</bool>
+diff --git a/rockchip/common/rootdir/ueventd.rockchip.rc b/rockchip/common/rootdir/ueventd.rockchip.rc
+index bd0cf57..d4b2a6c 100644
+--- a/rockchip/common/rootdir/ueventd.rockchip.rc
++++ b/rockchip/common/rootdir/ueventd.rockchip.rc
+@@ -81,6 +81,11 @@ import /vendor/etc/ueventd.car.rc
+ /dev/ttyUSB8              0660   radio         radio
+ /dev/ttyUSB9              0660   radio         radio
+
++# for quectel port
++/dev/cdc-wdm*             0660   radio         radio
++/dev/qcqmi*               0660   radio         radio
++/dev/cdc-acm*             0660   radio         radio
++
+ # for mali-t764
+ /dev/mali0               0666   system          system
+
+diff --git a/rockchip/common/sepolicy/vendor/file_contexts b/rockchip/common/sepolicy/vendor/file_contexts
+index ac9fea6..8ea875c 100644
+--- a/rockchip/common/sepolicy/vendor/file_contexts
++++ b/rockchip/common/sepolicy/vendor/file_contexts
+@@ -263,3 +263,10 @@
+ /sys/devices/virtual/misc/hdmirx_hdcp/status   u:object_r:sysfs_hdmirx:s0
+ /sys/devices/virtual/misc/hdmirx_hdcp/test_key1x   u:object_r:sysfs_hdmirx:s0
+
++#quectel
++/dev/ttyUSB[0-9]        u:object_r:radio_device:s0
++/dev/ttyACM[0-9]        u:object_r:radio_device:s0
++/dev/cdc-wdm[0-9]        u:object_r:radio_device:s0
++/dev/qcqmi[0-9]          u:object_r:radio_device:s0
++/vendor/bin/hw/rild       u:object_r:rild_exec:s0
++/dev/socket/rildOemHook   u:object_r:rild_socket:s0
+diff --git a/rockchip/rk3588/rom6881_u/BoardConfig.mk b/rockchip/rk3588/rom6881_u/BoardConfig.mk
+index c2062df..d9141c5 100644
+--- a/rockchip/rk3588/rom6881_u/BoardConfig.mk
++++ b/rockchip/rk3588/rom6881_u/BoardConfig.mk
+@@ -25,9 +25,10 @@ BOARD_LIGHT_SENSOR_SUPPORT := true
+
+ PRODUCT_KERNEL_DTS := rk3588-rom6881-a1
+ PRODUCT_UBOOT_CONFIG := rk3588_rom6881a1_defconfig
+-PRODUCT_KERNEL_CONFIG := rk3588_adv_defconfig rk3588_adv_gki.config
++PRODUCT_KERNEL_CONFIG += rk3588_adv_defconfig rk3588_adv_gki.config
+ BOARD_GSENSOR_MXC6655XA_SUPPORT := true
+ BOARD_CAMERA_SUPPORT_EXT := true
+ BOARD_HS_ETHERNET := true
+ PRODUCT_KERNEL_CONFIG += pcie_wifi.config
++BOARD_HAVE_QUECTEL := true
+ include device/rockchip/rk3588/BoardConfig.mk
+diff --git a/rockchip/rk3588/rom6881_u/bt_vendor.conf b/rockchip/rk3588/rom6881_u/bt_vendor.conf
+index d98c62e..793e90a 100644
+--- a/rockchip/rk3588/rom6881_u/bt_vendor.conf
++++ b/rockchip/rk3588/rom6881_u/bt_vendor.conf
+@@ -1,5 +1,5 @@
+ # UART device port where Bluetooth controller is attached
+-UartPort = /dev/ttyS8
++UartPort = /dev/ttyS9
+
+ # Firmware patch file location
+ FwPatchFilePath = /vendor/etc/firmware/
+diff --git a/rockchip/rk3588/rom6881_u/rom6881_u.mk b/rockchip/rk3588/rom6881_u/rom6881_u.mk
+index 69e6040..9341b67 100644
+--- a/rockchip/rk3588/rom6881_u/rom6881_u.mk
++++ b/rockchip/rk3588/rom6881_u/rom6881_u.mk
+@@ -44,3 +44,28 @@ PRODUCT_PROPERTY_OVERRIDES += persist.wifi.sleep.delay.ms=0
+ PRODUCT_PROPERTY_OVERRIDES += persist.bt.power.down=true
+ PRODUCT_PROPERTY_OVERRIDES += vendor.hwc.device.primary=HDMI-A
+ PRODUCT_PROPERTY_OVERRIDES += vendor.hwc.device.extend=eDP
++
++PRODUCT_PACKAGES += \
++         canbusload \
++        candump \
++        canfdtest \
++        cangen \
++        cangw \
++        canlogserver \
++        canplayer \
++        cansend \
++        cansequence \
++        cansniffer \
++        i2ctransfer \
++        mdio-tool \
++        memtester
++
++PRODUCT_PACKAGES += \
++         android.hardware.radio.config-V1-ndk.vendor \
++         android.hardware.radio.data-V1-ndk.vendor \
++         android.hardware.radio.messaging-V1-ndk.vendor \
++         android.hardware.radio.modem-V1-ndk.vendor \
++         android.hardware.radio.network-V1-ndk.vendor \
++         android.hardware.radio.sim-V1-ndk.vendor \
++         android.hardware.radio-V1-ndk.vendor \
++         android.hardware.radio.voice-V1-ndk.vendor
+
+
+hardware
+
+diff --git a/interfaces/compatibility_matrices/compatibility_matrix.8.xml b/interfaces/compatibility_matrices/compatibility_matrix.8.xml
+index 5ea075a3..72beca82 100644
+--- a/interfaces/compatibility_matrices/compatibility_matrix.8.xml
++++ b/interfaces/compatibility_matrices/compatibility_matrix.8.xml
+@@ -416,6 +416,36 @@
+             <instance>default</instance>
+         </interface>
+     </hal>
++    <hal format="hidl" optional="true">
++        <name>android.hardware.radio</name>
++        <version>1.1</version>
++        <version>1.2</version>
++        <version>1.3</version>
++        <version>1.4</version>
++        <version>1.5</version>
++        <interface>
++            <name>IRadio</name>
++            <instance>slot1</instance>
++            <instance>slot2</instance>
++        </interface>
++    </hal>
++    <hal format="hidl" optional="true">
++        <name>android.hardware.radio</name>
++        <version>1.2</version>
++        <interface>
++            <name>ISap</name>
++            <instance>slot1</instance>
++        </interface>
++    </hal>
++    <hal format="hidl" optional="true">
++        <name>android.hardware.radio.config</name>
++        <version>1.0</version>
++        <version>1.1</version>
++        <interface>
++            <name>IRadioConfig</name>
++            <instance>default</instance>
++        </interface>
++    </hal>
+     <hal format="aidl" optional="true">
+         <name>android.hardware.radio.config</name>
+         <version>2</version>
+diff --git a/ril/libril/Android.mk b/ril/libril/Android.mk
+index 12b58cf9..c4c19ca4 100644
+--- a/ril/libril/Android.mk
++++ b/ril/libril/Android.mk
+@@ -1,5 +1,5 @@
+ # Copyright 2006 The Android Open Source Project
+-
++ifeq ($(BOARD_HAVE_QUECTEL),)
+ LOCAL_PATH:= $(call my-dir)
+ include $(CLEAR_VARS)
+
+@@ -48,3 +48,4 @@ LOCAL_NOTICE_FILE:= $(LOCAL_PATH)/NOTICE
+ LOCAL_SANITIZE := integer
+
+ include $(BUILD_SHARED_LIBRARY)
++endif
+
+
+diff --git a/mkcombinedroot/res/vendor_modules.load b/mkcombinedroot/res/vendor_modules.load
+index 6832d9fc..fa9d53e8 100644
+--- a/mkcombinedroot/res/vendor_modules.load
++++ b/mkcombinedroot/res/vendor_modules.load
+@@ -11,3 +11,8 @@ tp_elan_5515.ko
+ chipone-ts.ko
+ zram.ko
+ rockchip_disable_unused.ko
++usb_wwan.ko
++option.ko
++qcserial.ko
++qmi_wwan.ko
++qmi_wwan_q.ko
+
+
+kernel
+
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-rom6881-a1.dts b/arch/arm64/boot/dts/rockchip/rk3588-rom6881-a1.dts
+index 14070bb9b..bb915dd35 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-rom6881-a1.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588-rom6881-a1.dts
+@@ -301,6 +301,11 @@ wireless_wlan: wireless-wlan {
+                status = "okay";
+        };
+ #endif
++
++       misc-adv-gpio {
++               compatible = "misc-adv-gpio";
++               status = "okay";
++       };
+ };
+
+ &fiq_debugger {
+diff --git a/arch/arm64/configs/rk3588_adv_gki.config b/arch/arm64/configs/rk3588_adv_gki.config
+index 15f1c9373..93d2074ad 100644
+--- a/arch/arm64/configs/rk3588_adv_gki.config
++++ b/arch/arm64/configs/rk3588_adv_gki.config
+@@ -1 +1,10 @@
+ CONFIG_GPIO_PCA953X=m
++CONFIG_LOG_BUF_SHIFT=21
++CONFIG_ADVANTECH_GPIO=m
++CONFIG_ADVANTECH_BOARD=m
++CONFIG_USB_SERIAL_WWAN=m
++CONFIG_USB_SERIAL_OPTION=m
++CONFIG_USB_SERIAL_QUALCOMM=m
++CONFIG_USB_NET_QMI_WWAN=m
++CONFIG_RTC_DRV_RS5C372=m
++CONFIG_SATA_AHCI_PLATFORM=m
+diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+index 34cbfb83a..450157426 100644
+--- a/drivers/misc/Kconfig
++++ b/drivers/misc/Kconfig
+@@ -15,6 +15,18 @@ config RK803
+
+ source "drivers/misc/rockchip/Kconfig"
+
++config ADVANTECH_GPIO
++        tristate "adv gpio"
++        default n
++        help
++         GPIO control for the board
++
++config ADVANTECH_BOARD
++        tristate "adv board"
++        default n
++        help
++         Board Information Description
++
+ config LT7911D_FB_NOTIFIER
+        tristate "Lontium LT7911D FB Notifier"
+        depends on FB
+diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+index 130605811..426501dde 100644
+--- a/drivers/misc/Makefile
++++ b/drivers/misc/Makefile
+@@ -67,3 +67,5 @@ obj-$(CONFIG_OPEN_DICE)               += open-dice.o
+ obj-$(CONFIG_GP_PCI1XXXX)      += mchp_pci1xxxx/
+ obj-$(CONFIG_VCPU_STALL_DETECTOR)      += vcpu_stall_detector.o
+ obj-$(CONFIG_UID_SYS_STATS)    += uid_sys_stats.o
++obj-$(CONFIG_ADVANTECH_GPIO)   += gpio-adv.o
++obj-$(CONFIG_ADVANTECH_BOARD)    += board.o
+diff --git a/drivers/net/usb/Makefile b/drivers/net/usb/Makefile
+index 4964f7b32..22386d8ef 100644
+--- a/drivers/net/usb/Makefile
++++ b/drivers/net/usb/Makefile
+@@ -37,7 +37,7 @@ obj-$(CONFIG_USB_NET_CX82310_ETH)     += cx82310_eth.o
+ obj-$(CONFIG_USB_NET_CDC_NCM)  += cdc_ncm.o
+ obj-$(CONFIG_USB_NET_HUAWEI_CDC_NCM)   += huawei_cdc_ncm.o
+ obj-$(CONFIG_USB_VL600)                += lg-vl600.o
+-obj-$(CONFIG_USB_NET_QMI_WWAN) += qmi_wwan.o
++obj-$(CONFIG_USB_NET_QMI_WWAN) += qmi_wwan.o qmi_wwan_q.o
+ obj-$(CONFIG_USB_NET_CDC_MBIM) += cdc_mbim.o
+ obj-$(CONFIG_USB_NET_CH9200)   += ch9200.o
+ obj-$(CONFIG_USB_NET_AQC111)   += aqc111.o
+diff --git a/drivers/usb/serial/option.c b/drivers/usb/serial/option.c
+index 4adef9259..dc103c4f6 100644
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -632,6 +632,39 @@ static void option_instat_callback(struct urb *urb);
+
+
+ static const struct usb_device_id option_ids[] = {
++#if 1 //Added by Quectel
++       { USB_DEVICE(0x05C6, 0x9090) }, /* Quectel UC15 */
++       { USB_DEVICE(0x05C6, 0x9003) }, /* Quectel UC20 */
++       { USB_DEVICE(0x05C6, 0x9215) }, /* Quectel EC20(MDM9215) */
++        { USB_DEVICE(0x05C6, 0x9091) }, /* Quectel QCM6125 */
++       { USB_DEVICE(0x05C6, 0x90DB) }, /* Quectel QCM6490 */
++       { USB_DEVICE(0x2C7C, 0x0125) }, /* Quectel EC20(MDM9x07)/EC25/EG25 */
++       { USB_DEVICE(0x2C7C, 0x0121) }, /* Quectel EC21 */
++        { USB_DEVICE(0x2C7C, 0x030E) }, /* Quectel EM05G */
++       { USB_DEVICE(0x2C7C, 0x0191) }, /* Quectel EG91 */
++       { USB_DEVICE(0x2C7C, 0x0195) }, /* Quectel EG95 */
++       { USB_DEVICE(0x2C7C, 0x0306) }, /* Quectel EG06/EP06/EM06 */
++       { USB_DEVICE(0x2C7C, 0x030B) }, /* Quectel EG065K/EG060K */
++       { USB_DEVICE(0x2C7C, 0x0514) }, /* Quectel BL EG060K RNDIS Only */
++       { USB_DEVICE(0x2C7C, 0x0512) }, /* Quectel EG12/EP12/EM12/EG16/EG18 */
++       { USB_DEVICE(0x2C7C, 0x0296) }, /* Quectel BG96 */
++       { USB_DEVICE(0x2C7C, 0x0700) }, /* Quectel BG95/BG77/BG600L-M3/BC69 */
++       { USB_DEVICE(0x2C7C, 0x0435) }, /* Quectel AG35 */
++       { USB_DEVICE(0x2C7C, 0x0415) }, /* Quectel AG15 */
++       { USB_DEVICE(0x2C7C, 0x0452) }, /* Quectel AG520 */
++       { USB_DEVICE(0x2C7C, 0x0455) }, /* Quectel AG550 */
++       { USB_DEVICE(0x2C7C, 0x0620) }, /* Quectel EG20 */
++       { USB_DEVICE(0x2C7C, 0x0800) }, /* Quectel RG500/RM500/RG510/RM510 */
++       { USB_DEVICE(0x2C7C, 0x0801) }, /* Quectel RG520/RM520/SG520 */
++        { USB_DEVICE(0x2C7C, 0x0122) }, /* Quectel RG650 SDX7X */
++        { USB_DEVICE(0x2C7C, 0x0316) }, /* Quectel RG255 SDX35 */
++       { USB_DEVICE(0x2C7C, 0x6026) }, /* Quectel EC200 */
++       { USB_DEVICE(0x2C7C, 0x6120) }, /* Quectel UC200 */
++       { USB_DEVICE(0x2C7C, 0x6000) }, /* Quectel EC200/UC200 */
++       { USB_DEVICE(0x3763, 0x3C93) }, /* Quectel GW */
++       { USB_DEVICE(0x3C93, 0xFFFF) }, /* Quectel GW */
++       { .match_flags = USB_DEVICE_ID_MATCH_VENDOR, .idVendor = 0x2C7C }, /* Match All Quectel Modules */
++#endif
+        { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_COLT) },
+        { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA) },
+        { USB_DEVICE(OPTION_VENDOR_ID, OPTION_PRODUCT_RICOLA_LIGHT) },
+@@ -2289,7 +2322,28 @@ MODULE_DEVICE_TABLE(usb, option_ids);
+  * recognizes separately, thus num_port=1.
+  */
+
++#if 1 //Added by Quectel
++static void cfmakeraw(struct ktermios *t)
++{
++       t->c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP|INLCR|IGNCR|ICRNL|IXON);
++       t->c_oflag &= ~OPOST;
++       t->c_lflag &= ~(ECHO|ECHONL|ICANON|ISIG|IEXTEN);
++       t->c_cflag &= ~(CSIZE|PARENB);
++       t->c_cflag |= CS8;
++       t->c_cc[VMIN] = 1;
++       t->c_cc[VTIME] = 0;
++}
++
++static void option_init_termios(struct tty_struct *tty)
++{
++       cfmakeraw(&tty->termios);
++}
++#endif
++
+ static struct usb_serial_driver option_1port_device = {
++#if 1 //Added by Quectel
++       .init_termios  = option_init_termios,
++#endif
+        .driver = {
+                .owner =        THIS_MODULE,
+                .name =         "option1",
+@@ -2314,6 +2368,9 @@ static struct usb_serial_driver option_1port_device = {
+ #ifdef CONFIG_PM
+        .suspend           = usb_wwan_suspend,
+        .resume            = usb_wwan_resume,
++#if 1 //Added by Quectel
++       .reset_resume = usb_wwan_resume,
++#endif
+ #endif
+ };
+
+@@ -2338,6 +2395,44 @@ static int option_probe(struct usb_serial *serial,
+                                &serial->interface->cur_altsetting->desc;
+        unsigned long device_flags = id->driver_info;
+
++#if 1 //Added by Quectel
++       //Quectel UC20's interface 4 can be used as USB Network device
++       if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) && serial->dev->descriptor.idProduct == cpu_to_le16(0x9003)
++               && serial->interface->cur_altsetting->desc.bInterfaceNumber >= 4)
++               return -ENODEV;
++
++       //Quectel EC20(MDM9215)'s interface 4 can be used as USB Network device
++       if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) && serial->dev->descriptor.idProduct == cpu_to_le16(0x9215)
++               && serial->interface->cur_altsetting->desc.bInterfaceNumber >= 4)
++               return -ENODEV;
++
++    //Quectel QCM6125 & QCM6490's interface 2 can be used as USB Network device
++       if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) &&
++               (serial->dev->descriptor.idProduct == cpu_to_le16(0x9091) || serial->dev->descriptor.idProduct == cpu_to_le16(0x90DB))
++               && serial->interface->cur_altsetting->desc.bInterfaceNumber >= 2)
++               return -ENODEV;
++
++       if (serial->dev->descriptor.idVendor == cpu_to_le16(0x2C7C)) {
++               __u16 idProduct = le16_to_cpu(serial->dev->descriptor.idProduct);
++               struct usb_interface_descriptor *intf = &serial->interface->cur_altsetting->desc;
++
++               if (intf->bInterfaceClass != 0xFF || intf->bInterfaceSubClass == 0x42) {
++                       //ECM, RNDIS, NCM, MBIM, ACM, UAC, ADB
++                       return -ENODEV;
++               }
++
++               if ((idProduct&0xF000) == 0x0000) {
++                       //MDM interface 4 is QMI
++            if (idProduct == 0x0316 && intf->bInterfaceNumber == 3)   //SDX35
++                               return -ENODEV;
++
++                       if (intf->bInterfaceNumber == 4 && intf->bNumEndpoints == 3
++                               && intf->bInterfaceSubClass == 0xFF && intf->bInterfaceProtocol == 0xFF)
++                               return -ENODEV;
++               }
++       }
++#endif
++
+        /* Never bind to the CD-Rom emulation interface */
+        if (iface_desc->bInterfaceClass == USB_CLASS_MASS_STORAGE)
+                return -ENODEV;
+diff --git a/drivers/usb/serial/qcserial.c b/drivers/usb/serial/qcserial.c
+index b1e844bf3..70bbe4fa4 100644
+--- a/drivers/usb/serial/qcserial.c
++++ b/drivers/usb/serial/qcserial.c
+@@ -63,7 +63,7 @@ static const struct usb_device_id id_table[] = {
+        {DEVICE_G1K(0x05c6, 0x9202)},   /* Generic Gobi Modem device */
+        {DEVICE_G1K(0x05c6, 0x9203)},   /* Generic Gobi Modem device */
+        {DEVICE_G1K(0x05c6, 0x9222)},   /* Generic Gobi Modem device */
+-       {DEVICE_G1K(0x05c6, 0x9008)},   /* Generic Gobi QDL device */
++       //{DEVICE_G1K(0x05c6, 0x9008)}, /* Generic Gobi QDL device */
+        {DEVICE_G1K(0x05c6, 0x9009)},   /* Generic Gobi Modem device */
+        {DEVICE_G1K(0x05c6, 0x9201)},   /* Generic Gobi QDL device */
+        {DEVICE_G1K(0x05c6, 0x9221)},   /* Generic Gobi QDL device */
+diff --git a/drivers/usb/serial/usb_wwan.c b/drivers/usb/serial/usb_wwan.c
+index 0017f6e96..77a494161 100644
+--- a/drivers/usb/serial/usb_wwan.c
++++ b/drivers/usb/serial/usb_wwan.c
+@@ -433,6 +433,23 @@ static struct urb *usb_wwan_setup_urb(struct usb_serial_port *port,
+                          usb_sndbulkpipe(serial->dev, endpoint) | dir,
+                          buf, len, callback, ctx);
+
++#if 1 //Added by Quectel for Zero Packet
++       if (dir == USB_DIR_OUT) {
++               if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) && serial->dev->descriptor.idProduct == cpu_to_le16(0x9090))
++                       urb->transfer_flags |= URB_ZERO_PACKET;
++               if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) && serial->dev->descriptor.idProduct == cpu_to_le16(0x9003))
++                       urb->transfer_flags |= URB_ZERO_PACKET;
++               if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) && serial->dev->descriptor.idProduct == cpu_to_le16(0x9215))
++                       urb->transfer_flags |= URB_ZERO_PACKET;
++        if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) && serial->dev->descriptor.idProduct == cpu_to_le16(0x9091))
++                       urb->transfer_flags |= URB_ZERO_PACKET;
++        if (serial->dev->descriptor.idVendor == cpu_to_le16(0x05C6) && serial->dev->descriptor.idProduct == cpu_to_le16(0x90DB))
++                       urb->transfer_flags |= URB_ZERO_PACKET;
++               if (serial->dev->descriptor.idVendor == cpu_to_le16(0x2C7C))
++                       urb->transfer_flags |= URB_ZERO_PACKET;
++       }
++#endif
++
+        if (intfdata->use_zlp && dir == USB_DIR_OUT)
+                urb->transfer_flags |= URB_ZERO_PACKET;
+
+diff --git a/net/rfkill/rfkill-bt.c b/net/rfkill/rfkill-bt.c
+index e76de5408..73d6156a5 100644
+--- a/net/rfkill/rfkill-bt.c
++++ b/net/rfkill/rfkill-bt.c
+@@ -345,12 +345,16 @@ static int rfkill_rk_set_power(void *data, bool blocked)
+                }
+
+                if (gpio_is_valid(reset->io)) {
++               #ifdef CONFIG_ARCH_ADVANTECH
++                       gpio_direction_output(reset->io, !reset->enable);
++               #else
+                        if (gpio_get_value(reset->io) == !reset->enable) {
+                                gpio_direction_output(reset->io,
+                                                      !reset->enable);
+                                msleep(20);
+                                gpio_direction_output(reset->io, reset->enable);
+                        }
++               #endif
+                }
+
+                if (gpio_is_valid(wake_host->io)) {
+@@ -383,11 +387,15 @@ static int rfkill_rk_set_power(void *data, bool blocked)
+                bt_power_state = 0;
+                LOG("bt shut off power\n");
+                if (gpio_is_valid(reset->io)) {
++               #ifdef CONFIG_ARCH_ADVANTECH
++                       gpio_direction_output(reset->io, reset->enable);
++               #else
+                        if (gpio_get_value(reset->io) == reset->enable) {
+                                gpio_direction_output(reset->io,
+                                                      !reset->enable);
+                                msleep(20);
+                        }
++               #endif
+                }
+                if (toggle) {
+                        if (rfkill_get_wifi_power_state(&wifi_power)) {
+
+
+
+
+
+
+

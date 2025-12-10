@@ -1,0 +1,339 @@
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h3 l0, h2 l0, h0 l0, h4 l0, h0 l0,
+h1 l0, h1 l0, h1 l0, h3 l0, h1 l0, h3 l0, h1 l0, h5 l0,
+
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h5 l0, h1 l0, h6 l0, h1 l0, h5 l0,
+h0 l0, h1 l0, h0 l0, h1 l0, h2 l0, h1 l0, h2 l0, h1 l0,
+
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h4 l0, h2 l0, h1 l0, h1 l0, h2 l0, h7 l0, h2 l0,
+h2 l0, h2 l0, h4 l0, h0 l0, h3 l0, h1 l0, h2 l0, h1 l0,
+
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h3 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+Magic is incorrect.
+Error validating A/B metadata from disk. Resetting and writing new A/B metadata to disk.
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(8c5a0501f7...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(13f8a3542a...) + sha256(9b79dd10aa...) + OK
+## Checking fdt 0x0034e930 ... sha256(e4e0311b2d...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(b4cf169833...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 277.53/546.488 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0xa
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14005 (Dec 27 2024 - 15:21:01 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba0f000
+Relocation fdt: e99fa600 - e99fecd0
+CR: M/C/I
+optee api revision: 2.0
+no mmc device at slot 1
+Repair the backup gpt table OK!
+mmc@fe2c0000: 1 (SD), mmc@fe2e0000: 0
+Bootdev(atags): mmc 1
+MMC1: Legacy, 52Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 7
+TEEC: Reset area[0] info...
+TEEC: Reset area[1] info...
+*** Warning - bad CRC, using default environment
+
+DM: v2
+RESC: 'resource_a', blk@0x0000e000
+TEEC: ree_fs_new_open : no such file. /dirf.db
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 13.0, Build 2000.0, v4
+boot mode: recovery (misc)
+ANDROID: fdt overlay OK
+swversion = V14005
+Error: adv_set_factory_info: out of memory!
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0000000000
+model[2]         V14005
+model[3]         A1
+----------------------------------------------------------------
+ROM-6881 hw_id = 13
+Info : not configurate display in uboot
+----------------------------------------------------------------
+display0         6881
+display1
+display2
+display3
+----------------------------------------------------------------
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+Warn: can't find connect driver
+Warn: can't get connect driver
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Warn: can't find connect driver
+Warn: can't get connect driver
+warning: bad baseparameter
+Model: ROM-6881 AKS0000000000 V14005 A1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Using display timing dts
+dsi@fde20000:  detailed mode clock 33300 kHz, flags[a]
+    H: 0800 1000 1006 1056
+    V: 0480 0500 0504 0508
+bus_format: 100e
+VOP update mode to: 800x480p62, type: MIPI0 for VP3
+VP3 set crtc_clock to 33000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@73x105] fmt[0] addr[0xebf00000]
+final DSI-Link bandwidth: 220000 Kbps x 4
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP2
+VP2 set crtc_clock to 85500KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP2 enable Esmart2[654x270->654x270@357x249] fmt[0] addr[0xebf00000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 684000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta_a: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot_a
+preloaded: distribute image from 'vendor_boot_a
+preloaded: distribute image from 'init_boot_a
+Could not find "system_a" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff000 ...
+Kernel: 0x00400000 - 0x02539a00 (34023 KiB)
+v-ramdisk:  0x0a200000 - 0x0c08215b (31241 KiB)
+ramdisk:    0x0c08215b - 0x0c2b33b0 (2245 KiB)
+bootconfig: 0x0c2b33b0 - 0x0c2b3430 (1 KiB)
+bootparams: 0x0c2b3430 - 0x0c2b5430
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x02539a00
+   Using Device Tree in place at 0000000008300000, end 0000000008349a34
+## reserved-memory:
+  cma: addr=10000000 size=10000000
+  drm-logo@0: addr=ebf00000 size=15a000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 9004.774/9764.977 ms
+
+Starting kernel ...
+
+[    0.000000][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@0': base 0x0000000000000000, size 0 MiB
+[    0.000000][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'vendor-storage-rm@00000000': base 0x0000000000000000, size 0 MiB
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[    0.187715][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 19 not active.
+[    0.507932][    T1] rk806 spi2.0: no sleep-setting state
+[    0.513717][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    0.520281][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    0.563519][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ fiq not found
+[    0.571593][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ wakeup not found
+[    0.579815][    T1] fiq_debugger_probe: could not install nmi irq handler
+[    0.763050][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    0.763065][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    0.763145][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    0.770818][   T87] rockchip-vop2 fdd90000.vop: Supported VOP aclk dvfs, normal mode:500000000, reset mode:0, advanced mode:750000000
+[    0.775191][   T87] rockchip-drm display-subsystem: route-dp0: failed to get logo,offset
+[    0.823554][   T87] rockchip-dp fded0000.edp: failed to read downspread -110
+[    0.841796][   T87] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[    0.841828][   T87] rockchip-drm display-subsystem: route-hdmi0: failed to get logo,offset
+[    0.931656][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    0.931668][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    0.931681][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    1.310520][    T1] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    1.310528][    T1] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    1.377256][   T90] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    1.385167][   T90] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    1.385194][   T90] debugfs: File 'uA_load' in directory '/' already present!
+[    1.385207][   T90] debugfs: File 'min_uV' in directory '/' already present!
+[    1.385218][   T90] debugfs: File 'max_uV' in directory '/' already present!
+[    1.385229][   T90] debugfs: File 'constraint_flags' in directory '/' already present!
+[    1.446262][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    1.446284][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    1.446292][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    1.464756][    T1] debugfs: File 'uA_load' in directory '/' already present!
+[    1.464768][    T1] debugfs: File 'min_uV' in directory '/' already present!
+[    1.464773][    T1] debugfs: File 'max_uV' in directory '/' already present!
+[    1.464778][    T1] debugfs: File 'constraint_flags' in directory '/' already present!
+[    1.466576][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    1.477025][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    1.477472][    T1] debugfs: File 'uA_load' in directory '/' already present!
+[    1.477477][    T1] debugfs: File 'min_uV' in directory '/' already present!
+[    1.477481][    T1] debugfs: File 'max_uV' in directory '/' already present!
+[    1.477485][    T1] debugfs: File 'constraint_flags' in directory '/' already present!
+[    1.502195][    T1] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    1.503382][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    1.503389][    T1] rkvdec2_init:1197: No niu aclk reset resource define
+[    1.503394][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    1.503398][    T1] rkvdec2_init:1200: No niu hclk reset resource define
+[    1.504668][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    1.504674][    T1] rkvdec2_init:1197: No niu aclk reset resource define
+[    1.504678][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    1.504682][    T1] rkvdec2_init:1200: No niu hclk reset resource define
+[    1.581780][    T1] init: Failed to open device-mapper: No such file or directory
+[    1.581812][    T1] init: Could not update logical partition
+[    1.581857][    T1] init: Could not update logical partition
+[    1.581898][    T1] init: Could not update logical partition
+[    1.581939][    T1] init: Could not update logical partition
+[    1.582138][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    1.668899][    T1] selinux: SELinux:  Could not stat /dev/selinux: No such file or directory.
+[    1.682933][    T1] init: Could not read properties from '/dev/selinux/apex_property_contexts': No such file or directory
+[    1.702551][    T1] selinux: SELinux:  Could not stat /dev/block: No such file or directory.
+[    1.702813][    T1] selinux: SELinux: Could not get canonical path for /metadata/ota/rollback-indicator restorecon: No such file or directory.
+[    1.702837][    T1] selinux: SELinux:  Could not stat /metadata/gsi: No such file or directory.
+[    1.707754][    T1] init: /system/etc/init/init.recovery.udc.rc: 1: ignored duplicate definition of service 'rockchip_udc_detector'
+[    1.711840][    T1] libprocessgroup: Failed to read task profiles from /etc/task_profiles.json
+[    1.711875][    T1] libprocessgroup: Loading /etc/task_profiles.json for [1] failed
+[    2.009069][    T1] init: Could not start service 'charger' as part of class 'default': Cannot find '/system/bin/charger': No such file or directory
+# [    2.025920][  T197] cutils-trace: Error opening trace file: No such file or directory (2)
+[    2.026090][  T192] cutils-trace: Error opening trace file: No such file or directory (2)
+[    2.042212][  T195] FAT-fs (mmcblk0p1): bogus number of reserved sectors
+[    2.042329][  T195] recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+[    2.108656][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    2.192013][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    2.240111][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    2.287953][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    2.336406][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    2.442706][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    2.491840][  T195] recovery: Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+[    2.491877][  T195] recovery: Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+[    2.491911][  T195] recovery: Failed to load bitmap try_again_text for locale en-US (error -1)
+[    2.491940][  T195] recovery: Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+[    2.491968][  T195] recovery: Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+[    2.590094][  T195] logwrapper: Cannot log to file /dev/fscklogs/log
+[    2.590112][  T195] logwrapper:
+
+#
+

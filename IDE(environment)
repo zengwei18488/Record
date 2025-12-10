@@ -20,33 +20,53 @@ sshfs zengwei@172.21.170.48:/home/zengwei/temp ~/work/Temp/temp
 
 sshfs yanwei@172.21.170.48:/home/yixuan/advantech/JD ~/work/JD
 
+sshfs yanwei@172.21.170.48:/home/yanwei/link/ebc_rc01 /home/zengwei/data_8T2/work/rc01
+
 sshfs yanwei@172.21.170.48:/home/yanwei/rk3288-linux/git-kernel/kernel ~/work/debian9
 
-sshfs yanwei@172.21.170.48:/home/yanwei/link/rk3399-linux ~/work/rk3399-linux
+sshfs yanwei@172.21.170.48:/home/yanwei/link/rk3399-linux /home/zengwei/data_8T2/work/3399-linux-from48yw
 
 sshfs yanwei@172.21.170.48:/home/yanwei/link/rk3399-android10/kernel kernel/
 
 sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3288 ~/work/rk3288
 
-sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3399 /media/store/work/rk3399
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3399 /home/zengwei/data_8T2/work/rk3399
 
-sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3568 /media/store/work/rk3568
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3568 /home/zengwei/data_8T2/work/rk3568
+
+sshfs zengwei@172.21.170.48:/HD/dataHD1/rkcode /home/zengwei/data_8T2/work/rkcode
+
+sshfs jt@172.21.171.102:/home/jt/5710 /home/zengwei/data_8T2/work/3730-yocto3.0
+
+sshfs jt@172.21.171.102:/media/jt/8T/kh/bsp/NXP/linux-imx_4.2 /home/zengwei/data_8T2/work/3730-yocto4.2
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3588 /home/zengwei/data_8T2/work/48-rk3588
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk-all-android14 /home/zengwei/data_8T2/work/48-android14
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk-all-android15 /home/zengwei/data_8T2/work/48-android15
+
+sshfs aka@172.21.171.106:/home/aka/work/code/rk3588/debian /home/zengwei/data_8T2/work/rk3588-debian
+
+sshfs zhihao@172.21.170.50:/home/zhihao/zhihao/rk3588_linux /home/zengwei/data_8T2/work/rk3588-debian12
+
+sshfs bo@172.21.170.124:/media/bo/Docker/Rockchip/RK3588/rk3588_linux_risc_linux6.1_v1.1.0_R460 /home/zengwei/data_8T2/work/rk3588-debian12 -o debug -o sshfs_debug
 
 sshfs aka@172.21.171.106:/home/aka/work/code/rk356x/debian ~/work/rk356x/debian
 
-sshfs aka@172.21.171.106:/home/aka/work/code/rk3399 ~/work/rk3399
+sshfs aka@172.21.171.106:/home/aka/work/code/rk3399 ~/work/rk3399-debian
 
 sshfs aka@172.21.171.106:/home/aka/work/code/rk3288/debian/rk3288_rsb4680 ~/work/rk3288/debian
 
 sshfs zengwei@172.21.170.48:/home/zengwei/work/EBC-GF66 ~/work/EBC-GF66
 
-sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3288-android8.1 ~/work/rk3288-android8.1
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3288-android8.1 /media/store/work/rk3288-android8.1
 
 sshfs zengwei@172.21.170.48:/home/zengwei/workspace ~/work/workspace
 
 sshfs jinmin@172.21.170.48:/home/jinmin/work/gf06/new/uboot-imx6 ~/work/yocto2.1-uboot
 
-sshfs weijie@172.21.170.48:/home/weijie ~/weijie
+sshfs bo@172.21.170.124:/media/bo/Docker/3220_Y4.0/ti-processor-sdk-linux-am335x-evm-09.01.00.001 /media/store/work/am335x
 
 sshfs zengwei@172.21.170.48:/home/zengwei/work/R200 ~/work/R200
 
@@ -120,7 +140,7 @@ svn log "path"
 
 svn -R revert  ＊ 
 
-    svn import --no-ignore . file:///home/user/svn/LinphoneSVN  
+svn import --no-ignore . file:///home/user/svn/LinphoneSVN  
 
 sudo apt-get install rapidsvn   图形工具
 在 Linux 下，点击菜单栏 ==> ‘View/Preferences…’ 来设置参数，在 ‘Programs’ 页

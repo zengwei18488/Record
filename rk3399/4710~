@@ -1,0 +1,604 @@
+buildroot
+……………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+./build.sh cleanall
+source envsetup.sh rockchip_rk3399
+./build.sh rootfs
+
+/BSP/buildroot/output/rockchip_rk3399/images
+
+make chromium-wayland
+
+/home/adv/BSP/buildroot/output/rockchip_rk3399/target/
+output/rockchip_rk3399/.config
+make menuconfig
+  libnss
+  atk
+  
+[root@rk3399:/]# cat /etc/os-release
+NAME=Buildroot
+VERSION=2018.02-rc3-dirty
+ID=buildroot
+VERSION_ID=2018.02-rc3
+PRETTY_NAME="Buildroot 2018.02-rc3"
+
+root@rk3399-buildroot:/# cat /etc/os-release 
+NAME=Buildroot
+VERSION=linux-5.10-gen-rkr8
+ID=buildroot
+VERSION_ID=2021.11
+PRETTY_NAME="Buildroot 2021.11"
+ID_LIKE="buildroot"
+
+$ cd kernel
+$ make ARCH=arm64 rk3399_adv_defconfig -j8 
+$ make ARCH=arm64 rk3399-rsb4710-a2.img -j12
+
+确认gpu使用率有用起来。另外也可以设置性能模式
+echo performance | tee $(find /sys/ -name *governor) > /dev/null 2>&1 || true
+
+cpu A53
+./sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+cpu A72
+./sys/devices/system/cpu/cpufreq/policy4/scaling_governor
+./sys/devices/platform/dmc/devfreq/dmc/governor
+GPU
+./sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu/governor
+
+    echo -n A53 freq:
+    awk '{printf "%3.1fM\n", $1/1000}'  /sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq
+    echo -n A72 freq:
+    awk '{printf "%3.1fM\n", $1/1000}'  /sys/devices/system/cpu/cpufreq/policy4/scaling_cur_freq
+
+    echo -n ddr freq:
+    awk '{printf " %3.1fM\n", $1/1000000}' /sys/class/devfreq/dmc/cur_freq
+
+    echo -n gpu freq:
+    awk '{printf " %3.1fM\n", $1/1000000}' /sys/class/devfreq/ff9a0000.gpu/cur_freq
+    echo -n gpu used:
+    awk '{printf " %4d\n", $1}' /sys/devices/platform/ff9a0000.gpu/utilisation
+
+    echo -n cpu temp:
+    awk '{printf " %3.1f°C\n",$1/1000}' /sys/class/thermal/thermal_zone0/temp
+    echo -n gpu temp:
+    awk '{printf " %3.1f°C\n",$1/1000}' /sys/class/thermal/thermal_zone1/temp
+
+
+开机自启动
+1）打开编辑 /etc/inittab
+2）追加 ::sysinit:/root/test.sh，即在系统初始化后启动对应路径的脚本
+3）创建文件 /root/test.sh
+4）在 test.sh 中添加脚本 ，头文件不要写成 #!/bin/bash，文件系统可能不识别 bash 
+
+#!/bin/sh
+echo "Hello Auto StartUp ${0}"
+
+____________________________________________________________________________________________
+debian 跑马灯
+
+chromium index.html --kiosk --window-position=0,0 --user-data-dir="/home/linaro/0" &
+
+1、首先确保安装了qemu-user-static
+
+sudo apt-get install qemu-user-static
+
+2、确保qemu-arm-static复制到正确目录
+
+sudo cp /usr/bin/qemu-arm-static binary/usr/bin/
+
+sudo apt install qemu-user-binfmt
+
+显示当前环境下执行文件系统架构支持情况
+
+update-binfmts --display
+
+设置qemu-arm为enabled，启用qemu-arm
+
+sudo update-binfmts --enable qemu-arm
+
+
+sudo mkdir binary
+sudo mount rootfs.img binary
+sudo cp /usr/bin/qemu-arm-static binary/usr/bin/
+./mk-qt5.sh -m binary/
+
+
+./mk-qt5.sh -u binary/
+
+mkdir rootfs
+sudo mount rootfs.img binary
+./mk-image.sh
+
+su
+dd if=/dev/zero of=/dev/block/mmcblk1 bs=1M count=4;sync;
+
+
+userdata:grow checking...update.img Installation success.
+update.img Installation success.
+
+Please remove SD CARD!!!, wait for reboot.
+
+
+line in(line-in)
+
+使用line in线对接
+amixer -c0 cset name="RECMIXL BST3 Switch" 1
+amixer -c0 cset name="RECMIXR BST3 Switch" 1
+
+debian10指令   arecord -v -f dat | aplay -Dplughw:0,0 -t wav
+                               arecord -v -f dat | aplay -V mono
+                               arecord -D hw:0,0 -f cd -t wav | aplay -Dplughw:0,0 -t wav
+                  debian 9指令   arecord -f cd -t wav -d 10 | aplay -Dplughw:0,0 -t wav
+                               arecord -f cd -t wav | aplay -Dplughw:0,0 -t wav
+arecord --list-formats
+alsamixer --card=0
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+……………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+rk3399_rsb4710:/ # cat /data/BurnIn/ForTest.sh
+#!/system/bin/sh
+i=`cat /data/count`
+let "i = $i + 1"
+echo $i >/data/count
+echo $i
+
+ifconfig eth1 192.168.0.101 netmask 255.255.255.0
+route add default gw 192.168.0.1
+
+sleep 1
+
+
+
+ifconfig eth1 down
+sysctl -w net.ipv4.ip_forward=1
+ip rule add from all lookup main pref 0
+ifconfig eth1 172.22.169.136 netmask 255.255.254.0 up
+
+/data/misc/ethernet/ipconfig.txt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+pipeline
+
+$ sudo docker run -itd --name build_rk3399_android7_risc -v /build/build_rk3399_risc:/home/adv/BSP:rw --privileged advrisc/u18.04-rk3399abv10:latest /bin/bash
+
+git clone ssh://git@www.rockchip.com.cn:2222/repo-release/tools/repo
+./repo/repo init --repo-url=ssh://git@www.rockchip.com.cn:2222/repo-release/tools/repo.git -u ssh://git@www.rockchip.com.cn:2222/Android_S/manifests.git -m Android12.xml
+./repo/repo sync -c
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+适配鸿蒙
+
+super.img
+
+build/make/core/Makefile
+build/make/core/config.mk
+device/rockchip/common/BoardConfig*.mk
+build/make/tools/releasetools/build_super_image.py
+out/target/product/rsb4710_Android10/obj/PACKAGING/superimage_debug_intermediates/misc_info.txt
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+2.2 生成完整包 Generate complete package
+完整包所包含内容：system、recovery、boot.img
+The complete package includes: system, recovery, boot.img
+发布一个固件正确的顺序：
+The correct order to release an image:
+1. make -j12
+2. make otapackage -j12;./mkimage.sh ota
+
+make -j12;make -j12 otapackage;./mkimage.sh ota
+
+update.zip 拷贝到 USB、SD 卡根目录，或/data/media/0/ 目录下
+
+########################################################################################################
+
+docker run -it --name android_n7 -v /home/zengwei/data_2T/zengwei/work/rsb4710-android7.1/android:/home/adv/BSP:rw advrisc/u16.04-imx6abv5:20170523 /bin/bash
+
+make clobber
+make distclean
+make mrproper
+make clean
+
+
+android 10
+
+persist.sys.notification
+persist.sys.statusbar
+persist.sys.navbar
+persist.sys.isBtnRightBack
+
+frameworks/native/services/inputflinger/InputReader.cpp
+右键
+
+frameworks/base/services/core/java/com/android/server/wm/DisplayPolicy.java
+[NavigationBar]:layoutNavigationBar
+
+frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java
+[statusbar]:makeStatusBarView,setSystemUiVisibility
+
+frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarView.java
+onTouchEvent,return fales;   状态栏不能下拉
+
+frameworks/base/services/core/java/com/android/server/wm/ImmersiveModeConfirmation.java
+Android 去除“Viewing full screen”弹窗
+
+frameworks/base/services/core/java/com/android/server/wm/DisplayPolicy.java
+new SystemGesturesPointerEventListener.Callbacks,状态了隐藏后滑动动作
+
+packages/apps/Settings/res/drawable/ic_homepage_home.xml
+packages/apps/Settings/res/drawable/ic_homepage_screenshot.xml
+packages/apps/Settings/res/values-en-rGB/strings.xml
+packages/apps/Settings/res/values-zh-rCN/strings.xml
+packages/apps/Settings/res/values/strings.xml
+packages/apps/Settings/res/xml/screenshot.xml
+packages/apps/Settings/res/xml/top_level_settings.xml
+packages/apps/Settings/src/com/android/settings/ScreenshotSettings.java
+packages/apps/Settings/src/com/android/settings/dashboard/DashboardFragment.java
+frameworks/native/services/inputflinger/InputReader.cpp
+frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/PhoneStatusBarView.java
+frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBar.java
+frameworks/base/services/core/java/com/android/server/wm/DisplayPolicy.java
+frameworks/base/services/core/java/com/android/server/wm/ImmersiveModeConfirmation.java
+
+queryintentActivities，添加权限<users-permission android:name="android.permission.QUERY_ALL_PACKAGE">
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+app系统签名
+java -Djava.library.path="out/host/linux-x86/lib64" -jar out/host/linux-x86/framework/signapk.jar build/target/product/security/platform.x509.pem build/target/product/security/platform.pk8 app-debug.apk SysCore.apk
+
+使用Android studio查看源码
+1、查看out/host/linux-x86/framework/idegen.jar是否存在
+2、source build/envsetup.sh
+   lunch [选择整编时选择的参数或者数字]
+   mmm development/tools/idegen/
+   或source build/ensetup.sh  make idegen
+3、sudo development/tools/idegen/idegen.sh（保证java和javac版本一致“sudo update-alternatives --config java/javadoc/javap”）
+4、sudo chmod 777 android.iml android.ipr
+   sudo chmod 777 android.ipr
+5、AS安装目录的bin目录下，打开studio64.vmoptions文件
+   -Xms4096m
+   -Xmx4096m
+   -XX:ReservedCodeCacheSize=1024m
+6、通过AS的Open an existing Android Studio project选项选择android.ipr 就可以导入源码
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+Camera(mipi csi)
+
+./media/i2c/soc_camera/rockchip/ov8858_v4l2-i2c-subdev.c:	{.compatible = "omnivision,ov8858-v4l2-i2c-subdev"},
+
+./media/media-device.c:			 "Entity type for entity %s was not initialized!\n",
+./media/i2c/ov8858.c:	{ .compatible = "ovti,ov8858" },
+
+cat /sys/module/video_rkisp1/parameters/version
+
+hardware/rockchip/camera/Config/cam_board_rk3399.xml
+
+localhost ~ # dmesg | grep Async
+
+*****************************************************************************************************************************
+
+hardware/realtek/rtkbt/code/libbt-vendor/src/bt_vendor_rtk.c
+
+echo -e "AT+QSIMSTAT? \r\n" > /dev/ttyUSB6
+echo -e "AT+CPIN? \r\n" > /dev/ttyUSB6
+echo -e "AT+CREG? \r\n" > /dev/ttyUSB6
+echo -e "AT+CSQ? \r\n" > /dev/ttyUSB6
+echo -e "AT+CGREG? \r\n" > /dev/ttyUSB6
+echo -e "AT+CGATT? \r\n" > /dev/ttyUSB6
+
+130|console:/ # stop vendor.ril-daemon
+
+130|console:/ # getprop | grep ril
+[gsm.version.ril-impl]: [Quectel_Android_RIL_Driver_V3.3.32]
+[init.svc.vendor.ril-daemon]: [running]
+[ril.function.dataonly]: [1]
+[ro.boot.noril]: [false]
+[ro.boottime.vendor.ril-daemon]: [8885538545]
+[vendor.rild.libpath]: [/vendor/lib64/libquectel-ril.so]
+
+130|console:/ # start vendor.ril-daemon
+
+logcat -b radio > logcat-radio.txt
+
+console:/data/quectel_debug_log # logcat -b radio -b main -b system -v time > logcat-radio.txt
+
+vendor/rockchip/common/phone/etc/apns-full-conf.xml
+
+./system/libhidl/transport/ServiceManagement.cpp:            LOG(WARNING) << "Waited one second for " << mInterfaceName << "/" << mInstanceName;
+system/core/init/init.cpp
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+repo init --repo-url=ssh://git@www.rockchip.com.cn:2222/repo-release/tools/repo.git -u ssh://git@www.rockchip.com.cn:2222/Android_Qt/manifests.git -m Android10.xml
+
+cd u-boot/
+./make.sh rk3399
+./make.sh rk3399_rsb4710a2_2G
+./make.sh rk3399_rsb3710a1_2G
+./make.sh rk3399_rom5780a3_2G
+
+
+cd kernel/
+make ARCH=arm64 rockchip_defconfig android-10.config rk3399.config
+挖掘机
+make ARCH=arm64 rk3399-sapphire-excavator-edp-avb.img
+
+make ARCH=arm64 menuconfig
+make ARCH=arm64 rk3399_adv_defconfig
+make ARCH=arm64 rk3399-rsb3710-a1.img
+make ARCH=arm64 rk3399-rsb4710-a2.img
+make ARCH=arm64 rk3399-rom5780-a3.img
+make ARCH=arm64 rk3399-ppc115w-a2.img
+
+source build/envsetup.sh
+lunch rsb4710_Android10-userdebug
+lunch rk3399_Android10-userdebug
+lunch rsb3710_Android10-userdebug
+lunch rom5780_Android10-userdebug
+lunch ppc115w_Android10-userdebug
+make -j12;./mkimage.sh;
+
+修改记录
+device/rockchip/rk3399/rsb4710_Android10/
+
+开启overlay功能
+rsb4710_Android10.mk PRODUCT_PACKAGE_OVERLAYS += device/rockchip/rk3399/rsb4710_Android10/overlay
+device/rockchip/rk3399/rsb4710_Android10/overlay/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+
+git init
+git checkout -b rk3399-androidQ10
+git add .
+git commit -m "Initial commit"
+git remote add origin https://gitlab.edgecenter.io/risc/rockchip/android-uboot.git
+git remote add origin https://gitlab.edgecenter.io/risc/rockchip/android-kernel.git
+git remote add origin https://gitlab.edgecenter.io/risc/rockchip/android-bsp.git
+git remote add origin https://gitlab.edgecenter.io/risc/rockchip/android-manifest.git
+git push --set-upstream origin rk3399-androidQ10
+
+双显配置
+setenv extend_screen hdmi-default
+setenv prmry_screen lvds-g070vw01
+setprop vendor.hwc.device.primary  HDMI-A-1
+setprop vendor.hwc.device.extend   LVDS
+
+getprop vendor.hwc.device.main
+getprop vendor.hwc.device.aux
+
+getprop persist.vendor.framebuffer.main
+
+移植rtl8822ce，wifi/bt
+./kernel/drivers/bluetooth/rtk_btusb.c
+./kernel/drivers/bluetooth/btusb.c
+hardware/realtek/rtkbt/vendor/etc/bluetooth/rtkbt.conf
+hardware/realtek/rtkbt/code/libbt-vendor/src/hardware_usb.c
+
+sudo docker run -itd --name build_rk3399_android10_risc -v /media/store/rk3399-android10:/home/adv/BSP:rw --privileged advrisc/u18.04-rk3399abv10:latest /bin/bash
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+cat /sys/kernel/debug/dw-hdmi/phy
+
+
+usb  lan7500 phy
+
+/sys/devices/platform/fe300000.ethernet/mdio_bus/stmmac-0/stmmac-0:00/phy_registers
+
+[ 3962.892358] smsc75xx 1-1:1.0 eth1: link down
+[ 3967.538977] smsc75xx 1-1:1.0 eth1: link down
+[ 3969.858938] IPv6: ADDRCONF(NETDEV_CHANGE): eth1: link becomes ready
+[ 3969.861474] smsc75xx 1-1:1.0 eth1: link up, 100Mbps, full-duplex, lpa 0x4DE1
+[ 4121.114857] smsc75xx 1-1:1.0 eth1: link down
+
+drivers/net/usb/smsc75xx.c
+
+smsc75xx_phy_initialize
+
+#ifdef CONFIG_ARCH_ADVANTECH
+       ret = smsc75xx_mdio_read(dev->net, dev->mii.phy_id, 0x11);
+       ret |= 1<<7;
+       smsc75xx_mdio_write(dev->net, dev->mii.phy_id, 0x11, ret);
+#endif
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+rtc
+
+frameworks/base/services/core/java/com/android/server/AlarmManagerService.java
+frameworks/base/services/core/jni/com_android_server_AlarmManagerService.cpp
+
+./common/sepolicy/vendor/genfs_contexts:genfscon sysfs /devices/platform/ff110000.i2c/i2c-1/1-0068/rtc/rtc0/hctosys                u:object_r:sysfs_hctosys:s0
+/sys/devices/platform/ff110000.i2c/i2c-1/1-0068/rtc/rtc0/hctosys 
+
+
+driver/rtc/hctosys.c
+
+该文件中只有一个函数：rtc_hctosys,该函数通过宏定义late_initcall放在特殊的段，在系统启动时会调用该函数.
+该函数主要有两个动作：
+
+1. rtc_read_time，通过该函数读硬件RTC芯片的时间
+2. do_settimeofday，将读回的RTC时间设置时间，xtime变量
+
+简单网络时间协议（Simple Network Time Protocol），由 NTP 改编而来，主要用来同步因特网中的计算机时钟。
+网络标识和时区（Network Identity and Time Zone，NITZ）是一种通过无线网络向移动设备提供本地日期和时间、时区、夏时制偏移，以及网络提供商身份信息的机制，这通常用于移动电话自动更新系统时间。
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+python for ubuntu 22.04 building
+
+zengwei@zengwei-Precision-3660:~/data_8T2/rk3399-android10$ git diff build/make/tools/releasetools/build_image.py
+diff --git a/build/make/tools/releasetools/build_image.py b/build/make/tools/releasetools/build_image.py
+index 4136ed432e..8ae9b77f2f 100755
+--- a/build/make/tools/releasetools/build_image.py
++++ b/build/make/tools/releasetools/build_image.py
+@@ -74,7 +74,7 @@ def GetInodeUsage(path):
+   cmd = ["find", path, "-print"]
+   output = common.RunAndCheckOutput(cmd, verbose=False)
+   # increase by > 4% as number of files and directories is not whole picture.
+-  inodes = output.count('\n')
++  inodes = output.count('\n'.encode())
+   spare_inodes = inodes * 4 // 100
+   min_spare_inodes = 12
+   if spare_inodes < min_spare_inodes:
+@@ -104,7 +104,7 @@ def GetFilesystemCharacteristics(image_path, sparse_image=True):
+       os.remove(unsparse_image_path)
+   fs_dict = {}
+   for line in output.splitlines():
+-    fields = line.split(":")
++    fields = line.split(":".encode())
+     if len(fields) == 2:
+       fs_dict[fields[0].strip()] = fields[1].strip()
+   return fs_dict
+@@ -213,7 +213,7 @@ def CheckHeadroom(ext4fs_output, prop_dict):
+   ext4fs_stats = re.compile(
+       r'Created filesystem with .* (?P<used_blocks>[0-9]+)/'
+       r'(?P<total_blocks>[0-9]+) blocks')
+-  last_line = ext4fs_output.strip().split('\n')[-1]
++  last_line = ext4fs_output.strip().split('\n'.encode())[-1]
+   m = ext4fs_stats.match(last_line)
+   used_blocks = int(m.groupdict().get('used_blocks'))
+   total_blocks = int(m.groupdict().get('total_blocks'))
+
+---------------------------------------------------------------------------
+
+/kernel/scripts/dtc/dtc-parser.tab.c
+
+/* Location data for the lookahead symbol.  */
+extern YYLTYPE yylloc
+
+
+***************************************************************************************************************
+2025/09  api
+
+framework.jar会生成在out/target/common/obj/JAVA_LIBRARIES/framework_intermediates/classes.jar路径下
+mkdir ~/temp
+cd ~/temp
+jar xf ../../../../out/target/common/obj/JAVA_LIBRARIES/framework_intermediates/classes.jar
+
+mkdir StNvaCtl-api
+cd StNvaCtl-api/
+cp -r ../android/StNvaCtllib/* .
+
+jar cvf custom-core-api.jar StNvaCtl-api/
+jar cvf javalib.jar stnvctllib/
+
+frameworks/basestnvactllib/java/android/stnvactllib/StNvaCtllib.java
+frameworks/base/api/current.txt
+frameworks/base/api/system-current.txt
+art/runtime/mem_map.cc
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+make rk3399_rsb3710a2_2G_defconfig
+make rk3399_rsb4710a2_2G_defconfig
+make ARCHV=aarch64
+
+make ARCH=arm64 rk3399_adv_defconfig
+make ARCH=arm64 rk3399-rsb4710-a2.img -j12
+make ARCH=arm64 rk3399-rsb3710-a2.img -j12
+
+sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches
+
+make update-api
+source build/envsetup.sh;lunch rk3399_rsb4710-userdebug;make -j8;./mkimage.sh
+source build/envsetup.sh;lunch rk3399_rsb3710-userdebug;make -j8;./mkimage.sh
+
+adb.exe root
+adb.exe disable-verity
+adb.exe reboot
+adb.exe root
+adb.exe remount
+
+USB to Serial
+
+cat /proc/tty/driver/usbserial
+
+SSL error when connecting to the Jack server. Try 'jack-diagnose' 报错处理
+即：
+1.从/etc/java-8-openjdk/security/java.security file中删除TLSv1, TLSv1.1
+2.依次运行cd /prebuilts/sdk/tools/、./jack-admin kill-server、./jack-admin start-server并查看结果
+
+#ifdef CONFIG_ARCH_ADVANTECH
+static int __init usb_serial_module_init(void)
+{
+	return usb_serial_register_drivers(serial_drivers,KBUILD_MODNAME, id_table_combined);
+}
+late_initcall(usb_serial_module_init);
+static void __exit usb_serial_module_exit(void)
+{
+	usb_serial_deregister_drivers(serial_drivers);
+}
+module_exit(usb_serial_module_exit);
+#else
+module_usb_serial_driver(serial_drivers, id_table_combined);
+#endif
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+PhysicalKeyboardFragment.java  Secure.SHOW_IME_WITH_HARD_KEYBOARD
+
+./external/dnsmasq/src/dhcp.c:	  my_syslog(MS_DHCP | LOG_WARNING, _("DHCP packet received on %s which has no address"), ifr.ifr_name);
+
+./system/netd/server/NetworkController.cpp:        ALOGE("interface %s already assigned to netId %u", interface, existingNetId);
+
+
+###########################################################################################################################
+
+签名应用
+
+这个错误是由于找不到 libconscrypt_openjdk_jni.so 文件导致的。
+
+路径：prebuilts/sdk/tools/linux/lib64/libconscrypt_openjdk_jni.so
+
+然后运行java -Djava.library.path=. -jar signapk.jar platform.x509.pem platform.pk8 src.apk src-sign.apk  成功生成签名apk
+
+
+屏幕旋转   persist.sys.hwrotation
+
+./frameworks/base/services/core/jni/com_android_server_input_InputManagerService.cpp:        if (property_get("ro.sf.hwrotation", property, "0") > 0) {
+./frameworks/base/services/core/java/com/android/server/wm/WindowManagerService.java:    private static final String WINDOW_ROTATION_DEGREES = "ro.sf.hwrotation";
+./frameworks/native/services/surfaceflinger/DisplayDevice.cpp:        property_get("ro.sf.hwrotation", value, "0");
+./frameworks/native/services/surfaceflinger/SurfaceFlinger_hwc1.cpp:    property_get("ro.sf.hwrotation", value, "0");
+./frameworks/native/services/sensorservice/SensorDevice.cpp:    property_get("ro.sf.hwrotation", value, "0");
+
+./device/rockchip/rk3399/system.prop:ro.sf.hwrotation=0
+./device/rockchip/rk3399/rk3399_all/system.prop:ro.sf.hwrotation=0
+./device/rockchip/rk3399/rk3399_rsb4710/system.prop:ro.sf.hwrotation=90
+./device/rockchip/common/system.prop:ro.sf.hwrotation=0
+./hardware/rockchip/camera/CameraHal/CameraHal_Module.cpp:    property_get("ro.sf.hwrotation", property, "0");
+./hardware/rockchip/camera/CameraHal/CameraHal_Module.cpp:    property_get("ro.sf.hwrotation", property, "0");
+
+./out/target/product/rk3399_rsb4710/system/build.prop:ro.sf.hwrotation=90
+./out/target/product/rk3399_rsb4710/recovery/root/default.prop:ro.sf.hwrotation=90
+./out/target/product/rk3399_rsb4710/obj/ETC/system_build_prop_intermediates/build.prop:ro.sf.hwrotation=90
+./out/target/product/rk3399_rsb4710/obj/PACKAGING/target_files_intermediates/rk3399_rsb4710-target_files-eng.zengwei/SYSTEM/build.prop:ro.sf.hwrotation=0
+./out/target/common/obj/JAVA_LIBRARIES/services_intermediates/classes.dex.toc: value="ro.sf.hwrotation"
+
+
+./frameworks/base/services/core/java/com/android/server/display/LogicalDisplay.java:                String rotation = SystemProperties.get("persist.sys.rotation.einit","0");
+./frameworks/base/services/core/java/com/android/server/display/DisplayManagerService.java:                String rotation = SystemProperties.get("persist.sys.rotation.einit","0");
+./device/rockchip/rk3399/rk3399_rsb4710/system.prop:persist.sys.rotation.einit=1
+./packages/apps/Settings/src/com/android/settings/HdmiSettings.java:            String value = SystemProperties.get("persist.sys.rotation.einit", "0");
+./packages/apps/Settings/src/com/android/settings/HdmiSettings.java:            SystemProperties.set("persist.sys.rotation.einit", obj.toString());
+
+./out/target/product/rk3399_rsb4710/system/build.prop:persist.sys.rotation.einit=1
+./out/target/product/rk3399_rsb4710/recovery/root/default.prop:persist.sys.rotation.einit=1
+./out/target/product/rk3399_rsb4710/obj/ETC/system_build_prop_intermediates/build.prop:persist.sys.rotation.einit=1
+
+************************************************************************************************************************
+
+webview
+
+LOCAL_PREBUILT_JNI_LIBS_arm := @lib/armeabi-v7a/libwebviewchromium.so
+LOCAL_PREBUILT_JNI_LIBS_arm64 := @lib/arm64-v8a/libwebviewchromium.so
+LOCAL_PREBUILT_JNI_LIBS_x86 := @lib/x86/libwebviewchromium.so
+LOCAL_PREBUILT_JNI_LIBS_x86_64 := @lib/x86_64/libwebviewchromium.so
+
+external/chromium-webview/prebuilt/arm64/
+
+libplaceholder.so
+
+git clone https://android.googlesource.com/platform/external/chromium-webview --depth 1 -b android-14.0.0_r75
+
+

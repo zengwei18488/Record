@@ -1,0 +1,38 @@
+commit 1683dfa99c8b6e06b3aa4ea3cad756297f392ff2 (HEAD -> 1.20.4, rk/rockchip-1.20.4-debian)
+Author: Jeffy Chen <jeffy.chen@rock-chips.com>
+Date:   Wed Oct 12 17:30:34 2022 +0800
+
+    Revert "HACK: glamor: Workaround FBO drawing issue"
+
+    This reverts commit a8875843458cc0e4ec6c29515598b76565e2a5bc.
+
+    Somehow that would cause memory leak in Mali.
+
+    Signed-off-by: Jeffy Chen <jeffy.chen@rock-chips.com>
+
+commit 6fba005737320f5a4c45bd2128d8d9fd468e6437
+Author: Jeffy Chen <jeffy.chen@rock-chips.com>
+Date:   Mon Sep 19 10:52:39 2022 +0800
+
+    modesetting: Prefer original FB over new dummy FB when doing modeset
+
+    Signed-off-by: Jeffy Chen <jeffy.chen@rock-chips.com>
+
+
+
+
+commit 71f3d378130d07bb4c4c5a22a73e9a3348e66681 (HEAD -> 1.20.4, tag: linux-5.10-gen-rkr7, tag: linux-4.19-m-rkr2, tag: m/linux)
+Author: Zheng Yang <zhengyang@rock-chips.com>
+Date:   Fri Dec 8 17:35:13 2023 +0800
+
+    modesetting: Fix cursor disappeared when coordinates were negative
+
+    When the cursor is on the far left and top of the screen, cursor is
+    disappeared, and kernel prompt an error:
+
+    [drm:vop2_plane_atomic_check] *ERROR* Esmart2-win0 is invisible
+    (src: pos[0, 0] rect[64 x 64] dst: pos[1118466, 326] rect[64 x 64]
+
+    Signed-off-by: Zheng Yang <zhengyang@rock-chips.com>
+    Change-Id: I5e0bbea3f8c3f3cf5bad8b01c09ccf8d311bda8a
+

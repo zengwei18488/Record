@@ -1,0 +1,989 @@
+DDR Version 1.30 20230417
+In
+Channel 0: LPDDR3, 800MHz
+CS = 0
+MR0=0x58
+MR1=0x58
+MR2=0x58
+MR3=0x58
+MR4=0x2
+MR5=0x1
+MR6=0x5
+MR7=0x0
+MR8=0x1F
+MR9=0x1F
+MR10=0x1F
+MR11=0x1F
+MR12=0x1F
+MR13=0x1F
+MR14=0x1F
+MR15=0x1F
+MR16=0x1F
+CS = 1
+MR0=0x58
+MR1=0x58
+MR2=0x58
+MR3=0x58
+MR4=0x2
+MR5=0x1
+MR6=0x5
+MR7=0x0
+MR8=0x1F
+MR9=0x1F
+MR10=0x1F
+MR11=0x1F
+MR12=0x1F
+MR13=0x1F
+MR14=0x1F
+MR15=0x1F
+MR16=0x1F
+Bus Width=32 Col=10 Bank=8 Row=15/15 CS=2 Die Bus-Width=32 Size=2048MB
+Channel 1: LPDDR3, 800MHz
+CS = 0
+MR0=0x58
+MR1=0x58
+MR2=0x58
+MR3=0x58
+MR4=0x2
+MR5=0x1
+MR6=0x5
+MR7=0x0
+MR8=0x1F
+MR9=0x1F
+MR10=0x1F
+MR11=0x1F
+MR12=0x1F
+MR13=0x1F
+MR14=0x1F
+MR15=0x1F
+MR16=0x1F
+CS = 1
+MR0=0x58
+MR1=0x58
+MR2=0x58
+MR3=0x58
+MR4=0x2
+MR5=0x1
+MR6=0x5
+MR7=0x0
+MR8=0x1F
+MR9=0x1F
+MR10=0x1F
+MR11=0x1F
+MR12=0x1F
+MR13=0x1F
+MR14=0x1F
+MR15=0x1F
+MR16=0x1F
+Bus Width=32 Col=10 Bank=8 Row=15/15 CS=2 Die Bus-Width=32 Size=2048MB
+256B stride
+ch 0 ddrconfig = 0x101, ddrsize = 0x2020
+ch 1 ddrconfig = 0x101, ddrsize = 0x2020
+pmugrf_os_reg[2] = 0x3AA0DAA0, stride = 0xD
+OUT
+Boot1 Release Time: May 26 2022 18:14:35, version: 1.30
+CPUId = 0x0
+ChipType = 0x10, 315
+mmc_set_bus_width: 1
+EmmcClk: 375KHZ
+mmc_switch index:183, value:0x2
+mmc_switch index:185, value:0x2
+EmmcClk: 375KHZ
+mmc_set_bus_width: 8
+EmmcClk: 200000KHZ
+SdmmcInit=2 0
+BootCapSize=100000
+UserCapSize=7456MB
+FwPartOffset=2000 , 100000
+NeedKHz=200KHz, Clock=12000KHz
+NeedKHz=200KHz, Clock=12000KHz
+NeedKHz=200KHz, Clock=12000KHz
+mmc0:cmd8,20
+mmc0:cmd5,20
+mmc0:cmd55,20
+mmc0:cmd1,20
+NeedKHz=200KHz, Clock=12000KHz
+NeedKHz=200KHz, Clock=12000KHz
+mmc0:cmd8,20
+mmc0:cmd5,20
+mmc0:cmd55,20
+mmc0:cmd1,20
+NeedKHz=200KHz, Clock=12000KHz
+NeedKHz=200KHz, Clock=12000KHz
+mmc0:cmd8,20
+mmc0:cmd5,20
+mmc0:cmd55,20
+mmc0:cmd1,20
+NeedKHz=200KHz, Clock=12000KHz
+SdmmcInit=0 1
+StorageInit ok = 78319
+SecureMode = 0
+SecureInit read PBA: 0x4
+SecureInit read PBA: 0x404
+SecureInit read PBA: 0x804
+SecureInit read PBA: 0xc04
+SecureInit read PBA: 0x1004
+SecureInit read PBA: 0x1404
+SecureInit read PBA: 0x1804
+SecureInit read PBA: 0x1c04
+SecureInit ret = 0, SecureMode = 0
+atags_set_bootdev: ret:(0)
+GPT part:  0, name:         security, start:0x2000, size:0x2000
+GPT part:  1, name:          uboot_a, start:0x4000, size:0x2000
+GPT part:  2, name:          uboot_b, start:0x6000, size:0x2000
+GPT part:  3, name:          trust_a, start:0x8000, size:0x2000
+GPT part:  4, name:          trust_b, start:0xa000, size:0x2000
+GPT part:  5, name:             misc, start:0xc000, size:0x2000
+GPT part:  6, name:       resource_a, start:0xe000, size:0x8000
+GPT part:  7, name:       resource_b, start:0x16000, size:0x8000
+GPT part:  8, name:    vendor_boot_a, start:0x1e000, size:0x14000
+GPT part:  9, name:    vendor_boot_b, start:0x32000, size:0x14000
+GPT part: 10, name:      init_boot_a, start:0x46000, size:0x4000
+GPT part: 11, name:      init_boot_b, start:0x4a000, size:0x4000
+GPT part: 12, name:           dtbo_a, start:0x4e000, size:0x2000
+GPT part: 13, name:           dtbo_b, start:0x50000, size:0x2000
+GPT part: 14, name:         vbmeta_a, start:0x52000, size:0x800
+GPT part: 15, name:         vbmeta_b, start:0x52800, size:0x800
+GPT part: 16, name:           boot_a, start:0x53000, size:0x20000
+GPT part: 17, name:           boot_b, start:0x73000, size:0x20000
+GPT part: 18, name:           backup, start:0x93000, size:0xc0000
+GPT part: 19, name:            cache, start:0x153000, size:0xc0000
+GPT part: 20, name:         metadata, start:0x213000, size:0x20000
+GPT part: 21, name:              frp, start:0x233000, size:0x400
+GPT part: 22, name:    baseparameter, start:0x233400, size:0x800
+GPT part: 23, name:            super, start:0x233c00, size:0x614000
+GPT part: 24, name:         userdata, start:0x847c00, size:0x6483c0
+find part:misc OK. first_lba:0xc000.
+slot priority:15, tries_remaining:6, successful_boot:0
+slot priority:14, tries_remaining:7, successful_boot:0
+find part:trust_a OK. first_lba:0x8000.
+find part:uboot_a OK. first_lba:0x4000.
+LoadTrust Addr:0x8000
+No find bl30.bin
+Load uboot, ReadLba = 4000
+Load OK, addr=0x200000, size=0x11e370
+RunBL31 0x40000 @ 137558 us
+NOTICE:  BL31: v1.3(release):8f40012ab
+NOTICE:  BL31: Built : 14:20:53, Feb 16 2023
+NOTICE:  BL31: Rockchip release version: v1.1
+INFO:    GICv3 with legacy support detected. ARM GICV3 driver initialized in EL3
+INFO:    Using opteed sec cpu_context!
+INFO:    boot cpu mask: 0
+INFO:    plat_rockchip_pmu_init(1203): pd status 3e
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+INF [0x0] TEE-CORE:init_primary_helper:337: Initializing (1.1.0-294-g369edd59c #hisping.lin #2 Tue Apr 16 06:28:00 UTC 2024 aarch64, fwver: v2.12 )
+
+INF [0x0] TEE-CORE:init_primary_helper:338: Release version: 1.2
+
+INF [0x0] TEE-CORE:init_primary_helper:339: OP-TEE memory: TEEOS 0x200000 TA 0x1800000 SHM 0x400000
+INF [0x0] TEE-CORE:init_teecore:83: teecore inits done
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09-g688a738 #zengwei (Oct 15 2024 - 09:11:28 +0800)
+
+Model: Rockchip RK3399 Evaluation Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xff1a0000
+DRAM:  3.8 GiB
+Sysmem: init
+Relocation Offset: f5a44000
+Relocation fdt: f3c382c8 - f3c3ace3
+CR: M/C/I
+Using default environment
+
+DM: v1
+dwmmc@fe320000: 1, sdhci@fe330000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400, 150Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 6
+RESC: 'resource_a', blk@0x0000e000
+optee api revision: 2.0
+TEEC: Reset area[0] info...
+TEEC: Reset area[1] info...
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 13.0, Build 2000.0, v4
+boot mode: recovery (misc)
+ANDROID: fdt overlay OK
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 400000Hz
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+of_get_regulator: Get (pmu1830-supply) regulator: /i2c@ff3c0000/pmic@20/regulators/LDO_REG2 failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+of_get_regulator: Get (bt656-supply) regulator: /i2c@ff3c0000/pmic@20/regulators/LDO_REG7 failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+of_get_regulator: Get (audio-supply) regulator: /i2c@ff3c0000/pmic@20/regulators/LDO_REG4 failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+of_get_regulator: Get (sdmmc-supply) regulator: /i2c@ff3c0000/pmic@20/regulators/LDO_REG8 failed, ret=-121
+rk8xx_read: read reg 0xed failed, ret=-121
+of_get_regulator: Get (gpio1830-supply) regulator: /i2c@ff3c0000/pmic@20/regulators/LDO_REG7 failed, ret=-121
+io-domain: OK
+warning: bad baseparameter
+Model: Rockchip RK3399 EVB IND LPDDR4 Board edp (Android)
+Rockchip UBOOT DRM driver version: v1.0.1
+hdmi@ff940000 disconnected
+Using display timing dts
+edp@ff970000:  detailed mode clock 200000 kHz, flags[a]
+    H: 1536 1548 1564 1612
+    V: 2048 2056 2060 2068
+bus_format: 100e
+VOP:0xff900000 update mode to: 1536x2048p60, type: eDP0
+VOP:0xff900000 set crtc_clock to 200000KHz, get 200000000Hz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+Link Training success!
+final link rate = 0x06, lane count = 0x04
+CLK: (uboot. arml: enter 816000 KHz, init 816000 KHz, kernel 0N/A)
+CLK: (uboot. armb: enter 816000 KHz, init 816000 KHz, kernel 0N/A)
+  aplll 816000 KHz
+  apllb 816000 KHz
+  dpll 800000 KHz
+  cpll 200000 KHz
+  gpll 800000 KHz
+  npll 600000 KHz
+  vpll 24000 KHz
+  aclk_perihp 133333 KHz
+  hclk_perihp 66666 KHz
+  pclk_perihp 33333 KHz
+  aclk_perilp0 266666 KHz
+  hclk_perilp0 88888 KHz
+  pclk_perilp0 44444 KHz
+  hclk_perilp1 100000 KHz
+  pclk_perilp1 50000 KHz
+Net:   eth0: ethernet@fe300000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta_a: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot_a
+preloaded: distribute image from 'vendor_boot_a
+preloaded: distribute image from 'init_boot_a
+Could not find "system_a" partition
+Booting IMAGE kernel at 0x00280000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x0027f000 ...
+Kernel: 0x00280000 - 0x023b9a00 (34023 KiB)
+v-ramdisk:  0x0a200000 - 0x0c47bc37 (35312 KiB)
+ramdisk:    0x0c47bc37 - 0x0c6ca6aa (2363 KiB)
+bootconfig: 0x0c6ca6aa - 0x0c6ca72c (1 KiB)
+bootparams: 0x0c6ca72c - 0x0c6cc72c
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00280000 to 0x00280000 ... OK
+   kernel loaded at 0x00280000, end = 0x023b9a00
+   Using Device Tree in place at 0000000008300000, end 000000000832188f
+## reserved-memory:
+  drm-logo@0: addr=f5f00000 size=15a000
+  vendor-storage-rm@00000000: addr=f3d18000 size=10000
+  ramoops@110000: addr=110000 size=f0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x0a200000 - 0xf8000000 (size: 0xede00000)
+== DO RELOCATE == Kernel from 0x00280000 to 0x00200000
+Total: 1230.306/1267.530 ms
+
+Starting kernel ...
+
+[    0.000000][    T0] Booting Linux on physical CPU 0x0000000000 [0x410fd034]
+[    0.000000][    T0] Linux version 6.1.75-android14-11-g8942136b2744-ab11900366 (build-user@build-host) (Android (10087095, +pgo, +bolt, +lto, -mlgo, based on r487747c) clang version 17.0.2 (https://android.googlesource.com/toolchain/llvm-project d9f89f4d16663d5012e5c09495f3b30ece3d2362), LLD 17.0.2) #1 SMP PREEMPT Wed May 29 13:36:01 UTC 2024
+[    0.000000][    T0] Machine model: Rockchip RK3399 EVB IND LPDDR4 Board edp (Android)
+[    0.000000][    T0] Stack Depot is disabled
+[    0.000000][    T0] earlycon: uart8250 at MMIO32 0x00000000ff1a0000 (options '')
+[    0.000000][    T0] printk: bootconsole [uart8250] enabled
+[    0.000000][    T0] Enabling dynamic shadow call stack
+[    0.000000][    T0] efi: UEFI not found.
+[    0.000000][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'stb-devinfo@00000000': base 0x0000000000000000, size 0 MiB
+[    0.000000][    T0] OF: reserved mem: 0x0000000000110000..0x00000000001fffff ( 960 KB ) map non-reusable ramoops@110000
+[    0.000000][    T0] OF: reserved mem: 0x00000000f3d18000..0x00000000f3d27fff ( 64 KB ) map non-reusable vendor-storage-rm@00000000
+[    0.000000][    T0] OF: reserved mem: 0x00000000f5f00000..0x00000000f6059fff ( 1384 KB ) map non-reusable drm-logo@0
+[    0.000000][    T0] Zone ranges:
+[    0.000000][    T0]   DMA32    [mem 0x0000000000200000-0x00000000f7ffffff]
+[    0.000000][    T0]   Normal   empty
+[    0.000000][    T0]   Device   empty
+[    0.000000][    T0] Movable zone start for each node
+[    0.000000][    T0] Early memory node ranges
+[    0.000000][    T0]   node   0: [mem 0x0000000000200000-0x00000000083fffff]
+[    0.000000][    T0]   node   0: [mem 0x000000000a200000-0x00000000f7ffffff]
+[    0.000000][    T0] Initmem setup node 0 [mem 0x0000000000200000-0x00000000f7ffffff]
+[    0.000000][    T0] On node 0, zone DMA32: 512 pages in unavailable ranges
+[    0.000000][    T0] On node 0, zone DMA32: 7680 pages in unavailable ranges
+[    0.000000][    T0] cma: Reserved 16 MiB at 0x00000000f6400000
+[    0.000000][    T0] psci: probing for conduit method from DT.
+[    0.000000][    T0] psci: PSCIv1.0 detected in firmware.
+[    0.000000][    T0] psci: Using standard PSCI v0.2 function IDs
+[    0.000000][    T0] psci: Trusted OS migration not required
+[    0.000000][    T0] psci: SMC Calling Convention v1.0
+[    0.000000][    T0] Load bootconfig: 368 bytes 26 nodes
+[    0.000000][    T0] percpu: Embedded 30 pages/cpu s82152 r8192 d32536 u122880
+[    0.000000][    T0] Detected VIPT I-cache on CPU0
+[    0.000000][    T0] CPU features: SYS_ID_AA64MMFR1_EL1[11:8]: already set to 0
+[    0.000000][    T0] CPU features: detected: GIC system register CPU interface
+[    0.000000][    T0] CPU features: detected: ARM erratum 845719
+[    0.000000][    T0] alternatives: applying boot alternatives
+[    0.000000][    T0] Built 1 zonelists, mobility grouping on.  Total pages: 991752
+[    0.000000][    T0] Kernel command line: console=ttynull stack_depot_disable=on cgroup_disable=pressure kasan.page_alloc.sample=10 kasan.stacktrace=off kvm-arm.mode=protected bootconfig ioremap_guard storagemedia=emmc console=ttyFIQ0 firmware_class.path=/vendor/etc/firmware init=/init rootwait ro loop.max_part=7 printk.devkmsg=on usbcore.autosuspend=-1 usbcore.quirks=325d:6410:k,21c4:0cd1:k,0951:1666:k,058f:6387:e usb-storage.quirks=174c:x55aa:f,152d:0583:f,0bc2:2321:u,05e3:0749:mr kvm-arm.mode=none 8250.nr_uarts=10 bootconfig earlycon=uart8250,mmio32,0xff1a0000 coherent_pool=1m #z-10/15/2024  fwver=bl32-v2.12,uboot-688a738
+[    0.000000][    T0] cgroup: Disabling pressure control group feature
+[    0.000000][    T0] Unknown kernel command line parameters "#z-10/15/2024 storagemedia=emmc fwver=bl32-v2.12,uboot-688a738", will be passed to user space.
+[    0.000000][    T0] Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+[    0.000000][    T0] Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+[    0.000000][    T0] mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+[    0.000000][    T0] Memory: 3860648K/4030464K available (16256K kernel code, 1958K rwdata, 11468K rodata, 4160K init, 635K bss, 153432K reserved, 16384K cma-reserved)
+[    0.000000][    T0] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=6, Nodes=1
+[    0.000000][    T0] trace event string verifier disabled
+[    0.000000][    T0] rcu: Preemptible hierarchical RCU implementation.
+[    0.000000][    T0] rcu:     RCU event tracing is enabled.
+[    0.000000][    T0] rcu:     RCU restricting CPUs from NR_CPUS=32 to nr_cpu_ids=6.
+[    0.000000][    T0] rcu:     RCU priority boosting: priority 1 delay 500 ms.
+[    0.000000][    T0]  Trampoline variant of Tasks RCU enabled.
+[    0.000000][    T0]  Tracing variant of Tasks RCU enabled.
+[    0.000000][    T0] rcu: RCU calculated value of scheduler-enlistment delay is 25 jiffies.
+[    0.000000][    T0] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=6
+[    0.000000][    T0] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000][    T0] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000][    T0] GICv3: 256 SPIs implemented
+[    0.000000][    T0] GICv3: 0 Extended SPIs implemented
+[    0.000000][    T0] Root IRQ handler: gic_handle_irq
+[    0.000000][    T0] GICv3: GICv3 features: 16 PPIs
+[    0.000000][    T0] GICv3: CPU0: found redistributor 0 region 0:0x00000000fef00000
+[    0.000000][    T0] ITS [mem 0xfee20000-0xfee3ffff]
+[    0.000000][    T0] ITS@0x00000000fee20000: allocated 65536 Devices @2500000 (flat, esz 8, psz 64K, shr 0)
+[    0.000000][    T0] ITS: using cache flushing for cmd queue
+[    0.000000][    T0] GICv3: using LPI property table @0x00000000024d0000
+[    0.000000][    T0] GIC: using cache flushing for LPI property table
+[    0.000000][    T0] GICv3: CPU0: using allocated LPI pending table @0x00000000024e0000
+[    0.000000][    T0] GICv3: GIC: PPI partition interrupt-partition-0[0] { /cpus/cpu@0[0] /cpus/cpu@1[1] /cpus/cpu@2[2] /cpus/cpu@3[3] }
+[    0.000000][    T0] GICv3: GIC: PPI partition interrupt-partition-1[1] { /cpus/cpu@100[4] /cpus/cpu@101[5] }
+[    0.000000][    T0] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000][    T0] arch_timer: cp15 timer(s) running at 24.00MHz (phys).
+[    0.000000][    T0] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x588fe9dc0, max_idle_ns: 440795202592 ns
+[    0.000000][    T0] sched_clock: 56 bits at 24MHz, resolution 41ns, wraps every 4398046511097ns
+[    0.002587][    T0] kfence: initialized - using 524288 bytes for 63 objects at 0x(____ptrval____)-0x(____ptrval____)
+[    0.003840][    T0] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=96000)
+[    0.004896][    T0] pid_max: default: 32768 minimum: 301
+[    0.005780][    T0] LSM: Security Framework initializing
+[    0.006395][    T0] SELinux:  Initializing.
+[    0.007251][    T0] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.008068][    T0] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.010980][    T1] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[    0.012767][    T1] cblist_init_generic: Setting adjustable number of callback queues.
+[    0.013536][    T1] cblist_init_generic: Setting shift to 3 and lim to 1.
+[    0.014376][    T1] cblist_init_generic: Setting adjustable number of callback queues.
+[    0.015139][    T1] cblist_init_generic: Setting shift to 3 and lim to 1.
+[    0.016116][    T1] rcu: Hierarchical SRCU implementation.
+[    0.016649][    T1] rcu:     Max phase no-delay instances is 1000.
+[    0.018745][    T1] dyndbg: Ignore empty _ddebug table in a CONFIG_DYNAMIC_DEBUG_CORE build
+[    0.019662][    T1] Platform MSI: interrupt-controller@fee20000 domain created
+[    0.020997][    T1] PCI/MSI: /interrupt-controller@fee00000/interrupt-controller@fee20000 domain created
+[    0.022361][    T1] EFI services will not be available.
+[    0.023895][    T1] smp: Bringing up secondary CPUs ...
+[    0.025516][    T0] Detected VIPT I-cache on CPU1
+[    0.025628][    T0] cacheinfo: Unable to detect cache hierarchy for CPU 1
+[    0.025646][    T0] GICv3: CPU1: found redistributor 1 region 0:0x00000000fef20000
+[    0.025674][    T0] GICv3: CPU1: using allocated LPI pending table @0x00000000024f0000
+[    0.025734][    T0] CPU1: Booted secondary processor 0x0000000001 [0x410fd034]
+[    0.026768][    T0] Detected VIPT I-cache on CPU2
+[    0.026865][    T0] cacheinfo: Unable to detect cache hierarchy for CPU 2
+[    0.026879][    T0] GICv3: CPU2: found redistributor 2 region 0:0x00000000fef40000
+[    0.026901][    T0] GICv3: CPU2: using allocated LPI pending table @0x0000000002580000
+[    0.026942][    T0] CPU2: Booted secondary processor 0x0000000002 [0x410fd034]
+[    0.027965][    T0] Detected VIPT I-cache on CPU3
+[    0.028061][    T0] cacheinfo: Unable to detect cache hierarchy for CPU 3
+[    0.028076][    T0] GICv3: CPU3: found redistributor 3 region 0:0x00000000fef60000
+[    0.028098][    T0] GICv3: CPU3: using allocated LPI pending table @0x0000000002590000
+[    0.028137][    T0] CPU3: Booted secondary processor 0x0000000003 [0x410fd034]
+[    0.029214][    T0] CPU features: detected: Spectre-v2
+[    0.029224][    T0] CPU features: detected: Spectre-v3a
+[    0.029228][    T0] CPU features: detected: Spectre-v4
+[    0.029232][    T0] CPU features: detected: Spectre-BHB
+[    0.029239][    T0] CPU features: detected: ARM erratum 1742098
+[    0.029244][    T0] CPU features: detected: ARM errata 1165522, 1319367, or 1530923
+[    0.029249][    T0] Detected PIPT I-cache on CPU4
+[    0.029341][    T0] cacheinfo: Unable to detect cache hierarchy for CPU 4
+[    0.029358][    T0] GICv3: CPU4: found redistributor 100 region 0:0x00000000fef80000
+[    0.029379][    T0] GICv3: CPU4: using allocated LPI pending table @0x00000000025a0000
+[    0.029419][    T0] CPU4: Booted secondary processor 0x0000000100 [0x410fd082]
+[    0.030424][    T0] Detected PIPT I-cache on CPU5
+[    0.030499][    T0] cacheinfo: Unable to detect cache hierarchy for CPU 5
+[    0.030512][    T0] GICv3: CPU5: found redistributor 101 region 0:0x00000000fefa0000
+[    0.030532][    T0] GICv3: CPU5: using allocated LPI pending table @0x00000000025b0000
+[    0.030562][    T0] CPU5: Booted secondary processor 0x0000000101 [0x410fd082]
+[    0.030678][    T1] smp: Brought up 1 node, 6 CPUs
+[    0.050964][    T1] SMP: Total of 6 processors activated.
+[    0.051488][    T1] CPU features: detected: 32-bit EL0 Support
+[    0.052053][    T1] CPU features: detected: 32-bit EL1 Support
+[    0.052618][    T1] CPU features: detected: CRC32 instructions
+[    0.053285][    T1] CPU features: emulated: Privileged Access Never (PAN) using TTBR0_EL1 switching
+[    0.054180][    T1] CPU: All CPU(s) started at EL2
+[    0.054680][    T1] alternatives: applying system-wide alternatives
+[    0.086063][    T1] Registered cp15_barrier emulation handler
+[    0.086641][    T1] Registered setend emulation handler
+[    0.087362][    T1] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.088416][    T1] futex hash table entries: 2048 (order: 5, 131072 bytes, linear)
+[    0.089764][    T1] pinctrl core: initialized pinctrl subsystem
+[    0.091623][    T1] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.094844][    T1] DMA: preallocated 1024 KiB GFP_KERNEL pool for atomic allocations
+[    0.096100][    T1] DMA: preallocated 1024 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.097045][    T1] audit: initializing netlink subsys (disabled)
+[    0.097886][   T53] audit: type=2000 audit(0.092:1): state=initialized audit_enabled=0 res=1
+[    0.098348][    T1] thermal_sys: Registered thermal governor 'step_wise'
+[    0.098712][    T1] thermal_sys: Registered thermal governor 'user_space'
+[    0.099361][    T1] thermal_sys: Registered thermal governor 'power_allocator'
+[    0.100054][    T1] cpuidle: using governor menu
+[    0.101442][    T1] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.102338][    T1] ASID allocator initialised with 65536 entries
+[    0.103111][    T1] Serial: AMBA PL011 UART driver
+[    0.105305][    T1] printk: console [ramoops-1] enabled
+[    0.105907][    T1] pstore: Registered ramoops as persistent store backend
+[    0.106572][    T1] ramoops: using 0xf0000@0x110000, ecc: 0
+[    0.128155][    T1] platform fe330000.sdhci: Fixed dependency cycle(s) with /syscon@ff770000/phy@f780
+[    0.132222][    T1] platform ff8f0000.vop: Fixed dependency cycle(s) with /dp@fec00000/ports/port/endpoint@1
+[    0.134595][    T1] platform ff910000.rkisp1: Fixed dependency cycle(s) with /syscon@ff770000/mipi-dphy-rx0/ports/port@1/endpoint@0
+[    0.137361][    T1] platform ff940000.hdmi: Fixed dependency cycle(s) with /vop@ff8f0000/port/endpoint@2
+[    0.138684][    T1] platform ff968000.mipi-dphy-tx1rx1: Fixed dependency cycle(s) with /rkisp1@ff920000/port/endpoint@0
+[    0.140195][    T1] platform ff970000.edp: Fixed dependency cycle(s) with /vop@ff900000/port/endpoint@0
+[    0.148485][    T1] sysfs: cannot create duplicate filename '/devices/platform/fe430000.debug'
+[    0.149323][    T1] CPU: 5 PID: 1 Comm: swapper/0 Not tainted 6.1.75-android14-11-g8942136b2744-ab11900366 #1
+[    0.150292][    T1] Hardware name: Rockchip RK3399 EVB IND LPDDR4 Board edp (Android) (DT)
+[    0.151094][    T1] Call trace:
+[    0.151405][    T1]  dump_backtrace+0xf4/0x118
+[    0.151849][    T1]  show_stack+0x18/0x24
+[    0.152243][    T1]  dump_stack_lvl+0x60/0x7c
+[    0.152676][    T1]  dump_stack+0x18/0x3c
+[    0.153070][    T1]  sysfs_create_dir_ns+0xe8/0x148
+[    0.153550][    T1]  kobject_add_internal+0x228/0x430
+[    0.154049][    T1]  kobject_add+0x94/0x104
+[    0.154462][    T1]  device_add+0x134/0x604
+[    0.154876][    T1]  of_device_add+0x38/0x4c
+[    0.155300][    T1]  of_platform_device_create_pdata+0x94/0x114
+[    0.155878][    T1]  of_platform_bus_create+0x1e4/0x38c
+[    0.156390][    T1]  of_platform_populate+0x74/0xe0
+[    0.156868][    T1]  of_platform_default_populate_init+0xd0/0xf0
+[    0.157455][    T1]  do_one_initcall+0xdc/0x314
+[    0.157899][    T1]  do_initcall_level+0xc8/0x19c
+[    0.158360][    T1]  do_initcalls+0x54/0x94
+[    0.158768][    T1]  do_basic_setup+0x1c/0x28
+[    0.159194][    T1]  kernel_init_freeable+0xec/0x15c
+[    0.159677][    T1]  kernel_init+0x20/0x1a4
+[    0.160090][    T1]  ret_from_fork+0x10/0x20
+[    0.160535][    T1] kobject_add_internal failed for fe430000.debug with -EEXIST, don't try to register things with the same name in the same directory.
+[    0.163150][    T1] platform panel: Fixed dependency cycle(s) with /edp@ff970000/ports/port@1/endpoint
+[    0.164886][    T1] KASLR disabled due to lack of seed
+[    0.177383][    T1] iommu: Default domain type: Translated
+[    0.177936][    T1] iommu: DMA domain TLB invalidation policy: strict mode
+[    0.179199][    T1] SCSI subsystem initialized
+[    0.179777][    T1] usbcore: registered new interface driver usbfs
+[    0.180479][    T1] usbcore: registered new interface driver hub
+[    0.181095][    T1] usbcore: registered new device driver usb
+[    0.181842][    T1] mc: Linux media interface: v0.10
+[    0.182374][    T1] videodev: Linux video capture interface: v2.00
+[    0.183057][    T1] pps_core: LinuxPPS API ver. 1 registered
+[    0.183609][    T1] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.184587][    T1] PTP clock support registered
+[    0.185063][    T1] EDAC MC: Ver: 3.0.0
+[    0.186663][    T1] Advanced Linux Sound Architecture Driver Initialized.
+[    0.188242][    T1] clocksource: Switched to clocksource arch_sys_counter
+[    0.189451][    T1] VFS: Disk quotas dquot_6.6.0
+[    0.189967][    T1] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.191676][    T1] NET: Registered PF_INET protocol family
+[    0.192535][    T1] IP idents hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.196692][    T1] tcp_listen_portaddr_hash hash table entries: 2048 (order: 3, 32768 bytes, linear)
+[    0.197681][    T1] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.198591][    T1] TCP established hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[    0.199857][    T1] TCP bind hash table entries: 32768 (order: 8, 1048576 bytes, linear)
+[    0.201635][    T1] TCP: Hash tables configured (established 32768 bind 32768)
+[    0.202487][    T1] UDP hash table entries: 2048 (order: 4, 65536 bytes, linear)
+[    0.203316][    T1] UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes, linear)
+[    0.204368][    T1] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.205017][    T1] NET: Registered PF_XDP protocol family
+[    0.205560][    T1] PCI: CLS 0 bytes, default 64
+[    0.206544][   T64] Trying to unpack rootfs image as initramfs...
+[    0.216887][    T1] hw perfevents: enabled with armv8_cortex_a53 PMU driver, 7 counters available
+[    0.218298][    T1] hw perfevents: enabled with armv8_cortex_a72 PMU driver, 7 counters available
+[    0.219980][    T1] kvm [1]: KVM disabled from command line
+[    0.222436][    T1] Initialise system trusted keyrings
+[    0.223477][    T1] workingset: timestamp_bits=46 max_order=20 bucket_order=0
+[    0.235234][    T1] fuse: init (API version 7.37)
+[    0.288162][    T1] Key type asymmetric registered
+[    0.288724][    T1] Asymmetric key parser 'x509' registered
+[    0.289349][    T1] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 238)
+[    0.290593][    T1] io scheduler mq-deadline registered
+[    0.291136][    T1] io scheduler kyber registered
+[    0.291939][    T1] io scheduler bfq registered
+[    0.299046][    T1] Serial: 8250/16550 driver, 10 ports, IRQ sharing disabled
+[    0.305337][    T1] printk: console [ttynull0] enabled
+[    0.306711][   T21] cacheinfo: Unable to detect cache hierarchy for CPU 0
+[    0.315374][    T1] brd: module loaded
+[    0.329591][    T1] loop: module loaded
+[    0.332278][    T1] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+[    0.333090][    T1] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+[    0.334895][    T1] MACsec IEEE 802.1AE
+[    0.335892][    T1] tun: Universal TUN/TAP device driver, 1.6
+[    0.338507][    T1] usbcore: registered new interface driver uas
+[    0.339138][    T1] usbcore: registered new interface driver usb-storage
+[    0.340104][    T1] usbcore: registered new interface driver xpad
+[    0.340956][    T1] gspca_main: v2.14.0 registered
+[    0.341476][    T1] usbcore: registered new interface driver uvcvideo
+[    0.342850][    T1] device-mapper: uevent: version 1.0.3
+[    0.343628][    T1] device-mapper: ioctl: 4.47.0-ioctl (2022-07-28) initialised: dm-devel@redhat.com
+[    0.346638][    T1] sdhci: Secure Digital Host Controller Interface driver
+[    0.347296][    T1] sdhci: Copyright(c) Pierre Ossman
+[    0.347785][    T1] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.349237][    T1] hid: raw HID events driver (C) Jiri Kosina
+[    0.351058][    T1] usbcore: registered new interface driver usbhid
+[    0.351662][    T1] usbhid: USB HID core driver
+[    0.352517][    T1] ashmem: initialized
+[    0.353758][    T1] gnss: GNSS driver registered with major 503
+[    0.355389][    T1] usbcore: registered new interface driver snd-usb-audio
+[    0.356682][    T1] GACT probability NOT on
+[    0.357104][    T1] Mirror/redirect action on
+[    0.357540][    T1] netem: version 1.3
+[    0.358033][    T1] u32 classifier
+[    0.358368][    T1]     input device check on
+[    0.358775][    T1]     Actions configured
+[    0.415181][    T1] xt_time: kernel timezone is -0000
+[    0.415798][    T1] ipip: IPv4 and MPLS over IPv4 tunneling driver
+[    0.416946][    T1] gre: GRE over IPv4 demultiplexor driver
+[    0.417488][    T1] ip_gre: GRE over IPv4 tunneling driver
+[    0.419290][    T1] IPv4 over IPsec tunneling driver
+[    0.420275][    T1] Initializing XFRM netlink socket
+[    0.420783][    T1] IPsec XFRM device driver
+[    0.421858][    T1] NET: Registered PF_INET6 protocol family
+[    0.424878][    T1] Segment Routing with IPv6
+[    0.425342][    T1] In-situ OAM (IOAM) with IPv6
+[    0.426011][    T1] mip6: Mobile IPv6
+[    0.427123][    T1] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    0.428845][    T1] ip6_gre: GRE over IPv6 tunneling driver
+[    0.430002][    T1] NET: Registered PF_PACKET protocol family
+[    0.430576][    T1] NET: Registered PF_KEY protocol family
+[    0.431414][    T1] NET: Registered PF_VSOCK protocol family
+[    0.433244][    T1] registered taskstats version 1
+[    0.433747][    T1] Loading compiled-in X.509 certificates
+[    0.434790][   T87] cryptomgr_probe (87) used greatest stack depth: 14400 bytes left
+[    0.436896][    T1] Loaded X.509 cert 'Build time autogenerated kernel key: 210d8cbbbf6a67d06ed7c6c0dfbbe72eba05d383'
+[    0.437988][    T1] page_owner is disabled
+[    0.438604][    T1] Key type .fscrypt registered
+[    0.439053][    T1] Key type fscrypt-provisioning registered
+[    0.440109][    T1] pstore: Using crash dump compression: deflate
+[    0.444383][    T1] ALSA device list:
+[    0.444754][    T1]   No soundcards found.
+[    0.687101][   T64] Freeing initrd memory: 37672K
+[    0.689875][    T1] Freeing unused kernel memory: 4160K
+[    0.692336][    T1] Run /init as init process
+[    0.697158][    T1] init: init first stage started!
+[    0.709849][    T1] init: Loading module /lib/modules/rockchip_iommu.ko with args ''
+[    0.710791][    T1] rockchip_iommu: disagrees about version of symbol module_layout
+[    0.711574][    T1] init: Failed to insmod '/lib/modules/rockchip_iommu.ko' with args '': Exec format error
+[    0.712628][    T1] init: LoadWithAliases was unable to load rockchip_iommu
+[    0.714439][    T1] init: Copied ramdisk prop to /second_stage_resources/system/etc/ramdisk/build.prop
+[    0.715402][    T1] init: First stage mount skipped (recovery mode)
+[    0.716444][    T1] init: [libfs_mgr] ReadFstabFromDt(): failed to read fstab from dt
+[    0.718417][    T1] init: Using Android DT directory /proc/device-tree/firmware/android/
+[    0.719275][    T1] init: Skipped setting INIT_AVB_VERSION (not vbmeta compatible)
+[    4.816227][    C4] random: crng init done
+[    4.853315][    T1] init: Failed to open device-mapper: No such file or directory
+[    4.854100][    T1] init: DM_DEV_STATUS failed for system_ext_a: Bad file descriptor
+[    4.854869][    T1] init: Could not update logical partition
+[    4.855634][    T1] init: DM_DEV_STATUS failed for system_ext_a: Bad file descriptor
+[    4.856777][    T1] init: Could not update logical partition
+[    4.857552][    T1] init: DM_DEV_STATUS failed for product_a: Bad file descriptor
+[    4.858296][    T1] init: Could not update logical partition
+[    4.859052][    T1] init: DM_DEV_STATUS failed for product_a: Bad file descriptor
+[    4.859795][    T1] init: Could not update logical partition
+[    4.860460][    T1] init: Opening SELinux policy
+[    4.861397][    T1] init: Falling back to standard signature check. TODO implement support for fsverity SEPolicy.
+[    4.862444][    T1] init: Error: Apex SEPolicy failed signature check
+[    4.863093][    T1] init: Loading APEX Sepolicy from /system/etc/selinux/apex/SEPolicy.zip
+[    4.863941][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    4.867395][    T1] init: Loading SELinux policy
+[    4.895963][    T1] SELinux:  Permission bpf in class capability2 not defined in policy.
+[    4.896791][    T1] SELinux:  Permission checkpoint_restore in class capability2 not defined in policy.
+[    4.897722][    T1] SELinux:  Permission bpf in class cap2_userns not defined in policy.
+[    4.898510][    T1] SELinux:  Permission checkpoint_restore in class cap2_userns not defined in policy.
+[    4.899529][    T1] SELinux:  Class mctp_socket not defined in policy.
+[    4.900177][    T1] SELinux:  Class user_namespace not defined in policy.
+[    4.900844][    T1] SELinux: the above unknown classes and permissions will be denied
+[    4.910074][    T1] SELinux:  policy capability network_peer_controls=1
+[    4.910733][    T1] SELinux:  policy capability open_perms=1
+[    4.911281][    T1] SELinux:  policy capability extended_socket_class=1
+[    4.911919][    T1] SELinux:  policy capability always_check_network=0
+[    4.912612][    T1] SELinux:  policy capability cgroup_seclabel=0
+[    4.913203][    T1] SELinux:  policy capability nnp_nosuid_transition=1
+[    4.913841][    T1] SELinux:  policy capability genfs_seclabel_symlinks=0
+[    4.914495][    T1] SELinux:  policy capability ioctl_skip_cloexec=0
+[    5.020913][   T53] audit: type=1403 audit(5.012:2): auid=4294967295 ses=4294967295 lsm=selinux res=1
+[    5.026370][    T1] selinux: SELinux: Loaded file context from:
+[    5.026971][    T1] selinux:                 /plat_file_contexts
+[    5.027449][    T1] selinux:                 /system_ext_file_contexts
+[    5.027975][    T1] selinux:                 /product_file_contexts
+[    5.028508][    T1] selinux:                 /vendor_file_contexts
+[    5.028999][    T1] selinux:                 /odm_file_contexts
+[    5.029804][    T1] selinux: SELinux:  Could not stat /dev/selinux: No such file or directory.
+[    5.031119][   T53] audit: type=1404 audit(5.020:3): enforcing=1 old_enforcing=0 auid=4294967295 ses=4294967295 enabled=1 old-enabled=1 lsm=selinux res=1
+[    5.072062][    T1] init: init second stage started!
+[    5.086616][    T1] init: Could not read properties from '/dev/selinux/apex_property_contexts': No such file or directory
+[    5.105416][    T1] selinux: SELinux: Loaded file context from:
+[    5.106016][    T1] selinux:                 /plat_file_contexts
+[    5.106494][    T1] selinux:                 /system_ext_file_contexts
+[    5.107019][    T1] selinux:                 /product_file_contexts
+[    5.107518][    T1] selinux:                 /vendor_file_contexts
+[    5.108007][    T1] selinux:                 /odm_file_contexts
+[    5.144522][    T1] init: Using Android DT directory /proc/device-tree/firmware/android/
+[    5.150833][    T1] init: Do not have permissions to set 'http://www.google.com/webhp?client' to '' in property file '/prop.default': Illegal property name
+[    5.152206][    T1] init: Do not have permissions to set '{CID}&amp;source' to 'android-home' in property file '/prop.default': Illegal property name
+[    5.156317][    T1] init: Couldn't load property file '/system/build.prop': open() failed: No such file or directory
+[    5.160726][    T1] init: Setting product property ro.product.brand to 'rockchip' (from ro.product.product.brand)
+[    5.161773][    T1] init: Setting product property ro.product.device to 'rk3399_u' (from ro.product.product.device)
+[    5.162853][    T1] init: Setting product property ro.product.manufacturer to 'rockchip' (from ro.product.product.manufacturer)
+[    5.164011][    T1] init: Setting product property ro.product.model to 'rk3399_u' (from ro.product.product.model)
+[    5.165096][    T1] init: Setting product property ro.product.name to 'rk3399_u' (from ro.product.product.name)
+[    5.166146][    T1] init: Setting property 'ro.build.fingerprint' to 'rockchip/rk3399_u/rk3399_u:14/UQ1A.240205.004.B1/eng.zengwe.20241015.092253:userdebug/release-keys'
+[    5.167669][    T1] init: Setting property 'ro.product.cpu.abilist' to 'arm64-v8a'
+[    5.168455][    T1] init: Setting property 'ro.product.cpu.abilist32' to ''
+[    5.169166][    T1] init: Setting property 'ro.product.cpu.abilist64' to 'arm64-v8a'
+[    5.174802][    T1] selinux: SELinux: Loaded file context from:
+[    5.175402][    T1] selinux:                 /plat_file_contexts
+[    5.175879][    T1] selinux:                 /system_ext_file_contexts
+[    5.176471][    T1] selinux:                 /product_file_contexts
+[    5.176970][    T1] selinux:                 /vendor_file_contexts
+[    5.177462][    T1] selinux:                 /odm_file_contexts
+[    5.177972][    T1] init: Running restorecon...
+[    5.187594][    T1] selinux: SELinux:  Could not stat /dev/block: No such file or directory.
+[    5.189471][    T1] selinux: SELinux: Could not get canonical path for /metadata/ota/rollback-indicator restorecon: No such file or directory.
+[    5.190808][    T1] selinux: SELinux:  Could not stat /metadata/gsi: No such file or directory.
+[    5.192612][    T1] init: Created socket '/dev/socket/property_service', mode 666, user 0, group 0
+[    5.200205][    T1] init: SetupMountNamespaces done
+[    5.203502][    T1] init: Forked subcontext for 'u:r:vendor_init:s0' with pid 93
+[    5.204467][    T1] init: Parsing file /system/etc/init/hw/init.rc...
+[    5.205274][    T1] init: Added '/init.recovery.rk30board.rc' to import list
+[    5.207382][    T1] init: Parsing file /init.recovery.rk30board.rc...
+[    5.208100][    T1] init: Added '/system/etc/init/init.recovery.udc.rc' to import list
+[    5.209059][    T1] init: Parsing file /system/etc/init/init.recovery.udc.rc...
+[    5.209887][    T1] init: Parsing directory /system/etc/init...
+[    5.210595][    T1] init: Parsing file /system/etc/init/android.hardware.boot-service.default_recovery.rc...
+[    5.211654][    T1] init: Parsing file /system/etc/init/android.hardware.fastboot-service.rockchip_recovery.rc...
+[    5.212794][    T1] init: Parsing file /system/etc/init/android.hardware.health-service.rockchip_recovery.rc...
+[    5.213883][    T1] init: Parsing file /system/etc/init/init.recovery.udc.rc...
+[    5.214687][    T1] init: /system/etc/init/init.recovery.udc.rc: 1: ignored duplicate definition of service 'rockchip_udc_detector'
+[    5.215863][    T1] init: Parsing file /system/etc/init/servicemanager.recovery.rc...
+[    5.216775][    T1] init: Parsing file /system/etc/init/snapuserd.rc...
+[    5.217609][    T1] init: Parsing file /system_ext/etc/init...
+[    5.218228][    T1] init: Unable to read config file '/system_ext/etc/init': open() failed: No such file or directory
+[    5.219289][    T1] init: Parsing file /vendor/etc/init...
+[    5.219871][    T1] init: Unable to read config file '/vendor/etc/init': open() failed: No such file or directory
+[    5.220923][    T1] init: Parsing file /odm/etc/init...
+[    5.221482][    T1] init: Unable to read config file '/odm/etc/init': open() failed: No such file or directory
+[    5.222486][    T1] init: Parsing file /product/etc/init...
+[    5.223084][    T1] init: Unable to read config file '/product/etc/init': open() failed: No such file or directory
+[    5.225526][    T1] init: processing action (SetupCgroups) from (<Builtin Action>:0)
+[    5.229858][    T1] init: processing action (SetKptrRestrict) from (<Builtin Action>:0)
+[    5.231115][    T1] init: processing action (TestPerfEventSelinux) from (<Builtin Action>:0)
+[    5.233068][    T1] init: processing action (ConnectEarlyStageSnapuserd) from (<Builtin Action>:0)
+[    5.234049][    T1] init: processing action (early-init) from (/system/etc/init/hw/init.rc:3)
+[    5.236047][    T1] init: starting service 'ueventd'...
+[    5.243270][    T1] libprocessgroup: Failed to read task profiles from /etc/task_profiles.json
+[    5.244198][    T1] libprocessgroup: Loading /etc/task_profiles.json for [1] failed
+[    5.245127][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    5.247850][    T1] init: ... started service 'ueventd' has pid 95
+[    5.249536][    T1] init: processing action (wait_for_coldboot_done) from (<Builtin Action>:0)
+[    5.291531][   T53] audit: type=1400 audit(5.280:4): avc:  denied  { sys_nice } for  pid=95 comm="ueventd" capability=23  scontext=u:r:ueventd:s0 tcontext=u:r:ueventd:s0 tclass=capability permissive=0
+[    5.291770][   T95] ueventd: ueventd started!
+[    5.299123][   T95] selinux: SELinux: Loaded file context from:
+[    5.299731][   T95] selinux:                 /plat_file_contexts
+[    5.300658][   T95] selinux:                 /system_ext_file_contexts
+[    5.301198][   T95] selinux:                 /product_file_contexts
+[    5.301697][   T95] selinux:                 /vendor_file_contexts
+[    5.302190][   T95] selinux:                 /odm_file_contexts
+[    5.303161][   T95] ueventd: Parsing file /system/etc/ueventd.rc...
+[    5.303872][   T95] ueventd: Added '/vendor/etc/ueventd.rc' to import list
+[    5.304643][   T95] ueventd: Added '/odm/etc/ueventd.rc' to import list
+[    5.305836][   T95] ueventd: Parsing file /vendor/etc/ueventd.rc...
+[    5.306503][   T95] ueventd: Unable to read config file '/vendor/etc/ueventd.rc': open() failed: No such file or directory
+[    5.307618][   T95] ueventd: Parsing file /odm/etc/ueventd.rc...
+[    5.308341][   T95] ueventd: Unable to read config file '/odm/etc/ueventd.rc': open() failed: No such file or directory
+[    5.532967][  T102] ueventd (102) used greatest stack depth: 12664 bytes left
+[    5.956627][   T92] init: Wait for property 'ro.cold_boot_done=true' took 706ms
+[    5.957600][   T95] ueventd: Coldboot took 0.647 seconds
+[    5.957647][    T1] init: processing action (SetMmapRndBits) from (<Builtin Action>:0)
+[    5.959870][    T1] init: processing action (KeychordInit) from (<Builtin Action>:0)
+[    5.960745][    T1] init: processing action (init) from (/system/etc/init/hw/init.rc:15)
+[    5.963599][    T1] init: Command 'symlink /system/bin /bin' action=init (/system/etc/init/hw/init.rc:24) took 0ms and failed: symlink() failed: File exists
+[    5.965200][    T1] init: Command 'symlink /system/etc /etc' action=init (/system/etc/init/hw/init.rc:25) took 0ms and failed: symlink() failed: File exists
+[    5.972025][    T1] init: starting service 'servicemanager'...
+[    5.976961][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    5.979061][    T1] init: ... started service 'servicemanager' has pid 105
+[    5.979924][    T1] init: processing action (late-init) from (/system/etc/init/hw/init.rc:76)
+[    5.981149][    T1] init: processing action (queue_property_triggers) from (<Builtin Action>:0)
+[    5.982100][    T1] init: processing action (early-fs) from (/init.recovery.rk30board.rc:3)
+[    5.983420][    T1] init: processing action (early-fs) from (/system/etc/init/init.recovery.udc.rc:7)
+[    5.984418][    T1] init: starting service 'rockchip_udc_detector'...
+[    5.989443][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    5.991590][    T1] init: ... started service 'rockchip_udc_detector' has pid 106
+[    5.992545][    T1] init: processing action (early-fs) from (/system/etc/init/init.recovery.udc.rc:7)
+[    5.993485][    T1] init: service 'rockchip_udc_detector' requested start, but it is already running (flags: 134)
+[    5.994592][    T1] init: processing action (sys.usb.configfs=1 && fs) from (/system/etc/init/hw/init.rc:114)
+[    5.999356][    T1] file system registered
+[    6.001809][    T1] init: processing action (fs) from (/system/etc/init/hw/init.rc:136)
+[    6.006067][    T1] init: processing action (sys.usb.configfs=1 && fs) from (/init.recovery.rk30board.rc:6)
+[    6.009668][    T1] init: processing action (ro.debuggable=1 && fs) from (/init.recovery.rk30board.rc:15)
+[    6.010540][  T105] servicemanager: Starting sm instance on /dev/binder
+[    6.010815][    T1] init: processing action (firmware_mounts_complete) from (/system/etc/init/hw/init.rc:72)
+[    6.012371][    T1] init: Service 'rockchip_udc_detector' (pid 106) exited with status 0 oneshot service took 0.024000 seconds in background
+[    6.013614][    T1] init: Sending signal 9 to service 'rockchip_udc_detector' (pid 106) process group...
+[    6.014702][    T1] libprocessgroup: Successfully killed process cgroup uid 0 pid 106 in 0ms
+[    6.016748][    T1] init: processing action (boot) from (/system/etc/init/hw/init.rc:64)
+[    6.017658][  T105] SELinux: SELinux: Loaded service context from:
+[    6.018364][  T105] SELinux:                 /plat_service_contexts
+[    6.018929][  T105] SELinux:                 /system_ext_service_contexts
+[    6.019038][    T1] init: service 'ueventd' requested start, but it is already running (flags: 36)
+[    6.019541][  T105] SELinux:                 /product_service_contexts
+[    6.020503][    T1] init: Could not start service 'charger' as part of class 'default': Cannot find '/system/bin/charger': No such file or directory
+[    6.020975][  T105] SELinux:                 /vendor_service_contexts
+[    6.022204][    T1] init: starting service 'recovery'...
+[    6.023864][    T1] init: Created socket '/dev/socket/recovery', mode 422, user 1000, group 1000
+[    6.029217][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    6.031298][    T1] init: ... started service 'recovery' has pid 107
+[    6.032027][    T1] init: service 'servicemanager' requested start, but it is already running (flags: 132)
+[    6.033389][    T1] init: starting service 'vendor.fastboot-default'...
+[    6.039865][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    6.041978][    T1] init: ... started service 'vendor.fastboot-default' has pid 108
+[    6.042833][    T1] init: starting service 'vendor.health-rockchip'...
+[    6.048062][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    6.050283][    T1] init: ... started service 'vendor.health-rockchip' has pid 109
+[    6.051191][    T1] init: processing action (enable_property_trigger) from (<Builtin Action>:0)
+[    6.071457][  T105] cutils-trace: Error opening trace file: No such file or directory (2)
+[    6.073119][  T105] servicemanager: getRecoveryHalManifest: Reading VINTF information.
+[    6.075675][  T105] servicemanager: getRecoveryHalManifest: Successfully processed VINTF information
+[    6.076664][  T105] servicemanager: Found android.hardware.fastboot.IFastboot/default in recovery VINTF manifest.
+[    6.079982][  T109] healthd: No battery devices found
+[    6.080887][  T109] android.hardware.health-service.rockchip_recovery: Starting health HAL.
+[    6.081798][  T109] android.hardware.health-service.rockchip_recovery: default instance initializing with healthd_config...
+[    6.083946][  T109] cutils-trace: Error opening trace file: No such file or directory (2)
+[    6.085767][  T105] servicemanager: Found android.hardware.health.IHealth/default in recovery VINTF manifest.
+[    6.087143][  T109] android.hardware.health-service.rockchip_recovery: default: Hal init done
+[    6.088590][  T109] healthd: battery none chg=
+[    6.089086][   T53] audit: type=1400 audit(6.080:5): avc:  denied  { search } for  pid=107 comm="recovery" name="/" dev="pstore" ino=53 scontext=u:r:recovery:s0 tcontext=u:object_r:pstorefs:s0 tclass=dir permissive=0
+[    6.090947][   T53] audit: type=1400 audit(6.080:6): avc:  denied  { search } for  pid=107 comm="recovery" name="/" dev="pstore" ino=53 scontext=u:r:recovery:s0 tcontext=u:object_r:pstorefs:s0 tclass=dir permissive=0
+[    6.092820][   T53] audit: type=1400 audit(6.080:7): avc:  denied  { open } for  pid=107 comm="recovery" path="/dev/ttynull" dev="tmpfs" ino=351 scontext=u:r:recovery:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=0
+[    6.094749][   T53] audit: type=1400 audit(6.080:8): avc:  denied  { open } for  pid=107 comm="recovery" path="/dev/ttynull" dev="tmpfs" ino=351 scontext=u:r:recovery:s0 tcontext=u:object_r:device:s0 tclass=chr_file permissive=0
+[   10.473272][   T64] /usb@fe800000: Failed to get clk index: 0 ret: -517
+[   10.474063][   T64] /usb@fe900000: Failed to get clk index: 0 ret: -517
+[   10.474903][   T65] amba fe430000.debug: deferred probe pending
+[   10.475484][   T65] amba fe432000.debug: deferred probe pending
+[   10.476060][   T65] amba fe434000.debug: deferred probe pending
+[   10.476676][   T65] amba fe436000.debug: deferred probe pending
+[   10.477251][   T65] amba fe610000.debug: deferred probe pending
+[   10.477824][   T65] amba fe710000.debug: deferred probe pending
+[   10.478397][   T65] amba ff6d0000.dma-controller: deferred probe pending
+[   10.479044][   T65] amba ff6e0000.dma-controller: deferred probe pending
+[   10.479692][   T65] platform fe380000.usb: deferred probe pending
+[   10.480294][   T65] platform vcc5v0-host-regulator: deferred probe pending
+[   10.480958][   T65] platform fe3c0000.usb: deferred probe pending
+[   10.481547][   T65] platform vcc5v0-usbnet: deferred probe pending
+[   10.482144][   T65] platform vcc5v0-sys: deferred probe pending
+[   10.482717][   T65] platform vbus-typec-regulator: deferred probe pending
+[   10.483371][   T65] platform hub_reset: deferred probe pending
+[   10.483935][   T65] platform vcc-lcd: deferred probe pending
+[   10.484517][   T65] platform ff180000.serial: deferred probe pending
+[   10.485133][   T65] platform usb@fe800000: deferred probe pending
+[   10.485722][   T65] platform usb@fe900000: deferred probe pending
+[   10.486311][   T65] platform gpio-keys: deferred probe pending
+[   16.094557][  T107] recovery: failed to stat /dev/block/by-name/misc try 1: No such file or directory
+[   16.095474][  T107] recovery: failed to stat /dev/block/by-name/misc try 2: No such file or directory
+[   16.096433][  T107] recovery: failed to stat /dev/block/by-name/misc try 3: No such file or directory
+[   16.097332][  T107] recovery: failed to stat /dev/block/by-name/misc try 4: No such file or directory
+[   16.098233][  T107] recovery: failed to stat /dev/block/by-name/misc try 5: No such file or directory
+[   16.099129][  T107] recovery: failed to stat /dev/block/by-name/misc try 6: No such file or directory
+[   16.100029][  T107] recovery: failed to stat /dev/block/by-name/misc try 7: No such file or directory
+[   16.100942][  T107] recovery: failed to stat /dev/block/by-name/misc try 8: No such file or directory
+[   16.101842][  T107] recovery: failed to stat /dev/block/by-name/misc try 9: No such file or directory
+[   16.102738][  T107] recovery: failed to stat /dev/block/by-name/misc try 10: No such file or directory
+[   16.103647][  T107] recovery: failed to stat /dev/block/by-name/misc
+[   16.104321][  T107] recovery:
+[   16.105299][  T107] recovery: inotify_add_watch failed: No such file or directory
+[   36.142186][  T107] recovery: [libfs_mgr] Skipping mounting '/dev/block/by-name/cache'
+[   36.143054][  T107] recovery: [libfs_mgr] Failed to open '/dev/block/by-name/cache': No such file or directory
+[   36.144119][  T107] /dev/block/by-name/cache: Can't open blockdev
+[   36.144823][  T107] recovery: [libfs_mgr] __mount(source=/dev/block/by-name/cache(missing),target=/cache,type=ext4)=-1: No such file or directory
+[   36.146104][  T107] recovery: [libfs_mgr] Failed to mount /cache: No such file or directory
+[   36.146932][  T107] recovery: [libfs_mgr] Failed to mount for path [/cache/recovery/command]
+[   71.969996][    T1] init: processing action (sys.usb.config=none && sys.usb.configfs=1) from (/system/etc/init/hw/init.rc:174)
+[   71.971696][    T1] init: Command 'write /config/usb_gadget/g1/UDC none' action=sys.usb.config=none && sys.usb.configfs=1 (/system/etc/init/hw/init.rc:175) took 0ms and failed: Unable to write to file '/config/usb_gadget/g1/UDC': Unable to write file contents: No such device
+[   71.976373][    T1] init: Command 'rm /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=none && sys.usb.configfs=1 (/system/etc/init/hw/init.rc:179) took 0ms and failed: unlink() failed: No such file or directory
+[   71.979007][    T1] init: processing action (sys.usb.config=adb) from (/system/etc/init/hw/init.rc:143)
+[   71.979996][    T1] init: starting service 'adbd'...
+[   71.981165][    T1] init: Created socket '/dev/socket/adbd', mode 660, user 1000, group 1000
+[   72.000443][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[   72.002390][    T1] init: ... started service 'adbd' has pid 113
+[   72.034105][  T117] read descriptors
+[   72.034504][  T117] read strings
+[   72.036006][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   72.038869][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   72.042777][  T107] recovery: inotify_add_watch failed: No such file or directory
+[   73.068862][  T117] read descriptors
+[   73.069260][  T117] read strings
+[   73.070328][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   73.073122][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   73.075587][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   74.108859][  T117] read descriptors
+[   74.109256][  T117] read strings
+[   74.110323][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   74.113077][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   74.115543][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   75.152792][  T117] read descriptors
+[   75.153191][  T117] read strings
+[   75.154213][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   75.156930][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   75.159394][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   76.188618][  T117] read descriptors
+[   76.189018][  T117] read strings
+[   76.190077][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   76.192826][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   76.195292][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   77.248859][  T117] read descriptors
+[   77.249259][  T117] read strings
+[   77.250329][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   77.253079][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   77.255544][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   78.288862][  T117] read descriptors
+[   78.289257][  T117] read strings
+[   78.290325][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   78.293054][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   78.295518][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   79.332935][  T117] read descriptors
+[   79.333332][  T117] read strings
+[   79.334431][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   79.337176][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   79.339641][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   80.372922][  T117] read descriptors
+[   80.373320][  T117] read strings
+[   80.374413][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   80.377152][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   80.379617][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   81.412938][  T117] read descriptors
+[   81.413335][  T117] read strings
+[   81.414435][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   81.417191][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   81.419658][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   82.448857][  T117] read descriptors
+[   82.449249][  T117] read strings
+[   82.450276][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   82.452985][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   82.455450][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   83.492842][  T117] read descriptors
+[   83.493238][  T117] read strings
+[   83.494405][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   83.497150][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   83.499614][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   84.532916][  T117] read descriptors
+[   84.533314][  T117] read strings
+[   84.534405][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   84.537112][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   84.539578][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   85.572864][  T117] read descriptors
+[   85.573259][  T117] read strings
+[   85.574329][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   85.577067][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   85.579533][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   86.612782][  T117] read descriptors
+[   86.613181][  T117] read strings
+[   86.614320][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   86.617079][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   86.619545][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   87.656856][  T117] read descriptors
+[   87.657254][  T117] read strings
+[   87.658324][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   87.661064][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   87.663530][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   88.704779][  T117] read descriptors
+[   88.705177][  T117] read strings
+[   88.706275][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   88.708975][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   88.711441][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   89.744918][  T117] read descriptors
+[   89.745315][  T117] read strings
+[   89.746400][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   89.749133][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   89.751599][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   90.800913][  T117] read descriptors
+[   90.801311][  T117] read strings
+[   90.802400][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   90.805096][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   90.807560][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   91.840945][  T117] read descriptors
+[   91.841344][  T117] read strings
+[   91.842432][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   91.845172][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   91.847638][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   92.091444][  T107] recovery: [libfs_mgr] Skipping mounting '/dev/block/by-name/metadata'
+[   92.092366][  T107] recovery: [libfs_mgr] Failed to open '/dev/block/by-name/metadata': No such file or directory
+[   92.093490][  T107] recovery: [libfs_mgr] __mount(source=/dev/block/by-name/metadata(missing),target=/metadata,type=f2fs)=-1: No such file or directory
+[   92.094822][  T107] recovery: [libfs_mgr] Failed to mount /metadata; formatting: No such file or directory
+[   92.095776][  T107] recovery: [libfs_mgr] fs_mgr_do_format: Format /dev/block/by-name/metadata as 'f2fs'
+[   92.096759][  T107] recovery: [libfs_mgr] Cannot open block device: No such file or directory
+[   92.097604][  T107] recovery: [libfs_mgr] Failed to format /metadata: No such file or directory
+[   92.098465][  T107] recovery: [libfs_mgr] Failed to mount for path [/metadata]
+[   92.130236][  T138] make_f2fs (138) used greatest stack depth: 12600 bytes left
+[   92.130547][  T107] recovery: /system/bin/make_f2fs failed with status 255
+[   92.131666][  T107] recovery: format_volume: Failed to make_f2fs on /dev/block/by-name/metadata: Success
+[   92.133269][  T107] recovery: inotify_add_watch failed: No such file or directory
+[   92.880939][  T117] read descriptors
+[   92.881338][  T117] read strings
+[   92.882439][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   92.885208][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   92.887676][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   93.920720][  T117] read descriptors
+[   93.921117][  T117] read strings
+[   93.922117][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   93.924885][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   93.927353][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   94.972862][  T117] read descriptors
+[   94.973261][  T117] read strings
+[   94.974438][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   94.977192][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   94.979658][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   96.016840][  T117] read descriptors
+[   96.017236][  T117] read strings
+[   96.018403][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   96.021137][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   96.023603][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   97.056785][  T117] read descriptors
+[   97.057181][  T117] read strings
+[   97.058250][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   97.060946][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   97.063410][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   98.096856][  T117] read descriptors
+[   98.097253][  T117] read strings
+[   98.098324][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   98.101055][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   98.103524][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+[   99.148738][  T117] read descriptors
+[   99.149136][  T117] read strings
+[   99.150261][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[   99.153008][    T1] init: Command 'symlink /config/usb_gadget/g1/functions/ffs.adb /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:192) took 0ms and failed: symlink() failed: File exists
+[   99.155475][    T1] init: Command 'write /config/usb_gadget/g1/UDC ${sys.usb.controller}' action=sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1 (/system/etc/init/hw/init.rc:193) took 0ms and failed: property 'sys.usb.controller' doesn't exist while expanding '${sys.usb.controller}'
+
+

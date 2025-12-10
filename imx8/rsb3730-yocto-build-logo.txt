@@ -1,0 +1,159 @@
+CONTAINER ID   IMAGE                               COMMAND       CREATED         STATUS                       PORTS     NAMES
+07ebcfdfb76b   advrisc/u18.04-imx8lbv1             "/bin/bash"   18 hours ago    Exited (0) 21 minutes ago              rsb3730-y3.0
+
+adv@07ebcfdfb76b:~/adv-release-bsp$ MACHINE=imx8mmrsb3730a2  UBOOT_CONFIG=2G  DISTRO=fsl-imx-xwayland source imx-setup-release.sh -b 3730a2_2g
+
+ Build directory is  3730a2_2g
+/home/adv/adv-release-bsp
+
+Some BSPs depend on libraries and packages which are covered by Freescale's
+End User License Agreement (EULA). To have the right to use these binaries in
+your images, you need to read and accept the following...
+
+LA_OPT_NXP_Software_License v17 October 2020
+
+Do you accept the EULA you just read? (y/n)  y
+EULA has been accepted.
+
+Welcome to Freescale Community BSP
+
+The Yocto Project has extensive documentation about OE including a
+reference manual which can be found at:
+    http://yoctoproject.org/documentation
+
+For more information about OpenEmbedded see their website:
+    http://www.openembedded.org/
+
+You can now run 'bitbake <target>'
+
+Common targets are:
+    core-image-minimal
+    meta-toolchain
+    meta-toolchain-sdk
+    adt-installer
+    meta-ide-support
+
+Your build environment has been configured with:
+
+    MACHINE=imx8mmrsb3730a2
+    UBOOT_CONFIG=2G
+    SDKMACHINE=i686
+    DISTRO=fsl-imx-xwayland
+    EULA=
+BSPDIR=
+BUILD_DIR=.
+meta-freescale directory found
+adv@07ebcfdfb76b:~/adv-release-bsp/3730a2_2g$ bitbake imx-image-full
+NOTE: Your conf/bblayers.conf has been automatically updated.
+Parsing recipes: 100% |#####################################################################################################################################################################| Time: 0:00:15
+Parsing of 3301 .bb files complete (0 cached, 3301 parsed). 4733 targets, 248 skipped, 1 masked, 0 errors.
+WARNING: No recipes available for:
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-fsl-imx/recipes-kernel/linux-firmware/linux-firmware_git.bbappend
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-WISE-PaaS/recipes-core/images/arago-base-tisdk-image.bbappend
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-WISE-PaaS/recipes-core/images/rpb-desktop-image.bbappend
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-WISE-PaaS/recipes-core/images/tisdk-rootfs-image.bbappend
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-WISE-PaaS/recipes-ota/images/arago-base-tisdk-image.bbappend
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-WISE-PaaS/recipes-ota/images/rpb-desktop-image.bbappend
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-WISE-PaaS/recipes-ota/images/tisdk-rootfs-image.bbappend
+  /home/adv/adv-release-bsp/sources/meta-advantech/meta-WISE-PaaS/recipes-support/openssl/openssl_1.0.%.bbappend
+NOTE: Resolving any missing task queue dependencies
+
+Build Configuration:
+BB_VERSION           = "1.44.0"
+BUILD_SYS            = "x86_64-linux"
+NATIVELSBSTRING      = "ubuntu-18.04"
+TARGET_SYS           = "aarch64-poky-linux"
+MACHINE              = "imx8mmrsb3730a2"
+DISTRO               = "fsl-imx-xwayland"
+DISTRO_VERSION       = "5.4-zeus"
+TUNE_FEATURES        = "aarch64 cortexa53 crc crypto"
+TARGET_FPU           = ""
+meta                 
+meta-poky            = "HEAD:d88d62c20d7d8da85f02edb170dae0280624ad7e"
+meta-oe              
+meta-multimedia      
+meta-python          = "HEAD:2b5dd1eb81cd08bc065bc76125f2856e9383e98b"
+meta-freescale       = "HEAD:14f1a630a47375432f93c556927b879b51d84c4e"
+meta-freescale-3rdparty = "HEAD:dbcc686f52c3c84db8cb86aa8973a4e373651b98"
+meta-freescale-distro = "HEAD:ca27d12e4964d1336e662bcc60184bbff526c857"
+meta-bsp             
+meta-sdk             
+meta-ml              = "HEAD:7f0abf664d65ab9f03f85a1d16ab54e0d1134a9b"
+meta-nxp-demo-experience = "HEAD:03904c493469907a2829cf29df7ab060f9c664a6"
+meta-browser         = "HEAD:ee3be3b5986a4aa0e73df2204a625ae1fe5df37e"
+meta-rust            = "HEAD:53bfa324891966a2daf5d36dc13d4a43725aebed"
+meta-clang           = "HEAD:711e593d5984aad3bf35c51b7ac4482982bc16c7"
+meta-gnome           
+meta-networking      
+meta-filesystems     
+meta-initramfs       = "HEAD:2b5dd1eb81cd08bc065bc76125f2856e9383e98b"
+meta-qt5             = "HEAD:21ce4c124d9a972d9122f87c64ac2773bf04c284"
+meta-python2         = "HEAD:4400f9155ec193d028208cf0c66aeed2ba2b00ab"
+meta-fsl-imx         
+meta-tools           
+meta-WISE-PaaS       = "HEAD:90b21c246e9716ad35b0acf01317efbf8288e3b5"
+meta-hailo-accelerator 
+meta-hailo-libhailort 
+meta-hailo-tappas    = "HEAD:d8cc69f42cb074da6f225acfc2675d682f8ffef6"
+
+Initialising tasks: 100% |##################################################################################################################################################################| Time: 0:00:05
+Sstate summary: Wanted 3944 Found 0 Missed 3944 Current 0 (0% match, 0% complete)
+NOTE: Executing Tasks
+NOTE: Setscene tasks completed
+WARNING: libdrm-2.4.102.imx-r0 do_patch: Fuzz detected:
+
+Applying patch drm-update-arm.patch
+patching file xf86drm.h
+Hunk #1 succeeded at 504 with fuzz 2 (offset 43 lines).
+
+The context lines in the patches can be updated with devtool:
+
+    devtool modify libdrm
+    devtool finish --force-patch-refresh libdrm <layer_path>
+
+Don't forget to review changes done by devtool!
+
+WARNING: libdrm-2.4.102.imx-r0 do_patch: QA Issue: Patch log indicates that patches do not apply cleanly. [patch-fuzz]
+WARNING: dlt-daemon-2.18.4-r0 do_patch: Fuzz detected:
+
+Applying patch 0004-Modify-systemd-config-directory.patch
+patching file CMakeLists.txt
+Hunk #1 succeeded at 200 with fuzz 2 (offset 25 lines).
+
+The context lines in the patches can be updated with devtool:
+
+    devtool modify dlt-daemon
+    devtool finish --force-patch-refresh dlt-daemon <layer_path>
+
+Don't forget to review changes done by devtool!
+
+WARNING: dlt-daemon-2.18.4-r0 do_patch: QA Issue: Patch log indicates that patches do not apply cleanly. [patch-fuzz]
+WARNING: fsl-rc-local-1.0-r0 do_patch: Fuzz detected:
+Applying patch add_file_for_lirc.patch
+patching file rc.local.etc
+Hunk #1 succeeded at 26 with fuzz 2 (offset 2 lines).
+
+Applying patch add_boottimes.patch
+patching file rc.local.etc
+Hunk #1 succeeded at 26 with fuzz 1 (offset 2 lines).
+
+The context lines in the patches can be updated with devtool:
+
+    devtool modify fsl-rc-local
+    devtool finish --force-patch-refresh fsl-rc-local <layer_path>
+
+Don't forget to review changes done by devtool!
+
+WARNING: fsl-rc-local-1.0-r0 do_patch: QA Issue: Patch log indicates that patches do not apply cleanly. [patch-fuzz]
+Initialising tasks: 100% |##################################################################################################################################################################| Time: 0:00:04
+Sstate summary: Wanted 1793 Found 0 Missed 1793 Current 2151 (0% match, 54% complete)
+NOTE: Executing Tasks
+NOTE: Setscene tasks completed
+WARNING: lttng-modules-2.10.14-r0 do_package: lttng-modules: no modules were created; this may be due to CONFIG_TRACEPOINTS not being enabled in your kernel.
+WARNING: dlt-daemon-2.18.4-r0 do_package_qa: QA Issue: https://github.com/GENIVI/dlt-daemon/archive/v2.18.4.tar.gz     file://0002-Don-t-execute-processes-as-a-specific-user.patch     file://0004-Modify-systemd-config-directory.patch : SRC_URI uses unstable GitHub archives [src-uri-bad]
+WARNING: lua-5.2.2-r0 do_package_qa: QA Issue: lua: SRC_URI uses PN not BPN [src-uri-bad]
+WARNING: opencv-4.4.0.imx-r0 do_package_qa: QA Issue: git://github.com/nxp-imx/opencv-imx.git;protocol=https;branch=4.4.0_imx;name=opencv             git://github.com/opencv/opencv_contrib.git;destsuffix=contrib;name=contrib            git://github.com/opencv/opencv_3rdparty.git;branch=ippicv/master_20191018;destsuffix=ipp;name=ipp            git://github.com/opencv/opencv_3rdparty.git;branch=contrib_xfeatures2d_boostdesc_20161012;destsuffix=boostdesc;name=boostdesc            git://github.com/opencv/opencv_3rdparty.git;branch=contrib_xfeatures2d_vgg_20160317;destsuffix=vgg;name=vgg            git://github.com/opencv/opencv_3rdparty.git;branch=contrib_face_alignment_20170818;destsuffix=face;name=face            file://0001-3rdparty-ippicv-Use-pre-downloaded-ipp.patch            file://0003-To-fix-errors-as-following.patch            file://0001-Temporarliy-work-around-deprecated-ffmpeg-RAW-functi.patch            file://0001-Dont-use-isystem.patch            file://download.patch            file://0001-Make-ts-module-external.patch                  git://github.com/opencv/opencv_extra.git;destsuffix=extra;name=extra     https://github.com/tiny-dnn/tiny-dnn/archive/v1.0.0a3.tar.gz;destsuffix=git/3rdparty/tinydnn/tiny-dnn-1.0.0a3;name=tinydnn;unpack=false     file://OpenCV_DNN_examples.patch     file://0001-Add-smaller-version-of-download_models.py.patch;patchdir=../extra : SRC_URI uses unstable GitHub archives [src-uri-bad]
+NOTE: Tasks Summary: Attempted 10403 tasks of which 7439 didn't need to be rerun and all succeeded.
+
+Summary: There were 5 WARNING messages shown.
+

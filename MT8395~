@@ -1,0 +1,25 @@
+sudo docker run --privileged -it --name mt8395-rsb3810-android11 -v /home/zengwei/data_8T2/work/MT8395:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-MT8395-Android11/_git/android-manifest
+
+repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-MT8395-Android11/_git/android-manifest -b adv_alps-release-r0.mp6-aiot-V1.81 -m mt8395AB10060.xml
+
+source build/envsetup.sh
+lunch full_mt8395_rsb3810a1-userdebug
+make -j16 preloader
+make -j16 lk
+make -j16 kernel
+make -j16 bootimage
+make -j16 systemimage
+make -j16 dtboimage
+make -j16
+
+
+out/target/product/mt8395_rsb3810a1/system/system_ext/priv-app/Settings/Settings.apk
+
+tar zcvf rsb3810-android11-0513.tar.gz out/target/product/mt8395_rsb3810a1/MT8195_Android_scatter.txt   out/target/product/mt8395_rsb3810a1/preloader_mt8395_rsb3810a1.bin   out/target/product/mt8395_rsb3810a1/vbmeta.img   out/target/product/mt8395_rsb3810a1/vbmeta_system.img   out/target/product/mt8395_rsb3810a1/vbmeta_vendor.img   out/target/product/mt8395_rsb3810a1/spmfw.img   out/target/product/mt8395_rsb3810a1/pi_img.img   out/target/product/mt8395_rsb3810a1/dpm.img   out/target/product/mt8395_rsb3810a1/scp.img   out/target/product/mt8395_rsb3810a1/sspm.img   out/target/product/mt8395_rsb3810a1/mcupm.img   out/target/product/mt8395_rsb3810a1/cam_vpu1.img    out/target/product/mt8395_rsb3810a1/cam_vpu2.img    out/target/product/mt8395_rsb3810a1/cam_vpu3.img   out/target/product/mt8395_rsb3810a1/lk.img    out/target/product/mt8395_rsb3810a1/boot.img   out/target/product/mt8395_rsb3810a1/dtbo.img   out/target/product/mt8395_rsb3810a1/tee.img   out/target/product/mt8395_rsb3810a1/logo.bin   out/target/product/mt8395_rsb3810a1/super.img   out/target/product/mt8395_rsb3810a1/userdata.img
+
+
+
+device/mediatek/mt8195/sepolicy/basic/genfs_contexts device/mediatek/mt8195/sepolicy/basic/system_server.te frameworks/base/core/java/android/net/EthernetManager.java frameworks/base/core/java/android/net/IEthernetManager.aidl frameworks/opt/net/ethernet/java/com/android/server/ethernet/EthernetNetworkFactory.java frameworks/opt/net/ethernet/java/com/android/server/ethernet/EthernetServiceImpl.java frameworks/opt/net/ethernet/java/com/android/server/ethernet/EthernetTracker.java 
+
+

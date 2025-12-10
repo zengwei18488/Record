@@ -1,0 +1,1712 @@
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h3 l0, h2 l0, h0 l0, h3 l0, h0 l0,
+h1 l0, h1 l0, h1 l0, h3 l0, h1 l0, h2 l0, h1 l0, h5 l0,
+
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h5 l0, h1 l0, h6 l0, h1 l0, h4 l0,
+h0 l0, h1 l0, h0 l0, h1 l0, h2 l0, h1 l0, h2 l0, h1 l0,
+
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h2 l0, h1 l0, h1 l0, h2 l0, h5 l0, h2 l0,
+h2 l0, h2 l0, h3 l0, h0 l0, h3 l0, h1 l0, h2 l0, h1 l0,
+
+CH3 RX Vref:28.5%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h3 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+Magic is incorrect.
+Error validating A/B metadata from disk. Resetting and writing new A/B metadata to disk.
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(a324841f2f...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(7556997d73...) + sha256(7a95a488cf...) + OK
+## Checking fdt 0x0034dde0 ... sha256(e4e0311b2d...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(d9da7b9b17...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 277.93/548.514 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0xa
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14001 (Dec 13 2024 - 15:28:45 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba10000
+Relocation fdt: e99f9ac0 - e99fece0
+CR: M/C/I
+optee api revision: 2.0
+no mmc device at slot 1
+mmc@fe2c0000: 1 (SD), mmc@fe2e0000: 0
+Bootdev(atags): mmc 1
+MMC1: Legacy, 52Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 7
+TEEC: Reset area[0] info...
+TEEC: Reset area[1] info...
+DM: v2
+RESC: 'resource_a', blk@0x0000e000
+TEEC: ree_fs_new_open : no such file. /dirf.db
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 13.0, Build 2000.0, v4
+boot mode: recovery (misc)
+ANDROID: fdt overlay OK
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+*** Warning - bad CRC, using default environment
+
+Warn: can't find connect driver
+Warn: can't get connect driver
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Warn: can't find connect driver
+Warn: can't get connect driver
+warning: bad baseparameter
+Model: ROM-6881 AKS0000000000 V14000 A1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Using display timing dts
+dsi@fde20000:  detailed mode clock 33300 kHz, flags[a]
+    H: 0800 1000 1006 1056
+    V: 0480 0500 0504 0508
+bus_format: 100e
+VOP update mode to: 800x480p62, type: MIPI0 for VP3
+VP3 set crtc_clock to 33000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@73x105] fmt[0] addr[0xebf00000]
+final DSI-Link bandwidth: 220000 Kbps x 4
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP2
+VP2 set crtc_clock to 85500KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP2 enable Esmart2[654x270->654x270@357x249] fmt[0] addr[0xebf00000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 684000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta_a: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot_a
+preloaded: distribute image from 'vendor_boot_a
+preloaded: distribute image from 'init_boot_a
+Could not find "system_a" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff000 ...
+Kernel: 0x00400000 - 0x02539a00 (34023 KiB)
+v-ramdisk:  0x0a200000 - 0x0c07fb76 (31231 KiB)
+ramdisk:    0x0c07fb76 - 0x0c2b0cef (2245 KiB)
+bootconfig: 0x0c2b0cef - 0x0c2b0d6f (1 KiB)
+bootparams: 0x0c2b0d6f - 0x0c2b2d6f
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x02539a00
+   Using Device Tree in place at 0000000008300000, end 0000000008349a34
+## reserved-memory:
+  cma: addr=10000000 size=10000000
+  drm-logo@0: addr=ebf00000 size=15a000
+  vendor-storage-rm@00000000: addr=e9d44000 size=10000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+Total: 9074.741/9837.874 ms
+
+Starting kernel ...
+
+[    0.000000][    T0] Booting Linux on physical CPU 0x0000000000 [0x412fd050]
+[    0.000000][    T0] Linux version 6.1.75-android14-11-g8942136b2744-ab11900366 (build-user@build-host) (Android (10087095, +pgo, +bolt, +lto, -mlgo, based on r487747c) clang version 17.0.2 (https://android.googlesource.com/toolchain/llvm-project d9f89f4d16663d5012e5c09495f3b30ece3d2362), LLD 17.0.2) #1 SMP PREEMPT Wed May 29 13:36:01 UTC 2024
+[    0.000000][    T0] random: crng init done
+[    0.000000][    T0] Machine model: ROM-6881 AKS0000000000 V14000 A1
+[    0.000000][    T0] Stack Depot is disabled
+[    0.000000][    T0] earlycon: uart8250 at MMIO32 0x00000000feb50000 (options '')
+[    0.000000][    T0] printk: bootconsole [uart8250] enabled
+[    0.000000][    T0] Enabling dynamic shadow call stack
+[    0.000000][    T0] efi: UEFI not found.
+[    0.000000][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@0': base 0x0000000000000000, size 0 MiB
+[    0.000000][    T0] OF: reserved mem: 0x0000000000110000..0x00000000001effff ( 896 KB ) map non-reusable ramoops@110000
+[    0.000000][    T0] Reserved memory: created CMA memory pool at 0x0000000010000000, size 256 MiB
+[    0.000000][    T0] OF: reserved mem: initialized node cma, compatible id shared-dma-pool
+[    0.000000][    T0] OF: reserved mem: 0x0000000010000000..0x000000001fffffff ( 262144 KB ) map reusable cma
+[    0.000000][    T0] OF: reserved mem: 0x00000000e9d44000..0x00000000e9d53fff ( 64 KB ) map non-reusable vendor-storage-rm@00000000
+[    0.000000][    T0] OF: reserved mem: 0x00000000ebf00000..0x00000000ec059fff ( 1384 KB ) map non-reusable drm-logo@0
+[    0.000000][    T0] Zone ranges:
+[    0.000000][    T0]   DMA32    [mem 0x0000000000200000-0x00000000ffffffff]
+[    0.000000][    T0]   Normal   [mem 0x0000000100000000-0x00000001ffffffff]
+[    0.000000][    T0]   Device   empty
+[    0.000000][    T0] Movable zone start for each node
+[    0.000000][    T0] Early memory node ranges
+[    0.000000][    T0]   node   0: [mem 0x0000000000200000-0x00000000083fffff]
+[    0.000000][    T0]   node   0: [mem 0x0000000009400000-0x00000000efffffff]
+[    0.000000][    T0]   node   0: [mem 0x00000001f0000000-0x00000001ffffffff]
+[    0.000000][    T0] Initmem setup node 0 [mem 0x0000000000200000-0x00000001ffffffff]
+[    0.000000][    T0] On node 0, zone DMA32: 512 pages in unavailable ranges
+[    0.000000][    T0] On node 0, zone DMA32: 4096 pages in unavailable ranges
+[    0.000000][    T0] psci: probing for conduit method from DT.
+[    0.000000][    T0] psci: PSCIv1.1 detected in firmware.
+[    0.000000][    T0] psci: Using standard PSCI v0.2 function IDs
+[    0.000000][    T0] psci: Trusted OS migration not required
+[    0.000000][    T0] psci: SMC Calling Convention v1.2
+[    0.000000][    T0] Load bootconfig: 421 bytes 29 nodes
+[    0.000000][    T0] percpu: Embedded 30 pages/cpu s82152 r8192 d32536 u122880
+[    0.000000][    T0] Detected VIPT I-cache on CPU0
+[    0.000000][    T0] CPU features: SYS_ID_AA64MMFR1_EL1[11:8]: forced to 0
+[    0.000000][    T0] CPU features: detected: GIC system register CPU interface
+[    0.000000][    T0] CPU features: detected: ARM errata 1165522, 1319367, or 1530923
+[    0.000000][    T0] alternatives: applying boot alternatives
+[    0.000000][    T0] Built 1 zonelists, mobility grouping on.  Total pages: 1027656
+[    0.000000][    T0] Kernel command line: console=ttynull stack_depot_disable=on cgroup_disable=pressure kasan.page_alloc.sample=10 kasan.stacktrace=off kvm-arm.mode=protected bootconfig ioremap_guard storagemedia=sd sdfwupdate console=ttyFIQ0 firmware_class.path=/vendor/etc/firmware init=/init rootwait ro loop.max_part=7 printk.devkmsg=on usbcore.autosuspend=-1 usbcore.quirks=325d:6410:k,21c4:0cd1:k,0951:1666:k,058f:6387:e usb-storage.quirks=174c:x55aa:f,152d:0583:f,0bc2:2321:u,05e3:0749:mr kvm-arm.mode=none 8250.nr_uarts=10 bootconfig earlycon=uart8250,mmio32,0xfeb50000 irqchip.gicv3_pseudo_nmi=0 rcupdate.rcu_expedited=1 rcu_nocbs=all pci=nomsi pcie_pme=nomsi  fwver=ddr-v1.17-3488111f83,spl-v1.13,bl31-v1.46,bl32-v1.16,uboot-14001-12/13/2024
+[    0.000000][    T0] cgroup: Disabling pressure control group feature
+[    0.000000][    T0] Unknown kernel command line parameters "storagemedia=sd fwver=ddr-v1.17-3488111f83,spl-v1.13,bl31-v1.46,bl32-v1.16,uboot-14001-12/13/2024", will be passed to user space.
+[    0.000000][    T0] Dentry cache hash table entries: 524288 (order: 10, 4194304 bytes, linear)
+[    0.000000][    T0] Inode-cache hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+[    0.000000][    T0] mem auto-init: stack:all(zero), heap alloc:on, heap free:off
+[    0.000000][    T0] software IO TLB: area num 8.
+[    0.000000][    T0] software IO TLB: mapped [mem 0x00000000e5d44000-0x00000000e9d44000] (64MB)
+[    0.000000][    T0] Memory: 3694676K/4175872K available (16256K kernel code, 1958K rwdata, 11468K rodata, 4160K init, 635K bss, 219052K reserved, 262144K cma-reserved)
+[    0.000000][    T0] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=8, Nodes=1
+[    0.000000][    T0] trace event string verifier disabled
+[    0.000000][    T0] rcu: Preemptible hierarchical RCU implementation.
+[    0.000000][    T0] rcu:     RCU event tracing is enabled.
+[    0.000000][    T0] rcu:     RCU restricting CPUs from NR_CPUS=32 to nr_cpu_ids=8.
+[    0.000000][    T0] rcu:     RCU priority boosting: priority 1 delay 500 ms.
+[    0.000000][    T0]  All grace periods are expedited (rcu_expedited).
+[    0.000000][    T0]  Trampoline variant of Tasks RCU enabled.
+[    0.000000][    T0]  Tracing variant of Tasks RCU enabled.
+[    0.000000][    T0] rcu: RCU calculated value of scheduler-enlistment delay is 25 jiffies.
+[    0.000000][    T0] rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=8
+[    0.000000][    T0] NR_IRQS: 64, nr_irqs: 64, preallocated irqs: 0
+[    0.000000][    T0] GICv3: GIC: Using split EOI/Deactivate mode
+[    0.000000][    T0] GICv3: 480 SPIs implemented
+[    0.000000][    T0] GICv3: 0 Extended SPIs implemented
+[    0.000000][    T0] Root IRQ handler: gic_handle_irq
+[    0.000000][    T0] GICv3: GICv3 features: 16 PPIs
+[    0.000000][    T0] GICv3: CPU0: found redistributor 0 region 0:0x00000000fe680000
+[    0.000000][    T0] ITS: No ITS available, not enabling LPIs
+[    0.000000][    T0] rcu:     Offload RCU callbacks from CPUs: 0-7.
+[    0.000000][    T0] rcu: srcu_init: Setting srcu_struct sizes based on contention.
+[    0.000000][    T0] arch_timer: cp15 timer(s) running at 24.00MHz (phys).
+[    0.000000][    T0] clocksource: arch_sys_counter: mask: 0xffffffffffffff max_cycles: 0x588fe9dc0, max_idle_ns: 440795202592 ns
+[    0.000000][    T0] sched_clock: 56 bits at 24MHz, resolution 41ns, wraps every 4398046511097ns
+[    0.011279][    T0] kfence: initialized - using 524288 bytes for 63 objects at 0x(____ptrval____)-0x(____ptrval____)
+[    0.022858][    T0] Calibrating delay loop (skipped), value calculated using timer frequency.. 48.00 BogoMIPS (lpj=96000)
+[    0.034790][    T0] pid_max: default: 32768 minimum: 301
+[    0.040648][    T0] LSM: Security Framework initializing
+[    0.046470][    T0] SELinux:  Initializing.
+[    0.051203][    T0] Mount-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.060037][    T0] Mountpoint-cache hash table entries: 8192 (order: 4, 65536 bytes, linear)
+[    0.071081][    T1] cblist_init_generic: Setting adjustable number of callback queues.
+[    0.079735][    T1] cblist_init_generic: Setting shift to 3 and lim to 1.
+[    0.087213][    T1] cblist_init_generic: Setting adjustable number of callback queues.
+[    0.095867][    T1] cblist_init_generic: Setting shift to 3 and lim to 1.
+[    0.103421][    T1] rcu: Hierarchical SRCU implementation.
+[    0.109403][    T1] rcu:     Max phase no-delay instances is 1000.
+[    0.116911][    T1] dyndbg: Ignore empty _ddebug table in a CONFIG_DYNAMIC_DEBUG_CORE build
+[    0.126723][    T1] EFI services will not be available.
+[    0.132936][    T1] smp: Bringing up secondary CPUs ...
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[    0.147046][    T0] CPU features: detected: Spectre-v4
+[    0.147050][    T0] CPU features: detected: Spectre-BHB
+[    0.147055][    T0] Detected PIPT I-cache on CPU1
+[    0.147097][    T0] GICv3: CPU1: found redistributor 400 region 0:0x00000000fe700000
+[    0.147113][    T0] CPU1: Booted secondary processor 0x0000000400 [0x414fd0b0]
+[    0.155541][    T0] Detected PIPT I-cache on CPU2
+[    0.155587][    T0] GICv3: CPU2: found redistributor 500 region 0:0x00000000fe720000
+[    0.155601][    T0] CPU2: Booted secondary processor 0x0000000500 [0x414fd0b0]
+[    0.163985][    T0] Detected PIPT I-cache on CPU3
+[    0.164025][    T0] GICv3: CPU3: found redistributor 600 region 0:0x00000000fe740000
+[    0.164038][    T0] CPU3: Booted secondary processor 0x0000000600 [0x414fd0b0]
+[    0.172491][    T0] Detected PIPT I-cache on CPU4
+[    0.172532][    T0] GICv3: CPU4: found redistributor 700 region 0:0x00000000fe760000
+[    0.172545][    T0] CPU4: Booted secondary processor 0x0000000700 [0x414fd0b0]
+[    0.180953][    T0] Detected VIPT I-cache on CPU5
+[    0.181033][    T0] GICv3: CPU5: found redistributor 100 region 0:0x00000000fe6a0000
+[    0.181056][    T0] CPU5: Booted secondary processor 0x0000000100 [0x412fd050]
+[    0.189479][    T0] Detected VIPT I-cache on CPU6
+[    0.189561][    T0] GICv3: CPU6: found redistributor 200 region 0:0x00000000fe6c0000
+[    0.189584][    T0] CPU6: Booted secondary processor 0x0000000200 [0x412fd050]
+[    0.197994][    T0] Detected VIPT I-cache on CPU7
+[    0.198079][    T0] GICv3: CPU7: found redistributor 300 region 0:0x00000000fe6e0000
+[    0.198102][    T0] CPU7: Booted secondary processor 0x0000000300 [0x412fd050]
+[    0.198178][    T1] smp: Brought up 1 node, 8 CPUs
+[    0.364373][    T1] SMP: Total of 8 processors activated.
+[    0.370271][    T1] CPU features: detected: 32-bit EL0 Support
+[    0.376610][    T1] CPU features: detected: Data cache clean to the PoU not required for I/D coherence
+[    0.386745][    T1] CPU features: detected: Common not Private translations
+[    0.394324][    T1] CPU features: detected: CRC32 instructions
+[    0.400686][    T1] CPU features: detected: RCpc load-acquire (LDAPR)
+[    0.407747][    T1] CPU features: detected: LSE atomic instructions
+[    0.414601][    T1] CPU features: detected: Privileged Access Never
+[    0.421452][    T1] CPU features: detected: RAS Extension Support
+[    0.428113][    T1] CPU features: detected: Speculative Store Bypassing Safe (SSBS)
+[    0.436540][    T1] CPU: All CPU(s) started at EL2
+[    0.441795][    T1] alternatives: applying system-wide alternatives
+[    0.473845][    T1] Registered cp15_barrier emulation handler
+[    0.480031][    T1] Registered setend emulation handler
+[    0.485694][    T1] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[    0.496780][    T1] futex hash table entries: 2048 (order: 5, 131072 bytes, linear)
+[    0.506236][    T1] pinctrl core: initialized pinctrl subsystem
+[    0.512910][    T1] NET: Registered PF_NETLINK/PF_ROUTE protocol family
+[    0.520676][    T1] DMA: preallocated 512 KiB GFP_KERNEL pool for atomic allocations
+[    0.529032][    T1] DMA: preallocated 512 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+[    0.538245][    T1] audit: initializing netlink subsys (disabled)
+[    0.544876][   T75] audit: type=2000 audit(0.356:1): state=initialized audit_enabled=0 res=1
+[    0.545020][    T1] thermal_sys: Registered thermal governor 'step_wise'
+[    0.553909][    T1] thermal_sys: Registered thermal governor 'user_space'
+[    0.561133][    T1] thermal_sys: Registered thermal governor 'power_allocator'
+[    0.568472][    T1] cpuidle: using governor menu
+[    0.581319][    T1] hw-breakpoint: found 6 breakpoint and 4 watchpoint registers.
+[    0.589381][    T1] ASID allocator initialised with 65536 entries
+[    0.596000][    T1] Serial: AMBA PL011 UART driver
+[    0.602264][    T1] printk: console [ramoops-1] enabled
+[    0.607874][    T1] pstore: Registered ramoops as persistent store backend
+[    0.615212][    T1] ramoops: using 0xe0000@0x110000, ecc: 0
+[    0.631492][    T1] platform fde20000.dsi: Fixed dependency cycle(s) with /dsi@fde20000/panel@0/ports/port@0/endpoint
+[    0.642873][    T1] platform fde20000.dsi: Fixed dependency cycle(s) with /vop@fdd90000/ports/port@3/endpoint@0
+[    0.653921][    T1] platform fde80000.hdmi: Fixed dependency cycle(s) with /vop@fdd90000/ports/port@0/endpoint@2
+[    0.673988][    T1] platform fded0000.edp: Fixed dependency cycle(s) with /vop@fdd90000/ports/port@2/endpoint@6
+[    0.686609][    T1] platform edp1-panel: Fixed dependency cycle(s) with /edp@fded0000/ports/port@1/endpoint
+[    0.698736][    T1] KASLR disabled due to lack of seed
+[    0.708350][    T1] iommu: Default domain type: Translated
+[    0.714346][    T1] iommu: DMA domain TLB invalidation policy: strict mode
+[    0.722055][    T1] SCSI subsystem initialized
+[    0.726852][    T1] usbcore: registered new interface driver usbfs
+[    0.733566][    T1] usbcore: registered new interface driver hub
+[    0.740056][    T1] usbcore: registered new device driver usb
+[    0.746323][    T1] mc: Linux media interface: v0.10
+[    0.751662][    T1] videodev: Linux video capture interface: v2.00
+[    0.758246][    T1] pps_core: LinuxPPS API ver. 1 registered
+[    0.764292][    T1] pps_core: Software ver. 5.3.6 - Copyright 2005-2007 Rodolfo Giometti <giometti@linux.it>
+[    0.774825][    T1] PTP clock support registered
+[    0.779771][    T1] EDAC MC: Ver: 3.0.0
+[    0.784190][    T1] arm-scmi firmware:scmi: Enabled polling mode TX channel - prot_id:16
+[    0.792884][    T1] arm-scmi firmware:scmi: SCMI Notifications - Core Enabled.
+[    0.800565][    T1] arm-scmi firmware:scmi: SCMI Protocol v2.0 'rockchip:' Firmware version 0x0
+[    0.810235][    T1] Advanced Linux Sound Architecture Driver Initialized.
+[    0.817857][    T1] clocksource: Switched to clocksource arch_sys_counter
+[    0.864406][    T1] VFS: Disk quotas dquot_6.6.0
+[    0.869376][    T1] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.877842][    T1] NET: Registered PF_INET protocol family
+[    0.883821][    T1] IP idents hash table entries: 65536 (order: 7, 524288 bytes, linear)
+[    0.893913][    T1] tcp_listen_portaddr_hash hash table entries: 2048 (order: 3, 32768 bytes, linear)
+[    0.903843][    T1] Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+[    0.912874][    T1] TCP established hash table entries: 32768 (order: 6, 262144 bytes, linear)
+[    0.922221][    T1] TCP bind hash table entries: 32768 (order: 8, 1048576 bytes, linear)
+[    0.931427][    T1] TCP: Hash tables configured (established 32768 bind 32768)
+[    0.939236][    T1] UDP hash table entries: 2048 (order: 4, 65536 bytes, linear)
+[    0.947118][    T1] UDP-Lite hash table entries: 2048 (order: 4, 65536 bytes, linear)
+[    0.955623][    T1] NET: Registered PF_UNIX/PF_LOCAL protocol family
+[    0.962348][    T1] NET: Registered PF_XDP protocol family
+[    0.968252][    T1] PCI: CLS 0 bytes, default 64
+[    0.973427][    T8] Trying to unpack rootfs image as initramfs...
+[    0.980179][    T1] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 counters available
+[    0.989910][    T1] kvm [1]: KVM disabled from command line
+[    0.996527][    T1] Initialise system trusted keyrings
+[    1.002173][    T1] workingset: timestamp_bits=46 max_order=20 bucket_order=0
+[    1.013175][    T1] fuse: init (API version 7.37)
+[    1.040283][    T1] Key type asymmetric registered
+[    1.045482][    T1] Asymmetric key parser 'x509' registered
+[    1.051495][    T1] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 238)
+[    1.060301][    T1] io scheduler mq-deadline registered
+[    1.065970][    T1] io scheduler kyber registered
+[    1.071091][    T1] io scheduler bfq registered
+[    1.079013][    T1] Serial: 8250/16550 driver, 10 ports, IRQ sharing disabled
+[    1.088411][    T1] printk: console [ttynull0] enabled
+[    1.097042][    T1] brd: module loaded
+[    1.104676][    T1] loop: module loaded
+[    1.109750][    T1] wireguard: WireGuard 1.0.0 loaded. See www.wireguard.com for information.
+[    1.118980][    T1] wireguard: Copyright (C) 2015-2019 Jason A. Donenfeld <Jason@zx2c4.com>. All Rights Reserved.
+[    1.130294][    T1] MACsec IEEE 802.1AE
+[    1.134594][    T1] tun: Universal TUN/TAP device driver, 1.6
+[    1.141951][    T1] usbcore: registered new interface driver uas
+[    1.148443][    T1] usbcore: registered new interface driver usb-storage
+[    1.155787][    T1] usbcore: registered new interface driver xpad
+[    1.162422][    T1] gspca_main: v2.14.0 registered
+[    1.162753][    T8] Freeing initrd memory: 33472K
+[    1.167522][    T1] usbcore: registered new interface driver uvcvideo
+[    1.179798][    T1] device-mapper: uevent: version 1.0.3
+[    1.185568][    T1] device-mapper: ioctl: 4.47.0-ioctl (2022-07-28) initialised: dm-devel@redhat.com
+[    1.195443][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 19 not active.
+[    1.203469][    T1] sdhci: Secure Digital Host Controller Interface driver
+[    1.210853][    T1] sdhci: Copyright(c) Pierre Ossman
+[    1.216225][    T1] sdhci-pltfm: SDHCI platform and OF driver helper
+[    1.223269][    T1] SMCCC: SOC_ID: ID = jep106:0001:0002 Revision = 0xfffffffd
+[    1.231061][    T1] hid: raw HID events driver (C) Jiri Kosina
+[    1.237578][    T1] usbcore: registered new interface driver usbhid
+[    1.244316][    T1] usbhid: USB HID core driver
+[    1.249224][    T1] ashmem: initialized
+[    1.253632][    T1] gnss: GNSS driver registered with major 503
+[    1.260506][    T1] usbcore: registered new interface driver snd-usb-audio
+[    1.268113][    T1] GACT probability NOT on
+[    1.272609][    T1] Mirror/redirect action on
+[    1.277242][    T1] netem: version 1.3
+[    1.281272][    T1] u32 classifier
+[    1.284884][    T1]     input device check on
+[    1.289596][    T1]     Actions configured
+[    1.318224][    T1] xt_time: kernel timezone is -0000
+[    1.323772][    T1] ipip: IPv4 and MPLS over IPv4 tunneling driver
+[    1.330506][    T1] gre: GRE over IPv4 demultiplexor driver
+[    1.336435][    T1] ip_gre: GRE over IPv4 tunneling driver
+[    1.342643][    T1] IPv4 over IPsec tunneling driver
+[    1.348071][    T1] Initializing XFRM netlink socket
+[    1.353405][    T1] IPsec XFRM device driver
+[    1.358132][    T1] NET: Registered PF_INET6 protocol family
+[    1.364878][    T1] Segment Routing with IPv6
+[    1.369563][    T1] In-situ OAM (IOAM) with IPv6
+[    1.374523][    T1] mip6: Mobile IPv6
+[    1.378646][    T1] sit: IPv6, IPv4 and MPLS over IPv4 tunneling driver
+[    1.385991][    T1] ip6_gre: GRE over IPv6 tunneling driver
+[    1.392080][    T1] NET: Registered PF_PACKET protocol family
+[    1.398263][    T1] NET: Registered PF_KEY protocol family
+[    1.404257][    T1] NET: Registered PF_VSOCK protocol family
+[    1.410752][    T1] registered taskstats version 1
+[    1.415894][    T1] Loading compiled-in X.509 certificates
+[    1.421900][  T116] cryptomgr_probe (116) used greatest stack depth: 15072 bytes left
+[    1.422976][    T1] Loaded X.509 cert 'Build time autogenerated kernel key: 210d8cbbbf6a67d06ed7c6c0dfbbe72eba05d383'
+[    1.441601][    T1] page_owner is disabled
+[    1.446010][    T1] Key type .fscrypt registered
+[    1.450993][    T1] Key type fscrypt-provisioning registered
+[    1.457174][    T1] pstore: Using crash dump compression: deflate
+[    1.465052][    T1] ALSA device list:
+[    1.469011][    T1]   No soundcards found.
+[    1.474279][    T1] Freeing unused kernel memory: 4160K
+[    1.481934][    T1] Run /init as init process
+[    1.487812][    T1] init: init first stage started!
+[    1.497091][    T1] init: Loading module /lib/modules/rockchip_iommu.ko with args ''
+[    1.505546][    T1] rockchip_iommu: module verification failed: signature and/or required key missing - tainting kernel
+[    1.517456][    T1] Kernel module BTF mismatch detected, BTF debug info may be unavailable for some modules
+[    1.528394][    T1] init: Loaded kernel module /lib/modules/rockchip_iommu.ko
+[    1.536077][    T1] init: Loading module /lib/modules/rockchip-cpuinfo.ko with args ''
+[    1.544972][    T1] init: Loaded kernel module /lib/modules/rockchip-cpuinfo.ko
+[    1.552938][    T1] init: Loading module /lib/modules/pinctrl-rockchip.ko with args ''
+[    1.564913][    T1] rockchip-pinctrl pinctrl: probed pinctrl
+[    1.571911][    T1] init: Loaded kernel module /lib/modules/pinctrl-rockchip.ko
+[    1.579841][    T1] init: Loading module /lib/modules/gpio-rockchip.ko with args ''
+[    1.588673][    T1] init: Loaded kernel module /lib/modules/gpio-rockchip.ko
+[    1.596296][    T1] init: Loading module /lib/modules/gpio-pca953x.ko with args ''
+[    1.604840][    T1] init: Loaded kernel module /lib/modules/gpio-pca953x.ko
+[    1.612352][    T1] init: Loading module /lib/modules/gpio-adv.ko with args ''
+[    1.680421][    T1] init: Loaded kernel module /lib/modules/gpio-adv.ko
+[    1.687577][    T1] init: Loading module /lib/modules/board.ko with args ''
+[    1.695217][    T1] init: Loaded kernel module /lib/modules/board.ko
+[    1.702199][    T1] init: Loading module /lib/modules/grf.ko with args ''
+[    1.710121][    T1] init: Loaded kernel module /lib/modules/grf.ko
+[    1.716848][    T1] init: Loading module /lib/modules/clk-link.ko with args ''
+[    1.725107][    T1] init: Loaded kernel module /lib/modules/clk-link.ko
+[    1.732312][    T1] init: Loading module /lib/modules/rockchip_sip.ko with args ''
+[    1.740688][    T1] init: Loaded kernel module /lib/modules/rockchip_sip.ko
+[    1.748247][    T1] init: Loading module /lib/modules/clk-rockchip-regmap.ko with args ''
+[    1.757306][    T1] init: Loaded kernel module /lib/modules/clk-rockchip-regmap.ko
+[    1.765600][    T1] init: Loading module /lib/modules/clk-pwm.ko with args ''
+[    1.773535][    T1] init: Loaded kernel module /lib/modules/clk-pwm.ko
+[    1.780614][    T1] init: Loading module /lib/modules/clk-rk808.ko with args ''
+[    1.788708][    T1] init: Loaded kernel module /lib/modules/clk-rk808.ko
+[    1.796040][    T1] init: Loading module /lib/modules/rockchip_dmc_common.ko with args ''
+[    1.804965][    T1] init: Loaded kernel module /lib/modules/rockchip_dmc_common.ko
+[    1.813185][    T1] init: Loading module /lib/modules/clk-scmi.ko with args ''
+[    1.821945][    T1] init: Loaded kernel module /lib/modules/clk-scmi.ko
+[    1.829273][    T1] init: Loading module /lib/modules/clk-rockchip.ko with args ''
+[    1.838594][    T1] init: Loaded kernel module /lib/modules/clk-rockchip.ko
+[    1.846309][    T1] init: Loading module /lib/modules/clk-out.ko with args ''
+[    1.854490][    T1] init: Loaded kernel module /lib/modules/clk-out.ko
+[    1.861772][    T1] init: Loading module /lib/modules/clk-rk3562.ko with args ''
+[    1.870398][    T1] init: Loaded kernel module /lib/modules/clk-rk3562.ko
+[    1.877937][    T1] init: Loading module /lib/modules/clk-rk3568.ko with args ''
+[    1.886657][    T1] init: Loaded kernel module /lib/modules/clk-rk3568.ko
+[    1.894248][    T1] init: Loading module /lib/modules/clk-rk3588.ko with args ''
+[    1.967183][    T1] init: Loaded kernel module /lib/modules/clk-rk3588.ko
+[    1.967505][  T110] fd890000.serial: ttyS0 at MMIO 0xfd890000 (irq = 15, base_baud = 1500000) is a 16550A
+[    1.974706][    T1] init: Loading module /lib/modules/clk-px30.ko with args ''
+[    1.987335][  T110] rockchip-gpio fd8a0000.gpio: probed /pinctrl/gpio@fd8a0000
+[    2.000785][  T110] rockchip-gpio fec20000.gpio: probed /pinctrl/gpio@fec20000
+[    2.001051][    T1] init: Loaded kernel module /lib/modules/clk-px30.ko
+[    2.008731][  T110] rockchip-gpio fec30000.gpio: probed /pinctrl/gpio@fec30000
+[    2.015870][    T1] init: Loading module /lib/modules/clk-rk3399.ko with args ''
+[    2.023726][  T110] rockchip-gpio fec40000.gpio: probed /pinctrl/gpio@fec40000
+[    2.039543][  T110] rockchip-gpio fec50000.gpio: probed /pinctrl/gpio@fec50000
+[    2.039791][    T1] init: Loaded kernel module /lib/modules/clk-rk3399.ko
+[    2.054905][    T1] init: Loading module /lib/modules/clk-rk3576.ko with args ''
+[    2.063566][    T1] init: Loaded kernel module /lib/modules/clk-rk3576.ko
+[    2.068877][  T110] feb90000.serial: ttyS6 at MMIO 0xfeb90000 (irq = 25, base_baud = 1500000) is a 16550A
+[    2.071011][    T1] init: Loading module /lib/modules/gpio-regulator.ko with args ''
+[    2.081950][  T110] febc0000.serial: ttyS9 at MMIO 0xfebc0000 (irq = 26, base_baud = 1500000) is a 16550A
+[    2.100389][    T1] init: Loaded kernel module /lib/modules/gpio-regulator.ko
+[    2.108303][    T1] init: Loading module /lib/modules/nvmem_rockchip_efuse.ko with args ''
+[    2.118121][    T1] init: Loaded kernel module /lib/modules/nvmem_rockchip_efuse.ko
+[    2.126615][    T1] init: Loading module /lib/modules/nvmem-rockchip-otp.ko with args ''
+[    2.136320][    T1] init: Loaded kernel module /lib/modules/nvmem-rockchip-otp.ko
+[    2.138072][   T83] rockchip-cpuinfo cpuinfo: SoC            : 35881000
+[    2.144579][    T1] init: Loading module /lib/modules/io-domain.ko with args ''
+[    2.159199][    T1] init: Loaded kernel module /lib/modules/io-domain.ko
+[    2.166575][    T1] init: Loading module /lib/modules/rk_system_heap.ko with args ''
+[    2.175363][    T1] system_heap: orders[0] = 6
+[    2.180187][    T1] system_heap: orders[1] = 4
+[    2.185022][    T1] system_heap: orders[2] = 0
+[    2.190015][    T1] init: Loaded kernel module /lib/modules/rk_system_heap.ko
+[    2.197919][    T1] init: Loading module /lib/modules/rk_cma_heap.ko with args ''
+[    2.206491][    T1] init: Loaded kernel module /lib/modules/rk_cma_heap.ko
+[    2.214063][    T1] init: Loading module /lib/modules/sw_sync.ko with args ''
+[    2.222394][    T1] init: Loaded kernel module /lib/modules/sw_sync.ko
+[    2.229585][    T1] init: Loading module /lib/modules/i2c-dev.ko with args ''
+[    2.237773][    T1] i2c_dev: i2c /dev entries driver
+[    2.243208][    T1] init: Loaded kernel module /lib/modules/i2c-dev.ko
+[    2.250390][    T1] init: Loading module /lib/modules/i2c-rk3x.ko with args ''
+[    2.260620][    T1] pca953x 5-0070: supply vcc not found, using dummy regulator
+[    2.268614][    T1] pca953x 5-0070: using no AI
+[    2.275007][    T1] pca953x 6-0027: supply vcc not found, using dummy regulator
+[    2.283014][    T1] pca953x 6-0027: using no AI
+[    2.289950][    T1] init: Loaded kernel module /lib/modules/i2c-rk3x.ko
+[    2.297277][    T1] init: Loading module /lib/modules/i2c-gpio.ko with args ''
+[    2.305591][    T1] init: Loaded kernel module /lib/modules/i2c-gpio.ko
+[    2.312931][    T1] init: Loading module /lib/modules/i2c-hid.ko with args ''
+[    2.321132][    T1] init: Loaded kernel module /lib/modules/i2c-hid.ko
+[    2.328393][    T1] init: Loading module /lib/modules/i2c-mux.ko with args ''
+[    2.336434][    T1] init: Loaded kernel module /lib/modules/i2c-mux.ko
+[    2.343633][    T1] init: Loading module /lib/modules/rockchip-rng.ko with args ''
+[    2.352726][    T1] init: Loaded kernel module /lib/modules/rockchip-rng.ko
+[    2.360422][    T1] init: Loading module /lib/modules/pl330.ko with args ''
+[    2.369251][    T1] dma-pl330 fea10000.dma-controller: Loaded driver for PL330 DMAC-241330
+[    2.378248][    T1] dma-pl330 fea10000.dma-controller:       DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    2.389920][    T1] dma-pl330 fea30000.dma-controller: Loaded driver for PL330 DMAC-241330
+[    2.398931][    T1] dma-pl330 fea30000.dma-controller:       DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    2.410621][    T1] dma-pl330 fed10000.dma-controller: Loaded driver for PL330 DMAC-241330
+[    2.419583][    T1] dma-pl330 fed10000.dma-controller:       DBUFF-128x8bytes Num_Chans-8 Num_Peri-32 Num_Events-16
+[    2.430528][    T1] init: Loaded kernel module /lib/modules/pl330.ko
+[    2.437513][    T1] init: Loading module /lib/modules/pinctrl-rk805.ko with args ''
+[    2.446261][    T1] init: Loaded kernel module /lib/modules/pinctrl-rk805.ko
+[    2.454057][    T1] init: Loading module /lib/modules/pinctrl-rk806.ko with args ''
+[    2.462730][    T1] init: Loaded kernel module /lib/modules/pinctrl-rk806.ko
+[    2.470526][    T1] init: Loading module /lib/modules/spidev.ko with args ''
+[    2.478677][    T1] init: Loaded kernel module /lib/modules/spidev.ko
+[    2.485749][    T1] init: Loading module /lib/modules/spi-rockchip.ko with args ''
+[    2.495202][    T1] rockchip-spi feb10000.spi: no high_speed pinctrl state
+[    2.502963][    T1] rockchip-spi feb10000.spi: probed, poll=0, rsd=0, cs-inactive=0, ready=0
+[    2.512515][    T1] rockchip-spi feb20000.spi: no high_speed pinctrl state
+[    2.520312][    T1] spi spi2.0: Fixed dependency cycle(s) with /spi@feb20000/rk806single@0/regulators/DCDC_REG7
+[    2.531293][    T1] spi spi2.0: Fixed dependency cycle(s) with /spi@feb20000/rk806single@0/pinctrl_rk806/rk806_dvs1_pwrdn
+[    2.543130][    T1] spi spi2.0: Fixed dependency cycle(s) with /spi@feb20000/rk806single@0/pinctrl_rk806/rk806_dvs3_null
+[    2.554940][    T1] spi spi2.0: Fixed dependency cycle(s) with /spi@feb20000/rk806single@0/pinctrl_rk806/rk806_dvs2_null
+[    2.566670][    T1] spi spi2.0: Fixed dependency cycle(s) with /spi@feb20000/rk806single@0/pinctrl_rk806/rk806_dvs1_null
+[    2.578446][    T1] rockchip-spi feb20000.spi: probed, poll=0, rsd=0, cs-inactive=0, ready=0
+[    2.588083][    T1] rockchip-spi feb30000.spi: no high_speed pinctrl state
+[    2.595781][    T1] rockchip-spi feb30000.spi: probed, poll=0, rsd=0, cs-inactive=0, ready=0
+[    2.605244][    T1] init: Loaded kernel module /lib/modules/spi-rockchip.ko
+[    2.612928][    T1] init: Loading module /lib/modules/rk806-core.ko with args ''
+[    2.621449][    T1] init: Loaded kernel module /lib/modules/rk806-core.ko
+[    2.628918][    T1] init: Loading module /lib/modules/rk806-i2c.ko with args ''
+[    2.637158][    T1] init: Loaded kernel module /lib/modules/rk806-i2c.ko
+[    2.644546][    T1] init: Loading module /lib/modules/rk806-spi.ko with args ''
+[    2.653120][    T1] rk806 spi2.0: chip id: RK806,ver:0x2, 0x1
+[    2.659454][    T1] rk806 spi2.0: ON: 0x40 OFF:0x0
+[    2.666014][    T1] rk806 spi2.0: no sleep-setting state
+[    2.671750][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    2.678285][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    2.686372][    T1] init: Loaded kernel module /lib/modules/rk806-spi.ko
+[    2.693794][    T1] init: Loading module /lib/modules/rk806-regulator.ko with args ''
+[    2.711696][    T1] init: Loaded kernel module /lib/modules/rk806-regulator.ko
+[    2.719695][    T1] init: Loading module /lib/modules/rk808-regulator.ko with args ''
+[    2.728766][    T1] init: Loaded kernel module /lib/modules/rk808-regulator.ko
+[    2.736740][    T1] init: Loading module /lib/modules/rk860x-regulator.ko with args ''
+[    2.760281][    T1] init: Loaded kernel module /lib/modules/rk860x-regulator.ko
+[    2.768369][    T1] init: Loading module /lib/modules/rk808.ko with args ''
+[    2.776481][    T1] init: Loaded kernel module /lib/modules/rk808.ko
+[    2.783506][    T1] init: Loading module /lib/modules/fan53555.ko with args ''
+[    2.791679][    T1] init: Loaded kernel module /lib/modules/fan53555.ko
+[    2.798992][    T1] init: Loading module /lib/modules/pwm-regulator.ko with args ''
+[    2.807824][    T1] init: Loaded kernel module /lib/modules/pwm-regulator.ko
+[    2.815624][    T1] init: Loading module /lib/modules/pm_domains.ko with args ''
+[    2.827511][    T1] init: Loaded kernel module /lib/modules/pm_domains.ko
+[    2.832204][   T83] rk_iommu fdca0000.iommu: av1d iommu enabled
+[    2.835035][    T1] init: Loading module /lib/modules/ufs-rockchip.ko with args ''
+[    2.850273][    T1] init: Loaded kernel module /lib/modules/ufs-rockchip.ko
+[    2.857957][    T1] init: Loading module /lib/modules/rockchip_debug.ko with args ''
+[    2.867301][    T1] init: Loaded kernel module /lib/modules/rockchip_debug.ko
+[    2.875194][    T1] init: Loading module /lib/modules/fiq_debugger.ko with args ''
+[    2.884058][    T1] Registered FIQ tty driver
+[    2.888918][    T1] init: Loaded kernel module /lib/modules/fiq_debugger.ko
+[    2.896617][    T1] init: Loading module /lib/modules/rk_fiq_debugger.ko with args ''
+[    2.906324][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ fiq not found
+[    2.914365][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ wakeup not found
+[    2.922680][    T1] fiq_debugger_probe: could not install nmi irq handler
+[[    2.930097][    T1] printk: console [ttyFIQ0] enabled
+    2.930097][    T1] printk: console [ttyFIQ0] enabled
+[    2.940579[    2.940579][    T1] printk: bootconsole [uart8250] disabled
+][    T1] printk: bootconsole [uart8250] disabled
+[    2.952206][    T1] Registered fiq debugger ttyFIQ0
+[    2.952381][    T1] init: Loaded kernel module /lib/modules/rk_fiq_debugger.ko
+[    2.952520][    T1] init: Loading module /lib/modules/cqhci.ko with args ''
+[    2.953031][    T1] init: Loaded kernel module /lib/modules/cqhci.ko
+[    2.953167][    T1] init: Loading module /lib/modules/sdhci-of-arasan.ko with args ''
+[    2.954185][    T1] init: Loaded kernel module /lib/modules/sdhci-of-arasan.ko
+[    2.954408][    T1] init: Loading module /lib/modules/mmc_hsq.ko with args ''
+[    2.954745][    T1] init: Loaded kernel module /lib/modules/mmc_hsq.ko
+[    2.954784][    T1] init: Loading module /lib/modules/sdhci-of-dwcmshc.ko with args ''
+[    2.955807][   T83] mmc0: CQHCI version 5.10
+[    2.986693][   T83] mmc0: SDHCI controller on fe2e0000.mmc [fe2e0000.mmc] using ADMA
+[    2.986776][    T1] init: Loaded kernel module /lib/modules/sdhci-of-dwcmshc.ko
+[    2.986918][    T1] init: Loading module /lib/modules/dw_mmc.ko with args ''
+[    2.987698][    T1] Synopsys Designware Multimedia Card Interface Driver
+[    2.987756][    T1] init: Loaded kernel module /lib/modules/dw_mmc.ko
+[    2.987883][    T1] init: Loading module /lib/modules/dw_mmc-pltfm.ko with args ''
+[    2.988381][    T1] init: Loaded kernel module /lib/modules/dw_mmc-pltfm.ko
+[    2.988515][    T1] init: Loading module /lib/modules/dw_mmc-rockchip.ko with args ''
+[    2.989379][  T110] dwmmc_rockchip fe2c0000.mmc: No normal pinctrl state
+[    2.989389][  T110] dwmmc_rockchip fe2c0000.mmc: No idle pinctrl state
+[    2.989423][  T110] dwmmc_rockchip fe2c0000.mmc: IDMAC supports 32-bit address mode.
+[    2.989445][  T110] dwmmc_rockchip fe2c0000.mmc: Using internal DMA controller.
+[    2.989453][  T110] dwmmc_rockchip fe2c0000.mmc: Version ID is 270a
+[    2.989476][  T110] dwmmc_rockchip fe2c0000.mmc: DW MMC controller at irq 66,32 bit host data width,256 deep fifo
+[    3.001906][  T110] mmc_host mmc1: Bus speed (slot 0) = 400000Hz (slot req 400000Hz, actual 400000HZ div = 0)
+[    3.014545][    T1] init: Loaded kernel module /lib/modules/dw_mmc-rockchip.ko
+[    3.014686][    T1] init: Loading module /lib/modules/tee.ko with args ''
+[    3.015686][    T1] init: Loaded kernel module /lib/modules/tee.ko
+[    3.015908][    T1] init: Loading module /lib/modules/kfifo_buf.ko with args ''
+[    3.016227][    T1] init: Loaded kernel module /lib/modules/kfifo_buf.ko
+[    3.016359][    T1] init: Loading module /lib/modules/industrialio-triggered-buffer.ko with args ''
+[    3.016624][    T1] init: Loaded kernel module /lib/modules/industrialio-triggered-buffer.ko
+[    3.016661][    T1] init: Loading module /lib/modules/rockchip_saradc.ko with args ''
+[    3.018040][    T1] init: Loaded kernel module /lib/modules/rockchip_saradc.ko
+[    3.018202][    T1] init: Loading module /lib/modules/optee.ko with args ''
+[    3.019185][    T1] optee: probing for conduit method.
+[    3.019204][    T1] optee: revision 3.13 (185dc3c9)
+[    3.019273][    T1] optee: dynamic shared memory is enabled
+[    3.019366][    T1] optee: initialized driver
+[    3.019695][    T1] init: Loaded kernel module /lib/modules/optee.ko
+[    3.019859][    T1] init: Loading module /lib/modules/optee-rng.ko with args ''
+[    3.020161][    T1] init: Loaded kernel module /lib/modules/optee-rng.ko
+[    3.020291][    T1] init: Loading module /lib/modules/rockchip_thermal.ko with args ''
+[    3.021360][    T1] rockchip-thermal fec00000.tsadc: Missing rockchip,grf property
+[    3.022078][    T1] rockchip-thermal fec00000.tsadc: tsadc is probed successfully!
+[    3.022301][    T1] init: Loaded kernel module /lib/modules/rockchip_thermal.ko
+[    3.022428][    T1] init: Loading module /lib/modules/phy-rockchip-dp.ko with args ''
+[    3.022892][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-dp.ko
+[    3.023014][    T1] init: Loading module /lib/modules/phy-rockchip-emmc.ko with args ''
+[    3.023459][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-emmc.ko
+[    3.023592][    T1] init: Loading module /lib/modules/phy-rockchip-samsung-dcphy.ko with args ''
+[    3.024700][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-samsung-dcphy.ko
+[    3.024843][    T1] init: Loading module /lib/modules/phy-rockchip-inno-dsidphy.ko with args ''
+[    3.025583][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-inno-dsidphy.ko
+[    3.025719][    T1] init: Loading module /lib/modules/phy-rockchip-inno-hdmi-phy.ko with args ''
+[    3.026489][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-inno-hdmi-phy.ko
+[    3.026626][    T1] init: Loading module /lib/modules/phy-rockchip-naneng-edp.ko with args ''
+[    3.027062][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-naneng-edp.ko
+[    3.027195][    T1] init: Loading module /lib/modules/pcierockchiphost.ko with args ''
+[    3.028031][    T1] init: Loaded kernel module /lib/modules/pcierockchiphost.ko
+[    3.028166][    T1] init: Loading module /lib/modules/phy-rockchip-naneng-combphy.ko with args ''
+[    3.029384][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-naneng-combphy.ko
+[    3.029525][    T1] init: Loading module /lib/modules/phy-rockchip-pcie.ko with args ''
+[    3.029913][   T83] xhci-hcd xhci-hcd.3.auto: xHCI Host Controller
+[    3.029930][   T83] xhci-hcd xhci-hcd.3.auto: new USB bus registered, assigned bus number 1
+[    3.030001][   T83] xhci-hcd xhci-hcd.3.auto: hcc params 0x0220fe64 hci version 0x110 quirks 0x0000008002010010
+[    3.030028][   T83] xhci-hcd xhci-hcd.3.auto: irq 69, io mem 0xfcd00000
+[    3.030071][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-pcie.ko
+[    3.030106][   T83] xhci-hcd xhci-hcd.3.auto: xHCI Host Controller
+[    3.030116][   T83] xhci-hcd xhci-hcd.3.auto: new USB bus registered, assigned bus number 2
+[    3.030124][   T83] xhci-hcd xhci-hcd.3.auto: Host supports USB 3.0 SuperSpeed
+[    3.030191][   T83] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.01
+[    3.030199][   T83] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.030207][   T83] usb usb1: Product: xHCI Host Controller
+[    3.030207][    T1] init: Loading module /lib/modules/phy-rockchip-samsung-hdptx.ko with args ''
+[    3.030216][   T83] usb usb1: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 xhci-hcd
+[    3.030223][   T83] usb usb1: SerialNumber: xhci-hcd.3.auto
+[    3.030385][   T83] hub 1-0:1.0: USB hub found
+[    3.030403][   T83] hub 1-0:1.0: 1 port detected
+[    3.030553][   T83] usb usb2: We don't know the algorithms for LPM for this host, disabling LPM.
+[    3.030595][   T83] usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.01
+[    3.030602][   T83] usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.030609][   T83] usb usb2: Product: xHCI Host Controller
+[    3.030615][   T83] usb usb2: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 xhci-hcd
+[    3.030621][   T83] usb usb2: SerialNumber: xhci-hcd.3.auto
+[    3.030753][   T83] hub 2-0:1.0: USB hub found
+[    3.030772][   T83] hub 2-0:1.0: 1 port detected
+[    3.031040][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-samsung-hdptx.ko
+[    3.031181][    T1] init: Loading module /lib/modules/phy-rockchip-snps-pcie3.ko with args ''
+[    3.031976][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-snps-pcie3.ko
+[    3.032114][    T1] init: Loading module /lib/modules/phy-rockchip-typec.ko with args ''
+[    3.032984][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-typec.ko
+[    3.033121][    T1] init: Loading module /lib/modules/phy-rockchip-usb.ko with args ''
+[    3.033834][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-usb.ko
+[    3.033982][    T1] init: Loading module /lib/modules/phy-rockchip-usbdp.ko with args ''
+[    3.034697][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-usbdp.ko
+[    3.034819][    T1] init: Loading module /lib/modules/pwm-rockchip.ko with args ''
+[    3.036222][    T1] init: Loaded kernel module /lib/modules/pwm-rockchip.ko
+[    3.036358][    T1] init: Loading module /lib/modules/pwm_bl.ko with args ''
+[    3.036962][    T1] pwm-backlight backlight0: supply power not found, using dummy regulator
+[    3.054047][    T1] pwm-backlight backlight1: supply power not found, using dummy regulator
+[    3.060965][   T88] mmc_host mmc1: Bus speed (slot 0) = 148500000Hz (slot req 150000000Hz, actual 148500000HZ div = 0)
+[    3.073966][    T1] init: Loaded kernel module /lib/modules/pwm_bl.ko
+[    3.074116][    T1] init: Loading module /lib/modules/iep.ko with args ''
+[    3.075110][    T1] iep: Module initialized.
+[    3.075200][    T1] init: Loaded kernel module /lib/modules/iep.ko
+[    3.075411][    T1] init: Loading module /lib/modules/rockchip_pvtm.ko with args ''
+[    3.076101][    T1] rockchip-pvtm fda40000.pvtm: pvtm@0 probed
+[    3.076220][    T1] rockchip-pvtm fda50000.pvtm: pvtm@1 probed
+[    3.076331][    T1] rockchip-pvtm fda60000.pvtm: pvtm@2 probed
+[    3.076440][    T1] rockchip-pvtm fdaf0000.pvtm: pvtm@3 probed
+[    3.076579][    T1] rockchip-pvtm fdb30000.pvtm: pvtm@4 probed
+[    3.077255][    T1] init: Loaded kernel module /lib/modules/rockchip_pvtm.ko
+[    3.077401][    T1] init: Loading module /lib/modules/rockchip_opp_select.ko with args ''
+[    3.078356][    T1] init: Loaded kernel module /lib/modules/rockchip_opp_select.ko
+[    3.078387][    T1] init: Loading module /lib/modules/rockchip_system_monitor.ko with args ''
+[    3.079317][    T1] rockchip-system-monitor rockchip-system-monitor: system monitor probe
+[    3.079739][    T1] init: Loaded kernel module /lib/modules/rockchip_system_monitor.ko
+[    3.079878][    T1] init: Loading module /lib/modules/rk_vendor_storage.ko with args ''
+[    3.080148][    T1] init: Loaded kernel module /lib/modules/rk_vendor_storage.ko
+[    3.080276][    T1] init: Loading module /lib/modules/ram_vendor_storage.ko with args ''
+[    3.080928][    T1] init: Loaded kernel module /lib/modules/ram_vendor_storage.ko
+[    3.081066][    T1] init: Loading module /lib/modules/rockchip_csu.ko with args ''
+[    3.081726][    T1] init: Loaded kernel module /lib/modules/rockchip_csu.ko
+[    3.081869][    T1] init: Loading module /lib/modules/drm_display_helper.ko with args ''
+[    3.084674][    T1] init: Loaded kernel module /lib/modules/drm_display_helper.ko
+[    3.084799][    T1] init: Loading module /lib/modules/dw_hdcp2.ko with args ''
+[    3.085531][    T1] init: Loaded kernel module /lib/modules/dw_hdcp2.ko
+[    3.085667][    T1] init: Loading module /lib/modules/rockchip_aux_client.ko with args ''
+[    3.086275][    T1] init: Loaded kernel module /lib/modules/rockchip_aux_client.ko
+[    3.086526][    T1] init: Loading module /lib/modules/dw-hdmi.ko with args ''
+[    3.088095][    T1] init: Loaded kernel module /lib/modules/dw-hdmi.ko
+[    3.088231][    T1] init: Loading module /lib/modules/drm_dma_helper.ko with args ''
+[    3.088761][    T1] init: Loaded kernel module /lib/modules/drm_dma_helper.ko
+[    3.088891][    T1] init: Loading module /lib/modules/analogix_dp.ko with args ''
+[    3.090091][    T1] init: Loaded kernel module /lib/modules/analogix_dp.ko
+[    3.090245][    T1] init: Loading module /lib/modules/rockchip_panel_notifier.ko with args ''
+[    3.090598][    T1] init: Loaded kernel module /lib/modules/rockchip_panel_notifier.ko
+[    3.090728][    T1] init: Loading module /lib/modules/panel-simple.ko with args ''
+[    3.094204][    T1] panel-simple edp0-panel: supply power not found, using dummy regulator
+[    3.094285][    T1] panel-simple edp0-panel: Specify missing connector_type, please specify "connector-type" in dts
+[    3.094618][    T1] panel-simple edp1-panel: Specify missing connector_type, please specify "connector-type" in dts
+[    3.095145][    T1] init: Loaded kernel module /lib/modules/panel-simple.ko
+[    3.095289][    T1] init: Loading module /lib/modules/dw-hdmi-qp.ko with args ''
+[    3.096601][    T1] init: Loaded kernel module /lib/modules/dw-hdmi-qp.ko
+[    3.096722][    T1] init: Loading module /lib/modules/dw-mipi-dsi.ko with args ''
+[    3.097214][  T126] mmc0: Command Queue Engine enabled
+[    3.097227][  T126] mmc0: new HS400 Enhanced strobe MMC card at address 0001
+[    3.097337][    T1] init: Loaded kernel module /lib/modules/dw-mipi-dsi.ko
+[    3.097380][    T1] init: Loading module /lib/modules/rockchipdrm.ko with args ''
+[    3.097647][  T126] mmcblk0: mmc0:0001 88A19B 28.9 GiB
+[    3.101211][  T126]  mmcblk0: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12 p13 p14 p15 p16 p17 p18 p19 p20 p21 p22 p23 p24 p25
+[    3.102155][  T126] mmcblk0boot0: mmc0:0001 88A19B 4.00 MiB
+[    3.102646][  T126] mmcblk0boot1: mmc0:0001 88A19B 4.00 MiB
+[    3.103048][  T126] mmcblk0rpmb: mmc0:0001 88A19B 4.00 MiB, chardev (507:0)
+[    3.107956][    T1] rockchip-vop2 fdd90000.vop: Adding to iommu group 1
+[    3.112611][    T1] mipi-dsi fde20000.dsi.0: Fixed dependency cycle(s) with /dsi@fde20000/ports/port@1/endpoint
+[    3.112780][    T1] panel-simple-dsi fde20000.dsi.0: supply power not found, using dummy regulator
+[    3.112847][    T1] panel-simple-dsi fde20000.dsi.0: Expected bpc in {6,8} but got: 0
+[    3.115397][    T1] init: Loaded kernel module /lib/modules/rockchipdrm.ko
+[    3.115561][    T1] init: Loading module /lib/modules/display-connector.ko with args ''
+[    3.116271][    T1] init: Loaded kernel module /lib/modules/display-connector.ko
+[    3.116405][    T1] init: Loading module /lib/modules/dw-hdmi-hdcp.ko with args ''
+[    3.116881][    T1] init: Loaded kernel module /lib/modules/dw-hdmi-hdcp.ko
+[    3.117007][    T1] init: Loading module /lib/modules/dw-hdmi-qp-hdcp.ko with args ''
+[    3.117446][    T1] init: Loaded kernel module /lib/modules/dw-hdmi-qp-hdcp.ko
+[    3.117583][    T1] init: Loading module /lib/modules/dw-hdmi-i2s-audio.ko with args ''
+[    3.117987][    T1] init: Loaded kernel module /lib/modules/dw-hdmi-i2s-audio.ko
+[    3.118110][    T1] init: Loading module /lib/modules/dw-hdmi-qp-i2s-audio.ko with args ''
+[    3.118458][    T1] init: Loaded kernel module /lib/modules/dw-hdmi-qp-i2s-audio.ko
+[    3.118590][    T1] init: Loading module /lib/modules/dw-hdmi-cec.ko with args ''
+[    3.119066][    T1] init: Loaded kernel module /lib/modules/dw-hdmi-cec.ko
+[    3.119193][    T1] init: Loading module /lib/modules/dw-hdmi-qp-cec.ko with args ''
+[    3.119543][    T1] init: Loaded kernel module /lib/modules/dw-hdmi-qp-cec.ko
+[    3.119674][    T1] init: Loading module /lib/modules/phy-rockchip-samsung-hdptx-hdmi.ko with args ''
+[    3.121107][    T1] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy init success
+[    3.121256][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-samsung-hdptx-hdmi.ko
+[    3.121391][    T1] init: Loading module /lib/modules/rkvtunnel.ko with args ''
+[    3.122434][    T1] init: Loaded kernel module /lib/modules/rkvtunnel.ko
+[    3.122571][    T1] init: Loading module /lib/modules/pcs_xpcs.ko with args ''
+[    3.123009][    T1] init: Loaded kernel module /lib/modules/pcs_xpcs.ko
+[    3.123134][    T1] init: Loading module /lib/modules/stmmac.ko with args ''
+[    3.126243][    T1] init: Loaded kernel module /lib/modules/stmmac.ko
+[    3.126398][    T1] init: Loading module /lib/modules/stmmac-platform.ko with args ''
+[    3.126932][    T1] init: Loaded kernel module /lib/modules/stmmac-platform.ko
+[    3.127067][    T1] init: Loading module /lib/modules/dwmac-rockchip.ko with args ''
+[    3.129050][    T1] rk_gmac-dwmac fe1c0000.ethernet: IRQ eth_lpi not found
+[    3.129262][    T1] rk_gmac-dwmac fe1c0000.ethernet: supply phy not found, using dummy regulator
+[    3.129355][    T1] rk_gmac-dwmac fe1c0000.ethernet: clock input or output? (input).
+[    3.129363][    T1] rk_gmac-dwmac fe1c0000.ethernet: TX delay(0x3d).
+[    3.129369][    T1] rk_gmac-dwmac fe1c0000.ethernet: RX delay(0x30).
+[    3.129392][    T1] rk_gmac-dwmac fe1c0000.ethernet: integrated PHY? (no).
+# [    3.129401][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    3.129408][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    3.129430][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    3.129435][    T1] rk_gmac-dwmac fe1c0000.ethernet: clock input from PHY
+[    3.129655][    T1] rk_gmac-dwmac fe1c0000.ethernet: init for RGMII
+[    3.129792][    T1] rk_gmac-dwmac fe1c0000.ethernet: User ID: 0x30, Synopsys ID: 0x51
+[    3.129799][    T1] rk_gmac-dwmac fe1c0000.ethernet:         DWMAC4/5
+[    3.129806][    T1] rk_gmac-dwmac fe1c0000.ethernet: DMA HW capability register supported
+[    3.129812][    T1] rk_gmac-dwmac fe1c0000.ethernet: RX Checksum Offload Engine supported
+[    3.129817][    T1] rk_gmac-dwmac fe1c0000.ethernet: TX Checksum insertion supported
+[    3.129823][    T1] rk_gmac-dwmac fe1c0000.ethernet: Wake-Up On Lan supported
+[    3.129868][    T1] rk_gmac-dwmac fe1c0000.ethernet: TSO supported
+[    3.129874][    T1] rk_gmac-dwmac fe1c0000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    3.129880][    T1] rk_gmac-dwmac fe1c0000.ethernet: Enabled L3L4 Flow TC (entries=2)
+[    3.129887][    T1] rk_gmac-dwmac fe1c0000.ethernet: Enabled RFS Flow TC (entries=10)
+[    3.129893][    T1] rk_gmac-dwmac fe1c0000.ethernet: TSO feature enabled
+[    3.129899][    T1] rk_gmac-dwmac fe1c0000.ethernet: Using 32/32 bits DMA host/device width
+[    3.132665][   T83] rockchip-vop2 fdd90000.vop: [drm:vop2_bind [rockchipdrm]] vp0 assign plane mask: Cluster0 | Esmart0[0x5], primary plane phy id: Esmart0[2]
+[    3.132916][   T83] rockchip-vop2 fdd90000.vop: [drm:vop2_bind [rockchipdrm]] vp1 assign plane mask: Cluster1 | Esmart1[0xa], primary plane phy id: Esmart1[3]
+[    3.133145][   T83] rockchip-vop2 fdd90000.vop: [drm:vop2_bind [rockchipdrm]] vp2 assign plane mask: Cluster2 | Esmart2[0x140], primary plane phy id: Esmart2[8]
+[    3.133372][   T83] rockchip-vop2 fdd90000.vop: [drm:vop2_bind [rockchipdrm]] vp3 assign plane mask: Cluster3 | Esmart3[0x280], primary plane phy id: Esmart3[9]
+[    3.133716][   T83] rockchip-drm display-subsystem: failed to get hdmi1_phy_pll: -517
+[    3.163939][   T83] rockchip-vop2 fdd90000.vop: bin=0
+[    3.164151][   T83] rockchip-vop2 fdd90000.vop: leakage=40
+[    3.164161][   T83] rockchip-vop2 fdd90000.vop: leakage-volt-sel=1
+[    3.164503][   T83] rockchip-vop2 fdd90000.vop: avs=0
+[    3.164570][   T83] rockchip-vop2 fdd90000.vop: l=-2147483648 h=2147483647 hyst=0 l_limit=0 h_limit=0 h_table=0
+[    3.164725][   T83] rockchip-vop2 fdd90000.vop: Supported VOP aclk dvfs, normal mode:500000000, reset mode:0, advanced mode:750000000
+[    3.164745][   T83] rockchip-drm display-subsystem: bound fdd90000.vop (ops vop2_component_ops [rockchipdrm])
+[    3.165122][   T83] rockchip-drm display-subsystem: bound fded0000.edp (ops rockchip_dp_component_ops [rockchipdrm])
+[    3.165800][   T83] dwhdmi-rockchip fde80000.hdmi: registered ddc I2C bus driver
+[    3.166166][   T83] rockchip-drm display-subsystem: bound fde80000.hdmi (ops dw_hdmi_rockchip_ops [rockchipdrm])
+[    3.166306][   T83] rockchip-drm display-subsystem: bound fde20000.dsi (ops dw_mipi_dsi2_ops [rockchipdrm])
+[    3.166963][   T83] rockchip-drm display-subsystem: route-dp0: failed to get logo,offset
+[    3.214852][   T83] rockchip-dp fded0000.edp: failed to read downspread -110
+[    3.233900][   T83] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[    3.233925][   T83] rockchip-drm display-subsystem: route-hdmi0: failed to get logo,offset
+[    3.239348][   T83] rockchip-vop2 fdd90000.vop: [drm:vop2_crtc_atomic_disable [rockchipdrm]] Crtc atomic disable vp2
+[    3.267721][   T83] dw-hdmi-qp-hdcp dw-hdmi-qp-hdcp.7.auto: dw_hdcp_qp_hdcp_probe success
+[    3.267888][   T83] [drm] Initialized rockchip 4.0.0 20140818 for display-subsystem on minor 0
+[    3.299445][    T1] rk_gmac-dwmac fe1b0000.ethernet: IRQ eth_lpi not found
+[    3.299700][    T1] rk_gmac-dwmac fe1b0000.ethernet: supply phy not found, using dummy regulator
+[    3.299763][    T1] rk_gmac-dwmac fe1b0000.ethernet: clock input or output? (input).
+[    3.299771][    T1] rk_gmac-dwmac fe1b0000.ethernet: TX delay(0x3d).
+[    3.299777][    T1] rk_gmac-dwmac fe1b0000.ethernet: RX delay(0x2a).
+[    3.299787][    T1] rk_gmac-dwmac fe1b0000.ethernet: integrated PHY? (no).
+[    3.299795][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    3.299801][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    3.299814][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    3.299819][    T1] rk_gmac-dwmac fe1b0000.ethernet: clock input from PHY
+[    3.300037][    T1] rk_gmac-dwmac fe1b0000.ethernet: init for RGMII
+[    3.300162][    T1] rk_gmac-dwmac fe1b0000.ethernet: User ID: 0x30, Synopsys ID: 0x51
+[    3.300171][    T1] rk_gmac-dwmac fe1b0000.ethernet:         DWMAC4/5
+[    3.300178][    T1] rk_gmac-dwmac fe1b0000.ethernet: DMA HW capability register supported
+[    3.300183][    T1] rk_gmac-dwmac fe1b0000.ethernet: RX Checksum Offload Engine supported
+[    3.300189][    T1] rk_gmac-dwmac fe1b0000.ethernet: TX Checksum insertion supported
+[    3.300194][    T1] rk_gmac-dwmac fe1b0000.ethernet: Wake-Up On Lan supported
+[    3.300223][    T1] rk_gmac-dwmac fe1b0000.ethernet: TSO supported
+[    3.300229][    T1] rk_gmac-dwmac fe1b0000.ethernet: Enable RX Mitigation via HW Watchdog Timer
+[    3.300235][    T1] rk_gmac-dwmac fe1b0000.ethernet: Enabled L3L4 Flow TC (entries=2)
+[    3.300241][    T1] rk_gmac-dwmac fe1b0000.ethernet: Enabled RFS Flow TC (entries=10)
+[    3.300247][    T1] rk_gmac-dwmac fe1b0000.ethernet: TSO feature enabled
+[    3.300253][    T1] rk_gmac-dwmac fe1b0000.ethernet: Using 32/32 bits DMA host/device width
+[    3.389156][   T88] dwmmc_rockchip fe2c0000.mmc: Successfully tuned phase to 270
+[    3.389169][   T88] mmc1: new ultra high speed SDR104 SDHC card at address 0001
+[    3.389552][   T88] mmcblk1: mmc1:0001 SD32G 29.2 GiB
+[    3.390769][   T88]  mmcblk1: p1
+[    3.466843][    T1] init: Loaded kernel module /lib/modules/dwmac-rockchip.ko
+[    3.467033][    T1] init: Loading module /lib/modules/phy-rockchip-inno-usb2.ko with args ''
+[    3.477356][  T110] ehci-platform fc880000.usb: EHCI Host Controller
+[    3.477374][  T110] ehci-platform fc880000.usb: new USB bus registered, assigned bus number 3
+[    3.477425][    T8] ehci-platform fc800000.usb: EHCI Host Controller
+[    3.477432][  T110] ehci-platform fc880000.usb: irq 85, io mem 0xfc880000
+[    3.477442][    T8] ehci-platform fc800000.usb: new USB bus registered, assigned bus number 4
+[    3.477494][    T8] ehci-platform fc800000.usb: irq 86, io mem 0xfc800000
+[    3.481546][   T83] phy phy-fd5d4000.syscon:usb2-phy@4000.12: illegal mode
+[    3.481560][   T83] xhci-hcd xhci-hcd.8.auto: xHCI Host Controller
+[    3.481571][   T83] xhci-hcd xhci-hcd.8.auto: new USB bus registered, assigned bus number 5
+[    3.481662][   T83] xhci-hcd xhci-hcd.8.auto: hcc params 0x0220fe64 hci version 0x110 quirks 0x0000008002010010
+[    3.481686][   T83] xhci-hcd xhci-hcd.8.auto: irq 87, io mem 0xfc400000
+[    3.481763][   T83] xhci-hcd xhci-hcd.8.auto: xHCI Host Controller
+[    3.481771][   T83] xhci-hcd xhci-hcd.8.auto: new USB bus registered, assigned bus number 6
+[    3.481779][   T83] xhci-hcd xhci-hcd.8.auto: Host supports USB 3.0 SuperSpeed
+[    3.481846][   T83] usb usb5: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.01
+[    3.481880][   T83] usb usb5: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.481887][   T83] usb usb5: Product: xHCI Host Controller
+[    3.481894][   T83] usb usb5: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 xhci-hcd
+[    3.481900][   T83] usb usb5: SerialNumber: xhci-hcd.8.auto
+[    3.482059][   T83] hub 5-0:1.0: USB hub found
+[    3.482073][   T83] hub 5-0:1.0: 1 port detected
+[    3.482211][   T83] usb usb6: We don't know the algorithms for LPM for this host, disabling LPM.
+[    3.482252][   T83] usb usb6: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.01
+[    3.482260][   T83] usb usb6: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.482266][   T83] usb usb6: Product: xHCI Host Controller
+[    3.482272][   T83] usb usb6: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 xhci-hcd
+[    3.482278][   T83] usb usb6: SerialNumber: xhci-hcd.8.auto
+[    3.482407][   T83] hub 6-0:1.0: USB hub found
+[    3.482420][   T83] hub 6-0:1.0: 1 port detected
+[    3.489870][  T110] ehci-platform fc880000.usb: USB 2.0 started, EHCI 1.00
+[    3.489988][  T110] usb usb3: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.01
+[    3.490000][  T110] usb usb3: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.490007][  T110] usb usb3: Product: EHCI Host Controller
+[    3.490014][  T110] usb usb3: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 ehci_hcd
+[    3.490020][  T110] usb usb3: SerialNumber: fc880000.usb
+[    3.490182][  T110] hub 3-0:1.0: USB hub found
+[    3.490205][  T110] hub 3-0:1.0: 1 port detected
+[    3.505867][    T8] ehci-platform fc800000.usb: USB 2.0 started, EHCI 1.00
+[    3.505983][    T8] usb usb4: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.01
+[    3.505993][    T8] usb usb4: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.506000][    T8] usb usb4: Product: EHCI Host Controller
+[    3.506006][    T8] usb usb4: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 ehci_hcd
+[    3.506012][    T8] usb usb4: SerialNumber: fc800000.usb
+[    3.506168][    T8] hub 4-0:1.0: USB hub found
+[    3.506191][    T8] hub 4-0:1.0: 1 port detected
+[    3.506468][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-inno-usb2.ko
+[    3.506648][    T1] init: Loading module /lib/modules/phy-rockchip-inno-usb3.ko with args ''
+[    3.507623][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-inno-usb3.ko
+[    3.507746][    T1] init: Loading module /lib/modules/dwc2.ko with args ''
+[    3.510566][    T1] init: Loaded kernel module /lib/modules/dwc2.ko
+[    3.510712][    T1] init: Loading module /lib/modules/ohci-hcd.ko with args ''
+[    3.511483][    T1] init: Loaded kernel module /lib/modules/ohci-hcd.ko
+[    3.511642][    T1] init: Loading module /lib/modules/ohci-platform.ko with args ''
+[    3.512243][    T8] ohci-platform fc840000.usb: Generic Platform OHCI controller
+[    3.512256][    T8] ohci-platform fc840000.usb: new USB bus registered, assigned bus number 7
+[    3.512276][  T110] ohci-platform fc8c0000.usb: Generic Platform OHCI controller
+[    3.512288][  T110] ohci-platform fc8c0000.usb: new USB bus registered, assigned bus number 8
+[    3.512304][    T8] ohci-platform fc840000.usb: irq 88, io mem 0xfc840000
+[    3.512339][  T110] ohci-platform fc8c0000.usb: irq 89, io mem 0xfc8c0000
+[    3.573932][  T110] usb usb8: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 6.01
+[    3.573940][  T110] usb usb8: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.573947][  T110] usb usb8: Product: Generic Platform OHCI controller
+[    3.573953][  T110] usb usb8: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 ohci_hcd
+[    3.573959][  T110] usb usb8: SerialNumber: fc8c0000.usb
+[    3.574101][  T110] hub 8-0:1.0: USB hub found
+[    3.574116][  T110] hub 8-0:1.0: 1 port detected
+[    3.574285][    T8] usb usb7: New USB device found, idVendor=1d6b, idProduct=0001, bcdDevice= 6.01
+[    3.574295][    T8] usb usb7: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    3.574301][    T8] usb usb7: Product: Generic Platform OHCI controller
+[    3.574308][    T8] usb usb7: Manufacturer: Linux 6.1.75-android14-11-g8942136b2744-ab11900366 ohci_hcd
+[    3.574314][    T8] usb usb7: SerialNumber: fc840000.usb
+[    3.574457][    T8] hub 7-0:1.0: USB hub found
+[    3.574472][    T8] hub 7-0:1.0: 1 port detected
+[    3.574667][    T1] init: Loaded kernel module /lib/modules/ohci-platform.ko
+[    3.574808][    T1] init: Loading module /lib/modules/usblp.ko with args ''
+[    3.575337][    T1] usbcore: registered new interface driver usblp
+[    3.575396][    T1] init: Loaded kernel module /lib/modules/usblp.ko
+[    3.575526][    T1] init: Loading module /lib/modules/cdc-wdm.ko with args ''
+[    3.576064][    T1] usbcore: registered new interface driver cdc_wdm
+[    3.576121][    T1] init: Loaded kernel module /lib/modules/cdc-wdm.ko
+[    3.576244][    T1] init: Loading module /lib/modules/trancevibrator.ko with args ''
+[    3.576483][    T1] usbcore: registered new interface driver trancevibrator
+[    3.576527][    T1] init: Loaded kernel module /lib/modules/trancevibrator.ko
+[    3.576651][    T1] init: Loading module /lib/modules/adc-keys.ko with args ''
+[    3.577087][    T1] init: Loaded kernel module /lib/modules/adc-keys.ko
+[    3.577211][    T1] init: Loading module /lib/modules/rk805-pwrkey.ko with args ''
+[    3.578308][    T1] input: rk805 pwrkey as /devices/platform/feb20000.spi/spi_master/spi2/spi2.0/rk805-pwrkey.1.auto/input/input0
+[    3.578461][    T1] init: Loaded kernel module /lib/modules/rk805-pwrkey.ko
+[    3.578582][    T1] init: Loading module /lib/modules/rk817_battery.ko with args ''
+[    3.579429][    T1] init: Loaded kernel module /lib/modules/rk817_battery.ko
+[    3.579545][    T1] init: Loading module /lib/modules/rk817_charger.ko with args ''
+[    3.580220][    T1] init: Loaded kernel module /lib/modules/rk817_charger.ko
+[    3.580339][    T1] init: Loading module /lib/modules/rk818_battery.ko with args ''
+[    3.581390][    T1] init: Loaded kernel module /lib/modules/rk818_battery.ko
+[    3.581505][    T1] init: Loading module /lib/modules/rk818_charger.ko with args ''
+[    3.582201][    T1] init: Loaded kernel module /lib/modules/rk818_charger.ko
+[    3.582332][    T1] init: Loading module /lib/modules/bq25700_charger.ko with args ''
+[    3.582990][    T1] init: Loaded kernel module /lib/modules/bq25700_charger.ko
+[    3.583114][    T1] init: Loading module /lib/modules/test_power.ko with args ''
+[    3.583767][    T1] test_power_init: could not find dev node
+[    3.583819][    T1] init: Loaded kernel module /lib/modules/test_power.ko
+[    3.583947][    T1] init: Loading module /lib/modules/cw2015_battery.ko with args ''
+[    3.584335][    T1] init: Loaded kernel module /lib/modules/cw2015_battery.ko
+[    3.584460][    T1] init: Loading module /lib/modules/cw221x_battery.ko with args ''
+[    3.584841][    T1] init: Loaded kernel module /lib/modules/cw221x_battery.ko
+[    3.584968][    T1] init: Loading module /lib/modules/sgm41542_charger.ko with args ''
+[    3.585431][    T1] init: Loaded kernel module /lib/modules/sgm41542_charger.ko
+[    3.585554][    T1] init: Loading module /lib/modules/fusb302.ko with args ''
+[    3.586183][    T1] init: Loaded kernel module /lib/modules/fusb302.ko
+[    3.586315][    T1] init: Loading module /lib/modules/tcpci_husb311.ko with args ''
+[    3.586684][    T1] init: Loaded kernel module /lib/modules/tcpci_husb311.ko
+[    3.586807][    T1] init: Loading module /lib/modules/usb_f_rndis.ko with args ''
+[    3.587595][    T1] init: Loaded kernel module /lib/modules/usb_f_rndis.ko
+[    3.587724][    T1] init: Loading module /lib/modules/rtc-hym8563.ko with args ''
+[    3.588088][    T1] init: Loaded kernel module /lib/modules/rtc-hym8563.ko
+[    3.588211][    T1] init: Loading module /lib/modules/rtc-rk808.ko with args ''
+[    3.588625][    T1] init: Loaded kernel module /lib/modules/rtc-rk808.ko
+[    3.588839][    T1] init: Loading module /lib/modules/reboot-mode.ko with args ''
+[    3.589217][    T1] init: Loaded kernel module /lib/modules/reboot-mode.ko
+[    3.589254][    T1] init: Loading module /lib/modules/syscon-reboot-mode.ko with args ''
+[    3.589792][    T1] init: Loaded kernel module /lib/modules/syscon-reboot-mode.ko
+[    3.589941][    T1] init: Loading module /lib/modules/dw_wdt.ko with args ''
+[    3.590469][    T1] init: Loaded kernel module /lib/modules/dw_wdt.ko
+[    3.590702][    T1] init: Loading module /lib/modules/rockchip-cpufreq.ko with args ''
+[    3.591919][    T1] cpu cpu0: bin=2
+[    3.592100][    T1] cpu cpu0: leakage=17
+[    3.593587][    T1] cpu cpu0: pvtm=1439
+[    3.593775][    T1] cpu cpu0: pvtm-volt-sel=4
+[    3.595735][    T1] cpu cpu1: bin=2
+[    3.595913][    T1] cpu cpu1: leakage=12
+[    3.602513][    T1] cpu cpu1: pvtm=1673
+[    3.606567][    T1] cpu cpu1: pvtm-volt-sel=5
+[    3.609255][    T1] cpu cpu3: bin=2
+[    3.609432][    T1] cpu cpu3: leakage=13
+[    3.615998][    T1] cpu cpu3: pvtm=1681
+[    3.620019][    T1] cpu cpu3: pvtm-volt-sel=6
+[    3.621162][    T1] init: Loaded kernel module /lib/modules/rockchip-cpufreq.ko
+[    3.621197][    T1] init: Loading module /lib/modules/cpufreq-dt.ko with args ''
+[    3.622653][    T1] cpu cpu0: avs=0
+[    3.623736][    T1] cpu cpu1: avs=0
+[    3.624643][    T1] cpu cpu3: avs=0
+[    3.624732][    T1] cpu cpu0: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=1608000000 h_table=0
+[    3.625111][    T1] cpu cpu0: EM: created perf domain
+[    3.625594][    T1] cpu cpu1: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=2208000000 h_table=0
+[    3.633670][    T1] cpu cpu1: EM: created perf domain
+[    3.634601][    T1] cpu cpu3: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=2208000000 h_table=0
+[    3.646372][    T1] cpu cpu3: EM: created perf domain
+[    3.646791][    T1] init: Loaded kernel module /lib/modules/cpufreq-dt.ko
+[    3.646937][    T1] init: Loading module /lib/modules/leds-gpio.ko with args ''
+[    3.647549][    T1] init: Loaded kernel module /lib/modules/leds-gpio.ko
+[    3.647677][    T1] init: Loading module /lib/modules/ledtrig-heartbeat.ko with args ''
+[    3.648030][    T1] init: Loaded kernel module /lib/modules/ledtrig-heartbeat.ko
+[    3.648151][    T1] init: Loading module /lib/modules/ledtrig-backlight.ko with args ''
+[    3.648430][    T1] init: Loaded kernel module /lib/modules/ledtrig-backlight.ko
+[    3.648550][    T1] init: Loading module /lib/modules/ledtrig-default-on.ko with args ''
+[    3.648791][    T1] init: Loaded kernel module /lib/modules/ledtrig-default-on.ko
+[    3.648999][    T1] init: Loading module /lib/modules/cryptodev.ko with args ''
+[    3.650686][    T1] cryptodev: driver 1.12 loaded.
+[    3.650824][    T1] init: Loaded kernel module /lib/modules/cryptodev.ko
+[    3.650855][    T1] init: Loading module /lib/modules/rk_crypto.ko with args ''
+[    3.652747][    T1] init: Loaded kernel module /lib/modules/rk_crypto.ko
+[    3.652887][    T1] init: Loading module /lib/modules/rockchip_bus.ko with args ''
+[    3.654035][    T1] init: Loaded kernel module /lib/modules/rockchip_bus.ko
+[    3.654156][    T1] init: Loading module /lib/modules/rockchip-nocp.ko with args ''
+[    3.654735][    T1] init: Loaded kernel module /lib/modules/rockchip-nocp.ko
+[    3.654860][    T1] init: Loading module /lib/modules/rockchip_pm_config.ko with args ''
+[    3.655444][    T1] rockchip-pm rockchip-suspend: not set pwm-regulator-config
+[    3.656281][    T1] init: Loaded kernel module /lib/modules/rockchip_pm_config.ko
+[    3.656422][    T1] init: Loading module /lib/modules/aes-ce-ccm.ko with args ''
+[    3.656775][    T1] init: Loaded kernel module /lib/modules/aes-ce-ccm.ko
+[    3.656946][    T1] init: Loading module /lib/modules/ofb.ko with args ''
+[    3.657187][    T1] init: Loaded kernel module /lib/modules/ofb.ko
+[    3.657264][    T1] init: Loading module /lib/modules/sha1-ce.ko with args ''
+[    3.657434][    T1] init: Loaded kernel module /lib/modules/sha1-ce.ko
+[    3.657512][    T1] init: Loading module /lib/modules/industrialio-buffer-cb.ko with args ''
+[    3.657749][    T1] init: Loaded kernel module /lib/modules/industrialio-buffer-cb.ko
+[    3.657822][    T1] init: Loading module /lib/modules/sg.ko with args ''
+[    3.658455][    T1] init: Loaded kernel module /lib/modules/sg.ko
+[    3.658533][    T1] init: Loading module /lib/modules/timer-rockchip.ko with args ''
+[    3.658922][    T1] init: Loaded kernel module /lib/modules/timer-rockchip.ko
+[    3.658996][    T1] init: Loading module /lib/modules/rockchip_ipa.ko with args ''
+[    3.659294][    T1] init: Loaded kernel module /lib/modules/rockchip_ipa.ko
+[    3.659366][    T1] init: Loading module /lib/modules/cpufreq_ondemand.ko with args ''
+[    3.659621][    T1] init: Loaded kernel module /lib/modules/cpufreq_ondemand.ko
+[    3.659696][    T1] init: Loading module /lib/modules/cpufreq_userspace.ko with args ''
+[    3.659859][    T1] init: Loaded kernel module /lib/modules/cpufreq_userspace.ko
+[    3.659933][    T1] init: Loading module /lib/modules/rockchip-dfi.ko with args ''
+[    3.660454][    T1] init: Loaded kernel module /lib/modules/rockchip-dfi.ko
+[    3.660541][    T1] init: Loading module /lib/modules/rockchip_dmc.ko with args ''
+[    3.661459][    T1] rockchip-dmc dmc: bin=2
+[    3.661630][    T1] rockchip-dmc dmc: leakage=40
+[    3.661636][    T1] rockchip-dmc dmc: leakage-volt-sel=1
+[    3.661642][    T1] rockchip-dmc dmc: soc version=2, speed=1
+[    3.662555][    T1] rockchip-dmc dmc: avs=0
+[    3.662563][    T1] rockchip-dmc dmc: current ATF version 0x100
+[    3.662725][    T1] rockchip-dmc dmc: normal_rate = 1560000000
+[    3.662730][    T1] rockchip-dmc dmc: reboot_rate = 2112000000
+[    3.662733][    T1] rockchip-dmc dmc: suspend_rate = 528000000
+[    3.662738][    T1] rockchip-dmc dmc: video_4k_rate = 1560000000
+[    3.662741][    T1] rockchip-dmc dmc: video_4k_10b_rate = 1560000000
+[    3.662745][    T1] rockchip-dmc dmc: video_svep_rate = 1560000000
+[    3.662748][    T1] rockchip-dmc dmc: boost_rate = 2112000000
+[    3.662752][    T1] rockchip-dmc dmc: fixed_rate(isp|cif0|cif1|dualview) = 2112000000
+[    3.662756][    T1] rockchip-dmc dmc: performance_rate = 2112000000
+[    3.662760][    T1] rockchip-dmc dmc: hdmirx_rate = 2112000000
+[    3.662764][    T1] rockchip-dmc dmc: deep_suspend_rate = 2112000000
+[    3.662770][    T1] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    3.662773][    T1] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    3.662957][    T1] rockchip-dmc dmc: l=15000 h=2147483647 hyst=5000 l_limit=0 h_limit=0 h_table=0
+[    3.673394][    T1] init: Loaded kernel module /lib/modules/rockchip_dmc.ko
+[    3.673507][    T1] init: Loading module /lib/modules/rockchip.ko with args ''
+[    3.673749][    T1] init: Loaded kernel module /lib/modules/rockchip.ko
+[    3.673866][    T1] init: Loading module /lib/modules/rk628_misc.ko with args ''
+[    3.675533][    T1] init: Loaded kernel module /lib/modules/rk628_misc.ko
+[    3.675675][    T1] init: Loading module /lib/modules/bifrost_kbase.ko with args ''
+[    3.692133][    T8] mali fb000000.gpu: Kernel DDK version g21p0-01eac0
+[    3.692211][    T8] mali fb000000.gpu: GPU metrics tracepoint support enabled
+[    3.696258][    T8] mali fb000000.gpu: bin=2
+[    3.696435][    T8] mali fb000000.gpu: leakage=20
+[    3.698230][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    3.703716][    T8] mali fb000000.gpu: pvtm=849
+[    3.711048][    T8] mali fb000000.gpu: pvtm-volt-sel=3
+[    3.711099][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    3.711106][    T8] debugfs: File 'uA_load' in directory '/' already present!
+[    3.711110][    T8] debugfs: File 'min_uV' in directory '/' already present!
+[    3.711115][    T8] debugfs: File 'max_uV' in directory '/' already present!
+[    3.711119][    T8] debugfs: File 'constraint_flags' in directory '/' already present!
+[    3.711883][    T8] mali fb000000.gpu: avs=0
+[    3.711909][    T8] W : [File] : drivers/gpu/arm/bifrost/platform/rk/mali_kbase_config_rk.c; [Line] : 144; [Func] : kbase_platform_rk_init(); power-off-delay-ms not available.
+[    3.717333][    T8] mali fb000000.gpu: Register LUT 000a0800 initialized for GPU arch 0x000a0806
+[    3.717347][    T8] mali fb000000.gpu: r0p0 status 5 not found in HW issues table;
+[    3.717352][    T8] mali fb000000.gpu: falling back to closest match: r0p0 status 0
+[    3.717357][    T8] mali fb000000.gpu: Execution proceeding normally with fallback match
+[    3.717362][    T8] mali fb000000.gpu: GPU identified as 0x7 arch 10.8.6 r0p0 status 0
+[    3.717429][    T8] mali fb000000.gpu: No priority control manager is configured
+[    3.717435][    T8] mali fb000000.gpu: Large page allocation set to false after hardware feature check
+[    3.717557][    T8] mali fb000000.gpu: No memory group manager is configured
+[    3.717576][    T8] mali fb000000.gpu: Protected memory allocator not available
+[    3.718827][    T8] mali fb000000.gpu: EM: created perf domain
+[    3.719046][    T8] mali fb000000.gpu: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=800000000 h_table=0
+[    3.719338][    T8] mali fb000000.gpu: * MALI kbase_mmap_min_addr compiled to CONFIG_DEFAULT_MMAP_MIN_ADDR, no runtime update possible! *
+[    3.719344][    T8] mali fb000000.gpu: Probed as mali0
+[    3.719938][    T1] init: Loaded kernel module /lib/modules/bifrost_kbase.ko
+[    3.720132][    T1] init: Loading module /lib/modules/rockchip_charger_manager.ko with args ''
+[    3.721274][    T1] init: Loaded kernel module /lib/modules/rockchip_charger_manager.ko
+[    3.721418][    T1] init: Loading module /lib/modules/phy-rockchip-csi2-dphy-hw.ko with args ''
+[    3.722356][    T1] rockchip-csi2-dphy-hw fedc0000.csi2-dphy0-hw: csi2 dphy hw probe successfully!
+[    3.722431][    T1] rockchip-csi2-dphy-hw fedc8000.csi2-dphy1-hw: csi2 dphy hw probe successfully!
+[    3.722621][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-csi2-dphy-hw.ko
+[    3.722751][    T1] init: Loading module /lib/modules/videobuf2-cma-sg.ko with args ''
+[    3.723266][    T1] init: Loaded kernel module /lib/modules/videobuf2-cma-sg.ko
+[    3.723372][    T1] init: Loading module /lib/modules/video_rkcif.ko with args ''
+[    3.726883][    T1] rockchip-mipi-csi2-hw fdd10000.mipi0-csi2-hw: enter mipi csi2 hw probe!
+[    3.727060][    T1] rockchip-mipi-csi2-hw fdd10000.mipi0-csi2-hw: probe success, v4l2_dev:mipi0-csi2-hw!
+[    3.727089][    T1] rockchip-mipi-csi2-hw fdd20000.mipi1-csi2-hw: enter mipi csi2 hw probe!
+[    3.727129][    T1] rockchip-mipi-csi2-hw fdd20000.mipi1-csi2-hw: probe success, v4l2_dev:mipi1-csi2-hw!
+[    3.727152][    T1] rockchip-mipi-csi2-hw fdd30000.mipi2-csi2-hw: enter mipi csi2 hw probe!
+[    3.727190][    T1] rockchip-mipi-csi2-hw fdd30000.mipi2-csi2-hw: probe success, v4l2_dev:mipi2-csi2-hw!
+[    3.727211][    T1] rockchip-mipi-csi2-hw fdd40000.mipi3-csi2-hw: enter mipi csi2 hw probe!
+[    3.727246][    T1] rockchip-mipi-csi2-hw fdd40000.mipi3-csi2-hw: probe success, v4l2_dev:mipi3-csi2-hw!
+[    3.727267][    T1] rockchip-mipi-csi2-hw fdd50000.mipi4-csi2-hw: enter mipi csi2 hw probe!
+[    3.727302][    T1] rockchip-mipi-csi2-hw fdd50000.mipi4-csi2-hw: probe success, v4l2_dev:mipi4-csi2-hw!
+[    3.727322][    T1] rockchip-mipi-csi2-hw fdd60000.mipi5-csi2-hw: enter mipi csi2 hw probe!
+[    3.727357][    T1] rockchip-mipi-csi2-hw fdd60000.mipi5-csi2-hw: probe success, v4l2_dev:mipi5-csi2-hw!
+[    3.727883][    T1] init: Loaded kernel module /lib/modules/video_rkcif.ko
+[    3.727995][    T1] init: Loading module /lib/modules/video_rkisp.ko with args ''
+[    3.733070][    T1] init: Loaded kernel module /lib/modules/video_rkisp.ko
+[    3.733205][    T1] init: Loading module /lib/modules/video_rkisp1.ko with args ''
+[    3.734567][    T1] init: Loaded kernel module /lib/modules/video_rkisp1.ko
+[    3.734665][    T1] init: Loading module /lib/modules/rk_ircut.ko with args ''
+[    3.735101][    T1] init: Loaded kernel module /lib/modules/rk_ircut.ko
+[    3.735180][    T1] init: Loading module /lib/modules/leds-rgb13h.ko with args ''
+[    3.735562][    T1] init: Loaded kernel module /lib/modules/leds-rgb13h.ko
+[    3.735631][    T1] init: Loading module /lib/modules/dw9714.ko with args ''
+[    3.735996][    T1] init: Loaded kernel module /lib/modules/dw9714.ko
+[    3.736085][    T1] init: Loading module /lib/modules/ov13855.ko with args ''
+[    3.736441][    T1] init: Loaded kernel module /lib/modules/ov13855.ko
+[    3.736521][    T1] init: Loading module /lib/modules/ov13850.ko with args ''
+[    3.736844][    T1] init: Loaded kernel module /lib/modules/ov13850.ko
+[    3.736905][    T1] init: Loading module /lib/modules/vm149c.ko with args ''
+[    3.737232][    T1] init: Loaded kernel module /lib/modules/vm149c.ko
+[    3.737304][    T1] init: Loading module /lib/modules/dw9763.ko with args ''
+[    3.737633][    T1] init: Loaded kernel module /lib/modules/dw9763.ko
+[    3.737700][    T1] init: Loading module /lib/modules/gc8034.ko with args ''
+[    3.738075][    T1] init: Loaded kernel module /lib/modules/gc8034.ko
+[    3.738144][    T1] init: Loading module /lib/modules/imx415.ko with args ''
+[    3.738548][    T1] init: Loaded kernel module /lib/modules/imx415.ko
+[    3.738631][    T1] init: Loading module /lib/modules/ov50c40.ko with args ''
+[    3.738993][    T1] init: Loaded kernel module /lib/modules/ov50c40.ko
+[    3.739073][    T1] init: Loading module /lib/modules/ov5695.ko with args ''
+[    3.739363][    T1] init: Loaded kernel module /lib/modules/ov5695.ko
+[    3.739430][    T1] init: Loading module /lib/modules/gc2145.ko with args ''
+[    3.739727][    T1] init: Loaded kernel module /lib/modules/gc2145.ko
+[    3.739806][    T1] init: Loading module /lib/modules/gc2385.ko with args ''
+[    3.740119][    T1] init: Loaded kernel module /lib/modules/gc2385.ko
+[    3.740210][    T1] init: Loading module /lib/modules/ov8858.ko with args ''
+[    3.740555][    T1] init: Loaded kernel module /lib/modules/ov8858.ko
+[    3.740632][    T1] init: Loading module /lib/modules/aw8601.ko with args ''
+[    3.740873][    T1] init: Loaded kernel module /lib/modules/aw8601.ko
+[    3.740953][    T1] init: Loading module /lib/modules/ces6301.ko with args ''
+[    3.741308][    T1] init: Loaded kernel module /lib/modules/ces6301.ko
+[    3.741387][    T1] init: Loading module /lib/modules/gc05a2.ko with args ''
+[    3.741749][    T1] init: Loaded kernel module /lib/modules/gc05a2.ko
+[    3.741840][    T1] init: Loading module /lib/modules/ov8865.ko with args ''
+[    3.742204][    T1] init: Loaded kernel module /lib/modules/ov8865.ko
+[    3.742277][    T1] init: Loading module /lib/modules/sc4336.ko with args ''
+[    3.742630][    T1] init: Loaded kernel module /lib/modules/sc4336.ko
+[    3.742712][    T1] init: Loading module /lib/modules/s5k3l8xx.ko with args ''
+[    3.743055][    T1] init: Loaded kernel module /lib/modules/s5k3l8xx.ko
+[    3.743146][    T1] init: Loading module /lib/modules/ov16880.ko with args ''
+[    3.743516][    T1] init: Loaded kernel module /lib/modules/ov16880.ko
+[    3.743669][    T1] init: Loading module /lib/modules/rockchip-hdmirx-class.ko with args ''
+[    3.743912][    T1] init: Loaded kernel module /lib/modules/rockchip-hdmirx-class.ko
+[    3.743994][    T1] init: Loading module /lib/modules/video-rk628.ko with args ''
+[    3.745666][    T1] init: Loaded kernel module /lib/modules/video-rk628.ko
+[    3.745690][    T1] init: Loading module /lib/modules/rk628-csi.ko with args ''
+[    3.746631][    T1] init: Loaded kernel module /lib/modules/rk628-csi.ko
+[    3.746802][    T1] init: Loading module /lib/modules/rk628-bt1120.ko with args ''
+[    3.747402][    T1] init: Loaded kernel module /lib/modules/rk628-bt1120.ko
+[    3.747488][    T1] init: Loading module /lib/modules/phy-rockchip-csi2-dphy.ko with args ''
+[    3.748255][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-csi2-dphy.ko
+[    3.748340][    T1] init: Loading module /lib/modules/phy-rockchip-mipi-rx.ko with args ''
+[    3.749063][    T1] init: Loaded kernel module /lib/modules/phy-rockchip-mipi-rx.ko
+[    3.749153][    T1] init: Loading module /lib/modules/rockchip-hdmirx.ko with args ''
+[    3.750874][    T1] init: Loaded kernel module /lib/modules/rockchip-hdmirx.ko
+[    3.750961][    T1] init: Loading module /lib/modules/sensor_dev.ko with args ''
+[    3.751726][    T1] init: Loaded kernel module /lib/modules/sensor_dev.ko
+[    3.751813][    T1] init: Loading module /lib/modules/mma7660.ko with args ''
+[    3.752030][    T1] init: Loaded kernel module /lib/modules/mma7660.ko
+[    3.752115][    T1] init: Loading module /lib/modules/ak8975.ko with args ''
+[    3.752395][    T1] init: Loaded kernel module /lib/modules/ak8975.ko
+[    3.752493][    T1] init: Loading module /lib/modules/ak8963.ko with args ''
+[    3.752813][    T1] init: Loaded kernel module /lib/modules/ak8963.ko
+[    3.752903][    T1] init: Loading module /lib/modules/sgm3784.ko with args ''
+[    3.753218][    T1] init: Loaded kernel module /lib/modules/sgm3784.ko
+[    3.753300][    T1] init: Loading module /lib/modules/st_lsm6dsx.ko with args ''
+[    3.753773][    T1] init: Loaded kernel module /lib/modules/st_lsm6dsx.ko
+[    3.753861][    T1] init: Loading module /lib/modules/mpu6500_acc.ko with args ''
+[    3.754060][    T1] init: Loaded kernel module /lib/modules/mpu6500_acc.ko
+[    3.754149][    T1] init: Loading module /lib/modules/mpu6500_gyro.ko with args ''
+[    3.754350][    T1] init: Loaded kernel module /lib/modules/mpu6500_gyro.ko
+[    3.754436][    T1] init: Loading module /lib/modules/mxc6655xa.ko with args ''
+[    3.754628][    T1] init: Loaded kernel module /lib/modules/mxc6655xa.ko
+[    3.754726][    T1] init: Loading module /lib/modules/icm4260x_acc.ko with args ''
+[    3.754933][    T1] init: Loaded kernel module /lib/modules/icm4260x_acc.ko
+[    3.755017][    T1] init: Loading module /lib/modules/icm4260x_gyro.ko with args ''
+[    3.755219][    T1] init: Loaded kernel module /lib/modules/icm4260x_gyro.ko
+[    3.755297][    T1] init: Loading module /lib/modules/mh248.ko with args ''
+[    3.755709][    T1] init: Loaded kernel module /lib/modules/mh248.ko
+[    3.755781][    T1] init: Loading module /lib/modules/sc7a20.ko with args ''
+[    3.756045][    T1] init: Loaded kernel module /lib/modules/sc7a20.ko
+[    3.756111][    T1] init: Loading module /lib/modules/rga3.ko with args ''
+[    3.757695][    T1] rga3 fdb60000.rga: Adding to iommu group 3
+[    3.758117][    T1] rga3 fdb60000.rga: probe successfully, irq = 48, hw_version:3.0.76831
+[    3.758224][    T1] rga3 fdb70000.rga: Adding to iommu group 4
+[    3.758456][    T1] rga3 fdb70000.rga: probe successfully, irq = 49, hw_version:3.0.76831
+[    3.758959][    T1] rga2 fdb80000.rga: probe successfully, irq = 107, hw_version:3.2.63318
+[    3.759344][    T1] rga_iommu: IOMMU binding successfully, default mapping core[0x1]
+[    3.759406][    T1] rga: Module initialized. v1.3.4
+[    3.759510][    T1] init: Loaded kernel module /lib/modules/rga3.ko
+[    3.759606][    T1] init: Loading module /lib/modules/rknpu.ko with args ''
+[    3.761047][    T1] RKNPU fdab0000.npu: Adding to iommu group 0
+[    3.761113][    T1] RKNPU fdab0000.npu: RKNPU: rknpu iommu is enabled, using iommu mode
+[    3.764616][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    3.764632][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    3.764641][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    3.764760][    T1] [drm] Initialized rknpu 0.9.7 20240424 for fdab0000.npu on minor 1
+[    3.780470][    T1] debugfs: File 'uA_load' in directory '/' already present!
+[    3.780478][    T1] debugfs: File 'min_uV' in directory '/' already present!
+[    3.780482][    T1] debugfs: File 'max_uV' in directory '/' already present!
+[    3.780486][    T1] debugfs: File 'constraint_flags' in directory '/' already present!
+[    3.785986][    T1] RKNPU fdab0000.npu: RKNPU: bin=2
+[    3.786160][    T1] RKNPU fdab0000.npu: leakage=10
+[    3.786181][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    3.795855][    T1] RKNPU fdab0000.npu: pvtm=842
+[    3.799804][    T1] RKNPU fdab0000.npu: pvtm-volt-sel=2
+[    3.799834][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    3.800282][    T1] debugfs: File 'uA_load' in directory '/' already present!
+[    3.800286][    T1] debugfs: File 'min_uV' in directory '/' already present!
+[    3.800290][    T1] debugfs: File 'max_uV' in directory '/' already present!
+[    3.800295][    T1] debugfs: File 'constraint_flags' in directory '/' already present!
+[    3.801454][    T1] RKNPU fdab0000.npu: avs=0
+[    3.801529][    T1] RKNPU fdab0000.npu: l=15000 h=85000 hyst=5000 l_limit=0 h_limit=800000000 h_table=0
+[    3.816776][    T1] init: Loaded kernel module /lib/modules/rknpu.ko
+[    3.816925][    T1] init: Loading module /lib/modules/rk_vcodec.ko with args ''
+[    3.821316][    T1] mpp_service mpp-srv: 231ab18f7 author: AdvantechECGRISC 2024-09-18 Initial commit
+[    3.821323][    T1] mpp_service mpp-srv: probe start
+[    3.822655][    T1] mpp_vdpu1 fdb51000.avsd-plus: Adding to iommu group 2
+[    3.822967][    T1] mpp_vdpu1 fdb51000.avsd-plus: probe device
+[    3.823116][    T1] mpp_vdpu1 fdb51000.avsd-plus: reset_group->rw_sem_on=0
+[    3.823123][    T1] mpp_vdpu1 fdb51000.avsd-plus: reset_group->rw_sem_on=0
+[    3.823168][    T1] mpp_vdpu1 fdb51000.avsd-plus: probing finish
+[    3.823515][    T1] mpp_vdpu2 fdb50400.vdpu: Adding to iommu group 2
+[    3.823554][    T1] mpp_vdpu2 fdb50400.vdpu: probe device
+[    3.823617][    T1] mpp_vdpu2 fdb50400.vdpu: reset_group->rw_sem_on=0
+[    3.823635][    T1] mpp_vdpu2 fdb50400.vdpu: reset_group->rw_sem_on=0
+[    3.823647][    T1] mpp_vdpu2 fdb50400.vdpu: probing finish
+[    3.823769][    T1] mpp_vepu2 jpege-ccu: probing start
+[    3.823775][    T1] mpp_vepu2 jpege-ccu: probing finish
+[    3.823867][    T1] mpp_vepu2 fdb50000.vepu: Adding to iommu group 2
+[    3.823899][    T1] mpp_vepu2 fdb50000.vepu: probing start
+[    3.823969][    T1] mpp_vepu2 fdb50000.vepu: reset_group->rw_sem_on=0
+[    3.823974][    T1] mpp_vepu2 fdb50000.vepu: reset_group->rw_sem_on=0
+[    3.823991][    T1] mpp_vepu2 fdb50000.vepu: probing finish
+[    3.824094][    T1] mpp_vepu2 fdba0000.jpege-core: Adding to iommu group 6
+[    3.824148][    T1] mpp_vepu2 fdba0000.jpege-core: probing start
+[    3.824239][    T1] mpp_vepu2 fdba0000.jpege-core: attach ccu success
+[    3.824257][    T1] mpp_vepu2 fdba0000.jpege-core: probing finish
+[    3.824327][    T1] mpp_vepu2 fdba4000.jpege-core: Adding to iommu group 7
+[    3.824381][    T1] mpp_vepu2 fdba4000.jpege-core: probing start
+[    3.824457][    T1] mpp_vepu2 fdba4000.jpege-core: attach ccu success
+[    3.824474][    T1] mpp_vepu2 fdba4000.jpege-core: probing finish
+[    3.824562][    T1] mpp_vepu2 fdba8000.jpege-core: Adding to iommu group 8
+[    3.824617][    T1] mpp_vepu2 fdba8000.jpege-core: probing start
+[    3.824689][    T1] mpp_vepu2 fdba8000.jpege-core: attach ccu success
+[    3.824706][    T1] mpp_vepu2 fdba8000.jpege-core: probing finish
+[    3.824778][    T1] mpp_vepu2 fdbac000.jpege-core: Adding to iommu group 9
+[    3.824832][    T1] mpp_vepu2 fdbac000.jpege-core: probing start
+[    3.824903][    T1] mpp_vepu2 fdbac000.jpege-core: attach ccu success
+[    3.824916][    T1] mpp_vepu2 fdbac000.jpege-core: probing finish
+[    3.825151][    T1] mpp-iep2 fdbb0000.iep: Adding to iommu group 10
+[    3.825211][    T1] mpp-iep2 fdbb0000.iep: probe device
+[    3.825306][    T1] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    3.825319][    T1] mpp-iep2 fdbb0000.iep: probing finish
+[    3.825498][    T1] mpp_jpgdec fdb90000.jpegd: Adding to iommu group 5
+[    3.825731][    T1] mpp_jpgdec fdb90000.jpegd: probe device
+[    3.825842][    T1] mpp_jpgdec fdb90000.jpegd: probing finish
+[    3.826236][    T1] mpp_rkvdec2 fdc30000.rkvdec-ccu: rkvdec-ccu, probing start
+[    3.826298][    T1] mpp_rkvdec2 fdc30000.rkvdec-ccu: ccu-mode: 1
+[    3.826304][    T1] mpp_rkvdec2 fdc30000.rkvdec-ccu: probing finish
+[    3.826402][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: Adding to iommu group 13
+[    3.826594][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: rkvdec-core, probing start
+[    3.826685][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    3.826691][    T1] rkvdec2_init:1197: No niu aclk reset resource define
+[    3.826696][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    3.826712][    T1] rkvdec2_init:1200: No niu hclk reset resource define
+[    3.827226][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: no regulator, devfreq is disabled
+[    3.827271][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: core_mask=00010001
+[    3.827275][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: attach ccu as core 0
+[    3.827544][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: sram_start 0x00000000ff001000
+[    3.827550][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: rcb_iova 0x00000000fff00000
+[    3.827554][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: sram_size 491520
+[    3.827558][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: rcb_size 1048576
+[    3.827564][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: min_width 512
+[    3.827568][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: rcb_info_count 20
+[    3.827572][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [136, 24576]
+[    3.827576][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [137, 49152]
+[    3.827580][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [141, 90112]
+[    3.827584][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [140, 49152]
+[    3.827588][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [139, 180224]
+[    3.827592][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [133, 49152]
+[    3.827596][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [134, 8192]
+[    3.827600][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [135, 4352]
+[    3.827604][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [138, 13056]
+[    3.827608][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: [142, 291584]
+[    3.827629][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: probing finish
+[    3.827700][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: Adding to iommu group 14
+[    3.827868][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: rkvdec-core, probing start
+[    3.827946][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    3.827950][    T1] rkvdec2_init:1197: No niu aclk reset resource define
+[    3.827955][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    3.827959][    T1] rkvdec2_init:1200: No niu hclk reset resource define
+[    3.831754][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: no regulator, devfreq is disabled
+[    3.831788][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: core_mask=00020002
+[    3.831804][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: attach ccu as core 1
+[    3.832053][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: sram_start 0x00000000ff079000
+[    3.832058][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: rcb_iova 0x00000000ffe00000
+[    3.832062][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: sram_size 487424
+[    3.832066][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: rcb_size 1048576
+[    3.832071][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: min_width 512
+[    3.832075][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: rcb_info_count 20
+[    3.832079][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [136, 24576]
+[    3.832083][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [137, 49152]
+[    3.832087][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [141, 90112]
+[    3.832091][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [140, 49152]
+[    3.832095][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [139, 180224]
+[    3.832099][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [133, 49152]
+[    3.832103][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [134, 8192]
+[    3.832106][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [135, 4352]
+[    3.832110][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [138, 13056]
+[    3.832114][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: [142, 291584]
+[    3.832133][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: probing finish
+[    3.832298][    T1] mpp_rkvenc2 rkvenc-ccu: probing start
+[    3.832302][    T1] mpp_rkvenc2 rkvenc-ccu: probing finish
+[    3.832414][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: Adding to iommu group 11
+[    3.832535][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: probing start
+[    3.842318][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: bin=0
+[    3.842533][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: leakage=17
+[    3.842540][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: leakage-volt-sel=1
+[    3.849109][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: avs=0
+[    3.849122][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: l=-2147483648 h=2147483647 hyst=0 l_limit=0 h_limit=0 h_table=0
+[    3.861084][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: attach ccu as core 0
+[    3.861110][    T1] mpp_rkvenc2 fdbd0000.rkvenc-core: probing finish
+[    3.861197][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: Adding to iommu group 12
+[    3.861356][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: probing start
+[    3.865106][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: bin=0
+[    3.865288][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: leakage=17
+[    3.865294][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: leakage-volt-sel=1
+[    3.874224][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: avs=0
+[    3.874236][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: l=-2147483648 h=2147483647 hyst=0 l_limit=0 h_limit=0 h_table=0
+[    3.882280][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: attach ccu as core 1
+[    3.882301][    T1] mpp_rkvenc2 fdbe0000.rkvenc-core: probing finish
+[    3.882575][    T1] mpp_av1dec fdc70000.av1d: Adding to iommu group 15
+[    3.882741][    T1] mpp_av1dec fdc70000.av1d: probing start
+[    3.882853][    T1] mpp_av1dec fdc70000.av1d: probing finish
+[    3.883026][    T1] mpp_service mpp-srv: probe success
+[    3.883304][    T1] init: Loaded kernel module /lib/modules/rk_vcodec.ko
+[    3.883460][    T1] init: Loading module /lib/modules/rk_headset.ko with args ''
+[    3.884063][    T1] init: Loaded kernel module /lib/modules/rk_headset.ko
+[    3.884166][    T1] init: Loading module /lib/modules/rk_headset_irq_hook_adc.ko with args ''
+[    3.884553][    T1] init: Loaded kernel module /lib/modules/rk_headset_irq_hook_adc.ko
+[    3.884652][    T1] init: Loading module /lib/modules/rockchip_headset_core.ko with args ''
+[    3.885032][    T1] init: Loaded kernel module /lib/modules/rockchip_headset_core.ko
+[    3.885111][    T1] init: Loading module /lib/modules/snd-soc-dummy-codec.ko with args ''
+[    3.885410][    T1] init: Loaded kernel module /lib/modules/snd-soc-dummy-codec.ko
+[    3.885480][    T1] init: Loading module /lib/modules/snd-soc-hdmi-codec.ko with args ''
+[    3.885849][    T1] init: Loaded kernel module /lib/modules/snd-soc-hdmi-codec.ko
+[    3.885935][    T1] init: Loading module /lib/modules/snd-soc-rk-codec-digital.ko with args ''
+[    3.886430][    T1] init: Loaded kernel module /lib/modules/snd-soc-rk-codec-digital.ko
+[    3.886517][    T1] init: Loading module /lib/modules/snd-soc-rk817.ko with args ''
+[    3.886927][    T1] init: Loaded kernel module /lib/modules/snd-soc-rk817.ko
+[    3.887012][    T1] init: Loading module /lib/modules/snd-soc-rockchip-hdmi.ko with args ''
+[    3.887554][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-hdmi.ko
+[    3.887665][    T1] init: Loading module /lib/modules/snd-soc-rockchip.ko with args ''
+[    3.887986][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip.ko
+[    3.888077][    T1] init: Loading module /lib/modules/snd-soc-rockchip-i2s.ko with args ''
+[    3.888586][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-i2s.ko
+[    3.888670][    T1] init: Loading module /lib/modules/snd-soc-rockchip-pdm.ko with args ''
+[    3.889227][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-pdm.ko
+[    3.889311][    T1] init: Loading module /lib/modules/snd-soc-rockchip-pdm-v2.ko with args ''
+[    3.889662][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-pdm-v2.ko
+[    3.889747][    T1] init: Loading module /lib/modules/snd-soc-rockchip-spdif.ko with args ''
+[    3.890521][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-spdif.ko
+[    3.890602][    T1] init: Loading module /lib/modules/snd-soc-rockchip-spdifrx.ko with args ''
+[    3.890950][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-spdifrx.ko
+[    3.891035][    T1] init: Loading module /lib/modules/snd-soc-simple-card-utils.ko with args ''
+[    3.891725][    T1] init: Loaded kernel module /lib/modules/snd-soc-simple-card-utils.ko
+[    3.891809][    T1] init: Loading module /lib/modules/snd-soc-simple-card.ko with args ''
+[    3.892290][    T1] init: Loaded kernel module /lib/modules/snd-soc-simple-card.ko
+[    3.892368][    T1] init: Loading module /lib/modules/snd-soc-spdif-rx.ko with args ''
+[    3.892620][    T1] init: Loaded kernel module /lib/modules/snd-soc-spdif-rx.ko
+[    3.892701][    T1] init: Loading module /lib/modules/snd-soc-spdif-tx.ko with args ''
+[    3.892952][    T1] init: Loaded kernel module /lib/modules/snd-soc-spdif-tx.ko
+[    3.893032][    T1] init: Loading module /lib/modules/snd-soc-bt-sco.ko with args ''
+[    3.893292][    T1] init: Loaded kernel module /lib/modules/snd-soc-bt-sco.ko
+[    3.893374][    T1] init: Loading module /lib/modules/snd-soc-es8323.ko with args ''
+[    3.893750][    T1] init: Loaded kernel module /lib/modules/snd-soc-es8323.ko
+[    3.893831][    T1] init: Loading module /lib/modules/snd-soc-rockchip-trcm.ko with args ''
+[    3.894178][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-trcm.ko
+[    3.894262][    T1] init: Loading module /lib/modules/snd-soc-rockchip-i2s-tdm.ko with args ''
+[    3.895152][    T1] rockchip-i2s-tdm fddf0000.i2s: CLK-ALWAYS-ON: mclk: 12288000, bclk: 3072000, fsync: 48000
+[    3.896130][    T8] input: rockchip-hdmi0 rockchip-hdmi0 as /devices/platform/hdmi0-sound/sound/card0/input1
+[    3.896182][    T1] rockchip-i2s-tdm fe470000.i2s: Register PCM for TRCM mode
+[    3.896619][    T1] rockchip-i2s-tdm fddf4000.i2s: CLK-ALWAYS-ON: mclk: 12288000, bclk: 3072000, fsync: 48000
+[    3.897045][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-i2s-tdm.ko
+[    3.897162][    T1] init: Loading module /lib/modules/snd-soc-rockchip-sai.ko with args ''
+[    3.897927][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-sai.ko
+[    3.898013][    T1] init: Loading module /lib/modules/snd-soc-rockchip-multicodecs.ko with args ''
+[    3.898583][    T1] init: Loaded kernel module /lib/modules/snd-soc-rockchip-multicodecs.ko
+[    3.899181][    T1] init: Loaded 242 kernel modules took 2406 ms
+[    3.899305][    T1] init: Copied ramdisk prop to /second_stage_resources/system/etc/ramdisk/build.prop
+[    3.899326][    T1] init: First stage mount skipped (recovery mode)
+[    3.899485][    T1] init: [libfs_mgr] ReadFstabFromDt(): failed to read fstab from dt
+[    3.899847][    T1] init: Using Android DT directory /proc/device-tree/firmware/android/
+[    3.899866][    T1] init: Skipped setting INIT_AVB_VERSION (not vbmeta compatible)
+[    3.910133][    T1] init: Failed to open device-mapper: No such file or directory
+[    3.910157][    T1] init: DM_DEV_STATUS failed for system_ext_a: Bad file descriptor
+[    3.910165][    T1] init: Could not update logical partition
+[    3.910214][    T1] init: DM_DEV_STATUS failed for system_ext_a: Bad file descriptor
+[    3.910221][    T1] init: Could not update logical partition
+[    3.910264][    T1] init: DM_DEV_STATUS failed for product_a: Bad file descriptor
+[    3.910271][    T1] init: Could not update logical partition
+[    3.910312][    T1] init: DM_DEV_STATUS failed for product_a: Bad file descriptor
+[    3.910319][    T1] init: Could not update logical partition
+[    3.910337][    T1] init: Opening SELinux policy
+[    3.910501][    T1] init: Falling back to standard signature check. TODO implement support for fsverity SEPolicy.
+[    3.910518][    T1] init: Error: Apex SEPolicy failed signature check
+[    3.910525][    T1] init: Loading APEX Sepolicy from /system/etc/selinux/apex/SEPolicy.zip
+[    3.910539][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    3.911335][    T1] init: Loading SELinux policy
+[    3.920849][    T1] SELinux:  Permission bpf in class capability2 not defined in policy.
+[    3.920860][    T1] SELinux:  Permission checkpoint_restore in class capability2 not defined in policy.
+[    3.920871][    T1] SELinux:  Permission bpf in class cap2_userns not defined in policy.
+[    3.920875][    T1] SELinux:  Permission checkpoint_restore in class cap2_userns not defined in policy.
+[    3.920917][    T1] SELinux:  Class mctp_socket not defined in policy.
+[    3.920926][    T1] SELinux:  Class user_namespace not defined in policy.
+[    3.920929][    T1] SELinux: the above unknown classes and permissions will be denied
+[    3.923336][    T1] SELinux:  policy capability network_peer_controls=1
+[    3.923347][    T1] SELinux:  policy capability open_perms=1
+[    3.923350][    T1] SELinux:  policy capability extended_socket_class=1
+[    3.923354][    T1] SELinux:  policy capability always_check_network=0
+[    3.923357][    T1] SELinux:  policy capability cgroup_seclabel=0
+[    3.923361][    T1] SELinux:  policy capability nnp_nosuid_transition=1
+[    3.923364][    T1] SELinux:  policy capability genfs_seclabel_symlinks=0
+[    3.923368][    T1] SELinux:  policy capability ioctl_skip_cloexec=0
+[    3.965891][   T22] usb 7-1: new low-speed USB device number 2 using ohci-platform
+[    3.997032][   T75] audit: type=1403 audit(3.804:2): auid=4294967295 ses=4294967295 lsm=selinux res=1
+[    3.999147][    T1] selinux: SELinux: Loaded file context from:
+[    3.999158][    T1] selinux:                 /plat_file_contexts
+[    3.999163][    T1] selinux:                 /system_ext_file_contexts
+[    3.999168][    T1] selinux:                 /product_file_contexts
+[    3.999173][    T1] selinux:                 /vendor_file_contexts
+[    3.999177][    T1] selinux:                 /odm_file_contexts
+[    3.999335][    T1] selinux: SELinux:  Could not stat /dev/selinux: No such file or directory.
+[    3.999534][   T75] audit: type=1404 audit(3.808:3): enforcing=1 old_enforcing=0 auid=4294967295 ses=4294967295 enabled=1 old-enabled=1 lsm=selinux res=1
+[    4.009968][    T1] init: init second stage started!
+[    4.013648][    T1] init: Could not read properties from '/dev/selinux/apex_property_contexts': No such file or directory
+[    4.018359][    T1] selinux: SELinux: Loaded file context from:
+[    4.018368][    T1] selinux:                 /plat_file_contexts
+[    4.018373][    T1] selinux:                 /system_ext_file_contexts
+[    4.018378][    T1] selinux:                 /product_file_contexts
+[    4.018382][    T1] selinux:                 /vendor_file_contexts
+[    4.018385][    T1] selinux:                 /odm_file_contexts
+[    4.026314][    T1] init: Using Android DT directory /proc/device-tree/firmware/android/
+[    4.028360][    T1] init: Couldn't load property file '/system/build.prop': open() failed: No such file or directory
+[    4.029186][    T1] init: Setting product property ro.product.brand to 'rockchip' (from ro.product.product.brand)
+[    4.029201][    T1] init: Setting product property ro.product.device to 'rom6881_u' (from ro.product.product.device)
+[    4.029218][    T1] init: Setting product property ro.product.manufacturer to 'rockchip' (from ro.product.product.manufacturer)
+[    4.029231][    T1] init: Setting product property ro.product.model to 'rom6881_u' (from ro.product.product.model)
+[    4.029244][    T1] init: Setting product property ro.product.name to 'rom6881_u' (from ro.product.product.name)
+[    4.029269][    T1] init: Setting property 'ro.build.fingerprint' to 'rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/eng.adv.20241213.154023:userdebug/release-keys'
+[    4.029290][    T1] init: Setting property 'ro.product.cpu.abilist' to 'arm64-v8a,armeabi-v7a,armeabi'
+[    4.029300][    T1] init: Setting property 'ro.product.cpu.abilist32' to 'armeabi-v7a,armeabi'
+[    4.029312][    T1] init: Setting property 'ro.product.cpu.abilist64' to 'arm64-v8a'
+[    4.030863][    T1] selinux: SELinux: Loaded file context from:
+[    4.030872][    T1] selinux:                 /plat_file_contexts
+[    4.030876][    T1] selinux:                 /system_ext_file_contexts
+[    4.030880][    T1] selinux:                 /product_file_contexts
+[    4.030884][    T1] selinux:                 /vendor_file_contexts
+[    4.030889][    T1] selinux:                 /odm_file_contexts
+[    4.030906][    T1] init: Running restorecon...
+[    4.033169][    T1] selinux: SELinux:  Could not stat /dev/block: No such file or directory.
+[    4.033392][    T1] selinux: SELinux: Could not get canonical path for /metadata/ota/rollback-indicator restorecon: No such file or directory.
+[    4.033413][    T1] selinux: SELinux:  Could not stat /metadata/gsi: No such file or directory.
+[    4.033775][    T1] init: Created socket '/dev/socket/property_service', mode 666, user 0, group 0
+[    4.036188][    T1] init: SetupMountNamespaces done
+[    4.037484][    T1] init: Forked subcontext for 'u:r:vendor_init:s0' with pid 178
+[    4.037565][    T1] init: Parsing file /system/etc/init/hw/init.rc...
+[    4.037619][    T1] init: Added '/init.recovery.rk30board.rc' to import list
+[    4.038105][    T1] init: Parsing file /init.recovery.rk30board.rc...
+[    4.038137][    T1] init: Added '/system/etc/init/init.recovery.udc.rc' to import list
+[    4.038175][    T1] init: Parsing file /system/etc/init/init.recovery.udc.rc...
+[    4.038203][    T1] init: Parsing directory /system/etc/init...
+[    4.038250][    T1] init: Parsing file /system/etc/init/android.hardware.boot-service.default_recovery.rc...
+[    4.038297][    T1] init: Parsing file /system/etc/init/android.hardware.fastboot-service.rockchip_recovery.rc...
+[    4.038324][    T1] init: Parsing file /system/etc/init/android.hardware.health-service.rockchip_recovery.rc...
+[    4.038351][    T1] init: Parsing file /system/etc/init/init.recovery.udc.rc...
+[    4.038380][    T1] init: /system/etc/init/init.recovery.udc.rc: 1: ignored duplicate definition of service 'rockchip_udc_detector'
+[    4.038389][    T1] init: Parsing file /system/etc/init/servicemanager.recovery.rc...
+[    4.038421][    T1] init: Parsing file /system/etc/init/snapuserd.rc...
+[    4.038484][    T1] init: Parsing file /system_ext/etc/init...
+[    4.038503][    T1] init: Unable to read config file '/system_ext/etc/init': open() failed: No such file or directory
+[    4.038514][    T1] init: Parsing file /vendor/etc/init...
+[    4.038525][    T1] init: Unable to read config file '/vendor/etc/init': open() failed: No such file or directory
+[    4.038539][    T1] init: Parsing file /odm/etc/init...
+[    4.038550][    T1] init: Unable to read config file '/odm/etc/init': open() failed: No such file or directory
+[    4.038560][    T1] init: Parsing file /product/etc/init...
+[    4.038572][    T1] init: Unable to read config file '/product/etc/init': open() failed: No such file or directory
+[    4.038980][    T1] init: processing action (SetupCgroups) from (<Builtin Action>:0)
+[    4.039915][    T1] init: processing action (SetKptrRestrict) from (<Builtin Action>:0)
+[    4.040064][    T1] init: processing action (TestPerfEventSelinux) from (<Builtin Action>:0)
+[    4.040352][    T1] init: processing action (ConnectEarlyStageSnapuserd) from (<Builtin Action>:0)
+[    4.040369][    T1] init: processing action (early-init) from (/system/etc/init/hw/init.rc:3)
+[    4.040640][    T1] init: starting service 'ueventd'...
+[    4.042508][    T1] libprocessgroup: Failed to read task profiles from /etc/task_profiles.json
+[    4.042540][    T1] libprocessgroup: Loading /etc/task_profiles.json for [1] failed
+[    4.042566][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    4.043192][    T1] init: ... started service 'ueventd' has pid 179
+[    4.043353][    T1] init: processing action (wait_for_coldboot_done) from (<Builtin Action>:0)
+[    4.067380][   T75] audit: type=1400 audit(3.876:4): avc:  denied  { sys_nice } for  pid=179 comm="ueventd" capability=23  scontext=u:r:ueventd:s0 tcontext=u:r:ueventd:s0 tclass=capability permissive=0
+[    4.067490][  T179] ueventd: ueventd started!
+[    4.069025][  T179] selinux: SELinux: Loaded file context from:
+[    4.069032][  T179] selinux:                 /plat_file_contexts
+[    4.069036][  T179] selinux:                 /system_ext_file_contexts
+[    4.069039][  T179] selinux:                 /product_file_contexts
+[    4.069044][  T179] selinux:                 /vendor_file_contexts
+[    4.069048][  T179] selinux:                 /odm_file_contexts
+[    4.069176][  T179] ueventd: Parsing file /system/etc/ueventd.rc...
+[    4.069201][  T179] ueventd: Added '/vendor/etc/ueventd.rc' to import list
+[    4.069209][  T179] ueventd: Added '/odm/etc/ueventd.rc' to import list
+[    4.069360][  T179] ueventd: Parsing file /vendor/etc/ueventd.rc...
+[    4.069376][  T179] ueventd: Unable to read config file '/vendor/etc/ueventd.rc': open() failed: No such file or directory
+[    4.069387][  T179] ueventd: Parsing file /odm/etc/ueventd.rc...
+[    4.069398][  T179] ueventd: Unable to read config file '/odm/etc/ueventd.rc': open() failed: No such file or directory
+[    4.155513][  T183] ueventd (183) used greatest stack depth: 12496 bytes left
+[    4.157531][  T186] ueventd (186) used greatest stack depth: 12352 bytes left
+[    4.193915][   T22] usb 7-1: New USB device found, idVendor=17ef, idProduct=608d, bcdDevice= 1.00
+[    4.193971][   T22] usb 7-1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[    4.193982][   T22] usb 7-1: Product: Lenovo USB Optical Mouse
+[    4.193992][   T22] usb 7-1: Manufacturer: PixArt
+[    4.201599][   T22] input: PixArt Lenovo USB Optical Mouse as /devices/platform/fc840000.usb/usb7/7-1/7-1:1.0/0003:17EF:608D.0001/input/input2
+[    4.201752][   T22] hid-generic 0003:17EF:608D.0001: input,hidraw0: USB HID v1.11 Mouse [PixArt Lenovo USB Optical Mouse] on usb-fc840000.usb-1/input0
+[    4.333470][  T177] init: Wait for property 'ro.cold_boot_done=true' took 290ms
+[    4.333569][    T1] init: processing action (SetMmapRndBits) from (<Builtin Action>:0)
+[    4.333611][  T179] ueventd: Coldboot took 0.263 seconds
+[    4.333876][    T1] init: processing action (KeychordInit) from (<Builtin Action>:0)
+[    4.333895][    T1] init: processing action (init) from (/system/etc/init/hw/init.rc:15)
+[    4.334568][    T1] init: Command 'symlink /system/bin /bin' action=init (/system/etc/init/hw/init.rc:24) took 0ms and failed: symlink() failed: File exists
+[    4.334607][    T1] init: Command 'symlink /system/etc /etc' action=init (/system/etc/init/hw/init.rc:25) took 0ms and failed: symlink() failed: File exists
+[    4.335945][    T1] init: starting service 'servicemanager'...
+[    4.337780][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    4.338381][    T1] init: ... started service 'servicemanager' has pid 190
+[    4.338424][    T1] init: processing action (late-init) from (/system/etc/init/hw/init.rc:76)
+[    4.338446][    T1] init: processing action (queue_property_triggers) from (<Builtin Action>:0)
+[    4.338477][    T1] init: processing action (early-fs) from (/init.recovery.rk30board.rc:3)
+[    4.338603][    T1] init: processing action (early-fs) from (/system/etc/init/init.recovery.udc.rc:7)
+[    4.338636][    T1] init: starting service 'rockchip_udc_detector'...
+[    4.340477][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    4.340906][    T1] init: ... started service 'rockchip_udc_detector' has pid 191
+[    4.340935][    T1] init: processing action (early-fs) from (/system/etc/init/init.recovery.udc.rc:7)
+[    4.340950][    T1] init: service 'rockchip_udc_detector' requested start, but it is already running (flags: 134)
+[    4.340983][    T1] init: processing action (sys.usb.configfs=1 && fs) from (/system/etc/init/hw/init.rc:114)
+[    4.342016][    T1] file system registered
+[    4.342387][    T1] init: processing action (fs) from (/system/etc/init/hw/init.rc:136)
+[    4.343090][    T1] init: processing action (sys.usb.configfs=1 && fs) from (/init.recovery.rk30board.rc:6)
+[    4.343525][    T1] init: processing action (ro.debuggable=1 && fs) from (/init.recovery.rk30board.rc:15)
+[    4.343649][    T1] init: starting service 'console'...
+[    4.345341][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    4.346009][    T1] init: ... started service 'console' has pid 192
+[    4.346130][    T1] init: Service 'rockchip_udc_detector' (pid 191) exited with status 0 oneshot service took 0.005000 seconds in background
+[    4.346167][    T1] init: Sending signal 9 to service 'rockchip_udc_detector' (pid 191) process group...
+[    4.346396][    T1] libprocessgroup: Successfully killed process cgroup uid 0 pid 191 in 0ms
+[    4.347052][    T1] init: processing action (firmware_mounts_complete) from (/system/etc/init/hw/init.rc:72)
+[    4.347129][    T1] init: processing action (boot) from (/system/etc/init/hw/init.rc:64)
+[    4.348398][    T1] init: service 'ueventd' requested start, but it is already running (flags: 36)
+[    4.348507][    T1] init: Could not start service 'charger' as part of class 'default': Cannot find '/system/bin/charger': No such file or directory
+[    4.348558][    T1] init: starting service 'recovery'...
+[    4.352188][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    4.357059][  T190] servicemanager: Starting sm instance on /dev/binder
+[    4.361823][  T190] SELinux:                 /product_service_contexts
+[    4.367743][  T197] healthd: No battery devices found
+[    4.380476][  T195] EXT4-fs (mmcblk0p20): recovery complete
+[    4.381148][  T195] EXT4-fs (mmcblk0p20): unmounting filesystem.
+[    4.387162][  T195] recovery: Screensaver disabled
+[    4.435604][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.520310][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.569360][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.618371][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.667686][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.775486][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+[    4.815319][  T195] recovery: Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1). Falling back to use default locale.
+[    4.815351][  T195] recovery: Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+[    4.815369][  T195] recovery: Failed to load bitmap factory_data_reset_text for locale en-US (error -1). Falling back to use default locale.
+[    4.815385][  T195] recovery: Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+[    4.815402][  T195] recovery: Failed to load bitmap try_again_text for locale en-US (error -1). Falling back to use default locale.
+[    4.815417][  T195] recovery: Failed to load bitmap try_again_text for locale en-US (error -1)
+[    4.815436][  T195] recovery: Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1). Falling back to use default locale.
+[    4.815452][  T195] recovery: Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+[    4.815469][  T195] recovery: Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1). Falling back to use default locale.
+[    4.815485][  T195] recovery: Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+[    4.876575][  T195] recovery: Starting recovery (pid 195) on Thu Jan  1 00:00:04 1970
+[    4.876592][  T195] recovery:
+[    4.876601][  T195] recovery: locale is [en-US]
+[    4.878620][    T1] init: processing action (sys.usb.config=none && sys.usb.configfs=1) from (/system/etc/init/hw/init.rc:174)
+[    4.878938][    T1] init: Command 'write /config/usb_gadget/g1/UDC none' action=sys.usb.config=none && sys.usb.configfs=1 (/system/etc/init/hw/init.rc:175) took 0ms and failed: Unable to write to file '/config/usb_gadget/g1/UDC': Unable to write file contents: No such device
+[    4.879702][    T1] init: Command 'rm /config/usb_gadget/g1/configs/b.1/f1' action=sys.usb.config=none && sys.usb.configfs=1 (/system/etc/init/hw/init.rc:179) took 0ms and failed: unlink() failed: No such file or directory
+[    4.879905][    T1] init: processing action (sys.usb.config=adb) from (/system/etc/init/hw/init.rc:143)
+[    4.879940][    T1] init: starting service 'adbd'...
+[    4.880212][    T1] init: Created socket '/dev/socket/adbd', mode 660, user 1000, group 1000
+[    4.882223][    T1] libprocessgroup: Failed to find NormalIoPriority process profile
+[    4.882689][    T1] init: ... started service 'adbd' has pid 207
+[    4.890362][  T211] read descriptors
+[    4.890372][  T211] read strings
+[    4.890767][    T1] init: processing action (sys.usb.config=adb && sys.usb.configfs=1 && sys.usb.ffs.ready=1) from (/system/etc/init/hw/init.rc:189)
+[    4.918365][  T195] recovery: [libfs_mgr] Running /system/bin/fsck.f2fs -a -c 10000 --debug-cache /dev/block/mmcblk0p21
+[    4.920473][  T195] logwrapper: Cannot log to file /dev/fscklogs/log
+[    4.920488][  T195] logwrapper:
+[    4.935386][  T195] fsck.f2fs: Info: Fix the reported corruption.
+[    4.935905][  T195] fsck.f2fs: Info: not exist /proc/version!
+[    4.937105][  T195] fsck.f2fs: Info: MKFS version
+[    4.937109][  T195] fsck.f2fs:   "6.1.75-android14-11-g8942136b2744-ab11900366"
+[    4.937114][  T195] fsck.f2fs: Info: FSCK version
+[    4.937118][  T195] fsck.f2fs:   from "6.1.75-android14-11-g8942136b2744-ab11900366"
+[    4.937125][  T195] fsck.f2fs:     to "6.1.75-android14-11-g8942136b2744-ab11900366"
+[    4.937131][  T195] fsck.f2fs: Info: superblock features = 499 :  encrypt verity extra_attr project_quota quota_ino
+[    4.937149][  T195] fsck.f2fs: Info: superblock encrypt level = 0, salt = 00000000000000000000000000000000
+[    4.937161][  T195] fsck.f2fs: Info: Segments per section = 1
+[    4.937167][  T195] fsck.f2fs: Info: Sections per zone = 1
+[    4.937172][  T195] fsck.f2fs: Info: total FS sectors = 131072 (64 MB)
+[    4.939437][  T195] fsck.f2fs: Info: CKPT version = 11560ee5
+[    4.939452][  T195] fsck.f2fs: Info: version timestamp cur: 386, prev: 282
+[    4.979723][  T195] fsck.f2fs: Info: checkpoint state = 44 :  crc compacted_summary sudden-power-off
+[    4.979731][  T195] fsck.f2fs: Info: No error was reported
+[    4.979779][  T195] fsck.f2fs:
+[    4.979784][  T195] fsck.f2fs: c, u, RA, CH, CM, Repl=
+[    4.979796][  T195] fsck.f2fs: 10000 1546 1571 25 1546 0
+[    4.983926][  T214] fsck.f2fs (214) used greatest stack depth: 12056 bytes left
+[    5.022663][  T195] F2FS-fs (mmcblk0p21): Mounted with checkpoint version = 11560ee5
+[    5.023004][  T195] recovery: [libfs_mgr] __mount(source=/dev/block/by-name/metadata,target=/metadata,type=f2fs)=0: Success
+[    5.050223][   T22] android_work: sent uevent USB_STATE=CONNECTED
+[    5.091717][   T22] android_work: sent uevent USB_STATE=CONFIGURED
+** 42 console messages dropped **
+[   15.002750][   T92] platform rt5640-sound: deferred probe pending
+[   31.897894][   T88] lcd0_vdd: disabling
+
+#

@@ -1,5 +1,22 @@
+Account: advantech.ess.rd@gmail.com
+Password: #adv27927818
+
+www.dropbox.com/login?cont=%2Fhome%2FESSRISC_SHARE
+
+
 WorkDay
-100000166 Zw@18488
+100000166 Advantech@887
+
+Zw@c05257
+
+eAppraisal
+
+wei.zeng@advantechcom.cn  advantech
+
+
+https://usatrade.census.gov/index.php
+ID：8YRNMC8
+password:?VGX8a2&NPa#@mR
 
 
 dockerhub:
@@ -34,6 +51,8 @@ wei.zeng@advantech.com.cn
 Zwq-18488
 
 
+Rockchip Redmine
+
 AdvantechECGRISC
 20170328
 
@@ -49,8 +68,20 @@ zengwei18488
 Zw@18488
 
 
+
+gitee
+
+zengwei166
+Q5Q
+
+
 172.22.16.60 zengwei:123456
 
 TI
 
 59676142@qq.com  Q5Q
+
+
+FTP public information server ：WiFi/Bluetooth/Ethernet/patches/various source codes/RK Datasheet/RKIVE/SDK release note
+FTP地址（FTP address）： ftp://www.rockchip.com.cn/ 账号名（Account）：rkwifi 密码（Password）： Cng9280H8t
+

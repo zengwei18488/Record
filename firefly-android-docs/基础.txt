@@ -1,0 +1,231 @@
+
+1. Firefly version
+
+    固件版本的查看
+
+        在 Settings 应用里
+
+        Settings–>About tablet–>Firefly version
+
+        比如：
+
+        ROC-RK3399-PC+ HDMI+DP(Android)
+        rk3399_roc_pc_plus/industry-71/V1.2.2008101849/98c828d3a1d2
+
+2. 开发者选项的打开
+
+    Settings–>About tablet–>Build number
+
+    点击Build number至少7次
+
+3. ADB 的使用
+3.1. 连接设备
+3.1.1. USB 的方式
+
+主机通过 USB 连接设备，具体如何连接，可参考设备的WiKi教程。
+
+    USB Type A 的接口
+
+        使能 USB 连接
+
+            Android7.1
+
+        Settings–>USB–>Connect to PC
+
+            Android10/Android11
+
+        Settings–>Connected devices–>Connect to PC
+
+    USB Type C 的接口（默认已经使能）
+
+3.1.2. 网络的方式
+
+主机通过网络连接设备（主机和设备在同一个局域网内）
+
+    打开网络 ADB
+
+    查看设备的 IP 地址
+
+    Settings–>About tablet–>Status->IP address
+
+    通过 IP 地址连接到设备
+
+    adb connect device_ip_address
+
+3.2. 常用命令
+
+    查询设备
+
+    adb devices
+
+    停止 adb 服务器
+
+    adb kill-server
+
+    安装应用
+
+    adb install path_to_apk
+
+    将文件复制到设备
+
+    adb push local remote
+
+    从设备复制文件
+
+    adb pull remote local
+
+    发出 shell 命令
+
+    adb [-d |-e | -s serial_number] shell shell_command
+
+4. Log 日志
+4.1. Last Log
+
+在设备的/sys/fs/pstore目录下：
+
+    console-ramoops-0 : last_log 上次启动的 kernel log，但只保存里优先级比默认 log level 高的 log
+
+    pmsg-ramoops-0 : 上次用户空间的log，android 的 log
+
+4.2. Log 自动保存
+4.2.1. 方式一（推荐使用）
+
+    打开“开发者选项”
+
+    使能 Log 自动保存
+
+        Android7.1
+
+    Settings–>Developer options–>Android bug collector
+
+        Android10/Android11/Android12
+
+    Settings–>System–>Developer options–>Android LogSave
+
+    重启设备
+
+    在设备的/data/logs目录下有 log 相关的文件(Android 10及以上为:/data/vendor/logs)
+
+        android: 系统 logcat
+
+        kernel: 内核 kmsg
+
+4.2.2. 方式二
+
+    打开“开发者选项”
+
+    使能Enable logging to save
+
+    Settings–>Developer options–>Enable logging to save
+
+    重启设备
+
+    在设备的/data/media/0/.LOGSAVE目录下有 log 相关的文件
+
+        xxxx_kmsg.log: 内核 kmsg
+
+        xxxx_logcat.log: 系统 logcat
+
+NOTE: 仅支持Android 7.1
+4.2.3. 方式三
+
+    打开“开发者选项”
+
+    使能Android bug collector
+
+    Settings–>Developer options–>Android bug collector
+
+    重启设备
+
+    在设备的/data/media/0/rk_logs目录下有 log 相关的文件
+
+        COPY-COMPLETEB表示 log 已经拷贝完成
+
+        anr表示ANR文件
+
+        bugreport.log表示 bugreport 文件
+
+        logs表示每次开机之后的 logcat，kmsg
+
+        pstore表示 last_log
+
+        tombstones表示 tombstones 文件
+
+NOTE: 仅支持Android 7.1
+5. Android 系统签名文件
+5.1. 网盘
+
+    Android7.1及以上的版本
+
+        此处下载
+
+
+    Android5.1 的版本
+
+        此处下载
+
+6. 定时开关机
+
+    设备要有 RTC 芯片
+
+        RK808
+
+        HYM8563
+
+    设备常供电
+
+可以直接使用 cat 和 echo 操作/sys/class/rtc/rtc0下面的接口。
+6.1. 设置开机时间
+
+比如设置120秒后开机
+
+#120秒后定时开机
+echo +120 >  /sys/class/rtc/rtc0/wakealarm
+# 查看开机时间
+cat /sys/class/rtc/rtc0/wakealarm
+#关机
+reboot -p
+
+7. NPU 的使用
+
+NPU使用详细参考对应机型
+主控 	机型
+RK3399 	AIO-3399C(AI)
+RK3399Pro 	AIO-3399Pro-JD4
+RK3566 	ROC-RK3566-PC
+RK3568 	AIO-3568J, ROC-RK3568-PC
+RK3588 	ITX-3588J, ROC-RK3588S-PC
+8. 触摸效果的打开
+
+    打开“开发者选项”
+
+    使能Show taps
+
+        Android7.1
+        Settings–>Developer options–>Show taps
+
+        Android10/Android11/Android12
+        Settings–>System–>Developer options–>Show taps
+
+    使能Pointer location
+
+        Android7.1
+        Settings–>Developer options–>Pointer location
+
+        Android10/Android11/Android12
+        Settings–>System–>Developer options–>Pointer location
+
+9. Rockchip 编解码器
+9.1. MediaCodec
+
+Android 的 MediaCodec 默认就会调用到 Rockchip 编解码器。
+如果需要更底层的操作，可以使用 MPP。
+9.2. MPP
+
+瑞芯微提供的媒体处理软件平台(Media Process Platform，简称 MPP)是适用于瑞芯微芯片系列的通用媒体处理软件平台。 该平台对应用软件屏蔽了芯片相关的复杂底层处理，其目的是为了屏蔽不同芯片的差异，为使用者提供统一的视频媒体处理接口(Media Process Interface，缩写 MPI)。
+
+    文档资料：SDK/RKDocs/common/MPP/ 目录下
+
+    MPP源码：https://github.com/rockchip-linux/mpp
+
+

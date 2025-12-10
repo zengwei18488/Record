@@ -1,0 +1,650 @@
+
+1. 概述
+1.1. 适用范围
+
+    RK3399 Android7.1 Industry
+
+    RK3399 Android10
+
+    RK356X Android11
+
+    RK3588 Android12
+
+对于其他 Android 的版本，可供参考。
+
+1.2. 修改方式
+
+Android 系统定制，一般有临时修改的方式和代码修改的方式。
+
+    临时修改的方式：一般可以通过调试串口或者 ADB 对设备进行操作。
+
+    代码修改的方式：修改完代码后，需要进行 SDK 的编译以及固件的烧录。
+
+其中，SDK 的编译或者固件的烧录参考WiKi教程。
+1.3. 名词解释
+
+    CPU_TYPE：表示主控芯片，比如rk3288，rk3399，rk3399pro, rk356x, rk3588
+
+    PRODUCT_TYPE：表示产品类型，比如rk3399_firefly，rk3399_firefly_aio，rk3399_firefly_aioc_ai
+
+1.4. 定制说明
+
+对于系统的定制的内容，在Android12 Android11, Android10.0 和 Android7.1 Industry会有部分内容不相同，对于这部分内容会对其区分,而没有区分的内容表示兼容。
+2. 开机 logo 动画修改
+2.1. 第一阶段
+2.1.1. 代码修改的方式
+
+    准备 logo
+
+        制作新的 logo.bmp
+
+            图片属性和默认的 logo.bmp 一致，否则会出现颠倒异常
+
+            width，height 都为偶数
+
+    替换 logo
+
+        替换kernel/logo.bmp
+
+2.2. 第二阶段
+2.2.1. 临时修改的方式
+
+    准备 bootanimation.zip
+
+        准备 png 文件
+
+            width，height 都为偶数
+
+        准备 desc.txt 文件，比如
+
+        800 1280 30
+        p 0 0 part0
+
+            800 1280 30含义：前两个数字代表图片的像素宽度和高度，30 代表帧数，也就是1秒播放的图片张数
+
+            p 0 0 part0含义：p 代表标志位，0 表示无限循环，0 表示阶段间隔时间为0，part0 表示对应文件夹
+
+            desc.txt 文本格式：Unix+UTF-8
+
+        制作 bootanimation.zip
+
+            以存储方式压缩成zip文件
+
+    push bootanimation.zip
+
+    adb shell setprop persist.sys.root_access 3
+    adb root
+    adb remount
+    adb push bootanimation.zip system/media/bootanimation.zip
+    adb shell reboot
+
+2.2.2. 代码修改的方式
+
+    准备 bootanimation.zip
+
+        把制作好的bootanimation.zip放到device/rockchip/CPU_TYPE/目录下
+
+    在device/rockchip/CPU_TYPE/device.mk文件里，添加如下内容：
+
+    PRODUCT_COPY_FILES += \
+           device/rockchip/CPU_TYPE/bootanimation.zip:/system/media/bootanimation.zip
+
+3. 默认屏幕方向修改
+3.1. 临时修改的方式
+
+    系统可读可写
+
+    adb shell setprop persist.sys.root_access 3
+    adb root
+    adb remount
+
+    修改或添加属性值
+
+        Android7.1
+
+            在/system/build.prop文件中，修改或添加ro.sf.hwrotation的值
+
+                0：横屏
+
+                90：竖屏
+
+                180：反向横屏
+
+                270：反向竖屏
+
+        Android10及以上
+
+            在vendor/build.prop文件中，修改或添加ro.surface_flinger.primary_display_orientation的值
+
+                ORIENTATION_0：横屏
+
+                ORIENTATION_90：竖屏
+
+                ORIENTATION_180：反向横屏
+
+                ORIENTATION_270：反向竖屏
+
+    系统重启
+
+    adb shell reboot
+
+3.2. 代码修改的方式
+
+    Android 7.1:
+
+    在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，修改ro.sf.hwrotation的值
+
+    Android 10及以上:
+
+    在device/rockchip/CPU_TYPE/BoardConfig.mk文件里，修改SF_PRIMARY_DISPLAY_ORIENTATION的值
+
+        0：横屏
+
+        90：竖屏
+
+        180：反向横屏
+
+        270：反向竖屏
+
+    删除out目录下的 build.prop
+
+    rm out/target/product/PRODUCT_TYPE/obj/ETC/system_build_prop_intermediates/build.prop
+
+4. 默认隐藏状态栏
+4.1. 临时修改的方式
+
+在 Settings 应用里，使能选项即可。
+
+Settings–>Display–>Always hide the status bar
+4.1.1. 代码修改的方式
+
+    修改内容如下
+
+    diff --git a/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml b/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml
+    index ba87da7ec4..e32c9699f9 100644
+    --- a/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml
+    +++ b/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml
+    @@ -12,7 +12,7 @@
+         <!-- should show the hidebar button default -->
+         <bool name="def_hidebar_button_show">true</bool>
+         <!-- always hide statusbar -->
+    -    <bool name="def_always_hide_bar">false</bool>
+    +    <bool name="def_always_hide_bar">true</bool>
+
+         <!-- will set DEFAULT_LAUNCHER in frist boot -->
+         <string name="def_default_launcher" translatable="false"></string>
+
+5. 内置 APP 的几种方式
+5.1. 代码修改的方式
+
+可在vendor目录下新增APP的文件夹
+5.1.1. 不可卸载
+
+可参考vendor/firefly/fireflyapi
+
+    Android.mk里的内容
+
+    LOCAL_PATH := $(call my-dir)
+    include $(CLEAR_VARS)
+    LOCAL_MODULE := firefly_sdkapi_demo
+    LOCAL_MODULE_CLASS := APPS
+    LOCAL_MODULE_TAGS := optional
+    LOCAL_BUILT_MODULE_STEM := package.apk
+    LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
+    #LOCAL_PRIVILEGED_MODULE :=
+    LOCAL_CERTIFICATE := platform
+    #LOCAL_OVERRIDES_PACKAGES := 
+    LOCAL_SRC_FILES := $(LOCAL_MODULE).apk
+    #LOCAL_REQUIRED_MODULES :=
+    #LOCAL_PREBUILT_JNI_LIBS :=
+    include $(BUILD_PREBUILT)
+
+        LOCAL_CERTIFICATE := platform含义：APK签名使用系统签名
+
+        LOCAL_PRIVILEGED_MODULE如果不设置或者设置为false，安装位置为/system/app
+
+    fireflyapi.mk里的内容
+
+    PRODUCT_PACKAGES += \
+       	firefly_sdkapi_demo 
+
+    PRODUCT_COPY_FILES += \
+           vendor/firefly/fireflyapi/fireflyapi:system/bin/fireflyapi \
+           vendor/firefly/fireflyapi/fireflyapi.jar:system/framework/fireflyapi.jar 
+
+5.1.2. 可卸载
+
+    在 device/rockchip/CPU_TYPE/PRODUCT_TYPE/ 目录下新建一个 preinstall_del 目录
+
+    把 apk 拷贝到 device/rockchip/CPU_TYPE/PRODUCT_TYPE/preinstall_del 目录下
+
+    编译 android
+
+6. 内置默认输入法
+6.1. 代码修改的方式
+
+    获取输入法包名
+
+    adb shell settings get secure enabled_input_methods
+    com.android.inputmethod.latin/.LatinIME:com.iflytek.inputmethod.google/com.iflytek.inputmethod.FlyIME:com.google.android.inputmethod.pinyin/.PinyinIME
+    adb shell settings get secure default_input_method
+    com.iflytek.inputmethod.google/com.iflytek.inputmethod.FlyIME
+
+    修改代码如下
+
+    diff --git a/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml b/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml
+    index ba87da7ec4..7ed79b4c15 100644
+    --- a/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml
+    +++ b/frameworks/base/packages/SettingsProvider/res/values/custom_defaults.xml
+    @@ -19,4 +19,7 @@
+
+         <!-- if 1 ,reboot will reset DEFAULT_LAUNCHER -->
+         <bool name="def_lock_default_launcher">false</bool>
+    +
+    +       <string name="enabled_input_methods" translatable="false">com.android.inputmethod.latin/.LatinIME:com.iflytek.inputmethod.google/com.iflytek.inputmethod.FlyIME:com.google.android.inputmethod.pinyin/.PinyinIME</string>
+    +       <string name="def_input_method" translatable="false">com.iflytek.inputmethod.google/com.iflytek.inputmethod.FlyIME</string>
+     </resources>
+
+    diff --git a/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java b/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+    index cac5f800bd..f705a895b4 100644
+    --- a/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+    +++ b/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+    @@ -2474,6 +2474,11 @@ class DatabaseHelper extends SQLiteOpenHelper {
+                 stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
+                         + " VALUES(?,?);");
+
+    +                       loadStringSetting(stmt, Settings.Secure.ENABLED_INPUT_METHODS,
+    +                                       R.string.enabled_input_methods);
+    +                       loadStringSetting(stmt, Settings.Secure.DEFAULT_INPUT_METHOD,
+    +                                       R.string.def_input_method);
+    +
+                 loadStringSetting(stmt, Settings.Secure.LOCATION_PROVIDERS_ALLOWED,
+                         R.string.def_location_providers_allowed);
+
+7. 删除内置应用
+7.1. 临时修改的方式
+
+adb shell setprop persist.sys.root_access 3
+adb root
+adb remount
+adb shell rm -r system/app/APK_NAME/
+adb shell reboot
+
+或者
+
+adb shell setprop persist.sys.root_access 3
+adb root
+adb remount
+adb shell rm -r system/priv-app/APK_NAME/
+adb shell reboot
+
+7.2. 代码修改的方式
+
+    如果应用有源代码，在应用源代码的Android.mk文件里注释掉include $(BUILD_PACKAGE)
+
+    如果应用是 APK 文件且有Android.mk，则在Android.mk文件里注释掉include $(BUILD_PREBUILT)
+
+8. 开机启动应用
+8.1. 修改代码的方式
+8.1.1. 非 Launcher
+
+    在应用源码里的AndroidManifest.xml添加如下内容
+
+    package="com.example.testfile"
+    android:sharedUserId="android.uid.system">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <receiver android:name="com.example.testfile.BootBroadcastReceiver" >
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            <category android:name="android.intent.category.LAUNCHER" />
+       </intent-filter>
+    </receiver>
+
+    增加广播接收的代码BootBroadcastReceiver.java，比如
+
+    package com.example.testfile;
+
+    import android.content.BroadcastReceiver;
+    import android.content.Context;
+    import android.content.Intent;
+    import android.util.Log;
+    import android.widget.Toast;
+
+    public class BootBroadcastReceiver extends BroadcastReceiver {
+        private static final String TAG = "sjft";
+
+        public static final String EXTRA_VOLUME_STATE = "android.os.storage.extra.VOLUME_STATE";
+
+        public static final int STATE_UNMOUNTED = 0;
+        public static final int STATE_CHECKING = 1;
+        public static final int STATE_MOUNTED = 2;
+        public static final int STATE_MOUNTED_READ_ONLY = 3;
+        public static final int STATE_FORMATTING = 4;
+        public static final int STATE_EJECTING = 5;
+        public static final int STATE_UNMOUNTABLE = 6;
+        public static final int STATE_REMOVED = 7;
+        public static final int STATE_BAD_REMOVAL = 8;
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // TODO Auto-generated method stub
+            String action = intent.getAction();
+            if (action.equals("android.intent.action.PACKAGE_REPLACED")){
+                String packageName = intent.getData().getSchemeSpecificPart();
+                Log.v(TAG,"BootBroadcastReceiver packageName:"+packageName);
+                if(context.getPackageName().equals(packageName)){
+                    Intent launchIntent = new Intent(context, MainActivity.class);//重新启动应用
+                    //此处如果不想写死启动的Activity，也可以通过如下方法获取默认的启动Activity
+                    //Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+                    launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(launchIntent);
+                }
+            } else if (action.equals("android.intent.action.BOOT_COMPLETED")) {
+                Intent launchIntent = new Intent(context, MainActivity.class);//重新启动应用
+                //此处如果不想写死启动的Activity，也可以通过如下方法获取默认的启动Activity
+                //Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+                launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(launchIntent);
+            }
+        }
+    }
+
+    开机自启动 apk 需要系统签名（系统签名文件）
+
+    必须先打开一次开机自启动 apk，才能接收到开机完成的广播
+
+8.1.2. Launcher
+
+    删除或者不编译 SDK 里的 Launcher 应用
+
+    在应用源码里的AndroidManifest.xml里最先启动的 Activity 添加如下内容
+
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+
+9. 默认语言的修改
+
+语言的支持列表可以查看build/target/product/languages_full.mk。
+9.1. 临时修改的方式
+
+    系统可读可写
+
+    adb shell setprop persist.sys.root_access 3
+    adb root
+    adb remount
+
+    修改/system/build.prop文件中ro.product.locale的值(Android 10及以上为: /vendor/build.prop)
+
+        en-US：英文
+
+        zh-CN：中文
+
+    系统重启
+
+    adb shell reboot
+
+9.2. 代码修改的方式
+
+    在build/target/product/full_base.mk里修改PRODUCT_LOCALES的值
+
+        中文
+
+        PRODUCT_LOCALES := zh_CN
+
+    删除 out 目录下的 build.prop
+
+    rm out/target/product/PRODUCT_TYPE/obj/ETC/system_build_prop_intermediates/build.prop
+
+10. 默认时区的修改
+
+时区的支持列表可以查看frameworks/base/packages/SettingsLib/res/xml/timezones.xml。
+10.1. 临时修改的方式
+
+    系统可读可写
+
+    adb shell setprop persist.sys.root_access 3
+    adb root
+    adb remount
+
+    修改/system/build.prop文件中persist.sys.timezone的值(Android 10及以上为: /vendor/build.prop)
+
+        Asia/Shanghai：UTC+8
+
+    系统重启
+
+    adb shell reboot
+
+10.2. 代码修改的方式
+
+    Android7.1/Android10
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，修改persist.sys.timezone的值
+
+            Asia/Shanghai：UTC+8
+
+    Android11及以上
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/PRODUCT_TYPE.mk文件里添加如下内容：
+
+    PRODUCT_PROPERTY_OVERRIDES += persist.sys.timezone=Asia/Shanghai
+
+    删除 out 目录下的 build.prop
+
+    rm out/target/product/PRODUCT_TYPE/obj/ETC/system_build_prop_intermediates/build.prop
+
+11. 默认 ROOT
+11.1. 临时修改的方式
+
+adb shell setprop persist.sys.root_access 3
+
+11.2. 代码修改的方式
+
+    Android7.1/Android10.0
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，添加如下内容：
+
+    persist.sys.root_access=3
+
+    Android11及以上
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/PRODUCT_TYPE.mk文件里添加如下内容：
+
+    PRODUCT_PROPERTY_OVERRIDES += persist.sys.root_access=3
+
+    删除 out 目录下的 build.prop
+
+    rm out/target/product/PRODUCT_TYPE/obj/ETC/system_build_prop_intermediates/build.prop
+
+12. 默认系统时间24小时制
+12.1. 代码修改的方式
+
+diff --git a/frameworks/base/packages/SettingsProvider/res/values/defaults.xml b/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+index f95ecc6535..06055dba7b 100644
+--- a/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
++++ b/frameworks/base/packages/SettingsProvider/res/values/defaults.xml
+@@ -244,4 +244,6 @@
+ 
+     <!-- should show the screenshot button default -->
+     <integer name="def_screenshot_button_show">0</integer>
++<!-- value 12/24/null 对应设置 12/24/自动-->
++    <string name="def_time_12_24" translatable="false">24</string>
+ </resources>
+diff --git a/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java b/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+index b3ff9d08a8..ebdd5d3637 100644
+--- a/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
++++ b/frameworks/base/packages/SettingsProvider/src/com/android/providers/settings/DatabaseHelper.java
+@@ -2261,6 +2261,9 @@ class DatabaseHelper extends SQLiteOpenHelper {
+    private void loadSystemSettings(SQLiteDatabase db) {
+                                     ......
++            
++            loadStringSetting(stmt, Settings.System.TIME_12_24,
++                    R.string.def_time_12_24);
+
+13. 默认打开网络 ADB
+13.1. 临时修改的方式
+13.1.1. 方式一
+
+    Android7.1
+
+    adb shell setprop persist.internet.adb.enable 1
+
+    Android10/Android11/Android12
+
+    adb shell setprop persist.internet_adb_enable 1
+
+13.1.2. 方式二
+
+    打开“开发者选项”
+
+    打开 ADB over network
+
+    Settings–>Developer options–>ADB over network
+
+13.2. 代码修改的方式
+
+    Android7.1
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，添加如下内容：
+
+    persist.internet.adb.enable=1
+
+    Android10
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，添加如下内容：
+
+    persist.internet_adb_enable=1
+
+    Android11/Android12
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/PRODUCT_TYPE.mk文件里，添加如下内容：
+
+    PRODUCT_PROPERTY_OVERRIDES += persist.internet_adb_enable=1
+
+    删除 out 目录下的 build.prop
+
+    rm out/target/product/PRODUCT_TYPE/obj/ETC/system_build_prop_intermediates/build.prop
+
+14. 默认设置 OTG USB3.0 为 devices 模式
+14.1. 临时修改的方式
+
+adb shell setprop persist.usb.mode 2
+
+14.2. 代码修改的方式
+
+    Android7.1/Android10
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，添加如下内容：
+
+    persist.usb.mode=2
+
+    Android11/Android12
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/PRODUCT_TYPE.mk文件里，添加如下内容：
+
+    PRODUCT_PROPERTY_OVERRIDES += persist.usb.mode=otg
+
+    删除 out 目录下的 build.prop
+
+    rm out/target/product/PRODUCT_TYPE/obj/ETC/system_build_prop_intermediates/build.prop
+
+15. 打开或关闭未知应用安装功能
+15.1. 代码修改的方式
+15.1.1. Android 7.1
+
+在frameworks/base/packages/SettingsProvider/res/values/defaults.xml文件里，修改def_install_non_market_apps的值。
+
+    false : 关闭
+
+    true : 打开
+
+15.1.2. Android 10及以上
+
+在Android10中，已经删除了”允许未知来源”安装应用程序的永久授权选项，从系统设置当中已经找不到该开关，谷歌将永久授权修改为每次的单独授权，当用户每次安装第三方来源的Android软件时需要对软件权限进行手动确认。
+16. 打开或关闭触摸声音
+16.1. 代码修改的方式
+
+在frameworks/base/packages/SettingsProvider/res/values/defaults.xml文件里，修改def_sound_effects_enabled的值。
+
+    false : 关闭
+
+    true : 打开
+
+17. 修改桌面布局
+17.1. 代码修改的方式
+
+设备开机后，默认加载到桌面的程序快捷方式、小插件、快捷方式导航条（HotSeat）和文件夹的修改方法。
+
+详细参考开源社区的帖子。
+18. 配置 USB 摄像头前置或者后置
+
+默认是前置的
+18.1. 临时修改的方式
+
+    前置
+
+    adb shell setprop persist.sys.uvc.facing front
+
+    后置
+
+    adb shell setprop persist.sys.uvc.facing back
+
+18.2. 代码修改的方式
+
+    Android7.1/Android10
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，添加如下内容：
+
+            前置
+
+        persist.sys.uvc.facing=front
+
+            后置
+
+        persist.sys.uvc.facing=back
+
+    Android11/Android12
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/PRODUCT_TYPE.mk文件里，添加如下内容：
+
+            前置
+
+        PRODUCT_PROPERTY_OVERRIDES += persist.sys.uvc.facing=front
+
+            后置
+
+        PRODUCT_PROPERTY_OVERRIDES += persist.sys.uvc.facing=back
+
+    删除 out 目录下的 build.prop
+
+    rm out/target/product/PRODUCT_TYPE/obj/ETC/system_build_prop_intermediates/build.prop
+
+19. 配置4K UI
+19.1. 代码修改方式：
+19.1.1. 平台(RK3399/RK356x)
+
+    Android7.1
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/system.prop文件里，添加如下内容：
+
+    persist.sys.framebuffer.main=3840x2160@25
+
+    Android10.0及以上
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/PRODUCT_TYPE.mk文件里，添加如下内容：
+
+    PRODUCT_PROPERTY_OVERRIDES += persist.vendor.framebuffer.main=3840x2160@25
+
+NOTE: 配置 4K UI 占用系统资源较多，最高只能支持到 4K25Hz 左右，不推荐使用 4K UI。如果只是想要播放 4K 视频或是查看 4K 图片，那可以不需要配置 4K UI，系统默认的视频播放器和图片浏览器可以支持。
+19.1.2. 平台(RK3588)
+
+    Android12.0及以上
+
+        在device/rockchip/CPU_TYPE/PRODUCT_TYPE/PRODUCT_TYPE.mk文件里，添加如下内容：
+
+    PRODUCT_PROPERTY_OVERRIDES += persist.vendor.framebuffer.main=3840x2160@60
+
+NOTE:RK3588 性能强劲可以支持4K UI 60Hz。

@@ -12,6 +12,14 @@ docker search advrisc
 
 ./work/imx8-githubAndBak/docker-images/advrisc/u18.04-rk3399ABV10/Dockerfile
 
+https://www.dropbox.com/home/ESSRISC_SHARE/
+account: advantech.ess.rd@gmail.com
+password: !adv27927818
+
+PLM
+ID: Wei.Zeng
+PW: @PLM0911
+
 sudo systemctl start openvpn@advrisc-vpn
 ftpuser
 P@ssw0rd
@@ -64,8 +72,18 @@ git rm  -r -n --cached [file]
 
 find -name [file] | xargs rm -rf
 
+find ./rkbin/bin/rk35/ -iname "rk3588_*" -print0 | tar --null --files-from=- -czvf rkbin-rk3588.tar.gz
+
 tar xxx.tar.gz --exclude=.git xxxx
 tar zcvf android8.1-r46-fromRK-20221206.tar.gz --exclude=".git" --exclude=".repo" android8.1-r46-fromRK/
+
+计算文件大小排序（去掉h按字节算）
+du -sh | sort -nr
+
+echo -e "AT+CNMP? \r\n" > /dev/ttyUSB3
+echo -e "AT+cfun? \r\n" > /dev/ttyUSB3
+echo -e "AT+cqcnv \r\n" > /dev/ttyUSB3
+echo -e "AT+simcomati? \r\n" > /dev/ttyUSB3
 
 Quectel EC21 DFOTA
 
@@ -119,7 +137,7 @@ echo -e "AT+QFLST=\"UFS:*\" \r\n" > /dev/ttyUSB3
 
 echo -e "AT+QFOTADL=\"/data/ufs/Update_EC21EUXGAR08A06_20.002.20.002-R08A04_20.002.20.002.zip\" \r\n" > /dev/ttyUSB3
 
-**************************************************************************************8
+**************************************************************************************
 
 echo -e "AT+QGMR \r\n" > /dev/ttyUSB2
 echo -e "AT+QFOTADL=? \r\n" > /dev/ttyUSB2
@@ -185,6 +203,8 @@ make
  @echo  '  mrproper   - Remove all generated files + config + various backup files'
 
  @echo  '  distclean   - mrproper + remove editor backup and patch files'
+ 
+am broadcast -a android.intent.action.SHOW_NOTIFICATION --es title "Test Title" --es content "This is a Test Message"
 
 am broadcast -a "android.intent.action.MEDIA_REMOVED"
 am broadcast -a "android.intent.action.BOOT_COMPLETED"
@@ -200,6 +220,8 @@ am broadcast -a "android.receive.status.bar" --es cmd show
 am broadcast -a "android.receive.status.bar" --es cmd close
 am broadcast -a "android.receive.navigation.bar" --es cmd show
 am broadcast -a "android.receive.navigation.bar" --es cmd close
+
+am broadcast -a "com.advantech.intent.OPENAPI_OPERATION" -f 0x01000000
 
 am broadcast -a "com.advantech.intent.OPENAPI_OTA" -f 0x01000000
 Intent加上FLAG_RECEIVER_INCLUDE_BACKGROUND（0x01000000） 这个标志位

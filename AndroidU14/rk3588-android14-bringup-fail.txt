@@ -1,0 +1,338 @@
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0x13
+CH0 RX Vref:28.8%, TX Vref:26.8%,0.0%DQ rds:
+h0 l0, h1 l0, h1 l0, h0 l0, h7 l0, h1 l0, h0 l3, h0 l0,
+h1 l0, h0 l0, h1 l0, h2 l0, h3 l0, h2 l0, h1 l0, h1 l0,
+
+CH1 RX Vref:28.9%, TX Vref:25.8%,0.0%DQ rds:
+h4 l0, h1 l0, h0 l0, h2 l0, h0 l0, h4 l0, h1 l0, h0 l1,
+h1 l0, h1 l0, h1 l0, h1 l0, h0 l0, h1 l0, h1 l0, h1 l0,
+
+CH2 RX Vref:29.3%, TX Vref:24.8%,0.0%DQ rds:
+h1 l0, h2 l0, h1 l0, h1 l0, h3 l0, h1 l0, h6 l0, h0 l0,
+h0 l1, h0 l0, h0 l1, h0 l1, h0 l1, h0 l0, h1 l0, h1 l0,
+
+CH3 RX Vref:28.9%, TX Vref:25.8%,0.0%DQ rds:
+h1 l0, h0 l0, h0 l2, h0 l0, h2 l0, h1 l0, h0 l0, h2 l0,
+h1 l0, h1 l0, h2 l0, h0 l0, h6 l0, h1 l0, h1 l0, h1 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+Boot1 Release Time: Oct 17 2023 17:09:54, version: 1.11
+Emmc IO init.
+Emmc IO init.
+mmc_set_bus_width: 1
+SetEmmcClk: 375000, 2, 64
+mmc_switch index:183, value:0x2
+mmc_switch index:185, value:0x2
+SetEmmcClk: 375000, 2, 64
+mmc_set_bus_width: 8
+SetEmmcClk: 200000000, 0, 3
+Enable PHY CLK: 200000000, timing: 9
+SdmmcInit=2 0
+BootCapSize=100000
+UserCapSize=29820MB
+FwPartOffset=2000 , 100000
+UsbBoot ...65433
+powerOn 65691
+SoftReset, 7216230 us
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0x13
+CH0 RX Vref:28.8%, TX Vref:26.8%,0.0%DQ rds:
+h0 l0, h1 l0, h1 l0, h0 l0, h6 l0, h1 l0, h0 l2, h0 l0,
+h1 l0, h0 l0, h1 l0, h2 l0, h3 l0, h2 l0, h1 l0, h1 l0,
+
+CH1 RX Vref:28.9%, TX Vref:24.8%,0.0%DQ rds:
+h4 l0, h0 l0, h0 l0, h2 l0, h0 l0, h4 l0, h1 l0, h0 l1,
+h1 l0, h1 l0, h1 l0, h1 l0, h0 l0, h1 l0, h1 l0, h1 l0,
+
+CH2 RX Vref:29.3%, TX Vref:23.8%,0.0%DQ rds:
+h1 l0, h2 l0, h1 l0, h1 l0, h3 l0, h1 l0, h7 l0, h0 l0,
+h0 l1, h0 l0, h0 l1, h0 l1, h0 l1, h0 l0, h1 l0, h1 l0,
+
+CH3 RX Vref:28.9%, TX Vref:25.8%,0.0%DQ rds:
+h2 l0, h0 l0, h0 l1, h0 l0, h1 l0, h1 l0, h0 l0, h3 l0,
+h1 l0, h1 l0, h2 l0, h0 l0, h7 l0, h1 l0, h1 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+Magic is incorrect.
+Error validating A/B metadata from disk. Resetting and writing new A/B metadata to disk.
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(42e28b6dbb...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(712732ea1d...) + sha256(3fcdd9fb5d...) + OK
+## Checking fdt 0x0034e930 ... sha256(2c7f5a74fa...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(e4882d0ea8...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 176.458/444.983 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0x1
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14008 (Feb 21 2025 - 09:15:45 +0800)
+
+Model: Advantech RK3588 ASRA501 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba0f000
+Relocation fdt: e99fa600 - e99fecd0
+CR: M/C/I
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 7
+DM: v2
+RESC: 'boot', blk@0x0001e408
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 14.0, Build 2024.2, v2
+boot mode: recovery (misc)
+ANDROID: fdt overlay OK
+swversion = V14008
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+get vp0 plane mask:0x5, primary id:2, cursor_plane:0, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Model: ASR-A501 AKS0000000000 V14000 A2-EG90
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+disp info 0, type:11, id:0
+Monitor has basic audio support
+base_parameter.mode:1920x1080
+color_format:0
+hdmi_select_link_config use tmds mode
+mode:1920x1080 bus_format:0x100a
+hdmi@fde80000:  detailed mode clock 148500 kHz, flags[5]
+    H: 1920 2008 2052 2200
+    V: 1080 1084 1089 1125
+bus_format: 100a
+VOP update mode to: 1920x1080p60, type: HDMI0 for VP0
+dclk:148500,if_pixclk_div;2,if_dclk_div:4
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+hdptx_ropll_cmn_config bus_width:16a8c8 rate:1485000
+hdptx phy pll locked!
+VP0 set crtc_clock to 1485KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP0 enable Esmart0[654x270->654x270@633x405] fmt[0] addr[0xebf00000]
+CEA mode used vic=16
+mtmdsclock:148500000
+hdptx_ropll_cmn_config bus_width:16a8c8 rate:1485000
+hdptx phy pll locked!
+dw_hdmi_setup HDMI mode
+don't use dsc mode
+dw hdmi qp use tmds mode
+bus_width:0x16a8c8,bit_rate:1485000
+hdptx phy lane locked!
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 24000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+Sysmem Error: "AVB_ANDROID" size is 0 for alloc sysmem
+
+sysmem_dump_all:
+    --------------------------------------------------------------------
+    memory.rgn[0].addr     = 0x00200000 - 0x08400000 (size: 0x08200000)
+    memory.rgn[1].addr     = 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+
+    memory.total           = 0xeee00000 (3822 MiB. 0 KiB)
+    --------------------------------------------------------------------
+    allocated.rgn[0].name  = "UBOOT"
+                    .addr  = 0xe99fa5f0 - 0xf0000000 (size: 0x06605a10)
+    allocated.rgn[1].name  = "STACK"
+                    .addr  = 0xe97fa5f0 - 0xe99fa5f0 (size: 0x00200000)
+    allocated.rgn[2].name  = "FDT_DTBO"
+                    .addr  = 0x08300000 - 0x083483d4 (size: 0x000483d4)
+
+    kmem-resv.rgn[0].name  = "cma"
+                    .addr  = 0x10000000 - 0x20000000 (size: 0x10000000)
+    kmem-resv.rgn[1].name  = "ramoops@110000"
+                    .addr  = 0x00110000 - 0x001f0000 (size: 0x000e0000)
+
+    framework malloc_r     =  32 MiB
+    framework malloc_f     = 512 KiB
+
+    allocated.total        = 0x1692dde4 (361 MiB. 183 KiB)
+    --------------------------------------------------------------------
+    LMB.allocated[0].addr  = 0x08300000 - 0x083483d4 (size: 0x000483d4)
+    LMB.allocated[1].addr  = 0xe97fa5f0 - 0xf0000000 (size: 0x06805a10)
+
+    reserved.core.total    = 0x0684dde4 (104 MiB. 311 KiB)
+    --------------------------------------------------------------------
+
+avb: sysmem alloc failed
+avb image distribute prepare failed -12
+AVB verify failed
+Android boot failed, error -1.
+## Booting FIT Image FIT: No fit blob
+FIT: No FIT image
+Unknown command 'bootrkp' - try 'help'
+MMC: no card present
+mmc_init: -123, time 2
+switch to partitions #0, OK
+mmc0(part 0) is current device
+Failed to mount ext2 filesystem...
+** Unrecognized filesystem type **
+
+Device 2: unrecognized JEDEC id bytes: 00, 00, 00
+unknown device
+
+Device 1: unknown raw ID 0 0 0
+
+Device 0: unknown device
+starting USB...
+Bus usb@fc000000: Register 2000140 NbrPorts 2
+Starting the controller
+USB XHCI 1.10
+Bus usb@fc800000: USB EHCI 1.00
+Bus usb@fc840000: USB OHCI 1.0
+Bus usb@fc880000: USB EHCI 1.00
+Bus usb@fc8c0000: USB OHCI 1.0
+Bus usb@fcd00000: usb maximum-speed not found
+Failed to get USB PHY0 for usb@fcd00000
+Port not available.
+Bus usb@fc400000: usb maximum-speed not found
+Register 2000140 NbrPorts 2
+Starting the controller
+USB XHCI 1.10
+scanning bus usb@fc000000 for devices... 1 USB Device(s) found
+scanning bus usb@fc800000 for devices... 1 USB Device(s) found
+scanning bus usb@fc840000 for devices... 1 USB Device(s) found
+scanning bus usb@fc880000 for devices... 1 USB Device(s) found
+scanning bus usb@fc8c0000 for devices... 1 USB Device(s) found
+scanning bus usb@fc400000 for devices... 1 USB Device(s) found
+       scanning usb for storage devices... 0 Storage Device(s) found
+
+Device 0: unknown device
+ethernet@fe1c0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110ethernet@fe1b0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110missing environment variable: pxeuuid
+missing environment variable: bootfile
+Retrieving file: pxelinux.cfg/01-52-64-14-51-30-d1
+ethernet@fe1c0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110ethernet@fe1b0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110missing environment variable: bootfile
+Retrieving file: pxelinux.cfg/00000000
+ethernet@fe1c0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110ethernet@fe1b0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110missing environment variable: bootfile
+Retrieving file: pxelinux.cfg/0000000
+ethernet@fe1c0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110ethernet@fe1b0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110missing environment variable: bootfile
+Retrieving file: pxelinux.cfg/000000
+ethernet@fe1c0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110ethernet@fe1b0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110missing environment variable: bootfile
+Retrieving file: pxelinux.cfg/00000
+ethernet@fe1c0000 Waiting for PHY auto negotiation to complete......... TIMEOUT !
+phy_startup() failed: -110FAILED: -110ethernet@fe1b0000 Waiting for PHY auto negotiation to complete........
+

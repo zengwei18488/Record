@@ -1,0 +1,94 @@
+一、前期准备
+一款新的4G模块,我们需要厂商提供对应的so库，否则无法进行后期的工作，也一并要求厂商提供一定的移植文档。
+二、底层配置
+厂商提供的一般都是对应的上层配置，我们需要自己去调试底层。
+
+首先需要确定供电正确（pwr en和reset）gpio可控
+
+打开4G模块的通信端口，我使用的usb进行通信，在android的标准代码中，其实已经做好了对应的驱动，我们只需要打开对应的宏就可以了。对应的驱动文件为kernel/drivers/usb/serial/option.c，对应的宏为：CONFIG_USB_SERIAL_OPTION=y
+这个宏需要在对应的defconfig文件中进行打开，这样才能编译驱动。如果成功则可以在对应的目录看到相关的节点 如：/dev/ttyUSB 0-3
+通过 ls -l /dev/ttyUSB* 查看所属组和读写权限
+
+
+使用qmi，如下配置
+CONFIG_USB_NET_QMI_WWAN=y
+使用厂商提供的驱动文件，不然不可用
+obj-${CONFIG_USB_NET_QMI_WWAN}  += qmi_wwan_q.o
+
+三、添加厂商提供的ril.so库
+
+    首先关闭源码中的对应的ril.so库,通过这种宏定义的方式去屏蔽源码中的ril.so库 修改目录 hardware/ril / reference-ril/Android.mk
+修改 device/nxp/imx8q/mek_8q/BoardConfig.mk b/imx8q/mek_8q/BoardConfig.mk
+添加厂家自己ril.so库
+PRODUCT_COPY_FILES +=  \
+    device/nxp/imx8q/mek_8q/modem/chat:system/bin/chat \
+    device/nxp/imx8q/mek_8q/modem/ip-up:system/etc/ppp/ip-up \
+    device/nxp/imx8q/mek_8q/modem/ip-down:system/etc/ppp/ip-down \
+    device/nxp/imx8q/mek_8q/4G_modem/libreference-ril.so:vendor/lib64/hw/libreference-ril.so \
+
+修改上网权限 在对应的新建立一个文件 device/nxp/imx8q/sepolicy/rild.te 内容如下
+allow rild usb_serial_device:chr_file { read write open ioctl };
+allow rild rild:packet_socket { create bind write read };
+
+
+修改文件 device/nxp/imx8q/mek_8q/sepolicy/file_contexts 添加如下内容
+#4G
+/dev/ttyUSB[0-9]				u:object_r:radio_device:s0
+/dev/ttyACM[0-9]				u:object_r:radio_device:s0
+/dev/cdc-wdm[0-9]				u:object_r:radio_device:s0
+/dev/qcqmi[0-9]					u:object_r:radio_device:s0
+/vendor/bin/hw/rild				u:object_r:rild_exec:s0
+/dev/socket/rildOemHook			u:object_r:rild_socket:s0
+#PCIe
+/dev/mhi_DUN					u:object_r:radio_device:s0
+/dev/mhi_DIAG					u:object_r:radio_device:s0
+/dev/mhi_BHI					u:object_r:radio_device:s0
+/dev/mhi_LOOPBACK				u:object_r:radio_device:s0
+/dev/mhi_QMI0					u:object_r:radio_device:s0
+
+添加文件 device/nxp/imx8q/mek_8q/apns-conf.xml 
+
+修改selinux的权限 修改/system/core/init/selinux.cpp
+diff --git a/init/selinux.cpp b/init/selinux.cpp
+index 5a0255acd..ae6f1fce9 100644
+--- a/init/selinux.cpp
++++ b/init/selinux.cpp
+@@ -104,6 +104,7 @@ EnforcingStatus StatusFromCmdline() {
+ }
+ 
+ bool IsEnforcing() {
++    return false;
+     if (ALLOW_PERMISSIVE_SELINUX) {
+         return StatusFromCmdline() == SELINUX_ENFORCING;
+     }
+
+修改系统的配置权限 ueventd.rc
+
+diff --git a/rootdir/ueventd.rc b/rootdir/ueventd.rc
+index 9c2cdf27f..50d6a091f 100644
+--- a/rootdir/ueventd.rc
++++ b/rootdir/ueventd.rc
+@@ -41,6 +41,18 @@ subsystem sound
+ /dev/pmsg0                0222   root       log
+ 
+ # kms driver for drm based gpu
++#quectel port
++/dev/ttyUSB*              0666   radio       radio
++/dev/cdc-wdm*             0666   radio       radio
++/dev/qcqmi*               0666   radio       radio
++/dev/cdc-acm*             0666   radio       radio
++#PCIe
++/dev/mhi_DUN                           0666   radio       radio
++/dev/mhi_DIAG                          0666   radio       radio
++/dev/mhi_BHI                           0666   radio       radio
++/dev/mhi_LOOPBACK                      0666   radio       radio
++/dev/mhi_QMI0                          0666   radio       radio
++
+ /dev/dri/*                0666   root       graphics
+ 
+ # these should not be world writable
+
+
+
+
+

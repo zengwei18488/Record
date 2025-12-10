@@ -1,0 +1,50 @@
+From 744029410957242e554e4b79d3bed96282755f26 Mon Sep 17 00:00:00 2001
+From: Zhixiong Lin <zhixiong.lin@rock-chips.com>
+Date: Tue, 19 Nov 2024 09:32:46 +0800
+Subject: [PATCH] hwui: set max texture cache size from 12x to 36x
+
+Property:
+  debug.hwui.surface_size_multiplier=144.0
+  debug.hwui.background_retention_percent=1.5
+  debug.hwui.use_alternative_ui_hidden=true
+
+Type: Fix
+Redmine ID:
+  https://redmine.rock-chips.com/issues/489272
+  https://redmine.rock-chips.com/issues/518164
+Associated modifications: N/A
+Test: N/A
+
+Change-Id: I8d6bc5cf3e77251754a647d201df4ed8fa374521
+Signed-off-by: Zhixiong Lin <zhixiong.lin@rock-chips.com>
+---
+ libs/hwui/MemoryPolicy.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/libs/hwui/MemoryPolicy.cpp b/libs/hwui/MemoryPolicy.cpp
+index ca1312e75f4c..b5d54aedda42 100644
+--- a/libs/hwui/MemoryPolicy.cpp
++++ b/libs/hwui/MemoryPolicy.cpp
+@@ -25,7 +25,7 @@
+ 
+ namespace android::uirenderer {
+ 
+-constexpr static MemoryPolicy sDefaultMemoryPolicy;
++static MemoryPolicy sDefaultMemoryPolicy;
+ constexpr static MemoryPolicy sPersistentOrSystemPolicy{
+         .contextTimeout = 10_s,
+         .useAlternativeUiHidden = true,
+@@ -49,6 +49,10 @@ const MemoryPolicy& loadMemoryPolicy() {
+     if (Properties::isSystemOrPersistent) {
+         return sPersistentOrSystemPolicy;
+     }
++
++    sDefaultMemoryPolicy.surfaceSizeMultiplier = std::stof(base::GetProperty("debug.hwui.surface_size_multiplier", "144.0"));
++    sDefaultMemoryPolicy.backgroundRetentionPercent = std::stof(base::GetProperty("debug.hwui.background_retention_percent", "1.5"));
++    sDefaultMemoryPolicy.useAlternativeUiHidden = base::GetBoolProperty("debug.hwui.use_alternative_ui_hidden", true);
+     std::string memoryPolicy = base::GetProperty(PROPERTY_MEMORY_POLICY, "");
+     if (memoryPolicy == "default") {
+         return sDefaultMemoryPolicy;
+-- 
+2.25.1
+

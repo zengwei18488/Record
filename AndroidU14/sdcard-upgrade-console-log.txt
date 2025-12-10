@@ -1,0 +1,2681 @@
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.3%, TX Vref:21.8%,0.0%DQ rds:
+h0 l0, h0 l0, h1 l0, h2 l0, h1 l0, h0 l0, h3 l0, h0 l0,
+h0 l0, h1 l0, h0 l0, h2 l0, h1 l0, h2 l0, h1 l0, h4 l0,
+
+CH1 RX Vref:29.3%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h5 l0, h1 l0, h5 l0, h1 l0, h4 l0,
+h0 l0, h1 l0, h0 l0, h1 l0, h2 l0, h1 l0, h2 l0, h1 l0,
+
+CH2 RX Vref:30.1%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h4 l0, h2 l0, h1 l0, h1 l0, h4 l0, h5 l0, h2 l0,
+h2 l0, h2 l0, h4 l0, h0 l0, h2 l0, h1 l0, h1 l0, h1 l0,
+
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h1 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h3 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+Magic is incorrect.
+Error validating A/B metadata from disk. Resetting and writing new A/B metadata to disk.
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(23eeaffd14...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(3ced55f820...) + sha256(b83a5996c7...) + OK
+## Checking fdt 0x0034e930 ... sha256(e4e0311b2d...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(820ab73bd4...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 332.284/607.360 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0xa
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14005 (Dec 25 2024 - 15:15:06 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba0f000
+Relocation fdt: e99fa600 - e99fecd0
+CR: M/C/I
+optee api revision: 2.0
+no mmc device at slot 1
+mmc@fe2c0000: 1 (SD), mmc@fe2e0000: 0
+Bootdev(atags): mmc 1
+MMC1: Legacy, 52Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 7
+TEEC: Reset area[0] info...
+TEEC: Reset area[1] info...
+*** Warning - bad CRC, using default environment
+
+DM: v2
+RESC: 'boot_a', blk@0x0003fa34
+TEEC: ree_fs_new_open : no such file. /dirf.db
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 14.0, Build 2024.2, v2
+boot mode: recovery (misc)
+ANDROID: fdt overlay OK
+swversion = V14005
+Error: adv_set_factory_info: out of memory!
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0000000000
+model[2]         V14005
+model[3]         A1
+----------------------------------------------------------------
+ROM-6881 hw_id = 13
+Info : not configurate display in uboot
+----------------------------------------------------------------
+display0         6881
+display1
+display2
+display3
+----------------------------------------------------------------
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+Warn: can't find connect driver
+Warn: can't get connect driver
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Warn: can't find connect driver
+Warn: can't get connect driver
+warning: bad baseparameter
+Model: ROM-6881 AKS0000000000 V14005 A1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Using display timing dts
+dsi@fde20000:  detailed mode clock 33300 kHz, flags[a]
+    H: 0800 1000 1006 1056
+    V: 0480 0500 0504 0508
+bus_format: 100e
+VOP update mode to: 800x480p62, type: MIPI0 for VP3
+VP3 set crtc_clock to 33000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@73x105] fmt[0] addr[0xebf00000]
+final DSI-Link bandwidth: 220000 Kbps x 4
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP2
+VP2 set crtc_clock to 85500KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP2 enable Esmart2[654x270->654x270@357x249] fmt[0] addr[0xebf00000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 684000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta_a: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot_a
+ANDROID: sha1(ecdbc11bf4...) + OK
+Could not find "system_a" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff800 ...
+Kernel: 0x00400000 - 0x0277b008 (36333 KiB)
+ramdisk:    0x0a200000 - 0x0d7ca286 (55081 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x0277b008
+   Using Device Tree in place at 0000000008300000, end 0000000008349a34
+## reserved-memory:
+  cma: addr=10000000 size=10000000
+  drm-logo@0: addr=ebf00000 size=15a000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 11001.916/11823.284 ms
+
+Starting kernel ...
+
+[   11.864960][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@0': base 0x0000000000000000, size 0 MiB
+[   11.877566][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'vendor-storage-rm@00000000': base 0x0000000000000000, size 0 MiB
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[   12.349778][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ fiq not found
+[   12.357654][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ wakeup not found
+[   12.365795][    T1] fiq_debugger_probe: could not install nmi irq handler
+[   12.513660][    T1] rk806 spi2.0: no sleep-setting state
+[   12.513675][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[   12.513681][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[   12.517912][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[   12.517922][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[   12.517934][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[   12.687037][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[   12.687052][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[   12.687065][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[   12.940828][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 17 not active.
+[   12.945878][    T1] rt5640 5-001c: Device with ID register 0x0 is not rt5640/39
+[   12.969924][   T83] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[   12.970426][   T83] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[   12.970431][   T83] rkvdec2_init:1197: No niu aclk reset resource define
+[   12.970435][   T83] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[   12.970438][   T83] rkvdec2_init:1200: No niu hclk reset resource define
+[   12.970866][   T83] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[   12.970870][   T83] rkvdec2_init:1197: No niu aclk reset resource define
+[   12.970873][   T83] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[   12.970876][   T83] rkvdec2_init:1200: No niu hclk reset resource define
+[   12.987361][   T83] rockchip-vop2 fdd90000.vop: Supported VOP aclk dvfs, normal mode:500000000, reset mode:0, advanced mode:750000000
+[   12.988593][   T83] rockchip-drm display-subsystem: route-dp0: failed to get logo,offset
+[   13.036042][   T83] rockchip-dp fded0000.edp: failed to read downspread -110
+[   13.053367][   T83] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[   13.053448][   T83] rockchip-drm display-subsystem: route-hdmi0: failed to get logo,offset
+[   13.081507][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[   13.086280][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[   13.086496][   T83] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[   13.086507][   T83] rockchip-dmc dmc: failed to get vop pn to msch rl
+[   13.104160][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[   13.104181][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[   13.104187][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[   13.110852][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[   13.121277][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[   13.488534][    T1] init: Failed to open device-mapper: No such file or directory
+[   13.488573][    T1] init: Could not update logical partition
+[   13.488650][    T1] init: Could not update logical partition
+[   13.488723][    T1] init: Could not update logical partition
+[   13.488795][    T1] init: Could not update logical partition
+[   13.489042][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[   13.572168][    T1] selinux: SELinux:  Could not stat /dev/selinux: No such file or directory.
+[   13.585750][    T1] init: Could not read properties from '/dev/selinux/apex_property_contexts': No such file or directory
+[   13.605190][    T1] selinux: SELinux:  Could not stat /dev/block: No such file or directory.
+[   13.605466][    T1] selinux: SELinux: Could not get canonical path for /metadata/ota/rollback-indicator restorecon: No such file or directory.
+[   13.605492][    T1] selinux: SELinux:  Could not stat /metadata/gsi: No such file or directory.
+[   13.610161][    T1] init: /system/etc/init/init.recovery.udc.rc: 1: ignored duplicate definition of service 'rockchip_udc_detector'
+[   13.614335][    T1] libprocessgroup: Failed to read task profiles from /etc/task_profiles.json
+[   13.614358][    T1] libprocessgroup: Loading /etc/task_profiles.json for [1] failed
+[   13.918277][    T1] init: Could not start service 'charger' as part of class 'default': Cannot find '/system/bin/charger': No such file or directory
+# [   13.934010][  T191] cutils-trace: Error opening trace file: No such file or directory (2)
+[   13.941695][  T197] cutils-trace: Error opening trace file: No such file or directory (2)
+recovery filesystem table
+=========================
+[   13.952004][  T195] FAT-fs (mmcblk0p1): bogus number of reserved sectors
+  0 /system  erofs system_a 0
+[   13.952131][  T195] recovery: trying mount fs/dev/block/mmcblk1p1 to vfat.
+  1 /system  ext4 system_a 0
+  2 /vendor  erofs vendor_a 0
+  3 /vendor  ext4 vendor_a 0
+  4 /odm  erofs odm_a 0
+  5 /odm  ext4 odm_a 0
+  6 /cache  ext4 /dev/block/by-name/cache 0
+  7 /boot  emmc /dev/block/by-name/boot_a 0
+  8 /misc  emmc /dev/block/by-name/misc 0
+  9 /backup  emmc /dev/block/by-name/backup 0
+  10 /baseparamer  emmc /dev/block/by-name/baseparamer 0
+  11 /mnt/external_sd  vfat /dev/block/mmcblk0p1 0
+  12 auto  vfat /devices/platform/*usb* 0
+  13 auto  vfat /devices/platform/*.sata* 0
+  14 auto  vfat /devices/platform/*.pcie* 0
+  15 auto  auto /devices/platform/fe2c0000.mmc/mmc_host* 0
+[   14.022642][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+  16 /data  f2fs /dev/block/by-name/userdata 0
+  17 /metadata  f2fs /dev/block/by-name/metadata 0
+  18 /frp  emmc /dev/block/by-name/frp 0
+  19 /system_dlkm  erofs system_dlkm_a 0
+  20 /system_dlkm  ext4 system_dlkm_a 0
+  21 /system_ext  erofs system_ext_a 0
+  22 /system_ext  ext4 system_ext_a 0
+  23 /vendor_dlkm  erofs vendor_dlkm_a 0
+  24 /vendor_dlkm  ext4 vendor_dlkm_a 0
+  25 /odm_dlkm  erofs odm_dlkm_a 0
+[   14.070312][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+  26 /odm_dlkm  ext4 odm_dlkm_a 0
+  27 /product  erofs product_a 0
+  28 /product  ext4 product_a 0
+  29 /tmp  ramdisk ramdisk 0
+
+exit=================
+result_point[1] is ----/dev/block/mmcblk1
+result_point[0] is ----/dev/block/mmcblk0
+111
+emmc_point is /dev/block/mmcblk0
+sd_point is /dev/block/mmcblk1p1
+sd_point_2 is /dev/block/mmcblk1
+read cmdline
+in get_args_from_sd
+ensure_path_mounted path=/mnt/external_sd
+ensure_path_mounted sdcard, path=/mnt/external_sd
+[   14.118248][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+v->blk_device is /dev/block/mmcblk0p1
+v->blk_device is /dev/block/mmcblk0p1 to vfat.
+E:trying mount fs/dev/block/mmcblk1p1 to vfat.
+enter sdboot_set_bUpdateModel !
+enter sdboot_get_bUpdateModel !
+in parse_config
+#rockchip sdcard boot config file for factory
+loader_update = 0
+display_led = 1
+display_lcd = 1
+pcba_test = 0
+fw_update = 1
+demo_copy = 0
+out parse_config
+out parse_config_file
+--fw_update=1
+out get_args_from_sd
+ensure_path_mounted path=/cache/recovery/last_locale
+[   14.165799][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+I:[libfs_mgr] superblock s_max_mnt_count:65535,/dev/block/by-name/cache
+I:[libfs_mgr] Filesystem on /dev/block/by-name/cache was not cleanly shutdown; state flags: 0x1, incompat feature flags: 0x46
+I:[libfs_mgr] check_fs(): mount(/dev/block/by-name/cache,/cache,ext4)=0: Success
+I:[libfs_mgr] umount_retry(): unmount(/cache) succeeded
+I:[libfs_mgr] Not running /system/bin/e2fsck on /dev/block/mmcblk0p20 (executable not in system image)
+[   14.213236][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+I:[libfs_mgr] __mount(source=/dev/block/by-name/cache,target=/cache,type=ext4)=0: Success
+Loading make_device from librecovery_ui_ext.so
+W:Failed to read max brightness: No such file or directory
+I:Screensaver disabled
+Display Mode 0 resolution: 800 x 480 @ 62 FPS
+Choosing display mode #0
+Allocating buffer with resolution 800 x 480 pitch: 3200 bpp: 32, size: 1536000
+Framebuffer of size 1536000 allocated @ 0x7ad5cd2000
+Allocating buffer with resolution 800 x 480 pitch: 3200 bpp: 32, size: 1536000
+Framebuffer of size 1536000 allocated @ 0x7ad5b5b000
+[   14.263223][  T195] rockchip-dp fded0000.edp: failed to read max link rate
+          erasing_text: en (47 x 19 @ 700)
+[   14.300141][  T195] recovery: Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+       no_command_text: en (83 x 19 @ 700)
+[   14.300179][  T195] recovery: Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+            error_text: en (33 x 19 @ 700)
+[   14.300214][  T195] recovery: Failed to load bitmap try_again_text for locale en-US (error -1)
+W:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1). Falling back to use default locale.
+[   14.300249][  T195] recovery: Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+E:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+[   14.300285][  T195] recovery: Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+W:Failed to load bitmap factory_data_reset_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+W:Failed to load bitmap try_again_text for locale en-US (error -1). Falling back to use default locale.
+[   14.389182][  T195] logwrapper: Cannot log to file /dev/fscklogs/log
+E:Failed to load bitmap try_again_text for locale en-US (error -1)
+[   14.389193][  T195] logwrapper:
+W:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+W:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+I:Starting recovery (pid 195) on Thu Jan  1 00:00:01 1970
+
+I:locale is [en-US]
+SELinux: Loaded file context from:
+                /plat_file_contexts
+                /system_ext_file_contexts
+                /product_file_contexts
+                /vendor_file_contexts
+                /odm_file_contexts
+stage is []
+reason is []
+       installing_text: en (156 x 19 @ 700)
+ensure_path_mounted path=/metadata
+I:[libfs_mgr] Running /system/bin/fsck.f2fs -a -c 10000 --debug-cache /dev/block/mmcblk0p21
+Cannot log to file /dev/fscklogs/log
+ERROR: logwrapper: Cannot log to file /dev/fscklogs/log
+
+I:[libfs_mgr] __mount(source=/dev/block/by-name/metadata,target=/metadata,type=f2fs)=0: Success
+Command: "/system/bin/recovery" "--fw_update=1"
+
+bluetooth.profile.bas.client.enabled=true
+bluetooth.profile.hfp.ag.enabled=true
+bluetooth.profile.hid.host.enabled=true
+bluetooth.profile.hid.device.enabled=true
+bluetooth.profile.map.server.enabled=true
+bluetooth.profile.opp.enabled=true
+bluetooth.profile.pan.nap.enabled=true
+bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.sap.server.enabled=true
+bluetooth.profile.a2dp.source.enabled=true
+bluetooth.profile.asha.central.enabled=true
+bluetooth.profile.gatt.enabled=true
+bluetooth.profile.pbap.server.enabled=true
+bluetooth.profile.avrcp.target.enabled=true
+ro.boot.vr=0
+ro.boot.mode=normal
+ro.boot.flash.locked=0
+ro.boot.fwver=ddr-v1.17-3488111f83,spl-v1.13,bl31-v1.46,bl32-v1.16,uboot-14005-12/25/2024
+ro.boot.console=ttyFIQ0
+ro.boot.dtb_idx=0
+ro.boot.dtbo_idx=0
+ro.boot.hardware=rk30board
+ro.boot.boot_devices=fe2e0000.mmc
+ro.boot.storagemedia=sd
+ro.boot.verifiedbootstate=orange
+ro.baseband=unknown
+ro.bootmode=normal
+ro.hardware=rk30board
+ro.revision=0
+ro.bootloader=unknown
+ro.boottime.adbd=2193014167
+ro.boottime.init=1304195000
+ro.boottime.init.fsck.cache=11
+ro.boottime.init.fsck.metadata=9
+ro.boottime.init.mount.cache=2
+ro.boottime.init.mount.metadata=8
+ro.boottime.init.selinux=93970042
+ro.boottime.init.first_stage=10267250
+ro.boottime.init.cold_boot_wait=289
+ro.boottime.vendor.health-rockchip=1750541542
+ro.boottime.vendor.fastboot-default=1748327209
+ro.boottime.console=1742271042
+ro.boottime.ueventd=1439981875
+ro.boottime.recovery=1746235084
+ro.boottime.servicemanager=1735013209
+ro.boottime.rockchip_udc_detector=1737392625
+ro.product.bootimage.name=rom6881_u
+ro.product.bootimage.brand=rockchip
+ro.product.bootimage.model=rom6881_u
+ro.product.bootimage.device=rom6881_u
+ro.product.bootimage.manufacturer=rockchip
+ro.bootimage.build.id=UQ1A.240205.004.B1
+ro.bootimage.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.bootimage.build.date.utc=1735111206
+ro.bootimage.build.tags=release-keys
+ro.bootimage.build.type=userdebug
+ro.bootimage.build.version.sdk=34
+ro.bootimage.build.version.release=14
+ro.bootimage.build.version.incremental=eng.adv.20241225.152544
+ro.bootimage.build.version.release_or_codename=14
+ro.bootimage.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.odm.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.odm.build.date.utc=1735111206
+ro.odm.build.version.incremental=eng.adv.20241225.152544
+ro.odm.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.product.odm.name=rom6881_u
+ro.product.odm.brand=rockchip
+ro.product.odm.model=rom6881_u
+ro.product.odm.device=rom6881_u
+ro.product.odm.manufacturer=rockchip
+ro.build.id=UQ1A.240205.004.B1
+ro.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.build.date.utc=1735111206
+ro.build.host=33be0978b65a
+ro.build.tags=release-keys
+ro.build.type=userdebug
+ro.build.user=adv
+ro.build.flavor=rom6881_u-userdebug
+ro.build.display.id=rom6881_u-userdebug 14 UQ1A.240205.004.B1 eng.adv.20241225.152544 release-keys
+ro.build.product=rom6881_u
+ro.build.version.sdk=34
+ro.build.version.base_os=
+ro.build.version.release=14
+ro.build.version.codename=REL
+ro.build.version.incremental=eng.adv.20241225.152544
+ro.build.version.preview_sdk=0
+ro.build.version.all_codenames=REL
+ro.build.version.security_patch=2024-02-05
+ro.build.version.release_or_codename=14
+ro.build.version.preview_sdk_fingerprint=REL
+ro.build.version.min_supported_target_sdk=28
+ro.build.description=rom6881_u-userdebug 14 UQ1A.240205.004.B1 eng.adv.20241225.152544 release-keys
+ro.build.characteristics=tablet
+ro.force.debuggable=0
+ro.system.build.id=UQ1A.240205.004.B1
+ro.system.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.system.build.date.utc=1735111206
+ro.system.build.tags=release-keys
+ro.system.build.type=userdebug
+ro.system.build.version.sdk=34
+ro.system.build.version.release=14
+ro.system.build.version.incremental=eng.adv.20241225.152544
+ro.system.build.version.release_or_codename=14
+ro.system.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.treble.enabled=true
+ro.product.cpu.abi=arm64-v8a
+ro.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.product.cpu.pagesize.max=65536
+ro.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.product.cpu.abilist64=arm64-v8a
+ro.product.name=rom6881_u
+ro.product.brand=rockchip
+ro.product.build.id=UQ1A.240205.004.B1
+ro.product.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.product.build.date.utc=1735111206
+ro.product.build.tags=release-keys
+ro.product.build.type=userdebug
+ro.product.build.version.sdk=34
+ro.product.build.version.release=14
+ro.product.build.version.incremental=eng.adv.20241225.152544
+ro.product.build.version.release_or_codename=14
+ro.product.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.product.model=rom6881_u
+ro.product.device=rom6881_u
+ro.product.system.name=rom6881_u
+ro.product.system.brand=rockchip
+ro.product.system.model=rom6881_u
+ro.product.system.device=rom6881_u
+ro.product.system.manufacturer=rockchip
+ro.product.product.name=rom6881_u
+ro.product.product.brand=rockchip
+ro.product.product.model=rom6881_u
+ro.product.product.device=rom6881_u
+ro.product.product.manufacturer=rockchip
+ro.product.system_ext.name=rom6881_u
+ro.product.system_ext.brand=rockchip
+ro.product.system_ext.model=rom6881_u
+ro.product.system_ext.device=rom6881_u
+ro.product.system_ext.manufacturer=rockchip
+ro.product.manufacturer=rockchip
+ro.system_ext.build.id=UQ1A.240205.004.B1
+ro.system_ext.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.system_ext.build.date.utc=1735111206
+ro.system_ext.build.tags=release-keys
+ro.system_ext.build.type=userdebug
+ro.system_ext.build.version.sdk=34
+ro.system_ext.build.version.release=14
+ro.system_ext.build.version.incremental=eng.adv.20241225.152544
+ro.system_ext.build.version.release_or_codename=14
+ro.system_ext.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.actionable_compatible_property.enabled=true
+ro.board.first_api_level=34
+ro.vendor.build.id=UQ1A.240205.004.B1
+ro.vendor.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.vendor.build.date.utc=1735111206
+ro.vendor.build.tags=release-keys
+ro.vendor.build.type=userdebug
+ro.vendor.build.version.sdk=34
+ro.vendor.build.version.release=14
+ro.vendor.build.version.incremental=eng.adv.20241225.152544
+ro.vendor.build.version.release_or_codename=14
+ro.vendor.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.vendor.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist64=arm64-v8a
+ro.vendor.api_level=34
+ro.product.board=rk30sdk
+ro.product.vendor.name=rom6881_u
+ro.product.vendor.brand=rockchip
+ro.product.vendor.model=rom6881_u
+ro.product.vendor.device=rom6881_u
+ro.product.vendor.manufacturer=rockchip
+ro.product.first_api_level=34
+ro.dalvik.vm.native.bridge=0
+ro.dalvik.vm.enable_uffd_gc=true
+ro.zygote=zygote64_32
+dalvik.vm.isa.arm.variant=cortex-a76
+dalvik.vm.isa.arm.features=default
+dalvik.vm.isa.arm64.variant=cortex-a76
+dalvik.vm.isa.arm64.features=default
+dalvik.vm.dexopt.secondary=true
+dalvik.vm.dexopt.thermal-cutoff=2
+dalvik.vm.usejit=true
+dalvik.vm.madvise.artfile.size=4294967295
+dalvik.vm.madvise.odexfile.size=104857600
+dalvik.vm.madvise.vdexfile.size=104857600
+dalvik.vm.heapsize=512m
+dalvik.vm.lockprof.threshold=500
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
+dalvik.vm.heapmaxfree=8m
+dalvik.vm.heapminfree=512k
+dalvik.vm.heapstartsize=16m
+dalvik.vm.minidebuginfo=true
+dalvik.vm.useartservice=true
+dalvik.vm.appimageformat=lz4
+dalvik.vm.heapgrowthlimit=192m
+dalvik.vm.image-dex2oat-Xms=64m
+dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.usap_pool_enabled=false
+dalvik.vm.usap_pool_size_max=3
+dalvik.vm.usap_pool_size_min=1
+dalvik.vm.dex2oat-minidebuginfo=true
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.usap_refill_threshold=1
+dalvik.vm.usap_pool_refill_delay_ms=3000
+dalvik.vm.dex2oat-max-image-block-size=524288
+dalvik.vm.dex2oat-resolve-startup-strings=true
+dalvik.vm.dex2oat-threads=4
+dalvik.vm.boot-dex2oat-threads=4
+persist.sys.dalvik.vm.lib.2=libart.so
+ro.rk.bt_enable=true
+ro.rk.hdmi_enable=true
+ro.rk.flash_enable=true
+ro.rk.screenoff_time=60000
+ro.rk.ethernet_settings=true
+ro.rk.screenshot_enable=true
+ro.tee.storage=rkss
+ro.boot.noril=true
+ro.wifi.sleep.power.down=true
+ro.rksdk.version=ANDROID14_RKR5
+ro.config.enable.remotecontrol=false
+ro.tether.denied=false
+ro.factory.tool=0
+ro.factory.hasUMS=false
+ro.factory.without_battery=false
+ro.factory.storage_suppntfs=true
+ro.safemode.disabled=true
+sf.power.control=2073600
+ril.function.dataonly=1
+sys.resolution.changed=false
+debug.nfc.se=false
+debug.nfc.fw_download=false
+debug.atrace.tags.enableflags=0
+debug.stagefright.ccodec=4
+debug.stagefright.c2inputsurface=-1
+persist.bt.power.down=true
+persist.sys.strictmode.visual=false
+persist.wifi.sleep.delay.ms=0
+ro.sf.fakerotation=false
+ro.sys.host_unhide_charge_notify=true
+ro.wifi.channels=
+ro.allow.mock.location=0
+ro.audio.monitorOrientation=true
+ro.build.version.known_codenames=Base,Base11,Cupcake,Donut,Eclair,Eclair01,EclairMr1,Froyo,Gingerbread,GingerbreadMr1,Honeycomb,HoneycombMr1,HoneycombMr2,IceCreamSandwich,IceCreamSandwichMr1,JellyBean,JellyBeanMr1,JellyBeanMr2,Kitkat,KitkatWatch,Lollipop,LollipopMr1,M,N,NMr1,O,OMr1,P,Q,R,S,Sv2,Tiramisu,UpsideDownCake
+ro.build.version.release_or_preview_display=14
+ro.build.shutdown_timeout=6
+ro.kernel.android.checkjni=0
+ro.kernel.version=6.1
+ro.system.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.system.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.system.product.cpu.abilist64=arm64-v8a
+ro.target.product=tablet
+ro.default.size=100
+ro.product.ota.host=192.168.1.1:8888
+ro.product.locale=en-US
+ro.product.usbfactory=rockchip_usb
+ro.flash_img.enable=false
+ro.postinstall.fstab.prefix=/system
+persist.wm.extensions.enabled=true
+persist.dbg.keep_debugfs_mounted=1
+persist.enable_task_snapshots=false
+testing.mediascanner.skiplist=/mnt/shell/emulated/Android/
+rt_retriever_enable=1
+ro.frp.pst=/dev/block/by-name/frp
+ro.apex.updatable=true
+ro.boot.slot_suffix=_a
+ro.boot.dynamic_partitions=true
+ro.hwui.use_vulkan=true
+ro.board.platform=rk3588
+ro.build.ab_update=true
+ro.carrier=unknown
+ro.hardware.egl=mali
+pm.dexopt.ab-ota=speed-profile
+pm.dexopt.shared=speed
+pm.dexopt.cmdline=verify
+pm.dexopt.install=speed-profile
+pm.dexopt.inactive=verify
+pm.dexopt.bg-dexopt=speed-profile
+[   15.433317][   T95] rk-pcie fe150000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+pm.dexopt.post-boot=extract
+[   15.433333][   T95] rk-pcie fe150000.pcie: failed to initialize host
+pm.dexopt.first-boot=verify
+[   15.441316][   T97] rk-pcie fe170000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+pm.dexopt.install-bulk=speed-profile
+[   15.441326][   T97] rk-pcie fe170000.pcie: failed to initialize host
+pm.dexopt.install-fast=skip
+[   15.445314][   T94] rk-pcie fe180000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+pm.dexopt.boot-after-ota=verify
+[   15.445321][   T94] rk-pcie fe180000.pcie: failed to initialize host
+pm.dexopt.install-bulk-secondary=verify
+[   15.461315][   T96] rk-pcie fe160000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+pm.dexopt.install-bulk-downgraded=verify
+[   15.461320][   T96] rk-pcie fe160000.pcie: failed to initialize host
+pm.dexopt.boot-after-mainline-update=verify
+pm.dexopt.install-bulk-secondary-downgraded=extract
+sys.usb.ffs.ready=1
+ro.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/eng.adv.20241225.152544:userdebug/release-keys
+ro.opengles.version=196610
+graphics.gpu.profiler.support=true
+ro.gsid.image_running=0
+gsid.image_installed=0
+init.svc.ueventd=running
+init.svc.recovery=running
+init.svc.fastbootd=stopped
+init.svc.servicemanager=running
+init.svc.rockchip_udc_detector=stopped
+init.svc.adbd=running
+init.svc.console=running
+log.tag.stats_log=I
+ro.logd.size.stats=64K
+ro.logd.kernel=1
+ro.product.ab_ota_partitions=boot,dtbo,odm,odm_dlkm,product,system,system_dlkm,system_ext,uboot,vendor,vendor_dlkm
+persist.debug.dalvik.vm.core_platform_api_policy=just-warn
+ro.property_service.version=2
+ro.ril.ecclist=112,911
+ro.minui.pixel_format=RGBX_8888
+ro.minui.default_rotation=ROTATION_NONE
+ro.boot.serialno=8e5b64b9f2c4fdc8
+ro.serialno=8e5b64b9f2c4fdc8
+servicemanager.ready=true
+security.perf_harden=1
+ro.soc.model=RK3588
+ro.soc.manufacturer=Rockchip
+external_storage.projid.enabled=1
+external_storage.casefold.enabled=1
+external_storage.sdcardfs.enabled=0
+persist.sys.sf.color_saturation=1.0
+ro.sf.lcd_density=320
+ro.surface_flinger.has_HDR_display=false
+dev.mnt.blk.mnt.external_sd=mmcblk1p1
+dev.mnt.blk.cache=mmcblk0p20
+dev.mnt.blk.metadata=mmcblk0p21
+dev.mnt.dev.mnt.external_sd=mmcblk1p1
+dev.mnt.dev.cache=mmcblk0p20
+dev.mnt.dev.metadata=mmcblk0p21
+dev.mnt.rootdisk.mnt.external_sd=mmcblk1
+dev.mnt.rootdisk.cache=mmcblk0
+dev.mnt.rootdisk.metadata=mmcblk0
+net.bt.name=Android
+sys.rkadb.root=0
+sys.status.hidebar_enable=false
+sys.wallpaper.rgb565=0
+persist.sys.usb.config=adb
+persist.sys.ext_ram=none
+ro.config.ringtone=Ring_Synth_04.ogg
+ro.config.alarm_alert=Alarm_Classic.ogg
+ro.config.notification_sound=OnTheHunt.ogg
+ro.com.android.dataroaming=true
+sys.usb.state=adb
+sys.usb.config=adb
+sys.usb.configfs=1
+ro.secure=1
+ro.debuggable=1
+ro.odm.build.id=UQ1A.240205.004.B1
+ro.odm.build.tags=release-keys
+ro.odm.build.type=userdebug
+ro.odm.build.version.sdk=34
+ro.odm.build.version.release=14
+ro.odm.build.version.release_or_codename=14
+ro.odm.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist64=arm64-v8a
+init.svc.vendor.health-rockchip=running
+init.svc.vendor.fastboot-default=running
+ro.vendor.rk_sdk=1
+ro.vendor.sdkversion=rk3588_ANDROID14.0_MID_V1.0
+ro.vendor.frameratelock=true
+ro.vendor.hdmi_settings=true
+vendor.gralloc.disable_afbc=0
+ro.virtual_ab.enabled=true
+ro.vndk.version=34
+ro.product.vndk.version=34
+
+
+bSDBoot = 1, sdboot_update_package=1
+bSDBoot = 1, sdboot_update_package=1
+enter sdboot_set_bUpdateModel !
+enter sdboot_get_bSDBoot !
+SDBoot do_rk_mode_update
+SDBoot do_rk_mode_update
+enter sdboot_set_status !
+start sd upgrade...
+start sd upgrade...
+librkupdate_Start to upgrade firmware...
+Start to upgrade firmware...
+librkupdate_INFO:emmc_point-->is /dev/block/mmcblk0
+librkupdate_INFO:is emmc devices...
+flashSize is 31037849600
+CRKUsbComm INFO m_bEmmc=1 m_ufs=0
+librkupdate_INFO:CRKUsbComm-->is emmc.
+librkupdate_INFO:CRKUsbComm EMMC_DRIVER_DEV_VENDOR-->/dev/vendor_storage=16
+librkupdate_INFO:CRKUsbComm emmc_point-->/dev/block/mmcblk0=17
+In Md5Check
+New Md5:
+34 32 30 61 36 61 66 66 35 63 33 39 61 62 32 65
+35 32 38 65 39 61 35 34 61 31 31 35 30 31 34 32
+Old Md5:
+34 32 30 61 36 61 66 66 35 63 33 39 61 62 32 65
+35 32 38 65 39 61 35 34 61 31 31 35 30 31 34 32
+librkupdate_uid: 52 4F 43 4B 43 48 49 50 21 00 00 00 6B 7B 98 73
+ 74 49 94 4C A3 E8 58 AB 2E B7 A9 46 3A 71
+uid: 52 4F 43 4B 43 48 49 50 21 00 00 00 6B 7B 98 73
+ 74 49 94 4C A3 E8 58 AB 2E B7 A9 46 3A 71
+librkupdate_Get FlashInfo...
+Get FlashInfo...
+librkupdate_INFO:FlashInfo: 00 00 80 00 00 04 04 00 28 00 01
+librkupdate_INFO:m_flashInfo.uiFlashSize=29600 MB, RKU_GetFlashSize=60620800 sectors
+librkupdate_IDBlock Preparing...
+IDBlock Preparing...
+librkupdate_INFO:CS(1)          (29600MB)               (SAMSUNG)
+librkupdate_ERROR:PrepareIDB-->IDblock count=0.
+librkupdate_INFO:FindBackupBuffer-->No Found Tag
+librkupdate_INFO:FindBackupBuffer-->No Found Tag
+librkupdate_INFO:FindBackupBuffer-->No Found Tag
+librkupdate_INFO:FindBackupBuffer-->No Found Tag
+librkupdate_INFO:FindBackupBuffer-->No Found Tag
+librkupdate_INFO:CalcIDBCount IsNewIDBFlag is true
+librkupdate_ERROR:PrepareIDB-->New IDblock offset=0 1 2 3 4 .
+librkupdate_IDBlock Writing...
+IDBlock Writing...
+librkupdate_INFO:DownloadIDBlock-->IsNewIDBFlag is true
+librkupdate_INFO:MakeNewIDBlockData in
+librkupdate_INFO:MakeNewIDBlockData out
+librkupdate_INFO:WriteIDBlock in
+RKU_IsUfs is_ufs=0, is_emmc
+RKU_IsUfs is_ufs=0, is_emmc
+RKU_IsUfs is_ufs=0, is_emmc
+RKU_IsUfs is_ufs=0, is_emmc
+RKU_IsUfs is_ufs=0, is_emmc
+librkupdate_INFO:WriteIDBlock out
+INFO:do_rk_firmware_upgrade begin DownloadImage... !
+DownloadImage rkImageHead.item_count=14
+parameter writing...
+RKU_IsUfs is_ufs=0, is_emmc
+create_gpt_buffer backup_gpt_secs=64
+librkupdate_INFO:RKA_Gpt_Download-->disk_sector=60620800
+)
+librkupdate_ERROR:RKA_Gpt_Download-->write gpt master successfully!
+librkupdate_ERROR:RKA_Gpt_Download-->write gpt backup also successfully!
+uboot_a writing...
+RKA_File_Download entry.name=uboot_a
+librkupdate_ INFO:Start to download uboot_a,offset=0x4000,size=4194304
+RKA_File_Download entry.name=uboot_a DONE!
+uboot_b writing...
+RKA_File_Download entry.name=uboot_b
+librkupdate_ INFO:Start to download uboot_b,offset=0x6000,size=4194304
+RKA_File_Download entry.name=uboot_b DONE!
+misc writing...
+RKA_File_Download entry.name=misc
+librkupdate_ INFO:Start to download misc,offset=0xc000,size=49152
+RKA_File_Download entry.name=misc DONE!
+dtbo_a writing...
+RKA_File_Download entry.name=dtbo_a
+librkupdate_ INFO:Start to download dtbo_a,offset=0xe000,size=4194304
+RKA_File_Download entry.name=dtbo_a DONE!
+dtbo_b writing...
+RKA_File_Download entry.name=dtbo_b
+librkupdate_ INFO:Start to download dtbo_b,offset=0x10000,size=4194304
+RKA_File_Download entry.name=dtbo_b DONE!
+vbmeta_a writing...
+RKA_File_Download entry.name=vbmeta_a
+librkupdate_ INFO:Start to download vbmeta_a,offset=0x12000,size=4096
+RKA_File_Download entry.name=vbmeta_a DONE!
+vbmeta_b writing...
+RKA_File_Download entry.name=vbmeta_b
+librkupdate_ INFO:Start to download vbmeta_b,offset=0x12800,size=4096
+RKA_File_Download entry.name=vbmeta_b DONE!
+boot_a writing...
+RKA_File_Download entry.name=boot_a
+librkupdate_ INFO:Start to download boot_a,offset=0x13000,size=98467840
+RKA_File_Download entry.name=boot_a DONE!
+boot_b writing...
+RKA_File_Download entry.name=boot_b
+librkupdate_ INFO:Start to download boot_b,offset=0x43000,size=98467840
+RKA_File_Download entry.name=boot_b DONE!
+baseparameter writing...
+RKA_File_Download entry.name=baseparameter
+librkupdate_ INFO:Start to download baseparameter,offset=0x213400,size=1048576
+RKA_File_Download entry.name=baseparameter DONE!
+super writing...
+RKA_SparseFile_Download entry.name=super
+librkupdate_INFO:Start to download super,offset=0x213c00,size=3263168512
+INFO:Start to download super,offset=0x213c00,size=3263168512
+INFO:ErasePartition_discard super,offset=0x213c00,size=3263168512, part_size=0x614000
+RKU_EraseBlock_discard dwPos = 1115160576, len=3263168512
+Wipe used discard success
+INFO:RKA_SparseFile_Download-->total_chunks=745
+RKA_SparseFile_Download entry.name=super DONE!
+parameter checking...
+RKU_IsUfs is_ufs=0, is_emmc
+uboot_a checking...
+RKA_File_Check entry.name=uboot_a
+RKA_File_Check entry.name=uboot_a DONE!
+uboot_b checking...
+RKA_File_Check entry.name=uboot_b
+RKA_File_Check entry.name=uboot_b DONE!
+misc checking...
+RKA_File_Check entry.name=misc
+RKA_File_Check entry.name=misc DONE!
+dtbo_a checking...
+RKA_File_Check entry.name=dtbo_a
+RKA_File_Check entry.name=dtbo_a DONE!
+dtbo_b checking...
+RKA_File_Check entry.name=dtbo_b
+RKA_File_Check entry.name=dtbo_b DONE!
+vbmeta_a checking...
+RKA_File_Check entry.name=vbmeta_a
+RKA_File_Check entry.name=vbmeta_a DONE!
+vbmeta_b checking...
+RKA_File_Check entry.name=vbmeta_b
+RKA_File_Check entry.name=vbmeta_b DONE!
+boot_a checking...
+RKA_File_Check entry.name=boot_a
+RKA_File_Check entry.name=boot_a DONE!
+boot_b checking...
+RKA_File_Check entry.name=boot_b
+RKA_File_Check entry.name=boot_b DONE!
+baseparameter checking...
+RKA_File_Check entry.name=baseparameter
+RKA_File_Check entry.name=baseparameter DONE!
+super checking...
+RKA_SparseFile_Check entry.name=super
+librkupdate_INFO:Start to check super,offset=0x213c00,size=I64u
+INFO:Start to check super,offset=0x213c00,size=I64u
+RKA_SparseFile_Check entry.name=super Done!
+librkupdate_Finish to upgrade firmware.
+Finish to upgrade firmware.
+enter sdboot_set_status !
+SD upgrade ok.
+SD upgrade ok.
+enter sdboot_get_status !
+enter sdboot_set_status !
+prksdboot->do_rk_mode_update Successful!
+prksdboot->do_rk_mode_update Successful!
+enter sdboot_get_bSDBoot !
+enter sdboot_get_status !
+Doing Actions succeeded.please remove the sdcard......
+enter sdboot_get_bUpdateModel !
+remove sdcard
+enter sdboot_get_bUpdateModel !
+reboot ...
+check_device_remove sd update, waiting for reboot........
+check_device_remove sd update, waiting for reboot........
+[  347.904534][    T1] init: Could not open '/metadata/bootstat/persist.sys.boot.reason' to persist reboot reason: Structure needs cleaning
+[  348.351437][    T1] reboot: Restarting system with command 'reboot'
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.3%, TX Vref:21.8%,0.0%DQ rds:
+h0 l0, h0 l0, h1 l0, h2 l0, h2 l0, h0 l0, h2 l0, h0 l0,
+h1 l0, h1 l0, h0 l0, h2 l0, h1 l0, h2 l0, h1 l0, h5 l0,
+
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h4 l0, h1 l0, h5 l0, h0 l0, h5 l0,
+h1 l0, h1 l0, h0 l0, h1 l0, h2 l0, h1 l0, h3 l0, h1 l0,
+
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h3 l0, h1 l0, h1 l0, h2 l0, h6 l0, h2 l0,
+h2 l0, h2 l0, h4 l0, h0 l0, h2 l0, h1 l0, h1 l0, h1 l0,
+
+CH3 RX Vref:28.5%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h3 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+Magic is incorrect.
+Error validating A/B metadata from disk. Resetting and writing new A/B metadata to disk.
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(23eeaffd14...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(3ced55f820...) + sha256(b83a5996c7...) + OK
+## Checking fdt 0x0034e930 ... sha256(e4e0311b2d...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(820ab73bd4...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 174.838/448.312 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0xa
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14005 (Dec 25 2024 - 15:15:06 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba0f000
+Relocation fdt: e99fa600 - e99fecd0
+CR: M/C/I
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 7
+*** Warning - bad CRC, using default environment
+
+DM: v2
+RESC: 'boot_a', blk@0x0003fa34
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 14.0, Build 2024.2, v2
+boot mode: recovery (misc)
+ANDROID: fdt overlay OK
+swversion = V14005
+Error: adv_set_factory_info: out of memory!
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0000000000
+model[2]         V14005
+model[3]         A1
+----------------------------------------------------------------
+ROM-6881 hw_id = 13
+Info : not configurate display in uboot
+----------------------------------------------------------------
+display0         6881
+display1
+display2
+display3
+----------------------------------------------------------------
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+Warn: can't find connect driver
+Warn: can't get connect driver
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Warn: can't find connect driver
+Warn: can't get connect driver
+Model: ROM-6881 AKS0000000000 V14005 A1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+disp info 2, type:16, id:0
+base2_disp_info couldn't be found, screen_info type[0] or id[0] mismatched
+Using display timing dts
+dsi@fde20000:  detailed mode clock 33300 kHz, flags[a]
+    H: 0800 1000 1006 1056
+    V: 0480 0500 0504 0508
+bus_format: 100e
+VOP update mode to: 800x480p62, type: MIPI0 for VP3
+VP3 set crtc_clock to 33000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@73x105] fmt[0] addr[0xebf00000]
+final DSI-Link bandwidth: 220000 Kbps x 4
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP2
+VP2 set crtc_clock to 85500KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP2 enable Esmart2[654x270->654x270@357x249] fmt[0] addr[0xebf00000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 684000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta_a: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot_a
+ANDROID: sha1(ecdbc11bf4...) + OK
+Could not find "system_a" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff800 ...
+Kernel: 0x00400000 - 0x0277b008 (36333 KiB)
+ramdisk:    0x0a200000 - 0x0d7ca286 (55081 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x0277b008
+   Using Device Tree in place at 0000000008300000, end 0000000008349a34
+## reserved-memory:
+  cma: addr=10000000 size=10000000
+  drm-logo@0: addr=ebf00000 size=15a000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 2241.724/2904.195 ms
+
+Starting kernel ...
+
+[    2.945775][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@0': base 0x0000000000000000, size 0 MiB
+[    2.958260][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'vendor-storage-rm@00000000': base 0x0000000000000000, size 0 MiB
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[    3.431831][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ fiq not found
+[    3.439705][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ wakeup not found
+[    3.447835][    T1] fiq_debugger_probe: could not install nmi irq handler
+[    3.599583][    T1] rk806 spi2.0: no sleep-setting state
+[    3.599598][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    3.599604][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    3.603808][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    3.603818][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    3.603830][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    3.772997][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    3.773011][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    3.773023][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    4.027250][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 17 not active.
+[    4.032956][    T1] rt5640 5-001c: Device with ID register 0x0 is not rt5640/39
+[    4.052905][   T82] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    4.053472][   T82] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    4.053478][   T82] rkvdec2_init:1197: No niu aclk reset resource define
+[    4.053482][   T82] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    4.053485][   T82] rkvdec2_init:1200: No niu hclk reset resource define
+[    4.053962][   T82] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    4.053966][   T82] rkvdec2_init:1197: No niu aclk reset resource define
+[    4.053970][   T82] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    4.053973][   T82] rkvdec2_init:1200: No niu hclk reset resource define
+[    4.079860][   T82] rockchip-vop2 fdd90000.vop: Supported VOP aclk dvfs, normal mode:500000000, reset mode:0, advanced mode:750000000
+[    4.081152][   T82] rockchip-drm display-subsystem: route-dp0: failed to get logo,offset
+[    4.128282][   T82] rockchip-dp fded0000.edp: failed to read downspread -110
+[    4.147381][   T82] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[    4.147463][   T82] rockchip-drm display-subsystem: route-hdmi0: failed to get logo,offset
+[    4.182766][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    4.183923][   T82] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    4.183935][   T82] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    4.186057][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    4.206291][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    4.206316][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    4.206323][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    4.208509][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    4.218937][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    4.561253][    T1] init: Failed to open device-mapper: No such file or directory
+[    4.561285][    T1] init: Could not update logical partition
+[    4.561350][    T1] init: Could not update logical partition
+[    4.561412][    T1] init: Could not update logical partition
+[    4.561473][    T1] init: Could not update logical partition
+[    4.561671][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    4.685457][    T1] selinux: SELinux:  Could not stat /dev/selinux: No such file or directory.
+[    4.699361][    T1] init: Could not read properties from '/dev/selinux/apex_property_contexts': No such file or directory
+[    4.718926][    T1] selinux: SELinux:  Could not stat /dev/block: No such file or directory.
+[    4.719182][    T1] selinux: SELinux: Could not get canonical path for /metadata/ota/rollback-indicator restorecon: No such file or directory.
+[    4.719206][    T1] selinux: SELinux:  Could not stat /metadata/gsi: No such file or directory.
+[    4.723560][    T1] init: /system/etc/init/init.recovery.udc.rc: 1: ignored duplicate definition of service 'rockchip_udc_detector'
+[    4.727693][    T1] libprocessgroup: Failed to read task profiles from /etc/task_profiles.json
+[    4.727718][    T1] libprocessgroup: Loading /etc/task_profiles.json for [1] failed
+[    5.003926][    T1] init: Could not start service 'charger' as part of class 'default': Cannot find '/system/bin/charger': No such file or directory
+# [    5.020421][  T190] cutils-trace: Error opening trace file: No such file or directory (2)
+recovery filesystem table
+=========================
+[    5.027574][  T195] cutils-trace: Error opening trace file: No such file or directory (2)
+  0 /system  erofs system_a 0
+[    5.028429][  T193] EXT4-fs (mmcblk0p14): error loading journal
+  1 /system  ext4 system_a 0
+[    5.030659][  T193] EXT4-fs (mmcblk0p14): error loading journal
+  2 /vendor  erofs vendor_a 0
+[    5.030755][  T193] recovery: [libfs_mgr] Failed to mount /cache: Invalid argument
+  3 /vendor  ext4 vendor_a 0
+[    5.030765][  T193] recovery: [libfs_mgr] Failed to mount for path [/cache/recovery/last_locale]
+  4 /odm  erofs odm_a 0
+[    5.030775][  T193] recovery: Can't mount /cache/recovery/last_locale
+  5 /odm  ext4 odm_a 0
+[    5.080798][  T193] rockchip-dp fded0000.edp: failed to read max link rate
+  6 /cache  ext4 /dev/block/by-name/cache 0
+  7 /boot  emmc /dev/block/by-name/boot_a 0
+  8 /misc  emmc /dev/block/by-name/misc 0
+  9 /backup  emmc /dev/block/by-name/backup 0
+  10 /baseparamer  emmc /dev/block/by-name/baseparamer 0
+  11 /mnt/external_sd  vfat /dev/block/mmcblk0p1 0
+  12 auto  vfat /devices/platform/*usb* 0
+  13 auto  vfat /devices/platform/*.sata* 0
+[    5.128505][  T193] rockchip-dp fded0000.edp: failed to read max link rate
+  14 auto  vfat /devices/platform/*.pcie* 0
+  15 auto  auto /devices/platform/fe2c0000.mmc/mmc_host* 0
+  16 /data  f2fs /dev/block/by-name/userdata 0
+  17 /metadata  f2fs /dev/block/by-name/metadata 0
+  18 /frp  emmc /dev/block/by-name/frp 0
+  19 /system_dlkm  erofs system_dlkm_a 0
+  20 /system_dlkm  ext4 system_dlkm_a 0
+  21 /system_ext  erofs system_ext_a 0
+  22 /system_ext  ext4 system_ext_a 0
+  23 /vendor_dlkm  erofs vendor_dlkm_a 0
+  24 /vendor_dlkm  ext4 vendor_dlkm_a 0
+[    5.176382][  T193] rockchip-dp fded0000.edp: failed to read max link rate
+  25 /odm_dlkm  erofs odm_dlkm_a 0
+  26 /odm_dlkm  ext4 odm_dlkm_a 0
+  27 /product  erofs product_a 0
+  28 /product  ext4 product_a 0
+  29 /tmp  ramdisk ramdisk 0
+
+exit=================
+result_point[0] is ----/dev/block/mmcblk0
+111
+emmc_point is /dev/block/mmcblk0
+sd_point is (null)
+sd_point_2 is (null)
+read cmdline
+I:Boot command: boot-recovery
+I:Got 2 arguments from boot message
+ensure_path_mounted path=/cache/recovery/last_locale
+I:[libfs_mgr] superblock s_max_mnt_count:65535,/dev/block/by-name/cache
+[    5.223925][  T193] rockchip-dp fded0000.edp: failed to read max link rate
+I:[libfs_mgr] Filesystem on /dev/block/by-name/cache was not cleanly shutdown; state flags: 0x1, incompat feature flags: 0x46
+I:[libfs_mgr] check_fs(): mount(/dev/block/by-name/cache,/cache,ext4)=-1: Invalid argument
+I:[libfs_mgr] Not running /system/bin/e2fsck on /dev/block/mmcblk0p14 (executable not in system image)
+I:[libfs_mgr] __mount(source=/dev/block/by-name/cache,target=/cache,type=ext4)=-1: Invalid argument
+E:[libfs_mgr] Failed to mount /cache: Invalid argument
+[    5.271467][  T193] rockchip-dp fded0000.edp: failed to read max link rate
+E:[libfs_mgr] Failed to mount for path [/cache/recovery/last_locale]
+E:Can't mount /cache/recovery/last_locale
+Loading make_device from librecovery_ui_ext.so
+W:Failed to read max brightness: No such file or directory
+I:Screensaver disabled
+Display Mode 0 resolution: 800 x 480 @ 62 FPS
+Choosing display mode #0
+Allocating buffer with resolution 800 x 480 pitch: 3200 bpp: 32, size: 1536000
+Framebuffer of size 1536000 allocated @ 0x78c9620000
+[    5.321713][  T193] rockchip-dp fded0000.edp: failed to read max link rate
+Allocating buffer with resolution 800 x 480 pitch: 3200 bpp: 32, size: 1536000
+Framebuffer of size 1536000 allocated @ 0x78c94a9000
+          erasing_text: en (47 x 19 @ 700)
+[    5.368664][  T193] recovery: Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+       no_command_text: en (83 x 19 @ 700)
+[    5.368696][  T193] recovery: Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+            error_text: en (33 x 19 @ 700)
+[    5.368725][  T193] recovery: Failed to load bitmap try_again_text for locale en-US (error -1)
+W:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1). Falling back to use default locale.
+[    5.368757][  T193] recovery: Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+E:Failed to load bitmap cancel_wipe_data_text for locale en-US (error -1)
+[    5.368786][  T193] recovery: Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+W:Failed to load bitmap factory_data_reset_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap factory_data_reset_text for locale en-US (error -1)
+W:Failed to load bitmap try_again_text for locale en-US (error -1). Falling back to use default locale.
+[    5.464548][  T193] recovery: [libfs_mgr] Failed to mount /metadata; formatting: File exists
+E:Failed to load bitmap try_again_text for locale en-US (error -1)
+[    5.478611][  T193] recovery: [libfs_mgr] fs_mgr_do_format: Format /dev/block/by-name/metadata as 'f2fs'
+W:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_confirmation_text for locale en-US (error -1)
+W:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1). Falling back to use default locale.
+E:Failed to load bitmap wipe_data_menu_header_text for locale en-US (error -1)
+I:Starting recovery (pid 193) on Thu Jan  1 00:00:01 1970
+
+I:locale is [en-US]
+SELinux: Loaded file context from:
+                /plat_file_contexts
+                /system_ext_file_contexts
+                /product_file_contexts
+                /vendor_file_contexts
+                /odm_file_contexts
+stage is []
+reason is []
+       installing_text: en (156 x 19 @ 700)
+ensure_path_mounted path=/metadata
+I:[libfs_mgr] Invalid f2fs superblock on '/dev/block/by-name/metadata'
+ERROR:   recovery: [libfs_mgr] Failed to mount /metadata; formatting: File exists
+ERROR:   recovery: [libfs_mgr] fs_mgr_do_format: Format /dev/block/by-name/metadata as 'f2fs'
+I:[libfs_mgr] Running /system/bin/fsck.f2fs -a -c 10000 --debug-cache /dev/block/mmcblk0p15
+[    5.644942][  T193] logwrapper: Cannot log to file /dev/fscklogs/log
+Cannot log to file /dev/fscklogs/log
+[    5.644961][  T193] logwrapper:
+ERROR: logwrapper: Cannot log to file /dev/fscklogs/log
+
+I:[libfs_mgr] __mount(source=/dev/block/by-name/metadata,target=/metadata,type=f2fs)=0: Success
+Command: "/system/bin/recovery" "--wipe_all"
+
+bluetooth.profile.bas.client.enabled=true
+bluetooth.profile.hfp.ag.enabled=true
+bluetooth.profile.hid.host.enabled=true
+bluetooth.profile.hid.device.enabled=true
+bluetooth.profile.map.server.enabled=true
+bluetooth.profile.opp.enabled=true
+bluetooth.profile.pan.nap.enabled=true
+bluetooth.profile.pan.panu.enabled=true
+bluetooth.profile.sap.server.enabled=true
+bluetooth.profile.a2dp.source.enabled=true
+bluetooth.profile.asha.central.enabled=true
+bluetooth.profile.gatt.enabled=true
+[    5.723489][  T193] recovery: Open failed: /metadata/ota: No such file or directory
+bluetooth.profile.pbap.server.enabled=true
+bluetooth.profile.avrcp.target.enabled=true
+ro.boot.vr=0
+ro.boot.mode=normal
+ro.boot.flash.locked=0
+ro.boot.fwver=ddr-v1.17-3488111f83,spl-v1.13,bl31-v1.46,bl32-v1.16,uboot-14005-12/25/2024
+ro.boot.console=ttyFIQ0
+ro.boot.dtb_idx=0
+ro.boot.dtbo_idx=0
+ro.boot.hardware=rk30board
+ro.boot.boot_devices=fe2e0000.mmc
+ro.boot.storagemedia=emmc
+ro.boot.verifiedbootstate=orange
+ro.baseband=unknown
+ro.bootmode=normal
+ro.hardware=rk30board
+ro.revision=0
+ro.bootloader=unknown
+ro.boottime.adbd=2179608875
+ro.boottime.init=1296291417
+ro.boottime.init.fsck.cache=1
+ro.boottime.init.fsck.metadata=18
+ro.boottime.init.mount.metadata=8
+ro.boottime.init.selinux=134967875
+ro.boottime.init.first_stage=8981583
+ro.boottime.init.cold_boot_wait=262
+ro.boottime.vendor.health-rockchip=1754047667
+ro.boottime.vendor.fastboot-default=1751628292
+ro.boottime.console=1746661209
+ro.boottime.ueventd=1471417417
+ro.boottime.recovery=1749678209
+ro.boottime.servicemanager=1739839709
+ro.boottime.rockchip_udc_detector=1742136875
+ro.product.bootimage.name=rom6881_u
+ro.product.bootimage.brand=rockchip
+ro.product.bootimage.model=rom6881_u
+ro.product.bootimage.device=rom6881_u
+ro.product.bootimage.manufacturer=rockchip
+ro.bootimage.build.id=UQ1A.240205.004.B1
+ro.bootimage.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.bootimage.build.date.utc=1735111206
+ro.bootimage.build.tags=release-keys
+ro.bootimage.build.type=userdebug
+ro.bootimage.build.version.sdk=34
+ro.bootimage.build.version.release=14
+ro.bootimage.build.version.incremental=eng.adv.20241225.152544
+ro.bootimage.build.version.release_or_codename=14
+ro.bootimage.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.odm.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.odm.build.date.utc=1735111206
+ro.odm.build.version.incremental=eng.adv.20241225.152544
+ro.odm.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.product.odm.name=rom6881_u
+ro.product.odm.brand=rockchip
+ro.product.odm.model=rom6881_u
+ro.product.odm.device=rom6881_u
+ro.product.odm.manufacturer=rockchip
+ro.build.id=UQ1A.240205.004.B1
+ro.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.build.date.utc=1735111206
+ro.build.host=33be0978b65a
+ro.build.tags=release-keys
+ro.build.type=userdebug
+ro.build.user=adv
+ro.build.flavor=rom6881_u-userdebug
+ro.build.display.id=rom6881_u-userdebug 14 UQ1A.240205.004.B1 eng.adv.20241225.152544 release-keys
+ro.build.product=rom6881_u
+ro.build.version.sdk=34
+ro.build.version.base_os=
+ro.build.version.release=14
+ro.build.version.codename=REL
+ro.build.version.incremental=eng.adv.20241225.152544
+ro.build.version.preview_sdk=0
+ro.build.version.all_codenames=REL
+ro.build.version.security_patch=2024-02-05
+ro.build.version.release_or_codename=14
+ro.build.version.preview_sdk_fingerprint=REL
+ro.build.version.min_supported_target_sdk=28
+ro.build.description=rom6881_u-userdebug 14 UQ1A.240205.004.B1 eng.adv.20241225.152544 release-keys
+ro.build.characteristics=tablet
+ro.force.debuggable=0
+ro.system.build.id=UQ1A.240205.004.B1
+ro.system.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.system.build.date.utc=1735111206
+ro.system.build.tags=release-keys
+ro.system.build.type=userdebug
+ro.system.build.version.sdk=34
+ro.system.build.version.release=14
+ro.system.build.version.incremental=eng.adv.20241225.152544
+ro.system.build.version.release_or_codename=14
+ro.system.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.treble.enabled=true
+ro.product.cpu.abi=arm64-v8a
+ro.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.product.cpu.pagesize.max=65536
+ro.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.product.cpu.abilist64=arm64-v8a
+ro.product.name=rom6881_u
+ro.product.brand=rockchip
+ro.product.build.id=UQ1A.240205.004.B1
+ro.product.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.product.build.date.utc=1735111206
+ro.product.build.tags=release-keys
+ro.product.build.type=userdebug
+ro.product.build.version.sdk=34
+ro.product.build.version.release=14
+ro.product.build.version.incremental=eng.adv.20241225.152544
+ro.product.build.version.release_or_codename=14
+ro.product.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.product.model=rom6881_u
+ro.product.device=rom6881_u
+ro.product.system.name=rom6881_u
+ro.product.system.brand=rockchip
+ro.product.system.model=rom6881_u
+ro.product.system.device=rom6881_u
+ro.product.system.manufacturer=rockchip
+ro.product.product.name=rom6881_u
+ro.product.product.brand=rockchip
+ro.product.product.model=rom6881_u
+ro.product.product.device=rom6881_u
+ro.product.product.manufacturer=rockchip
+ro.product.system_ext.name=rom6881_u
+ro.product.system_ext.brand=rockchip
+ro.product.system_ext.model=rom6881_u
+ro.product.system_ext.device=rom6881_u
+ro.product.system_ext.manufacturer=rockchip
+ro.product.manufacturer=rockchip
+ro.system_ext.build.id=UQ1A.240205.004.B1
+ro.system_ext.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.system_ext.build.date.utc=1735111206
+ro.system_ext.build.tags=release-keys
+ro.system_ext.build.type=userdebug
+ro.system_ext.build.version.sdk=34
+ro.system_ext.build.version.release=14
+ro.system_ext.build.version.incremental=eng.adv.20241225.152544
+ro.system_ext.build.version.release_or_codename=14
+ro.system_ext.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.actionable_compatible_property.enabled=true
+ro.board.first_api_level=34
+ro.vendor.build.id=UQ1A.240205.004.B1
+ro.vendor.build.date=Wed Dec 25 15:20:06 CST 2024
+ro.vendor.build.date.utc=1735111206
+ro.vendor.build.tags=release-keys
+ro.vendor.build.type=userdebug
+ro.vendor.build.version.sdk=34
+ro.vendor.build.version.release=14
+ro.vendor.build.version.incremental=eng.adv.20241225.152544
+ro.vendor.build.version.release_or_codename=14
+ro.vendor.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/adv12251520:userdebug/release-keys
+ro.vendor.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.vendor.product.cpu.abilist64=arm64-v8a
+ro.vendor.api_level=34
+ro.product.board=rk30sdk
+ro.product.vendor.name=rom6881_u
+ro.product.vendor.brand=rockchip
+ro.product.vendor.model=rom6881_u
+ro.product.vendor.device=rom6881_u
+ro.product.vendor.manufacturer=rockchip
+ro.product.first_api_level=34
+ro.dalvik.vm.native.bridge=0
+ro.dalvik.vm.enable_uffd_gc=true
+ro.zygote=zygote64_32
+dalvik.vm.isa.arm.variant=cortex-a76
+dalvik.vm.isa.arm.features=default
+dalvik.vm.isa.arm64.variant=cortex-a76
+dalvik.vm.isa.arm64.features=default
+dalvik.vm.dexopt.secondary=true
+dalvik.vm.dexopt.thermal-cutoff=2
+dalvik.vm.usejit=true
+dalvik.vm.madvise.artfile.size=4294967295
+dalvik.vm.madvise.odexfile.size=104857600
+dalvik.vm.madvise.vdexfile.size=104857600
+dalvik.vm.heapsize=512m
+dalvik.vm.lockprof.threshold=500
+dalvik.vm.dex2oat-Xms=64m
+dalvik.vm.dex2oat-Xmx=512m
+dalvik.vm.heapmaxfree=8m
+dalvik.vm.heapminfree=512k
+dalvik.vm.heapstartsize=16m
+dalvik.vm.minidebuginfo=true
+dalvik.vm.useartservice=true
+dalvik.vm.appimageformat=lz4
+dalvik.vm.heapgrowthlimit=192m
+dalvik.vm.image-dex2oat-Xms=64m
+dalvik.vm.image-dex2oat-Xmx=64m
+dalvik.vm.usap_pool_enabled=false
+dalvik.vm.usap_pool_size_max=3
+dalvik.vm.usap_pool_size_min=1
+dalvik.vm.dex2oat-minidebuginfo=true
+dalvik.vm.heaptargetutilization=0.75
+dalvik.vm.usap_refill_threshold=1
+dalvik.vm.usap_pool_refill_delay_ms=3000
+dalvik.vm.dex2oat-max-image-block-size=524288
+dalvik.vm.dex2oat-resolve-startup-strings=true
+dalvik.vm.dex2oat-threads=4
+dalvik.vm.boot-dex2oat-threads=4
+persist.sys.dalvik.vm.lib.2=libart.so
+ro.rk.bt_enable=true
+ro.rk.hdmi_enable=true
+ro.rk.flash_enable=true
+ro.rk.screenoff_time=60000
+ro.rk.ethernet_settings=true
+ro.rk.screenshot_enable=true
+ro.tee.storage=rkss
+ro.boot.noril=true
+ro.wifi.sleep.power.down=true
+ro.rksdk.version=ANDROID14_RKR5
+ro.config.enable.remotecontrol=false
+ro.tether.denied=false
+ro.factory.tool=0
+ro.factory.hasUMS=false
+ro.factory.without_battery=false
+ro.factory.storage_suppntfs=true
+ro.safemode.disabled=true
+sf.power.control=2073600
+ril.function.dataonly=1
+sys.resolution.changed=false
+debug.nfc.se=false
+debug.nfc.fw_download=false
+debug.atrace.tags.enableflags=0
+debug.stagefright.ccodec=4
+debug.stagefright.c2inputsurface=-1
+persist.bt.power.down=true
+persist.sys.strictmode.visual=false
+persist.wifi.sleep.delay.ms=0
+ro.sf.fakerotation=false
+ro.sys.host_unhide_charge_notify=true
+ro.wifi.channels=
+ro.allow.mock.location=0
+ro.audio.monitorOrientation=true
+ro.build.version.known_codenames=Base,Base11,Cupcake,Donut,Eclair,Eclair01,EclairMr1,Froyo,Gingerbread,GingerbreadMr1,Honeycomb,HoneycombMr1,HoneycombMr2,IceCreamSandwich,IceCreamSandwichMr1,JellyBean,JellyBeanMr1,JellyBeanMr2,Kitkat,KitkatWatch,Lollipop,LollipopMr1,M,N,NMr1,O,OMr1,P,Q,R,S,Sv2,Tiramisu,UpsideDownCake
+[    6.511358][   T95] rk-pcie fe150000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+ro.build.version.release_or_preview_display=14
+[    6.511385][   T95] rk-pcie fe150000.pcie: failed to initialize host
+ro.build.shutdown_timeout=6
+[    6.519345][   T97] rk-pcie fe160000.pcie: PCIe Link Fail, LTSSM is 0x1, hw_retries=0
+ro.kernel.android.checkjni=0
+[    6.519363][   T97] rk-pcie fe160000.pcie: failed to initialize host
+ro.kernel.version=6.1
+[    6.539334][   T94] rk-pcie fe180000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+ro.system.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+[    6.539344][   T94] rk-pcie fe180000.pcie: failed to initialize host
+ro.system.product.cpu.abilist32=armeabi-v7a,armeabi
+[    6.543329][   T98] rk-pcie fe170000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+ro.system.product.cpu.abilist64=arm64-v8a
+[    6.543335][   T98] rk-pcie fe170000.pcie: failed to initialize host
+ro.target.product=tablet
+ro.default.size=100
+ro.product.ota.host=192.168.1.1:8888
+ro.product.locale=en-US
+ro.product.usbfactory=rockchip_usb
+ro.flash_img.enable=false
+ro.postinstall.fstab.prefix=/system
+persist.wm.extensions.enabled=true
+persist.dbg.keep_debugfs_mounted=1
+persist.enable_task_snapshots=false
+testing.mediascanner.skiplist=/mnt/shell/emulated/Android/
+rt_retriever_enable=1
+ro.frp.pst=/dev/block/by-name/frp
+ro.apex.updatable=true
+ro.boot.slot_suffix=_a
+ro.boot.dynamic_partitions=true
+ro.hwui.use_vulkan=true
+ro.board.platform=rk3588
+ro.build.ab_update=true
+ro.carrier=unknown
+ro.hardware.egl=mali
+pm.dexopt.ab-ota=speed-profile
+pm.dexopt.shared=speed
+pm.dexopt.cmdline=verify
+pm.dexopt.install=speed-profile
+pm.dexopt.inactive=verify
+pm.dexopt.bg-dexopt=speed-profile
+pm.dexopt.post-boot=extract
+pm.dexopt.first-boot=verify
+pm.dexopt.install-bulk=speed-profile
+pm.dexopt.install-fast=skip
+pm.dexopt.boot-after-ota=verify
+pm.dexopt.install-bulk-secondary=verify
+pm.dexopt.install-bulk-downgraded=verify
+pm.dexopt.boot-after-mainline-update=verify
+pm.dexopt.install-bulk-secondary-downgraded=extract
+sys.usb.ffs.ready=1
+ro.build.fingerprint=rockchip/rom6881_u/rom6881_u:14/UQ1A.240205.004.B1/eng.adv.20241225.152544:userdebug/release-keys
+ro.opengles.version=196610
+graphics.gpu.profiler.support=true
+ro.gsid.image_running=0
+gsid.image_installed=0
+init.svc.ueventd=running
+init.svc.recovery=running
+init.svc.fastbootd=stopped
+init.svc.servicemanager=running
+init.svc.rockchip_udc_detector=stopped
+init.svc.adbd=running
+init.svc.console=running
+log.tag.stats_log=I
+ro.logd.size.stats=64K
+ro.logd.kernel=1
+ro.product.ab_ota_partitions=boot,dtbo,odm,odm_dlkm,product,system,system_dlkm,system_ext,uboot,vendor,vendor_dlkm
+persist.debug.dalvik.vm.core_platform_api_policy=just-warn
+ro.property_service.version=2
+ro.ril.ecclist=112,911
+ro.minui.pixel_format=RGBX_8888
+ro.minui.default_rotation=ROTATION_NONE
+ro.boot.serialno=8e5b64b9f2c4fdc8
+ro.serialno=8e5b64b9f2c4fdc8
+servicemanager.ready=true
+security.perf_harden=1
+ro.soc.model=RK3588
+ro.soc.manufacturer=Rockchip
+external_storage.projid.enabled=1
+external_storage.casefold.enabled=1
+external_storage.sdcardfs.enabled=0
+persist.sys.sf.color_saturation=1.0
+ro.sf.lcd_density=320
+ro.surface_flinger.has_HDR_display=false
+dev.mnt.blk.metadata=mmcblk0p15
+dev.mnt.dev.metadata=mmcblk0p15
+dev.mnt.rootdisk.metadata=mmcblk0
+net.bt.name=Android
+sys.rkadb.root=0
+sys.status.hidebar_enable=false
+sys.wallpaper.rgb565=0
+persist.sys.usb.config=adb
+persist.sys.ext_ram=none
+ro.config.ringtone=Ring_Synth_04.ogg
+ro.config.alarm_alert=Alarm_Classic.ogg
+ro.config.notification_sound=OnTheHunt.ogg
+ro.com.android.dataroaming=true
+sys.usb.state=adb
+sys.usb.config=adb
+sys.usb.configfs=1
+ro.secure=1
+ro.debuggable=1
+ro.odm.build.id=UQ1A.240205.004.B1
+ro.odm.build.tags=release-keys
+ro.odm.build.type=userdebug
+ro.odm.build.version.sdk=34
+ro.odm.build.version.release=14
+ro.odm.build.version.release_or_codename=14
+ro.odm.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist32=armeabi-v7a,armeabi
+ro.odm.product.cpu.abilist64=arm64-v8a
+init.svc.vendor.health-rockchip=running
+init.svc.vendor.fastboot-default=running
+ro.vendor.rk_sdk=1
+ro.vendor.sdkversion=rk3588_ANDROID14.0_MID_V1.0
+ro.vendor.frameratelock=true
+ro.vendor.hdmi_settings=true
+vendor.gralloc.disable_afbc=0
+ro.virtual_ab.enabled=true
+ro.vndk.version=34
+ro.product.vndk.version=34
+
+
+do WipeData
+
+-- Wiping data...
+ERROR:   recovery: Open failed: /metadata/ota: No such file or directory
+W:/metadata is mounted, but errors occur when acquiring a shared lock. Subsequent calls to SnapshotManager will fail. Unmounting /metadata now.
+Formatting /data...
+I:format_volume: wipe metadata encrypted /dev/block/by-name/userdata with size 26659487744
+[    6.979174][  T193] EXT4-fs (mmcblk0p14): error loading journal
+ensure_path_mounted path=/cache
+[    6.979711][  T175] init: Unable to set property 'ro.boottime.init.fsck.cache' from uid:0 gid:0 pid:193: Read-only property was already set
+I:[libfs_mgr] superblock s_max_mnt_count:65535,/dev/block/by-name/cache
+[    6.981402][  T193] EXT4-fs (mmcblk0p14): error loading journal
+I:[libfs_mgr] Filesystem on /dev/block/by-name/cache was not cleanly shutdown; state flags: 0x1, incompat feature flags: 0x46
+[    6.981483][  T193] recovery: [libfs_mgr] Failed to mount /cache: Invalid argument
+I:[libfs_mgr] check_fs(): mount(/dev/block/by-name/cache,/cache,ext4)=-1: Invalid argument
+[    6.990411][  T193] recovery: [libfs_mgr] Failed to mount for path [/cache]
+I:[libfs_mgr] Not running /system/bin/e2fsck on /dev/block/mmcblk0p14 (executable not in system image)
+libc: Unable to set property "ro.boottime.init.fsck.cache" to "1": error code: 0xb
+I:[libfs_mgr] __mount(source=/dev/block/by-name/cache,target=/cache,type=ext4)=-1: Invalid argument
+ERROR:   recovery: [libfs_mgr] Failed to mount /cache: Invalid argument
+ERROR:   recovery: [libfs_mgr] Failed to mount for path [/cache]
+[    7.084072][  T175] init: Unable to set property 'ro.boottime.init.fsck.cache' from uid:0 gid:0 pid:193: Read-only property was already set
+Formatting /cache...
+mke2fs 1.46.6 (1-Feb-2023)
+Discarding device blocks: done
+Creating filesystem with 98304 4k blocks and 98304 inodes
+Filesystem UUID: 36828e03-1fba-4799-b00e-caac967556f5
+Superblock backups stored on blocks:
+        32768
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+ensure_path_mounted path=/cache/recovery
+I:[libfs_mgr] superblock s_max_mnt_count:65535,/dev/block/by-name/cache
+I:[libfs_mgr] check_fs(): mount(/dev/block/by-name/cache,/cache,ext4)=0: Success
+I:[libfs_mgr] umount_retry(): unmount(/cache) succeeded
+I:[libfs_mgr] Not running /system/bin/e2fsck on /dev/block/mmcblk0p14 (executable not in system image)
+libc: Unable to set property "ro.boottime.init.fsck.cache" to "2": error code: 0xb
+I:[libfs_mgr] __mount(source=/dev/block/by-name/cache,target=/cache,type=ext4)=0: Success
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_kmsg
+ensure_path_mounted path=/cache/recovery/log
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_install
+Formatting /metadata...
+
+    F2FS-tools: mkfs.f2fs Ver: 1.16.0 (2023-04-11)
+
+Info: Disable heap-based policy
+Info: Debug level = 1
+Info: Trim is enabled
+Info: Set conf for android
+Info: Enable Project quota
+Info: not exist /proc/version!
+Info: Segments per section = 1
+Info: Sections per zone = 1
+Info: sector size = 512
+Info: total sectors = 131072 (64 MB)
+Info: zone aligned segment0 blkaddr: 512
+[    7.251500][    T1] init: Could not open '/metadata/bootstat/persist.sys.boot.reason' to persist reboot reason: No such file or directory
+Info: add quota type = 0 => 4
+Info: add quota type = 1 => 5
+Info: add quota type = 2 => 6
+Info: format version with
+  "6.1.75"
+Info: [/dev/block/by-name/metadata] Discarding device
+Info: Secure Discarded 0 MB
+[f2fs_init_sit_area: 640]       Filling sit area at offset 0x00600000
+[f2fs_init_nat_area: 674]       Filling nat area at offset 0x00a00000
+[f2fs_write_root_inode:1292]    Writing root inode (hot node), 1000 0 200 at offset 0x00004096
+[f2fs_write_default_quota:1368]         Writing quota data, at offset 00001601, 00001602
+[f2fs_write_qf_inode:1425]      Writing quota inode (hot node), 1000 0 200 at offset 0x00004097
+[f2fs_write_default_quota:1368]         Writing quota data, at offset 00001603, 00001604
+[f2fs_write_qf_inode:1425]      Writing quota inode (hot node), 1000 0 200 at offset 0x00004098
+[f2fs_write_default_quota:1368]         Writing quota data, at offset 00001605, 00001606
+[f2fs_write_qf_inode:1425]      Writing quota inode (hot node), 1000 0 200 at offset 0x00004099
+[f2fs_update_nat_root:1479]     Writing nat root, at offset 0x00000a00
+[f2fs_add_default_dentry_root:1676]     Writing default dentry root, at offset 0x00001600
+Info: Overprovision ratio = 55.000%
+Info: Overprovision segments = 10 (GC reserved = 8)
+[f2fs_write_check_point_pack: 837]      Writing main segments, cp at offset 0x00000200
+[f2fs_write_check_point_pack: 993]      Writing Segment summary for HOT/WARM/COLD_DATA, at offset 0x00000201
+[f2fs_write_check_point_pack:1020]      Writing Segment summary for HOT_NODE, at offset 0x00000202
+[f2fs_write_check_point_pack:1032]      Writing Segment summary for WARM_NODE, at offset 0x00000203
+[f2fs_write_check_point_pack:1043]      Writing Segment summary for COLD_NODE, at offset 0x00000204
+[f2fs_write_check_point_pack:1051]      Writing cp page2, at offset 0x00000205
+[f2fs_write_check_point_pack:1071]      Writing NAT bits pages, at offset 0x000003ff
+[f2fs_write_check_point_pack:1092]      Writing cp page 1 of checkpoint pack 2, at offset 0x00000400
+[f2fs_write_check_point_pack:1111]      Writing cp page 2 of checkpoint pack 2, at offset 0x00000405
+[f2fs_write_super_block:1144]   Writing super block, at offset 0x00000000
+Info: format successful
+Resetting memtag message...
+Data wipe complete.
+begin to wipe frp partion!
+I:format_volume for: fs_type: emmcblk_device: /dev/block/by-name/frpmount_point: /frp
+I:format_volume:len: 524288
+I:format_volume: success to format : /dev/block/by-name/frp
+wiping frp success!
+enter sdboot_get_bSDBoot !
+enter sdboot_get_bUsbBoot !
+enter sdboot_get_bUpdateModel !
+recovery_main before finish_recovery()
+I:Saving locale "en-US"
+ensure_path_mounted path=/cache/recovery/last_locale
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_kmsg
+ensure_path_mounted path=/cache/recovery/log
+ensure_path_mounted path=/cache/recovery/last_log
+ensure_path_mounted path=/cache/recovery/last_install
+ensure_path_mounted path=/cache/recovery/command
+Rebooting...
+Failed to drmModePageFlip, active_display=0libc: Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x8 in tid 198 (recovery), pid 193 (recovery)
+[    7.667483][    T1] reboot: Restarting system with command 'userrequested,recovery'
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h3 l0, h2 l0, h0 l0, h3 l0, h0 l0,
+h1 l0, h1 l0, h1 l0, h3 l0, h1 l0, h3 l0, h1 l0, h5 l0,
+
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h5 l0, h1 l0, h6 l0, h1 l0, h5 l0,
+h1 l0, h2 l0, h0 l0, h1 l0, h2 l0, h1 l0, h3 l0, h2 l0,
+
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%DQ rds:
+h0 l0, h2 l0, h2 l0, h1 l0, h1 l0, h3 l0, h6 l0, h2 l0,
+h2 l0, h2 l0, h4 l0, h0 l0, h2 l0, h1 l0, h3 l0, h1 l0,
+
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h1 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h3 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+SPL: A/B-slot: _a, successful: 0, tries-remain: 6
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(23eeaffd14...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(3ced55f820...) + sha256(b83a5996c7...) + OK
+## Checking fdt 0x0034e930 ... sha256(e4e0311b2d...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(820ab73bd4...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 164.983/434.791 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0xa
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14005 (Dec 25 2024 - 15:15:06 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba0f000
+Relocation fdt: e99fa600 - e99fecd0
+CR: M/C/I
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 6
+*** Warning - bad CRC, using default environment
+
+DM: v2
+RESC: 'boot_a', blk@0x0003fa34
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 14.0, Build 2024.2, v2
+boot mode: normal
+ANDROID: fdt overlay OK
+swversion = V14005
+Error: adv_set_factory_info: out of memory!
+----------------------------------------------------------------
+model[0]         ROM-6881
+model[1]         AKS0000000000
+model[2]         V14005
+model[3]         A1
+----------------------------------------------------------------
+ROM-6881 hw_id = 13
+Info : not configurate display in uboot
+----------------------------------------------------------------
+display0         6881
+display1
+display2
+display3
+----------------------------------------------------------------
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+Warn: can't find connect driver
+Warn: can't get connect driver
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Warn: can't find connect driver
+Warn: can't get connect driver
+Model: ROM-6881 AKS0000000000 V14005 A1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+disp info 2, type:16, id:0
+base2_disp_info couldn't be found, screen_info type[0] or id[0] mismatched
+Using display timing dts
+dsi@fde20000:  detailed mode clock 33300 kHz, flags[a]
+    H: 0800 1000 1006 1056
+    V: 0480 0500 0504 0508
+bus_format: 100e
+VOP update mode to: 800x480p62, type: MIPI0 for VP3
+VP3 set crtc_clock to 33000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@73x105] fmt[0] addr[0xebf00000]
+final DSI-Link bandwidth: 220000 Kbps x 4
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP2
+VP2 set crtc_clock to 85500KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP2 enable Esmart2[654x270->654x270@357x249] fmt[0] addr[0xebf00000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 684000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "(none)"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta_a: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot_a
+ANDROID: sha1(ecdbc11bf4...) + OK
+Could not find "system_a" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff800 ...
+Kernel: 0x00400000 - 0x0277b008 (36333 KiB)
+ramdisk:    0x0a200000 - 0x0d7ca286 (55081 KiB)
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x0277b008
+   Using Device Tree in place at 0000000008300000, end 0000000008349a34
+## reserved-memory:
+  cma: addr=10000000 size=10000000
+  drm-logo@0: addr=ebf00000 size=15a000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 2234.600/2883.519 ms
+
+Starting kernel ...
+
+[    2.925106][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@0': base 0x0000000000000000, size 0 MiB
+[    2.937721][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'vendor-storage-rm@00000000': base 0x0000000000000000, size 0 MiB
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[    3.410714][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ fiq not found
+[    3.418649][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ wakeup not found
+[    3.426737][    T1] fiq_debugger_probe: could not install nmi irq handler
+[    3.578570][    T1] rk806 spi2.0: no sleep-setting state
+[    3.578585][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    3.578591][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    3.582733][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    3.582743][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    3.582755][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    3.751941][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    3.751954][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    3.751965][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    4.005994][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 17 not active.
+[    4.011881][    T1] rt5640 5-001c: Device with ID register 0x0 is not rt5640/39
+[    4.037494][   T83] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    4.038854][   T83] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    4.038867][   T83] rkvdec2_init:1197: No niu aclk reset resource define
+[    4.038877][   T83] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    4.038885][   T83] rkvdec2_init:1200: No niu hclk reset resource define
+[    4.039955][   T83] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    4.039967][   T83] rkvdec2_init:1197: No niu aclk reset resource define
+[    4.039977][   T83] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    4.039985][   T83] rkvdec2_init:1200: No niu hclk reset resource define
+[    4.051933][   T83] rockchip-vop2 fdd90000.vop: Supported VOP aclk dvfs, normal mode:500000000, reset mode:0, advanced mode:750000000
+[    4.052935][   T83] rockchip-drm display-subsystem: route-dp0: failed to get logo,offset
+[    4.100509][   T83] rockchip-dp fded0000.edp: failed to read downspread -110
+[    4.118356][   T83] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[    4.118409][   T83] rockchip-drm display-subsystem: route-hdmi0: failed to get logo,offset
+[    4.164083][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    4.164750][   T83] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    4.164756][   T83] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    4.167357][    T8] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    4.187302][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    4.187333][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    4.187340][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    4.189501][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    4.204882][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    4.536698][    T1] init: Failed to read vbmeta partitions.
+[    4.569912][    T1] init: Failed to copy /avb into /metadata/gsi/dsu/avb/: No such file or directory
+[    4.573666][    T1] erofs: (device dm-0): erofs_read_superblock: cannot find valid erofs superblock
+[    4.579269][    T1] erofs: (device dm-3): erofs_read_superblock: cannot find valid erofs superblock
+[    4.582634][    T1] erofs: (device dm-5): erofs_read_superblock: cannot find valid erofs superblock
+[    4.584901][    T1] erofs: (device dm-1): erofs_read_superblock: cannot find valid erofs superblock
+[    4.587135][    T1] erofs: (device dm-2): erofs_read_superblock: cannot find valid erofs superblock
+[    4.589798][    T1] erofs: (device dm-4): erofs_read_superblock: cannot find valid erofs superblock
+[    4.592012][    T1] erofs: (device dm-6): erofs_read_superblock: cannot find valid erofs superblock
+[    4.594198][    T1] erofs: (device dm-7): erofs_read_superblock: cannot find valid erofs superblock
+[    4.758702][    T1] init: Failed to open package /system/etc/selinux/apex/SEPolicy.zip: No such file or directory
+[    4.871276][    T1] selinux: SELinux:  Could not stat /dev/selinux: No such file or directory.
+[    4.905529][    T1] init: Do not have permissions to set 'ro.flash_img.enable' to 'false' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905567][    T1] init: Do not have permissions to set 'ro.product.ota.host' to '192.168.1.1:8888' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905632][    T1] init: Do not have permissions to set 'ro.ril.ecclist' to '112,911' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905678][    T1] init: Do not have permissions to set 'ro.audio.monitorOrientation' to 'true' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905760][    T1] init: Do not have permissions to set 'ro.sf.fakerotation' to 'false' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905790][    T1] init: Do not have permissions to set 'ro.default.size' to '100' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905816][    T1] init: Do not have permissions to set 'ro.product.usbfactory' to 'rockchip_usb' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905858][    T1] init: Do not have permissions to set 'wifi.supplicant_scan_interval' to '15' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905886][    T1] init: Do not have permissions to set 'ro.kernel.android.checkjni' to '0' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905910][    T1] init: Do not have permissions to set 'ro.build.shutdown_timeout' to '6' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.905934][    T1] init: Do not have permissions to set 'persist.enable_task_snapshots' to 'false' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.906048][    T1] init: Do not have permissions to set 'ro.boot.vr' to '0' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.906085][    T1] init: Do not have permissions to set 'testing.mediascanner.skiplist' to '/mnt/shell/emulated/Android/' in property file '/vendor/build.prop': SELinux permission check failed
+[    4.916734][    T1] selinux: SELinux: Could not get canonical path for /metadata/ota/rollback-indicator restorecon: No such file or directory.
+[    4.916759][    T1] selinux: SELinux:  Could not stat /metadata/gsi: No such file or directory.
+[    4.926912][    T1] init: /vendor/etc/init/hw/init.rk30board.rc: 363: ParseTriggers() failed: unexported property trigger found: flash.success
+[    4.971621][    T1] cgroup: Unknown subsys name 'memoryapps'
+[    4.971682][    T1] cgroup: Unknown subsys name 'schedtune'
+[    5.028923][  T199] cutils-trace: Error opening trace file: No such file or directory (2)
+[    5.529429][  T271] init: failed to set task profiles
+[    5.558419][  T196] init: Unable to set property 'ro.logd.kernel' from uid:1036 gid:1036 pid:268: Read-only property was already set
+console:/ $ [    5.808118][  T270] cutils-trace: Error opening trace file: Permission denied (13)
+I/TA: Hello Rockchip Keymaster! ver:20231201 rpmb :0
+I/TA: Provision google keybox:no,ID attestation:no
+[    5.931428][  T311] init: failed to set task profiles
+[    5.936536][  T312] init: failed to set task profiles
+[    5.967618][    T1] init: [libfs_mgr] mount_with_alternatives(): skipping mount due to invalid magic, mountpoint=/data blk_dev=/dev/block/mmcblk0p19 rec[16].fs_type=f2fs
+[    5.969441][    T1] init: [libfs_mgr] fs_mgr_mount_all(): /dev/block/mmcblk0p19 is wiped and /data f2fs is formattable. Format it.
+[    6.195126][  T288] vold: keystore2 Keystore generateKey returned service specific error: -67
+[    6.213162][  T310] rockchip-dp fded0000.edp: failed to read max link rate
+[    6.261043][  T310] rockchip-dp fded0000.edp: failed to read max link rate
+[    6.494329][   T94] rk-pcie fe180000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+[    6.494357][   T94] rk-pcie fe180000.pcie: failed to initialize host
+[    6.506311][   T95] rk-pcie fe150000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+[    6.506311][   T96] rk-pcie fe160000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+[    6.506313][   T97] rk-pcie fe170000.pcie: PCIe Link Fail, LTSSM is 0x0, hw_retries=0
+[    6.506320][   T96] rk-pcie fe160000.pcie: failed to initialize host
+[    6.506320][   T97] rk-pcie fe170000.pcie: failed to initialize host
+[    6.506348][   T95] rk-pcie fe150000.pcie: failed to initialize host
+[    7.988055][  T196] init: Unable to set property 'ro.crypto.type' from uid:0 gid:0 pid:1: Read-only property was already set
+[    8.020516][    T1] init: Control message: Could not find 'aidl/android.system.keystore2.IKeystoreService/default' for ctl.interface_start from pid: 270 (/system/bin/servicemanager)
+[    8.064290][  T288] vold: keystore2 Keystore generateKey returned service specific error: -67
+[    8.118204][  T196] init: Unable to set property 'sys.gmali.version' from uid:1003 gid:1003 pid:312: SELinux permission check failed
+[    8.214882][  T288] vold: keystore2 Keystore earlyBootEnded returned service specific error: -68
+[    8.218606][  T196] init: Could not load single persistent property file, trying legacy directory: Unable to read persistent property file: open() failed: No such file or directory
+[    8.252371][  T280] logd: Cannot read /data/misc/logd/event-log-tags
+[    8.253035][  T280] logd: FrameworkListener: read() failed (Connection reset by peer)
+[    8.642803][  T391] apexd: Failed to process compressed APEX: Failed to decompress : /system/apex/com.android.appsearch.capex Could not decompress to file /data/apex/decompressed/com.android.appsearch@340090000.decompressed.apex Inconsistent information
+[    8.774670][  T391] apexd: Failed to process compressed APEX: Failed to decompress : /system/apex/com.android.adservices.capex Could not decompress to file /data/apex/decompressed/com.android.adservices@340090000.decompressed.apex Inconsistent information
+[    9.486560][  T391] apexd: Failed to process compressed APEX: Failed to decompress : /system/apex/com.android.adbd.capex Could not decompress to file /data/apex/decompressed/com.android.adbd@340090000.decompressed.apex Inconsistent information
+[   11.609381][  T288] vold: keystore2 Keystore generateKey returned service specific error: -67
+[   28.401654][    T1] selinux: SELinux:  Could not stat /data/dalvik-cache/arm: No such file or directory.
+[   28.401743][    T1] selinux: SELinux:  Could not stat /data/dalvik-cache/arm64: No such file or directory.
+[   28.401810][    T1] selinux: SELinux:  Could not stat /data/dalvik-cache/riscv64: No such file or directory.
+[   28.401875][    T1] selinux: SELinux:  Could not stat /data/dalvik-cache/x86: No such file or directory.
+[   28.401941][    T1] selinux: SELinux:  Could not stat /data/dalvik-cache/x86_64: No such file or directory.
+[   28.432572][  T602] WARNING: Unprivileged eBPF is enabled, data leaks possible via Spectre v2 BHB attacks!
+[   28.704294][  T625] init: failed to set task profiles
+[   28.709691][  T626] init: failed to set task profiles
+[   28.788517][  T631] init: failed to set task profiles
+[   28.790460][  T632] init: failed to set task profiles
+[   28.793193][  T633] init: failed to set task profiles
+[   28.794891][  T634] init: failed to set task profiles
+[   28.857430][    T1] init: Could not start service 'displayd' as part of class 'core': Cannot find '/system/bin/displayd': No such file or directory
+[   28.859431][  T661] init: failed to set task profiles
+I/TA: Hello Rockchip gatekeeper! ver:20230920 rpmb :0
+I/TA: Hello Rockchip Weaver! rpmb :0
+[   29.223540][  T643] [dhd] _dhd_module_init: in Dongle Host Driver, version 101.10.591.68.30 (20240603-1)(429fcb0)
+[   29.223540][  T643] /home/adv/BSP/external/wifi_driver/bcmdhd compiled on Dec 25 2024 at 15:19:43
+[   29.223540][  T643]
+[   29.223575][  T643] [dhd] STATIC-MSG) dhd_static_buf_init : 101.10.361.36 (wlan=r892223-20231107-1)
+[   29.223830][  T643] [dhd] STATIC-MSG) dhd_init_wlan_mem : prealloc ok for index 0: 8212480(8020K)
+[   29.224393][  T643] [dhd] STATIC-MSG) dhd_static_buf_exit : Enter
+[   29.224473][  T198] selinux: SELinux:  Could not stat /sys/bus/pci/drivers/pcieh: No such file or directory.
+[   29.259918][  T196] init: Unable to set property 'vendor.vehicle.camera.count' from uid:1047 gid:1005 pid:633: SELinux permission check failed
+[   29.260102][  T196] init: Unable to set property 'vendor.vehicle.camera.ready' from uid:1047 gid:1005 pid:633: SELinux permission check failed
+[   29.322709][    T1] init: Control message: Could not find 'android.hardware.audio@7.1::IDevicesFactory/default' for ctl.interface_start from pid: 271 (/system/bin/hwservicemanager)
+[   29.327311][    T1] init: Control message: Could not find 'android.hardware.audio@7.1::IDevicesFactory/default' for ctl.interface_start from pid: 271 (/system/bin/hwservicemanager)
+[   29.335113][    T1] init: Control message: Could not find 'android.hardware.audio.effect@7.0::IEffectsFactory/default' for ctl.interface_start from pid: 271 (/system/bin/hwservicemanager)
+[   29.335309][    T1] init: Control message: Could not find 'android.hardware.audio.effect@7.0::IEffectsFactory/default' for ctl.interface_start from pid: 271 (/system/bin/hwservicemanager)
+[   29.693032][  T732] init: failed to set task profiles
+[   29.696267][  T733] init: failed to set task profiles
+[   29.722121][  T739] init: failed to set task profiles
+[   29.733256][    T1] init: Could not start service 'bplus_helper' as part of class 'main': Cannot find '/system/bin/bplus_helper': No such file or directory
+[   29.733390][    T1] init: Could not start service 'up_eth0' as part of class 'main': File /system/bin/busybox(labeled "u:object_r:system_file:s0") has incorrect label or no domain transition from u:r:init:s0 to another SELinux domain defined. Have you configured your service correctly? https://source.android.com/security/selinux/device-policy#label_new_services_and_address_denials. Note: this error shows up even in permissive mode in order to make auditing denials possible.
+[   29.733417][    T1] init: Could not start service 'rk_store_keybox' as part of class 'main': Cannot find '/vendor/bin/rk_store_keybox': No such file or directory
+[   29.735840][  T748] init: failed to set task profiles
+[   29.738053][  T749] init: failed to set task profiles
+[   29.756369][  T755] init: failed to set task profiles
+[   29.909481][    T1] init: Control message: Could not ctl.start for 'adbd' from pid: 776 (/system/bin/usbd): Cannot find '/system/bin/adbd': No such file or directory
+[   33.863326][  T820] init: failed to set task profiles
+[   34.696258][  T841] init: failed to set task profiles
+[   34.699865][  T842] init: failed to set task profiles
+[   34.742768][  T844] init: failed to set task profiles
+[   34.747698][  T845] init: failed to set task profiles
+[   35.122222][  T884] init: failed to set task profiles
+[   38.867925][  T896] init: failed to set task profiles
+[   39.698985][  T916] init: failed to set task profiles
+[   39.702220][  T917] init: failed to set task profiles
+[   39.746492][  T919] init: failed to set task profiles
+[   39.752100][  T920] init: failed to set task profiles
+[   40.133015][  T956] init: failed to set task profiles
+[   43.868081][  T964] init: failed to set task profiles
+[   44.701873][  T986] init: failed to set task profiles
+[   44.705576][  T987] init: failed to set task profiles
+[   44.750636][  T989] init: failed to set task profiles
+[   44.756400][  T990] init: failed to set task profiles
+[   45.058016][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   45.058526][  T391] apexd: Native process 'zygote' is crashing. Attempting a revert
+[   45.058624][  T391] apexd: Revert failed : Revert requested, when there are no active sessions.
+[   45.134802][ T1027] init: failed to set task profiles
+[   48.871602][ T1039] init: failed to set task profiles
+[   49.331490][  T196] init: Unable to set property 'wlan.driver.status' from uid:1010 gid:1010 pid:643: Property type check failed, value doesn't match expected type 'enum ok unloaded'
+[   49.704770][ T1059] init: failed to set task profiles
+[   49.708488][ T1060] init: failed to set task profiles
+[   49.753874][ T1062] init: failed to set task profiles
+[   49.758750][ T1063] init: failed to set task profiles
+[   50.177930][ T1099] init: failed to set task profiles
+[   53.874745][ T1111] init: failed to set task profiles
+[   54.708660][ T1129] init: failed to set task profiles
+[   54.712831][ T1130] init: failed to set task profiles
+[   54.757429][ T1132] init: failed to set task profiles
+[   54.762316][ T1133] init: failed to set task profiles
+[   55.064180][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   55.180351][ T1170] init: failed to set task profiles
+[   58.877041][ T1178] init: failed to set task profiles
+[   59.711312][ T1200] init: failed to set task profiles
+[   59.714908][ T1201] init: failed to set task profiles
+[   59.761170][ T1203] init: failed to set task profiles
+[   59.766377][ T1204] init: failed to set task profiles
+[   59.829644][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[   60.089004][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   60.182782][ T1241] init: failed to set task profiles
+[   63.880004][ T1249] init: failed to set task profiles
+[   64.715246][ T1271] init: failed to set task profiles
+[   64.718625][ T1272] init: failed to set task profiles
+[   64.764795][ T1274] init: failed to set task profiles
+[   64.769861][ T1275] init: failed to set task profiles
+[   65.077784][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   65.184894][ T1312] init: failed to set task profiles
+[   68.882452][ T1320] init: failed to set task profiles
+[   69.718710][ T1342] init: failed to set task profiles
+[   69.722270][ T1343] init: failed to set task profiles
+[   69.768469][ T1345] init: failed to set task profiles
+[   69.773396][ T1346] init: failed to set task profiles
+[   69.830092][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[   70.089193][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   70.211710][ T1385] init: failed to set task profiles
+[   73.885314][ T1393] init: failed to set task profiles
+[   74.722008][ T1415] init: failed to set task profiles
+[   74.725589][ T1416] init: failed to set task profiles
+[   74.772062][ T1418] init: failed to set task profiles
+[   74.777067][ T1419] init: failed to set task profiles
+[   75.084036][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   75.213619][ T1457] init: failed to set task profiles
+[   78.887817][ T1465] init: failed to set task profiles
+[   79.725335][ T1487] init: failed to set task profiles
+[   79.729275][ T1488] init: failed to set task profiles
+[   79.776140][ T1490] init: failed to set task profiles
+[   79.785150][ T1491] init: failed to set task profiles
+[   80.113490][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   80.216096][ T1528] init: failed to set task profiles
+[   83.890434][ T1535] init: failed to set task profiles
+[   84.728733][ T1558] init: failed to set task profiles
+[   84.733006][ T1559] init: failed to set task profiles
+[   84.780633][ T1561] init: failed to set task profiles
+[   84.787884][ T1562] init: failed to set task profiles
+[   85.115002][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   85.219143][ T1599] init: failed to set task profiles
+[   88.893223][ T1606] init: failed to set task profiles
+[   89.732313][ T1629] init: failed to set task profiles
+[   89.736064][ T1630] init: failed to set task profiles
+[   89.784200][ T1632] init: failed to set task profiles
+[   89.791410][ T1633] init: failed to set task profiles
+[   90.107705][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   90.221551][ T1670] init: failed to set task profiles
+[   93.897163][ T1677] init: failed to set task profiles
+[   94.735894][ T1700] init: failed to set task profiles
+[   94.739850][ T1701] init: failed to set task profiles
+[   94.788306][ T1703] init: failed to set task profiles
+[   94.794594][ T1704] init: failed to set task profiles
+[   95.101817][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[   95.223765][ T1741] init: failed to set task profiles
+[   98.904701][ T1748] init: failed to set task profiles
+[   99.739820][ T1771] init: failed to set task profiles
+[   99.743503][ T1772] init: failed to set task profiles
+[   99.790857][ T1774] init: failed to set task profiles
+[   99.798105][ T1775] init: failed to set task profiles
+[  100.105302][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  100.225943][ T1812] init: failed to set task profiles
+[  103.910812][ T1819] init: failed to set task profiles
+[  104.743859][ T1842] init: failed to set task profiles
+[  104.747501][ T1843] init: failed to set task profiles
+[  104.794856][ T1845] init: failed to set task profiles
+[  104.801202][ T1846] init: failed to set task profiles
+[  105.113844][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  105.228797][ T1884] init: failed to set task profiles
+[  108.918147][ T1891] init: failed to set task profiles
+[  109.747121][ T1914] init: failed to set task profiles
+[  109.750995][ T1915] init: failed to set task profiles
+[  109.798335][ T1917] init: failed to set task profiles
+[  109.805002][ T1918] init: failed to set task profiles
+[  110.110934][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  110.231343][ T1955] init: failed to set task profiles
+[  113.924310][ T1962] init: failed to set task profiles
+[  114.751395][ T1985] init: failed to set task profiles
+[  114.755146][ T1986] init: failed to set task profiles
+[  114.802393][ T1988] init: failed to set task profiles
+[  114.810321][ T1989] init: failed to set task profiles
+[  115.119059][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  115.234246][ T2027] init: failed to set task profiles
+[  118.930495][ T2034] init: failed to set task profiles
+[  119.754349][ T2057] init: failed to set task profiles
+[  119.759268][ T2058] init: failed to set task profiles
+[  119.805796][ T2060] init: failed to set task profiles
+[  119.813781][ T2061] init: failed to set task profiles
+[  120.124990][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  120.236873][ T2098] init: failed to set task profiles
+[  123.935592][ T2105] init: failed to set task profiles
+[  124.757827][ T2128] init: failed to set task profiles
+[  124.761467][ T2129] init: failed to set task profiles
+[  124.809308][ T2131] init: failed to set task profiles
+[  124.817575][ T2132] init: failed to set task profiles
+[  125.130109][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  125.239095][ T2169] init: failed to set task profiles
+[  128.942423][ T2176] init: failed to set task profiles
+[  129.761278][ T2199] init: failed to set task profiles
+[  129.771081][ T2200] init: failed to set task profiles
+[  129.813714][ T2202] init: failed to set task profiles
+[  129.821172][ T2203] init: failed to set task profiles
+[  130.148848][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  130.241555][ T2240] init: failed to set task profiles
+[  133.948493][ T2247] init: failed to set task profiles
+[  134.765033][ T2270] init: failed to set task profiles
+[  134.768522][ T2271] init: failed to set task profiles
+[  134.816853][ T2273] init: failed to set task profiles
+[  134.823809][ T2274] init: failed to set task profiles
+[  135.154053][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  135.243935][ T2311] init: failed to set task profiles
+[  138.952097][ T2318] init: failed to set task profiles
+[  139.768529][ T2341] init: failed to set task profiles
+[  139.771771][ T2342] init: failed to set task profiles
+[  139.820865][ T2344] init: failed to set task profiles
+[  139.827293][ T2345] init: failed to set task profiles
+[  140.141975][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  140.246970][ T2382] init: failed to set task profiles
+[  143.958257][ T2389] init: failed to set task profiles
+[  144.771832][ T2412] init: failed to set task profiles
+[  144.775226][ T2413] init: failed to set task profiles
+[  144.824579][ T2415] init: failed to set task profiles
+[  144.830986][ T2416] init: failed to set task profiles
+[  145.133178][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  145.249805][ T2453] init: failed to set task profiles
+[  148.968738][ T2460] init: failed to set task profiles
+[  149.775169][ T2483] init: failed to set task profiles
+[  149.778738][ T2484] init: failed to set task profiles
+[  149.828311][ T2486] init: failed to set task profiles
+[  149.834844][ T2487] init: failed to set task profiles
+[  150.148855][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  150.252854][ T2524] init: failed to set task profiles
+[  153.969029][ T2531] init: failed to set task profiles
+[  154.778893][ T2554] init: failed to set task profiles
+[  154.782381][ T2555] init: failed to set task profiles
+[  154.831905][ T2557] init: failed to set task profiles
+[  154.838487][ T2558] init: failed to set task profiles
+[  155.151536][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  155.255585][ T2594] init: failed to set task profiles
+[  158.974211][ T2601] init: failed to set task profiles
+[  159.782324][ T2624] init: failed to set task profiles
+[  159.786368][ T2625] init: failed to set task profiles
+[  159.835402][ T2627] init: failed to set task profiles
+[  159.841595][ T2628] init: failed to set task profiles
+[  160.140598][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  160.258795][ T2665] init: failed to set task profiles
+[  163.980876][ T2672] init: failed to set task profiles
+[  164.785990][ T2695] init: failed to set task profiles
+[  164.795128][ T2696] init: failed to set task profiles
+[  164.838201][ T2698] init: failed to set task profiles
+[  164.844364][ T2699] init: failed to set task profiles
+[  165.152509][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  165.261262][ T2738] init: failed to set task profiles
+[  168.987592][ T2745] init: failed to set task profiles
+[  169.789918][ T2768] init: failed to set task profiles
+[  169.793717][ T2769] init: failed to set task profiles
+[  169.842429][ T2771] init: failed to set task profiles
+[  169.847230][ T2772] init: failed to set task profiles
+[  170.185155][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  170.263953][ T2809] init: failed to set task profiles
+[  173.994595][ T2816] init: failed to set task profiles
+[  174.793579][ T2839] init: failed to set task profiles
+[  174.797242][ T2840] init: failed to set task profiles
+[  174.845534][ T2842] init: failed to set task profiles
+[  174.850469][ T2843] init: failed to set task profiles
+[  175.157904][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  175.265796][ T2880] init: failed to set task profiles
+[  179.001162][ T2887] init: failed to set task profiles
+[  179.796763][ T2911] init: failed to set task profiles
+[  179.800991][ T2912] init: failed to set task profiles
+[  179.849437][ T2914] init: failed to set task profiles
+[  179.854921][ T2915] init: failed to set task profiles
+[  180.169753][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  180.268342][ T2954] init: failed to set task profiles
+[  184.007289][ T2961] init: failed to set task profiles
+[  184.799543][ T2984] init: failed to set task profiles
+[  184.802968][ T2985] init: failed to set task profiles
+[  184.853712][ T2987] init: failed to set task profiles
+[  184.858779][ T2988] init: failed to set task profiles
+[  185.153486][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  185.271326][ T3027] init: failed to set task profiles
+[  189.013279][ T3034] init: failed to set task profiles
+[  189.802976][ T3057] init: failed to set task profiles
+[  189.806511][ T3058] init: failed to set task profiles
+[  189.857557][ T3060] init: failed to set task profiles
+[  189.862735][ T3061] init: failed to set task profiles
+[  189.941235][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[  190.177181][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  190.273893][ T3098] init: failed to set task profiles
+[  194.020042][ T3105] init: failed to set task profiles
+[  194.806845][ T3128] init: failed to set task profiles
+[  194.810424][ T3129] init: failed to set task profiles
+[  194.861463][ T3131] init: failed to set task profiles
+[  194.866335][ T3132] init: failed to set task profiles
+[  194.931285][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[  195.182185][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  195.276055][ T3169] init: failed to set task profiles
+[  199.026589][ T3176] init: failed to set task profiles
+[  199.810599][ T3199] init: failed to set task profiles
+[  199.814033][ T3200] init: failed to set task profiles
+[  199.865138][ T3202] init: failed to set task profiles
+[  199.869691][ T3203] init: failed to set task profiles
+[  200.182618][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  200.278637][ T3240] init: failed to set task profiles
+[  204.029901][ T3247] init: failed to set task profiles
+[  204.813556][ T3270] init: failed to set task profiles
+[  204.817194][ T3271] init: failed to set task profiles
+[  204.868719][ T3273] init: failed to set task profiles
+[  204.873639][ T3274] init: failed to set task profiles
+[  205.179261][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  205.281739][ T3313] init: failed to set task profiles
+[  209.037518][ T3320] init: failed to set task profiles
+[  209.816494][ T3343] init: failed to set task profiles
+[  209.820144][ T3344] init: failed to set task profiles
+[  209.872422][ T3346] init: failed to set task profiles
+[  209.877164][ T3347] init: failed to set task profiles
+[  210.189796][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  210.285028][ T3385] init: failed to set task profiles
+[  214.043755][ T3392] init: failed to set task profiles
+[  214.819397][ T3415] init: failed to set task profiles
+[  214.823011][ T3416] init: failed to set task profiles
+[  214.876267][ T3418] init: failed to set task profiles
+[  214.880956][ T3419] init: failed to set task profiles
+[  214.958518][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[  215.205539][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  215.298047][ T3456] init: failed to set task profiles
+[  219.050268][ T3463] init: failed to set task profiles
+[  219.823116][ T3486] init: failed to set task profiles
+[  219.826724][ T3487] init: failed to set task profiles
+[  219.879914][ T3489] init: failed to set task profiles
+[  219.884593][ T3490] init: failed to set task profiles
+[  220.193787][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  220.298422][ T3527] init: failed to set task profiles
+[  224.056364][ T3534] init: failed to set task profiles
+[  224.826017][ T3557] init: failed to set task profiles
+[  224.834757][ T3558] init: failed to set task profiles
+[  224.883175][ T3560] init: failed to set task profiles
+[  224.887934][ T3561] init: failed to set task profiles
+[  225.202725][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  225.301767][ T3598] init: failed to set task profiles
+[  229.061467][ T3605] init: failed to set task profiles
+[  229.829236][ T3628] init: failed to set task profiles
+[  229.833152][ T3629] init: failed to set task profiles
+[  229.886867][ T3631] init: failed to set task profiles
+[  229.892490][ T3632] init: failed to set task profiles
+[  230.196179][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  230.304934][ T3669] init: failed to set task profiles
+[  234.066142][ T3676] init: failed to set task profiles
+[  234.832209][ T3699] init: failed to set task profiles
+[  234.835859][ T3700] init: failed to set task profiles
+[  234.890142][ T3702] init: failed to set task profiles
+[  234.894597][ T3703] init: failed to set task profiles
+[  234.970806][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[  235.199325][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  235.307400][ T3742] init: failed to set task profiles
+[  239.072930][ T3749] init: failed to set task profiles
+[  239.835496][ T3772] init: failed to set task profiles
+[  239.838939][ T3773] init: failed to set task profiles
+[  239.894065][ T3775] init: failed to set task profiles
+[  239.898590][ T3776] init: failed to set task profiles
+[  240.201688][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  240.310122][ T3813] init: failed to set task profiles
+[  240.966912][  T154] rockchip-dp fded0000.edp: failed to read max link rate
+[  241.016665][  T334] rockchip-dp fded0000.edp: failed to read max link rate
+[  241.069712][  T334] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy pll locked!
+[  241.070034][  T334] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy pll locked!
+[  241.074311][  T334] rockchip-hdptx-phy-hdmi fed60000.hdmiphy: hdptx phy lane locked!
+[  244.078570][ T3824] init: failed to set task profiles
+[  244.839099][ T3847] init: failed to set task profiles
+[  244.843585][ T3848] init: failed to set task profiles
+[  244.897899][ T3850] init: failed to set task profiles
+[  244.903668][ T3852] init: failed to set task profiles
+[  244.971048][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[  245.230428][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  245.312713][ T3888] init: failed to set task profiles
+[  249.084681][ T3895] init: failed to set task profiles
+[  249.842130][ T3918] init: failed to set task profiles
+[  249.846135][ T3919] init: failed to set task profiles
+[  249.901008][ T3921] init: failed to set task profiles
+[  249.905837][ T3922] init: failed to set task profiles
+[  250.232332][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  250.318359][ T3962] init: failed to set task profiles
+[  254.091442][ T3969] init: failed to set task profiles
+[  254.846092][ T3992] init: failed to set task profiles
+[  254.849642][ T3993] init: failed to set task profiles
+[  254.904875][ T3995] init: failed to set task profiles
+[  254.910030][ T3996] init: failed to set task profiles
+[  254.964678][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[  255.227593][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  255.320533][ T4035] init: failed to set task profiles
+[  259.097643][ T4042] init: failed to set task profiles
+[  259.849250][ T4065] init: failed to set task profiles
+[  259.852766][ T4066] init: failed to set task profiles
+[  259.909102][ T4068] init: failed to set task profiles
+[  259.913674][ T4069] init: failed to set task profiles
+[  260.229211][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  260.342337][ T4109] init: failed to set task profiles
+[  264.104570][ T4116] init: failed to set task profiles
+[  264.852062][ T4139] init: failed to set task profiles
+[  264.856081][ T4140] init: failed to set task profiles
+[  264.913094][ T4142] init: failed to set task profiles
+[  264.917784][ T4145] init: failed to set task profiles
+[  265.232894][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  265.345149][ T4180] init: failed to set task profiles
+[  269.111593][ T4187] init: failed to set task profiles
+[  269.855703][ T4210] init: failed to set task profiles
+[  269.859611][ T4211] init: failed to set task profiles
+[  269.916688][ T4213] init: failed to set task profiles
+[  269.921226][ T4216] init: failed to set task profiles
+[  270.235310][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  270.347879][ T4251] init: failed to set task profiles
+[  274.117363][ T4258] init: failed to set task profiles
+[  274.859480][ T4281] init: failed to set task profiles
+[  274.863119][ T4282] init: failed to set task profiles
+[  274.920394][ T4284] init: failed to set task profiles
+[  274.925696][ T4287] init: failed to set task profiles
+[  275.240828][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  275.350723][ T4322] init: failed to set task profiles
+[  279.123865][ T4329] init: failed to set task profiles
+[  279.863031][ T4352] init: failed to set task profiles
+[  279.867074][ T4353] init: failed to set task profiles
+[  279.924513][ T4355] init: failed to set task profiles
+[  279.929283][ T4359] init: failed to set task profiles
+[  280.225475][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  280.353484][ T4396] init: failed to set task profiles
+[  284.130484][ T4403] init: failed to set task profiles
+[  284.866094][ T4426] init: failed to set task profiles
+[  284.870156][ T4427] init: failed to set task profiles
+[  284.927944][ T4429] init: failed to set task profiles
+[  284.929999][ T4432] init: failed to set task profiles
+[  284.981536][  T198] selinux: SELinux:  Could not stat /sys/devices/virtual/net/ipsec_test: No such file or directory.
+[  285.244866][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  285.356630][ T4468] init: failed to set task profiles
+[  289.136903][ T4475] init: failed to set task profiles
+[  289.869820][ T4498] init: failed to set task profiles
+[  289.873507][ T4499] init: failed to set task profiles
+[  289.931841][ T4501] init: failed to set task profiles
+[  289.936411][ T4504] init: failed to set task profiles
+[  290.359003][ T4538] init: failed to set task profiles
+[  294.140213][ T4545] init: failed to set task profiles
+[  294.873396][ T4568] init: failed to set task profiles
+[  294.877164][ T4569] init: failed to set task profiles
+[  294.934981][ T4571] init: failed to set task profiles
+[  294.939727][ T4572] init: failed to set task profiles
+[  295.251389][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  295.362482][ T4611] init: failed to set task profiles
+[  299.146958][ T4618] init: failed to set task profiles
+[  299.876367][ T4641] init: failed to set task profiles
+[  299.880460][ T4642] init: failed to set task profiles
+[  299.938491][ T4644] init: failed to set task profiles
+[  299.943171][ T4647] init: failed to set task profiles
+[  300.239290][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  300.364412][ T4682] init: failed to set task profiles
+[  304.153954][ T4689] init: failed to set task profiles
+[  304.880010][ T4712] init: failed to set task profiles
+[  304.884150][ T4713] init: failed to set task profiles
+[  304.941905][ T4715] init: failed to set task profiles
+[  304.946141][ T4718] init: failed to set task profiles
+[  305.265748][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  305.367550][ T4753] init: failed to set task profiles
+[  309.159635][ T4760] init: failed to set task profiles
+[  309.884374][ T4783] init: failed to set task profiles
+[  309.888052][ T4784] init: failed to set task profiles
+[  309.945955][ T4786] init: failed to set task profiles
+[  309.950715][ T4787] init: failed to set task profiles
+[  310.264867][    T1] init: process with updatable components 'zygote' exited 4 times before boot completed
+[  310.370554][ T4824] init: failed to set task profiles
+

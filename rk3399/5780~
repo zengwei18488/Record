@@ -1,0 +1,302 @@
+Debian
+
+./make.sh rk3399_rom5780a3_2G
+
+#longxun  lvds 
+drivers/gpu/drm/rockchip/LT9211.c
+
+make ARCH=arm64 rk3399_adv_defconfig
+make ARCH=arm64 rk3399-rom5780-a3.img -j12
+make ARCH=arm64 rk3399-rom5780-b1-gy.img -j12
+
+
+sudo docker run -it --name rk3399_linux_risc -v /home/zengwei/data_8T2/work/rk3399-linux/guangyou/rk3399_linux_risc:/home/adv/BSP:rw --privileged advrisc/u18.04-rklbv1:latest /bin/bash
+
+Debian9 国内镜像源
+deb https://mirrors.aliyun.com/debian-archive/debian stretch main contrib non-free
+#deb https://mirrors.aliyun.com/debian-archive/debian stretch-proposed-updates main non-free contrib
+deb https://mirrors.aliyun.com/debian-archive/debian stretch-backports main non-free contrib
+deb https://mirrors.aliyun.com/debian-archive/debian-security stretch/updates main contrib non-free
+deb-src https://mirrors.aliyun.com/debian-archive/debian stretch main contrib non-free
+#deb-src https://mirrors.aliyun.com/debian-archive/debian stretch-proposed-updates main contrib non-free
+deb-src https://mirrors.aliyun.com/debian-archive/debian stretch-backports main contrib non-free
+deb-src https://mirrors.aliyun.com/debian-archive/debian-security stretch/updates main contrib non-free
+————————————————
+
+/lib/udev/rules.d/98-remove-ilitek-cursor.rules
+ACTION=="add|change", ENV{ID_INPUT_TOUCHSCREEN}!="1", ENV{ID_MODEL_ID}=="0001", ENV{ID_VENDOR_ID}=="222a", ENV{ID_INPUT_MOUSE}=""
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+功耗高问题
+
+hdparm   关闭硬盘（休眠）
+hdparm -B /dev/sda查看硬盘是否支持高级电源管理（APM），只有支持APM的硬盘才能通过-S参数或/etc/hdparm.conf中设置spindown_time让硬盘自己控制相应时间不读写自动休眠
+不支持-S参数的，可以用hdparm -y /dev/sda设置硬盘立即进入待机，还有一个hdparm -Y /dev/sda是让硬盘进入睡眠
+使用hdparm -C /dev/sda查看硬盘状态   standby是待机，active是活动，sleep是睡眠
+
+关背光     echo 0 > /sys/devices/platform/backlight1/backlight/backlight1/brightness
+
+CPU
+
+cat /sys/devices/system/cpu/cpufreq/policy0/scaling_available_governors
+conservative ondemand userspace powersave interactive performance
+
+cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+echo powersave > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
+echo powersave > /sys/devices/system/cpu/cpufreq/policy4/scaling_governor
+
+cat /sys/kernel/debug/opp/opp_summary
+cat /d/opp/opp_summary
+
+/sys/power/wake_lock
+
+yanwei@AKTC-RISC:~/link/rk3399-linux/kernel-v231$ diff .config .config.old
+525,528c525,526
+< CONFIG_PM_AUTOSLEEP=y
+< CONFIG_PM_WAKELOCKS=y
+< CONFIG_PM_WAKELOCKS_LIMIT=0
+< # CONFIG_PM_WAKELOCKS_GC is not set
+---
+> # CONFIG_PM_AUTOSLEEP is not set
+> # CONFIG_PM_WAKELOCKS is not set
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+鼠标不回弹
+
+mali库更新
+
+卸载
+sudo apt-get purge libmali-rk-dev libmali-rk-midgard-t86x-r14p0
+安装
+sudo dpkg -i package-name.deb
+查版本
+dpkg -l | grep mali
+
+
+重启界面
+sudo service lightdm restart
+
+(Reading database ... 60355 files and directories currently installed.)
+Preparing to unpack xserver-xorg-core_1.20.4-1_arm64.deb ...a2-dbgsym_2.0.0-1_arm
+Unpacking xserver-xorg-core (2:1.20.4-1) over (2:1.20.4-1) ...
+dpkg: dependency problems prevent configuration of xserver-xorg-core:_2.0.0-1_arm64.deb
+ xserver-xorg-core depends on libepoxy0 (>= 1.4.3); however:a-dev_2.0.0-1_arm64.d
+  Version of libepoxy0:arm64 on system is 1.3.1-2.
+
+dpkg: error processing package xserver-xorg-core (--install):
+ dependency problems - leaving unconfigured
+Errors were encountered while processing:
+ xserver-xorg-core
+
+Preparing to unpack xserver-xorg-core_1.20.4-1_arm64.deb ...
+Unpacking xserver-xorg-core (2:1.20.4-1) over (2:1.20.4-1) ...
+dpkg: dependency problems prevent configuration of xserver-xorg-core:
+ xserver-xorg-core depends on libepoxy0 (>= 1.4.3); however:
+  Version of libepoxy0:arm64 on system is 1.3.1-2.
+ xserver-xorg-core depends on librga2; however:
+  Package librga2 is not installed.
+
+dpkg: error processing package xserver-xorg-core (--install):
+ dependency problems - leaving unconfigured
+Errors were encountered while processing:
+ xserver-xorg-core
+
+sudo dpkg -i --force-overwrite
+
+apt list --installed | grep -v oldstable | cut -d/ -f1 | xargs apt-mark unhold
+sudo dpkg -i libepoxy0_1.5.3-0.1_arm64.deb
+sudo dpkg -i librga2_2.0.0-1_arm64.deb
+sudo dpkg -i librga2-dbgsym_2.0.0-1_arm64.deb
+sudo dpkg -i librga-dev_2.0.0-1_arm64.deb
+
+sudo dpkg -i xserver/xserver-common_1.20.4-1_all.deb
+sudo dpkg -i xserver/xserver-xorg-core_1.20.4-1_arm64.deb
+
+sudo dpkg -i xserver/xserver-common_1.20.4-1+deb10u3_all.deb
+sudo dpkg -i xserver/xserver-xorg-core_1.20.4-1+deb10u3_arm64.deb
+
+sudo dpkg -i xserver/*
+
+cp 20-modesetting.conf /etc/X11/xorg.conf.d/20-modesetting.conf
+vim /etc/X11/xorg.conf.d/20-modesetting.conf
+vi /home/linaro/.config/openbox/lxde-rc.xml
+sudo apt-get purge libmali-rk-dev libmali-rk-midgard-t86x-r14p0:arm64
+sudo dpkg -i libmali-midgard-t86x-r18p0-x11_1.9-1_arm64.deb
+sudo dpkg -i libmali-midgard-t86x-r18p0-x11-dbgsym_1.9-1_arm64.deb
+
+cat /var/log/Xorg.0.log |grep xorg-server
+
+sudo dpkg -i gnome-panel-control_3.6.1-4_arm64.deb
+sudo dpkg -i libobrender32v5_3.6.1-4_arm64.deb
+sudo dpkg -i libobt2v5_3.6.1-4_arm64.deb
+sudo dpkg -i openbox-dev_3.6.1-4_arm64.deb
+sudo dpkg -i openbox_3.6.1-4_arm64.deb
+
+sudo dpkg -i pcmanfm-dbg_1.2.5-3_arm64.deb
+sudo dpkg -i pcmanfm_1.2.5-3_arm64.deb
+
+
+root@linaro-alip:~# cat /etc/X11/xorg.conf.d/20-modesetting.conf
+Section "Device"
+Identifier "Rockchip Graphics"
+Driver "modesetting"
+
+    Option "AccelMethod" "exa"
+    Option "AccelMethod" "glamor"
+    Option "DRI" "2"
+    Option "FlipFB" "none"
+    EndSection
+这个配置改下用glamor, flipfb改为none
+另外
+root@linaro-alip:~# vi /home/linaro/.config/openbox/lxde-rc.xml
+     change  &lt;drawContents&gt;yes&lt;/drawContents&gt; to
+     &lt;drawContents&gt;no&lt;/drawContents&gt;
+yes改为no
+
+拖动窗口确认下。
+root@linaro-alip:~# cat /sys/class/devfreq/ff9a0000.gpu/load
+
+确认gpu使用率有用起来。另外也可以设置性能模式
+echo performance | tee $(find /sys/ -name *governor) > /dev/null 2>&1 || true
+
+
+2/ apt update
+3/ apt install xserver-common xserver-xorg-core xserver-xorg-legacy --reinstall
+下载deb安装包安装  http://ftp.debian.org/debian/pool/main/x/xorg-server/
+http://ftp.debian.org/debian/pool/main/libe/libepoxy/
+http://deb.debian.org/debian
+sudo dpkg -i libepoxy0_1.5.3-0.1_arm64.deb
+sudo dpkg -i xserver-common_1.20.4-1+deb10u4_all.deb
+sudo dpkg -i xserver-xorg-core_1.20.4-1+deb10u4_arm64.deb
+sudo dpkg -i xserver-xorg-legacy_1.20.4-1+deb10u4_arm64.deb
+
+
+export DISPLAY=:0.0
+sudo -u linaro xrandr --output HDMI-1 --mode 1920x1080
+sudo dpkg -i xinput_1.6.2-1+b1_arm64.deb
+xinput map-to-output "ILITEK ILITEK-TP" HDMI-1
+sudo -u linaro xinput map-to-output "eGalax Inc. USB TouchController" HDMI-1
+sudo -u linaro xinput map-to-output "eGalax Inc. USB TouchController" DSI-1
+
+sudo -u linaro xinput --list-props "ILITEK ILITEK-TP"
+
+sudo evemu-event /dev/input/event1 --type EV_ABS --code ABS_MT_TRACKING_ID --value -1 --sync
+sudo evemu-event /dev/input/event1 --type EV_KEY --code BTN_TOUCH --value 0 --sync
+
+sudo evemu-event /dev/input/event1 --type EV_KEY --code KEY_A --value 1 --sync
+sudo evemu-event /dev/input/event1 --type EV_KEY --code KEY_A --value 0 --sync
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+make rk3399_rom5780a3_2G_defconfig
+make ARCHV=aarch64
+
+make ARCH=arm64 rk3399_adv_defconfig
+make ARCH=arm64 rk3399-rom5780-a3.img -j12
+
+source build/envsetup.sh 
+lunch rk3399_rom5780-userdebug
+make -j8
+
+./mkimage.sh
+
+adb.exe root
+adb.exe disable-verity
+adb.exe reboot
+adb.exe root
+adb.exe remount
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+arch/arm64/boot/dts/rockchip/rk3399-rom5780-a3.dts
+                                                     arch/arm64/boot/dts/rockchip/rk3399.dtsi
+arch/arm64/configs/rk3399_adv_defconfig
+
+drivers/base/regmap/regmap.c
+drivers/clk/rockchip/clk-rk3399.c
+                                                    drivers/extcon/extcon-pd-virtual.c
+
+drivers/gpio/gpio-pca953x.c
+
+drivers/gpu/drm/bridge/analogix/analogix_dp_core.c
+drivers/gpu/drm/rockchip/dw-mipi-dsi.c
+drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
+drivers/gpu/drm/rockchip/rockchip_lvds.c
+drivers/gpu/drm/rockchip/rockchip_rgb.c
+drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+drivers/gpu/drm/drm_crtc.c
+
+drivers/i2c/busses/i2c-rk3x.c
+drivers/i2c/muxes/i2c-mux-pca954x.c
+
+drivers/misc/gpio-adv.c
+
+drivers/net/wireless/rockchip_wlan/rtl8822be/
+drivers/net/wireless/rockchip_wlan/Kconfig
+drivers/net/wireless/rockchip_wlan/Makefile
+drivers/net/wireless/rockchip_wlan/cm276_bt/
+drivers/net/usb/usbnet.c
+
+drivers/pci/host/pcie-rockchip.c
+
+drivers/regulator/rk808-regulator.c
+
+drivers/rtc/rtc-pt7c4337.c
+drivers/rtc/rtc-s35390a.c
+
+drivers/watchdog/dw_wdt.c
+drivers/watchdog/watchdog_advantech.c
+drivers/watchdog/Kconfig
+drivers/watchdog/Makefile
+
+include/linux/mfd/rk808.h
+
+sound/soc/rockchip/rockchip_spdif.c
+sound/soc/rockchip/rockchip_i2s.c
+sound/soc/codecs/rt5640.c
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+UBOOT
+ configs/rk3399_rom5780a2_2G_defconfig 
+ board/rockchip/advantech/Kconfig 
+ arch/arm/dts/rk3399-rom5780-a2.dts
+
+able_status_by_alias_node
+arch/arm/cpu/armv8/rk33xx/Kconfig
+board/rockchip/advantech/Kconfig
+board/rockchip/advantech/Makefile
+board/rockchip/advantech/advantech.c
+board/rockchip/advantech/config.mk
+board/rockchip/advantech/demo.c
+board/rockchip/advantech/io_tool.c
+board/rockchip/rk33xx/Kconfig
+common/cmd_bootrk.c
+configs/rk3399_rsb4710a1_2G_defconfig
+drivers/spi/rk_spi.c
+drivers/video/backlight/pwm_bl.c
+include/configs/rk3399_rsb4710.h
+
+KERNEL
+ arch/arm64/boot/dts/rockchip/rk3399-rom5780-a2.dts
+ arch/arm64/configs/rk3399_adv_defconfig
+ arch/arm64/Kconfig.platforms
+ arch/arm64/configs/rockchip_defconfig_back
+
+
+Android
+
+device/rockchip/rk3399/AndroidProducts.mk
+device/rockchip/rk3399/advantech.sh
+device/rockchip/rk3399/init.rsb4710.rc
+device/rockchip/rk3399/rk3399_rsb4710.mk
+device/rockchip/rk3399/vendorsetup.sh
+
+device/rockchip/rk3399/rk3399_rsb4710/
+
+
+
+

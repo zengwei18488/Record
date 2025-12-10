@@ -255,11 +255,35 @@ Signed
 
 java -jar signapk.jar  platform.x509.pem platform.pk8　app-debug.apk launcherApp-debug.apk
 
-java -Djava.library.path=/home/zengwei/work/rk3288-android8.1/android8.1-r46/out/host/linux-x86/lib64 -jar signapk.jar platform.x509.pem platform.pk8 
+java -Djava.library.path=/home/zengwei/work/rk3288-android8.1/android8.1-r46/out/host/linux-x86/lib64 -jar signapk.jar platform.x509.pem platform.pk8
+
+Power Key
+frameworks\base\services\core\java\com\android\server\policy\PhoneWindowManager.java
+ViewConfiguration.get(mContext).getDeviceGlobalActionKeyTimeout()
+frameworks/base/core/java/android/view/ViewConfiguration.java    GLOBAL_ACTIONS_KEY_TIMEOUT
+frameworks/base/core/res/res/values/config.xml    config_globalActionsKeyTimeout
 
 docker 容器配置信息
 /var/lib/docker/containers/c8c4259911cacf6f646fd30da055e97a651b04b3b2f1d92e0e63d043c111b486/config.v2.json
 
+fstabl 解决sqlite数据库异常，文件corrupt，问题
+userdata区文件系统换为EXT4
+默认data分区的文件系统为f2fs，建议不带电池的产品可以将data区的文件系统改为ext4，可以减小异常掉电后数据丢失的概率。
+修改方法如下：
+--- a/device/rockchip/common/recovery.nvme.fstab
++++ b/device/rockchip/common/recovery.nvme.fstab
+-/dev/block/platform/f8000000.pcie/by-name/userdata              /data                f2fs
+           defaults                  defaults
++/dev/block/platform/f8000000.pcie/by-name/userdata              /data                ext4
+           defaults                  defaults
+--- a/device/rockchip/rsb4680/fstab.rk30board
++++ b/device/rockchip/rsb4680/fstab.rk30board
+ # For sdmmc
+ /devices/platform/ff0c0000.dwmmc/mmc_host*        auto  auto    defaults        voldmanaged=sdcard1:auto
+ # 3288 default opening data-encrypt.
+-/dev/block/by-name/userdata       /data               f2fs      noatime,nodiratime,nosuid,nodev,discard,inline_xattr                   wait,check,notrim,forceencrypt=/metadata/key_file
++#/dev/block/by-name/userdata       /data               f2fs      noatime,nodiratime,nosuid,nodev,discard,inline_xattr                   wait,check,notrim,forceencrypt=/metadata/key_fil
++/dev/block/by-name/userdata       /data               ext4      noatime,nodiratime,nosuid,nodev,noauto_da_alloc,discard,errors=panic                   wait,check,encryptable=/metadata/key_file
 
 
 cat /d/dri/0/summary     //查看vop状态
@@ -324,6 +348,9 @@ source build/envsetup.sh;lunch rsb4680-userdebug
 $ make -j12;./mkimage.sh
 $./mkimage.sh
 
+我们可以绕过去不采用jack命令来编译，把原来的make命令变成
+make ANDROID_COMPILE_WITH_JACK = false
+
 u-boot 编译步骤
 make rk3288_rsb4680a3_2G_defconfig
 make rk3288_usm110a2_2G_defconfig
@@ -334,6 +361,48 @@ cd kernel
 make ARCH=arm rk3288_adv_defconfig
 make ARCH=arm rk3288-rsb4680-a3.img -j8
 make ARCH=arm rk3288-usm110-a2.img -j8
+******************************************************************************************************
+NFS
+busybox mount -t nfs -o nolock 172.21.171.105:/home/zengwei /data/temp
+
+defconfig 开启NFS
+
+openssh
+1. 编译openssh库-在方案目录下添加ssh包
+PRODUCT_PACKAGES += ssh sftp scp sshd ssh-keygen sshd_config start-ssh
+externel/openssh下，MM
+2. 系统起来之后
+1. 将根文件系统挂载为可读写
+mount -o rw,remount /
+2. 创建文件夹
+adb root
+adb shell mkdir /data/ssh
+adb shell mkdir -p /var/run/ssh/empty
+adb shell chmod 700 /var/run/ssh/empty
+3. 将Ubuntu电脑中的root用户的id_rsa.pub文件的内容，拷贝到Android设备中的/data/ssh/authorized_keys文件
+4. Android设备中启动sshd：start-ssh
+5. 在Ubuntu电脑中，用ssh root@192.168.1.106命令连接Android设备
+1. 在Android根目录下添加var目录
+# 在Android根目录下添加var目录：
+# 1. BoardConfig.mk上配置var
+BOARD_ROOT_EXTRA_FOLDERS += var
+# 2. 配置var目录的selinux，在file_contexts文件中添加
+/var  u:object_r:tmpfs:s0
+# 3. 配置目录的读写权限，system/core/libcutils/fs_config.cpp
+{ 00775, AID_ROOT,         AID_ROOT,         0, "var" },
+
+设备树和defconfig，eGTouch
+vendor/usbtouch/
+device/rockchip/common/sepolicy/eGTouchD.te
+device/rockchip/common/sepolicy/file.te
+device/rockchip/common/sepolicy/file_contexts
+device/rockchip/rsb4680/BoardConfig.mk
+device/rockchip/rsb4680/adv_autorun.sh
+device/rockchip/rsb4680/device.mk
+device/rockchip/rsb4680/init.rsb4680.rc
+
+kernel/arch/arm/boot/dts/rk3288-rsb4680-a3.dts
+kernel/arch/arm/configs/rk3288_adv_defconfig
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 

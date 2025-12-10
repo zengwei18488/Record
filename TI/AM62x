@@ -24,6 +24,8 @@ LP--Low Power--低功耗
 DDR
 uboot/arch/arm/dts/k3-am62x-rs10-ddr4-1600MTs.dtsi
 
+devmem2 0x00682040 w 0x80000010
+
 Uboot下，地址对应TRM 9.1.4
 => md.l 0x0f308098
 
@@ -35,6 +37,8 @@ date -s "20230417 17:45:40"
 /proc/device-tree/bus@f0000/mmc@fa00000/   SDCard只支持3.3v，50Mhz工作
 
 LAN LED phy mac
+
+/sys/class/mdio_bus/8000f00.mdio/8000f00.mdio:01# cat phy_id
 
 ./mdio-tool w eth0 0x1e 0xa000
 ./mdio-tool w eth0 0x1f 0
@@ -111,9 +115,39 @@ include/linux/phy.h
 include/uapi/linux/mii.h
 include/uapi/linux/ethtool.h
 
+rtl ethernet 展频SSC
+./mdio-tool w eth0 0x1f 0x0c44
+./mdio-tool w eth0 0x13 0x5f00
+./mdio-tool w eth0 0x1f 0x0000
+./mdio-tool w eth0 0x00 0x9200
+
+./mdio-tool w eth0 0x1f 0x0c44
+./mdio-tool w eth0 0x17 0x4f00
+./mdio-tool w eth0 0x1f 0x0000
+./mdio-tool w eth0 0x00 0x9200
+
 4G minipcie reset
 
 echo 1 > /sys/bus/platform/devices/misc-adv-gpio/minipcie_reset
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+1、系统服务在目录：/etc/systemd/system/
+
+在该目录下新建：autostart.service
+[Unit]
+Description = autostart-service
+[Service]
+Type=simple
+#Type=oneshot
+#RemainAfterExit=yes
+ExecStart=/usr/local/bin/auto-start.sh    (把启动xxx脚本放到了/usr/local/bin/)
+#After= test-watchdog.service
+[Install]
+WantedBy=multi-user.target
+
+2、使能服务：$ systemctl enable my.service
+
+3、编写一个名为：auto-start.sh的脚本
 
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 arago-image.inc
@@ -232,7 +266,7 @@ RS485 or usb hub
 
 ./mac_write CC:82:7F:2E:11:CA,CC:82:7F:2E:11:CB AKS0211599 2023-04-23 Testing
 ./mac_write CC:82:7F:2E:11:C7,CC:82:7F:2E:11:C8 AKS0211592 2023-04-23 Testing
-./mac_write CC:82:7F:2E:11:D6,CC:82:7F:2E:11:D7 AKS0211594 2023-04-23 Testing
+./mac_write CC:82:7F:2E:11:F8,CC:82:7F:2E:11:F7 AKS0211602 2023-07-20 TestingForDQA
 ./mac_tool /dev/mtd0 0x2000 CC:82:7F:2E:11:CB,CC:82:7F:2E:11:CA AKS0211599 2023-04-21 Testing
 海岸线位置信息：USB LAN1(eth1) LAN0(eth0)
 
@@ -614,6 +648,7 @@ $ MACHINE=am62xx-rs10 bitbake u-boot-ti-staging
 $ MACHINE=am62xx-rs10 bitbake linux-ti-staging
 $ MACHINE=am62xx-rs10 bitbake tisdk-core-bundle
 $ MACHINE=am62xx-rs10 bitbake -k tisdk-default-image
+$ MACHINE=am62xx-rs10 bitbake -f tisdk-default-image -c compile
 $ MACHINE=am62xx-rs10 bitbake tisdk-default-image
 $ MACHINE=am62xx-rs10 bitbake tisdk-default-image -c cleansstate
 $ MACHINE=am62xx-rs10 bitbake tisdk-base-image -c cleansstate
@@ -653,6 +688,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 Azure VM
 ssh -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153
+ssh -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu2004-KS01_key.pem azureuser@172.183.42.172
 scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/tisdk/build/arago-tmp-external-arm-glibc/deploy/images/am62xx-evm/tisdk-base-image-am62xx-evm-20221206023221.rootfs.wic.xz .
 
 scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem azureuser@20.212.36.153:/build/AM62xx/downloads_am62xx_5.10.168-20230515.tar.gz .

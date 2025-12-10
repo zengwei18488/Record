@@ -1,0 +1,549 @@
+=> rbrom
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.3%, TX Vref:21.8%,0.0%DQ rds:
+h0 l0, h0 l0, h1 l0, h2 l0, h1 l0, h0 l0, h2 l0, h0 l0,
+h1 l0, h1 l0, h0 l0, h2 l0, h1 l0, h2 l0, h1 l0, h4 l0,
+
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h6 l0, h1 l0, h6 l0, h1 l0, h4 l0,
+h0 l0, h1 l0, h0 l0, h1 l0, h2 l0, h1 l0, h3 l0, h2 l0,
+
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h2 l0, h2 l0, h1 l0, h1 l0, h2 l0, h5 l0, h2 l0,
+h2 l0, h2 l0, h4 l0, h0 l0, h3 l0, h1 l0, h2 l0, h1 l0,
+
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h2 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+Boot1 Release Time: Oct 17 2023 17:09:54, version: 1.11
+Emmc IO init.
+Emmc IO init.
+mmc_set_bus_width: 1
+SetEmmcClk: 375000, 2, 64
+mmc_switch index:183, value:0x2
+mmc_switch index:185, value:0x2
+SetEmmcClk: 375000, 2, 64
+mmc_set_bus_width: 8
+SetEmmcClk: 200000000, 0, 3
+Enable PHY CLK: 200000000, timing: 9
+SdmmcInit=2 0
+BootCapSize=100000
+UserCapSize=29600MB
+FwPartOffset=2000 , 100000
+UsbBoot ...65414
+powerOn 67670
+SoftReset, 21049734 us
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h3 l0, h2 l0, h0 l0, h3 l0, h0 l0,
+h1 l0, h1 l0, h1 l0, h2 l0, h1 l0, h2 l0, h1 l0, h5 l0,
+
+CH1 RX Vref:28.5%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l1, h1 l0, h4 l0, h1 l0, h5 l0, h0 l0, h4 l0,
+h0 l0, h1 l0, h0 l0, h1 l0, h2 l0, h1 l0, h2 l0, h1 l0,
+
+CH2 RX Vref:30.1%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h2 l0, h3 l0, h1 l0, h1 l0, h2 l0, h4 l0, h3 l0,
+h2 l0, h2 l0, h4 l0, h0 l0, h2 l0, h1 l0, h2 l0, h1 l0,
+
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h2 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+Magic is incorrect.
+Error validating A/B metadata from disk. Resetting and writing new A/B metadata to disk.
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(3f5d6e9c8a...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(609e3938a4...) + sha256(4d39c862b8...) + OK
+## Checking fdt 0x0034b950 ... sha256(e4e0311b2d...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(b95d49558c...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 222.418/494.148 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0xa
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14005 (Dec 19 2024 - 13:14:08 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba12000
+Relocation fdt: e99fa620 - e99fecd0
+CR: M/C/I
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 7
+*** Warning - bad CRC, using default environment
+
+DM: v2
+RESC: 'resource_a', blk@0x0000e000
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 13.0, Build 2000.0, v4
+boot mode: recovery (misc)
+ANDROID: fdt overlay OK
+swversion = V14005
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+Warn: can't find connect driver
+Warn: can't get connect driver
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Warn: can't find connect driver
+Warn: can't get connect driver
+Model: ROM-6881 AKS0000000000 V14000 A1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+disp info 2, type:16, id:0
+base2_disp_info couldn't be found, screen_info type[0] or id[0] mismatched
+Using display timing dts
+dsi@fde20000:  detailed mode clock 33300 kHz, flags[a]
+    H: 0800 1000 1006 1056
+    V: 0480 0500 0504 0508
+bus_format: 100e
+VOP update mode to: 800x480p62, type: MIPI0 for VP3
+VP3 set crtc_clock to 33000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@73x105] fmt[0] addr[0xebf00000]
+final DSI-Link bandwidth: 220000 Kbps x 4
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP2
+VP2 set crtc_clock to 85500KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP2 enable Esmart2[654x270->654x270@357x249] fmt[0] addr[0xebf00000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 684000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "recovery"
+Vboot=0, AVB images, AVB verify
+read_is_device_unlocked() ops returned that device is UNLOCKED
+avb_slot_verify.c:763: ERROR: vbmeta_a: Error verifying vbmeta image: OK_NOT_SIGNED
+preloaded: distribute image from 'boot_a
+preloaded: distribute image from 'vendor_boot_a
+preloaded: distribute image from 'init_boot_a
+Could not find "system_a" partition
+Booting IMAGE kernel at 0x00400000 with fdt at 0x08300000...
+
+
+Fdt Ramdisk skip relocation
+## Booting Android Image at 0x003ff000 ...
+Kernel: 0x00400000 - 0x02539a00 (34023 KiB)
+v-ramdisk:  0x0a200000 - 0x0c0943d2 (31313 KiB)
+ramdisk:    0x0c0943d2 - 0x0c2c5627 (2245 KiB)
+bootconfig: 0x0c2c5627 - 0x0c2c56a7 (1 KiB)
+bootparams: 0x0c2c56a7 - 0x0c2c76a7
+## Flattened Device Tree blob at 0x08300000
+   Booting using the fdt blob at 0x08300000
+   XIP Kernel Image from 0x00400000 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x02539a00
+   Using Device Tree in place at 0000000008300000, end 0000000008349a34
+## reserved-memory:
+  cma: addr=10000000 size=10000000
+  drm-logo@0: addr=ebf00000 size=15a000
+  ramoops@110000: addr=110000 size=e0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 1615.56/2323.253 ms
+
+Starting kernel ...
+
+[    0.000000][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'drm-cubic-lut@0': base 0x0000000000000000, size 0 MiB
+[    0.000000][    T0] OF: fdt: Reserved memory: failed to reserve memory for node 'vendor-storage-rm@00000000': base 0x0000000000000000, size 0 MiB
+I/TC: Secondary CPU 4 initializing
+I/TC: Secondary CPU 4 switching to normal world boot
+I/TC: Secondary CPU 5 initializing
+I/TC: Secondary CPU 5 switching to normal world boot
+I/TC: Secondary CPU 6 initializing
+I/TC: Secondary CPU 6 switching to normal world boot
+I/TC: Secondary CPU 7 initializing
+I/TC: Secondary CPU 7 switching to normal world boot
+I/TC: Secondary CPU 1 initializing
+I/TC: Secondary CPU 1 switching to normal world boot
+I/TC: Secondary CPU 2 initializing
+I/TC: Secondary CPU 2 switching to normal world boot
+I/TC: Secondary CPU 3 initializing
+I/TC: Secondary CPU 3 switching to normal world boot
+[    0.199172][    T1] arm-scmi firmware:scmi: Failed. SCMI protocol 19 not active.
+[    0.500695][    T1] rk806 spi2.0: no sleep-setting state
+[    0.506511][    T1] rk806 spi2.0: no reset-setting pinctrl state
+[    0.513044][    T1] rk806 spi2.0: no dvs-setting pinctrl state
+[    0.556722][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ fiq not found
+[    0.564762][    T1] fiq_debugger fiq_debugger.0: error -ENXIO: IRQ wakeup not found
+[    0.573114][    T1] fiq_debugger_probe: could not install nmi irq handler
+[    0.758833][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_rx
+[    0.758848][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock mac_clk_tx
+[    0.758939][    T1] rk_gmac-dwmac fe1c0000.ethernet: cannot get clock clk_mac_speed
+[    0.766177][   T87] rockchip-vop2 fdd90000.vop: Supported VOP aclk dvfs, normal mode:500000000, reset mode:0, advanced mode:750000000
+[    0.768486][   T87] rockchip-drm display-subsystem: route-dp0: failed to get logo,offset
+[    0.816254][   T87] rockchip-dp fded0000.edp: failed to read downspread -110
+[    0.833911][   T87] rockchip-drm display-subsystem: connector[eDP-1] loader protect failed
+[    0.833938][   T87] rockchip-drm display-subsystem: route-hdmi0: failed to get logo,offset
+[    0.927685][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_rx
+[    0.927698][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock mac_clk_tx
+[    0.927711][    T1] rk_gmac-dwmac fe1b0000.ethernet: cannot get clock clk_mac_speed
+[    1.309027][    T1] rockchip-dmc dmc: failed to get vop bandwidth to dmc rate
+[    1.309036][    T1] rockchip-dmc dmc: failed to get vop pn to msch rl
+[    1.329952][  T113] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    1.331524][  T113] debugfs: Directory 'fb000000.gpu-mali' with parent 'vdd_gpu_s0' already present!
+[    1.331551][  T113] debugfs: File 'uA_load' in directory '/' already present!
+[    1.331564][  T113] debugfs: File 'min_uV' in directory '/' already present!
+[    1.331577][  T113] debugfs: File 'max_uV' in directory '/' already present!
+[    1.331589][  T113] debugfs: File 'constraint_flags' in directory '/' already present!
+[    1.382425][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdab0000-0xfdabffff]
+[    1.382444][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdac0000-0xfdacffff]
+[    1.382452][    T1] RKNPU fdab0000.npu: can't request region for resource [mem 0xfdad0000-0xfdadffff]
+[    1.383072][    T1] debugfs: File 'uA_load' in directory '/' already present!
+[    1.383083][    T1] debugfs: File 'min_uV' in directory '/' already present!
+[    1.383088][    T1] debugfs: File 'max_uV' in directory '/' already present!
+[    1.383092][    T1] debugfs: File 'constraint_flags' in directory '/' already present!
+[    1.384876][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    1.395309][    T1] debugfs: Directory 'fdab0000.npu-rknpu' with parent 'vdd_npu_s0' already present!
+[    1.395754][    T1] debugfs: File 'uA_load' in directory '/' already present!
+[    1.395758][    T1] debugfs: File 'min_uV' in directory '/' already present!
+[    1.395762][    T1] debugfs: File 'max_uV' in directory '/' already present!
+[    1.395766][    T1] debugfs: File 'constraint_flags' in directory '/' already present!
+[    1.425147][    T1] mpp-iep2 fdbb0000.iep: allocate roi buffer failed
+[    1.426323][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_a is not found!
+[    1.426334][    T1] rkvdec2_init:1197: No niu aclk reset resource define
+[    1.426338][    T1] mpp_rkvdec2 fdc38100.rkvdec-core: shared_niu_h is not found!
+[    1.426342][    T1] rkvdec2_init:1200: No niu hclk reset resource define
+[    1.427006][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_a is not found!
+[    1.427012][    T1] rkvdec2_init:1197: No niu aclk reset resource define
+[    1.427017][    T1] mpp_rkvdec2 fdc48100.rkvdec-core: shared_niu_h is not found!
+[    1.427020][    T1] rkvdec2_init:1200: No niu hclk reset resource define
+[    1.445893][    T1] init: Failed to insmod '/lib/modules/snd-soc-rt5640.ko' with args '': No such file or directory
+[    1.445908][    T1] init: LoadWithAliases was unable to load snd_soc_rt5640
+[    1.446521][    T1] init: Failed to load kernel modules
+[    1.446873][    T1] init: InitFatalReboot: signal 6
+[    1.452392][    T1] init:   #00 pc 000000000031ef48  /init (unwindstack::AndroidLocalUnwinder::InternalUnwind(std::__1::optional<int>, unwindstack::AndroidUnwinderData&)+92) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452411][    T1] init:   #01 pc 0000000000313c90  /init (android::init::InitFatalReboot(int)+204) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452424][    T1] init:   #02 pc 0000000000314320  /init (android::init::InstallRebootSignalHandlers()::$_0::__invoke(int)+32) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452431][    T1] init:   #03 pc 0000000000000860  [vdso]
+[    1.452440][    T1] init:   #04 pc 00000000004abd30  /init (abort+160) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452452][    T1] init:   #05 pc 00000000003192a4  /init (android::init::InitAborter(char const*)+44) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452468][    T1] init:   #06 pc 000000000046f7cc  /init (android::base::SetAborter(std::__1::function<void (char const*)>&&)::$_0::__invoke(char const*)+80) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452480][    T1] init:   #07 pc 000000000046efa0  /init (android::base::LogMessage::~LogMessage()+352) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452491][    T1] init:   #08 pc 000000000030a9b4  /init (android::init::FirstStageMain(int, char**)+8812) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    1.452505][    T1] init:   #09 pc 00000000004a9ec8  /init (__real_libc_init(void*, void (*)(), int (*)(int, char**, char**), structors_array_t const*, bionic_tcb*)+692) (BuildId: 8a94164082cfbc2931a096db161bda02)
+[    2.576257][    T1] reboot: Restarting system with command 'bootloader'
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0xff
+CH0 RX Vref:29.7%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h3 l0, h2 l0, h0 l0, h3 l0, h0 l0,
+h1 l0, h1 l0, h0 l0, h3 l0, h1 l0, h2 l0, h1 l0, h5 l0,
+
+CH1 RX Vref:28.9%, TX Vref:21.8%,0.0%DQ rds:
+h1 l0, h0 l0, h1 l0, h5 l0, h1 l0, h5 l0, h0 l0, h4 l0,
+h0 l0, h1 l0, h0 l0, h1 l0, h2 l0, h1 l0, h3 l0, h2 l0,
+
+CH2 RX Vref:29.7%, TX Vref:22.8%,0.0%DQ rds:
+h0 l0, h2 l0, h2 l0, h1 l0, h1 l0, h2 l0, h5 l0, h2 l0,
+h2 l0, h2 l0, h4 l0, h0 l0, h2 l0, h1 l0, h2 l0, h2 l0,
+
+CH3 RX Vref:28.5%, TX Vref:22.8%,0.0%DQ rds:
+h1 l0, h3 l0, h7 l0, h1 l0, h1 l0, h0 l1, h1 l0, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h0 l0, h2 l0, h0 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+SPL: A/B-slot: _a, successful: 0, tries-remain: 6
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(3f5d6e9c8a...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(609e3938a4...) + sha256(4d39c862b8...) + OK
+## Checking fdt 0x0034b950 ... sha256(e4e0311b2d...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(b95d49558c...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 164.759/434.610 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0xa
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V14005 (Dec 19 2024 - 13:14:08 +0800)
+
+Model: Advantech RK3588 ROM6881 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba12000
+Relocation fdt: e99fa620 - e99fecd0
+CR: M/C/I
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+A/B-slot: _a, successful: 0, tries-remain: 6
+*** Warning - bad CRC, using default environment
+
+DM: v2
+RESC: 'resource_a', blk@0x0000e000
+Device is: UNLOCKED
+DTB: rk-kernel.dtb
+HASH(c): OK
+Android 13.0, Build 2000.0, v4
+boot mode: bootloader
+ANDROID: fdt overlay OK
+swversion = V14005
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 800000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 800000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 800000 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+Warn: can't find connect driver
+Warn: can't get connect driver
+get vp0 plane mask:0x5, primary id:2, cursor_plane:-1, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Warn: can't find connect driver
+Warn: can't get connect driver
+Model: ROM-6881 AKS0000000000 V14000 A1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+disp info 2, type:16, id:0
+base2_disp_info couldn't be found, screen_info type[0] or id[0] mismatched
+Using display timing dts
+dsi@fde20000:  detailed mode clock 33300 kHz, flags[a]
+    H: 0800 1000 1006 1056
+    V: 0480 0500 0504 0508
+bus_format: 100e
+VOP update mode to: 800x480p62, type: MIPI0 for VP3
+VP3 set crtc_clock to 33000KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP3 enable Esmart3[654x270->654x270@73x105] fmt[0] addr[0xebf00000]
+final DSI-Link bandwidth: 220000 Kbps x 4
+Using display timing dts
+edp@fded0000:  detailed mode clock 85500 kHz, flags[5]
+    H: 1368 1438 1581 1794
+    V: 0768 0771 0774 0798
+bus_format: 100e
+VOP update mode to: 1368x768p60, type: eDP1 for VP2
+VP2 set crtc_clock to 85500KHz
+Unsupported bt709f at 10bit csc depth, use bt601f instead
+VOP VP2 enable Esmart2[654x270->654x270@357x249] fmt[0] addr[0xebf00000]
+AUX CH command reply failed!
+AUX CH error happens: 2
+AUX CH error happens: 2
+failed to read dpcd caps: -121
+enter fastboot!
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 684000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   eth1: ethernet@fe1c0000, eth0: ethernet@fe1b0000
+switch to partitions #0, OK
+mmc0(part 0) is current device
+Enter fastboot...rockchip_u3phy_uboot_init: udphy mode not support usb3
+OK
+usb device is high-speed
+

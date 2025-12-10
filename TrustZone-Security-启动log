@@ -1,0 +1,309 @@
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0x13
+CH0 RX Vref:27.9%, TX Vref:26.8%,0.0%DQ rds:
+h0 l0, h1 l0, h0 l0, h0 l0, h5 l0, h1 l0, h0 l3, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h3 l0, h1 l0, h1 l0, h0 l0,
+
+CH1 RX Vref:28.9%, TX Vref:25.8%,0.0%DQ rds:
+h5 l0, h0 l0, h0 l0, h2 l0, h0 l0, h4 l0, h2 l0, h0 l1,
+h1 l0, h1 l0, h1 l0, h1 l0, h0 l0, h1 l0, h1 l0, h1 l0,
+
+CH2 RX Vref:29.3%, TX Vref:24.8%,0.0%DQ rds:
+h1 l0, h2 l0, h1 l0, h1 l0, h3 l0, h1 l0, h5 l0, h0 l0,
+h0 l0, h0 l0, h0 l1, h0 l0, h0 l1, h0 l0, h1 l0, h1 l0,
+
+CH3 RX Vref:28.9%, TX Vref:25.8%,0.0%DQ rds:
+h2 l0, h0 l0, h0 l1, h0 l0, h1 l0, h1 l0, h0 l0, h3 l0,
+h1 l0, h1 l0, h2 l0, h0 l0, h6 l0, h1 l0, h1 l0, h1 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+Boot1 Release Time: Oct 17 2023 17:09:54, version: 1.11
+Emmc IO init.
+Emmc IO init.
+mmc_set_bus_width: 1
+SetEmmcClk: 375000, 2, 64
+mmc_switch index:183, value:0x2
+mmc_switch index:185, value:0x2
+SetEmmcClk: 375000, 2, 64
+mmc_set_bus_width: 8
+SetEmmcClk: 200000000, 0, 3
+Enable PHY CLK: 200000000, timing: 9
+SdmmcInit=2 0
+BootCapSize=100000
+UserCapSize=29820MB
+FwPartOffset=2000 , 100000
+UsbBoot ...83109
+powerOn 83367
+SoftReset, 7137767 us
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4X, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS=1 Die BW=16 Size=1024MB
+Manufacturer ID:0x13
+CH0 RX Vref:28.3%, TX Vref:26.8%,0.0%DQ rds:
+h0 l0, h1 l0, h1 l0, h0 l0, h5 l0, h1 l0, h0 l3, h0 l0,
+h1 l0, h0 l0, h1 l0, h1 l0, h1 l0, h2 l0, h1 l0, h0 l0,
+
+CH1 RX Vref:28.9%, TX Vref:24.8%,0.0%DQ rds:
+h6 l0, h0 l0, h0 l0, h2 l0, h0 l0, h4 l0, h1 l0, h0 l1,
+h1 l0, h1 l0, h1 l0, h1 l0, h0 l0, h1 l0, h1 l0, h1 l0,
+
+CH2 RX Vref:28.9%, TX Vref:24.8%,0.0%DQ rds:
+h1 l0, h3 l0, h2 l0, h1 l0, h3 l0, h2 l0, h6 l0, h0 l0,
+h0 l0, h0 l0, h0 l1, h0 l1, h0 l0, h0 l0, h2 l0, h1 l0,
+
+CH3 RX Vref:28.9%, TX Vref:25.8%,0.0%DQ rds:
+h2 l0, h0 l0, h0 l1, h0 l0, h2 l0, h1 l0, h0 l0, h2 l0,
+h1 l0, h1 l0, h2 l0, h0 l0, h6 l0, h1 l0, h1 l0, h1 l0,
+
+stride=0x2, ddr_config=0x0
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x0
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+U-Boot SPL board init
+U-Boot SPL 2017.09-ge4e124926e-230922 #lxh (Sep 25 2023 - 10:58:38), fwver: v1.13
+unknown raw ID 0 0 0
+unrecognized JEDEC id bytes: 00, 00, 00
+Trying to boot from MMC2
+MMC: no card present
+mmc_init: -123, time 2
+spl: mmc init failed with error: -123
+Trying to boot from MMC1
+SPL: A/B-slot: _a, successful: 0, tries-remain: 7
+Trying fit image at 0x4000 sector
+## Verified-boot: 0
+## Checking atf-1 0x00040000 (gzip @0x00240000) ... sha256(8d3d205162...) + sha256(64122e141b...) + OK
+## Checking uboot 0x00200000 (gzip @0x00400000) ... sha256(b781306a08...) + sha256(268fa1770d...) + OK
+## Checking fdt 0x0034d2e8 ... sha256(62cafeac04...) + OK
+## Checking atf-2 0xff100000 ... sha256(ce8968e34f...) + OK
+## Checking atf-3 0x000f0000 ... sha256(ce48b69fdd...) + OK
+## Checking optee 0x08400000 (gzip @0x08600000) ... sha256(34522f7ead...) + sha256(b866e4e4a1...) + OK
+Jumping to U-Boot(0x00200000) via ARM Trusted Firmware(0x00040000)
+Total: 165.912/434.27 ms
+
+INFO:    Preloader serial: 2
+NOTICE:  BL31: v2.3():v2.3-765-g588059758:derrick.huang, fwver: v1.46
+NOTICE:  BL31: Built : 18:13:16, Apr 29 2024
+INFO:    spec: 0x1
+INFO:    code: 0x88
+INFO:    ext 32k is not valid
+INFO:    ddr: stride-en 4CH
+INFO:    GICv3 without legacy support detected.
+INFO:    ARM GICv3 driver initialized in EL3
+INFO:    valid_cpu_msk=0xff bcore0_rst = 0x0, bcore1_rst = 0x0
+INFO:    l3 cache partition cfg-0
+INFO:    system boots from cpu-hwid-0
+INFO:    disable memory repair
+INFO:    idle_st=0x21fff, pd_st=0x11fff9, repair_st=0xfff70001
+INFO:    dfs DDR fsp_params[0].freq_mhz= 2112MHz
+INFO:    dfs DDR fsp_params[1].freq_mhz= 528MHz
+INFO:    dfs DDR fsp_params[2].freq_mhz= 1068MHz
+INFO:    dfs DDR fsp_params[3].freq_mhz= 1560MHz
+INFO:    BL31: Initialising Exception Handling Framework
+INFO:    BL31: Initializing runtime services
+INFO:    BL31: Initializing BL32
+I/TC:
+I/TC: OP-TEE version: 3.13.0-791-g185dc3c92 #hisping.lin (gcc version 10.2.1 20201103 (GNU Toolchain for the A-profile Architecture 10.2-2020.11 (arm-10.16))) #2 Tue Apr 16 11:16:18 CST 2024 aarch64, fwver: v1.16
+I/TC: OP-TEE memory: TEEOS 0x200000 TA 0xc00000 SHM 0x200000
+I/TC: Primary CPU initializing
+I/TC: Primary CPU switching to normal world boot
+INFO:    BL31: Preparing for EL3 exit to normal world
+INFO:    Entry point address = 0x200000
+INFO:    SPSR = 0x3c9
+
+
+U-Boot 2017.09 V110044 (Mar 07 2025 - 11:01:44 +0800)
+
+Model: Advantech RK3588 ASRA501 Board
+MPIDR: 0x0
+PreSerial: 2, raw, 0xfeb50000
+DRAM:  4 GiB
+Sysmem: init
+Relocation Offset: eba11000
+Relocation fdt: e99f9fc0 - e99fecd8
+CR: M/C/I
+Cmd interface: disabled
+optee api revision: 2.0
+mmc@fe2c0000: 1, mmc@fe2e0000: 0
+Bootdev(atags): mmc 0
+MMC0: HS400 Enhanced Strobe, 200Mhz
+PartType: EFI
+TEEC: Waring: Could not find security partition
+DM: v2
+boot mode: normal
+conf: sha256,rsa2048:dev+
+RESC: 'boot', blk@0x000184b0
+resource: sha256+
+FIT: signed, conf required
+DTB: rk-kernel.dtb
+HASH(c): OK
+swversion = V110044
+----------------------------------------------------------------
+model[0]         ASR-A501
+model[1]         AKS0245031
+model[2]         V110044
+model[3]         A2-EG90
+----------------------------------------------------------------
+Read board id : 12,  adcval = 11
+ASR-A501 hw_id = 12
+uart7 mode is 0
+Error: Delete prop linux,rs485-enabled-at-boot-time of serial7, err = -1
+Info : not configurate display in uboot
+----------------------------------------------------------------
+display0         al7     0
+display1
+display2
+display3
+----------------------------------------------------------------
+usb dr_mode not found
+usb dr_mode not found
+usb dr_mode not found
+I2c0 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big0_s0 675000 uV
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_cpu_big1_s0 675000 uV
+I2c2 speed: 100000Hz
+vsel-gpios- not found!
+en-gpios- not found!
+vdd_npu_s0 812500 uV
+spi2: RK806: 2
+ON=0x40, OFF=0x00
+vdd_gpu_s0 750000 uV
+vdd_cpu_lit_s0 init 800000 uV
+vdd_log_s0 750000 uV
+vdd_vdenc_s0 init 750000 uV
+vdd_ddr_s0 850000 uV
+get vp0 plane mask:0x5, primary id:2, cursor_plane:0, from dts
+get vp1 plane mask:0xa, primary id:3, cursor_plane:-1, from dts
+get vp2 plane mask:0x140, primary id:8, cursor_plane:-1, from dts
+get vp3 plane mask:0x280, primary id:9, cursor_plane:-1, from dts
+Could not find baseparameter partition
+Model: ASR-A501 AKS0245031 V110044 A2-EG90
+Device 'gpio@fd8a0000': seq 0 is in use by 'gpio@fd8a0000'
+## Error: Can't overwrite "ethaddr"
+## Error inserting "ethaddr" variable, errno=1
+## Error: Can't overwrite "eth1addr"
+## Error inserting "eth1addr" variable, errno=1
+Minidump: init...
+Rockchip UBOOT DRM driver version: v1.0.1
+vp0 have layer nr:2[0 2 ], primary plane: 2
+vp1 have layer nr:2[1 3 ], primary plane: 3
+vp2 have layer nr:2[6 8 ], primary plane: 8
+vp3 have layer nr:2[7 9 ], primary plane: 9
+Monitor has basic audio support
+Could not find baseparameter partition
+color_format:1
+hdmi_select_link_config use tmds mode
+mode:3840x2160 bus_format:0x2025
+hdmi@fde80000:  detailed mode clock 297000 kHz, flags[5]
+    H: 3840 4016 4104 4400
+    V: 2160 2168 2178 2250
+bus_format: 2025
+VOP update mode to: 3840x2160p30, type: HDMI0 for VP0
+dclk:297000,if_pixclk_div;2,if_dclk_div:4
+VP0 set crtc_clock to 297000KHz
+display_enable get LT9211 device!
+ LT9211 device ret -19
+VOP VP0 enable Esmart0[654x258->654x258@1593x951] fmt[0] addr[0xebf00000]
+CEA mode used vic=95
+mtmdsclock:297000000
+hdptx_ropll_cmn_config bus_width:2d5190 rate:2970000
+hdptx phy pll locked!
+dw_hdmi_setup HDMI mode
+don't use dsc mode
+dw hdmi qp use tmds mode
+bus_width:0x2d5190,bit_rate:2970000
+hdptx phy lane locked!
+CLK: (sync kernel. arm: enter 1008000 KHz, init 1008000 KHz, kernel 0N/A)
+  b0pll 24000 KHz
+  b1pll 24000 KHz
+  lpll 24000 KHz
+  v0pll 24000 KHz
+  aupll 786431 KHz
+  cpll 1500000 KHz
+  gpll 1188000 KHz
+  npll 850000 KHz
+  ppll 1100000 KHz
+  aclk_center_root 702000 KHz
+  pclk_center_root 100000 KHz
+  hclk_center_root 396000 KHz
+  aclk_center_low_root 500000 KHz
+  aclk_top_root 750000 KHz
+  pclk_top_root 100000 KHz
+  aclk_low_top_root 396000 KHz
+Net:   Device 'gpio@fec30000': seq 2 is in use by 'gpio@fd8a0000'
+eth0: ethernet@fe1b0000, eth1: ethernet@fe1c0000
+Hit key to stop autoboot('CTRL+C'):  0
+ANDROID: reboot reason: "(none)"
+Not AVB images, AVB skip
+No valid android hdr
+Android image load failed
+Android boot failed, error -1.
+## Booting FIT Image at 0xe7762f80 with size 0x02096000
+Fdt Ramdisk skip relocation
+## Loading kernel from FIT Image at e7762f80 ...
+   Using 'conf' configuration
+## Verified-boot: 0
+   Verifying Hash Integrity ... sha256,rsa2048:dev+ OK
+   Trying 'kernel' kernel subimage
+     Description:  unavailable
+     Type:         Kernel Image
+     Compression:  uncompressed
+     Data Start:   0xe7790580
+     Data Size:    33982976 Bytes = 32.4 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x00400000
+     Entry Point:  0x00400000
+     Hash algo:    sha256
+     Hash value:   e9f783502edee2cf4653cf6ce9baacdc9e52e0955036fb89152c208be68744e0
+   Verifying Hash Integrity ... sha256+ OK
+## Loading fdt from FIT Image at e7762f80 ...
+   Using 'conf' configuration
+   Trying 'fdt' fdt subimage
+     Description:  unavailable
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0xe7763f80
+     Data Size:    181708 Bytes = 177.4 KiB
+     Architecture: AArch64
+     Load Address: 0x08300000
+     Hash algo:    sha256
+     Hash value:   9bf20bb1fc4dd3169f2426a8f4f67f3e5432675816d8d4f28f012067e430d49d
+   Verifying Hash Integrity ... sha256+ OK
+   Loading fdt from 0x08300000 to 0x08300000
+   Booting using the fdt blob at 0x08300000
+   Loading Kernel Image from 0xe7790580 to 0x00400000 ... OK
+   kernel loaded at 0x00400000, end = 0x02468a00
+   Using Device Tree in place at 0000000008300000, end 000000000832f6cb
+VP0 fail to load kernel logo
+## reserved-memory:
+  drm-logo@00000000: addr=ebf00000 size=a5000
+  ramoops@110000: addr=110000 size=f0000
+Adding bank: 0x00200000 - 0x08400000 (size: 0x08200000)
+Adding bank: 0x09400000 - 0xf0000000 (size: 0xe6c00000)
+Adding bank: 0x1f0000000 - 0x200000000 (size: 0x10000000)
+CPU Type is 0x1
+Total: 1107.238/1755.699 ms
+
+Starting kernel ...
+

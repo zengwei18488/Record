@@ -1,0 +1,319 @@
+BSP Launcher
+
+https://ess-kms.edgecenter.io/en/xdept/internal/BSP_Launcher/scripts-user-manual
+
+脚本
+https://dev.azure.com/AIM-Linux/AIM_Linux_BSP_Launcher/_git/Rockchip
+git@ssh.dev.azure.com:v3/AIM-Linux/AIM_Linux_BSP_Launcher/Rockchip
+branch:android-15.0-mid-rkr4
+
+manifest.xml--------最后更新
+https://dev.azure.com/AIM-Linux/AIM_Linux_Release/_git/Rockchip 
+git@ssh.dev.azure.com:v3/AIM-Linux/AIM_Linux_Release/Rockchip
+branch:android-15.0-mid-rkr4
+
+image
+https://portal.azure.com/#view/Microsoft_Azure_Storage/ContainerMenuBlade//overview/storageAccountId/%2Fsubscriptions%2F5f1796fb-9ef9-450d-8ef0-2e9b3212a0ad%2FresourceGroups%2FRISC-DevOps%2Fproviders%2FMicrosoft.Storage%2FstorageAccounts%2Friscsw/path/aim-linux-release/etag/%220x8DDC808A80DAB19%22/defaultId//publicAccessVal/Container 
+https://teams.microsoft.com/l/message/19:XjMZCcG5osP7PT7UbpcG_SJrE8LSEhnk_aNpycHLLf41@thread.tacv2/1761788231501?tenantId=a77d40d9-dcba-4dda-b571-5f18e6da853f&groupId=e386b63f-6088-4564-bbe3-3fb36b78d95c&parentMessageId=1761788231501&teamName=AIM-Linux&channelName=BSP%20Launcher&createdTime=1761788231501&ngc=true&allowXTenantAccess=true
+
+https://dev.azure.com/AIM-Linux/AIM_Linux_BSP_Launcher/_git/AIM_Linux_BSP_Launcher?path=%2F&version=GBmain_develop&_a=contents
+推送到main分支
+
+目录名：android-15.0-mid-rkr4
+
+git@ssh.dev.azure.com:v3/AIM-Linux/AIM_Linux_BSP_Launcher/AIM_Linux_BSP_Launcher
+
+
+tar czf aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_all_emmc_2025-11-18.img.tgz -C aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_all_emmc_2025-11-18.img .
+
+md5sum -b aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_all_emmc_2025-11-18.img.tgz | cut -d ' ' -f 1
+
+./flash_device_detection.sh -t ./ -m aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576.xml -r 8g -s emmc
+
+./flash.sh -t ./ -i ./image/ -m aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576.xml -r 8g -s emmc
+
+export PASSWORD=1
+./bsp_build.sh -m aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576.xml -r 8g -k https://AIM-Linux:xxxxxxxxx@dev.azure.com
+
+Build uboot ok!
+Build kernel ok!
+Build android ok!
+Make update image ok!
+
+git checkout -b android-15.0-mid-rkr4
+git checkout -b android-15.0-mid-rkr4_develop
+
+
+git push origin android-15.0-mid-rkr4_develop:android-15.0-mid-rkr4_develop
+
+git checkout android-15.0-mid-rkr4
+git merge android-15.0-mid-rkr4_develop
+
+git push origin android-15.0-mid-rkr4:android-15.0-mid-rkr4
+
+
+sudo docker run -itd --name local_rk_androidV15_risc -v /home/zengwei/data_8T2/work/BSP-Launcher/Rockchip:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+
+wget -c https://riscsw.blob.core.windows.net/android-prebuilts/rk-all-android15/prebuilts-rk-androidV15-rkr4-20250926.tar.gz?snapshot=2025-11-25T07:33:05.1128027Z
+
+wget -c -t 10 -T 120 -w 10 -O prebuilts.tar.gz https://www.dropbox.com/scl/fi/rnhvqa0vo8nwkr8xhukq6/prebuilts-rk-androidV15-rkr4-20250926.tar.gz?rlkey=0zfhqp56t1s4oryjp6vncgxgk&st=doyszkez&dl=0
+
+wget -c -t 10 -T 120 -w 10 --show-progress -O prebuilts.tar.gz "https://www.dropbox.com/scl/fi/rnhvqa0vo8nwkr8xhukq6/prebuilts-rk-androidV15-rkr4-20250926.tar.gz?rlkey=0zfhqp56t1s4oryjp6vncgxgk&st=doyszkez&dl=0"
+
+wget -c 'https://pan.baidu.com/s/1S4rv_8ITbI1ZqBc_FFuJHQ?pwd=a887'
+
+
+57a4ee11eeb7d781da17160002fbc8d3  prebuilts-rk-androidV15-rkr4-20250926.tar.gz
+
+总计 21911968
+-rw-rw-r-- 1 zengwei zengwei 22437848029  9月 26 10:12 prebuilts-rk-androidV15-rkr4-20250926.tar.gz
+
+
+git branch -m android-15.0-mid-rkr4
+git branch -m android15-linux6.1-rkr4 android-15.0-mid-rkr4
+
+git branch -m android-15.0-mid-rkr4_develop
+git branch -m android15-linux6.1-rkr4_develop android-15.0-mid-rkr4_develop
+
+# 删除远端旧分支
+git push origin --delete android15-linux6.1-rkr4
+git push origin --delete android15-linux6.1-rkr4_develop
+# 或等价写法
+git push origin :<old-name>
+
+# 推送新分支并建立本地对新分支的上游追踪
+git push origin -u android-15.0-mid-rkr4
+git push origin -u android-15.0-mid-rkr4_develop
+
+
+
+git branch -d android-15.0-mid-rkr4_develop
+
+git push --set-upstream origin android-15.0-mid-rkr4
+
+bsp-launcher --developer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+U-Boot
+
+cp .config configs/rk3576_defconfig_back
+cp configs/rk3576_defconfig_back configs/rk3576_aom3841a1_defconfig
+cp include/configs/evb_rk3576.h include/configs/rk3576_aom3841.h
+
+
+Kernel
+
+cp .config arch/arm64/configs/rockchip_linux_defconfig_back
+rk3576_adv_defconfig
+rk3576-aom3841-a1.dts
+
+./ddrbin_tool.py rk3576 ddrbin_param.txt rk3576_ddr_lp4_2112MHz_lp5_2736MHz_v1.10.bin
+
+
+source build/envsetup.sh;lunch aom3841_u-ap4a-userdebug
+./build.sh -AUCKu
+
+aom3841a1_android-15.0-mid-rkr4_v0.1.5_kernel-6.1.118_rk3576
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7
+
+setenv display0 hdmi0-default
+setenv display1 mipi0-gl0uan
+setenv display2
+
+fw_setenv display0 hdmi0-default
+fw_setenv display1 mipi0-gl0uan
+fw_setenv display2
+
+setenv disable_quiet 1
+
+=> setenv combphy0 sata
+=> setenv combphy1 pcie
+=> setenv combphy1 sata
+=> setenv combphy0 pcie
+
+/proc/device-tree/sata
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$1
+console:/ # lspci
+20:00.0 Class 0604: Device 1d87:3576 (rev 01)
+21:00.0 Class ff00: Device 17cb:0308
+
+./common/build/rockchip/build.sh
+./common/rootdir/init.insmod.sh
+config_mobile_data_capable
+no_config_mobile_networks
+UserManager.DISALLOW_CONFIG_MOBILE_NETWORKS
+packages/apps/Settings/src/com/android/settings/network/telephony/MobileNetworkUtils.java
+packages/apps/Settings/src/com/android/settings/network/telephony/MobileNetworkSettings.java
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+源码下载：
+
+git clone https://gerrit.rock-chips.com:8443/repo-release/tools/repo
+../repo/repo init -u https://gerrit.rock-chips.com:8443/Android_15/manifests -b master -m Android15.xml
+
+源码打包：
+
+tar zcvf android15-rkr4-fromRK-20250911.tar.gz --exclude=".git" --exclude=".repo" Android15/
+
+
+sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/work/rk-all-android15/Android15:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/work/rk-all-android15/Repo-From-Azure-A15:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+
+sudo chown adv:adv -R BSP
+
+repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/android-manifest -b adv-rk-androidV15
+repo sync
+
+source build/envsetup.sh;lunch rk3576_u-ap4a-userdebug
+./build.sh -AUCKu
+
+find . -type d -empty
+find . -type d -empty -not -path './.git*' -exec touch {}/.gitkeep \;
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7
+
+du -ah . | sort -hr
+du -sh * | sort -hr
+
+18G     external
+3.9G    hardware
+2.5G    device
+2.4G    packages
+2.4G    frameworks
+2.1G    cts
+1.6G    kernel-6.1
+1.3G    vendor
+1.1G    tools
+740M    system
+694M    kernel
+127M    u-boot
+
+bsp  u-boot  kernel  tools   vendor  cts   frameworks  packages  device   hardware  system  external
+
+mv  u-boot ../      
+mv  kernel-6.1 ../
+mv  tools ../
+mv  vendor ../ 
+mv  cts ../ 
+mv  frameworks ../ 
+mv  packages ../ 
+mv  device ../
+mv  hardware ../  
+mv  system ../ 
+mv  external ../
+
+1.5G    deqp
+1.3G    swiftshader
+1.2G    google-cloud-java
+892M    cronet
+784M    camera_engine_rkaiq
+595M    chromium-webview
+550M    jackson-databind
+488M    python
+423M    angle
+418M    icu
+411M    vixl
+399M    rust
+380M    tensorflow
+361M    cldr
+266M    mesa3d
+222M    intel-media-driver
+215M    exoplayer
+207M    leakcanary2
+206M    llvm
+200M    sdv
+192M    coreboot
+189M    vboot_reference
+185M    webrtc
+185M    skia
+
+deqp  swiftshader  google-cloud-java  cronet  camera_engine_rkaiq  chromium-webview  jackson-databind  python  angle  icu  vixl  rust  tensorflow  cldr  mesa3d  intel-media-driver   exoplayer  leakcanary2  llvm  sdv  coreboot  vboot_reference   webrtc  skia
+
+external-deqp  external-swiftshader  external-google-cloud-java  external-cronet  external-camera_engine_rkaiq  external-chromium-webview  external-jackson-databind  external-python  external-angle  external-icu  external-vixl  external-rust  external-tensorflow  external-cldr  external-mesa3d  external-intel-media-driver   external-exoplayer  external-leakcanary2  external-llvm  external-sdv  external-coreboot  external-vboot_reference   external-webrtc  external-skia
+
+mv  deqp ../      
+mv  swiftshader ../
+mv  google-cloud-java ../
+mv  cronet ../ 
+mv  camera_engine_rkaiq ../ 
+mv  chromium-webview ../ 
+mv  jackson-databind ../ 
+mv  python ../
+mv  angle ../  
+mv  icu ../ 
+mv  vixl ../
+mv  rust ../      
+mv  tensorflow ../
+mv  cldr ../
+mv  mesa3d ../ 
+mv  intel-media-driver ../ 
+mv  exoplayer ../ 
+mv  leakcanary2 ../ 
+mv  llvm ../
+mv  sdv ../  
+mv  coreboot ../ 
+mv  vboot_reference ../
+mv  webrtc ../ 
+mv  skia ../
+
+
+git init
+git add -f .
+git commit -m "Initial commit"
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/android-manifest
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/bsp
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/u-boot
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/kernel
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/tools
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/vendor
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/cts
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/frameworks
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/packages
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/device
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/hardware
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/system
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-deqp
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-swiftshader
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-google-cloud-java
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-cronet
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-camera_engine_rkaiq
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-chromium-webview
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-jackson-databind
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-python
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-angle
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-icu
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-vixl
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-rust
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-tensorflow
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-cldr
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-mesa3d
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-intel-media-driver
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-exoplayer
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-leakcanary2
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-llvm
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-sdv
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-coreboot
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-vboot_reference
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-webrtc
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-Rockchip-Android15/external-skia
+
+git push origin master:rockchip-androidV15
+git push origin master:adv-rk-androidV15
+
+
+git checkout -b adv-rk-androidV15 --track advantech-azure/adv-rk-androidV15
+
+git checkout -b adv-rk-androidV15 --track origin/adv-rk-androidV15
+
+git branch --set-upstream-to=origin/adv-rk-androidV15 master
+
+
+

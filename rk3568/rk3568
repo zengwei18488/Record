@@ -1,3 +1,187 @@
+AndroidS12 rkr13升级
+
+git checkout -b origin --track origin/branch_name  //此命令用于新建本地分支，并将他关联到远程同名分支
+git push --set-upstream origin branch_name  //此命令用于在远程新建与本地同名分支，并将两者关联
+
+--set-upstream 推送到远端的同时 建立与远端分支的关联关系
+	例：git push  --set-upstream origin master
+git push origin dev:davon  // <本地新建分支名,或是初始master>:<远程仓库的新分支名>
+git push --set-upstream origin dev:davon
+如果当前分支已和远端分支关联后，则可省略分支名和远端名
+
+查找关联关系
+git branch -vv
+git branch -vv <branch-name>  // 查询指定分支
+
+删除远程仓库中的某个分支
+git push <remote>:<branch> // remote是远程仓库的名称, branch是要删除的分支名称。可省略 remote ，则默认使用远程仓库 origin 作为远程仓库
+git push origin --delete feature-branch
+
+git init
+git add -f .
+git commit -m "Initial commit"
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/u-boot
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/kernel
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-camera_engine_rkaiq
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-deqp
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-jackson-databind
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-libabigail
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-swiftshader
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-vixl
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-python
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-icu
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-tensorflow
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-cldr
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-chromium-webview
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-llvm
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/external-llvm-project
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/cts
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/test
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/tools
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/developers
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/system
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/device
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/frameworks
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/packages
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/vendor
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Android/bsp
+
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/u-boot
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/kernel-4.19
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/camera_engine_rkaiq
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/deqp
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/jackson-databind
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/libabigail
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/swiftshader
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/vixl
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/python
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/icu
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/tensorflow
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/cldr
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/chromium-webview
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/llvm
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/external/llvm-project
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/cts
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/test
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/tools
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/developers
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/system
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/device
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/frameworks
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/packages
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android/vendor
+git config --global --add safe.directory /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android
+
+git push origin master:rockchip-androidS12
+git push origin master:rk3568-androidS12-rkr13
+
+git checkout -b rk3568-androidS12-rkr13 --track origin/rk3568-androidS12-rkr13
+
+git push --set-upstream origin rk3568-androidS12-rkr13
+
+git remote rm origin
+
+git clone https://github.com/ADVANTECH-Rockchip/repo.git
+repo/repo init -u https://dev.azure.com/AIM-Linux/RISC-RK3568-Android/_git/android-manifest -b rk3568-androidS12-rkr13
+repo/repo sync -c -f --no-clone-bundle -j`nproc`
+
+docker run --privileged -it --name rk3568-androidS12-rkr13 -v /home/zengwei/work/rk3568/rk3568-androidS12-rkr13/android:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+$ sudo chown adv:adv -R BSP
+$ cd ~/BSP
+source build/envsetup.sh;lunch rk3568_s-userdebug;
+source build/envsetup.sh;lunch rom5880_s-userdebug;
+source build/envsetup.sh;lunch rsb4810_s-userdebug;
+source build/envsetup.sh;lunch kedge350_s-userdebug;
+source build/envsetup.sh;lunch AFEE630_s-userdebug;
+./build.sh -AUCKu;
+./build.sh -AUCKuop
+
+repo/repo status
+sudo git checkout -b local-rkr13 --track advantech-azure/rk3568-androidS12-rkr13
+repo/repo forall -c "sudo git checkout -b local-rkr13 --track advantech-azure/rk3568-androidS12-rkr13"
+
+repo/repo forall -c "git status"
+
+git push advantech-azure HEAD:rk3568-androidS12-rkr13
+
+u-boot porting
+
+kernel porting
+arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dts
+arch/arm64/boot/dts/rockchip/rk3568-evb1-ddr4-v10.dtsi
+arch/arm64/boot/dts/rockchip/rk3568-android.dtsi
+arch/arm64/boot/dts/rockchip/rk3568-evb.dtsi
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+kedge350
+u-boot/arch/arm/dts/rk3568-kedge350a1.dts
+u-boot/configs/rk3568_kedge350a1_defconfig
+u-boot/include/configs/rk3568_kedge350.h
+
+kernel-4.19/arch/arm64/boot/dts/rockchip/rk3568-kedge350-a1.dts
+
+device/rockchip/rk356x/kedge350_s/
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+NPU DEMO
+
+rknn_ssd_demo_Android/
+export LD_LIBRARY_PATH=/data/rknn_ssd_demo_Android/lib:$LD_LIBRARY_PATH;
+cd /data/rknn_ssd_demo_Android/;
+./rknn_ssd_demo model/RK356X/ssd_inception_v2.rknn model/road.bmp
+
+Android Studio NDK及本地编译camke错误
+$ cmake --version
+cmake: error while loading shared libraries: libssl.so.1.1: cannot open shared object file: No such file or directory
+http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/
+sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2.20_amd64.deb
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+eDP
+
+console:/ # dmesg | grep edp
+[    0.303515] rockchip-drm display-subsystem: Linked as a consumer to fe0c0000.edp
+[    0.309178] panel-simple edp-panel: Linked as a consumer to regulator.12
+[    0.309199] panel-simple edp-panel: edp-panel supply vsp not found, using dummy regulator
+[    0.309235] panel-simple edp-panel: Linked as a consumer to regulator.0
+[    0.309248] panel-simple edp-panel: edp-panel supply vsn not found, using dummy regulator
+[    1.076997] rockchip-drm display-subsystem: bound fe0c0000.edp (ops rockchip_dp_component_ops)
+[    1.903400] rockchip-dp fe0c0000.edp: Link Training Clock Recovery success
+[    1.905139] rockchip-dp fe0c0000.edp: Link Training success!
+
+****************************************************************************************************************
+gmac0: ethernet@fe2a0000
+gmac1: ethernet@fe010000
+cat /sys/devices/platform/fe2a0000.ethernet/rgmii_delayline
+cat /sys/devices/platform/fe010000.ethernet/rgmii_delayline
+echo 100 > /sys/devices/platform/fe2a0000.ethernet/phy_lb_scan
+echo 1000 > /sys/devices/platform/fe2a0000.ethernet/phy_lb_scan
+echo 100 > /sys/devices/platform/fe010000.ethernet/phy_lb_scan
+echo 1000 > /sys/devices/platform/fe010000.ethernet/phy_lb_scan
+
+
+21:00.0 Class 0280: 14e4:449d
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
+
+****************************************************************************************************************
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+****************************************************************************************************************
 Debian
 
 $ cd kernel
@@ -151,13 +335,16 @@ error: vendor/rockchip/hardware/interfaces/codec2/Android.bp:1:1: module "c2_ver
 error: hardware/rockchip/librga/Android.bp:18:1: module "gen_rga_api_version": module source path "hardware/rockchip/librga/.git" does not exist
 packages/services/Iwlan/res
 
+开机动画（bootanimation）
+关闭debug.sf.nobootanimation=1
+
 
 ubuntu升级git版本
 sudo apt install software-properties-common
 sudo add-apt-repository ppa:git-core/ppa
 sudo apt update;sudo apt install git
 
-docker run --privileged -it --name rk3568-rsb4810-androidS12 -v /home/zengwei/work/rk3568/docker-bsp:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+docker run --privileged -it --name rk3568-androidS12 -v /media/store/work/rk3568-androidS12:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
 $ sudo chown adv:adv -R BSP
 $ cd ~/BSP
 $ sudo git clone https://github.com/rockchip-linux/repo.git
@@ -176,14 +363,66 @@ export GIT_TRACE=1
 export GIT_CURL_VERBOSE=1
 
 $ ../repo/repo init -u https://dev.azure.com/AIM-Linux/RISC-RK3568-Android/_git/android-manifest -b rk3568-androidS12 -m RK3568_S12_AIV0001.xml
+$ ../repo/repo init -u https://kag-sw.visualstudio.com/RK3568-Android/_git/android-manifest -b rk3568-androidS12
 $ ../repo/repo sync -c -f --no-clone-bundle -j`nproc`
 $ ../repo/repo forall -c git checkout -b local --track advantech-azure/rk3568-androidS12
 
 lrwxrwxrwx 1 zengwei   zengwei      74 Dec  7 17:49 adv_utils.c -> /home/zengwei/work/rk3568/rk3568_linux_u-boot_priv/board/rockchip/advantech/adv_utils.c
+ln -s /home/zengwei/work/rk3568/rk3568_linux_u-boot_priv/board/rockchip/advantech/adv_utils.c adv_utils.c
+
+****************************************************************************************
+dual camera
+
+./hardware/rockchip/camera/etc/camera/camera3_profiles_rk356x.xml
+./out/target/product/rom5880_s/vendor/etc/camera/camera3_profiles.xml
+media-ctl -d /dev/media0 -p
+v4l2-ctl -d /dev/video0 --set-fmt-video=width=3264,height=2448,pixelformat=BG10 --stream-mmap=3 --stream-skip=3 --stream-to=/data/cif2.out
+
+hardware/rockchip/camera/common/platformdata/PlatformData.cpp
+hardware/rockchip/camera/etc/camera/camera3_profiles_rk356x.xml
+
+media/platform/rockchip/cif   VIDEO_ROCKCHIP_CIF,ROCKCHIP_CIF_USE_DUMMY_BUF,ROCKCHIP_CIF_WORKMODE_PINGPONG
+
+camera相关代码
+CameraHal: sdk/hardware/rockchip/camera
+aiq: sdk/external/camera_engine_rkaiq
+kernel: drivers/media/platform/rockchip/isp
+kernel: drivers/media/platform/rockchip/cif
+kernel: include/uapi/linux/ rk-camera-module.h/ rkcif-config.h/ 
+        rk_vcm_head.h/ rkisp1-config.h rkisp2-config.h/ rkisp21-config.h/ rk-led-flash.h
+kernel: drivers/iommu/rockchip-iommu.c include/soc/rockchip/rockchip_iommu.h drivers/media/i2c
+
+水印
+./hardware/interfaces/camera/device/3.4/default/Android.bp:        cameraSupportOSD: {
+./build/make/core/soong_config.mk:$(call add_json_bool, CameraSupportOSD, 		 $(filter true,$(CAMERA_SUPPORT_OSD)))
+./build/soong/android/variable.go:		CameraSupportOSD struct {
+./build/soong/android/variable.go:	CameraSupportOSD             *bool `json:",omitempty"`
+./out/soong/soong.variables:    "CameraSupportOSD": false,
+
+************************************************************************************
+dual channel lvds uboot logo
+drivers/pwm/rk_pwm.c
+"drivers/gpu/drm/panel/panel-simple.c"
+static const struct drm_display_mode innolux_n116bge_mode = {
+        .clock = 76420,
+        .hdisplay = 1366,
+        .hsync_start = 1366 + 136,
+        .hsync_end = 1366 + 136 + 30,
+        .htotal = 1366 + 136 + 30 + 60,
+        .vdisplay = 768,
+        .vsync_start = 768 + 8,
+        .vsync_end = 768 + 8 + 12,
+        .vtotal = 768 + 8 + 12 + 12,
+        .vrefresh = 60,
+        .flags = DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
+};
+
 
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
 source build/envsetup.sh;lunch rsb4810_s-userdebug;
+source build/envsetup.sh;lunch rom5880_s-userdebug;
+source build/envsetup.sh;lunch rk3568_s-userdebug;
 ./build.sh -AUCKu
 ./build.sh -AUCKuop
 
@@ -197,6 +436,37 @@ make ARCH=arm64 rk3568_adv_defconfig
 make ARCH=arm64 rk3568-rsb4810-a2.img -j12
 
 kernel/configs/android-4.19/android-base-conditional.xml
+
+scp -i /home/zengwei/.ssh/RISCSW-AIM-Linux-Ubuntu2004-KS01_key.pem azureuser@172.183.42.172:/home/azureuser/zw/u22.04-rkabv14_latest.tar .
+
+sudo azcopy copy --recursive "rk3568-android12" "https://riscsw.blob.core.windows.net/android-prebuilts/rk3568-android12/?sp=racwdli&st=2023-06-29T07:16:02Z&se=2028-11-01T15:16:02Z&sv=2022-11-02&sr=c&sig=5CsR8kCKdWSrMtqVa%2FxYg2K%2F3CGIdphW43muFH8qXrk%3D"
+
+三显示(同显)
+setenv display0 edp-1366x768
+setenv display1 lvds-g070vw01
+setenv display2 hdmi-default
+setenv prmry_screen edp
+
+build.prop里面添加,强制指定主显：
+vendor.hwc.device.primary=eDP
+setprop vendor.hwc.device.primary eDP
+HDMI-A  DSI  DP
+setprop 属性后只要重启hwc服务即可，kill `pgrep composer`
+
+am start -n com.android.soundrecorder/.SoundRecorder
+
+调试过程
+device/rockchip/rk356x/rsb4810_s/rsb4810_s.mk
++PRODUCT_PROPERTY_OVERRIDES += ro.sf.lcd_density=240
++PRODUCT_PROPERTY_OVERRIDES += vendor.gralloc.no_afbc_for_fb_target_layer=1
++PRODUCT_PROPERTY_OVERRIDES += persist.sys.rotation.efull=true
+
+device/rockchip/rk356x/rk356x.prop
++vendor.hwc.device.primary=eDP
+
+device/rockchip/common/display_settings.xml
++  forcedDensity="160"  />
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 arch/arm/mach-rockchip/rk3568/Kconfig
 configs/rk3568_rsb4810a2_defconfig
@@ -212,6 +482,7 @@ rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.11.bin
 rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.14.bin
 ./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.11.bin
 ./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.14.bin
+./ddrbin_tool rk3568 ddrbin_param.txt rk3568_ddr_1560MHz_v1.19.bin
 
  MINOR=1
  [CODE471_OPTION]
@@ -381,6 +652,12 @@ git remote add origin https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Andr
 
 git push --set-upstream origin rk3568-androidS12
 
+git remote rm origin
+git remote add origin KAG-SW@vs-ssh.visualstudio.com:v3/KAG-SW/RK3568-Android/android-bsp
+KAG-SW@vs-ssh.visualstudio.com:v3/KAG-SW/RK3568-Android/android-uboot
+KAG-SW@vs-ssh.visualstudio.com:v3/KAG-SW/RK3568-Android/android-kernel
+
+
 android-11.0-mid-rkr10
 
 source build/envsetup.sh;lunch rk3568_r-userdebug;./build.sh -AUCKu
@@ -400,3 +677,22 @@ git tag -d RK3568_S12_AIV0001
 git push origin :refs/tags/RK3568_S12_AIV0001
 git tag -a v0.1.2 -m “0.1.2版本”
 git push origin --tags
+
+busybox route
+busybox ping 192.168.2.11 -I eth1
+查看当前的路由表：使用 ip route show 命令查看当前的路由表信息。
+ip route show
+
+添加新的路由表项：使用 ip route add 命令添加一个新的路由表项。
+ip route add <destination_network> via <gateway> dev <interface>
+
+其中 <destination_network> 是目标网络的 IP 地址或子网，<gateway> 是要设置的网关 IP 地址，<interface> 是网络接口（如 wlan0、eth0）。
+例如，要将所有流量发送到 IP 地址为 192.168.1.0/24 的目标网络，通过网关 192.168.0.1，并使用 wlan0 接口，可以执行以下命令：
+ip route add 192.168.2.0/24 via 192.168.2.1 dev eth1
+
+删除路由表项：如果想要删除现有的路由表项，可以使用 ip route del 命令。
+ip route del <destination_network> via <gateway>
+
+例如，要删除目标网络为 192.168.1.0/24 的路由表项，可以执行以下命令：
+ip route del 192.168.1.0/24
+

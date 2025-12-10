@@ -1,0 +1,123 @@
+
+dialog.getButton(DialogInterface.BUTTON_POSITIVE).performClick();
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+AndroidS12
+
+git init
+git checkout -b rk3399-androidS12
+git add -f .
+git commit -m "Initial commit"
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-uboot
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-kernel
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-cts
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-test
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-tools
+git remote add origin https://AIM-Cocreation@dev.azure.com/AIM-Cocreation/RK3399-Android/_git/android-s12-bsp-tools
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-developers
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-system
+
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-device
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-frameworks
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Cocreation/RK3399-Android/android-s12-bsp-packages
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp-vendor
+git remote add origin git@ssh.dev.azure.com:v3/KAG-SW/RK3399-Android/android-s12-bsp
+
+git remote rm origin
+
+git push --set-upstream origin rk3399-androidS12
+
+prmry_screen=edp-1366x768 extend_screen=hdmi-default
+
+image烧录，parameter.txt随时注意更新更新
+
+docker run --privileged -it --name rk3399-androidS12 -v /home/zengwei/data_8T2/work/rk3399-androidS12/rk3399-androidS12-Git:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+$ sudo chown adv:adv -R BSP
+$ cd ~/BSP
+
+source build/envsetup.sh;lunch rk3399_Android12-userdebug
+source build/envsetup.sh;lunch rk3568_s-userdebug
+./build.sh -AUCKu
+
+source build/envsetup.sh;lunch rsb3710_Android12-userdebug
+source build/envsetup.sh;lunch rsb4710_Android12-userdebug
+source build/envsetup.sh;lunch ppc1xx_Android12-userdebug
+./build.sh -AUCKu
+
+uboot
+cd uboot
+./make.sh rk3399_rsb3710a2_2G
+
+kernel 
+
+make ARCH=arm64 rockchip_defconfig android-11.config;
+
+make ARCH=arm64 BOOT_IMG=..rockdev/Image-rsb3710_Android12/boot.img rk3399-rsb3710-a2.img -j24
+
+-----------------------------------------------------------------------------------------
+CONFIG_ARCH_ADVANTECH=y
+#
+# Bluetooth device drivers
+#
+CONFIG_BT_RTKBTUSB=y
+
+Kernl\frameworks\hardware\devices
+
+wifi 驱动打印日志
+
+注释 CONFIG_RTW_DEBUG
+方式二：echo 0 > /sys/module/8852be/parameters/rtw_drv_log_level
+方式三：修改驱动源码把rtw_drv_log_level的默认值改0
+
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem external-rk3399-AndroidS12-20230522.tar.gz azureuser@20.212.36.153:/home/azureuser
+scp -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu1804-KS01_key.pem prebuilts-rk3399-AndroidS12-20230518.tar.gz azureuser@20.212.36.153:/home/azureuser
+
+sudo azcopy copy --recursive "rk3399-android12" "https://riscsw.blob.core.windows.net/android-prebuilts/rk3399-android12/?sp=racwdli&st=2023-06-29T07:16:02Z&se=2028-11-01T15:16:02Z&sv=2022-11-02&sr=c&sig=5CsR8kCKdWSrMtqVa%2FxYg2K%2F3CGIdphW43muFH8qXrk%3D"
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+vendor属性本身重启就不会保存，这不是问题。
+你如果只是调试的话，setprop 属性后只要重启hwc服务即可，kill `pgrep composer`
+setprop vendor.hwc.device.primary HDMI-A-1
+setprop vendor.hwc.device.extend DSI
+
+********************************************************************************************
+poweroff/reboot debug log
+
+echo 1 > /sys/module/kernel/parameters/initcall_debug
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+HDMI2.0 4Kx2Kp 60Hz:DATA Mask Test Fail issue for 新旧料
+
+cat /sys/kernel/debug/dw-hdmi/phy
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&&&&&&&&&&&&&&&&&&&&&&&
+
+eGTouch 支持
+
+1、CONFIG_TOUCHSCREEN_USB_COMPOSITE 去除
+Device Drivers->Input device support->Touchscreens->USB Touchscreen Driver
+2、eGTouchD eCalib（校准程序）放在/usr/bin
+3、eGTouchL.ini 放在/etc
+4、修改/etc/rc.local，添加/usr/bin/eGTouchD
+5、52-egalax-virtual.conf放在/usr/share/X11/xorg.conf.d目录
+
+
+调试lvds
+
+//setenv use_env_screen 1
+setenv prmry_screen hdmi-default
+setenv extend_screen lvds-am1024600k2tmqw
+
+1、excel中调试V、H，调试DSI Clock得到LVDS CLOCK
+2、注意LVDS数据格式是VESA还是JEIDA标准对应不同的clock
+3、soucre的值是位置倒置填入
+
+
+gpio-keys
+
+./arch/arm64/boot/dts/rockchip/rk3399-sapphire-excavator-linux-for-rk1808-cascade.dts
+
+./include/dt-bindings/input/rk-input.h

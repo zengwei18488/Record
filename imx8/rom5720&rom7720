@@ -1,3 +1,5 @@
+$ make clobber
+"编译要带有.git目录，注意是否需要export LC_ALL=C"
 $ make bootloader -j8 
 $ make bootimage -j8
 $ make dtboimage -j8
@@ -5,7 +7,7 @@ $ make -j8
 
 drivers/gpu/drm/panel/panel-simple.c  公板编译问题
 
-source build/envsetup.sh;lunch 40;make bootloader -j8;make bootimage -j8;make dtboimage -j8;make -j8
+source build/envsetup.sh;lunch rom5720_a1-userdebug;make bootloader -j8;make bootimage -j8;make dtboimage -j8;make -j8
 
 https://source.android.com/devices/architecture/treble
 
@@ -15,6 +17,10 @@ docker run -it --name imx8-android9-build -v /home/adv/imx8:/home/adv:rw advrisc
 
 "Agent went offline during the build"
 
+sudo docker run -it --name imx8-android9-build -v /home/zengwei/work/imx8-android9-newest:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+sudo docker run -it --name imx8-android9-build -v /home/zengwei/data_8T2/imx8-android9-newest:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+ssh -i ~/.ssh/RISCSW-AIM-Linux-Ubuntu2004-KS01_key.pem azureuser@172.183.42.172
+scp -i /home/zengwei/.ssh/RISCSW-AIM-Linux-Ubuntu2004-KS01_key.pem azureuser@172.183.42.172:/mnt/build/build_imx8_risc/imx8ABV9006_2024-04-25/out.tar.gz .
 
 ROM5720  i.MX8M Quad
 ROM5721  i.MX8M Mini
@@ -77,6 +83,21 @@ QCA6174
 ./frameworks/opt/net/wifi/libwifi_hal/hal_tool.cpp
 ./frameworks/opt/net/wifi/libwifi_hal/Android.mk
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+am start -a android.settings.SETTINGS
+input keyevent KEYCODE_BACK
+
+echo performance > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+echo performance > /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+echo performance > /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
+echo performance > /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
+echo 0 > /sys/devices/platform/busfreq/enable
+
+cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+cat /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor
+cat /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor
+cat /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor
+cat /sys/devices/platform/busfreq/enable
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 

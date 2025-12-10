@@ -1,0 +1,268 @@
+烧录SPL或u-boot.imx到sdcard
+
+1 off  2 on  强制从核心版sd卡启动
+
+清除环境变量
+env default -a
+saveenv
+reset
+
+./flash_erase /dev/mtd0 0 192
+dd if=./SPL of=/dev/mtd0 bs=512 seek=2;sync
+
+cp ./include/configs/mx6ebcrc01.h  ./include/configs/mx6ebcrc05.h
+cp ./configs/mx6soloebcrc01a1_512M_defconfig  ./configs/mx6soloebcrc05a1_512M_defconfig
+cp ./board/freescale/mx6advantech/mx6soloebcrc01a1_2x_MT41K128M16JT-125_1410022609-01.cfg ./board/freescale/mx6advantech/mx6soloebcrc05a1_2x_MT41K128M16JT-125_1410022609-01.cfg
+
+./arch/arm/cpu/armv7/mx6/Kconfig
+./board/freescale/mx6advantech/Kconfig
+
+./.config.old:# CONFIG_TARGET_MX6EBCRC01A1_512M is not set
+./arch/arm/cpu/armv7/mx6/Kconfig:config TARGET_MX6EBCRC01A1_512M
+./board/freescale/mx6advantech/Kconfig:if TARGET_MX6EBCRC01A1_512M
+./include/configs/mx6ebcrc01.h:#if defined(CONFIG_TARGET_MX6EBCRC01A1_512M)
+./.config:CONFIG_TARGET_MX6EBCRC01A1_512M=y
+./configs/mx6soloebcrc01a1_512M_defconfig:CONFIG_TARGET_MX6EBCRC01A1_512M=y
+
+
+source/linux-4.14.290/arch/arm/boot/dts/Makefile
+ source/linux-4.14.290/arch/arm/boot/dts/imx6dl-ebcrc01-a1.dts                           |   583 ++
+ source/linux-4.14.290/arch/arm/boot/dts/imx6qdl-advantech.dtsi                          |   865 +++
+ source/linux-4.14.290/arch/arm/configs/imx_v7_adv_ebcrc01_NoPcieNet_defconfig           |   435 ++
+ source/linux-4.14.290/arch/arm/configs/imx_v7_adv_ebcrc01_defconfig                     |   435 ++
+ ./arch/arm/mach-imx/Kconfig
+/arch/arm/boot/dts/imx6dl-ebcrc05-a1.dts
+
+sudo dd if=./u-boot_crc.bin.crc of=/dev/sdd bs=512 seek=4096
+sudo dd if=./u-boot_crc.bin of=/dev/sdd bs=512 seek=4097
+sudo cp zImage /media/zengwei/BOOT/
+sudo cp imx6dl-ebcrc05-a1.dtb /media/zengwei/BOOT/
+sudo rm /media/zengwei/BOOT/imx6dl-ebcrc01-a1.dtb
+
+
+./linux-4.14.290/drivers/net/ethernet/realtek/r8168-8.053.00/8119.cfg
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/home/yanwei/link/ebc_rc01/source/linux-4.14.290
+
+制作SD启动卡：
+sudo dd if=./rc01-sd-img-0.0.0.3.img of=/dev/sdx bs=1M
+
+source /opt/fsl-imx-x11/4.1.15-2.0.0/environment-setup-cortexa9hf-neon-poky-linux-gnueabi
+
+make imx_v7_adv_ebcrc01_defconfig
+make imx_v7_adv_ebcrc05_NoPcieNet_defconfig
+make imx_v7_adv_ebcrc05_defconfig
+make -j4 imx6dl-ebcrc05-a1.dtb
+make -j4 zImage
+make -j4 imx6dl-ebcrc01-a1.dtb
+make -j4 modules
+
+make INSTALL_MOD_PATH=/home/yanwei/link/ebc_rc01/source/modules/4.14.290 modules_install
+make modules_install
+
+sudo losetup -fP rc05-sd-img-0.0.0.1.img 
+sudo losetup --find --show rc05-sd-img-0.0.0.1.img
+
+sudo mount /dev/loop27p1 partition1
+sudo mount /dev/loop27p2 partition2
+sudo mount /dev/loop27p3 partition3
+sudo mount /dev/loop27p4 partition4
+
+sudo umount /dev/loop27p1
+sudo umount /dev/loop27p2
+sudo umount /dev/loop27p3
+sudo umount /dev/loop27p4
+
+sudo losetup -d /dev/loop27
+sudo losetup -d /dev/loop28
+sudo losetup -d /dev/loop29
+sudo losetup -d /dev/loop30
+
+sudo cp ~/data_8T2/work/rc05/image/imx6dl-ebcrc05-a1.dtb .
+sudo cp ~/data_8T2/work/rc05/image/zImage .
+
+sudo dd if=./rc01-sd-img-0.0.0.3.img of=/dev/sdx bs=1M
+sudo dd if=./rc05-sd-img-0.0.0.1.img of=/dev/sdx bs=1M
+dd if=/mnt/usb/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M
+
+dd if=/mnt/usb/rc05/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M;sync
+
+cp /mnt/usb/rc05/*.tar.gz .
+sync
+tar zxvf boot_count.tar.gz
+tar zxvf BurnIn-rc05.tar.gz
+tar zxvf factory-all-rc05.tar.gz
+tar zxvf tools-rc05.tar.gz
+ls -l BurnIn/ factory-all/test/3.diag_all/
+sync
+
+
+dd if=/mnt/usb/rc01-sd-img-0.0.0.3.img of=/dev/mmcblk0 bs=1M
+
+sudo dd if=./u-boot_crc.bin.crc of=./rc05-sd-img-0.0.0.1.img bs=512 seek=4096 conv=notrunc
+sudo dd if=./u-boot_crc.bin of=./rc05-sd-img-0.0.0.1.img bs=512 seek=4097 conv=notrunc
+
+/etc/modprobe.d/fbdev-blacklist.conf
+
+uboot：
+make mx6soloebcrc01a1_512M_defconfig
+make mx6soloebcrc05a1_512M_defconfig
+make -j4
+make -j4 u-boot.imx
+
+dd if=/mnt/usb/u-boot_crc.bin.crc of=/dev/mmcblk2 bs=512 seek=4096
+dd if=/mnt/usb/u-boot_crc.bin of=/dev/mmcblk2 bs=512 seek=4097
+dd if=./u-boot_crc.bin.crc of=/HD/dataHD1/FTP/ftp/EBC-RC01_Factory/rc01-sd-img-0.0.0.3.img bs=512 seek=4096 conv=notrunc
+
+
+SPL
+
+          make mx6qrsb6410a1_2G_defconfig
+          make u-boot.imx -j4
+          sudo dd if=u-boot.imx of=/dev/sdX bs=512 seek=2;sync    (sdX: your SD Card)
+
+		  製作SPL，由SD卡開機後，燒至SPI上:
+
+          make mx6qrsb6410a1_2G_defconfig
+          make -j4
+		  
+          [On RSB-6410]
+          flash_erase /dev/mtd0 0 192
+          dd if=[your path]/SPL of=/dev/mtd0 bs=512 seek=2;sync
+          
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+cd /root/factory-all/flash_rc01
+./1.flash_eeprom.sh AKS0213567
+./1.flash_eeprom.sh AKS0201354
+
+AKS0252103 CC:82:7F:8D:66:17 
+AKS0252104 CC:82:7F:8D:66:1F
+AKS0252107 CC:82:7F:8D:69:DE
+AKS0252098 CC:82:7F:8D:66:0C
+
+ic-test -s "AKS0252104" --version-major 2 --version-minor 11 -m 'ADVANTECH'
+
+./2.flash_fw.sh c4:00:ad:cd:44:1e c4:00:ad:cd:44:1f
+./2.flash_fw.sh 00:04:9f:01:30:e0 00:04:9f:01:30:e1
+
+echo_yellow "2.flash cp2104 fw"
+cd cp2104
+ret=$(./main)
+echo $ret | egrep -w "ok|already"
+judge $? "flash cp2104" "$ret"
+echo_yellow end______________________
+cd ..
+
+stty -F /dev/ttyUSB0 speed 115200 ignbrk -brkint -icrnl -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke
+stty -F /dev/ttymxc0 speed 115200 ignbrk -brkint -icrnl -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke
+
+stty -F /dev/ttymxc0 speed
+stty -F /dev/ttymxc0 115200
+stty -F /dev/ttymxc0 9600
+
+stty -F /dev/ttymxc0 speed 9600 cs8 -cstopb -parenb
+cat < /dev/ttymxc0 &
+echo -n "$" > /dev/ttymxc0
+echo -n "%" > /dev/ttymxc0
+echo -n "*" > /dev/ttymxc0
+
+source /opt/fsl-imx-x11/4.1.15-2.0.0/environment-setup-cortexa9hf-neon-poky-linux-gnueabi
+/home/yanwei/risc-tools
+
+~/link/ebc_rc01/source/RISC_tools_source/sandisk
+rm configure
+source /opt/fsl-imx-x11/4.1.15-2.0.0/environment-setup-cortexa9hf-neon-poky-linux-gnueabi
+autoconf
+./configure --host=arm32
+
+CP210x_CP2105_VERSION
+
+ESS_CP2104_PORT
+
+/sys/fsl_otp/HW_OCOTP_MAC0
+
+
+//
+// CP2105 Dual Port Config Structure
+//
+typedef struct
+{
+        WORD Mode;                      // Push-Pull = 1, Open-Drain = 0
+        WORD Reset_Latch;       // Logic High = 1, Logic Low = =0
+        WORD Suspend_Latch;     // Logic High = 1, Logic Low = =0
+        unsigned char EnhancedFxn_ECI;
+        unsigned char EnhancedFxn_SCI;
+        unsigned char EnhancedFxn_Device;
+} DUAL_PORT_CONFIG;
+
+
+//
+// CP2103/4 Port Config Structure
+//
+typedef struct
+{
+        WORD Mode;                      // Push-Pull = 1, Open-Drain = 0
+        WORD Reset_Latch;       // Logic High = 1, Logic Low = =0
+        WORD Suspend_Latch;     // Logic High = 1, Logic Low = =0
+        unsigned char EnhancedFxn;
+} PORT_CONFIG;
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+root@spreev2:~# ./memtool -32 0x20ca010 1
+E
+Reading 0x1 count starting at address 0x020CA010
+
+0x020CA010:  10020207
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+请确认ERP功能：
+1.PMIC PWRON  
+2.ERP enable/disable (MCU REG 0x10)： 0x01 enable
+3.切换ERP enable/disable的时间(MCU REG 0x11)：0x0C  (12S)
+4.关机状态下进入ERP所需要的时间(MCU REG 0x12)：0x0F  (15S)
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+/etc/network/interfaces.d/eth0.conf
+
+iface eth0 inet static
+address 192.168.0.10
+netmask 255.255.255.0
+gateway 192.168.0.1
+
+
+systemctl status dhclient
+systemctl status NetworkManager
+systemctl restart NetworkManager
+
+
+systemctl  enable  bootcount.service
+systemctl  disable  bootcount.service
+
+
+root@spreev2:~# ./mdio-tool w eth0 0x1f 0xd08
+root@spreev2:~# ./mdio-tool r eth0 0x11
+
+
+watchdog
+
+WDT_32.out 100 100 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

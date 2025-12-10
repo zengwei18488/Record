@@ -1,4 +1,43 @@
 
+更新usb设备id
+
+sudo modprobe option
+sudo echo 1508 1001 > /sys/bus/usb-serial/drivers/option1/new_id
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Yocto 4.0  版本: 09.01.00.001 发布日期: 31 十月 2023 
+
+docker run -it --name am335x-TI-yocto4.0 -v /media/store/work/am335x-09-y4.0:/home/adv/TI:rw advrisc/u18.04-imx8lbv1 /bin/bash
+
+sudo apt-get -f -y install \
+    git build-essential diffstat texinfo gawk chrpath socat doxygen \
+    dos2unix python3 bison flex libssl-dev u-boot-tools mono-devel \
+    mono-complete curl python3-distutils repo pseudo python3-sphinx \
+    g++-multilib libc6-dev-i386 jq git-lfs pigz zstd liblz4-tool \
+    cpio file zstd
+
+u-boot编译：
+export PATH=/home/adv/TI/external-toolchain-dir/arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-linux-gnueabihf/bin/:$PATH
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_Y4.0 am335x_epcr3220a1_1G_defconfig
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_Y4.0 
+
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_Y4.0 am335x_evm_defconfig
+
+kernel编译：
+export PATH=/home/adv/TI/linux-devkit/sysroots/x86_64-arago-linux/usr/bin:$PATH
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- am335x-adv_defconfig
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- zImage
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+https://www.ti.com.cn/tool/cn/download/PROCESSOR-SDK-LINUX-AM335X
+https://software-dl.ti.com/processor-sdk-linux/esd/AM335X/08_02_00_24/exports/docs/linux/Overview_Building_the_SDK.html#overview-building-the-sdk
 有一个PRUSS（Programmable Real time Unit Subsystem），可独立编程实现一些实时性要求高的个性化需求，实现产品的差异化
 
 1、Code
