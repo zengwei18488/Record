@@ -7,6 +7,10 @@ env default -a
 saveenv
 reset
 
+
+cp /mnt/usb/rc05/SPL .
+cp /mnt/usb/rc05/tools/flash_erase .
+
 ./flash_erase /dev/mtd0 0 192
 dd if=./SPL of=/dev/mtd0 bs=512 seek=2;sync
 
@@ -87,6 +91,8 @@ sudo dd if=./rc05-sd-img-0.0.0.1.img of=/dev/sdx bs=1M
 dd if=/mnt/usb/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M
 
 dd if=/mnt/usb/rc05/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M;sync
+
+date -s "2025-12-25 16:41:00"
 
 cp /mnt/usb/rc05/*.tar.gz .
 sync

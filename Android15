@@ -1,3 +1,9 @@
+./external/camera_engine_rkaiq/ipc/socket_client.c
+kernel-6.1/drivers/media/platform/rockchip/isp/capture.h
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
 BSP Launcher
 
 https://ess-kms.edgecenter.io/en/xdept/internal/BSP_Launcher/scripts-user-manual
@@ -52,7 +58,7 @@ git merge android-15.0-mid-rkr4_develop
 git push origin android-15.0-mid-rkr4:android-15.0-mid-rkr4
 
 
-sudo docker run -itd --name local_rk_androidV15_risc -v /home/zengwei/data_8T2/work/BSP-Launcher/Rockchip:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/data_8T2/work/BSP-Launcher/Rockchip:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
 
 wget -c https://riscsw.blob.core.windows.net/android-prebuilts/rk-all-android15/prebuilts-rk-androidV15-rkr4-20250926.tar.gz?snapshot=2025-11-25T07:33:05.1128027Z
 
