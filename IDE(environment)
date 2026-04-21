@@ -46,6 +46,12 @@ sshfs zengwei@172.21.170.48:/home/zengwei/work/rk-all-android14 /home/zengwei/da
 
 sshfs zengwei@172.21.170.48:/home/zengwei/work/rk-all-android15 /home/zengwei/data_8T2/work/48-android15
 
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk-all-android15/Repo /home/zengwei/data_8T2/work/48-android15
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3399/debian10 /home/zengwei/data_8T2/work/rk3399-debian12-48
+
+sshfs zengwei@172.21.170.48:/home/zengwei/work/rk3568/rk3568-debian12 /home/zengwei/data_8T2/work/rk3568-debian12
+
 sshfs aka@172.21.171.106:/home/aka/work/code/rk3588/debian /home/zengwei/data_8T2/work/rk3588-debian
 
 sshfs zhihao@172.21.170.50:/home/zhihao/zhihao/rk3588_linux /home/zengwei/data_8T2/work/rk3588-debian12

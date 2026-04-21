@@ -1,0 +1,279 @@
+https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Linux/_git/manifest
+default.xml
+debian12-linux6.1-v130
+
+
+$ cd ~/BSP
+$ git clone https://github.com/ADVANTECH-Rockchip/repo.git
+$ mkdir debian12-linux6.1-v130
+$ cd debian12-linux6.1-v130
+$ git config --global user.name "Your Name"
+$ git config --global user.email you@example.com
+$ ../repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Linux/_git/manifest -b debian12-linux6.1-v130 -m default.xml
+$ ../repo/repo sync
+$ ../repo/repo forall -c git checkout -b local --track advantech-azure/debian12-linux6.1-v130
+
+sudo docker run -it --name rk356x_debian12-linux6.1-v130 -v /home/zengwei/work/rk3568/rk3568-debian12:/home/adv/BSP:rw --privileged advrisc/u20.04-rklbv1:latest /bin/bash
+
+./build.sh rk3568_afee630a1_defconfig
+./build.sh uboot
+./build.sh kernel
+
+rm buildroot/output/rk3568_afee630a1/rockchip_rk3568_recovery -rf
+sudo apt-get install gettext -y
+./build.sh recovery
+
+sudo dpkg -i debian/ubuntu-build-service/packages/*
+sudo apt-get install -f -y
+sudo apt-get update
+sudo apt-get install binfmt-support qemu-user-static --reinstall
+sudo update-binfmts --enable qemu-aarch64
+./build.sh debian
+
+./build.sh firmware
+
+
+sudo apt-get remove live-build
+git clone https://salsa.debian.org/live-team/live-build.git --depth 1 -b debian/1%20230131
+cd live-build
+rm -rf manpages/po/
+sudo make install -j8
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+https://github.com/microsoft/sbom-tool
+https://github.com/aquasecurity/trivy
+https://github.com/anchore/syft
+
+生成标准 CycloneDX 格式（推荐，兼容性最好）：
+sudo syft dir:/ -o cyclonedx-json > my_debian12_sbom.json
+
+生成人类可读的表格简报（快速查看）：
+sudo syft dir:/ -o table
+
+
+ 扫描 SBOM 并显示高危漏洞（High/Critical）：
+trivy sbom --severity HIGH,CRITICAL my_debian12_sbom.json
+
+ 生成详细的文本报告并保存到文件：
+trivy sbom -o cve_report.txt my_debian12_sbom.json
+
+# 确保你已经安装了 trivy，运行以下命令生成网页版报告
+TRIVY_DB_REPOSITORY=public.ecr.aws/aquasecurity/trivy-db trivy sbom --format template --template "@contrib/html.tpl" -o cve_report.html my_debian12_sbom.json
+trivy sbom -o cve_report.txt my_debian12_sbom.json
+
+trivy sbom --format template --template "@html.tpl" -o cve_report.html my_debian12_sbom.json
+
+trivy sbom --severity CRITICAL,HIGH,MEDIUM,LOW -o cve_report.txt my_debian12_sbom.json
+
+--skip-db-update
+
+进阶技巧：直接扫描当前系统（不经过中间文件）
+如果你不需要保留 SBOM 文件，只想快速看当前 Debian 12 的漏洞，Trivy 可以直接扫描文件系统：
+# 直接扫描当前系统根目录
+sudo trivy fs / --severity HIGH,CRITICAL
+
+一行命令完成“生成 SBOM 并立即查看漏洞汇总”
+syft debian:12 -o cyclonedx-json | trivy sbom /dev/stdin
+
+
+严重程度解读 (Severity)
+等级	  颜色/标识	 含义	                                                                                                     处理建议
+CRITICAL 最严重	           攻击者通常可以远程执行代码，且无需用户交互。	                  必须立即修复。这是最高优先级的安全隐患。
+HIGH	严重	           可能导致权限提升或敏感数据泄露，利用难度一般。	     尽快修复。在处理完 CRITICAL 之后立即处理。
+MEDIUM	中等/警告         利用条件较复杂，或者只能造成局部破坏（如拒绝服务攻击）。	建议改进。在维护周期（如每月更新）内处理。
+LOW	低危/提醒         极难利用，或仅泄露非敏感信息。	                                                        忽略或延迟处理。通常不作为紧急修复目标。
+
+
+***********************************************************************************************************
+openssl ciphers -v | grep TLSv1.3
+grep -E "CipherString|MinProtocol" /etc/ssl/openssl.cnf
+
+在 Debian 12 的默认配置中，你应该能在文件末尾看到类似以下内容：
+CipherString = DEFAULT@SECLEVEL=2
+MinProtocol = TLSv1.2
+
+openssl ciphers -s -v 'DEFAULT@SECLEVEL=2'
+
+Debian 12 默认选择 Level 2 是为了强制执行现代安全标准：
+安全等级 	安全强度（折合对称密钥）	主要限制
+Level 0	        0 bits	                无限制，允许任何加密（包括不加密）。
+Level 1	        80 bits	                允许 RSA 1024位，允许 SHA1。
+Level 2	        112 bits	Debian 12 默认值。 要求 RSA大于等于2048位，禁用 SHA1，禁用 TLS 1.1 及以下版本。
+Level 3	        128 bits	要求 RSA大于等于3072位，仅允许支持前向安全性 (PFS) 的套件。
+
+cat /etc/ssl/openssl.cnf | grep SECLEVEL
+[system_default_sect]
+CipherString = DEFAULT@SECLEVEL=2
+MinProtocol = TLSv1.2
+
+--- a/apps/openssl.cnf
++++ b/apps/openssl.cnf
+@@ -1,6 +1,13 @@
+ #
+ # OpenSSL example configuration file.
+ # This is mostly being used for generation of certificate requests.
++
++openssl_conf = default_conf
++
++[default_conf]
++ssl_conf = ssl_module
++
++[ssl_module]
++system_default = system_default_sect
++
++[system_default_sect]
++CipherString = DEFAULT@SECLEVEL=2
++MinProtocol = TLSv1.2
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/AFE-E630/IEC62443/secure_tls.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/AFE-E630/IEC62443/cr101-pwd.sh .
+
+CR 1.01
+
+用户账户管理：
+不要使用默认的 rockchip 或 linaro 账户。应为每个操作员创建独立账户。
+强制 GUI 登录框：
+在 /etc/lightdm/lightdm.conf 中，确保禁用自动登录（Autologin）：
+ini
+[Seat:*]
+autologin-user=  # 留空
+
+禁用 LXDM 的自动登录
+如果你想继续使用 LXDM（这在 RK3568 的轻量级镜像中很常见），你需要修改 LXDM 的配置文件而不是 LightDM：
+文件路径：/etc/lxdm/lxdm.conf
+修改内容：
+找到 [base] 部分，确保 autologin 行被注释掉：
+ini
+[base]
+## 注释掉下面这行
+# autologin=rockchip
+
+如果合规要求允许用户通过 SSH 登录，您需要同步加固 SSH：
+禁用 Root 登录：在 /etc/ssh/sshd_config 中设置 PermitRootLogin no。
+强制强密码/密钥：配合 SECLEVEL 2 的要求，确保 SSH 密钥交换算法也是安全的。
+
+cr101 **************************************************************
+apt install -y libpam-pwquality
+
+cr101-pwd.sh
+
+#!/bin/bash
+# Debian 12 IEC 62443 Hardening Script
+
+# 2. Configure Password Complexity (IEC 62443 compliant)
+# minlen=12, minclass=4 (Upper, Lower, Digit, Special)
+CONF_PW="/etc/security/pwquality.conf"
+sudo sed -i 's/^# minlen =.*/minlen = 12/' $CONF_PW
+sudo sed -i 's/^# minclass =.*/minclass = 4/' $CONF_PW
+sudo sed -i 's/^# retry =.*/retry = 3/' $CONF_PW
+
+# 3. Add Account Lockout (Prevent Brute Force)
+# Lock for 30 mins after 5 failed attempts
+AUTH_PAM="/etc/pam.d/common-auth"
+if ! grep -q "pam_faillock.so" "$AUTH_PAM"; then
+    sudo sed -i '1i auth requisite pam_faillock.so preauth' "$AUTH_PAM"
+    echo "auth [default=die] pam_faillock.so authfail" | sudo tee -a "$AUTH_PAM"
+    echo "auth sufficient pam_faillock.so authsucc" | sudo tee -a "$AUTH_PAM"
+fi
+
+# 4. Ensure Auth logging is active
+sudo systemctl enable --now rsyslog
+echo "auth,authpriv.*    /var/log/auth.log" | sudo tee /etc/rsyslog.d/audit.conf
+sudo systemctl restart rsyslog
+
+echo "Debian 12 Hardening Complete."
+
+
+apt install -y cracklib-runtime wamerican
+sudo update-cracklib
+ls -l /var/cache/cracklib/cracklib_dict.pwd
+passwd linaro   #   Zw@887#advantech
+
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+
+SVV 是 Software Verification and Validation（软件验证与确认）的缩写
+SVV-1 的具体含义是：Security Requirements Testing（安全要求测试）
+SVV-3（Vulnerability Testing，漏洞测试）
+
+
+STATEMENTS AND CONFORMITY EVIDENCES FOR SECURITY CAPABILITY REQUIREMENTS
+ENSURING COMPLIANCE WITH IEC 62443-4-2 CR4.3 USE OF CRYPTOGRAPHY: COMPREHENSIVE USE OF CRYPTOGRAPHY IN UBUNTU 22.04
+ENSURING COMPLIANCE WITH IEC 62443-4-2 CR4.3 USE OF SECURITY GUIDELINES IN UBUNTU 22.04
+
+
+CCSC 的全称是 Common Component Security Constraints（通用组件安全约束）
+编号 	名称	研发需要在文档中填写的重点内容
+CCSC 1	系统安全特性支持	描述你的 RK3568 终端如何融入整体工业系统。例如：是否支持 NTP 时间同步（方便审计）、是否支持系统级的资产发现。
+CCSC 2	补偿性安全措施	如果 4-2 中的某条技术要求（CR）你的板子硬性做不到，你必须在此说明如何通过系统级手段（如防火墙、VLAN）来弥补。
+CCSC 3	最小特权原则	证明你的固件设计遵循“最小权限”。例如：Debian 中的业务进程不使用 root 权限运行，或者关闭了不必要的内核模块。
+CCSC 4	4-1 流程合规	最关键的一条。声明该产品是完全按照 IEC 62443-4-1 安全开发生命周期（SDL）流程开发的。
+
+
+IEC 62443-4-2
+是工業自動化及控制系統（IACS）系列標準中的技術核心，專門定義**單一組件（Components）**應具備的具體資安技術需求。 
+其與 IEC 62443-4-1 的主要區別在於：4-1 規範「開發流程」（怎麼做），而 4-2 規範「產品功能」（做什麼）。 
+1. 涵蓋的四種組件類型
+該標準根據組件在工控環境中的功能，將其分為四大類並分別定義需求：
+
+    嵌入式設備 (Embedded Devices, ED)：如 PLC、RTU、DCS 控制器及感測器。
+    網路設備 (Network Devices, ND)：如 工業交換器、路由器、防火牆。
+    主機設備 (Host Devices, HD)：如 工程站、HMI、資料伺服器。
+    軟體應用程式 (Software Applications, SA)：如 SCADA 軟體、防毒軟體或資產管理工具。 
+
+2. 技術要求架構
+4-2 標準將超過 140 項具體需求歸納在 7 個基礎需求（Foundational Requirements, FR） 之下： 
+
+    FR 1 身份識別與驗證控制 (IAC)：確保所有使用者、軟體或設備在存取前都經過唯一身份驗證。
+    FR 2 使用控制 (UC)：執行權限控管與紀錄，遵循「最小特權」原則。
+    FR 3 系統完整性 (SI)：保護組件不被未經授權地篡改，包含安全開機、韌體完整性驗證。
+    FR 4 資料機密性 (DC)：透過加密保護通訊與儲存中的機敏資訊。
+    FR 5 限制資料流 (RDF)：控制通訊路徑，如 VLAN 隔離或白名單過濾。
+    FR 6 事件及時回應 (TRE)：提供完整的稽核日誌與監控警報功能。
+    FR 7 資源可用性 (RA)：防禦阻斷服務攻擊（DoS），確保攻擊發生時核心功能仍能運作。 
+
+3. 安全等級 (Security Level, SL)
+標準定義了 4 個能力等級（SL-C），隨著等級提升，技術要求會變得更嚴格： 
+
+    SL 1：防護無意或偶然的錯誤。
+    SL 2：防護資源與動機較低的簡單惡意攻擊。
+    SL 3：防護具備工控專業知識與中等資源的複雜攻擊。
+    SL 4：防護具備國家級資源、高動機的進階持續性威脅（APT），通常要求具備硬體層級的保護（如安全 IC）。 
+
+4. 產品認證
+產品若要取得認證，通常需同時符合 4-1 的安全開發流程 與 4-2 的技術功能要求。目前主流的認證框架包括 IECEE CB 架構與 ISASecure CSA（原 EDSA）認證。
+
+
+針對不同類型的產品（如PLC 或 工業交換器）要達到 SL 2 或 SL 3，技術挑戰會從「軟體功能」提升到「硬體安全」與「密鑰管理」。以下是具體的技術挑戰與實作重點：
+1. 身份識別與存取控制 (FR 1 & FR 2)
+
+    SL 2 挑戰： 必須支援基於角色的存取控制 (RBAC)。設備不能只有一組預設密碼，需能區分管理員、操作員與檢修員，且密碼強度需符合規範。
+    SL 3 挑戰： 引入多因素驗證 (MFA) 或數位憑證（X.509）。對於 PLC 而言，遠端登入必須經過更嚴謹的身份挑戰（Challenge-Response），且需具備防止暴力破解的鎖定機制。
+
+2. 系統完整性與安全啟動 (FR 3)
+這是達到 SL 3 的最大硬體門檻：
+
+    SL 2 挑戰： 韌體更新必須經過數位簽章 (Digital Signature) 驗證，防止惡意韌體植入。
+    SL 3 挑戰： 必須具備 Root of Trust (RoT)。這通常需要硬體加密晶片（如 TPM 2.0 或 Secure Element），確保設備從啟動的第一個指令到載入作業系統都是受信任的（Secure Boot），防止 Bootloader 被竄改。
+
+3. 資料機密性與通訊安全 (FR 4 & FR 5)
+
+    SL 2 挑戰： 所有的管理介面（如網頁介面、SSH）必須加密。
+    SL 3 挑戰： 控制流量 (Control Plane) 的加密。例如，PLC 與 HMI 之間的通訊（如 OPC UA 或特定的工業協定）必須全程加密且具備防重放（Anti-replay）機制。這對處理效能較弱的嵌入式設備會造成顯著的運算負擔（效能衝擊）。
+
+4. 資源可用性與抗攻擊能力 (FR 7)
+
+    SL 2 挑戰： 具備基本的流量過濾，能抵抗簡單的網路風暴。
+    SL 3 挑戰： 必須能防禦拒絕服務攻擊 (DoS)。設備需能在遭受高負載攻擊時，優先保證「核心控制邏輯」不中斷（如 PLC 仍能執行邏輯掃描，即便網路介面已癱瘓）。
+
+5. 常見的實作難點
+
+    密鑰管理 (Key Management)： 如何安全地將憑證注入到成千上萬台 PLC 中？如何處理憑證過期更換？
+    效能瓶頸： 加密通訊會增加延遲，這對於要求「微秒級」反應的工業控制系統是巨大的挑戰。
+    舊版相容性： 許多工業協定（如 Modbus TCP）原生不支援加密，若要符合 SL 3，往往需要增加硬體防火牆或更換新一代支援安全協定的硬體。
+
+總結建議
+若您的目標是 SL 2，重點在於強化密碼與韌體簽章；若目標是 SL 3，則需在硬體設計階段就納入安全晶片 (TPM) 並優化通訊加密效能。
+您目前負責的是硬體開發（製造商）還是場域規劃（系統整合商）？這決定了您需要優先處理哪一部分的合規證明。

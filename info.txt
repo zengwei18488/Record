@@ -5,7 +5,7 @@ www.dropbox.com/login?cont=%2Fhome%2FESSRISC_SHARE
 
 
 WorkDay
-100000166 Advantech@887
+100000166 Adv@zw#166
 
 Zw@c05257
 
@@ -42,7 +42,7 @@ oracle
 
 Employeezone
 
-wei.zeng@advantechcom.cn   Zw@18488
+wei.zeng@advantechcom.cn   Zwq-18488
 
 
 NXP and trell

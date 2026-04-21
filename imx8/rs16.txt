@@ -1,0 +1,120 @@
+uboot:
+source /opt/fsl-imx-xwayland/6.6-scarthgap/environment-setup-armv8a-poky-linux
+make imx8mm_ebcrs16a1_2G_defconfig
+make imx8mm_ebcrs08a2_2G_defconfig
+make-j4
+cd..imx-boot/
+/mk8mm.sh
+cd-
+
+kernel:
+make imx_v8_adv_defconfig
+make freescale/imx8mm-ebcrs16-a1.dtb
+make -j4 Image
+make modules
+make modules_install INSTALL_MOD_PATH=./modules
+
+kuihong PC
+/media/jt/8T/kh/yocto/docker-start-y50.sh
+cd src_y50/
+source setup-environment rs16-2g-multimedia
+/build_multimedia.sh
+
+
+
+scp -r yanwei@172.21.170.48:/home/yanwei/link/imx8-yocto/rs16/linux-yocto5.0/arch/arm64/boot/dts/freescale/imx8mm-ebcrs16-a1.dtb /run/media/boot-mmcblk2p1/
+
+最新驱动WIFI-LNX_6_18_2_RC1-IMX8--MM6X18542.p8_V1
+
+SDIW612 = {
+	cfg80211_wext=0xf
+	max_vir_bss=1
+	cal_data_cfg=none
+	ps_mode=2
+	auto_ds=2
+	host_mlme=1
+	# fw_name=nxp/sduart_nw61x_v1.bin.se
+	txpwrlimit_cfg=nxp/IW612_QFN_iPA_power_table_DVT2_V1.bin
+	drvdbg=0xa0037
+}
+
+-rw-rw-r-- 1 yanwei yanwei   11826 Mar 11 16:31 IW612_QFN_iPA_power_table_DVT2_V1.bin
+-rw-rw-r-- 1 yanwei yanwei 1093936 Mar 11 14:56 sduart_nw61x_v1.bin.se
+-rw-rw-r-- 1 yanwei yanwei 1060944 Mar 11 14:56 sduart_nw61x_v1_zb_dual_pan.bin.se
+-rw-rw-r-- 1 yanwei yanwei  702156 Mar 11 14:56 sd_w61x_v1.bin.se
+-rw-rw-r-- 1 yanwei yanwei  396444 Mar 11 14:56 uartspi_n61x_v1.bin.se
+-rw-rw-r-- 1 yanwei yanwei  359328 Mar 11 14:56 uartspi_n61x_v1_zb_dual_pan.bin.se
+
+
+scp -r yanwei@172.21.170.48:/home/yanwei/link/imx8-yocto/rs16/linux-yocto5.0/arch/arm64/boot/Image /run/media/boot-mmcblk2p1/
+scp -r yanwei@172.21.170.48:/home/yanwei/link/wifi/fgs060n/Code/wifi/FwImage/* /lib/firmware/nxp/
+scp -r yanwei@172.21.170.48:/home/yanwei/link/wifi/fgs060n/Code/wifi/FwImage/IW612_QFN_iPA_power_table_DVT2_V1.bin /lib/firmware/nxp/
+scp -r yanwei@172.21.170.48:/home/yanwei/link/imx8-yocto/rs16/linux-yocto5.0/modules/lib/modules/6.6.23-g2cce75813f1c-dirty.tar.gz /lib/modules/
+tar zxvf /lib/modules/6.6.23-g2cce75813f1c-dirty.tar.gz -C /lib/modules/
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/imx8/RS16-wifi/IW612-WIFI-crash/advantech.conf /etc/modprobe.d/advantech.conf
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/imx8/RS16-wifi/IW612-WIFI-crash/wifi_mod_para.conf /lib/firmware/nxp/wifi_mod_para.conf
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/imx8/RS16-wifi/IW612-WIFI-crash/restore_k_log /root
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/imx8/RS16-wifi/IW612-WIFI-crash/switch_mlan0_ap_sta-yocto.sh /root
+
+ls -l /lib/modules
+ls -l /lib/firmware/nxp/
+ls -l /run/media/boot-mmcblk2p1/
+ls -l /etc/modprobe.d/advantech.conf
+ls -l /lib/firmware/nxp/wifi_mod_para.conf
+ls -l /root
+
+scp -r -o StrictHostKeyChecking=no zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/imx8/RS16-wifi/update.sh /root
+scp -r -o StrictHostKeyChecking=no zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/imx8/RS16-wifi/check.sh /root
+
+dd if=imx-image-multimedia-imx8mmebcrs16a1.rootfs-20260324103335.wic of=/dev/mmcblk2 bs=1M
+
+
+scp -r yanwei@172.21.170.48:/home/yanwei/link/imx8-yocto/rs16/imx-boot/iMX8M/flash.bin .
+sync;dd if=./flash.bin of=/dev/mmcblk2 bs=1K seek=33 conv=fsync
+sync;dd if=./flash.bin of=/dev/mmcblk1 bs=1K seek=33 conv=fsync
+scp -r yanwei@172.21.170.48:/homelyanweirisc-tools/test/imx8/rs16/pcba_balena/purge_data.sh
+
+烧录MAC:
+0xd0000=851968，0xd0400=852992
+/test_spi_macX.sh cc:82:7f:80:91:74 851968
+/test_spi_macX.sh cc:82:7f:80:91:78 852992
+hexdump -c /dev/mtd0 Oxd0000
+mtd_debug erase /dev/mtd0 Oxd0000 0x10000
+
+stop dhcp on eth:
+systemctl stop kea-dhcp4
+systemctl disable kea-dhcp4
+rm -f /etc/systemd/network/10-eth0-static.network
+
+modules/lib/modules/6.6.23-gdfa66901c84b-dirty.tgz
+driver：drivers/net/wireless/adv/IW612-MM6X17437/wlan_src/
+/home/yanwei/link/imx8-yocto/rs16/linux-yocto5.0
+
+
+systemctl stop kea-dhcp4.service
+killall hostapd udhcpd
+ifconfig uap0 192.168.11.1
+hostapd -B -dd /etc/hostapd.VHT80.conf &
+ touch /var/lib/misc/udhcpd.leases
+udhcpd /etc/udhcpd.conf -Sf &
+
+
+
+文件说明：
+1、imx-image-multimedia-imx8mmebcrs16a1.rootfs-20260309084144.wic.zst
+yocto BSP 编译出来的 img 文件，配方略作改动，使能了 nmcli ，因为复现问题需要用 nmcli 来操作wifi 模块。
+2、.config
+内核的 .config 文件，用此文件来重新编译内核跟 驱动 ko。
+替换 系统中的 ： Image ，imx8mm-ebcrs16-a1.dtb ； /lib/modules/  下的驱动。
+3、/etc/modprobe.d/advantech.conf
+加载模块传递的参数。
+4、/lib/firmware/nxp/wifi_mod_para.conf
+5、restore_k_log
+保存 内核 log 信息的程序，执行方法：./restore_k_log /root/kernel_log &
+6、switch_mlan0_ap_sta-yocto.sh
+复现问题的脚本文件，执行方法：./switch_mlan0_ap_sta-yocto.sh &
+注意脚本里面的热点名称和密码。
+
+
+

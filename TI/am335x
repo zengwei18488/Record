@@ -35,12 +35,135 @@ cd build
 . conf/setenv
 MACHINE=am335x-evm bitbake -k tisdk-default-image
 
+$ git clone https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-TI-Linux/_git/adv-ti-yocto-bsp -b processor-sdk-am335x-11.02.05.02 tisdk-adv
+$ cd tisdk-adv
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-scarthgap-11.02.05.02-config.txt
+$ cd build
+$ . conf/setenv
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-thinlinux-image
+
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-base-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-tiny-initramfs
+
+MACHINE=am335xepcr3220a1 bitbake linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c clean tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -c clean virtual/kernel
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate virtual/kernel
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate packagegroup-core-boot
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall u-boot-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-default-image
+
+MACHINE=am335xepcr3220a1 bitbake -k meta-toolchain-arago-tisdk
+MACHINE=am335xepcr3220a1 bitbake -s | grep -E "ti-test|board-scripts|scripts"
+
+MACHINE=am335xepcr3220a1 bitbake -e tisdk-default-image | grep ^WKS_FILE=
+WKS_FILE="sdimage-2part.wks"
+MACHINE=am335xepcr3220a1 bitbake -s
+MACHINE=am335xepcr3220a1 bitbake -s | grep bmap
+MACHINE=am335xepcr3220a1 bitbake -s | grep initramfs
+
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-20260113013324.tar.xz rootfs.tar.xz
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-tiny-initramfs-am335xepcr3220a1.rootfs.cpio.xz initramfs.tar.xz
+
+cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-base-image-am335xepcr3220a1.rootfs.tar.xz tisdk-base-image-am335x-evm.rootfs.tar.xz
+cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-default-image-am335xepcr3220a1.rootfs.tar.xz tisdk-default-image-am335x-evm.rootfs.tar.xz
+cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs.tar.xz tisdk-thinlinux-image-am335x-evm.rootfs.tar.xz
+
+
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-*.wic root/
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-*.wic.bmap root/
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/2025.01+git/build/MLO.byteswap root/
+sudo cp /home/zengwei/data_8T2/risc-private-tools/test/AM335x/epc-r3220/mkspi-advboot.sh root/
+
+
+dd if=/dev/zero of=/dev/mmcblk1 bs=512 count=1024 conv=fsync
+dd if=/dev/zero of=/dev/mmcblk1 bs=1M count=10 conv=fsync
+dd if=./tisdk-thinlinux-image-am335xepcr3220a1.rootfs-20260113013324.wic of=/dev/mmcblk1 bs=4M status=progress conv=fsync
+
+sudo partprobe /dev/mmcblk1
+sudo fdisk -l /dev/mmcblk1
+parted /dev/mmcblk1 set 1 boot on
+parted /dev/mmcblk1 print
+
+dd if=./MLO of=/dev/mmcblk1 seek=256 bs=512 conv=fsync
+dd if=./u-boot.img of=/dev/mmcblk1 seek=768 bs=512 conv=fsync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+Flash image to eMMC
+
+umount /dev/mmcblk1p* 2 > /dev/null || true
+# -b 指定 bmap 文件（可选，bmaptool 会自动在同目录下寻找同名的 .wic.bmap）
+sudo bmaptool copy /root/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-*.wic /dev/mmcblk1
+sudo bmaptool copy /root/tisdk-base-image-am335x-evm.wic.xz /dev/mmcblk1
+只有 .wic 文件而没有生成 .bmap 辅助文件，可以使用 --nobmap 参数，此时其行为类似于增强版的 dd
+sudo bmaptool copy --nobmap /root/tisdk-base-image-am335x-evm.wic /dev/mmcblk1
+刷新分区表：
+sudo partprobe /dev/mmcblk1
+设置活动标志 (Boot Flag)：
+sudo parted /dev/mmcblk1 set 1 boot on
+强制刷新缓存：
+sync
+
+
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/linux-ti-staging/6.12.49+git/image/boot/
+
+yocto project
+
+meta-advantech2 : aim38-scarthgap-6.12.y_am335x
+adv-ti-yocto-bsp : processor-sdk-am335x-11.02.05.02
+meta-ti-adv,https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-TI-Linux/_git/meta-advantech,aim38-scarthgap-6.12.y_am335x,017bd7573bc51ba85686061d202a9910b9ebc57c,layers=
+vim configs/processor-sdk/processor-sdk-scarthgap-11.02.05.02-config.txt
+
+
 source code
 /home/adv/yocto_bsp/tisdk/build/arago-tmp-default-glibc/work/am335x_evm-oe-linux-gnueabi/linux-ti-staging/
-/home/adv/yocto_bsp/tisdk/build/arago-tmp-default-glibc/work/am335x_evm-oe-linux-gnueabi/u-boot-ti-staging/
+/home/adv/yocto_bsp/tisdk/build/arago-tmp-default-glibc/work/am335x_evm-oe-linux-gnueabi/u-boot-ti-staging/     
+
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/linux-ti-staging/
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/
 
 images
 /home/adv/yocto_bsp/tisdk/build/deploy-ti/images/am335x-evm
+/home/adv/yocto_bsp/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1
+
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/2025.01+git/temp/log.do_fetch.947053
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/linux-ti-staging/6.12.49+git/temp/log.do_package.1302773
+
+MACHINE=am335xepcr3220a1 bitbake u-boot-ti-staging -c cleansstate
+MACHINE=am335xepcr3220a1 bitbake u-boot-ti-staging --force -c compile
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate u-boot-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall u-boot-ti-staging
+
+MACHINE=am335xepcr3220a1 bitbake -c fetch u-boot
+MACHINE=am335xepcr3220a1 bitbake -c cleanall u-boot && MACHINE=am335xepcr3220a1 bitbake -c fetch u-boot
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake linux-ti-staging
+
+bitbake -c clean (最轻量)bitbake -c cleansstate (最常用)bitbake -c cleanall (最彻底)
+
+检查和排查层和bb文件是否增加正确
+MACHINE=am335xepcr3220a1 bitbake-layers show-layers
+MACHINE=am335xepcr3220a1 bitbake-layers show-appends | grep linux-ti-staging
+
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate busybox
+MACHINE=am335xepcr3220a1 bitbake -e busybox | grep CONFIG_UDHCPD
+
+MACHINE=am335xepcr3220a1 bitbake -e linux-ti-staging | grep ^KERNEL_DEVICETREE=
+
+
 
 *****************系统时间TAG为git最后一笔commit时间**************************
 
@@ -106,6 +229,7 @@ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_epcr3220 am335x_epcr3220a1_1G_defconfig
 make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_epcr3220
 
+
 ../tools/mkeficapsule.c:20:10: fatal error: gnutls/gnutls.h: 没有那个文件或目录
 sudo apt-get update
 sudo apt-get install libgnutls28-dev
@@ -115,6 +239,7 @@ arch/arm/configs/am335x_adv_defconfig
 
 sudo cp ~/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/board-support/ti-linux-kernel-6.12.49+git-ti/arch/arm/boot/dts/ti/omap/am335x-epcr3220a1.dtb am335x-epcr3220a1.dtb
 sudo cp ~/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/board-support/ti-linux-kernel-6.12.49+git-ti/arch/arm/boot/zImage zImage-6.12.49-ti-g1a86d36433ea
+sudo cp ~/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/board-support/ti-linux-kernel-6.12.49+git-ti/arch/arm/boot/zImage .
 
 *****************************************************************************************************************************************************************8
 GPIO
@@ -307,18 +432,14 @@ cd board-support/ti-linux-kernel-6.12.49+git-ti/tools/spi/
 make all
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-yocto project
 
-meta-advantech2 : aim38-scarthgap-6.12.y_am335x
-adv-ti-yocto-bsp : processor-sdk-am335x-11.02.05.02
-
-meta-ti-adv,https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-TI-Linux/_git/meta-advantech,aim38-scarthgap-6.12.y_am335x,017bd7573bc51ba85686061d202a9910b9ebc57c,layers=
-
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 更新usb设备id
 
 sudo modprobe option
 sudo echo 1508 1001 > /sys/bus/usb-serial/drivers/option1/new_id
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/diagslave-3.5.tgz .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/modpoll-3.16.tgz .
 
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/Factory_epcr3220_v7/ .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/Factory_epcr3220_v5/ .
@@ -327,6 +448,27 @@ scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM3
 scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/LAB_EMI/Burn/Burn.sh .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/LAB_EMI/boot_count .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/RSB-6410/R200_for_LAB_20160509/Burn/Loop_uart232 .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/work/am335x-11-y5.0/quectel-CM .
+
+scp -r jt@172.21.171.102:/media/jt/8T/kh/bsp/NXP/driver_file/rs16_y50/quectel/4G/y5_k-6.6.23/quectel-CM/Quectel_QConnectManager_Linux_V1.6.7.zip . ; sync
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/epc-r3220/Test_epcr3220_Y5.0/ .
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-20260114003225.wic.bmap .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/2025.01+git/build/MLO.byteswap .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/epc-r3220/mkspi-advboot.sh .
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Build app for GCC
+
+source ./linux-devkit/environment-setup-armv7at2hf-neon-oe-linux-gnueabi
+echo $ARCH        
+echo $CROSS_COMPILE
+cd Quectel_QConnectManager_Linux_V1.6.7/
+make
+file quectel-CM   /*quectel-CM: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=1279a215ea1d688edf8ef3fd507d48c981a36de5, for GNU/Linux 5.15.0, with debug_info, not stripped
+*/
+
 
 chmod -R 777 **
 
@@ -438,7 +580,6 @@ $ export TOOLCHAIN_PATH_ARMV8=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linu
 
 $ MACHINE=am335x-evm bitbake tisdk-base-image
 $ MACHINE=am335x-evm bitbake arago-core-tisdk-bundle
-
 
 4、Create Sdcard image
 注意目录名字为ti-sdk-000

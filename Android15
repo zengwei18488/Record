@@ -120,6 +120,25 @@ rk3576-aom3841-a1.dts
 source build/envsetup.sh;lunch aom3841_u-ap4a-userdebug
 ./build.sh -AUCKu
 
+source build/envsetup.sh;lunch aom5841_u-ap4a-userdebug
+./build.sh -AUCKu
+
+board/rockchip/advantech/adv_utils.c
+注释 //adv_modified_bootargs_rootuuid(blob);
+
+cp arch/arm/dts/rk3576-aom3841a1.dts  arch/arm/dts/rk3576-aom5841a1.dts
+cp configs/rk3576_aom3841a1_defconfig  configs/rk3576_aom5841a1_defconfig
+cp include/configs/rk3576_aom3841.h   include/configs/rk3576_aom5841.h
+
+gedit arch/arm/dts/rk3576-aom5841a1.dts
+gedit configs/rk3576_aom5841a1_defconfig
+gedit include/configs/rk3576_aom5841.h
+
+cp arch/arm64/boot/dts/rockchip/rk3576-aom3841-a1.dts arch/arm64/boot/dts/rockchip/rk3576-aom5841-a1.dts
+
+# 启用凭据存储
+git config --global credential.helper store
+
 aom3841a1_android-15.0-mid-rkr4_v0.1.5_kernel-6.1.118_rk3576
 
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7
@@ -167,8 +186,9 @@ git clone https://gerrit.rock-chips.com:8443/repo-release/tools/repo
 tar zcvf android15-rkr4-fromRK-20250911.tar.gz --exclude=".git" --exclude=".repo" Android15/
 
 
-sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/work/rk-all-android15/Android15:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
-sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/work/rk-all-android15/Repo-From-Azure-A15:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/work/rk-all-android15/Repo:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+
+sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/work/rk-all-android15/Repo:/home/adv/BSP:rw -u 1005:1005 --privileged advrisc/u22.04-rkabv14:latest /bin/bash
 
 sudo chown adv:adv -R BSP
 

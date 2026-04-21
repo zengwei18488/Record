@@ -65,6 +65,7 @@ building
 
 ./build.sh debian
 
+
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 Testing
 
@@ -82,4 +83,27 @@ hwclock --systohc
 hwclock -s
 hwclock --hctosys
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo docker run -it --name rk3568_linux_risc_V123006 -v /home/zengwei/data_8T2/work/rk3568-debian10/RISC_V123006:/home/adv/BSP:rw --privileged advrisc/u18.04-rklbv1:latest /bin/bash
+
+repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Linux/_git/manifest -b rk356x_v123_risc -m RK3568_RISC_DIV123006.xml
+repo/repo sync
+
+
+rm -rf buildroot/output/rockchip_rk356x_recovery/build/rkupdate-develop/
+rm -rf buildroot/output/rockchip_rk356x_recovery/build/recovery-develop/
+rm -rf buildroot/output/recovery/build/recovery-custom/
+
+
+./buildroot/output/rockchip_rk356x_recovery/images/recovery.img
+
+ln -rfs device/rockchip/.target_product/BoardConfig-rk3568-rsb4810a2.mk device/rockchip/.BoardConfig.mk
+source envsetup.sh rockchip_rk356x_recovery
+./build.sh recovery
+
+./buildroot/configs/rockchip/recovery.config
+./buildroot/package/rockchip/recovery/recovery.mk
+
+make recovery-dirclean
 
