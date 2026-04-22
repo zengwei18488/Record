@@ -1,0 +1,40 @@
+這是一個典型的 IEC 62443-4-2 FR 1.1 / CR 1.11（登錄失敗處理） 的技術實作。要達成您的需求，我們需要分兩個層次處理：首先是 Linux 內部的帳號鎖定（pam_faillock），其次是與防火牆聯動（iptables 封禁 IP）。
+第一步：設定 pam_faillock 鎖定帳號
+這會讓使用者在失敗 3 次後，帳號被鎖定 10 分鐘。
+請編輯 /etc/pam.d/common-auth（Ubuntu/Debian）或 /etc/pam.d/system-auth（CentOS/RHEL）：
+在檔案的最上方（auth 段落）加入以下內容：
+bash
+# 失敗 3 次 (deny=3)，鎖定 10 分鐘 (unlock_time=600秒)
+auth    required    pam_faillock.so preauth silent deny=3 unlock_time=600
+auth    sufficient  pam_unix.so nullok try_first_pass
+auth    [default=die] pam_faillock.so authfail deny=3 unlock_time=600
+请谨慎使用此类代码。
+並在 account 段落加入：
+bash
+account required    pam_faillock.so
+请谨慎使用此类代码。
+第二步：連動 iptables 封禁 IP
+pam_faillock 本身只會鎖定「帳號」，不會封禁「IP」。要針對 IP 進行封禁，最工業標準且符合 IEC 62443 技術要求的做法是使用 Fail2Ban，它會監控日誌並自動下達 iptables 指令。
+1. 安裝 Fail2Ban
+bash
+sudo apt-get install fail2ban  # Debian/Ubuntu
+请谨慎使用此类代码。
+2. 建立自定義設定 /etc/fail2ban/jail.local
+新增或修改以下內容：
+ini
+[sshd]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log
+maxretry = 3              # 失敗 3 次
+findtime = 600            # 在 10 分鐘內
+bantime  = 600            # 封禁 10 分鐘
+banaction = iptables-multiport
+请谨慎使用此类代码。
+3. 啟動服務
+bash
+sudo systemctl restart fail2ban
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+

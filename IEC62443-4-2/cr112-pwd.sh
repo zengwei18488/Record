@@ -26,6 +26,15 @@ Access granted to authorized engineering personnel only.
 Please ensure all security protocols are followed.
 EOF
 
+# 備份 UI 檔案
+sudo cp /usr/share/lxdm/themes/Industrial/greeter.ui /usr/share/lxdm/themes/Industrial/greeter.ui.bak
+
+# 將 "User:" 替換為 "警告訊息 + User:"
+sudo sed -i 's/>User:<\/property>/>                                               User:\n                WARNING\nAuthorized Access Only!\nAll activities are logged.<\/property>/g' /usr/share/lxdm/themes/Industrial/greeter.ui
+
+# 設定系統控制台警告 (實體存取路徑)
+echo "WARNING: Authorized Access Only!" | sudo tee -a /etc/issue
+
 # --- 3. Graphics Interface (LXDM/LightDM) Support ---
 # 既然你的系统用的是 LXDM/LightDM 而非 GDM3，使用以下配置：
 if [ -f /etc/lxdm/lxdm.conf ]; then

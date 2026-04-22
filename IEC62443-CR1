@@ -111,6 +111,10 @@ Maximum number of days between password change          : 90
 Number of days of warning before password expires       : 7
 
 
+修改 /usr/share/lxdm/themes/Industrial/greeter.ui，將 User: 標籤內容替換為您的警告字串。
+
+
+
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
 针对 IEC 62443-4-2 CR 1.1（身份识别与鉴别） 的要求，在完成所有 Debian 12 加固配置后，你需要从以下 7 个核心维度进行验证。
@@ -167,3 +171,75 @@ TC-01	Password Strength	passwd with 8 chars	Rejected	Pass
 TC-02	Brute Force Protection	5 failed SSH logins	Account Locked	Pass
 ...	...	...	...	...
 你目前的系统中，这 7 项里哪一项是你最不确定是否配置成功的？ 我可以提供更深入的专项排查命令。
+
+
+
+
+在 Linux 系统中，/etc/shadow 是最核心的安全文件之一，它专门用于存储用户密码的加密哈希值以及密码的有效期策略。
+它的存在是为了解决 /etc/passwd 文件必须对所有用户可读的安全漏洞（/etc/shadow 只有 root 用户可以读取）。
+以下是它具体管控的 9 个字段（以冒号 : 分隔）的含义，这对你的 IEC 62443 认证非常关键：
+1. 字段详解（以 linaro 用户为例）
+假设你看到的一行是：
+linaro:$6$rounds=4096$...:19800:7:90:14:30::
+1、用户名 (linaro)：对应的账户名称。
+2、加密密码 ($6$...)：
+    这是密码的 SHA-512 哈希值。
+    如果显示 ! 或 *，表示该账户被锁定，无法登录。
+3、最后修改时间 (19800)：从 1970 年 1 月 1 日起计算的天数。
+4、最小修改间隔 (7)：修改密码后，必须过 7 天才能再次修改（对应你脚本里的 PASS_MIN_DAYS）。
+5、最大有效期 (90)：密码使用 90 天后强制过期（对应你脚本里的 PASS_MAX_DAYS）。
+6、过期警告期 (14)：密码过期前 14 天开始提示用户。
+7、宽限期 (30)：密码过期后，用户还有 30 天可以登录并改密码，超过后账户将被禁用。
+8、失效时间：账户彻底失效的日期（通常留空）。
+9、保留字段：留作未来使用
+
+
+linaro (使用者名稱)：這是該帳號的登入名稱。 
+$y$j9T$zw759uVOCJ4Q3OAGMtY.A.$M6IfoNd2VWPJrnAiPHgRI6m2ZHt0AJWPBYEGrNP8tV2 (密碼雜湊)：
+這不是明文密碼。
+$y$ 開頭代表使用的是 yescrypt 加密演算法（這在較新的 Debian 或 Ubuntu 發行版中是預設標準）。
+j9T 是演算法的設定參數。
+zw759uVOCJ4Q3OAGMtY.A. 是「鹽值」（Salt），用於增加破解難度。
+最後一部分則是經過處理後的加密結果。
+20565 (最後修改日期)：代表從 1970 年 1 月 1 日算起到上次修改密碼的天數。這大約落在 2026 年 4 月左右。
+7 (密碼最短更改期限)：密碼在 7 天內不能再次更改。
+90 (密碼最長有效期限)：密碼在 90 天後會過期。
+7 (過期前警告天數)：在密碼過期前 7 天開始提醒使用者。
+::: (保留欄位)：目前留空，通常用於帳號停權日期或未來擴展。
+
+
+
+/etc/login.defs 是 Linux 系统中 Shadow 密码套件（shadow password suite）的核心配置文件。它主要用于定义创建新用户或组时的系统默认值。 
+以下是该文件中最关键的配置项及其含义：
+1. 账号标识范围 (UID/GID) 
+
+    UID_MIN / UID_MAX：指定新建普通用户的用户 ID 范围（默认通常从 1000 开始）。
+    SYS_UID_MIN / SYS_UID_MAX：指定系统账号（System Accounts）的 UID 范围。
+    GID_MIN / GID_MAX：指定新建组的组 ID 范围。 
+
+2. 密码过期策略 (Password Aging)
+这些设置仅在创建新用户时生效，已存在的用户不受影响（现有用户需使用 chage 命令修改）。 
+
+    PASS_MAX_DAYS：密码使用的最大天数，到期必须更改。
+    PASS_MIN_DAYS：两次修改密码之间的最小间隔天数。
+    PASS_WARN_AGE：密码过期前开始出现警告提示的天数。 
+
+3. 用户环境与权限
+
+    CREATE_HOME：是否在创建用户时默认创建家目录（yes 或 no）。
+    UMASK：定义新建文件或目录的默认权限掩码。例如 022 意味着文件权限为 644。
+    USERGROUPS_ENAB：如果设为 yes，删除用户时若其私有组内没有其他成员，则同时删除该组。
+    MAIL_DIR：用户邮箱文件的存放目录（如 /var/spool/mail）。 
+
+4. 登录行为控制
+
+    LOGIN_RETRIES：密码输入错误后的最大重试次数。
+    LOGIN_TIMEOUT：登录会话的最大超时时间（秒）。
+    FAIL_DELAY：登录失败后重新允许尝试前的延迟秒数。 
+
+⚠️ 重要限制与说明
+
+    优先级：如果 /etc/shadow 文件中对特定用户已有相关设置，则以 /etc/shadow 为准，其优先级高于 login.defs。
+    对 root 无效：该文件中的账号限制通常不适用于 root 用户。
+    功能迁移：随着技术演进，许多原本在该文件中定义的功能（如 PASS_MIN_LEN 最小密码长度或具体的加密算法 ENCRYPT_METHOD）现在更多地由 PAM (Pluggable Authentication Modules) 模块（如 /etc/pam.d/common-password）来实际接管和执行。
+
