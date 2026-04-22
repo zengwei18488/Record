@@ -187,8 +187,188 @@ echo "Debian 12 Hardening Complete."
 apt install -y cracklib-runtime wamerican
 sudo update-cracklib
 ls -l /var/cache/cracklib/cracklib_dict.pwd
-passwd linaro   #   Zw@887#advantech
 
+
+passwd linaro   #   Advantech@887#zw
+sudo faillock --user linaro              #查看登陆失败记录
+sudo faillock --user linaro --reset     #重置失败记录
+
+sudo systemctl restart lxdm
+
+查看核心报错：/var/log/auth.log
+既然你有 lxdm 的失败记录，系统日志里一定记录了为什么它认为失败。请运行：
+grep "lxdm" /var/log/auth.log | tail -n 10
+
+
+IEC 62443 认证通常要求“禁止通用默认密码”。最合规的变通方案是：设置一个强初始密码，但强制用户在第一次通过 HDMI 登录时修改它。
+在构建脚本中添加：
+bash
+# 1. 设定强初始密码
+echo "linaro:Init@2026#Strong" | chroot $DEST chpasswd
+
+# 2. 强制密码过期
+chroot $DEST chage -d 0 linaro
+
+cr107 ************************************************************************************************************************
+
+#!/bin/bash
+# Corrected for Debian 12 (Bookworm) - RK3568 Linaro
+
+PWQUALITY_FILE="/etc/security/pwquality.conf"
+PASSWORD_FILE="/etc/pam.d/common-password"
+LOGIN_DEFS_FILE="/etc/login.defs"
+USERNAME="linaro"  # Corrected from 'ubuntu'
+
+# 1. Install dependency first
+apt install -y libpam-pwquality
+
+# 2. Configure pwquality.conf (Best Practice for Debian 12)
+# Using -1 to FORCE at least one of each class
+sudo sed -i "
+  s/^#\? \?minlen =.*/minlen = 12/;
+  s/^#\? \?dcredit =.*/dcredit = -1/;
+  s/^#\? \?ucredit =.*/ucredit = -1/;
+  s/^#\? \?lcredit =.*/lcredit = -1/;
+  s/^#\? \?ocredit =.*/ocredit = -1/;
+  s/^#\? \?minclass =.*/minclass = 4/;
+" $PWQUALITY_FILE
+
+# 3. Securely update common-password (avoid breaking the PAM stack)
+# Check if the line already exists to avoid duplication
+if ! grep -q "pam_pwquality.so" "$PASSWORD_FILE"; then
+    sudo sed -i '/pam_unix.so/i password requisite pam_pwquality.so retry=3' "$PASSWORD_FILE"
+fi
+
+# 4. Apply Aging Policy to the CURRENT user
+if id "$USERNAME" &>/dev/null; then
+    sudo chage -M 90 -W 7 -m 7 "$USERNAME"
+else
+    echo "Warning: User $USERNAME not found."
+fi
+
+# 5. Set Global Default for FUTURE users
+sudo sed -i "
+  s/^\(PASS_MAX_DAYS[[:space:]]*\)[[:digit:]]*/\1 90/;
+  s/^\(PASS_MIN_DAYS[[:space:]]*\)[[:digit:]]*/\1 7/;
+  s/^\(PASS_WARN_AGE[[:space:]]*\)[[:digit:]]*/\1 14/;
+" $LOGIN_DEFS_FILE
+
+echo "Configuration applied successfully for Debian 12."
+
+
+root@linaro-alip:~# chage -l linaro
+Last password change                                    : Apr 21, 2026
+Password expires                                        : Jul 20, 2026
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 7
+Maximum number of days between password change          : 90
+Number of days of warning before password expires       : 7
+
+vim /etc/pam.d/common-password    #加分项目，满足 IEC 62443 关于“禁止使用最近 5 次旧密码”的要求
+password [success=1 default=ignore] pam_unix.so obscure use_authtok remember=5
+
+
+cr111 ************************************************************************************************************************
+#!/bin/bash
+# Corrected for Debian 12 (Bookworm) - RK3568 Linaro
+
+PWQUALITY_FILE="/etc/security/pwquality.conf"
+PASSWORD_FILE="/etc/pam.d/common-password"
+LOGIN_DEFS_FILE="/etc/login.defs"
+USERNAME="linaro"  # Corrected from 'ubuntu'
+
+# 1. Install dependency first
+apt install -y libpam-pwquality
+
+# 2. Configure pwquality.conf (Best Practice for Debian 12)
+# Using -1 to FORCE at least one of each class
+sudo sed -i "
+  s/^#\? \?minlen =.*/minlen = 12/;
+  s/^#\? \?dcredit =.*/dcredit = -1/;
+  s/^#\? \?ucredit =.*/ucredit = -1/;
+  s/^#\? \?lcredit =.*/lcredit = -1/;
+  s/^#\? \?ocredit =.*/ocredit = -1/;
+  s/^#\? \?minclass =.*/minclass = 4/;
+" $PWQUALITY_FILE
+
+# 3. Securely update common-password (avoid breaking the PAM stack)
+# Check if the line already exists to avoid duplication
+if ! grep -q "pam_pwquality.so" "$PASSWORD_FILE"; then
+    sudo sed -i '/pam_unix.so/i password requisite pam_pwquality.so retry=3' "$PASSWORD_FILE"
+fi
+
+# 4. Apply Aging Policy to the CURRENT user
+if id "$USERNAME" &>/dev/null; then
+    sudo chage -M 90 -W 7 -m 7 "$USERNAME"
+else
+    echo "Warning: User $USERNAME not found."
+fi
+
+# 5. Set Global Default for FUTURE users
+sudo sed -i "
+  s/^\(PASS_MAX_DAYS[[:space:]]*\)[[:digit:]]*/\1 90/;
+  s/^\(PASS_MIN_DAYS[[:space:]]*\)[[:digit:]]*/\1 7/;
+  s/^\(PASS_WARN_AGE[[:space:]]*\)[[:digit:]]*/\1 14/;
+" $LOGIN_DEFS_FILE
+
+echo "Configuration applied successfully for Debian 12."
+
+sudo faillock --user linaro
+
+$ ssh -vvv linaro@172.21.170.37 2>&1 | grep "kex: server"
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+
+
+CR112************************************************************************************************************************
+#!/bin/bash
+# Compliance: IEC 62443 Legal Banner & SSH Hardening Fix
+
+# --- 1. Fix SSH Root Login (Crucial for Compliance) ---
+echo "Fixing SSH configuration..."
+SSH_CONF="/etc/ssh/sshd_config"
+# 强制禁用 Root 登录
+sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' $SSH_CONF
+# 开启登录前横幅引用
+sudo sed -i 's|^#\?Banner.*|Banner /etc/issue.net|' $SSH_CONF
+
+# --- 2. Create Legal Banners (CR 1.1) ---
+echo "Creating Legal Banners..."
+# 登录前横幅 (SSH 联通时显示)
+cat <<EOF | sudo tee /etc/issue.net
+*************************************************************************
+* WARNING: Unauthorized access to this device is strictly prohibited.   *
+* All activities are monitored and recorded for security purposes.       *
+* If you are not an authorized user, disconnect immediately.            *
+*************************************************************************
+EOF
+
+# 登录后横幅 (登录成功后显示)
+cat <<EOF | sudo tee /etc/motd
+Access granted to authorized engineering personnel only.
+Please ensure all security protocols are followed.
+EOF
+
+# --- 3. Graphics Interface (LXDM/LightDM) Support ---
+# 既然你的系统用的是 LXDM/LightDM 而非 GDM3，使用以下配置：
+if [ -f /etc/lxdm/lxdm.conf ]; then
+    echo "Hardening LXDM GUI..."
+    sudo sed -i 's/^#\?disable_user_list=.*/disable_user_list=1/' /etc/lxdm/lxdm.conf
+fi
+
+# --- 4. Restart Services ---
+sudo systemctl restart ssh
+echo "SSH Hardening and Banners applied."
+
+ssh -v root@172.21.170.37     #debug模式
+
+验证该配置是否生效：
+故意输错 5 次密码。
+查看状态：执行 sudo faillock。如果能看到失败计数在增加，说明配置成功。
+尝试第 6 次（用正确密码）：如果系统提示认证失败，说明锁定生效。
+手动解锁：sudo faillock --user linaro --reset
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
