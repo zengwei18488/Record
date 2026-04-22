@@ -2,6 +2,7 @@
 
 AUTH_FILE="/etc/pam.d/common-auth"
 ACCOUNT_FILE="/etc/pam.d/common-account"
+PASSWORD_FILE="/etc/pam.d/common-password"
 FAILLOCK_CONF="/etc/security/faillock.conf"
 
 # 1. 配置 faillock.conf (参数集中管理，最稳妥)
@@ -30,7 +31,24 @@ sudo sed -i '/pam_unix.so/a auth    [default=die]    pam_faillock.so authfail\na
 # 3. 修改 common-account
 sudo sed -i '/pam_unix.so/i account    required    pam_faillock.so' $ACCOUNT_FILE
 
+if [ -f "$PASSWORD_FILE" ]; then
+    if ! grep -q "remember=" "$PASSWORD_FILE"; then
+        echo "Adding remember=5 to $PASSWORD_FILE"
+        sudo cp "$PASSWORD_FILE" "${PASSWORD_FILE}.bak"
+        sudo sed -i '/pam_unix.so/ s/$/ remember=5/' "$PASSWORD_FILE"
+    else
+        echo "Password history (remember) is already configured in $PASSWORD_FILE, skipping..."
+    fi
+else
+    echo "Error: $PASSWORD_FILE not found!"
+fi
 # 4. 重置状态
 sudo faillock --reset
+
+# 1. 设定强初始密码
+echo "linaro:Init@2026#Strong" | sudo chpasswd
+
+# 2. 强制密码过期
+sudo chage -d 0 linaro
 
 echo "Debian 12 faillock configuration updated."

@@ -29,8 +29,21 @@ EOF
 # --- 3. Graphics Interface (LXDM/LightDM) Support ---
 # 既然你的系统用的是 LXDM/LightDM 而非 GDM3，使用以下配置：
 if [ -f /etc/lxdm/lxdm.conf ]; then
-    echo "Hardening LXDM GUI..."
-    sudo sed -i 's/^#\?disable_user_list=.*/disable_user_list=1/' /etc/lxdm/lxdm.conf
+    echo "Hardening LXDM GUI (Hiding user list)..."
+    
+    # 1. 先移除可能存在的旧配置防止冲突
+    sudo sed -i '/^disable=/d' /etc/lxdm/lxdm.conf
+    
+    # 2. 在 [userlist] 标签下面精确插入 disable=1
+    # 如果找不到 [userlist] 标签，则在文件末尾添加
+    if grep -q "\[userlist\]" /etc/lxdm/lxdm.conf; then
+        sudo sed -i '/\[userlist\]/a disable=1' /etc/lxdm/lxdm.conf
+    else
+        echo -e "\n[userlist]\ndisable=1" | sudo tee -a /etc/lxdm/lxdm.conf
+    fi
+    
+    # 3. 重启 LXDM 生效
+    sudo systemctl restart lxdm
 fi
 
 # --- 4. Restart Services ---

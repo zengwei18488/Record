@@ -51,7 +51,7 @@ echo "[1/5] Updating package lists..."
 apt-get update || echo "Update warning: some sources failed."
 
 echo "[1/5] Installing security modules with retry logic..."
-smart_install libpam-pwquality rsyslog cracklib-runtime wamerican libpam-cap
+smart_install libpam-pwquality rsyslog cracklib-runtime wamerican
 update-cracklib
 
 # 2. Configure Password Complexity (Min 12 chars, 4 classes)

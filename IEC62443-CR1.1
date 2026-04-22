@@ -1,227 +1,36 @@
 CR 1.1
 
 CR 1.01
-禁用 LXDM 的自动登录
-如果你想继续使用 LXDM（这在 RK3568 的轻量级镜像中很常见），你需要修改 LXDM 的配置文件而不是 LightDM：
-文件路径：/etc/lxdm/lxdm.conf
-修改内容：
-找到 [base] 部分，确保 autologin 行被注释掉：
-ini
-[base]
+
+vim /etc/lxdm/lxdm.conf
 ## 注释掉下面这行
-# autologin=rockchip
+# autologin=linaro
 
-如果合规要求允许用户通过 SSH 登录，您需要同步加固 SSH：
-禁用 Root 登录：在 /etc/ssh/sshd_config 中设置 PermitRootLogin no。
-强制强密码/密钥：配合 SECLEVEL 2 的要求，确保 SSH 密钥交换算法也是安全的。
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr1*.sh .
+./cr101-pwd.sh
+./cr107-pwd.sh
+./cr111-pwd.sh
+./cr112-pwd.sh
 
-cr101 **************************************************************
-apt install -y libpam-pwquality
-
-cr101-pwd.sh
-
-#!/bin/bash
-# Debian 12 IEC 62443 Hardening Script
-
-# 2. Configure Password Complexity (IEC 62443 compliant)
-# minlen=12, minclass=4 (Upper, Lower, Digit, Special)
-CONF_PW="/etc/security/pwquality.conf"
-sudo sed -i 's/^# minlen =.*/minlen = 12/' $CONF_PW
-sudo sed -i 's/^# minclass =.*/minclass = 4/' $CONF_PW
-sudo sed -i 's/^# retry =.*/retry = 3/' $CONF_PW
-
-# 3. Add Account Lockout (Prevent Brute Force)
-# Lock for 30 mins after 5 failed attempts
-AUTH_PAM="/etc/pam.d/common-auth"
-if ! grep -q "pam_faillock.so" "$AUTH_PAM"; then
-    sudo sed -i '1i auth requisite pam_faillock.so preauth' "$AUTH_PAM"
-    echo "auth [default=die] pam_faillock.so authfail" | sudo tee -a "$AUTH_PAM"
-    echo "auth sufficient pam_faillock.so authsucc" | sudo tee -a "$AUTH_PAM"
-fi
-
-# 4. Ensure Auth logging is active
-sudo systemctl enable --now rsyslog
-echo "auth,authpriv.*    /var/log/auth.log" | sudo tee /etc/rsyslog.d/audit.conf
-sudo systemctl restart rsyslog
-
-echo "Debian 12 Hardening Complete."
-
-
-apt install -y cracklib-runtime wamerican
-sudo update-cracklib
-ls -l /var/cache/cracklib/cracklib_dict.pwd
-
-
-passwd linaro   #   Advantech@887#zw
-sudo faillock --user linaro              #查看登陆失败记录
-sudo faillock --user linaro --reset     #重置失败记录
-
-sudo systemctl restart lxdm
 
 查看核心报错：/var/log/auth.log
 既然你有 lxdm 的失败记录，系统日志里一定记录了为什么它认为失败。请运行：
 grep "lxdm" /var/log/auth.log | tail -n 10
 
-
-IEC 62443 认证通常要求“禁止通用默认密码”。最合规的变通方案是：设置一个强初始密码，但强制用户在第一次通过 HDMI 登录时修改它。
-在构建脚本中添加：
-bash
-# 1. 设定强初始密码
-echo "linaro:Init@2026#Strong" | chroot $DEST chpasswd
-
-# 2. 强制密码过期
-chroot $DEST chage -d 0 linaro
-
-cr107 ************************************************************************************************************************
-
-#!/bin/bash
-# Corrected for Debian 12 (Bookworm) - RK3568 Linaro
-
-PWQUALITY_FILE="/etc/security/pwquality.conf"
-PASSWORD_FILE="/etc/pam.d/common-password"
-LOGIN_DEFS_FILE="/etc/login.defs"
-USERNAME="linaro"  # Corrected from 'ubuntu'
-
-# 1. Install dependency first
-apt install -y libpam-pwquality
-
-# 2. Configure pwquality.conf (Best Practice for Debian 12)
-# Using -1 to FORCE at least one of each class
-sudo sed -i "
-  s/^#\? \?minlen =.*/minlen = 12/;
-  s/^#\? \?dcredit =.*/dcredit = -1/;
-  s/^#\? \?ucredit =.*/ucredit = -1/;
-  s/^#\? \?lcredit =.*/lcredit = -1/;
-  s/^#\? \?ocredit =.*/ocredit = -1/;
-  s/^#\? \?minclass =.*/minclass = 4/;
-" $PWQUALITY_FILE
-
-# 3. Securely update common-password (avoid breaking the PAM stack)
-# Check if the line already exists to avoid duplication
-if ! grep -q "pam_pwquality.so" "$PASSWORD_FILE"; then
-    sudo sed -i '/pam_unix.so/i password requisite pam_pwquality.so retry=3' "$PASSWORD_FILE"
-fi
-
-# 4. Apply Aging Policy to the CURRENT user
-if id "$USERNAME" &>/dev/null; then
-    sudo chage -M 90 -W 7 -m 7 "$USERNAME"
-else
-    echo "Warning: User $USERNAME not found."
-fi
-
-# 5. Set Global Default for FUTURE users
-sudo sed -i "
-  s/^\(PASS_MAX_DAYS[[:space:]]*\)[[:digit:]]*/\1 90/;
-  s/^\(PASS_MIN_DAYS[[:space:]]*\)[[:digit:]]*/\1 7/;
-  s/^\(PASS_WARN_AGE[[:space:]]*\)[[:digit:]]*/\1 14/;
-" $LOGIN_DEFS_FILE
-
-echo "Configuration applied successfully for Debian 12."
-
-
 root@linaro-alip:~# chage -l linaro
-Last password change                                    : Apr 21, 2026
-Password expires                                        : Jul 20, 2026
-Password inactive                                       : never
+
+Last password change                                    : password must be changed
+Password expires                                        : password must be changed
+Password inactive                                       : password must be changed
 Account expires                                         : never
 Minimum number of days between password change          : 7
 Maximum number of days between password change          : 90
 Number of days of warning before password expires       : 7
 
-vim /etc/pam.d/common-password    #加分项目，满足 IEC 62443 关于“禁止使用最近 5 次旧密码”的要求
-password [success=1 default=ignore] pam_unix.so obscure use_authtok remember=5
 
-
-cr111 ************************************************************************************************************************
-#!/bin/bash
-# Corrected for Debian 12 (Bookworm) - RK3568 Linaro
-
-PWQUALITY_FILE="/etc/security/pwquality.conf"
-PASSWORD_FILE="/etc/pam.d/common-password"
-LOGIN_DEFS_FILE="/etc/login.defs"
-USERNAME="linaro"  # Corrected from 'ubuntu'
-
-# 1. Install dependency first
-apt install -y libpam-pwquality
-
-# 2. Configure pwquality.conf (Best Practice for Debian 12)
-# Using -1 to FORCE at least one of each class
-sudo sed -i "
-  s/^#\? \?minlen =.*/minlen = 12/;
-  s/^#\? \?dcredit =.*/dcredit = -1/;
-  s/^#\? \?ucredit =.*/ucredit = -1/;
-  s/^#\? \?lcredit =.*/lcredit = -1/;
-  s/^#\? \?ocredit =.*/ocredit = -1/;
-  s/^#\? \?minclass =.*/minclass = 4/;
-" $PWQUALITY_FILE
-
-# 3. Securely update common-password (avoid breaking the PAM stack)
-# Check if the line already exists to avoid duplication
-if ! grep -q "pam_pwquality.so" "$PASSWORD_FILE"; then
-    sudo sed -i '/pam_unix.so/i password requisite pam_pwquality.so retry=3' "$PASSWORD_FILE"
-fi
-
-# 4. Apply Aging Policy to the CURRENT user
-if id "$USERNAME" &>/dev/null; then
-    sudo chage -M 90 -W 7 -m 7 "$USERNAME"
-else
-    echo "Warning: User $USERNAME not found."
-fi
-
-# 5. Set Global Default for FUTURE users
-sudo sed -i "
-  s/^\(PASS_MAX_DAYS[[:space:]]*\)[[:digit:]]*/\1 90/;
-  s/^\(PASS_MIN_DAYS[[:space:]]*\)[[:digit:]]*/\1 7/;
-  s/^\(PASS_WARN_AGE[[:space:]]*\)[[:digit:]]*/\1 14/;
-" $LOGIN_DEFS_FILE
-
-echo "Configuration applied successfully for Debian 12."
-
-sudo faillock --user linaro
-
+主机查询
 $ ssh -vvv linaro@172.21.170.37 2>&1 | grep "kex: server"
 debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
-
-
-CR112************************************************************************************************************************
-#!/bin/bash
-# Compliance: IEC 62443 Legal Banner & SSH Hardening Fix
-
-# --- 1. Fix SSH Root Login (Crucial for Compliance) ---
-echo "Fixing SSH configuration..."
-SSH_CONF="/etc/ssh/sshd_config"
-# 强制禁用 Root 登录
-sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' $SSH_CONF
-# 开启登录前横幅引用
-sudo sed -i 's|^#\?Banner.*|Banner /etc/issue.net|' $SSH_CONF
-
-# --- 2. Create Legal Banners (CR 1.1) ---
-echo "Creating Legal Banners..."
-# 登录前横幅 (SSH 联通时显示)
-cat <<EOF | sudo tee /etc/issue.net
-*************************************************************************
-* WARNING: Unauthorized access to this device is strictly prohibited.   *
-* All activities are monitored and recorded for security purposes.       *
-* If you are not an authorized user, disconnect immediately.            *
-*************************************************************************
-EOF
-
-# 登录后横幅 (登录成功后显示)
-cat <<EOF | sudo tee /etc/motd
-Access granted to authorized engineering personnel only.
-Please ensure all security protocols are followed.
-EOF
-
-# --- 3. Graphics Interface (LXDM/LightDM) Support ---
-# 既然你的系统用的是 LXDM/LightDM 而非 GDM3，使用以下配置：
-if [ -f /etc/lxdm/lxdm.conf ]; then
-    echo "Hardening LXDM GUI..."
-    sudo sed -i 's/^#\?disable_user_list=.*/disable_user_list=1/' /etc/lxdm/lxdm.conf
-fi
-
-# --- 4. Restart Services ---
-sudo systemctl restart ssh
-echo "SSH Hardening and Banners applied."
 
 ssh -v root@172.21.170.37     #debug模式
 
@@ -231,61 +40,126 @@ ssh -v root@172.21.170.37     #debug模式
 尝试第 6 次（用正确密码）：如果系统提示认证失败，说明锁定生效。
 手动解锁：sudo faillock --user linaro --reset
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+grep "lxdm" /var/log/auth.log | tail -n 10
+
+2026-04-22T01:44:45.232369+00:00 linaro-alip lxdm-session: PAM adding faulty module: pam_cap.so
+2026-04-22T01:44:45.232369+00:00 linaro-alip lxdm-session: PAM adding faulty module: pam_cap.so
+2026-04-22T01:44:45.458663+00:00 linaro-alip lxdm-session: pam_unix(lxdm:account): expired password for user linaro (root enforced)
+2026-04-22T01:44:45.458663+00:00 linaro-alip lxdm-session: pam_unix(lxdm:account): expired password for user linaro (root enforced)
+
+这份日志清晰地显示了你之前的脚本已经成功生效，但也揭示了为什么你现在进不去 HDMI 界面。
+1. 日志解读
+expired password：说明你脚本中的 sudo chage -d 0 linaro 起作用了。系统认为 linaro 的密码已过期，必须修改。
+root enforced：这是由管理员（也就是你的脚本）强制执行的过期。
+LXDM 的局限性：这是一个非常关键的问题。LXDM 登录界面通常不支持“强制修改密码”的交互。当它发现密码过期时，它不会弹出修改密码的框，而是直接拒绝登录并返回登录界面，导致你看起来像是密码错误或闪退。
+2. 如何解决（进入系统）
+你需要通过一个支持交互式修改密码的通道登录一次，完成新密码的设定。
+方案 A：通过 SSH 登录（推荐）
+在电脑上运行：ssh linaro@你的IP
+输入初始强密码：Init@2026#Strong
+系统会立即提示：WARNING: Your password has expired. You must change your password now and login again!
+按照提示：先输入一遍旧密码 (Init@2026#Strong)，再输入两遍你的自定义新强密码（必须符合 12 位、4 类字符规则）。
+完成后，再去 HDMI 界面登录，就能进去了。
+方案 B：通过串口（Serial Console）
+如果你连接了串口，直接在串口输入用户名登录，它也会强制要求你改密码。
+3. 给量产/合规建议
+在 IEC 62443 审计中，这种“初次登录强制改密”是满分操作。但为了用户体验，通常有以下两种做法：
+做法 1（标准）：在产品说明书中告知用户，首次登录必须通过终端（SSH/串口）完成密码初始化。
+做法 2（优化）：如果不希望强制改密，请从脚本中删除 sudo chage -d 0 linaro 这一行。这样用户就能直接用 Init@2026#Strong 登录 HDMI 界面。
+4. 检查点
+请确保你设置的新密码不要包含用户名 linaro，否则 pam_pwquality 可能会因为“密码包含用户名”而再次拒绝你的修改。
 
 
+ssh-keygen -f "/home/zengwei/.ssh/known_hosts" -R "172.21.170.37"
+
+ssh linaro@172.21.170.37 
+
+ssh -v root@172.21.170.37
+
+passwd linaro   #  Advantech@887#zw
+passwd root     #  Advantech@887#zw
+
+linaro初始密码   # Init@2026#Strong
+
+sudo faillock --user linaro             #查看登陆失败记录
+sudo faillock --user linaro --reset     #重置失败记录
+
+重启界面
+sudo systemctl restart lxdm
 
 
+zengwei@zengwei-Precision-3660:~/data_2T/zengwei/documents/Record$ ssh linaro@172.21.170.37
+*************************************************************************
+* WARNING: Unauthorized access to this device is strictly prohibited.   *
+* All activities are monitored and recorded for security purposes.       *
+* If you are not an authorized user, disconnect immediately.            *
+*************************************************************************
+linaro@172.21.170.37's password: 
+Linux linaro-alip 6.1.141 #2 SMP Mon Mar 30 05:45:09 UTC 2026 aarch64
+Access granted to authorized engineering personnel only.
+Please ensure all security protocols are followed.
+Last login: Wed Apr 22 02:02:55 2026 from 172.21.171.105
+
+root@linaro-alip:/#  chage -l linaro
+Last password change                                    : Apr 22, 2026
+Password expires                                        : Jul 21, 2026
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 7
+Maximum number of days between password change          : 90
+Number of days of warning before password expires       : 7
 
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-
 针对 IEC 62443-4-2 CR 1.1（身份识别与鉴别） 的要求，在完成所有 Debian 12 加固配置后，你需要从以下 7 个核心维度进行验证。
 这些验证项不仅能确保系统安全，也是你在通过 TÜV NORD 审计时需要展示的测试报告（Test Report）要点。
 1. 密码复杂度验证 (Password Complexity)
-验证 pam_pwquality 是否强制执行了“12位+4类字符”策略。
-验证点：使用 passwd 修改密码。
-预期结果：
-密码少于 12 位：拒绝。
-缺少大写/小写/数字/特殊字符中的任意一类：拒绝。
-包含常见字典单词（如 Password12345）：拒绝。
+        验证 pam_pwquality 是否强制执行了“12位+4类字符”策略。
+        验证点：使用 passwd 修改密码。
+    预期结果：
+        密码少于 12 位：拒绝。
+        缺少大写/小写/数字/特殊字符中的任意一类：拒绝。
+       包含常见字典单词（如 Password12345）：拒绝。
 2. 暴力破解防御验证 (Account Lockout)
-验证 pam_faillock 在 SSH 和 HDMI 登录时是否生效。
-验证点：连续输入 5 次错误密码。
-预期结果：
-第 6 次尝试（即使密码正确）：拒绝。
-命令 faillock --user linaro：应显示 5 次失败记录。
-锁定时间：确认在 30 分钟（1800s）内无法登录，除非手动执行 --reset。
+       验证 pam_faillock 在 SSH 和 HDMI 登录时是否生效。
+       验证点：连续输入 5 次错误密码。
+    预期结果：
+       第 6 次尝试（即使密码正确）：拒绝。
+       命令 faillock --user linaro：应显示 5 次失败记录。
+       锁定时间：确认在 30 分钟（1800s）内无法登录，除非手动执行 --reset。
 3. 密码生命周期验证 (Password Lifecycle)
-验证 chage 和 login.defs 的策略。
-验证点：执行 chage -l linaro。
-预期结果：
-Maximum number of days：90。
-Minimum number of days：7（修改密码后 7 天内不能再改）。
-Password expiration warning：7 或 14。
+       验证 chage 和 login.defs 的策略。
+      验证点：执行 chage -l linaro。
+   预期结果：
+   Maximum number of days：90。
+   Minimum number of days：7（修改密码后 7 天内不能再改）。
+   Password expiration warning：7 或 14。
 4. 禁止重复使用旧密码 (Password History)
-验证 remember=5 是否生效。
-验证点：修改密码时，尝试改回最近使用的前 5 个密码之一。
-预期结果：系统报错，提示密码曾在最近使用过。
+       验证 remember=5 是否生效。
+       验证点：修改密码时，尝试改回最近使用的前 5 个密码之一。
+    预期结果：系统报错，提示密码曾在最近使用过。
 5. 最小权限与 Root 限制 (Least Privilege)
-验证 SSH 的安全访问控制。
-验证点：通过 SSH 直接以 root 账户登录。
-预期结果：
-即使密码正确也应提示 Permission denied（验证 PermitRootLogin no）。
-必须通过 linaro 登录后使用 sudo 提权。
+      验证 SSH 的安全访问控制。
+      验证点：通过 SSH 直接以 root 账户登录。
+   预期结果：
+      即使密码正确也应提示 Permission denied（验证 PermitRootLogin no）。
+      必须通过 linaro 登录后使用 sudo 提权。
 6. 法律告知横幅 (Login Banner)
-验证横幅是否在鉴别发生前显示。
-验证点：发起 SSH 连接及观察 HDMI 登录界面。
-预期结果：
-SSH：在提示输入密码之前，必须显示 WARNING: Unauthorized access... 的方框。
-GUI：登录界面隐藏了用户列表（disable_user_list=1）。
+      验证横幅是否在鉴别发生前显示。
+      验证点：发起 SSH 连接及观察 HDMI 登录界面。
+    预期结果：
+   SSH：在提示输入密码之前，必须显示 WARNING: Unauthorized access... 的方框。
+   GUI：登录界面隐藏了用户列表（disable_user_list=1）。
 7. 审计记录验证 (Audit Logging)
-验证所有认证行为是否可追溯。
-验证点：查看 /var/log/auth.log。
-预期结果：
-成功的登录：记录 session opened。
-失败的尝试：记录 authentication failure 及来源 IP。
-锁定的触发：记录 faillock 相关的锁定事件。
+       验证所有认证行为是否可追溯。
+       验证点：查看 /var/log/auth.log。
+   预期结果：
+      成功的登录：记录 session opened。
+      失败的尝试：记录 authentication failure 及来源 IP。
+      锁定的触发：记录 faillock 相关的锁定事件。
+      
 💡 审计建议 (TÜV 认证准备)
 为了符合你提到的 DE 7-0460 证书要求，建议你将上述 7 项验证过程整理成下表格式：
 测试 ID	CR 1.1 要求描述	测试操作	预期结果	实际结果 (Pass/Fail)

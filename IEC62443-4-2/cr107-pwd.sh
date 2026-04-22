@@ -6,9 +6,6 @@ PASSWORD_FILE="/etc/pam.d/common-password"
 LOGIN_DEFS_FILE="/etc/login.defs"
 USERNAME="linaro"  # Corrected from 'ubuntu'
 
-# 1. Install dependency first
-apt update && apt install -y libpam-pwquality
-
 # 2. Configure pwquality.conf (Best Practice for Debian 12)
 # Using -1 to FORCE at least one of each class
 sudo sed -i "
