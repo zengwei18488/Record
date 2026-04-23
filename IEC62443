@@ -243,7 +243,7 @@ E: Package 'linux-image-arm64' has no installation candidate
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-FR1
+FR1      Identification and Authentication Control (IAC)
 
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/secure_tls.sh .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr101-pwd.sh .
@@ -382,6 +382,140 @@ apt-mark hold: 防止 apt upgrade 更新目前已安裝的內核套件。
 Pin-Priority: -1: 這是最高級別的禁止，即使有新版本的內核出現在軟體源中，apt 也會完全忽略它們。
 如果您未來需要恢復更新，只需刪除 /etc/apt/preferences.d/no-kernel-upgrades 檔案並執行 sudo apt-mark unhold 即可。
 
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+FR2   Use Control (UC)
+
+CR2.01                   用户管理
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/*.sh .
+
+root@linaro-alip:~# id user1
+id user2
+id user3
+uid=1001(user1) gid=1005(user1) groups=1005(user1),27(sudo)
+uid=1002(user2) gid=1006(user2) groups=1006(user2),1002(operator),1004(devicegroup)
+uid=1003(user3) gid=1007(user3) groups=1007(user3),1003(viewer)
+
+root@linaro-alip:~# grep -E "user1|user2|user3" /etc/passwd
+user1:x:1001:1005::/home/user1:/bin/bash
+user2:x:1002:1006::/home/user2:/bin/bash
+user3:x:1003:1007::/home/user3:/bin/bash
+
+root@linaro-alip:~# sudo chage -l user1
+Last password change                                    : Apr 22, 2026
+Password expires                                        : Jul 21, 2026
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 7
+Maximum number of days between password change          : 90
+Number of days of warning before password expires       : 14
+
+root@linaro-alip:~# getent group sudo
+getent group operator
+getent group viewer
+getent group devicegroup
+sudo:x:27:linaro,user1
+operator:x:1002:user2
+viewer:x:1003:user3
+devicegroup:x:1004:user2
+root@linaro-alip:~# grep -E "sudo|operator|viewer|devicegroup" /etc/group
+sudo:x:27:linaro,user1
+operator:x:1002:user2
+viewer:x:1003:user3
+devicegroup:x:1004:user2
+
+root@linaro-alip:~# groups user1 user2 user3
+user1 : user1 sudo
+user2 : user2 operator devicegroup
+user3 : user3 viewer
+root@linaro-alip:~#
+
+
+CR2.04     动态代码执行监控（是否被篡改）
+
+Embedded device requirements，Host device requirements，Network device requirements，Software application requirements，
+
+在 AFE-E630 的生產流程中，建議按照以下順序操作：
+第一步：執行 sudo bash setup_ima.sh fix
+重啟系統。
+執行全盤掃描：sudo find / -fstype ext4 -type f -uid 0 -exec cat {} > /dev/null \;
+這會把正確的雜湊值寫入每個檔案的「安全標籤」(security.ima)。
+第二步：驗證標籤
+使用我之前提供給您的驗證腳本，確認 [ PASS ] File /bin/ls has 'security.ima' attribute。
+第三步：執行 sudo bash setup_ima.sh enforce
+重啟系統。
+結果：此時系統進入「完全保護」狀態。如果有人修改了系統檔，該程式將無法執行。
+
+這段操作屬於 「系統完整性保護」。在 IEC 62443 稽核中，這證明了 AFE-E630 具備「偵測並阻止非授權變更」的能力。
+注意：這是一個非常進階且有風險的操作。如果「最終發行前」沒有正確轉為 ima_appraise=enforce（強制模式），它就只有記錄功能，沒有攔截功能。
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr2*.sh .
+
+IMA（Integrity Measurement Architecture）完整性测量架构是 Linux 内核的一个模块
+
+# --- 基礎完整性框架 ---
+CONFIG_INTEGRITY=y
+CONFIG_INTEGRITY_SIGNATURE=y
+CONFIG_INTEGRITY_ASYMMETRIC_KEYS=y
+CONFIG_INTEGRITY_AUDIT=y
+
+# --- IMA 核心功能 (CR 2.04 RE 1 的關鍵) ---
+CONFIG_IMA=y
+CONFIG_IMA_LSM_RULES=y
+CONFIG_IMA_MEASURE_PCR_IDX=10
+CONFIG_IMA_NG_TEMPLATE=y
+CONFIG_IMA_DEFAULT_TEMPLATE="ima-ng"
+CONFIG_IMA_DEFAULT_HASH_SHA256=y
+CONFIG_IMA_DEFAULT_HASH="sha256"
+CONFIG_IMA_WRITE_POLICY=y
+CONFIG_IMA_READ_POLICY=y
+
+# --- 重要：開啟評估模式 (Appraisal) ---
+# 若沒開啟此項，系統只能記錄(Measure)而無法攔截(Appraise)非授權變更
+CONFIG_IMA_APPRAISE=y
+CONFIG_IMA_APPRAISE_BOOTPARAM=y
+
+# --- EVM 配置 (保護檔案擴展屬性 security.ima 不被離線修改) ---
+CONFIG_EVM=y
+CONFIG_EVM_ATTR_FSUUID=y
+CONFIG_EVM_EXTRA_INDICES=y
+
+開啟以下關鍵路徑：
+General setup --->
+[*] Initial RAM filesystem and RAM disk (initramfs/initrd) support
+Security options --->
+[*] Integrity Measurement Architecture(IMA)
+[*] IMA Measurement policies
+[*] Appraise objects on the filesystem (關鍵：CONFIG_IMA_APPRAISE)
+[*] IPMI-specific extension for IMA (可選)
+[*] EVM support (關鍵：CONFIG_EVM)
+
+在 Rockchip 的 SDK 中，找到 parameter.txt 檔案，在 CMDLINE: 的末尾追加：
+ima_policy=tcb ima_appraise=fix ima_hash=sha256
+然後重新燒錄 parameter 分區。這比改 GRUB 更能保證參數進入 /proc/cmdline。
+
+確認參數載入：
+cat /proc/cmdline 必須能看到 ima_appraise=fix。
+確認安全文件系統已掛載：
+ls -l /sys/kernel/security/ima/ 應該要看到 ascii_runtime_measurements 和 policy 等檔案。
+確認功能啟用：
+執行 zgrep CONFIG_IMA_APPRAISE /proc/config.gz，輸出應為 CONFIG_IMA_APPRAISE=y。
+
+
+CR 2.05
+
+sudo apt-get update && sudo apt-get install -y xscreensaver xscreensaver-data-extra
+
+主動透過快捷鍵（例如 Ctrl+Alt+L）
+# 設定 900 秒（15 分鐘）後自動鎖定
+xscreensaver-command -timeout 900 -lock
+
+您可以直接在終端機執行以下指令來測試手動鎖定功能：
+xscreensaver-command -lock
+
+# 強制殺掉所有 root 的 SSH 會話
+sudo pkill -u root sshd
+
 
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 
@@ -418,13 +552,13 @@ IEC 62443-4-2
 2. 技術要求架構
 4-2 標準將超過 140 項具體需求歸納在 7 個基礎需求（Foundational Requirements, FR） 之下： 
 
-    FR 1 身份識別與驗證控制 (IAC)：確保所有使用者、軟體或設備在存取前都經過唯一身份驗證。
-    FR 2 使用控制 (UC)：執行權限控管與紀錄，遵循「最小特權」原則。
-    FR 3 系統完整性 (SI)：保護組件不被未經授權地篡改，包含安全開機、韌體完整性驗證。
-    FR 4 資料機密性 (DC)：透過加密保護通訊與儲存中的機敏資訊。
-    FR 5 限制資料流 (RDF)：控制通訊路徑，如 VLAN 隔離或白名單過濾。
-    FR 6 事件及時回應 (TRE)：提供完整的稽核日誌與監控警報功能。
-    FR 7 資源可用性 (RA)：防禦阻斷服務攻擊（DoS），確保攻擊發生時核心功能仍能運作。 
+    FR 1 身份識別與驗證控制 (IAC)：確保所有使用者、軟體或設備在存取前都經過唯一身份驗證。 Identification and Authentication Control (IAC)
+    FR 2 使用控制 (UC)：執行權限控管與紀錄，遵循「最小特權」原則。        Use Control (UC)
+    FR 3 系統完整性 (SI)：保護組件不被未經授權地篡改，包含安全開機、韌體完整性驗證。    System Integrity (SI)
+    FR 4 資料機密性 (DC)：透過加密保護通訊與儲存中的機敏資訊。          Data Confidentiality (DC)
+    FR 5 限制資料流 (RDF)：控制通訊路徑，如 VLAN 隔離或白名單過濾。      Restricted Data Flow (RDF)
+    FR 6 事件及時回應 (TRE)：提供完整的稽核日誌與監控警報功能。            Timely Response to Events (TRE)
+    FR 7 資源可用性 (RA)：防禦阻斷服務攻擊（DoS），確保攻擊發生時核心功能仍能運作。       Resource Availability (RA)
 
 什么是 FR (Foundational Requirements)？
 FR 指的是“基础要求”，定义在 IEC 62443-1-1 中。
@@ -469,6 +603,21 @@ CR 是对 FR 的实例化。
 技術安全功能 (Technical Security Requirements)：
 這通常是指 CR 及其增強要求 (RE, Requirement Enhancements) 的總稱。
 
+CR (Component Requirement)：组件要求。这是针对所有工业组件（如 PLC、交换机、传感器）的基础技术要求。
+HDR (Host Device Requirement)：主机设备要求。这是 CR 在“主机设备”（如运行 Windows/Linux 的工业计算机、工作站）这一特定类别下的具体实例化。
+RE (Requirement Enhancement)：要求增强。这是在基础要求之上的额外加固项，通常用于提升 SL（安全等级）。
+
+关联：父类与子类的关系
+
+    CR 是“纲”：它定义了通用的规则（Generic）。
+    HDR 是“目”：它是 CR 的具体化应用。在标准文档中，除了 HDR（主机），还有 EDR（嵌入式设备）、NDR（网络设备）和 ADR（应用程序）。
+    逻辑链路：标准要求如果一个产品被定义为“主机设备”，那么它必须满足对应的 HDR。满足了 HDR 2.04，本质上就是满足了 CR 2.04 在该设备类型下的要求。
+
+区别：适用范围与颗粒度
+维度	                                 CR 2.04	                                            HDR 2.04
+定义范围	通用抽象要求，适用于所有工业组件。	专指工业主机（Host Device）的具体要求。
+落地重点	关注“移动代码”这个概念。	                         关注主机操作系统如何处理这些代码（如驱动程序签名、脚本执行策略）。
+判定逻辑	在系统架构设计时作为基准。	   在对特定硬件进行合规性测试（Verdict）时作为判定准则。
 
 
 3. 安全等級 (Security Level, SL)

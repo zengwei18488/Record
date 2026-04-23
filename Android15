@@ -57,6 +57,7 @@ git merge android-15.0-mid-rkr4_develop
 
 git push origin android-15.0-mid-rkr4:android-15.0-mid-rkr4
 
+git checkout android-15.0-mid-rkr4_develop
 
 sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/data_8T2/work/BSP-Launcher/Rockchip:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
 
