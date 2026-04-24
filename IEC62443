@@ -449,7 +449,7 @@ Embedded device requirements，Host device requirements，Network device require
 這段操作屬於 「系統完整性保護」。在 IEC 62443 稽核中，這證明了 AFE-E630 具備「偵測並阻止非授權變更」的能力。
 注意：這是一個非常進階且有風險的操作。如果「最終發行前」沒有正確轉為 ima_appraise=enforce（強制模式），它就只有記錄功能，沒有攔截功能。
 
-scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr2*.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr211*.sh .
 
 IMA（Integrity Measurement Architecture）完整性测量架构是 Linux 内核的一个模块
 
@@ -502,7 +502,7 @@ ls -l /sys/kernel/security/ima/ 應該要看到 ascii_runtime_measurements 和 p
 執行 zgrep CONFIG_IMA_APPRAISE /proc/config.gz，輸出應為 CONFIG_IMA_APPRAISE=y。
 
 
-CR 2.05
+CR 2.05/2.06
 
 sudo apt-get update && sudo apt-get install -y xscreensaver xscreensaver-data-extra
 
@@ -513,8 +513,369 @@ xscreensaver-command -timeout 900 -lock
 您可以直接在終端機執行以下指令來測試手動鎖定功能：
 xscreensaver-command -lock
 
-# 強制殺掉所有 root 的 SSH 會話
+# 強制殺掉所有 root/linaro 的 SSH 會話
 sudo pkill -u root sshd
+sudo pkill -u linaro sshd
+
+linaro@linaro-alip:~$ sed -i 's/timeout:.*/timeout: 0:01:00/' ~/.xscreensaver
+linaro@linaro-alip:~$ xscreensaver-command -restart
+xscreensaver-command: restarting
+
+
+CR 2.11
+
+zgrep CONFIG_AUDIT /proc/config.gz
+
+功能項目	負責組件	對應標準
+同步精準時間	Chrony	        CR 3.14 (Time sync)
+產生稽核日誌	Auditd/Kernel	CR 2.08 (Audit generation)
+附加時間戳記	rsyslog	        CR 2.11 RE 1 (Timestamps)
+存儲與備份	rsyslog	        CR 3.9 (Audit storage)
+
+時間同步支援：由 Chrony 提供精準時鐘。
+驗證時間戳記：使用 journalctl 來展示日誌中的時間是精確且同步的。
+長期稽核儲存：由 rsyslog 負責。
+
+角色分工圖 (The Compliance Chain)
+組件	                                   角色	                                                   對應標準 (IEC 62443-4-2)
+Chrony	              時間提供者 (Source)	CR 3.14 (Time Synchronization)
+systemd-journald      日誌收集器 (Collector)	CR 2.11 RE(1) (Timestamping)
+rsyslog	              日誌儲存與轉發 (Storage)	CR 3.9 (Audit Storage)
+journalctl	    驗證與稽核工具 (Audit Tool)	CR 3.1 (Audit Generation Verification)
+
+雖然腳本沒有用它來「設定」，但它是最好的「驗證工具」。執行完 Chrony 腳本後，你可以用 timedatectl 檢查最終結果：
+bash
+root@linaro-alip:~# timedatectl status
+               Local time: Fri 2026-04-24 09:16:15 CST
+           Universal time: Fri 2026-04-24 01:16:15 UTC
+                 RTC time: Fri 2026-04-24 01:16:15
+                Time zone: Asia/Taipei (CST, +0800)
+System clock synchronized: yes              <-- 證明 Chrony 成功同步
+              NTP service: active           <-- 證明時間服務正在運行
+          RTC in local TZ: no
+          
+root@linaro-alip:~# timedatectl status
+               Local time: Fri 2026-04-24 01:30:19 UTC
+           Universal time: Fri 2026-04-24 01:30:19 UTC
+                 RTC time: Fri 2026-04-24 09:31:28
+                Time zone: Etc/UTC (UTC, +0000)
+System clock synchronized: yes
+              NTP service: active
+          RTC in local TZ: no
+
+
+強制手動同步一次：
+bash
+# 告訴 Chrony 立刻嘗試在線伺服器
+sudo chronyc online
+# 強制立即跳轉時間（針對誤差極大的情況）
+sudo chronyc makestep
+请谨慎使用此类代码。
+檢查網路連線性：
+bash
+# 查看伺服器是否連得上 (看最後一欄是否有 * 號)
+chronyc sources -v
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+FR3 - System integrity
+
+CR 3.01
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr3*.sh .
+
+zgrep CONFIG_NETFILTER /proc/config.gz
+
+设定
+CONFIG_NETFILTER_XT_TARGET_LOG=y
+CONFIG_NETFILTER_XT_TARGET_REJECT=y
+CONFIG_NETFILTER_XT_MATCH_LIMIT=y
+CONFIG_NETFILTER_XT_MATCH_COMMENT=y
+CONFIG_NETFILTER_XT_MATCH_MULTIPORT=y
+CONFIG_NETFILTER_XT_MATCH_STATE=y
+CONFIG_IP_NF_IPTABLES=y
+CONFIG_IP_NF_FILTER=y
+CONFIG_IP_NF_TARGET_REJECT=y
+CONFIG_IP6_NF_IPTABLES=y
+CONFIG_IP6_NF_FILTER=y
+
+root@linaro-alip:~# ss -tulpn
+Netid State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+udp   UNCONN 0      0          127.0.0.1:323       0.0.0.0:*    users:(("chronyd",pid=3854,fd=5))
+udp   UNCONN 0      0            0.0.0.0:4500      0.0.0.0:*    users:(("charon",pid=1217,fd=13))
+udp   UNCONN 0      0            0.0.0.0:500       0.0.0.0:*    users:(("charon",pid=1217,fd=12))
+udp   UNCONN 0      0            0.0.0.0:1701      0.0.0.0:*    users:(("xl2tpd",pid=1264,fd=3))
+udp   UNCONN 0      0              [::1]:323             *:*    users:(("chronyd",pid=3854,fd=6))
+udp   UNCONN 0      0                  *:4500            *:*    users:(("charon",pid=1217,fd=11))
+udp   UNCONN 0      0                  *:500             *:*    users:(("charon",pid=1217,fd=10))
+tcp   LISTEN 0      0          127.0.0.1:1883      0.0.0.0:*    users:(("mosquitto",pid=1245,fd=5))
+tcp   LISTEN 0      0            0.0.0.0:22        0.0.0.0:*    users:(("sshd",pid=4789,fd=3))
+tcp   LISTEN 0      0              [::1]:1883            *:*    users:(("mosquitto",pid=1245,fd=6))
+tcp   LISTEN 0      0                  *:22              *:*    users:(("sshd",pid=4789,fd=4))
+
+sudo ufw disable     # 暂时关闭防火墙
+
+scp -v -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr3*.sh .
+
+
+sudo ufw disable
+sudo ufw --force reset
+
+# 2. 修改 UFW 設定以適應「缺少 IPv6 模組」的內核
+# 這樣可以避免 ip6tables 的錯誤導致整個防火牆崩潰
+sudo sed -i 's/IPV6=yes/IPV6=no/' /etc/default/ufw
+
+# 3. 重新設定最簡單的 IPv4 規則
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp
+
+# 4. 再次嘗試啟用
+sudo ufw --force enable
+
+ip addr show eth0
+
+# 清空所有核心防火牆規則
+sudo iptables -F
+sudo iptables -X
+sudo iptables -t nat -F
+sudo iptables -t nat -X
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+
+# 確保沒有拒絕所有連線
+sudo rm -f /etc/hosts.deny
+sudo touch /etc/hosts.deny
+
+
+確認監聽埠口 (CR 3.1-1 證據)
+ss -tulpn | grep LISTEN
+
+scp cr301-sys.sh linaro@172.21.170.37:/root
+
+ 加密協議與演算法的唯一性 (Cryptography Usage)
+證據：您的 sshd_config 現在強制使用了 Protocol 2。
+說明：腳本中配置了 Ciphers aes128-gcm@openssh.com, aes256-gcm@openssh.com。這些是經認證的強對稱加密演算法，能確保數據在傳輸過程中不會被第三方讀取或竄改。
+驗證指令：sshd -T | grep -E "protocol|ciphers"（輸出應顯示您設定的強演算法）。
+
+
+CR 3.02
+
+惡意軟體防護機制，對應 IEC 62443-4-2 CR 3.02 RE(1) (Protection against malicious code)
+
+腳本功能說明：
+自動安裝與清理：會安裝 clamav-daemon 以提升掃描效率，並確保掃描引擎處於待命狀態。
+優化掃描範圍：考慮到 RK3568 的效能，腳本中的排程掃描針對 /home、/tmp、/var/www 等高風險目錄，而非盲目掃描全系統，這能保護 eMMC 壽命。
+內建校驗 (Self-Verification)：
+更新測試：確認 freshclam 能夠正常運作。
+功能測試：立即掃描 /tmp 確保引擎沒崩潰。
+合規測試：檢查 crontab 確保自動化政策已寫入。
+如何提供合規證據？
+執行完腳本後，你可以直接將最後的 [ PASS ] 輸出與 /var/log/clamav_version.log 的內容作為 CR 3.02 RE(1) 的證據提交。
+
+# 停止背景自動更新服務，釋放鎖定
+sudo systemctl stop clamav-freshclam
+请谨慎使用此类代码。
+2. 手動再次執行並觀察進度：
+# 加上 -v 參數看詳細進度，確認到底是卡在網路還是檔案
+sudo freshclam -v
+
+
+
+CR 3.03     自動更新（Unattended Upgrades） 機制，對應的是 IEC 62443-4-2 CR 3.3（Security patches）
+
+相比你提到的單行指令 sudo dpkg-reconfigure --priority=low unattended-upgrades（這通常需要人工手動點選介面），我提供的腳本針對 SL2 等級多做了以下三點強化，且完全自動化：
+無人值守自動化：使用 debconf-set-selections 預先注入「YES」的答案，確保腳本在執行時不會跳出藍色視窗中斷你的操作。
+可用性保障 (No Reboot)：強制設定更新後禁止自動重啟。這對工控設備至關重要，防止設備在生產時突然重開機。
+磁碟空間保護：自動清理更新後的快取檔案，防止 AFE-E630 的 eMMC 被暫存檔塞滿。
+
+[ PASS ] 第三項：最重要。它代表系統實際去模擬了一遍「檢查更新 -> 準備安裝」的流程，如果通過了，代表你的網路和配置完全符合 IEC 62443 的修補要求。
+SL2 證據：這份腳本執行的結果可以直接截圖，證明設備具備「主動獲取並應用安全更新」的能力。
+
+root@linaro-alip:~# ./cr303-sys.sh
+--- 1. Installing unattended-upgrades ---
+--- 2. Enabling Auto-updates (Non-interactive) ---
+--- 3. Hardening Configuration for Industrial Stability ---
+--- 4. Running Verification (Verification) ---
+[ PASS ] Unattended-upgrades service is enabled.
+[ PASS ] Auto-upgrade policy is correctly applied.
+Running dry-run test (this may take a few seconds)...
+[ PASS ] Dry-run verification completed (Configuration is valid).
+--------------------------------------------------
+AFE-E630 CR 3.3 Hardening Complete!
+--------------------------------------------------
+
+策略落地：Auto-upgrade policy is correctly applied 證明了系統已經排程，每天會自動檢查並安裝安全性更新。
+配置有效性：Dry-run verification completed 最為關鍵。這代表系統實際模擬了從 Debian 官方安全伺服器獲取補丁的過程，且沒有發生語法錯誤或網路阻塞。
+合規等級 (SL 2)：您透過自動化手段解決了 Patch 管理問題，同時保留了「不自動重啟」的工控穩定性要求，這是 SL 2 等級的最佳實作。
+
+CR 3.07（Error handling）
+
+核心要求是：系統出錯時不應洩漏敏感資訊（如記憶體位址、代碼段）給普通用戶，但必須為管理員保留錯誤紀錄。
+
+root@linaro-alip:~# bash -c 'kill -s SIGSEGV $$'
+Segmentation fault (core dumped)
+root@linaro-alip:~#  coredumpctl list
+TIME                          PID UID GID SIG     COREFILE EXE            SIZE
+Fri 2026-04-24 08:07:35 UTC 11722   0   0 SIGSEGV present  /usr/bin/bash 39.7K
+root@linaro-alip:~# sysctl kernel.printk
+kernel.printk = 3       4       1       3
+root@linaro-alip:~# sysctl fs.suid_dumpable
+fs.suid_dumpable = 0
+
+驗證「錯誤是否被捕捉」以及「敏感資訊是否被隱藏」。
+請執行以下三個步驟進行實測校驗：
+1. 模擬程式崩潰（驗證捕捉機制）
+我們可以用指令人工觸發一個「段錯誤 (Segmentation Fault)」，看系統會不會抓到它：
+# 執行一個會立即崩潰的指令
+bash -c 'kill -s SIGSEGV $$'
+然後執行校驗指令：
+# 檢查 coredump 列表
+sudo coredumpctl list
+預期結果：你應該會看到一條剛才 bash 崩潰的紀錄。這證明了錯誤已經被導向管理員專用的後端，符合「安全處理錯誤」的要求
+
+2. 驗證內核訊息隱藏（驗證資訊不外洩）
+檢查內核是否真的被限制在「只顯示嚴重錯誤」，不顯示除錯訊息：
+# 檢查 printk 設定
+sysctl kernel.printk
+預期結果：輸出應為 kernel.printk = 3 4 1 3。
+第一個數字 3 代表只有 ERR 級別以上的訊息會跳到螢幕上。這證明了普通用戶在操作時不會看到系統底層的除錯資訊。
+
+3. 驗證 SUID 安全限制（驗證防止記憶體洩漏）
+確保具有 root 權限的程式崩潰時，不會把記憶體內容（可能包含密碼）寫入磁碟：
+# 檢查 suid_dumpable 設定
+sysctl fs.suid_dumpable
+預期結果：輸出應為 fs.suid_dumpable = 0。
+這是 SL2 級別以上非常重要的指標，證明系統防止了因程式崩潰導致的敏感資料外洩。
+
+建議給稽核員的正式回覆 (Conformity Guide)
+"In the Debian 12 environment, the requirements for CR 3.07 are fulfilled through native system mechanisms rather than Apport. 
+Please verify the following:
+Info Disclosure: Check /etc/sysctl.d/53-afe-error-handling.conf (kernel.printk = 3) for suppression of debug info.
+Error Management: Execute coredumpctl list to verify centralized, administrative crash logging.
+Login Feedback: Check /etc/pam.d/common-auth to verify that generic error messages are used for failed authentication attempts."
+
+
+CR 3.08
+
+
+第一組證明「系統支援哪些能力」，第二組證明「我們限制只能用強算法」。
+1. 檢測系統支援的所有能力（證明軟體具備安全基礎）
+請檢測員執行這三行，確認 OpenSSH 具備現代加密演算法：
+bash
+ssh -Q cipher | grep -E "aes|chacha"
+ssh -Q mac | grep "sha2"
+ssh -Q key | grep "ed25519"
+请谨慎使用此类代码。
+2. 檢測實際生效的安全政策（證明已加固，這是最重要的）
+因為 IEC 62443 要求「禁用弱算法」，所以你要展示實際運作中的配置：
+bash
+# 顯示目前 SSH 服務真正允許使用的加密組合
+sudo sshd -T | grep -E "ciphers|macs|kexalgorithms"
+请谨慎使用此类代码。
+預期結果分析：
+你會看到像 aes256-gcm@openssh.com 這種強算法。
+你會發現清單中 沒有 md5、96-bit 或 CBC 模式的弱算法。這就是滿足 CR 3.01 / CR 3.08 的直接證據。
+3. 針對 CR 3.08 (Audit log accessibility) 的額外指令
+如果稽核員想看「日誌存取是否受到保護」，請執行：
+bash
+# 證明只有具備 sudo 權限的系統管理員才能讀取核心日誌
+ls -ld /var/log/journal /var/log/audit
+请谨慎使用此类代码。
+合規說明：
+「在 AFE-E630 上，稽核日誌存取受到嚴格權限控制。外部人員必須透過具備強加密算法（如剛才展示的 AES-GCM）的 SSH 通道，並以授權管理員身分登入，才能使用 journalctl 或 ausearch 查閱紀錄，確保了日誌的機密性。」
+
+ssh -Q cipher; ssh -Q mac; ssh -Q key
+
+cat /proc/sys/kernel/random/entropy_avail
+cat /proc/sys/kernel/random/poolsize
+結論：如果 entropy_avail 等於 poolsize，就代表隨機數是 100% 充盈 的。
+
+
+CR 3.10 RE(1) 
+
+核心要求是：確保所有更新軟體包在安裝前都經過加密驗證，以保證其真實性（Authenticity）與完整性（Integrity）。
+
+稽核員（CBTL）會檢查什麼？
+當稽核員執行 CR 3.10 檢測時，您應該展示：
+/usr/share/keyrings/ 內的 .gpg 檔案。
+/etc/apt/sources.list 或子檔案中包含 signed-by 的標籤。
+
+「本地配置是否正確」：
+bash
+# 檢查本地規則是否寫入成功
+cat /etc/apt/sources.list.d/afe-integrity.list
+请谨慎使用此类代码。
+只要檔案裡有 signed-by=/usr/share/keyrings/debian-archive-keyring.gpg，稽核上就是 PASS。
+2. 強制跳過這一步
+請按 Ctrl + C 結束那個卡住的更新。
+3. 下一步操作建議
+由於你的環境有網路認證攔截，建議在 CR 3.10 的報告中註明：
+「System integrity is ensured by rejecting any unauthenticated packages. In restricted network environments, manual offline verification or whitelisting is required.」
+既然已經證明了「不合法的數據會被系統攔截」，你的 CR 3.10 任務已經算達成了。
+
+HDR 3.12   secure boot
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+FR4 - Data Confidentiality
+
+CR 4.01（Data integrity and confidentiality in transit） 數據傳輸完整性與機密性
+
+root@linaro-alip:~# ./cr401-data.sh
+Global OpenSSL Security Level:
+TLS_AES_256_GCM_SHA384         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(256)            Mac=AEAD
+TLS_AES_128_GCM_SHA256         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(128)            Mac=AEAD
+ECDHE-ECDSA-AES256-GCM-SHA384  TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AESGCM(256)            Mac=AEAD
+ECDHE-RSA-AES256-GCM-SHA384    TLSv1.2 Kx=ECDH     Au=RSA   Enc=AESGCM(256)            Mac=AEAD
+DHE-RSA-AES256-GCM-SHA384      TLSv1.2 Kx=DH       Au=RSA   Enc=AESGCM(256)            Mac=AEAD
+ECDHE-ECDSA-AES128-GCM-SHA256  TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AESGCM(128)            Mac=AEAD
+ECDHE-RSA-AES128-GCM-SHA256    TLSv1.2 Kx=ECDH     Au=RSA   Enc=AESGCM(128)            Mac=AEAD
+DHE-RSA-AES128-GCM-SHA256      TLSv1.2 Kx=DH       Au=RSA   Enc=AESGCM(128)            Mac=AEAD
+RSA-PSK-AES256-GCM-SHA384      TLSv1.2 Kx=RSAPSK   Au=RSA   Enc=AESGCM(256)            Mac=AEAD
+DHE-PSK-AES256-GCM-SHA384      TLSv1.2 Kx=DHEPSK   Au=PSK   Enc=AESGCM(256)            Mac=AEAD
+AES256-GCM-SHA384              TLSv1.2 Kx=RSA      Au=RSA   Enc=AESGCM(256)            Mac=AEAD
+PSK-AES256-GCM-SHA384          TLSv1.2 Kx=PSK      Au=PSK   Enc=AESGCM(256)            Mac=AEAD
+RSA-PSK-AES128-GCM-SHA256      TLSv1.2 Kx=RSAPSK   Au=RSA   Enc=AESGCM(128)            Mac=AEAD
+DHE-PSK-AES128-GCM-SHA256      TLSv1.2 Kx=DHEPSK   Au=PSK   Enc=AESGCM(128)            Mac=AEAD
+AES128-GCM-SHA256              TLSv1.2 Kx=RSA      Au=RSA   Enc=AESGCM(128)            Mac=AEAD
+PSK-AES128-GCM-SHA256          TLSv1.2 Kx=PSK      Au=PSK   Enc=AESGCM(128)            Mac=AEAD
+
+執行結果分析（稽核重點）：
+TLS 1.3 領先（安全性最高）：
+前兩行顯示了 TLSv1.3。這證明系統優先支持最新的加密協議，具備最強的抗攻擊能力。
+全部採用 GCM 模式（完整性保證）：
+你會發現清單中每一項最後都有 Mac=AEAD 且包含 GCM。
+合規意義：GCM（Galois/Counter Mode）提供「認證加密」，能同時保證數據的機密性（不被偷看）與完整性（不被竄改）。這直接回應了 CR 4.01 的核心要求。
+禁用弱演算法（最小化風險）：
+清單中完全沒有出現 MD5、RC4 或 DES。
+合規意義：這證明全域 OpenSSL 配置已經過濾掉所有已知的不安全演算法，符合 SL 2 的強度要求。
+
+
+CR 4.02 的核心目標是：「確保敏感資訊（如密碼、金鑰）在被刪除或會話結束後，不會殘留在記憶體或硬碟中可被恢復。」
+
+extundelete，srm，memtester
+
+secure-delete (用於硬碟資料抹除)
+目的：普通 rm 只是刪除索引，資料還在磁碟上。secure-delete 提供 srm 指令來多次覆蓋原始位置。
+要做的事：在安全手冊中註明，刪除敏感檔案（如舊金鑰）必須使用 srm。
+稽核指令：
+bash
+# 證明安裝並具備安全刪除能力
+srm --version
+请谨慎使用此类代码。
+2. memtester (用於記憶體完整性校驗)
+目的：驗證記憶體硬體是否可靠，防止資料因硬體錯誤而殘留或被錯誤讀取。
+要做的事：在系統出廠前執行一次壓力測試，確保記憶體沒有「連線殘留」的硬體風險。
+執行指令：
+bash
+# 測試 100M 記憶體 1 次
+sudo memtester 100M 1
+请谨慎使用此类代码。
+3. extundelete (用於反向驗證)
+目的：這是一個恢復工具。
+要做的事：在稽核現場，你可以用它來證明「如果你用了 srm 刪除，連專業工具都救不回來」。這才是最強大的 Conformity Evidence。
 
 
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
