@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# =================================================================
+# Script Name: CR_4.03_Security_Setup_Final.sh
+# Functions: 
+#   1. UFW Firewall (Fixed for SCP & Built-in Conntrack)
+#   2. Hybrid NTP/NTS (Taipei Stdtime + China High-Speed)
+#   3. Automated Verification (chronyc)
+# =================================================================
+
+echo "Starting CR 4.03 Security Configuration..."
+
+# 1. UFW Firewall Configuration
+echo "Configuring UFW rules..."
+sudo ufw --force reset
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow Incoming Ports
+sudo ufw allow ssh              # Port 22
+sudo ufw allow 123/udp          # NTP
+sudo ufw allow 4460/tcp         # NTS Key Establishment
+
+# [CRITICAL] Fix for SCP: Explicitly allow Established/Related connections
+# This ensures that even with built-in conntrack, return packets are not blocked
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+echo "y" | sudo ufw enable
+sudo ufw logging on
+
+# 2. Chrony NTP/NTS Configuration
+CHRONY_CONF="/etc/chrony/chrony.conf"
+echo "Setting up NTP/NTS servers (Taipei & China)..."
+
+# Backup configuration
+[ ! -f "${CHRONY_CONF}.bak" ] && sudo cp $CHRONY_CONF "${CHRONY_CONF}.bak"
+
+# Remove existing server/pool lines to avoid duplication (Optional but cleaner)
+sudo sed -i '/^server /d' $CHRONY_CONF
+sudo sed -i '/^pool /d' $CHRONY_CONF
+
+# Insert New Servers
+# - Taipei (NTS for Security/CR 4.03)
+# - China (Low latency for Accuracy)
+sudo tee -a $CHRONY_CONF << END
+
+# --- CR 4.03 Time Sources ---
+# Taipei NTS (Encrypted)
+server tock.stdtime.gov.tw iburst nts
+server tick.stdtime.gov.tw iburst nts
+server time.stdtime.gov.tw iburst nts
+
+# China High-Speed (Accuracy)
+server ://aliyun.com iburst
+server ://tencent.com iburst
+server ntp.ntsc.ac.cn iburst
+# ----------------------------
+END
+
+# Enable Logging & Statistics
+sudo sed -i "s/.*\(log tracking measurements statistics\)/\1/" $CHRONY_CONF
+
+# 3. Restart and Integrated Verification
+echo "Restarting Chrony and verifying..."
+sudo systemctl restart chrony
+sleep 2 # Wait for service to initialize
+
+echo "------------------------------------------------"
+echo "VERIFICATION RESULTS:"
+echo "------------------------------------------------"
+echo "1. Firewall Status:"
+sudo ufw status verbose
+
+echo -e "\n2. Chrony Sources (Checking for * or + markers):"
+# This is the 'chronyc' integration you requested
+chronyc sources -v
+
+echo -e "\n3. NTS Encryption Status (KeyID should not be 0):"
+chronyc authdata
+
+echo -e "\n4. Connectivity Test (DNS & Outbound):"
+# 安裝 host 指令工具
+sudo apt update && sudo apt install dnsutils -y
+host www.baidu.com > /dev/null && echo "External DNS: OK" || echo "External DNS: FAILED"
+echo "------------------------------------------------"
+echo "Configuration Complete. Try your SCP command now."

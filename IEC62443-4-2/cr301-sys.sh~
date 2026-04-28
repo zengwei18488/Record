@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# =================================================================
+# Project: AFE-E630 (Debian 12)
+# Requirements: IEC 62443-4-2 CR 3.01 RE(1) - SL 2 Strength
+# Scope: SSH Standard Hardening & Firewall Minimal Ports
+# =================================================================
+
+# 檢查 root 權限
+if [ "$EUID" -ne 0 ]; then 
+  echo "Error: Please run as root (sudo)."
+  exit 1
+fi
+
+echo "--- 0. Fixing System Permissions (Foundation) ---"
+# 先處理目錄與關鍵路徑
+sudo chown root:root /etc /lib /usr /usr/sbin
+sudo chmod 755 /etc /lib /usr /usr/sbin
+
+# 批次恢復 /etc 下的標準權限
+sudo find /etc -type d -exec chmod 755 {} +
+sudo find /etc -type f -exec chmod 644 {} +
+
+# 針對極度敏感檔案強制鎖定 (僅 root 可讀寫)
+sudo chmod 600 /etc/shadow /etc/gshadow /etc/ssh/ssh_host_*_key
+
+echo "Permissions restored. Proceeding to other hardenings..."
+
+echo "--- 1. Hardening SSH Configuration (SL 2 Standard) ---"
+SSHD_CONFIG="/etc/ssh/sshd_config"
+
+# 備份原始配置
+sudo cp $SSHD_CONFIG ${SSHD_CONFIG}.bak
+
+# SL 2 調整建議：
+# - 保持 Protocol 2 (禁用漏洞百出的 v1)
+# - 允許密碼登入 (方便現場維護)，但禁止 Root 直接登入 (符合 CR 2.1 審核)
+# - 啟用密碼複雜度與錯誤鎖定 (需搭配之前設定過的 pam_faillock)
+sudo sed -i \
+-e "/^[#]*[ ]*Protocol/c Protocol 2" \
+-e "/^[#]*[ ]*PermitRootLogin/c PermitRootLogin no" \
+-e "/^[#]*[ ]*PasswordAuthentication/c PasswordAuthentication yes" \
+-e "/^[#]*[ ]*PubkeyAuthentication/c PubkeyAuthentication yes" \
+-e "/^[#]*[ ]*UsePAM/c UsePAM yes" \
+$SSHD_CONFIG
+
+# 設定基本的安全加密算法 (SL 2 等級)
+# 排除掉 md5 和 96-bit 的弱 MACs
+sudo sed -i '/^Ciphers/d' $SSHD_CONFIG
+sudo sed -i '/^MACs/d' $SSHD_CONFIG
+sudo tee -a $SSHD_CONFIG > /dev/null << EOF
+Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-gcm@openssh.com,aes256-gcm@openssh.com
+MACs hmac-sha2-256,hmac-sha2-512
+EOF
+
+sudo systemctl restart ssh
+
+echo "--- 2. Enforcing Least Functionality with UFW ---"
+# 安裝 UFW 並阻斷您系統目前暴露的 500, 4500, 1701 等埠口
+#sudo apt-get update && sudo apt-get install -y ufw
+
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# 僅開放 SSH 服務
+sudo ufw allow 22/tcp comment 'Secure Management'
+
+# 強制啟用
+sudo ufw --force enable
+
+echo "--- 3. Setting Security Warning Banner ---"
+sudo tee /etc/issue > /dev/null << EOF
+***************************************************************************
+* AFE-E630 SECURITY NOTICE (SL 2):                                        *
+* - Root login is disabled. Please login as standard user and use sudo.   *
+* - Only SSH (Port 22) is open for management.                            *
+* - All other services are blocked by firewall.                           *
+***************************************************************************
+EOF
+
+echo "--------------------------------------------------"
+echo "SL 2 Hardening Complete!"
+echo "Current Firewall Status:"
+sudo ufw status
+echo "--------------------------------------------------"

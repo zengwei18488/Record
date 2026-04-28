@@ -1,0 +1,200 @@
+CR 1.1
+
+CR 1.01
+
+vim /etc/lxdm/lxdm.conf
+## 注释掉下面这行
+# autologin=linaro
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr1*.sh .
+./cr101-pwd.sh
+./cr107-pwd.sh
+./cr111-pwd.sh
+./cr112-pwd.sh
+
+
+查看核心报错：/var/log/auth.log
+既然你有 lxdm 的失败记录，系统日志里一定记录了为什么它认为失败。请运行：
+grep "lxdm" /var/log/auth.log | tail -n 10
+
+root@linaro-alip:~# chage -l linaro
+
+Last password change                                    : password must be changed
+Password expires                                        : password must be changed
+Password inactive                                       : password must be changed
+Account expires                                         : never
+Minimum number of days between password change          : 7
+Maximum number of days between password change          : 90
+Number of days of warning before password expires       : 7
+
+
+主机查询
+$ ssh -vvv linaro@172.21.170.37 2>&1 | grep "kex: server"
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+
+ssh -v root@172.21.170.37     #debug模式
+
+验证该配置是否生效：
+故意输错 5 次密码。
+查看状态：执行 sudo faillock。如果能看到失败计数在增加，说明配置成功。
+尝试第 6 次（用正确密码）：如果系统提示认证失败，说明锁定生效。
+手动解锁：sudo faillock --user linaro --reset
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+grep "lxdm" /var/log/auth.log | tail -n 10
+
+2026-04-22T01:44:45.232369+00:00 linaro-alip lxdm-session: PAM adding faulty module: pam_cap.so
+2026-04-22T01:44:45.232369+00:00 linaro-alip lxdm-session: PAM adding faulty module: pam_cap.so
+2026-04-22T01:44:45.458663+00:00 linaro-alip lxdm-session: pam_unix(lxdm:account): expired password for user linaro (root enforced)
+2026-04-22T01:44:45.458663+00:00 linaro-alip lxdm-session: pam_unix(lxdm:account): expired password for user linaro (root enforced)
+
+这份日志清晰地显示了你之前的脚本已经成功生效，但也揭示了为什么你现在进不去 HDMI 界面。
+1. 日志解读
+expired password：说明你脚本中的 sudo chage -d 0 linaro 起作用了。系统认为 linaro 的密码已过期，必须修改。
+root enforced：这是由管理员（也就是你的脚本）强制执行的过期。
+LXDM 的局限性：这是一个非常关键的问题。LXDM 登录界面通常不支持“强制修改密码”的交互。当它发现密码过期时，它不会弹出修改密码的框，而是直接拒绝登录并返回登录界面，导致你看起来像是密码错误或闪退。
+2. 如何解决（进入系统）
+你需要通过一个支持交互式修改密码的通道登录一次，完成新密码的设定。
+方案 A：通过 SSH 登录（推荐）
+在电脑上运行：ssh linaro@你的IP
+输入初始强密码：Init@2026#Strong
+系统会立即提示：WARNING: Your password has expired. You must change your password now and login again!
+按照提示：先输入一遍旧密码 (Init@2026#Strong)，再输入两遍你的自定义新强密码（必须符合 12 位、4 类字符规则）。
+完成后，再去 HDMI 界面登录，就能进去了。
+方案 B：通过串口（Serial Console）
+如果你连接了串口，直接在串口输入用户名登录，它也会强制要求你改密码。
+3. 给量产/合规建议
+在 IEC 62443 审计中，这种“初次登录强制改密”是满分操作。但为了用户体验，通常有以下两种做法：
+做法 1（标准）：在产品说明书中告知用户，首次登录必须通过终端（SSH/串口）完成密码初始化。
+做法 2（优化）：如果不希望强制改密，请从脚本中删除 sudo chage -d 0 linaro 这一行。这样用户就能直接用 Init@2026#Strong 登录 HDMI 界面。
+4. 检查点
+请确保你设置的新密码不要包含用户名 linaro，否则 pam_pwquality 可能会因为“密码包含用户名”而再次拒绝你的修改。
+
+
+ssh-keygen -f "/home/zengwei/.ssh/known_hosts" -R "172.21.170.37"
+
+ssh linaro@172.21.170.37 
+
+ssh -v root@172.21.170.37
+
+passwd linaro   #  Advantech@887#zw
+passwd root     #  Advantech@887#zw
+
+linaro初始密码   # Init@2026#Strong
+
+sudo faillock --user linaro             #查看登陆失败记录
+sudo faillock --user linaro --reset     #重置失败记录
+
+重启界面
+sudo systemctl restart lxdm
+
+
+zengwei@zengwei-Precision-3660:~/data_2T/zengwei/documents/Record$ ssh linaro@172.21.170.37
+*************************************************************************
+* WARNING: Unauthorized access to this device is strictly prohibited.   *
+* All activities are monitored and recorded for security purposes.       *
+* If you are not an authorized user, disconnect immediately.            *
+*************************************************************************
+linaro@172.21.170.37's password: 
+Linux linaro-alip 6.1.141 #2 SMP Mon Mar 30 05:45:09 UTC 2026 aarch64
+Access granted to authorized engineering personnel only.
+Please ensure all security protocols are followed.
+Last login: Wed Apr 22 02:02:55 2026 from 172.21.171.105
+
+root@linaro-alip:/#  chage -l linaro
+Last password change                                    : Apr 22, 2026
+Password expires                                        : Jul 21, 2026
+Password inactive                                       : never
+Account expires                                         : never
+Minimum number of days between password change          : 7
+Maximum number of days between password change          : 90
+Number of days of warning before password expires       : 7
+
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+针对 IEC 62443-4-2 CR 1.1（身份识别与鉴别） 的要求，在完成所有 Debian 12 加固配置后，你需要从以下 7 个核心维度进行验证。
+这些验证项不仅能确保系统安全，也是你在通过 TÜV NORD 审计时需要展示的测试报告（Test Report）要点。
+1. 密码复杂度验证 (Password Complexity)
+        验证 pam_pwquality 是否强制执行了“12位+4类字符”策略。
+        验证点：使用 passwd 修改密码。
+    预期结果：
+        密码少于 12 位：拒绝。
+        缺少大写/小写/数字/特殊字符中的任意一类：拒绝。
+       包含常见字典单词（如 Password12345）：拒绝。
+2. 暴力破解防御验证 (Account Lockout)
+       验证 pam_faillock 在 SSH 和 HDMI 登录时是否生效。
+       验证点：连续输入 5 次错误密码。
+    预期结果：
+       第 6 次尝试（即使密码正确）：拒绝。
+       命令 faillock --user linaro：应显示 5 次失败记录。
+       锁定时间：确认在 30 分钟（1800s）内无法登录，除非手动执行 --reset。
+3. 密码生命周期验证 (Password Lifecycle)
+       验证 chage 和 login.defs 的策略。
+      验证点：执行 chage -l linaro。
+   预期结果：
+   Maximum number of days：90。
+   Minimum number of days：7（修改密码后 7 天内不能再改）。
+   Password expiration warning：7 或 14。
+4. 禁止重复使用旧密码 (Password History)
+       验证 remember=5 是否生效。
+       验证点：修改密码时，尝试改回最近使用的前 5 个密码之一。
+    预期结果：系统报错，提示密码曾在最近使用过。
+5. 最小权限与 Root 限制 (Least Privilege)
+      验证 SSH 的安全访问控制。
+      验证点：通过 SSH 直接以 root 账户登录。
+   预期结果：
+      即使密码正确也应提示 Permission denied（验证 PermitRootLogin no）。
+      必须通过 linaro 登录后使用 sudo 提权。
+6. 法律告知横幅 (Login Banner)
+      验证横幅是否在鉴别发生前显示。
+      验证点：发起 SSH 连接及观察 HDMI 登录界面。
+    预期结果：
+   SSH：在提示输入密码之前，必须显示 WARNING: Unauthorized access... 的方框。
+   GUI：登录界面隐藏了用户列表（disable_user_list=1）。
+7. 审计记录验证 (Audit Logging)
+       验证所有认证行为是否可追溯。
+       验证点：查看 /var/log/auth.log。
+   预期结果：
+      成功的登录：记录 session opened。
+      失败的尝试：记录 authentication failure 及来源 IP。
+      锁定的触发：记录 faillock 相关的锁定事件。
+      
+💡 审计建议 (TÜV 认证准备)
+为了符合你提到的 DE 7-0460 证书要求，建议你将上述 7 项验证过程整理成下表格式：
+测试 ID	CR 1.1 要求描述	测试操作	预期结果	实际结果 (Pass/Fail)
+TC-01	Password Strength	passwd with 8 chars	Rejected	Pass
+TC-02	Brute Force Protection	5 failed SSH logins	Account Locked	Pass
+...	...	...	...	...
+你目前的系统中，这 7 项里哪一项是你最不确定是否配置成功的？ 我可以提供更深入的专项排查命令。
+
+
+
+
+在 Linux 系统中，/etc/shadow 是最核心的安全文件之一，它专门用于存储用户密码的加密哈希值以及密码的有效期策略。
+它的存在是为了解决 /etc/passwd 文件必须对所有用户可读的安全漏洞（/etc/shadow 只有 root 用户可以读取）。
+以下是它具体管控的 9 个字段（以冒号 : 分隔）的含义，这对你的 IEC 62443 认证非常关键：
+1. 字段详解（以 linaro 用户为例）
+假设你看到的一行是：
+linaro:$6$rounds=4096$...:19800:7:90:14:30::
+1、用户名 (linaro)：对应的账户名称。
+2、加密密码 ($6$...)：
+    这是密码的 SHA-512 哈希值。
+    如果显示 ! 或 *，表示该账户被锁定，无法登录。
+3、最后修改时间 (19800)：从 1970 年 1 月 1 日起计算的天数。
+4、最小修改间隔 (7)：修改密码后，必须过 7 天才能再次修改（对应你脚本里的 PASS_MIN_DAYS）。
+5、最大有效期 (90)：密码使用 90 天后强制过期（对应你脚本里的 PASS_MAX_DAYS）。
+6、过期警告期 (14)：密码过期前 14 天开始提示用户。
+7、宽限期 (30)：密码过期后，用户还有 30 天可以登录并改密码，超过后账户将被禁用。
+8、失效时间：账户彻底失效的日期（通常留空）。
+9、保留字段：留作未来使用
+
+
+linaro (使用者名稱)：這是該帳號的登入名稱。 
+$y$j9T$zw759uVOCJ4Q3OAGMtY.A.$M6IfoNd2VWPJrnAiPHgRI6m2ZHt0AJWPBYEGrNP8tV2 (密碼雜湊)：
+這不是明文密碼。
+$y$ 開頭代表使用的是 yescrypt 加密演算法（這在較新的 Debian 或 Ubuntu 發行版中是預設標準）。
+j9T 是演算法的設定參數。
+zw759uVOCJ4Q3OAGMtY.A. 是「鹽值」（Salt），用於增加破解難度。
+最後一部分則是經過處理後的加密結果。
+

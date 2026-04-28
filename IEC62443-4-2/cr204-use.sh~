@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# =================================================================
+# Project: AFE-E630 (Linaro/Debian 12)
+# Purpose: Configure IMA/EVM Integrity (CR 2.04 RE 1)
+# Usage: sudo bash setup_ima.sh [fix|enforce]
+# =================================================================
+
+MODE=$1
+
+if [[ "$MODE" != "fix" && "$MODE" != "enforce" ]]; then
+    echo "Usage: $0 [fix|enforce]"
+    echo "  fix:     Calculate hashes without blocking (Initial Setup)"
+    echo "  enforce: Stop execution if hash mismatch (Production)"
+    exit 1
+fi
+
+echo "--- Configuring IMA/EVM to mode: $MODE ---"
+
+# 1. 定義參數
+IMA_PARAMS="ima_policy=tcb ima_appraise=$MODE ima_hash=sha256"
+
+# 2. 判斷並修改開機配置
+if [ -f "/etc/default/grub" ]; then
+    # 傳統 GRUB 環境
+    sed -i "s/GRUB_CMDLINE_LINUX_DEFAULT=\"/GRUB_CMDLINE_LINUX_DEFAULT=\"$IMA_PARAMS /" /etc/default/grub
+    update-grub
+    echo "GRUB updated."
+elif [ -f "/boot/uEnv.txt" ]; then
+    # ARM/Linaro U-Boot 環境
+    # 將參數加入到 cmdline 或 extraargs
+    if grep -q "extraargs=" /boot/uEnv.txt; then
+        sed -i "s/extraargs=/extraargs=$IMA_PARAMS /" /boot/uEnv.txt
+    else
+        echo "extraargs=$IMA_PARAMS" >> /boot/uEnv.txt
+    fi
+    echo "U-Boot uEnv.txt updated."
+elif [ -f "/boot/extlinux/extlinux.conf" ]; then
+    # 另一種常見的 ARM 開機配置 (Extlinux)
+    sed -i "/append/s/$/ $IMA_PARAMS/" /boot/extlinux/extlinux.conf
+    echo "Extlinux configuration updated."
+else
+    echo "Error: Unknown bootloader configuration. Please check /boot directory."
+    exit 1
+fi
+
+echo "Done. Please REBOOT and run hash calculation in fix mode."

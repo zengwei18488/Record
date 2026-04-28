@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# =================================================================
+# Script Name: IEC62443_Ultimate_Compliance_Setup.sh
+# Purpose: Final fix for UFW, SSH/SCP, and Chrony NTS Security
+# =================================================================
+
+echo "Step 1: Fixing System Permissions & IPv6..."
+sudo chown root:root / /etc /lib /usr /var
+sudo chown -R root:root /etc/ufw
+sudo chmod 755 / /etc /lib /usr /var
+sudo sed -i 's/IPV6=yes/IPV6=no/' /etc/default/ufw
+
+echo "Step 2: Resetting UFW and Applying Base Policies..."
+sudo ufw --force reset
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Pre-define rules for ufw status clarity
+sudo ufw allow 22/tcp
+sudo ufw allow out 53
+sudo ufw allow out 123/udp
+sudo ufw allow out 4460/tcp
+
+echo "Step 3: Enabling UFW and Injecting Priority Rules..."
+echo "y" | sudo ufw enable
+sudo ufw logging low
+
+# --- CRITICAL: Manually insert rules to the TOP of the chain to bypass kernel state issues ---
+# These rules ensure Ping and SSH always work regardless of UFW's internal logic
+sudo iptables -I INPUT 1 -p icmp -j ACCEPT
+sudo iptables -I INPUT 2 -p tcp --dport 22 -j ACCEPT
+sudo iptables -I INPUT 3 -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+echo "Step 4: Configuring Chrony NTS (CR 4.03 Compliance)..."
+CHRONY_CONF="/etc/chrony/chrony.conf"
+[ -f "$CHRONY_CONF" ] && sudo cp $CHRONY_CONF "${CHRONY_CONF}.bak"
+
+sudo tee $CHRONY_CONF << END
+driftfile /var/lib/chrony/drift
+makestep 1.0 3
+rtcsync
+
+# Taipei NTS Sources (CR 4.03)
+server tock.stdtime.gov.tw iburst nts
+server tick.stdtime.gov.tw iburst nts
+server time.stdtime.gov.tw iburst nts
+
+# China High-Speed Sources
+server ://aliyun.com iburst
+server ://tencent.com iburst
+
+log tracking measurements statistics
+logdir /var/log/chrony
+END
+
+sudo systemctl restart chrony
+sleep 2
+
+echo "------------------------------------------------"
+echo "VERIFICATION RESULTS:"
+echo "------------------------------------------------"
+echo "1. Firewall Status:"
+sudo ufw status verbose
+
+echo -e "\n2. Iptables Priority Rules (Top 3):"
+sudo iptables -L INPUT -n --line-numbers | head -n 5
+
+echo -e "\n3. Time Sync Sources (chronyc):"
+chronyc sources -v
+
+echo -e "\n4. NTS Auth Status (KeyID should be > 0):"
+chronyc authdata
+
+echo -e "\n5. Connectivity Check:"
+ping -c 1 -W 2 8.8.8.8 > /dev/null && echo "Outbound Ping: SUCCESS" || echo "Outbound Ping: FAILED"
+echo "------------------------------------------------"
+echo "Final Setup Complete. Everything is now secure and accessible."

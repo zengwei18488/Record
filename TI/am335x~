@@ -1,15 +1,572 @@
+Yocto 5.0  Version: 11.02.05.02  Release date: Nov 21, 2025   Scarphgap 是 Yocto Project 5.0 版本
 
+  Component             Version  
+Linux Kernel         6.12.57 (2025 LTS)
+U-Boot               2025.01
+Yocto Project        5.0 (Scarthgap)
+ARM Toolchain (gcc)  13.4+
+
+mkdir ti-sdk-000
+
+tar -xJf LIC0011_am335xepcr3220a1_2024-10-12-16/tisdk-core-bundle-am335xepcr3220a1-20241012083131.tar.xz -C ti-sdk-000/
+
+
+Switch  SW2(DATA1)  SW1(DATAO)   Boot Priority       Boot Result     Note
+         ON(LOW)     ON(LOW)    NAND--NANDI2C--SPI     SPI開機
+         OFF(High)   ON(LOW)      SPI--MMC1(SD)        SPI開機
+         ON(LOW)     OFF(High)  NAMDI2C--MMC1(SD)      MMC1(SD)開機    有認到NANDI2C，但因意内部是空的.因此從MMC1(SD)開機
+         OFF(High)   OFF(High)   MMC1(SD)--SPI        MMC1(SD)開機
+
+sudo docker save -o u22.04-amxxlbv1_latest.tar advrisc/u22.04-amxxlbv1:latest
+sudo docker load -i u22.04-amxxlbv1_latest.tar
+
+
+bmaptool create -o tisdk-default-image-am335x-evm-11.02.05.02.rootfs.bmap tisdk-default-image-am335x-evm-11.02.05.02.rootfs.wic
+sudo bmaptool copy --bmap tisdk-default-image-am335x-evm-11.02.05.02.rootfs.bmap tisdk-default-image-am335x-evm-11.02.05.02.rootfs.wic /dev/sdx
+
+
+EVM building
+
+sudo docker run -it --name local_TI_am335x_risc -v /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build:/home/adv/yocto_bsp:rw  --privileged advrisc/u22.04-amxxlbv1:latest /bin/bash
+git clone https://git.ti.com/git/arago-project/oe-layersetup.git tisdk
+cd tisdk
+./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-scarthgap-11.02.05.02-config.txt
+cd build
+. conf/setenv
+MACHINE=am335x-evm bitbake -k tisdk-default-image
+
+$ git clone https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-TI-Linux/_git/adv-ti-yocto-bsp -b processor-sdk-am335x-11.02.05.02 tisdk-adv
+$ cd tisdk-adv
+$ ./oe-layertool-setup.sh -f configs/processor-sdk/processor-sdk-scarthgap-11.02.05.02-config.txt
+$ cd build
+$ . conf/setenv
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-thinlinux-image
+
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-base-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-tiny-initramfs
+
+MACHINE=am335xepcr3220a1 bitbake linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c clean tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -c clean virtual/kernel
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate virtual/kernel
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate packagegroup-core-boot
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall u-boot-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate tisdk-default-image
+MACHINE=am335xepcr3220a1 bitbake -k tisdk-default-image
+
+MACHINE=am335xepcr3220a1 bitbake -k meta-toolchain-arago-tisdk
+MACHINE=am335xepcr3220a1 bitbake -s | grep -E "ti-test|board-scripts|scripts"
+
+MACHINE=am335xepcr3220a1 bitbake -e tisdk-default-image | grep ^WKS_FILE=
+WKS_FILE="sdimage-2part.wks"
+MACHINE=am335xepcr3220a1 bitbake -s
+MACHINE=am335xepcr3220a1 bitbake -s | grep bmap
+MACHINE=am335xepcr3220a1 bitbake -s | grep initramfs
+
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-20260113013324.tar.xz rootfs.tar.xz
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-tiny-initramfs-am335xepcr3220a1.rootfs.cpio.xz initramfs.tar.xz
+
+cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-base-image-am335xepcr3220a1.rootfs.tar.xz tisdk-base-image-am335x-evm.rootfs.tar.xz
+cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-default-image-am335xepcr3220a1.rootfs.tar.xz tisdk-default-image-am335x-evm.rootfs.tar.xz
+cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs.tar.xz tisdk-thinlinux-image-am335x-evm.rootfs.tar.xz
+
+
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-*.wic root/
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-*.wic.bmap root/
+sudo cp /home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/2025.01+git/build/MLO.byteswap root/
+sudo cp /home/zengwei/data_8T2/risc-private-tools/test/AM335x/epc-r3220/mkspi-advboot.sh root/
+
+
+dd if=/dev/zero of=/dev/mmcblk1 bs=512 count=1024 conv=fsync
+dd if=/dev/zero of=/dev/mmcblk1 bs=1M count=10 conv=fsync
+dd if=./tisdk-thinlinux-image-am335xepcr3220a1.rootfs-20260113013324.wic of=/dev/mmcblk1 bs=4M status=progress conv=fsync
+
+sudo partprobe /dev/mmcblk1
+sudo fdisk -l /dev/mmcblk1
+parted /dev/mmcblk1 set 1 boot on
+parted /dev/mmcblk1 print
+
+dd if=./MLO of=/dev/mmcblk1 seek=256 bs=512 conv=fsync
+dd if=./u-boot.img of=/dev/mmcblk1 seek=768 bs=512 conv=fsync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+Flash image to eMMC
+
+umount /dev/mmcblk1p* 2 > /dev/null || true
+# -b 指定 bmap 文件（可选，bmaptool 会自动在同目录下寻找同名的 .wic.bmap）
+sudo bmaptool copy /root/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-*.wic /dev/mmcblk1
+sudo bmaptool copy /root/tisdk-base-image-am335x-evm.wic.xz /dev/mmcblk1
+只有 .wic 文件而没有生成 .bmap 辅助文件，可以使用 --nobmap 参数，此时其行为类似于增强版的 dd
+sudo bmaptool copy --nobmap /root/tisdk-base-image-am335x-evm.wic /dev/mmcblk1
+刷新分区表：
+sudo partprobe /dev/mmcblk1
+设置活动标志 (Boot Flag)：
+sudo parted /dev/mmcblk1 set 1 boot on
+强制刷新缓存：
+sync
+
+
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/linux-ti-staging/6.12.49+git/image/boot/
+
+yocto project
+
+meta-advantech2 : aim38-scarthgap-6.12.y_am335x
+adv-ti-yocto-bsp : processor-sdk-am335x-11.02.05.02
+meta-ti-adv,https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-TI-Linux/_git/meta-advantech,aim38-scarthgap-6.12.y_am335x,017bd7573bc51ba85686061d202a9910b9ebc57c,layers=
+vim configs/processor-sdk/processor-sdk-scarthgap-11.02.05.02-config.txt
+
+
+source code
+/home/adv/yocto_bsp/tisdk/build/arago-tmp-default-glibc/work/am335x_evm-oe-linux-gnueabi/linux-ti-staging/
+/home/adv/yocto_bsp/tisdk/build/arago-tmp-default-glibc/work/am335x_evm-oe-linux-gnueabi/u-boot-ti-staging/     
+
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/linux-ti-staging/
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/
+
+images
+/home/adv/yocto_bsp/tisdk/build/deploy-ti/images/am335x-evm
+/home/adv/yocto_bsp/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1
+
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/2025.01+git/temp/log.do_fetch.947053
+/home/adv/yocto_bsp/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/linux-ti-staging/6.12.49+git/temp/log.do_package.1302773
+
+MACHINE=am335xepcr3220a1 bitbake u-boot-ti-staging -c cleansstate
+MACHINE=am335xepcr3220a1 bitbake u-boot-ti-staging --force -c compile
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate u-boot-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall u-boot-ti-staging
+
+MACHINE=am335xepcr3220a1 bitbake -c fetch u-boot
+MACHINE=am335xepcr3220a1 bitbake -c cleanall u-boot && MACHINE=am335xepcr3220a1 bitbake -c fetch u-boot
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake -c cleanall linux-ti-staging
+MACHINE=am335xepcr3220a1 bitbake linux-ti-staging
+
+bitbake -c clean (最轻量)bitbake -c cleansstate (最常用)bitbake -c cleanall (最彻底)
+
+检查和排查层和bb文件是否增加正确
+MACHINE=am335xepcr3220a1 bitbake-layers show-layers
+MACHINE=am335xepcr3220a1 bitbake-layers show-appends | grep linux-ti-staging
+
+
+MACHINE=am335xepcr3220a1 bitbake -c cleansstate busybox
+MACHINE=am335xepcr3220a1 bitbake -e busybox | grep CONFIG_UDHCPD
+
+MACHINE=am335xepcr3220a1 bitbake -e linux-ti-staging | grep ^KERNEL_DEVICETREE=
+
+
+
+*****************系统时间TAG为git最后一笔commit时间**************************
+
+git clone KAG-SW@vs-ssh.visualstudio.com:v3/KAG-SW/AM335x-Linux/am335x-kernel -b ti-linux-6.1.y
+git clone KAG-SW@vs-ssh.visualstudio.com:v3/KAG-SW/AM335x-Linux/am335x-uboot -b ti-u-boot-2023.04
+git clone KAG-SW@vs-ssh.visualstudio.com:v3/KAG-SW/AM335x-Linux/meta-advantech2 -b tisdk-v09x
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+git init
+git add -f .
+git commit -m "Initial commit"
+
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-TI-Linux/AM335x-Linux
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-TI-Linux/AM335x-uboot
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-TI-Linux/adv-ti-yocto-bsp
+git remote add origin git@ssh.dev.azure.com:v3/AIM-Linux/RISC-TI-Linux/meta-advantech
+
+meta-advantech2 : aim38-scarthgap-6.12.y_am335x
+adv-ti-yocto-bsp : processor-sdk-am335x-11.02.05.02
+
+git push origin master:processor-sdk-am335x-11.02.05.02
+git checkout -b processor-sdk-am335x-11.02.05.02 --track origin/processor-sdk-am335x-11.02.05.02
+
+git push origin master:aim38-scarthgap-6.12.y_am335x
+git checkout -b aim38-scarthgap-6.12.y_am335x --track origin/aim38-scarthgap-6.12.y_am335x
+
+git push origin master:ti-linux-6.12.y
+git checkout -b ti-linux-6.12.y --track origin/ti-linux-6.12.y
+
+git push origin master:ti-uboot-2025.01
+git checkout -b ti-uboot-2025.01 --track origin/ti-uboot-2025.01
+
+SDK PATH=/home/zengwei/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/
+
+
+build GCC
+export CROSS_COMPILE_32="/home/zengwei/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-oe-linux-gnueabi/arm-oe-linux-gnueabi-"
+export SYSROOT_32="/home/zengwei/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/linux-devkit/sysroots/armv7at2hf-neon-oe-linux-gnueabi"
+export CFLAGS="-march=armv7-a -mthumb -mfpu=neon -mfloat-abi=hard"
+export CC_32="${CROSS_COMPILE_32}gcc ${CFLAGS} --sysroot=${SYSROOT_32}"
+
+Kernel and uboot compile  EVM
+export PATH=/home/zengwei/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/linux-devkit/sysroots/x86_64-arago-linux/usr/bin/arm-oe-linux-gnueabi:$PATH
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- distclean
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- multi_v7_defconfig ti_multi_v7_prune.config no_smp.config
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- zImage
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- dtbs
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- modules
+
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- am335x_adv_defconfig
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- zImage
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- dtbs
+make ARCH=arm CROSS_COMPILE=arm-oe-linux-gnueabi- modules
+
+sudo make ARCH=arm INSTALL_MOD_PATH=/media/zengwei/root/ modules_install
+
+export PATH=/home/zengwei/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/external-toolchain-dir/arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-linux-gnueabihf/bin/:$PATH
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_evm am335x_evm_defconfig
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_evm 
+
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- distclean
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_epcr3220 am335x_epcr3220a1_1G_defconfig
+make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- O=am335x_epcr3220
+
+
+../tools/mkeficapsule.c:20:10: fatal error: gnutls/gnutls.h: 没有那个文件或目录
+sudo apt-get update
+sudo apt-get install libgnutls28-dev
+
+arch/arm/boot/dts/ti/omap/am335x-epcr3220a1.dts
+arch/arm/configs/am335x_adv_defconfig
+
+sudo cp ~/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/board-support/ti-linux-kernel-6.12.49+git-ti/arch/arm/boot/dts/ti/omap/am335x-epcr3220a1.dtb am335x-epcr3220a1.dtb
+sudo cp ~/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/board-support/ti-linux-kernel-6.12.49+git-ti/arch/arm/boot/zImage zImage-6.12.49-ti-g1a86d36433ea
+sudo cp ~/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/board-support/ti-linux-kernel-6.12.49+git-ti/arch/arm/boot/zImage .
+
+*****************************************************************************************************************************************************************8
+GPIO
+
+# 列出系统所有GPIO控制器及其基本信息
+cat /sys/kernel/debug/gpio
+
+root@am335x-evm:/sys/class/gpio# for i in gpiochip*; do echo "Chip: $i, Base: $(cat $i/base), Label: $(cat $i/label)"; done
+Chip: gpiochip512, Base: 512, Label: gpio-0-31
+Chip: gpiochip544, Base: 544, Label: gpio-32-63
+Chip: gpiochip576, Base: 576, Label: gpio-64-95
+Chip: gpiochip608, Base: 608, Label: gpio-96-127
+Chip: gpiochip640, Base: 640, Label: tps65910
+Chip: gpiochip646, Base: 646, Label: 0-0022
+
+root@am335x-evm:~# cat /sys/kernel/debug/gpio
+gpiochip0: GPIOs 512-543, parent: platform/4804c000.gpio, gpio-0-31:
+
+gpiochip1: GPIOs 544-575, parent: platform/481ac000.gpio, gpio-32-63:
+ gpio-548 (                    |adv_wdt.wdt_ping    ) out lo
+ gpio-549 (                    |adv_wdt.wdt_en      ) out lo
+ gpio-561 (                    |rts                 ) out lo
+
+gpiochip2: GPIOs 576-607, parent: platform/481ae000.gpio, gpio-64-95:
+ gpio-590 (                    |cd                  ) in  lo IRQ ACTIVE LOW
+
+gpiochip3: GPIOs 608-639, parent: platform/44e07000.gpio, gpio-96-127:
+ gpio-617 (                    |rts                 ) out lo
+
+gpiochip4: GPIOs 640-645, parent: platform/tps65910-gpio, tps65910, can sleep:
+
+gpiochip5: GPIOs 646-661, parent: i2c/0-0022, 0-0022, can sleep:
+ gpio-646 (                    |PCA-953XGPIO        ) in  hi
+ gpio-647 (                    |PCA-953XGPIO        ) in  hi
+ gpio-648 (                    |PCA-953XGPIO        ) in  hi
+ gpio-649 (                    |PCA-953XGPIO        ) in  hi
+ gpio-650 (                    |PCA-953XGPIO        ) in  hi
+ gpio-651 (                    |PCA-953XGPIO        ) in  hi
+ gpio-652 (                    |PCA-953XGPIO        ) in  hi
+ gpio-653 (                    |PCA-953XGPIO        ) in  hi
+ gpio-654 (                    |PCA-953XGPIO        ) out hi     1   0
+ gpio-655 (                    |PCA-953XGPIO        ) out lo
+ gpio-656 (                    |PCA-953XGPIO        ) out lo
+ gpio-657 (                    |PCA-953XGPIO        ) out hi
+ gpio-658 (                    |PCA-953XGPIO        ) out lo
+ gpio-659 (                    |PCA-953XGPIO        ) out lo
+ gpio-660 (                    |PCA-953XGPIO        ) in  hi
+ gpio-661 (                    |PCA-953XGPIO        ) in  hi
+
+LED ----------------- gpio591  gpio592  gpio593
+
+GPIO0   646          GPIO3   649  
+GPIO1   647          GPIO3   650 
+GPIO2   648          GPIO3   651
+
+echo 646 > /sys/class/gpio/export
+echo 647 > /sys/class/gpio/export
+echo 648 > /sys/class/gpio/export
+echo 649 > /sys/class/gpio/export
+echo 650 > /sys/class/gpio/export
+echo 651 > /sys/class/gpio/export
+
+echo out > /sys/class/gpio/gpio646/direction
+echo in > /sys/class/gpio/gpio649/direction
+echo 0 > /sys/class/gpio/gpio646/value
+echo 1 > /sys/class/gpio/gpio646/value
+
+cat /sys/class/gpio/gpio646/direction
+cat /sys/class/gpio/gpio649/direction
+
+cat /sys/class/gpio/gpio646/value
+cat /sys/class/gpio/gpio649/value
+
+echo in > /sys/class/gpio/gpio646/direction
+echo out > /sys/class/gpio/gpio649/direction
+echo 0 > /sys/class/gpio/gpio649/value
+echo 1 > /sys/class/gpio/gpio649/value
+
+echo out > /sys/class/gpio/gpio647/direction
+echo in > /sys/class/gpio/gpio650/direction
+echo 0 > /sys/class/gpio/gpio647/value
+echo 1 > /sys/class/gpio/gpio647/value
+
+cat /sys/class/gpio/gpio647/direction
+cat /sys/class/gpio/gpio650/direction
+
+cat /sys/class/gpio/gpio647/value
+cat /sys/class/gpio/gpio650/value
+
+echo in > /sys/class/gpio/gpio647/direction
+echo out > /sys/class/gpio/gpio650/direction
+echo 0 > /sys/class/gpio/gpio650/value
+echo 1 > /sys/class/gpio/gpio650/value
+
+echo out > /sys/class/gpio/gpio648/direction
+echo in > /sys/class/gpio/gpio651/direction
+echo 0 > /sys/class/gpio/gpio648/value
+echo 1 > /sys/class/gpio/gpio648/value
+
+cat /sys/class/gpio/gpio648/direction
+cat /sys/class/gpio/gpio651/direction
+
+cat /sys/class/gpio/gpio648/value
+cat /sys/class/gpio/gpio651/value
+
+echo in > /sys/class/gpio/gpio648/direction
+echo out > /sys/class/gpio/gpio651/direction
+echo 0 > /sys/class/gpio/gpio651/value
+echo 1 > /sys/class/gpio/gpio651/value
+
+y2.4********************************************************************************************************************
+root@am335xepcr3220a1:/sys/class/gpio# for i in gpiochip*; do echo "Chip: $i, Base: $(cat $i/base), Label: $(cat $i/label)"; done
+Chip: gpiochip0, Base: 0, Label: gpio
+Chip: gpiochip32, Base: 32, Label: gpio
+Chip: gpiochip490, Base: 490, Label: pca9555
+Chip: gpiochip506, Base: 506, Label: tps65910
+Chip: gpiochip64, Base: 64, Label: gpio
+Chip: gpiochip96, Base: 96, Label: gpio
+
+root@am335xepcr3220a1:~# cat /sys/kernel/debug/gpio
+gpiochip0: GPIOs 0-31, parent: platform/44e07000.gpio, gpio:
+ gpio-9   (                    |omap-serial         ) out lo
+
+gpiochip1: GPIOs 32-63, parent: platform/4804c000.gpio, gpio:
+
+gpiochip2: GPIOs 64-95, parent: platform/481ac000.gpio, gpio:
+ gpio-68  (                    |adv_wdt.wdt_ping    ) out lo
+ gpio-69  (                    |adv_wdt.wdt_en      ) out lo
+ gpio-81  (                    |omap-serial         ) out lo
+
+gpiochip3: GPIOs 96-127, parent: platform/481ae000.gpio, gpio:
+ gpio-110 (                    |cd                  ) in  lo IRQ
+
+gpiochip5: GPIOs 490-505, parent: i2c/0-0022, pca9555, can sleep:
+ gpio-490 (                    |PCA-953XGPIO        ) in  hi
+ gpio-491 (                    |PCA-953XGPIO        ) in  hi
+ gpio-492 (                    |PCA-953XGPIO        ) in  hi
+ gpio-493 (                    |PCA-953XGPIO        ) in  hi
+ gpio-494 (                    |PCA-953XGPIO        ) in  hi
+ gpio-495 (                    |PCA-953XGPIO        ) in  hi
+ gpio-496 (                    |PCA-953XGPIO        ) in  hi
+ gpio-497 (                    |PCA-953XGPIO        ) in  hi
+ gpio-498 (                    |PCA-953XGPIO        ) out hi     1    0
+ gpio-499 (                    |PCA-953XGPIO        ) out lo     0    1
+ gpio-500 (                    |PCA-953XGPIO        ) out lo     1    1
+ gpio-501 (                    |PCA-953XGPIO        ) out hi     1    0
+ gpio-502 (                    |PCA-953XGPIO        ) out lo     0    1
+ gpio-503 (                    |PCA-953XGPIO        ) out lo     1    1
+ gpio-504 (                    |PCA-953XGPIO        ) in  hi
+ gpio-505 (                    |PCA-953XGPIO        ) in  hi
+
+gpiochip4: GPIOs 506-511, parent: platform/tps65910-gpio, tps65910, can sleep:
+********************************************************************************************************************
+root@am335x-evm:~# cat /sys/kernel/debug/usb/devices
+
+T:  Bus=01 Lev=00 Prnt=00 Port=00 Cnt=00 Dev#=  1 Spd=480  MxCh= 1
+B:  Alloc=  0/800 us ( 0%), #Int=  0, #Iso=  0
+D:  Ver= 2.00 Cls=09(hub  ) Sub=00 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1d6b ProdID=0002 Rev= 6.12
+S:  Manufacturer=Linux 6.12.49-g28ea12ce053a-dirty musb-hcd
+S:  Product=MUSB HDRC host driver
+S:  SerialNumber=musb-hdrc.0
+C:* #Ifs= 1 Cfg#= 1 Atr=e0 MxPwr=  0mA
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=09(hub  ) Sub=00 Prot=00 Driver=hub
+E:  Ad=81(I) Atr=03(Int.) MxPS=   4 Ivl=256ms
+
+T:  Bus=02 Lev=00 Prnt=00 Port=00 Cnt=00 Dev#=  1 Spd=480  MxCh= 1
+B:  Alloc=  0/800 us ( 0%), #Int=  0, #Iso=  0
+D:  Ver= 2.00 Cls=09(hub  ) Sub=00 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=1d6b ProdID=0002 Rev= 6.12
+S:  Manufacturer=Linux 6.12.49-g28ea12ce053a-dirty musb-hcd
+S:  Product=MUSB HDRC host driver
+S:  SerialNumber=musb-hdrc.1
+C:* #Ifs= 1 Cfg#= 1 Atr=e0 MxPwr=  0mA
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=09(hub  ) Sub=00 Prot=00 Driver=hub
+E:  Ad=81(I) Atr=03(Int.) MxPS=   4 Ivl=256ms
+
+cat /sys/kernel/debug/usb/musb-hdrc.0/
+
+/proc/device-tree/ocp/target-module@47400000/usb@1400/dr_mode
+/proc/device-tree/ocp/target-module@47400000/usb@1800/dr_mode
+/devices/platform/ocp/47400000.target-module/47401400.usb/musb-hdrc.0/usb1
+/sys/bus/usb/devices/usb1/
+cat /sys/kernel/debug/clk/clk_summary | grep usb
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+~/data_8T2/work/am335x-11-y5.0/ti-processor-sdk-linux-am335x-evm-11.02.05.02/linux-devkit$ source environment-setup
+cd board-support/ti-linux-kernel-6.12.49+git-ti/tools/spi/
+make all
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+arm-linux-gnueabihf-gcc rs_universal_tool.c -o rs_universal_tool -lpthread
+
+
+./diagslave -m rtu -a 3 -b 115200 -p none -4 15 /dev/ttyO3 &
+./modpoll -m rtu -a 3 -b 115200 -p none -r 500 -c 10 -t 4 -o 2.0 -4 10 -1 /dev/ttyO4
+
+
+stty -a -F /dev/ttyO4
+stty -a -F /dev/ttyO3
+
+
+stty -F /dev/ttyO4 115200 raw -echo -crtscts clocal
+stty -F /dev/ttyO3 115200 raw -echo -crtscts clocal
+
+stty -F /dev/ttyO4 9600 raw -echo -crtscts clocal
+stty -F /dev/ttyO3 9600 raw -echo -crtscts clocal
+
+
+stty -F /dev/ttyO4 115200 raw -echo -echoe -echok -crtscts
+stty -F /dev/ttyO3 115200 raw -echo -echoe -echok -crtscts
+
+dmesg | tail -n 20
+
+stty -F /dev/ttyO4 115200 raw -echo
+stty -F /dev/ttyO3 115200 raw -echo
+
+stty -F /dev/ttyO3 -crtscts -clocal
+stty -F /dev/ttyO4 -crtscts -clocal
+
+stty -F /dev/ttyO3 9600 raw -echo
+stty -F /dev/ttyO4 9600 raw -echo
+
+scp -r rs485_bang.c zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/
+
+./rs485_bangbangbnag -p /dev/ttyO3 -b 115200 -s -c 1 -a 1 &
+./rs485_bangbangbnag -p /dev/ttyO4 -b 115200 -m -c 1 -a 1
+
+killall -9 rs485_bangbangbnag 2>/dev/null
+
+./rs485_bangbangbnag -p /dev/ttyO4 -b 115200 -s -c 256 -a 2 &
+./rs485_bangbangbnag -p /dev/ttyO3 -b 115200 -m -c 256 -a 2
+./rs485_bangbangbnag -p /dev/ttyO3 -b 115200 -s -c 256 -a 2 &
+./rs485_bangbangbnag -p /dev/ttyO4 -b 115200 -m -c 256 -a 2
+
+./rs485_bangbangbnag -p /dev/ttyO4 -b 115200 -s -c 1024 -a 1 &
+./rs485_bangbangbnag -p /dev/ttyO3 -b 115200 -m -c 1024 -a 1
+
+killall -9 rs485_master rs485_slave 2>/dev/null
+killall -9 diagslave modpoll 2>/dev/null
+
+./diagslave -m rtu -a 3 -b 115200 -p none -4 5 /dev/ttyO4 &
+./modpoll -m rtu -a 3 -b 115200 -p none -r 500 -c 10 -t 4 -o 2.0 -4 5 /dev/ttyO3
+./diagslave -m rtu -a 3 -b 115200 -p none -4 5 /dev/ttyO3 &
+./modpoll -m rtu -a 3 -b 115200 -p none -r 500 -c 10 -t 4 -o 2.0 -4 5 /dev/ttyO4
+
+nice -n -20 ./rs485_master -b 115200 -p none -m rtu -4 5 -o 1 /dev/ttyO4 &
+nice -n -20 ./rs485_slave -b 115200 -p none -m rtu -a 3 -d 8 -r 500 -c 10 -4 5 -1 /dev/ttyO3
+nice -n -20 ./rs485_slave -b 115200 -p none -m rtu -a 3 -d 8 -r 500 -c 10 -4 5 /dev/ttyO3
+./rs485_slave -b 115200 -p none -m rtu -a 3 -d 8 -r 500 -c 10 -4 5 /dev/ttyO4
+
+nice -n -20 ./rs485_master -b 9600 -p none -m rtu -4 5 -o 1 /dev/ttyO4 &
+nice -n -20 ./rs485_slave -b 9600 -p none -m rtu -a 3 -d 8 -r 500 -c 10 -4 5 -1 /dev/ttyO3
+nice -n -20 ./rs485_slave -b 9600 -p none -m rtu -a 3 -d 8 -r 500 -c 10 -4 5 /dev/ttyO3
+
+./rs485_slave -b 115200 -p none -m rtu -a 3 -r 500 -c 10 -1 -4 2 /dev/ttyO3
+
+cat /dev/ttyO3 &
+cat /dev/ttyO4 &
+
+for i in {1..100}; do echo "Test-$i" > /dev/ttyO4; sleep 1; done
+for i in {1..100}; do echo "Test-$i" > /dev/ttyO3; sleep 1; done
+
+stty -F /dev/ttyO3 115200 raw -echo -echoe -echok -onlcr -iexten -echoctl -echoke clocal
+stty -F /dev/ttyO4 115200 raw -echo -echoe -echok -onlcr -iexten -echoctl -echoke clocal
+
+stty -F /dev/ttyO3 115200
+stty -F /dev/ttyO4 115200
+
+stty -F /dev/ttyO3 raw
+stty -F /dev/ttyO4 raw
+
+killall -9 /dev/ttyO3 2>/dev/null
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 更新usb设备id
 
 sudo modprobe option
 sudo echo 1508 1001 > /sys/bus/usb-serial/drivers/option1/new_id
 
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/diagslave-3.5.tgz .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/modpoll-3.16.tgz .
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/Factory_epcr3220_v7/ .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/Factory_epcr3220_v5/ .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/EPC-R3220/uart_test_arm .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/LAB_EMI/Burn .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/LAB_EMI/Burn/Burn.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/LAB_EMI/boot_count .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/RSB-6410/R200_for_LAB_20160509/Burn/Loop_uart232 .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/work/am335x-11-y5.0/quectel-CM .
+
+scp -r jt@172.21.171.102:/media/jt/8T/kh/bsp/NXP/driver_file/rs16_y50/quectel/4G/y5_k-6.6.23/quectel-CM/Quectel_QConnectManager_Linux_V1.6.7.zip . ; sync
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/epc-r3220/Test_epcr3220_Y5.0/ .
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/deploy-ti/images/am335xepcr3220a1/tisdk-thinlinux-image-am335xepcr3220a1.rootfs-20260114003225.wic.bmap .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/work/am335x-11-y5.0/TI-SDK-Build/tisdk-adv/build/arago-tmp-default-glibc/work/am335xepcr3220a1-oe-linux-gnueabi/u-boot-ti-staging/2025.01+git/build/MLO.byteswap .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_8T2/risc-private-tools/test/AM335x/epc-r3220/mkspi-advboot.sh .
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Build app for GCC
+
+source ./linux-devkit/environment-setup-armv7at2hf-neon-oe-linux-gnueabi
+echo $ARCH        
+echo $CROSS_COMPILE
+cd Quectel_QConnectManager_Linux_V1.6.7/
+make
+file quectel-CM   /*quectel-CM: ELF 32-bit LSB executable, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, BuildID[sha1]=1279a215ea1d688edf8ef3fd507d48c981a36de5, for GNU/Linux 5.15.0, with debug_info, not stripped
+*/
 
 
+chmod -R 777 **
 
+./uart_test_arm /dev/ttyO4 -b 115200 -rsoa -c n81 -f none -h 360000 >> ./com4.log &
+./uart_test_arm /dev/ttyO3 -b 115200 -rsoa -c n81 -f none -h 360000 >> ./com3.log &
 
+./uart_test_arm /dev/ttyS4 -b 115200 -rsoa -c n81 -f none -h 600 >> ./com4.log &
+./uart_test_arm /dev/ttyS3 -b 115200 -rsoa -c n81 -f none -h 600 >> ./com3.log &
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+dd if=/run/media/sda1/3220/epc-r3220_v20001_20200119.img of=/dev/mmcblk1 bs=1M;sync
+
+./mac_write /dev/mtd0 0x1000 C4:00:AD:5A:A6:6B,C4:00:AD:5A:A6:6C AKS0174892 2025-12-31 Test
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Yocto 4.0  版本: 09.01.00.001 发布日期: 31 十月 2023 
 
@@ -38,7 +595,7 @@ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabihf- zImage
 
 
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 https://www.ti.com.cn/tool/cn/download/PROCESSOR-SDK-LINUX-AM335X
@@ -107,7 +664,6 @@ $ export TOOLCHAIN_PATH_ARMV8=$HOME/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linu
 
 $ MACHINE=am335x-evm bitbake tisdk-base-image
 $ MACHINE=am335x-evm bitbake arago-core-tisdk-bundle
-
 
 4、Create Sdcard image
 注意目录名字为ti-sdk-000

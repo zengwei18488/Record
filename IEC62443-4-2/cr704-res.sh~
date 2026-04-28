@@ -1,0 +1,90 @@
+#!/bin/bash
+
+# =================================================================
+# Script Name: IEC62443_CR7_04_Auto_Backup_Schedule.sh
+# Purpose: Configure Automated Timeshift Guard via Cron
+# Target: Debian 12 (Linaro/Rockchip)
+# =================================================================
+
+# 顏色定義
+BLUE='\033[1;34m'
+GREEN='\033[0;32m'
+BOLD='\033[1m'
+NC='\033[0m'
+
+echo -e "${BLUE}Configuring CR 7.4 Automated Backup Guard...${NC}"
+
+# --- 1. 定義路徑 ---
+# 注意：Debian/Linaro 上的 Timeshift 設定通常在 /etc/timeshift/default.json
+CRON_RULE="/etc/cron.d/timeshift-hourly"
+TIMESHIFT_CFG="/etc/timeshift/default.json"
+
+# --- 2. 備份原始設定 (Audit Requirement) ---
+if [ -f "$TIMESHIFT_CFG" ]; then
+    sudo cp "$TIMESHIFT_CFG" "${TIMESHIFT_CFG}.bak"
+    echo "Backup created: ${TIMESHIFT_CFG}.bak"
+else
+    echo -e "\033[0;31mError: Timeshift config not found at $TIMESHIFT_CFG\033[0m"
+    echo "Please ensure CR 7.03 (Backup creation) has been executed."
+    exit 1
+fi
+
+# --- 3. 停止圖形界面干擾 ---
+echo "Closing any active Timeshift GUI sessions..."
+pidof timeshift-gtk && sudo killall timeshift-gtk 2>/dev/null
+
+# --- 4. 修改排程設定 (CR 7.4 Implementation) ---
+# 開啟每日備份排程 (schedule_daily)
+echo "Enabling 'schedule_daily' in Timeshift configuration..."
+sudo sed -i 's/"schedule_daily" : "false"/"schedule_daily" : "true"/' "$TIMESHIFT_CFG"
+
+# 建立排程檔案
+sudo tee /etc/cron.d/timeshift-hourly << EOT
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=""
+
+* * * * * root timeshift --check --scripted
+EOT
+
+# 設定權限
+sudo chmod 644 /etc/cron.d/timeshift-hourly
+sudo chown root:root /etc/cron.d/timeshift-hourly
+
+# --- 關鍵步驟：強制將快取寫入硬碟 ---
+sync
+
+# 3. 重啟 Cron 服務
+sudo systemctl restart cron
+
+echo -e "\n"
+echo -e "${BLUE}==========================================================${NC}"
+echo -e "${BLUE}      IEC 62443 CR 7.4 SCHEDULE VERIFICATION              ${NC}"
+echo -e "${BLUE}==========================================================${NC}"
+printf "${BOLD}%-25s | %-20s${NC}\n" "Control Item" "Status"
+echo "----------------------------------------------------------"
+
+# 驗證 1: Cron 檔案
+if [ -f "$CRON_RULE" ]; then
+    printf "%-25s | ${GREEN}%-20s${NC}\n" "Cron Rule File" "[ CREATED ]"
+else
+    printf "%-25s | \033[0;31m%-20s\033[0m\n" "Cron Rule File" "[ MISSING ]"
+fi
+
+# 驗證 2: 每日排程設定
+if grep -q '"schedule_daily" : "true"' "$TIMESHIFT_CFG"; then
+    printf "%-25s | ${GREEN}%-20s${NC}\n" "Daily Schedule" "[ ENABLED ]"
+else
+    printf "%-25s | \033[0;31m%-20s\033[0m\n" "Daily Schedule" "[ DISABLED ]"
+fi
+
+# 驗證 3: Cron 服務
+if systemctl is-active --quiet cron; then
+    printf "%-25s | ${GREEN}%-20s${NC}\n" "Cron Service" "[ RUNNING ]"
+else
+    printf "%-25s | \033[0;31m%-20s\033[0m\n" "Cron Service" "[ STOPPED ]"
+fi
+
+echo "----------------------------------------------------------"
+echo -e "Final Audit Tip: The system will now auto-verify and backup daily."
+echo -e "${BLUE}==========================================================${NC}"

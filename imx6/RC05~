@@ -88,6 +88,8 @@ dd if=/mnt/usb/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M
 
 dd if=/mnt/usb/rc05/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M;sync
 
+date -s "2025-12-25 15:38:00"
+
 cp /mnt/usb/rc05/*.tar.gz .
 sync
 tar zxvf boot_count.tar.gz
@@ -162,6 +164,7 @@ stty -F /dev/ttymxc0 115200
 stty -F /dev/ttymxc0 9600
 
 stty -F /dev/ttymxc0 speed 9600 cs8 -cstopb -parenb
+stty -F /dev/ttymxc0 speed 9600 cs8 -cstopb -parity
 cat < /dev/ttymxc0 &
 echo -n "$" > /dev/ttymxc0
 echo -n "%" > /dev/ttymxc0

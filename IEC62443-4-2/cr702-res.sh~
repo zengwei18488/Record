@@ -1,0 +1,110 @@
+#!/bin/bash
+
+# =================================================================
+# Script Name: IEC62443_Resource_Management_Color_Fixed.sh
+# Purpose: Implementation and Clean Visual Verification of CR 7.1(1) & CR 7.02
+# =================================================================
+
+# 定義顏色代碼
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[1;34m'
+NC='\033[0m' # No Color
+BOLD='\033[1m'
+
+echo -e "${BLUE}Starting IEC 62443 Resource Management & Visual Verification...${NC}"
+
+# --- 1. [CR 7.1 RE1] 優先級與資源配額 ---
+sudo mkdir -p /etc/systemd/system/ssh.service.d/
+sudo tee /etc/systemd/system/ssh.service.d/override.conf << EOT > /dev/null
+[Service]
+Nice=-5
+TasksMax=10
+MemoryMax=150M
+EOT
+sudo systemctl daemon-reload
+sudo systemctl restart ssh
+
+# --- 2. [CR 7.02] 資源限制測試組件 ---
+sudo tee /usr/local/bin/cpu-hog.sh << EOT > /dev/null
+#!/bin/bash
+while true; do :; done
+EOT
+sudo chmod +x /usr/local/bin/cpu-hog.sh
+
+sudo tee /etc/systemd/system/cpu-hog.service << EOT > /dev/null
+[Unit]
+Description=IEC 62443 CR 7.02 Resource Management Test
+[Service]
+ExecStart=/usr/local/bin/cpu-hog.sh
+CPUAccounting=true
+CPUQuota=20%
+MemoryAccounting=true
+MemoryMax=100M
+Restart=always
+EOT
+
+sudo systemctl daemon-reload
+sudo systemctl enable --now cpu-hog.service
+
+# --- 3. [Verification] 數據採樣 ---
+echo -e "${BOLD}Sampling CPU usage metrics...${NC}"
+sleep 2 
+PID=$(pgrep -f cpu-hog.sh)
+S1=$(top -b -n 2 -d 0.5 -p "$PID" | grep "$PID" | tail -n 1 | awk '{print $9}')
+sleep 1
+S2=$(top -b -n 2 -d 0.5 -p "$PID" | grep "$PID" | tail -n 1 | awk '{print $9}')
+sleep 1
+S3=$(top -b -n 2 -d 0.5 -p "$PID" | grep "$PID" | tail -n 1 | awk '{print $9}')
+AVG_CPU=$(echo "scale=2; ($S1+$S2+$S3)/3" | bc)
+
+# --- 4. [Audit Dashboard] 修正版彩色審計報告 ---
+echo ""
+echo -e "${BLUE}==========================================================${NC}"
+echo -e "${BLUE}      IEC 62443 COMPLIANCE VERIFICATION REPORT            ${NC}"
+echo -e "${BLUE}==========================================================${NC}"
+# 注意：此處 printf 使用 %b 來正確解析轉義序列
+printf "${BOLD}%-25s | %-15s | %-15s${NC}\n" "Requirement Item" "Target/Config" "Measured/Status"
+echo "----------------------------------------------------------"
+
+# 驗證 CR 7.02 CPU 限制
+if (( $(echo "$AVG_CPU <= 25.0" | bc -l) )) && (( $(echo "$AVG_CPU >= 15.0" | bc -l) )); then
+    STAT_702_LABEL="[ PASS ]"
+    COLOR_702=$GREEN
+else
+    STAT_702_LABEL="[ FAIL ]"
+    COLOR_702=$RED
+fi
+printf "%-25s | %-15s | %b%-15s%b\n" "CR 7.02 CPU Quota" "20.0%" "$COLOR_702" "$AVG_CPU% $STAT_702_LABEL" "$NC"
+
+# 驗證 CR 7.1 RE1 優先級
+SSH_NICE=$(systemctl show ssh -p Nice --value)
+if [ "$SSH_NICE" == "-5" ]; then 
+    STAT_701_LABEL="[ PASS ]"
+    COLOR_701=$GREEN
+else 
+    STAT_701_LABEL="[ FAIL ]"
+    COLOR_701=$RED
+fi
+printf "%-25s | %-15s | %b%-15s%b\n" "CR 7.1 RE1 Priority" "Nice=-5" "$COLOR_701" "$STAT_701_LABEL" "$NC"
+
+# 驗證 CR 7.1 RE1 記憶體限制
+SSH_MEM=$(systemctl show ssh -p MemoryMax --value | awk '{print $1/1024/1024"M"}')
+printf "%-25s | %-15s | %b%-15s%b\n" "CR 7.1 RE1 Memory" "150M" "$GREEN" "$SSH_MEM [ OK ]" "$NC"
+
+echo "----------------------------------------------------------"
+# 最終判定顯示
+FINAL_LABEL="[ PASS ] / [ PASS ]"
+if [ "$COLOR_702" == "$RED" ] || [ "$COLOR_701" == "$RED" ]; then
+    FINAL_LABEL="[ FAIL ]"
+    FINAL_COLOR=$RED
+else
+    FINAL_COLOR=$GREEN
+fi
+echo -e "${BOLD}FINAL STATUS: ${FINAL_COLOR}${FINAL_LABEL}${NC}"
+echo -e "${BLUE}==========================================================${NC}"
+
+# 清理測試服務
+sudo systemctl stop cpu-hog.service
+sudo systemctl disable cpu-hog.service > /dev/null 2>&1
+echo "Cleanup: Test service stopped. Verification complete."

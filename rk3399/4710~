@@ -132,6 +132,51 @@ debian10指令   arecord -v -f dat | aplay -Dplughw:0,0 -t wav
 arecord --list-formats
 alsamixer --card=0
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+debian10
+
+$sudo apt-get install expect 
+
+$ cd ~/BSP
+$ sudo git clone https://github.com/ADVANTECH-Rockchip/repo.git
+$ mkdir rk3399_linux_risc
+$ cd rk3399_linux_risc
+$ git config --global user.name "Your Name"
+$ git config --global user.email you@example.com
+$ ../repo/repo init -u https://github.com/ADVANTECH-Rockchip/linux-manifest.git -b rk3399_linux_v231_risc -m default.xml
+$ ../repo/repo sync
+$ ../repo/repo forall -c git checkout -b local --track advantech-github/rk3399_linux_v231_risc
+$ 
+
+Debian 10.x
+
+$ cd ~/BSP
+$ sudo git clone https://github.com/ADVANTECH-Rockchip/repo.git
+$ mkdir rk3399_linux_risc
+$ cd rk3399_linux_risc
+$ git config --global user.name "Your Name"
+$ git config --global user.email you@example.com
+$ ../repo/repo init -u https://github.com/ADVANTECH-Rockchip/linux-manifest.git -b rk3399_linux_v251_risc -m default.xml
+$ ../repo/repo sync
+$ ../repo/repo forall -c git checkout -b local --track advantech-github/rk3399_linux_v251_risc
+$ 
+
+sudo docker run -it --name rk3399_linux_risc -v /home/zengwei/work/rk3399/debian10:/home/adv/BSP:rw --privileged advrisc/u18.04-rklbv1:latest /bin/bash
+
+$ cd u-boot
+$ ./make.sh rk3399_rsb4710a2_2G
+
+$ cd kernel
+$ make ARCH=arm64 rk3399_adv_defconfig -j8
+$ make ARCH=arm64 rk3399-rsb4710-a2.img -j12
+
+$ rm buildroot/output/rockchip_rk3399_recovery -rf
+$ source envsetup.sh rockchip_rk3399_recovery
+$ ./build.sh recovery
+
+$ source envsetup.sh rockchip_rk3399
+$ sudo BUILD_IN_DOCKER=TRUE ./mk-debian.sh
+
+$ ./mkfirmware.sh
 
 ……………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
 rk3399_rsb4710:/ # cat /data/BurnIn/ForTest.sh
@@ -504,6 +549,9 @@ make update-api
 source build/envsetup.sh;lunch rk3399_rsb4710-userdebug;make -j8;./mkimage.sh
 source build/envsetup.sh;lunch rk3399_rsb3710-userdebug;make -j8;./mkimage.sh
 
+dumpsys usb
+dumpsys media.audio_flinger
+
 adb.exe root
 adb.exe disable-verity
 adb.exe reboot
@@ -600,5 +648,5 @@ external/chromium-webview/prebuilt/arm64/
 libplaceholder.so
 
 git clone https://android.googlesource.com/platform/external/chromium-webview --depth 1 -b android-14.0.0_r75
-
+out/target/product/rsb4710_Android10/product/app/webview/webview.apk
 

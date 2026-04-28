@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# =================================================================
+# Project: AFE-E630 (Debian 12)
+# Requirements: IEC 62443-4-2 CR 3.07 (Error Handling)
+# Strategy: Disable UI crash reports, Enable background core dumps for Admin
+# =================================================================
+
+# 檢查 root 權限
+if [ "$EUID" -ne 0 ]; then 
+  echo "Error: Please run as root (sudo)."
+  exit 1
+fi
+
+echo "--- 1. Configuring Crash Reporting (Internal Logging Only) ---"
+
+# Debian 12 通常不預裝 Apport，如果需要則安裝，否則使用系統核心機制
+if ! command -v apport-cli &> /dev/null; then
+    sudo apt-get update && sudo apt-get install -y apport
+fi
+
+APPORT_CONF="/etc/default/apport"
+# 確保 Apport 啟動但「隱藏」用戶界面 (符合 CR 3.07 不洩漏訊息給非授權用戶)
+sudo mkdir -p /etc/default
+sudo touch $APPORT_CONF
+
+# 設定 enabled=1 (開啟收集) 與 show_crash_ui=no (隱藏界面)
+sudo sed -i '/^enabled=/d' $APPORT_CONF
+sudo sed -i '/^show_crash_ui=/d' $APPORT_CONF
+sudo tee -a $APPORT_CONF > /dev/null << EOF
+enabled=1
+show_crash_ui=no
+EOF
+
+# 2. 配置後台處理行為 (CrashDB)
+CRASHDB_CONF="/etc/apport/crashdb.conf"
+sudo mkdir -p /etc/apport
+if [ -f $CRASHDB_CONF ]; then
+    sudo sed -i "s/'notify': .*/'notify': True,/" $CRASHDB_CONF
+else
+    sudo tee $CRASHDB_CONF > /dev/null << "EOT"
+crashdb = {
+    'system': {
+        'impl': 'file',
+        'db_dir': '/var/crash',
+        'notify': True
+    }
+}
+EOT
+fi
+
+# 3. 核心轉儲 (Core Dump) 限制：防止普通用戶觸發大量錯誤導致拒絕服務
+# 修改 sysctl 確保錯誤訊息僅發送至系統日誌，不顯示在終端機
+sudo tee /etc/sysctl.d/53-afe-error-handling.conf > /dev/null << EOF
+# 限制核心轉儲，防止敏感資訊外洩
+fs.suid_dumpable = 0
+# 內核錯誤不直接列印至控制台 (減少資訊洩漏)
+kernel.printk = 3 4 1 3
+EOF
+sudo sysctl -p /etc/sysctl.d/53-afe-error-handling.conf
+
+# 4. 重啟服務
+sudo systemctl restart apport 2>/dev/null || sudo systemctl start apport
+
+echo "--------------------------------------------------"
+echo "AFE-E630 CR 3.07 Hardening Complete!"
+echo "Status: Crash reporting enabled for Admin, UI disabled for Users."
+echo "--------------------------------------------------"

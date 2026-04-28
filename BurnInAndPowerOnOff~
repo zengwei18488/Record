@@ -1,0 +1,8 @@
+debian all BurnIn and PowerOff
+
+cat /etc/boottimes
+/usr/local/bin/adv_power_test.sh
+/tools/test/adv/lab/readme.txt
+
+E:\WorkSpace\Docs\team\RISC产品NPI测试介绍.pptx
+

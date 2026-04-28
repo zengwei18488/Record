@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# =================================================================
+# Project: AFE-E630 (Debian 12)
+# Purpose: Compliance with IEC 62443-4-2 CR 3.14 (Time Synchronization)
+# Tool: Chrony (Secure NTP Implementation)
+# =================================================================
+
+# 檢查 root 權限
+if [ "$EUID" -ne 0 ]; then 
+  echo "Error: Please run as root (sudo)."
+  exit 1
+fi
+
+echo "--- 1. Installing Chrony and Removing Old Tools ---"
+# 確保移除舊的或較不安全的 ntp 服務
+sudo apt-get update
+sudo apt-get remove --purge ntp systemd-timesyncd -y
+sudo apt-get install -y chrony
+
+echo "--- 2. Configuring Chrony for High Accuracy and Security ---"
+CHRONY_CONF="/etc/chrony/chrony.conf"
+
+# 備份原始配置
+sudo cp $CHRONY_CONF ${CHRONY_CONF}.bak
+
+# 寫入強化配置
+# - 允許快速修正時間偏差 (makestep)
+# - 即使沒有網路也維持運行 (local stratum)
+# - 限制管理存取 (cmdallow/cmddeny)
+sudo tee $CHRONY_CONF > /dev/null << EOF
+# --- IEC 62443 CR 3.14 Hardening ---
+# Use pool.ntp.org servers (or replace with your local trusted NTP server)
+pool pool.ntp.org iburst
+
+# Allow the system clock to be stepped in the first three updates if its offset is larger than 1 second.
+makestep 1.0 3
+
+# Record the rate at which the system clock gains/losses time.
+driftfile /var/lib/chrony/drift
+
+# Enable kernel synchronization of the real-time clock (RTC).
+rtcsync
+
+# Log measurements and statistics for auditing
+logdir /var/log/chrony
+log measurements statistics tracking
+
+# Security: Only allow localhost to manage chrony
+cmdallow 127.0.0.1
+bindcmdaddress 127.0.0.1
+EOF
+
+# 重啟服務
+sudo systemctl restart chrony
+sudo systemctl enable chrony
+
+echo "--- 3. Integrating with systemd-journald (CR 2.11 RE 1) ---"
+# 確保日誌使用系統精確時間
+sudo mkdir -p /var/log/journal
+sudo systemctl restart systemd-journald
+
+echo "--- 4. Enforcing Immediate Synchronization (Verification Step) ---"
+# 強制開啟網路同步並立即跳轉時間
+chronyc online &>/dev/null
+chronyc makestep &>/dev/null
+
+# 等待同步完成 (最多等待 10 秒)
+echo "Waiting for NTP synchronization..."
+for i in {1..10}; do
+    if chronyc tracking | grep -q "Reference ID    : [^0]"; then
+        echo "Synchronization successful!"
+        break
+    fi
+    sleep 1
+done
+
+echo "--------------------------------------------------"
+echo "AFE-E630 Time Synchronization Setup Complete!"
+echo "Status Check:"
+chronyc tracking
+echo "--------------------------------------------------"
