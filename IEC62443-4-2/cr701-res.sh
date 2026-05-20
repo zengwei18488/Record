@@ -70,7 +70,7 @@ sudo iptables -I OUTPUT 4 -p tcp --dport 443 -j ACCEPT
 
 # --- 4. Auditing, Monitoring & Capacity (CR 6.01 & 6.02) ---
 echo "Step 4: Configuring Auditd, Fail2Ban, and Journald..."
-sudo apt install -y auditd fail2ban python3-systemd
+#sudo apt install -y auditd fail2ban python3-systemd
 
 # Fail2Ban (CR 7.01 Brute Force Protection)
 sudo tee /etc/fail2ban/jail.local << EOT

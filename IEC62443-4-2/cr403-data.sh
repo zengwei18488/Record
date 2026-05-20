@@ -9,8 +9,8 @@
 echo "Starting IEC 62443-4-2 Compliance Setup..."
 
 # 1. Install necessary lightweight tools
-sudo apt update
-sudo apt install -y iptables iptables-persistent chrony dnsutils
+#sudo apt update
+#sudo apt install -y iptables iptables-persistent chrony dnsutils
 
 # 2. Configure Iptables (Firewall Policy)
 echo "Configuring Iptables rules..."

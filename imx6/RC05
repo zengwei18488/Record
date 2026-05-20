@@ -1,3 +1,40 @@
+制作一个普通的rc05 sdcard启动卡
+将此卡使用读卡器方式接入ubuntu主机进行操作
+如下指令：
+sudo dd if=u-boot.imx of=/dev/sdX bs=512 seek=2;sync    (sdX: your SD Card)
+
+u-boot.imx从附件档案中获取
+
+插入核心板sdcard卡槽，核心板拨码开关切换至 1 off  2 on  强制从核心版sd卡启动
+
+通过U盘方式将SPL（从142阶料号中获取或从上一封邮件附件档获取）和工具flash_erase（附件档获取）
+拷贝至/root目录下，及串口默认家目录
+
+如下指令为参考：
+cp /mnt/usb/rc05/SPL .
+cp /mnt/usb/rc05/tools/flash_erase .
+
+执行如下红色字体指令更新spi_flash
+
+root@spreev2:~# ls
+flash_erase  SPL
+root@spreev2:~# ./flash_erase /dev/mtd0 0 192
+Erasing 4 Kibyte @ bf000 -- 100 % complete
+root@spreev2:~#
+root@spreev2:~# dd if=./SPL of=/dev/mtd0 bs=512 seek=2;sync
+78+0 records in
+78+0 records out
+39936 bytes (40 kB) copied, 0.13882 s, 288 kB/s
+root@spreev2:~# sync
+
+更新完成后，断电，核心板拨码开关切换至 1 on  2 off 
+
+开机第一条log打印如下及完成更新
+
+Adv-Boot SPL 2016.03 (Sep 03 2018 - 10:00:52)
+
+
+
 烧录SPL或u-boot.imx到sdcard
 
 1 off  2 on  强制从核心版sd卡启动

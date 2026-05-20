@@ -3,9 +3,213 @@ FR1
 系统需改造内容
 
 1、SSL 等级修改为2
+root@linaro-alip:~# openssl version
+OpenSSL 3.0.20 7 Apr 2026 (Library: OpenSSL 3.0.20 7 Apr 2026) 
+
+root@linaro-alip:~# openssl ciphers -v "DEFAULT@SECLEVEL=2" | grep -E "TLSv1.3|ECDHE-.*-GCM"
+TLS_AES_256_GCM_SHA384         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(256)            Mac=AEAD
+TLS_CHACHA20_POLY1305_SHA256   TLSv1.3 Kx=any      Au=any   Enc=CHACHA20/POLY1305(256) Mac=AEAD
+TLS_AES_128_GCM_SHA256         TLSv1.3 Kx=any      Au=any   Enc=AESGCM(128)            Mac=AEAD
+ECDHE-ECDSA-AES256-GCM-SHA384  TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AESGCM(256)            Mac=AEAD
+ECDHE-RSA-AES256-GCM-SHA384    TLSv1.2 Kx=ECDH     Au=RSA   Enc=AESGCM(256)            Mac=AEAD
+ECDHE-ECDSA-AES128-GCM-SHA256  TLSv1.2 Kx=ECDH     Au=ECDSA Enc=AESGCM(128)            Mac=AEAD
+ECDHE-RSA-AES128-GCM-SHA256    TLSv1.2 Kx=ECDH     Au=RSA   Enc=AESGCM(128)            Mac=AEAD
+
+root@linaro-alip:~# ssh -V
+OpenSSH_9.2p1 Debian-2+deb12u10, OpenSSL 3.0.20 7 Apr 2026  
+
+root@linaro-alip:~# chronyd --version
+chronyd (chrony) version 4.3 (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SIGND +ASYNCDNS +NTS +SECHASH +IPV6 -DEBUG)
+
+root@linaro-alip:~# chronyc -N sources -v
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current best, '+' = combined, '-' = not combined,
+| /             'x' = may be in error, '~' = too variable, '?' = unusable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample
+===============================================================================
+^+ 2.debian.pool.ntp.org         2   9   377   210  -3192us[-3192us] +/-   44ms
+^- 2.debian.pool.ntp.org         2  10   277   905    +20ms[  +19ms] +/-  110ms
+^- 2.debian.pool.ntp.org         3  10   177    84    -21ms[  -21ms] +/-  117ms
+^* 2.debian.pool.ntp.org         1  10   377   266  +1310us[ +466us] +/-   18ms
+
+gpg --show-keys /etc/apt/trusted.gpg.d/*.gpg 2>/dev/null | grep -E "pub|sub"
+# 或者查看系統信任的金鑰環
+apt-key list 2>/dev/null | grep -B 1 "rsa4096"
+
+root@linaro-alip:~# apt-key list 2>/dev/null | grep -B 1 "rsa4096"
+------------------------------------------------------------
+pub   rsa4096 2023-01-21 [SC] [expires: 2031-01-19]
+--
+uid           [ unknown] Debian Archive Automatic Signing Key (12/bookworm) <ftpmaster@debian.org>
+sub   rsa4096 2023-01-21 [S] [expires: 2031-01-19]
+--
+---------------------------------------------------------------------
+pub   rsa4096 2023-01-21 [SC] [expires: 2031-01-19]
+--
+uid           [ unknown] Debian Security Archive Automatic Signing Key (12/bookworm) <ftpmaster@debian.org>
+sub   rsa4096 2023-01-21 [S] [expires: 2031-01-19]
+--
+------------------------------------------------------------
+pub   rsa4096 2021-01-17 [SC] [expires: 2029-01-15]
+--
+uid           [ unknown] Debian Archive Automatic Signing Key (11/bullseye) <ftpmaster@debian.org>
+sub   rsa4096 2021-01-17 [S] [expires: 2029-01-15]
+--
+---------------------------------------------------------------------
+pub   rsa4096 2021-01-17 [SC] [expires: 2029-01-15]
+--
+uid           [ unknown] Debian Security Archive Automatic Signing Key (11/bullseye) <ftpmaster@debian.org>
+sub   rsa4096 2021-01-17 [S] [expires: 2029-01-15]
+--
+---------------------------------------------------------
+pub   rsa4096 2021-02-13 [SC] [expires: 2029-02-11]
+--
+----------------------------------------------------------
+pub   rsa4096 2025-03-30 [SC] [expires: 2035-03-28]
+--
+uid           [ unknown] Debian Archive Automatic Signing Key (13/trixie) <ftpmaster@debian.org>
+sub   rsa4096 2025-03-30 [S] [expires: 2035-03-28]
+--
+-------------------------------------------------------------------
+pub   rsa4096 2025-03-30 [SC] [expires: 2035-03-28]
+--
+uid           [ unknown] Debian Security Archive Automatic Signing Key (13/trixie) <ftpmaster@debian.org>
+sub   rsa4096 2025-03-30 [S] [expires: 2035-03-28]
+
+
 2、uboot添加密码保护，登陆后才能修改环境变量    CR1.01
+
+root@linaro-alip:/# echo -n "Uboot@2026#strong" | sha256sum
+115a5c37cbb636f9cbe1d1c0bc689bdcd54ea06aa02d867320f1b742ef1e8e5c  -
+
+$ mkpasswd Uboot@2026#strong
+$y$j9T$75XujzxHKZuF9H0lqv.Z10$NE8tU.7RJSU5R6LLhb7xL2A7tEYIW6TSbrdRzHIOPc5
+CONFIG_AUTOBOOT_STOP_STR_CRYPT "$y$j9T$75XujzxHKZuF9H0lqv.Z10$NE8tU.7RJSU5R6LLhb7xL2A7tEYIW6TSbrdRzHIOPc5"
+
+Uboot@init#strong
+
+# --- FR 1.1 / 1.2: Identification and Authentication ---
+# Enable keyed autoboot to intercept the boot process
+CONFIG_AUTOBOOT_KEYED=y
+
+# Use SHA256 hashing for password storage (prevents plaintext exposure)
+CONFIG_AUTOBOOT_ENCRYPTION=y
+
+# The SHA256 hash of your password (Example: "root")
+# Command: echo -n "your_password" | sha256sum
+CONFIG_AUTOBOOT_STOP_STR_SHA256="115a5c37cbb636f9cbe1d1c0bc689bdcd54ea06aa02d867320f1b742ef1e8e5c"
+
+# --- FR 5.1: Resource Availability & Anti-Brute Force ---
+# Set boot delay to 0 to prevent standard interruption (Hidden Entry)
+CONFIG_BOOTDELAY=0
+
+# Disable prompt to hide the existence of the console entry point
+CONFIG_AUTOBOOT_PROMPT=""
+
+# --- FR 2.1: Login Success/Failure Behavior ---
+# Define timeout for input; if no input, proceed to autoboot
+CONFIG_BOOT_RETRY_TIME=30
+
+# Force system reset on authentication failure to mitigate brute-force attacks
+CONFIG_RESET_TO_RETRY=y
+
+# --- FR 4.1: Data Confidentiality & Minimizing Attack Surface ---
+# Disable high-risk commands that could be used for data exfiltration
+# CONFIG_CMD_USB is not set
+# CONFIG_CMD_TFTPBOOT is not set
+
+# Enable saving environment variables for authorized persistence
+CONFIG_CMD_SAVEENV=y
+
+
 3、支持IMA    CR2.04
 4、支持audit    CR2.08/CR2.09/CR2.10/CR3.09/CR6.01
+
+cat <<EOF | sudo chroot $TARGET_ROOTFS_DIR
+# 1. 定義變量
+AUDIT_RULES="/etc/audit/rules.d/audit.rules"
+AUDITD_CONF="/etc/audit/auditd.conf"
+PLUGIN_CONF="/etc/audit/plugins.d/au-remote.conf"
+
+# 2. 配置 Audit 規則 (CR 6.01, CR 2.08)
+# 修正：RK3568 是 ARM64，必須使用 b64 或 aarch64
+# 修正：去除了過於頻繁的讀寫監控，防止 eMMC 壽命縮短，專注於關鍵安全事件
+cat <<EOT > \$AUDIT_RULES
+## 刪除所有現有規則
+-D
+
+## 緩衝區大小 (工業環境建議提高)
+-b 8192
+
+## 監控執行行為 (CR 2.4 輔助)
+-a always,exit -F arch=aarch64 -S execve -k exec_tracking
+
+## 監控系統與審計配置變更 (CR 2.09)
+-w /etc/systemd/ -p wa -k sys_config
+-w /etc/audit/ -p wa -k audit_config
+-w /etc/libaudit.conf -p wa -k audit_config
+-w /var/log/audit/ -p wa -k audit_logs
+
+## 監控帳號與權限變更 (CR 1.1, CR 1.2)
+-w /etc/passwd -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/group -p wa -k identity
+-w /etc/sudoers -p wa -k priv_esc
+-w /etc/sudoers.d/ -p wa -k priv_esc
+
+## 監控網路事件 (CR 7.1)
+-a always,exit -F arch=aarch64 -S connect,accept,bind -F auid>=1000 -F auid!=4294967295 -k net_events
+
+## 鎖定規則 (CR 6.01 - 規則不可在運行時修改)
+-e 2
+EOT
+
+# 3. 配置審計日誌存儲策略 (CR 2.08)
+# max_log_file = 100 代表 100MB
+# space_left_action = SYSLOG 符合 CR 2.09 響應要求
+sed -i "
+  s|^max_log_file =.*|max_log_file = 100|;
+  s|^num_logs =.*|num_logs = 10|;
+  s|^space_left =.*|space_left = 50|;
+  s|^admin_space_left =.*|admin_space_left = 15|;
+  s|^admin_space_left_action =.*|admin_space_left_action = SYSLOG|;
+  s|^disk_full_action =.*|disk_full_action = SYSLOG|;
+  s|^disk_error_action =.*|disk_error_action = SYSLOG|;
+" \$AUDITD_CONF
+
+# 4. 配置插件與服務自動重啟 (CR 2.10, CR 2.08)
+[ -f "\$PLUGIN_CONF" ] && sed -i "s/^active =.*/active = yes/" \$PLUGIN_CONF
+
+# 修正：Debian 12 使用 systemd 管理服務，我們通過 override 實現服務自動重啟
+mkdir -p /etc/systemd/system/auditd.service.d
+cat <<UNIT > /etc/systemd/system/auditd.service.d/override.conf
+[Service]
+Restart=always
+RestartSec=5s
+UNIT
+
+# 5. 權限加固 (CR 2.08)
+chmod 640 \$AUDIT_RULES
+chmod 640 \$AUDITD_CONF
+
+EOF
+
+
+ 135  sudo auditctl -s | grep "enabled"
+  136  grep -E "max_log_file|num_logs" /etc/audit/auditd.conf
+  137  ls -lh /var/log/audit/
+  138  grep -E "space_left|admin_space_left_action" /etc/audit/auditd.conf
+  139  sudo dmesg | grep -i "audit"
+  140  systemctl show auditd.service | grep "Restart="
+
+
+
 5、设定CONFIG_NETFILTER，支持ufw     CR3.01 RE(1)
 6、secureboot   HDR3.12/HDR3.14  HDR3.14 RE(1)
 

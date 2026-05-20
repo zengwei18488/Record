@@ -41,7 +41,7 @@ sudo apt purge -y udisks2 gvfs thunar-volman 2>/dev/null
 sudo apt autoremove -y 2>/dev/null
 
 if [ -f "$AUTO_RULE" ]; then
-            sudo mv "$AUTO_RULE" "${AUTO_RULE}.bak"
+    sudo mv "$AUTO_RULE" "${AUTO_RULE}.bak"
 fi
 sudo chmod -x "$AUTO_SH" 2>/dev/null
 

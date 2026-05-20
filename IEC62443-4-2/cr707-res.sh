@@ -37,8 +37,8 @@ done
 echo -e "${BOLD}[2/3] Protecting Physical Ports (Restricting USB Access)...${NC}"
 
 # A. 移除自動掛載引擎 (防止隨身碟即插即用)
-sudo apt purge -y udisks2 gvfs thunar-volman 2>/dev/null
-sudo apt autoremove -y 2>/dev/null
+#sudo apt purge -y udisks2 gvfs thunar-volman 2>/dev/null
+#sudo apt autoremove -y 2>/dev/null
 
 if [ -f "$AUTO_RULE" ]; then
     sudo mv "$AUTO_RULE" "${AUTO_RULE}.bak"

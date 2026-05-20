@@ -13,6 +13,9 @@ $ ../repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Lin
 $ ../repo/repo sync
 $ ../repo/repo forall -c git checkout -b local --track advantech-azure/debian12-linux6.1-v130
 
+# 修复用的，编译不报错不管，在宿主机（即运行 docker 的那台机器）执行：
+docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
 sudo docker run -it --name rk356x_debian12-linux6.1-v130 -v /home/zengwei/work/rk3568/rk3568-debian12:/home/adv/BSP:rw --privileged advrisc/u20.04-rklbv1:latest /bin/bash
 
 ./build.sh rk3568_afee630a1_defconfig
@@ -28,6 +31,21 @@ sudo apt-get install -f -y
 sudo apt-get update
 sudo apt-get install binfmt-support qemu-user-static --reinstall
 sudo update-binfmts --enable qemu-aarch64
+
+# 重新安装
+sudo apt-get update
+sudo apt-get install --reinstall binfmt-support qemu-user-static
+# 手动启动 binfmt 注册（绕过 systemd）
+sudo /etc/init.d/binfmt-support restart
+在容器内执行以下命令，如果能看到 enabled，说明 QEMU 已经准备好：cat /proc/sys/fs/binfmt_misc/qemu-aarch64
+
+
+adv@444671c8e4ed:~/BSP/debian12-linux6.1-v130$ mount | grep "binary"
+devpts on /home/adv/BSP/debian12-linux6.1-v130/debian/binary/dev/pts type devpts (rw,relatime,gid=5,mode=620,ptmxmode=000)
+adv@444671c8e4ed:~/BSP/debian12-linux6.1-v130$ sudo umount -l /home/adv/BSP/debian12-linux6.1-v130/debian/binary/dev/pts
+adv@444671c8e4ed:~/BSP/debian12-linux6.1-v130$ mount | grep "binary"
+
+
 ./build.sh debian
 
 ./build.sh firmware
@@ -38,6 +56,15 @@ git clone https://salsa.debian.org/live-team/live-build.git --depth 1 -b debian/
 cd live-build
 rm -rf manpages/po/
 sudo make install -j8
+
+###按顺序执行，uboot的指令在device目录有添加编译flag，然后先编译kernel，再uboot签名，uboot、boot、recovery三个img从uboot目录获取
+./build.sh rk3568_afee630a1_defconfig
+./build.sh kernel
+./build.sh recovery
+./build.sh uboot
+./build.sh debian
+./build.sh firmware
+
 
 &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 https://github.com/microsoft/sbom-tool
@@ -84,6 +111,26 @@ MEDIUM	中等/警告         利用条件较复杂，或者只能造成局部破
 LOW	低危/提醒         极难利用，或仅泄露非敏感信息。	                                                        忽略或延迟处理。通常不作为紧急修复目标。
 ########################################################################################################################
 预装包
+
+######  iec62443
+apt-get install -y ima-evm-utils attr keyutils
+apt-get install -y libpam-pwquality rsyslog cracklib-runtime wamerican libpam-cap whois
+apt-get install -y sysstat libpam-modules usbguard logrotate
+apt-get install -y xscreensaver xscreensaver-data-extra dbus-x11
+apt-get remove --purge ntp systemd-timesyncd -y
+apt-get install -y chrony
+apt-get install -y bc
+apt-get install -y clamav clamav-daemon
+apt-get install -y unattended-upgrades
+apt-get install -y systemd-coredump
+apt-get install -y rng-tools-debian
+apt-get install -y secure-delete memtester extundelete
+apt-get install -y iptables dnsutils
+apt-get install -y ufw
+apt-get install -y auditd libaudit1 libauparse0 fail2ban python3-pyinotify python3-systemd
+systemctl enable rng-tools-debian
+update-cracklib
+
 
 Debian 12 完整合規套件清單 (對齊原始需求)
 bash
@@ -141,11 +188,21 @@ extundelete & memtester:
 openssl ciphers -v | grep TLSv1.3
 grep -E "CipherString|MinProtocol" /etc/ssl/openssl.cnf
 
+# 如果成功，這行輸出的清單應該「變短很多」，且絕對沒有 SSLv3 或 TLSv1
+openssl ciphers -v
+
 在 Debian 12 的默认配置中，你应该能在文件末尾看到类似以下内容：
 CipherString = DEFAULT@SECLEVEL=2
 MinProtocol = TLSv1.2
 
 openssl ciphers -s -v 'DEFAULT@SECLEVEL=2'
+
+重新載入 Systemd 設定：
+sudo systemctl daemon-reexec（這會讓 Systemd 讀取新的 system.conf）。
+重啟關鍵服務：
+sudo systemctl restart ssh（或是重啟整個系統 sudo reboot，這是最保險的）。
+
+openssl ciphers -v | grep -E "SSLv3|TLSv1"
 
 Debian 12 默认选择 Level 2 是为了强制执行现代安全标准：
 安全等级 	安全强度（折合对称密钥）	主要限制
@@ -153,6 +210,21 @@ Level 0	        0 bits	                无限制，允许任何加密（包括�
 Level 1	        80 bits	                允许 RSA 1024位，允许 SHA1。
 Level 2	        112 bits	Debian 12 默认值。 要求 RSA大于等于2048位，禁用 SHA1，禁用 TLS 1.1 及以下版本。
 Level 3	        128 bits	要求 RSA大于等于3072位，仅允许支持前向安全性 (PFS) 的套件。
+
+1. TLS 1.3 (最推薦：目前最強安全標準)
+優點：刪除了所有過時的弱加密演算法，握手過程更快且更安全（預設支援 PFS 完美轉發安全性）。
+常用套件：AES-GCM-256, ChaCha20-Poly1305。
+2. TLS 1.2 (目前工業界的標準下限)
+優點：相容性極高，且若配置正確（使用 GCM 模式與 SECLEVEL 2），安全性依然足夠。
+要求：必須禁用弱套件（如 MD5, SHA1, DES），這正是我們在 openssl.cnf 中設定 SECLEVEL=2 的原因。
+📊 審計對照表 (Audit Quick Reference)
+協定版本	安全地位	建議動作 (針對 CR 4.3)
+SSLv2 / SSLv3	極度危險	完全禁用 (Forbidden)
+TLS 1.0 / 1.1	過時/不安全	完全禁用 (Deprecated)
+TLS 1.2	安全 (配置需正確)	允許使用 (Minimum Standard)
+TLS 1.3	極度安全	優先使用 (Recommended)
+💡 總結：
+這就是為什麼您的 openssl ciphers -v 輸出中如果出現 SSLv3 或 TLSv1，CBTL 審計員會要求您修正。我們透過 BSP 修改將其鎖定在 TLS 1.2+，是保護板卡免受網路監聽最基本、也最重要的防線。
 
 cat /etc/ssl/openssl.cnf | grep SECLEVEL
 [system_default_sect]
@@ -177,6 +249,13 @@ MinProtocol = TLSv1.2
 +[system_default_sect]
 +CipherString = DEFAULT@SECLEVEL=2
 +MinProtocol = TLSv1.2
+
+
+
+root@linaro-alip:~# openssl version -d
+OPENSSLDIR: "/usr/lib/ssl"
+root@linaro-alip:~#
+
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 禁止内核更新
@@ -297,7 +376,24 @@ IEC 62443 认证通常要求“禁止通用默认密码”。最合规的变通�
 在构建脚本中添加：
 bash
 # 1. 设定强初始密码
-echo "linaro:Init@2026#Strong" | chroot $DEST chpasswd
+echo "linaro:Init@2026#strong" | chroot $DEST chpasswd
+
+#for login
+echo "linaro:Init@2026#user" | chpasswd
+echo "root:Init@2026#super" | chpasswd
+
+   84  dmesg | grep tty
+   85  sudo mkdir -p /etc/systemd/system/serial-getty@ttyFIQ0.service.d/
+   86  sudo tee /etc/systemd/system/serial-getty@ttyFIQ0.service.d/override.conf <<EOF
+   87  [Service]
+   88  # 清空之前的 ExecStart 命令
+   89  ExecStart=
+   90  # 恢复标准的登录提示符，要求手动输入用户名和密码
+   91  ExecStart=-/sbin/agetty --keep-baud 115200,57600,38400,9600 %I \$TERM
+   92  EOF
+   93  sudo systemctl daemon-reload
+   94  sudo systemctl restart serial-getty@ttyFIQ0.service
+
 
 # 2. 强制密码过期
 chroot $DEST chage -d 0 linaro
@@ -435,6 +531,10 @@ root@linaro-alip:~#
 
 CR2.04     动态代码执行监控（是否被篡改）
 
+find / -path /proc -prune -o -path /sys -prune -o -path /dev -prune -o -path /run -prune -o -type f -uid 0 -exec evmctl ima_hash -a sha256 {} \;
+
+sed -i '/ext4/ s/defaults/defaults,i_version/' /etc/fstab
+
 Embedded device requirements，Host device requirements，Network device requirements，Software application requirements，
 
 在 AFE-E630 的生產流程中，建議按照以下順序操作：
@@ -454,6 +554,23 @@ Embedded device requirements，Host device requirements，Network device require
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr211*.sh .
 
 IMA（Integrity Measurement Architecture）完整性测量架构是 Linux 内核的一个模块
+
+ima_policy=tcb ima_appraise=fix ima_hash=sha256
+bootargs "${bootargs} ima_policy=tcb ima_appraise=fix ima_hash=sha256"
+saveenv
+
+从你的 policy 内容来看，问题出在缺少 appraise 规则。你的 ima_policy=tcb 只加载了 测量 (measure) 规则，而没有加载 评估 (appraise/拦截) 规则。
+在 IMA 中，measure 只是把哈希记入日志，只有 appraise 才会对比哈希并拦截执行。
+1. 为什么会这样？虽然你在 cmdline 写了 ima_appraise=enforce，但这只是开启了“拦截功能”的开关，它还需要在 policy 中有对应的 appraise 指令才会真正去拦截。
+2. 解决方案：手动注入拦截策略为了验证合规性，你需要在运行状态下手动追加拦截规则。请执行以下命令：bash# 写入一条强制评估（拦截）所有以 root 身份执行的可执行文件的规则
+sudo sh -c 'echo "appraise func=BPRM_CHECK mask=MAY_EXEC" > /sys/kernel/security/ima/policy'
+请谨慎使用此类代码。执行后再检查：再次运行 sudo cat /sys/kernel/security/ima/policy，你会发现最下面多了一行 appraise ...。
+3. 再次进行篡改实验现在 appraise 规则已生效，请重复刚才的实验：bash# 1. 此时运行已篡改的 ls_test
+/usr/bin/ls_test
+请谨慎使用此类代码。预期结果： 此时系统应该会报错 Permission denied。
+4. 如何在 BSP 中永久固定（合规做法）在正式发布的版本中，不能靠手动 echo。
+你需要在内核启动参数中增加：ima_policy=tcb|appraise_tcb（注：某些内核版本需要用 | 符号连接多个内置策略，或者在 post-build 阶段预置一个 /etc/ima/ima-policy 文件）。
+或者在 cmdline 中使用：ima_policy=tcb ima_policy=appraise_tcb
 
 # --- 基礎完整性框架 ---
 CONFIG_INTEGRITY=y
@@ -494,6 +611,7 @@ Security options --->
 
 在 Rockchip 的 SDK 中，找到 parameter.txt 檔案，在 CMDLINE: 的末尾追加：
 ima_policy=tcb ima_appraise=fix ima_hash=sha256
+ima_policy=tcb ima_appraise=enforce ima_hash=sha256
 然後重新燒錄 parameter 分區。這比改 GRUB 更能保證參數進入 /proc/cmdline。
 
 確認參數載入：
@@ -503,6 +621,117 @@ ls -l /sys/kernel/security/ima/ 應該要看到 ascii_runtime_measurements 和 p
 確認功能啟用：
 執行 zgrep CONFIG_IMA_APPRAISE /proc/config.gz，輸出應為 CONFIG_IMA_APPRAISE=y。
 
+sudo mount -o loop linaro-rootfs.img temp/
+getfattr -m . -d /temp/audit_rootfs/lib/systemd/systemd-fsckd
+getfattr -e hex -n security.ima /usr/bin/ls
+getfattr -m . -d /lib/systemd/systemd-fsckd
+sudo umount temp/
+
+sudo apt install -y ima-evm-utils attr keyutils
+find /bin /sbin /usr/bin /usr/sbin -type f -exec evmctl ima_hash {} \;
+find / -fstype ext4 -type f -uid 0 -exec evmctl ima_hash {} \;
+# getfattr -n security.ima /usr/bin/ls
+getfattr: Removing leading '/' from absolute path names
+# file: usr/bin/ls
+security.ima=0sBASNCpDVqh+RUeCfBVCp24UiwKmgNWM949lN69JwEpmiVQ==
+
+# 查看已测量文件的数量
+cat /sys/kernel/security/ima/runtime_measurements_count
+
+# 使用 -a (archive) 或 --preserve=xattr 参数
+sudo cp -a /usr/bin/ls /usr/bin/ls_test
+# 验证属性是否被带过来
+getfattr -m . -d /usr/bin/ls_test
+# 2. 確保它現在能運行（此時它帶有原始哈希）
+/usr/bin/ls_test /home
+# 3. 惡意修改：在文件末尾追加一個字節
+sudo sh -c 'echo "1" >> /usr/bin/ls_test'
+# 4. 再次嘗試執行
+/usr/bin/ls_test /home
+
+setenv bootargs "${bootargs} usbcore.quirks=04b4:6504:k,04b4:6506:k"
+net/rfkill/rfkill-bt.c
+
+IMA (Integrity Measurement Architecture，完整性度量架構)
+CONFIG_IMA_APPRAISE_BOOTPARAM
+
+strings boot.img | grep "My IMA Key"
+dmesg | grep -i "Loading compiled-in X.509 certificates"
+strings arch/arm64/boot/Image | grep "My IMA Key" 
+# 或者搜索證書特有的字串，如 "MIIDCzCCAfOgAwIBAg"
+strings arch/arm64/boot/Image | grep "MIIDCzCCAfOgAwIBAg"
+
+# 查看 USB 驅動有沒有標籤（擴展屬性）
+getfattr -n security.ima /lib/modules/$(uname -r)/kernel/drivers/usb/host/xhci-hcd.ko
+
+CONFIG_IMA_KEYRINGS_PERMIT_SIGNED_BY_BUILTIN_OR_SECONDARY
+
+mkdir -p security_keys && cd security_keys
+openssl genrsa -out ima_privkey.pem 2048
+openssl req -new -x509 -sha256 -key ima_privkey.pem -out ima_cert.x509 -days 3650 -subj "/CN=My IMA Key/"
+cp security_keys/ima_cert.x509 kernel/certs/ima_cert.pem
+
+在 security_keys 目录下创建一个文件叫 ima.conf，内容如下：ini[ req ]
+[ req ]
+# Main settings for Certificate Signing Request (CSR)
+distinguished_name = req_distinguished_name
+x509_extensions = v3_ca
+prompt = no
+string_mask = utf8only
+
+[ req_distinguished_name ]
+# Identification details for the key holder
+O  = Advantech
+OU = SecurityDept
+CN = My IMA Key
+
+[ v3_ca ]
+# --- CRITICAL CONFIGURATIONS FOR KERNEL COMPATIBILITY ---
+
+# 1. MUST be FALSE. 
+# Resolves the "Permission denied" error during keyring linking. 
+# Modern kernels (Linux 5.10+) prohibit bridging CA certificates directly 
+# into the .ima keyring for file appraisal.
+basicConstraints = critical, CA:FALSE
+
+# 2. MUST include digitalSignature. 
+# Resolves the "err -11 (ENOKEY)" by granting the key the specific 
+# architectural permission to verify cryptographic signatures.
+keyUsage = critical, digitalSignature
+
+# 3. MUST include subjectKeyIdentifier. 
+# Allows the kernel to index and retrieve this key from the 
+# Secondary Trusted Keyring using its unique Hash ID.
+subjectKeyIdentifier = hash
+
+# 4. Provides a trust chain link back to the issuer
+authorityKeyIdentifier = keyid,issuer
+
+# 5. Optional: Explicitly marks the key for code signing.
+# Recommended for IEC 62443 compliance to define strict key usage scope.
+extendedKeyUsage = codeSigning
+
+sudo apt-get install faketime
+faketime '2010-01-01 00:00:00' openssl req -new -x509 -sha256 \
+    -key ima_privkey.pem \
+    -config ima.conf \
+    -out ima_cert.pem \
+    -days 3650 \
+    -set_serial 01
+    
+cp ima_cert.pem ../kernel/certs/ima_cert.pem
+
+
+# 加上 --imasig 選項，強制使用內核最相容的格式
+sudo evmctl ima_sign --imasig -a sha256 --key ~/security_keys/ima_privkey.pem -r $TARGET_ROOTFS_DIR
+# 使用全新的私钥重新扫描并打标
+sudo evmctl ima_sign -a sha256 --key ./ima_privkey.pem -r $TARGET_ROOTFS_DIR
+
+
+在开启了 ima_appraise=enforce 的合规模式下，答案是肯定的：你自己从外部拷贝进来的脚本默认会受到限制，无法执行。这正是 IEC 62443 CR 2.4 想要达到的效果：防止未经审核的第三方脚本（包括潜在的恶意软件）在系统上运行。具体表现如下：1. 为什么会被限制？当你拷贝一个新脚本（例如 test.sh）到板卡上时：该文件在你的宿主机上并没有 security.ima 这个扩展属性。当你尝试运行 ./test.sh 时，内核会检查它的 security.ima 标签。结果：内核发现该文件没有哈希指纹或指纹未记录，会直接返回 Permission denied（即使你已经执行了 chmod +x，甚至是 root 用户也一样）。2. 不同操作方式的影响直接执行 (./script.sh)：会被内核拦截。作为解释器参数 (sh script.sh 或 python3 script.py)：如果你的 IMA 策略配置为 BPRM_CHECK（仅检查二进制执行），那么 sh 程序本身是合法的，它读取脚本内容可能不会被拦截，但这种配置在高级别合规审计中是不合格的。如果你按照我们之前的合规配置（ima_policy=tcb），内核会对“所有被读取用于执行的文件”进行检查，此时 sh script.sh 也会因为脚本没有哈希值而失败。3. 如何让你的脚本“合法化”？如果你确实需要运行自己拷贝进来的脚本，你有三种选择：方案 A：在板卡上重新生成指纹（仅限开发阶段）如果系统当前还处于 ima_appraise=fix 模式：拷贝脚本。运行一次 cat script.sh > /dev/null。内核会自动计算并为它写上哈希标签。切换回 enforce 模式后，它就能跑了。方案 B：在外部签名后再拷贝（正式生产/合规做法）在你的宿主机上，使用与镜像相同的私钥（或计算相同的哈希）处理该脚本：bashevmctl ima_hash script.sh  # 如果是简化版哈希模式
+# 或者
+evmctl ima_sign --key privkey.pem script.sh # 如果是签名模式
+请谨慎使用此类代码。然后再将带有扩展属性的文件拷贝到板卡（必须使用支持扩展属性的传输方式，如 tar 打包传输，简单的 scp 有时会丢掉标签）。
 
 CR 2.05/2.06
 
@@ -584,7 +813,7 @@ FR3 - System integrity
 
 CR 3.01
 
-scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr3*.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/*.sh .
 
 zgrep CONFIG_NETFILTER /proc/config.gz
 
@@ -1214,6 +1443,13 @@ CR 7.07 要求組件必須具備「防止未經授權使用實體埠」的能力
 唯讀掛載 (Read-Only)：配置 udev 規則，所有插入的 USB 一律強制以 ro 模式掛載，防止惡意軟體寫入系統。
 白名單機制 (USBGuard)：
 安裝 usbguard 軟體，設定「預設拒絕所有 USB，僅允許滑鼠、鍵盤」。
+
+    sudo systemctl daemon-reload
+    sudo systemctl restart usbguard.service
+    systemctl status usbguard.service
+    journalctl -xeu usbguard.service
+    /usr/sbin/usbguard-daemon -f -s -c /etc/usbguard/usbguard-daemon.conf
+
 優點：兼顧安全與功能。
 缺點：軟體較重，且需要維護白名單規則。
 3. 你的現狀建議

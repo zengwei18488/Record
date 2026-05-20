@@ -9,7 +9,7 @@ echo "Configuring Continuous Monitoring (CR 6.2) per industry practices..."
 
 # 1. Detection: Real-time Intrusion Monitoring (Fail2Ban)
 # Detects brute force and characterizes it by banning source IPs
-sudo apt update && sudo apt install -y fail2ban
+#sudo apt update && sudo apt install -y fail2ban
 sudo cp -a /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 sudo sed -i '/^\[sshd\]/,/^\[/ s/enabled = .*/enabled = true/' /etc/fail2ban/jail.local
 sudo sed -i '/^\[sshd\]/,/^\[/ s/backend = .*/backend = systemd/' /etc/fail2ban/jail.local
@@ -17,7 +17,7 @@ sudo systemctl restart fail2ban
 
 # 2. Characterization: Kernel & Critical File Monitoring (Auditd)
 # Monitors who, when, and how security-critical files are accessed
-sudo apt install -y auditd
+#sudo apt install -y auditd
 sudo tee /etc/audit/rules.d/cr6_02_monitoring.rules << "EOT"
 # Monitor execution of sensitive management tools
 -w /usr/bin/sudo -p x -k monitor_priv_esc

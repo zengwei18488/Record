@@ -14,10 +14,10 @@ fi
 
 echo "--- 1. Installing Chrony and Removing Old Tools ---"
 # 確保移除舊的或較不安全的 ntp 服務
-sudo apt-get update
-sudo apt-get remove --purge ntp systemd-timesyncd -y
-sudo apt-get install -y chrony
-sudo apt-get install bc -y
+#sudo apt-get update
+#sudo apt-get remove --purge ntp systemd-timesyncd -y
+#sudo apt-get install -y chrony
+#sudo apt-get install bc -y
 
 echo "--- 2. Configuring Chrony for High Accuracy and Security ---"
 CHRONY_CONF="/etc/chrony/chrony.conf"

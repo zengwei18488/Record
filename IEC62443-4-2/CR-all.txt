@@ -1,0 +1,38 @@
+為了方便您進行 RootFS 改造與 BSP 固化，我將 IEC 62443-4-2 的要求依照「技術實施手段」進行了歸類。這樣您可以將功能相似的設定整合在同一個腳本或 Overlay 目錄中，提高開發效率。
+以下是針對 Debian 12 (RK3568) 平台的分類清單：
+第一類：身份驗證與存取控制 (Authentication & PAM)
+對應 CR： 1.1 (驗證器管理), 1.5 (密碼回饋), 1.7 (登入失敗處理), 1.11 (工作站鎖定)
+核心修改點： /etc/pam.d/ 檔案與 /etc/login.defs
+密碼強度設定：使用 pam_pwquality.so 限制長度與複雜度。
+密碼唯一性：使用 pam_pwhistory.so 紀錄最近 5 次密碼，防止重用。
+登入失敗鎖定：使用 pam_tally2.so 或 pam_faillock.so（Debian 12 推薦），設定失敗 5 次鎖定 15 分鐘。
+登入畫面隱蔽：修改 /etc/pam.d/common-auth 確保輸入密碼時不顯示任何星號或提示。
+逾時自動登出：在 /etc/profile 設定 TMOUT=600。
+第二類：加密與通訊保護 (Cryptography & Communication)
+對應 CR： 4.3 (加密使用), 7.6 (安全設定), 4.03 (對時安全)
+核心修改點： /etc/ssl/openssl.cnf, /etc/ssh/sshd_config, /etc/chrony/chrony.conf
+OpenSSL 全域硬化：設定 SECLEVEL=2 與 MinProtocol=TLSv1.2 (需透過我們討論過的環境變數強制注入)。
+SSH 服務加固：禁用 root 登入、禁用弱加密套件（只留 GCM）、禁用 SHA-1 相關演算法。
+加密時間同步 (NTS)：設定 chrony 僅使用 NTS (Network Time Security) 與受信任的加密時間伺服器。
+第三類：系統審計與資源監視 (Logging & Monitoring)
+對應 CR： 6.1 (審計紀錄), 6.2 (持續監控), 3.9 (資源剩餘資訊保護)
+核心修改點： /etc/audit/, /etc/systemd/journald.conf
+Auditd 規則實施：監控關鍵檔案（如 /etc/shadow）的讀寫動作。
+日誌持久化與限制：設定 journald 儲存上限，防止日誌佔滿 eMMC。
+資源保護：確保使用者登出後清理 /tmp 空間（通常 Debian 已內建）。
+第四類：網路與埠號管理 (Least Privilege & Network)
+對應 CR： 5.1 (網路隔離), 7.1 (DoS 防護), 7.7 (最小權限), 5.01 (埠號限制)
+核心修改點： UFW 規則, /etc/sysctl.conf
+防火牆鎖定：預設 Deny all，僅開放 SSH (22)。加入 RELATED,ESTABLISHED 狀態補丁。
+內核網路硬化 (Sysctl)：開啟 rp_filter（防止 IP 欺騙）、tcp_syncookies（防 DoS 攻擊）。
+服務封印：使用 systemctl mask 封鎖 Avahi, CUPS, Bluetooth, Mosquitto。
+第五類：實體安全與自動掛載 (Physical Protection)
+對應 CR： 7.07 (實體埠保護)
+核心修改點： /etc/udev/rules.d/, /etc/modprobe.d/
+USB 存取受控：移除 udisks2 引擎，並加入 99-no-automount.rules 防止隨身碟自動掛載。
+驅動屏蔽：在 modprobe.d 禁用 usb-storage 和 uas (視您的需求而定，也可採用權限控制法)。
+第六類：系統備份與重建 (Integrity & Recovery)
+對應 CR： 7.4 (系統重建), 7.3 (備份要求), 7.8 (組件清單)
+核心修改點： /etc/system-docs/, /etc/timeshift/
+黃金基準建立：將 fstab 和 sshd_config 備份至 /etc/system-docs 並產出 checksums.txt。
+自動化快照：配置 timeshift 指向 /userdata 磁碟，並產出 SBOM (軟體清單)。

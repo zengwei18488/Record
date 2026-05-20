@@ -48,11 +48,11 @@ echo "Starting IEC 62443 Hardening for Debian 12..."
 # libpam-pwquality: For password strength
 # rsyslog: For security auditing logs
 echo "[1/5] Updating package lists..."
-apt-get update || echo "Update warning: some sources failed."
+# apt-get update || echo "Update warning: some sources failed."
 
 echo "[1/5] Installing security modules with retry logic..."
-smart_install libpam-pwquality rsyslog cracklib-runtime wamerican libpam-cap whois
-update-cracklib
+# smart_install libpam-pwquality rsyslog cracklib-runtime wamerican libpam-cap whois
+# update-cracklib
 
 # 2. Configure Password Complexity (Min 12 chars, 4 classes)
 echo "[2/5] Configuring Password Complexity Policy..."

@@ -13,8 +13,8 @@ fi
 
 echo "--- 1. Installing Native Error Handling Tools ---"
 # 安裝 systemd-coredump 代替 apport
-sudo apt-get update
-sudo apt-get install -y systemd-coredump
+#sudo apt-get update
+#sudo apt-get install -y systemd-coredump
 
 echo "--- 2. Configuring Error Handling (Admin Only) ---"
 # 設定核心轉儲限制：僅管理員可存取，且限制大小防止磁碟耗盡 (CR 3.07)

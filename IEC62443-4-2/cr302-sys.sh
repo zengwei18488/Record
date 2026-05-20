@@ -13,8 +13,8 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 echo "--- 1. Installing ClamAV Packages ---"
-sudo apt-get update
-sudo apt-get install -y clamav clamav-daemon bc
+#sudo apt-get update
+#sudo apt-get install -y clamav clamav-daemon bc
 
 # 確保服務啟動
 sudo systemctl stop clamav-freshclam 2>/dev/null

@@ -101,4 +101,3 @@ echo -e "${BLUE}==========================================================${NC}"
 sudo systemctl stop cpu-hog.service
 sudo systemctl disable cpu-hog.service > /dev/null 2>&1
 sudo rm /etc/systemd/system/cpu-hog.service
-echo "Cleanup: Test service removed. Evidence is ready."

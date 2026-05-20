@@ -1,0 +1,89 @@
+
++mkdir -p /etc/udev/rules.d
++
++cat <<'_USB_POWER_' > /etc/udev/rules.d/999-usb-power.rules
++ACTION=="add", SUBSYSTEM=="usb", ATTR{power/control}="on"
++ACTION=="add", SUBSYSTEM=="usb", ATTR{power/autosuspend}="-1"
++_USB_POWER_
++
++chmod 644 /etc/udev/rules.d/999-usb-power.rules
++
++cat <<'_SECURE_TTY_' > /etc/securetty
++console
++ttyFIQ0
++ttyS2
++ttyS0
++_SECURE_TTY_
++
++chmod 600 /etc/securetty
++
++mkdir -p /etc/ima
++cat << 'POLICY' > /etc/ima/ima-policy
++dont_appraise fsmagic=0x73636673
++dont_appraise fsmagic=0x9fa0
++dont_appraise fsmagic=0x27e0eb
++dont_appraise fsmagic=0x01021994
++dont_appraise fsmagic=0x858458f6
++dont_appraise fsmagic=0x27e0ea
++measure func=BPRM_CHECK mask=MAY_EXEC
++appraise func=BPRM_CHECK mask=MAY_EXEC
++appraise func=MODULE_CHECK
++POLICY
++
++chmod 644 /etc/ima/ima-policy
++
++sed -i '/[[:space:]]\/[[:space:]]/ s/defaults/defaults,i_version/' /etc/fstab
+
+
+步驟 1：立刻停止並粉碎作怪的 usbguard 服務bash# 1. 停止並禁用 usbguard 核心服務
+sudo systemctl stop usbguard 2>/dev/null || true
+sudo systemctl disable usbguard 2>/dev/null || true
+sudo systemctl mask usbguard 2>/dev/null || true
+
+# 2. 同步停止與之連動的 D-Bus 接口
+sudo systemctl stop usbguard-dbus 2>/dev/null || true
+
+# 3. 清理 systemd 內的所有軟連結
+sudo find /etc/systemd/ -name "*usbguard*" -delete 2>/dev/null || true
+
+# 強制將被 usbguard 關閉的總線重新標記為 1 (經授權)
+echo 1 | sudo tee /sys/bus/usb/devices/usb1/authorized 2>/dev/null || true
+echo 1 | sudo tee /sys/bus/usb/devices/usb2/authorized 2>/dev/null || true
+echo 1 | sudo tee /sys/bus/usb/devices/5-1/authorized 2>/dev/null || true
+echo 1 | sudo tee /sys/bus/usb/devices/7-1/authorized 2>/dev/null || true
+
+
+# 1. 強制將 XHCI/USB 控制器的全局預設授權重新翻轉為 1 (允許所有裝置列舉)
+echo 1 | sudo tee /sys/bus/usb/devices/usb1/authorized_default
+echo 1 | sudo tee /sys/bus/usb/devices/usb2/authorized_default
+echo 1 | sudo tee /sys/bus/usb/devices/usb7/authorized_default
+
+# 2. 強制將當前卡在 7-1.2 和 7-1.3 端口上的設備單獨強行認證
+echo 1 | sudo tee /sys/bus/usb/devices/7-1.2/authorized
+echo 1 | sudo tee /sys/bus/usb/devices/7-1.3/authorized
+
+
+
+Bus 008 Device 002: ID 04b4:6504 Cypress Semiconductor Corp.
+Bus 008 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 007 Device 006: ID 1809:018a Advantech SLCAN-FD
+Bus 007 Device 008: ID 17ef:608d Lenovo Optical Mouse
+Bus 007 Device 002: ID 04b4:6506 Cypress Semiconductor Corp. CY4603
+Bus 007 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 006 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 005 Device 002: ID 2c7c:0121 Quectel Wireless Solutions Co., Ltd. EC21 LTE modem
+Bus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub
+Bus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+
+
+
+
+echo 1 | sudo tee /sys/bus/usb/devices/usb1/authorized_default
+echo 1 | sudo tee /sys/bus/usb/devices/usb2/authorized_default
+echo 1 | sudo tee /sys/bus/usb/devices/usb5/authorized_default
+echo 1 | sudo tee /sys/bus/usb/devices/usb7/authorized_default
+
