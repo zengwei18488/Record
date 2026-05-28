@@ -18,3 +18,4 @@ MinProtocol = TLSv1.2' $OPENSSL_CONF
 # 3. 驗證 (證明系統加密庫已升級)
 echo "Global OpenSSL Security Level:"
 openssl ciphers -v -tls1_3 | grep GCM
+openssl ciphers -v "DEFAULT@SECLEVEL=2"

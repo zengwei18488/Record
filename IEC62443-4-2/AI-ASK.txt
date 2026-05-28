@@ -1,0 +1,28 @@
+Conformity Statement (符合性聲明) 撰寫框架
+[宣告實作歸屬]：開頭必須明確宣告是由誰滿足此要求（例如：Met by component 或 Met by system integration)。
+[技術實作描述]：具體寫出設備是用什麼「技術、協定或模組」來達成要求的（例如：PAM 模組、HTTPS 表單、RSA 憑證等）。
+[涵蓋邊界/範圍]：說明該機制套用於哪些介面（例如：所有 Web 管理介面、SSH、Serial Console 等）。
+2. Conformity Evidence (符合性證據) 撰寫框架
+[Design] 設計證據 (對應 EA-13)：指向軟體設計規格書 (SDS) 或架構圖的對應章節。
+[Guidelines] 手冊證據 (對應 EA-16)：指向使用者操作手冊或安全強化指南 (SHG) 的對應章節，證明有指導使用者如何配置。
+[Testing] 測試驗證證據 (對應 EA-18)：指向安全性驗證與確認測試報告 (SVV-1)，必須精確寫出對應的「測試案例編號 (Test Case ID)」
+如上三项包含document、section和Description三小项说明。
+根据上述要求，改造如下CR 1.03，描述使用純技術與架構說明，讀起來更清爽、不臃腫
+Conformity Statement:
+Support the management of all account directly
+Conformity Evidence:
+UID01 – [Debian][AFE-E630] Statement and Evidence.docx, CR 1.3
+
+
+从Conformity Statement、Technical Architecture & Defense-in-Depth Design 、Core Hardening Configurations、Conformity Reference四个方面编写
+Document: UID01 - [Debian][AFE-E630] Security Design Document (SD).docx
+Section: Chapter 1.1.1 (Cryptographic Password Uniqueness and History Depth Specification)
+Description: Defines the system architecture for POSIX UID/GID isolation, PAM stack configuration rules, and access control settings for the /etc/security/opasswd historical token database.
+给出SG的参考内容，全英文输出，方便整体带格式贴到word
+Document: UID03 - [Debian][AFE-E630] Security Guidelines.docx
+Section: Section 2.1.2 (Enforcing Password Uniqueness and History Tracking for Asset Owners)
+Description: Provides pure-text administrative instructions directing field operators how to update account credentials safely without violating history depth restrictions.
+按照如下要求给出TS的参考内容：測試環境準備、具體測試步驟、預期結果、實際測試結果，以及 Pass/Fail 結論，对TS进行模板化编写，全英文输出，，方便整体带格式贴到word
+TS-CR1.1_RE1-01: Verifies that the PAM history subsystem successfully intercepts and blocks password change requests when a user attempts to recycle a historically used credential.
+TS-CR1.1_RE1-02: Validates the complete numerical uniqueness of active system-allocated UIDs and GIDs by parsing and auditing local identifier databases.
+

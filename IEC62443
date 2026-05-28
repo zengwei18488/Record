@@ -371,6 +371,14 @@ sudo systemctl restart lxdm
 既然你有 lxdm 的失败记录，系统日志里一定记录了为什么它认为失败。请运行：
 grep "lxdm" /var/log/auth.log | tail -n 10
 
+# 1. 現場排查：查看當前系統中究竟有哪些用戶因為密碼輸錯被 Faillock 關進了黑名單
+sudo faillock --user root
+
+# 2. 現場救援：手動強行清除 root 用戶的所有密碼錯誤紀錄，立刻熱解鎖該帳號
+sudo faillock --user root --reset
+
+# Reset any accidental lockouts during setup
+faillock --reset
 
 IEC 62443 认证通常要求“禁止通用默认密码”。最合规的变通方案是：设置一个强初始密码，但强制用户在第一次通过 HDMI 登录时修改它。
 在构建脚本中添加：
@@ -1296,6 +1304,9 @@ sudo ufw logging low
 # 停止將日誌轉發到 TTY/Console
 sudo sed -i 's/^ForwardToConsole=yes/ForwardToConsole=no/' /etc/systemd/journald.conf
 sudo systemctl restart systemd-journald
+
+# 讓 fail2ban 用戶態客戶端直接解析運行狀態，確認 sshd 監控已鐵腕生效
+sudo fail2ban-client status sshd
 
 ………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
 

@@ -80,7 +80,7 @@ echo "--- 3. Setting Security Warning Banner ---"
 sudo tee /etc/issue > /dev/null << EOF
 ***************************************************************************
 * AFE-E630 SECURITY NOTICE:                                               *
-* - Root login is disabled. Please login as 'linaro'.                     *
+* - Root login is disabled. Please login as a regular user.               *
 * - Encrypted Communication (SSH Protocol 2) is enforced.                 *
 * - Unauthorized network services are disabled by default.                *
 ***************************************************************************

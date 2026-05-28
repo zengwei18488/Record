@@ -1,0 +1,8 @@
+# Monitor execution of sensitive management tools
+-w /usr/bin/sudo -p x -k monitor_priv_esc
+-w /usr/sbin/sshd -p x -k monitor_remote_access
+
+# Monitor kernel module changes (Detect rootkits/breaches)
+-w /sbin/insmod -p x -k module_change
+-w /sbin/rmmod -p x -k module_change
+-w /sbin/modprobe -p x -k module_change

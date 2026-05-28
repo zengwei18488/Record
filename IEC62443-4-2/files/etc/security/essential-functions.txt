@@ -1,0 +1,5 @@
+[IEC 62443-4-2 CR 7.1 RE(1) Compliance]
+- Identified Essential Function: SSH (Port 22) for remote management.
+- Priority: Nice=-5 (Elevated CPU scheduling priority).
+- Resource Quotas: 150MB MemoryLimit and 10 TasksLimit enforced via Systemd.
+- Load Management: Inherited from CR 2.05 (MaxSessions limit).

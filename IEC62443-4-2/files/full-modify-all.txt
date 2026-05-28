@@ -1,0 +1,22 @@
+# 確保清除任何殘留的錯誤防火牆規則
+if command -v ufw > /dev/null; then
+    sudo ufw disable
+fi
+sudo iptables -F
+sudo iptables -P INPUT ACCEPT
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/etc/pam.d/lxdm /etc/pam.d/lxdm
+
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/*.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/all-modify-iec62443.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/etc.tar.gz .
+chmod 777 *
+tar zxvf etc.tar.gz -C /
+./all-modify-iec62443.sh
+fw_setenv ima_mode 3
+reboot
+
+
+
+

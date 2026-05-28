@@ -56,32 +56,43 @@ echo -e "${BOLD}Creating Mandatory System Snapshot (Baseline)...${NC}"
 # 使用 --scripted 模式，並強制指定 21G 的數據分區
 sudo timeshift --create --comments "IEC_62443_CR7.3_Baseline" --rsync --snapshot-device $TARGET_DEV --scripted
 
-# --- 4. 產出彩色審計驗證儀表板 ---
+# --- 4. 產出彩色審計驗證儀表板 (優化版) ---
 echo -e "\n"
 echo -e "${BLUE}==========================================================${NC}"
 echo -e "${BLUE}      IEC 62443 CR 7.3 COMPLIANCE VERIFICATION            ${NC}"
 echo -e "${BLUE}==========================================================${NC}"
+# 使用 %b 來確保顏色代碼被正確解析
 printf "${BOLD}%-25s | %-15s | %-15s${NC}\n" "Requirement Item" "Target/Config" "Status"
 echo "----------------------------------------------------------"
 
 # 檢查快照 (重新讀取列表)
 SNAPSHOT_LIST=$(sudo timeshift --list --scripted --snapshot-device $TARGET_DEV)
-if echo "$SNAPSHOT_LIST" | grep -q "IEC_62443"; then
-    STAT_RESTORE="${GREEN}[ PASS ]${NC}"
-    RESTORE_MSG="Snapshot Found"
-    FINAL_COLOR=$GREEN
-else
-    STAT_RESTORE="${RED}[ FAILED ]${NC}"
-    RESTORE_MSG="No Snapshot"
-    FINAL_COLOR=$RED
-fi
 
+# 判定 Backup Tooling
 printf "%-25s | %-15s | %b%-15s%b\n" "Backup Tooling" "Timeshift" "$GREEN" "[ INSTALLED ]" "$NC"
-printf "%-25s | %-15s | %b%-20s%b\n" "System Snapshot" "CR 7.3 RE(1)" "$FINAL_COLOR" "$RESTORE_MSG $STAT_RESTORE" "$NC"
+
+# 判定 System Snapshot
+if echo "$SNAPSHOT_LIST" | grep -q "IEC_62443"; then
+    STAT_LABEL="Snapshot Found"
+    PASS_LABEL="[ PASS ]"
+    COLOR=$GREEN
+else
+    STAT_LABEL="No Snapshot"
+    PASS_LABEL="[ FAILED ]"
+    COLOR=$RED
+fi
+printf "%-25s | %-15s | %b%-15s%b\n" "System Snapshot" "CR 7.3 RE(1)" "$COLOR" "$STAT_LABEL $PASS_LABEL" "$NC"
+
+# 判定 Storage Path
 printf "%-25s | %-15s | %-15s\n" "Storage Path" "/userdata" "[ 21GB FREE ]"
 
 echo "----------------------------------------------------------"
-echo -e "${BOLD}FINAL STATUS: ${FINAL_COLOR}${STAT_RESTORE}${NC}"
+# 最終判定
+if [ "$COLOR" == "$GREEN" ]; then
+    echo -e "${BOLD}FINAL STATUS: ${GREEN}[ PASS ]${NC}"
+else
+    echo -e "${BOLD}FINAL STATUS: ${RED}[ FAIL ]${NC}"
+fi
 echo -e "${BLUE}==========================================================${NC}"
 
 # 顯示證據截圖輔助文字

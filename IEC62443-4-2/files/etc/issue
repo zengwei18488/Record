@@ -1,0 +1,10 @@
+Debian GNU/Linux 12 \n \l
+
+WARNING: Authorized Access Only!
+
+***************************************************************************
+* AFE-E630 SECURITY NOTICE:                                               *
+* - Root login is disabled. Please login as a regular user.               *
+* - Encrypted Communication (SSH Protocol 2) is enforced.                 *
+* - Unauthorized network services are disabled by default.                *
+***************************************************************************

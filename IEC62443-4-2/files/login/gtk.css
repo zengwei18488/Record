@@ -1,0 +1,33 @@
+#lxdm {
+	background-image: url("wave.svg");
+	background-repeat: round;
+}
+
+#bottom_pane {
+	background-color: rgba(0,0,0,0.24);
+}
+
+#time {
+	font: Sans 12;
+	color: #ffffff;
+}
+
+#prompt {
+	font: Sans 14;
+	color: #000000;
+}
+
+#bottom_pane GtkLabel {
+	font: Sans 12;
+	color: #9E9D9B;
+}
+
+#error_label:after {
+    content: "\A\A********************************************************\AWARNING: Authorized Access Only!\AAFE-E630 SECURITY NOTICE:\ARoot login is disabled. Please login as a regular user.\A********************************************************";
+    white-space: pre-wrap;
+    color: #FF0000;
+    font-weight: bold;
+    font-size: 11pt;
+    display: block;
+    text-align: center;
+}

@@ -1,0 +1,74 @@
+# 1. 寻找当前在主屏幕 :0 上的控制进程，并顺藤摸瓜提取它的环境变量
+export $(strings /proc/$(pgrep -o Xorg || pgrep -o X)/environ | grep -E 'DISPLAY|XAUTHORITY')
+
+# 2. 如果成功提取，直接调用系统的桌面级工具强行截图
+gnome-screenshot -f /tmp/login_screen.png
+
+
+sudo journalctl -u lxdm --since "10 minutes ago"
+
+root@linaro-alip:~# journalctl -u lxdm --since "10 minutes ago"
+May 25 07:52:34 linaro-alip lxdm-session[2409]: pam_unix(lxdm:session): session>
+May 25 07:52:34 linaro-alip lxdm-session[2409]: pam_unix(lxdm:session): session>
+
+
+sudo faillock --user linaro
+
+                                  linaro:
+When                Type  Source                                           Valid
+2026-05-25 08:15:11 RHOST 172.21.171.105                                       V
+2026-05-25 08:15:14 RHOST 172.21.171.105                                       V
+2026-05-25 08:15:19 RHOST 172.21.171.105                                       V
+2026-05-25 08:15:29 RHOST 172.21.171.105                                       V
+2026-05-25 08:15:33 RHOST 172.21.171.105                                       V
+
+
+
+Press Ctrl+C to enter password (booting in 0 s).
+Enter password: *****************
+Access Granted.
+=>
+
+SSH
+
+zengwei@zengwei-Precision-3660:~/data_2T/zengwei/documents/Record/IEC62443-4-2/files$ ssh linaro@172.21.170.37
+*************************************************************************
+* WARNING: Unauthorized access to this device is strictly prohibited.   *
+* All activities are monitored and recorded for security purposes.       *
+* If you are not an authorized user, disconnect immediately.            *
+*************************************************************************
+linaro@172.21.170.37's password: 
+You are required to change your password immediately (administrator enforced).
+You are required to change your password immediately (administrator enforced).
+Linux linaro-alip 6.1.141 #1 SMP Fri May 15 01:12:09 UTC 2026 aarch64
+Access granted to authorized engineering personnel only.
+Please ensure all security protocols are followed.
+Last login: Thu May 28 05:46:05 2026 from 172.21.171.105
+WARNING: Your password has expired.
+You must change your password now and login again!
+Changing password for linaro.
+Current password: 
+New password: 
+Retype new password: 
+passwd: password updated successfully
+Connection to 172.21.170.37 closed.
+zengwei@zengwei-Precision-3660:~/data_2T/zengwei/documents/Record/IEC62443-4-2/files$ ssh linaro@172.21.170.37
+*************************************************************************
+* WARNING: Unauthorized access to this device is strictly prohibited.   *
+* All activities are monitored and recorded for security purposes.       *
+* If you are not an authorized user, disconnect immediately.            *
+*************************************************************************
+linaro@172.21.170.37's password: 
+Linux linaro-alip 6.1.141 #1 SMP Fri May 15 01:12:09 UTC 2026 aarch64
+Access granted to authorized engineering personnel only.
+Please ensure all security protocols are followed.
+Last login: Thu May 28 05:46:23 2026 from 172.21.171.105
+linaro@linaro-alip:~$ 
+
+
+
+scp -r /usr/share/lxdm/themes/Industrial/login.png zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files
+
+
+
+
