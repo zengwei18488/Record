@@ -22,6 +22,21 @@ fi
 sudo chage -d 0 linaro
 echo "going... 4"
 
+if ! grep -q "TMOUT=900" /etc/bash.bashrc; then
+    sudo sed -i '$a \
+\n\
+# =================================================================\n\
+# IEC 62443-4-2 CR 1.1 / CR 2.1 Non-Login Shell Timeout Enforcement\n\
+# =================================================================\n\
+if [ -z "$TMOUT" ]; then\n\
+    export TMOUT=900\n\
+    readonly TMOUT\n\
+fi' /etc/bash.bashrc
+    echo "[+] /etc/bash.bashrc enhanced successfully."
+else
+    echo "[*] TMOUT configuration already exists, skipping."
+fi
+
 sudo chmod u+s /usr/bin/xscreensaver
 echo "going... 5"
 # 為所有使用者設定「普通黑屏模式」
@@ -36,7 +51,7 @@ lock: True
 lockTimeout: 0:00:00
 EOF
         chown "$USERNAME":"$USERNAME" "$user_home/.xscreensaver"
-       echo "going... 6" 
+echo "going... 6"
         # 建立個人自啟動目錄與檔案
         mkdir -p "$user_home/.config/autostart"
         cat <<EOF > "$user_home/.config/autostart/xscreensaver.desktop"

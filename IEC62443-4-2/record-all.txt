@@ -66,9 +66,53 @@ Last login: Thu May 28 05:46:23 2026 from 172.21.171.105
 linaro@linaro-alip:~$ 
 
 
-
 scp -r /usr/share/lxdm/themes/Industrial/login.png zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files
 sudo scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/login/login.png /usr/share/lxdm/themes/Industrial
+
+scp -r /tmp/login_screen.png zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files
+
+
+sudo adduser --disabled-password --gecos "" operator1
+sudo usermod -aG operator operator1
+grep -w "operator1" /etc/passwd
+
+linaro@linaro-alip:~$ sudo adduser --disabled-password --gecos "" operator1
+[ 2049.359431] sudo[2246]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/sbin/adduser --disabled-password --gecos  operator1
+[ 2049.363560] sudo[2246]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+                                                                                                          Adding user `operator1' ...
+Adding new group `operator1' (1002) ...
+[ 2049.761883] groupadd[2249]: group added to /etc/group: name=operator1, GID=1002
+                                                                                  [ 2049.775144] groupadd[2249]: group added to /etc/gshadow: name=operator1
+                                                                                                                                                            [ 2049.783359] groupadd[2249]: new group: name=operator1, GID=1002
+                                       Adding new user `operator1' (1002) with group `operator1 (1002)' ...
+[ 2049.841152] useradd[2257]: new user: name=operator1, UID=1002, GID=1002, home=/home/operator1, shell=/bin/bash, from=/dev/pts/0
+                                                                                                                                  Creating home directory `/home/operator1' ...
+Copying files from `/etc/skel' ...
+[ 2049.977180] chfn[2267]: changed user 'operator1' information
+                                                               Adding new user `operator1' to supplemental / extra groups `users' ...
+Adding user `operator1' to group `users' ...
+[ 2050.048623] gpasswd[2273]: members of group users set by root to linaro,operator1
+                                                                                    [ 2050.064769] sudo[2246]: pam_unix(sudo:session): session closed for user root
+linaro@linaro-alip:~$ sudo usermod -aG operator operator1
+[ 2054.195021] sudo[2280]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/sbin/usermod -aG operator operator1
+[ 2054.198389] sudo[2280]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+                                                                                                          [ 2054.231237] usermod[2282]: add 'operator1' to group 'operator'
+                                                                                                                                                                           [ 2054.232711] usermod[2282]: add 'operator1' to shadow group 'operator'
+                                                            [ 2054.263616] sudo[2280]: pam_unix(sudo:session): session closed for user root
+linaro@linaro-alip:~$ grep -w "operator1" /etc/passwd
+operator1:x:1002:1002:,,,:/home/operator1:/bin/bash
+
+sudo grep -E '/bin/bash|/bin/sh' /etc/passwd
+
+linaro@linaro-alip:~$ sudo grep -E '/bin/bash|/bin/sh' /etc/passwd
+[ 2126.794723] sudo[2291]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/grep -E /bin/bash|/bin/sh /etc/passwd
+[ 2126.799236] sudo[2291]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+                                                                                                          root:x:0:0:root:/root:/bin/bash
+linaro:x:1000:1000:linaro,,,:/home/linaro:/bin/bash
+operator1:x:1002:1002:,,,:/home/operator1:/bin/bash
+[ 2126.810684] sudo[2291]: pam_unix(sudo:session): session closed for user root
+
+
 
 
 

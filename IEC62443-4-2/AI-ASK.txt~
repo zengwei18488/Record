@@ -7,27 +7,23 @@ Conformity Statement (符合性聲明) 撰寫框架
 [Guidelines] 手冊證據 (對應 EA-16)：指向使用者操作手冊或安全強化指南 (SHG) 的對應章節，證明有指導使用者如何配置。
 [Testing] 測試驗證證據 (對應 EA-18)：指向安全性驗證與確認測試報告 (SVV-1)，必須精確寫出對應的「測試案例編號 (Test Case ID)」
 如上三项包含document、section和Description三小项说明。
-根据上述要求，改造如下CR1.01 RE(1)，描述使用純技術與架構說明，讀起來更清爽、不臃腫
+根据上述要求，改造如下CR 1.03，描述使用純技術與架構說明，讀起來更清爽、不臃腫
 Conformity Statement:
-Met by component: Unique human user identification and authentication are strictly and role-basely enforced across all physical and network interfaces on the Debian 12 platform (AFE-E630).
-●Identity Uniqueness: The operating system strictly blocks credential sharing by enforcing unique User IDs (UIDs) and Group IDs (GIDs) centrally mapped within /etc/passwd and /etc/group.
-●Credential Uniqueness Layer: To prevent credential reuse, the Linux PAM (Pluggable Authentication Modules) stack incorporates pam_pwhistory.so within the /etc/pam.d/common-password control sequence. This configuration forces a strict memory history depth that forbids users from recycling any of their last 5 previously utilized passwords, maintaining definitive individual accountability.
-●Interface Enforcement: This cryptographic uniqueness mechanism covers all local graphical (LXDM via HDMI), local serial (UART Console), and remote network (OpenSSH 9.2p1) session establishment windows, aligning with the role boundaries defined under CR 2.1.
+Components shall provide the capability to integrate into a system that supports the management of identifiers and/or provide the capability to support the management of identifiers directly according to IEC 62443 3 3 SR 1.4.
 Conformity Evidence:
-●[Design] UID01 Chapter 1.1.1 (Cryptographic Password Uniqueness and History Depth Specification)
-●[Guidelines] UID03 Section 2.1.2 (Enforcing Password Uniqueness and History Tracking for Asset Owners)
-●[Testing] SVV-1 Test Cases: TS-CR1.1_RE1-01 / TS-CR1.1_RE1-02
+The Debian12 operating system has built-in features for managing identifiers, which can be integrated into a system that supports identifier management according to IEC 62443-3-3 SR 1.4. The built-in features include Local Security Policy, Active Directory, and Group Policy.
 
 
-根据如下说明，给出DS的参考内容，全英文输出，方便整体带格式贴到word
+基于rk3568 debian12 kernel6.1用最精简的方式合规，从Conformity Statement、Technical Architecture & Defense-in-Depth Design 、Core Hardening Configurations、Conformity Reference四个方面编写，全英文输出，不要有任何中文字符
 Document: UID01 - [Debian][AFE-E630] Security Design Document (SD).docx
-Section: Chapter 1.1.1 (Cryptographic Password Uniqueness and History Depth Specification)
-Description: Defines the system architecture for POSIX UID/GID isolation, PAM stack configuration rules, and access control settings for the /etc/security/opasswd historical token database.
-根据如下说明，给出SG的参考内容，全英文输出，方便整体带格式贴到word
+Section: Chapter 1.4 (Identifier Management and System Directory Integration Specification)
+Description: Defines the centralized repository layout for local POSIX numerical IDs, Name Service Switch (NSS) parsing logic, and PAM pluggable interfaces for external Active Directory integration.
+基于rk3568 debian12 kernel6.1用最精简的方式合规，给出SG的参考内容，全英文输出，不要有任何中文字符，方便整体带格式贴到word
 Document: UID03 - [Debian][AFE-E630] Security Guidelines.docx
-Section: Section 2.1.2 (Enforcing Password Uniqueness and History Tracking for Asset Owners)
-Description: Provides pure-text administrative instructions directing field operators how to update account credentials safely without violating history depth restrictions.
-按照如下要求：測試環境準備、具體測試步驟、預期結果、實際測試結果，以及 Pass/Fail 結論，对TS进行模板化编写，全英文输出，，方便整体带格式贴到word
-TS-CR1.1_RE1-01: Verifies that the PAM history subsystem successfully intercepts and blocks password change requests when a user attempts to recycle a historically used credential.
-TS-CR1.1_RE1-02: Validates the complete numerical uniqueness of active system-allocated UIDs and GIDs by parsing and auditing local identifier databases.
+Section: Section 2.4 (Procedures for Identifier Configuration and Enterprise Directory Services Setup)
+Description: Provides pure-text operational guidelines instructing plant operators how to inspect local identifier mappings and safely transition authentication authorities to centralized directory servers.
+基于rk3568 debian12 kernel6.1用最精简的方式合规，按照如下要求给出TS的参考内容：測試環境準備、具體測試步驟、預期結果、實際測試結果，以及 Pass/Fail 結論，对TS进行模板化编写，全英文输出，不要有任何中文字符方便整体带格式贴到word
+TS-CR1.4-01: Verifies that the platform directly provisions, isolates, and catalogs active user and group identifiers without numerical collision.
+TS-CR1.4-02: Audits the name service switch architecture and external communication modules to confirm systemic readiness for Active Directory/LDAP backend integration.
+
 

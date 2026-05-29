@@ -22,7 +22,7 @@ strings /usr/bin/openssl | grep .cnf
 在 UID02 加密文件中，將原本的描述改為「補償性控制 (Compensating Controls)」：
 Technical Evidence for CR 4.3:
 "The system utilizes a vendor-optimized OpenSSL library. To ensure security compliance, Protocol Restrictions are enforced at the Service Level. All externally accessible services, specifically OpenSSH (Port 22), have been hardened to support only TLS 1.2/1.3 and AES-GCM encryption, effectively disabling legacy SSLv3/TLS1.0 at the application gateway."
-🏁 最終建議：不要跟這個 OpenSSL 指令硬碰硬了
+ 最終建議：不要跟這個 OpenSSL 指令硬碰硬了
 如果 openssl ciphers -v 怎麼改都沒變，那代表這個指令顯示的是「內置能力」而非「當前策略」。
 請執行以下指令作為你的最終證據：
 bash

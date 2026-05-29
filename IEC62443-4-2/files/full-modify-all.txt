@@ -10,10 +10,12 @@ scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC
 
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/*.sh .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/all-modify-iec62443.sh .
-scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/etc.tar.gz .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/iec.tar.gz .
 chmod 777 *
-tar zxvf etc.tar.gz -C /
-./all-modify-iec62443.sh
+fw_setenv ima_mode 2
+reboot
+tar zxvf iec.tar.gz -C /
+sudo ./all-modify-iec62443.sh
 fw_setenv ima_mode 3
 reboot
 
