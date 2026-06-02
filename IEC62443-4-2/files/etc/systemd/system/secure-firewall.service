@@ -1,0 +1,12 @@
+[Unit]
+Description=IEC 62443 Industrial Ironclad Netfilter Firewall
+After=network.target network-online.target
+Before=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/iptables-restore -n /etc/iptables/rules.v4
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

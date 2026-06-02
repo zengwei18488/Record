@@ -1,0 +1,23 @@
+# =================================================================
+# IEC 62443-4-2 CR 5.1 / CR 7.1 Permanent Netfilter Matrix (SL2)
+# =================================================================
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT DROP [0:0]
+
+# 進站白名單
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp --dport 22 -j ACCEPT
+
+# 出站白名單
+-A OUTPUT -o lo -j ACCEPT
+-A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A OUTPUT -p udp --dport 53 -j ACCEPT
+-A OUTPUT -p tcp --dport 80 -j ACCEPT
+-A OUTPUT -p tcp --dport 443 -j ACCEPT
+-A OUTPUT -p udp --dport 123 -j ACCEPT
+-A OUTPUT -p tcp --dport 4460 -j ACCEPT
+
+COMMIT

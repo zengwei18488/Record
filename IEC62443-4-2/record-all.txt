@@ -113,6 +113,191 @@ operator1:x:1002:1002:,,,:/home/operator1:/bin/bash
 [ 2126.810684] sudo[2291]: pam_unix(sudo:session): session closed for user root
 
 
+linaro@linaro-alip:~$ sudo cut -d: -f3 /etc/passwd | sort | uniq -d
+[  368.116726] sudo[2107]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/cut -d: -f3 /etc/passwd
+[  368.121327] sudo[2107]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+[  368.129978] sudo[2107]: pam_unix(sudo:session): session closed for user root
+linaro@linaro-alip:~$ sudo cut -d: -f3 /etc/group | sort | uniq -d
+[  378.847281] sudo[2112]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/cut -d: -f3 /etc/group
+[  378.851752] sudo[2112]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+[  378.860425] sudo[2112]: pam_unix(sudo:session): session closed for user root
+
+
+linaro@linaro-alip:~$ sudo grep -E '^passwd:|^group:' /etc/nsswitch.conf
+[  474.851786] sudo[2117]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/grep -E ^passwd:|^group: /etc/nsswitch.conf
+[  474.855034] sudo[2117]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+                                                                                                          passwd:         files
+group:          files
+[  474.867303] sudo[2117]: pam_unix(sudo:session): session closed for user root
+
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/etc/ssh/sshd_config
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/etc/systemd/system/secure-firewall.service /etc/systemd/system/
+
+1. 查閱運行時防火牆總體策略驗證指令：
+sudo iptables -L -n -v
+完美通關標準：看見 Chain INPUT (policy DROP)（進站全域預設阻斷，滿足 CR 7.1）！
+看見 Chain OUTPUT (policy DROP)（出站全域預設阻斷，滿足高難度 SL2 邊界限縮）！
+在 INPUT 鏈下方，精準長出 ACCEPT  tcp  --  0.0.0.0/0  0.0.0.0/0  tcp dpt:22（唯獨放行 SSH 22 埠）。
+
+2. 查閱簡明規則流（防範代碼錯位）驗證指令：
+sudo iptables -S
+完美通關標準：螢幕上會整整齊齊、吐出以下 4 行最核心的黃金邊界規則：
+-P INPUT DROP
+-P OUTPUT DROP
+-A INPUT -i lo -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+
+ 外部主機發起 Nmap 全通訊埠盲測（最強客觀證據）在您的運維 PC 端（與板子同網段）執行指令：
+ nmap -p- -sV 172.21.170.37
+完美通關標準：
+全系統 65535 個通訊埠中，僅有 22/tcp open ssh 一行顯示開放！
+其餘 65534 個無關、高風險的工業通訊埠（如原廠殘留的 1883 端口）集體高亮回報 filtered（被 Netfilter 內核直接丟棄），黑客連線時會秒速彈回 Connection refused 或者是超時阻斷！
+
+nmap -Pn -p- -sV 172.21.170.37
+# 核心修正：去掉 -p- (不掃描全端口黑洞)，利用 -p 22 強制精準點名轟炸我們放行的 SSH 門禁
+# 同時利用 -Pn 跳過 Ping 攔截。這行指令會在「2 秒鐘內」瞬間滿血吐出完美的密碼學報告！
+nmap -Pn -p 22 -sV 172.21.170.37
+
+ss -tuln
+
+4. 出站限制測試（證明 OUTPUT 門禁滿血工作）在開發板端執行指令，試圖發起未報備的出站通訊（例如盲目連線外部的非合規通訊埠，如惡意反彈 Shell 4444 埠）：
+nc -zv 8.8.8.8 4444
+完美通關標準：內核會在一微秒內直接強行阻斷、連線當場掛起或超時彈回！因為你的 OUTPUT 默認是 DROP，從底層徹底掐死了設備在現場被植入木馬後向外發起反彈連線的可能！
+bash -c "echo > /dev/tcp/8.8.8.8/4444"
+
+
+白盒驗證：查閱子設定檔是否成功載入驗證指令：
+sudo sshd -T | grep -E "ciphers|macs|kexalgorithms"
+完美通關標準：ciphers 列表中，徹底洗淨了所有不合規的 cbc、sha1 弱演算法，只剩下符合 BSI 規範的 aes-gcm、ctr 和 chacha20！macs 列表中，精準呈現帶有防範 Padding Oracle 攻擊的 -etm 安全雜湊鏈！
+
+6. 黑盒對抗 1：使用不合規的「CTR 以外的弱對稱加密（如 CBC）」發起強行連線在運維 PC 端執行指令：
+ssh -o Ciphers=aes128-cbc,3des-cbc linaro@172.21.170.37
+完美通關標準：SSH 狀態機會在第一微秒直接強制切斷通訊（Handshake Failure），並在 PC 端高傲地噴出：Unable to negotiate: no matching cipher found（拒絕弱加密漏洞入侵）！
+
+7. 黑盒對抗 2：使用被我們物理閹割的非標準金鑰交換演算法（如 libssh2）發起強行連線在運維 PC 端執行指令：
+ssh -o KexAlgorithms=curve25519-sha256@libssh2.org linaro@172.21.170.37
+完美通關標準：同樣秒速遭到內核無情彈回，證明非官方認證的未知演算法在操作系統層面被徹底物理隔離！
+
+$ ssh linaro@172.21.170.37
+*************************************************************************
+* WARNING: Unauthorized access to this device is strictly prohibited.   *
+* All activities are monitored and recorded for security purposes.       *
+* If you are not an authorized user, disconnect immediately.            *
+*************************************************************************
+linaro@172.21.170.37's password: 
+You are required to change your password immediately (administrator enforced).
+You are required to change your password immediately (administrator enforced).
+Linux linaro-alip 6.1.141 #1 SMP Fri May 15 01:12:09 UTC 2026 aarch64
+
+18 updates could not be installed automatically. For more details,
+see /var/log/unattended-upgrades/unattended-upgrades.log
+Access granted to authorized engineering personnel only.
+Please ensure all security protocols are followed.
+Last login: Mon Jun  1 05:22:34 2026 from 172.21.171.105
+WARNING: Your password has expired.
+You must change your password now and login again!
+Changing password for linaro.
+Current password: 
+
+
+linaro@linaro-alip:~$ sudo stat -c "%a %U:%G" /etc/shadow
+[ 9147.587867] sudo[5060]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/stat -c '%a %U:%G' /etc/shadow
+[ 9147.590903] sudo[5060]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+                                                                                                          640 root:shadow
+[ 9147.601675] sudo[5060]: pam_unix(sudo:session): session closed for user root
+linaro@linaro-alip:~$
+linaro@linaro-alip:~$ sudo grep -w "linaro" /etc/shadow | cut -d$ -f2
+[ 9149.737791] sudo[5063]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/grep -w linaro /etc/shadow
+[ 9149.740687] sudo[5063]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+6
+[ 9149.751592] sudo[5063]: pam_unix(sudo:session): session closed for user root
+
+
+Debian GNU/Linux 12 linaro-alip ttyFIQ0
+
+WARNING: Authorized Access Only!
+
+***************************************************************************
+* AFE-E630 SECURITY NOTICE:                                               *
+* - Root login is disabled. Please login as a regular user.               *
+* - Encrypted Communication (SSH Protocol 2) is enforced.                 *
+* - Unauthorized network services are disabled by default.                *
+***************************************************************************
+linaro-alip login: 
+
+linaro@linaro-alip:~$ pidof systemd-journald
+2631
+linaro@linaro-alip:~$ sudo ls -l /proc/$(pidof systemd-journald | awk '{print $1}')/root/dev/mem
+ls: cannot access '/proc/2631/root/dev/mem': No such file or directory 
+
+linaro@linaro-alip:~$ pidof sshd
+923
+linaro@linaro-alip:~$ sudo ls -l /proc/923/root/dev/mem
+ls: cannot access '/proc/923/root/dev/mem': No such file or directory
+
+
+linaro@linaro-alip:~$ sudo grep "CapBnd" /proc/$(pidof systemd-journald | awk '{print $1}')/status
+CapBnd:l00000025402800cf
+linaro@linaro-alip:~$ sudo capsh --decode=0x00000025402800cf
+0x00000025402800cf=cap_chown,cap_dac_override,cap_dac_read_search,cap_fowner,cap_setgid,cap_setuid,cap_sys_ptrace,cap_sys_admin,cap_audit_control,cap_mac_override,cap_syslog,cap_audit_read
+
+
+linaro@linaro-alip:~$ sudo printf "operator1 ALL=(root) NOPASSWD: /usr/bin/systemctl status\n" | sudo tee /etc/sudoers.d/operator1_policy
+linaro@linaro-alip:~$ sudo chmod 0440 /etc/sudoers.d/operator1_policy
+linaro@linaro-alip:~$ sudo su - operator1
+operator1@linaro-alip:~$ sudo /usr/bin/systemctl status
+ linaro-alip
+    State: degraded
+    Units: 403 loaded (incl. loaded aliases)
+     Jobs: 0 queued
+   Failed: 3 units
+    Since: Tue 2026-06-02 06:19:02 UTC; 1h 47min ago
+  systemd: 252.39-1~deb12u2
+   CGroup: /
+           ├─init.scope
+           │ └─1 /sbin/init
+           ├─system.slice
+           │ ├─ModemManager.service
+           │ │ ├─ 708 /usr/sbin/ModemManager
+           │ │ └─1423 /usr/libexec/qmi-proxy
+           │ ├─NetworkManager.service
+           │ │ └─691 /usr/sbin/NetworkManager --no-daemon
+           │ ├─acpid.service
+           │ │ └─533 /usr/sbin/acpid
+           │ ├─atd.service
+           │ │ └─627 /usr/sbin/atd -f
+           │ ├─auditd.service
+           │ │ └─448 /sbin/auditd
+           │ ├─chrony.service
+
+
+operator1@linaro-alip:~$ echo "operator1 ALL=(ALL:ALL) ALL" >> /etc/sudoers
+-bash: /etc/sudoers: Permission denied
+operator1@linaro-alip:~$ touch /etc/sudoers.d/malicious_rule
+touch: cannot touch '/etc/sudoers.d/malicious_rule': Permission denied
+operator1@linaro-alip:~$
+
+
+zengwei@zengwei-Precision-3660:~/data_8T2/imx8-androidR11/android_build/vendor/nxp-opensource/kernel_imx$ ssh linaro@172.21.170.37
+*************************************************************************
+* WARNING: Unauthorized access to this device is strictly prohibited.   *
+* All activities are monitored and recorded for security purposes.       *
+* If you are not an authorized user, disconnect immediately.            *
+*************************************************************************
+linaro@172.21.170.37's password: 
+Linux linaro-alip 6.1.141 #1 SMP Fri May 15 01:12:09 UTC 2026 aarch64
+Access granted to authorized engineering personnel only.
+Please ensure all security protocols are followed.
+Last login: Mon Jun  1 07:15:44 2026 from 172.21.171.105
+timed out waiting for input: auto-logout
+Connection to 172.21.170.37 closed.
+
+
+
+
+
 
 
 

@@ -22,20 +22,16 @@ fi
 sudo chage -d 0 linaro
 echo "going... 4"
 
-if ! grep -q "TMOUT=900" /etc/bash.bashrc; then
-    sudo sed -i '$a \
-\n\
-# =================================================================\n\
-# IEC 62443-4-2 CR 1.1 / CR 2.1 Non-Login Shell Timeout Enforcement\n\
-# =================================================================\n\
-if [ -z "$TMOUT" ]; then\n\
-    export TMOUT=900\n\
-    readonly TMOUT\n\
-fi' /etc/bash.bashrc
-    echo "[+] /etc/bash.bashrc enhanced successfully."
-else
-    echo "[*] TMOUT configuration already exists, skipping."
+cat << 'EOF' >> /etc/bash.bashrc
+
+# =================================================================
+# IEC 62443-4-2 CR 1.1 / CR 2.1 Non-Login Shell Timeout Enforcement
+# =================================================================
+if ! declare -p TMOUT 2>/dev/null | grep -q " -.*r"; then
+    export TMOUT=900
+    readonly TMOUT
 fi
+EOF
 
 sudo chmod u+s /usr/bin/xscreensaver
 echo "going... 5"
@@ -135,10 +131,55 @@ openssl ciphers -v "DEFAULT@SECLEVEL=2"
 
 ./cr702-res.sh
 ./cr703-res.sh
+
+sleep 1
+
+sed -i 's,"/tmp/\*\*","\/tmp\*\*"\,\n    "\/userdata\/\*\*"\,\n    "\/root\/\.\*",g' /etc/timeshift/default.json
+sed -i 's/"count_monthly" : "[0-9]"/"count_monthly" : "0"/g' /etc/timeshift/timeshift.json
+sed -i 's/"count_weekly" : "[0-9]"/"count_weekly" : "0"/g' /etc/timeshift/timeshift.json
+sed -i 's/"count_daily" : "[0-9]"/"count_daily" : "0"/g' /etc/timeshift/timeshift.json
+sed -i 's/"count_hourly" : "[0-9]"/"count_hourly" : "0"/g' /etc/timeshift/timeshift.json
+sed -i 's/"count_boot" : "[0-9]"/"count_boot" : "0"/g' /etc/timeshift/timeshift.json
+sed -i '/"\/home\/linaro\/\*\*"/d' /etc/timeshift/timeshift.json
+sed -i '/"\/root\/\*\*"/d' /etc/timeshift/timeshift.json
+sed -i 's,"/tmp/\*\*","\/tmp\*\*"\,\n    "\/userdata\/\*\*"\,\n    "\/var\/run\/\*\*",g' /etc/timeshift/timeshift.json
+
+if [ -f "/etc/xdg/autostart/timeshift-gtk.desktop" ]; then
+    rm -f "/etc/xdg/autostart/timeshift-gtk.desktop"
+fi
+
+if [ -f "/usr/bin/timeshift-gtk" ]; then
+    rm -f "/usr/bin/timeshift-gtk"
+    ln -sf /bin/true /usr/bin/timeshift-gtk
+fi
+
+sudo rm -f /usr/lib/ipsec/charon
+sudo ln -sf /bin/true /usr/lib/ipsec/charon
+
+if [ -f "/usr/lib/ipsec/starter" ]; then
+    sudo rm -f /usr/lib/ipsec/starter
+    sudo ln -sf /bin/true /usr/lib/ipsec/starter
+fi
+
+if [ -f "/usr/sbin/ipsec" ]; then
+    sudo rm -f /usr/sbin/ipsec
+    sudo ln -sf /bin/true /usr/sbin/ipsec
+    echo "[+] VPN administrative wrappers redirected to /bin/true."
+fi
+
+echo "going.... 10-1"
+
+sudo mkdir -p /etc/systemd/system/systemd-journald.service.d
+sudo printf "[Service]\nPrivateDevices=yes\nProtectSystem=strict\n" | sudo tee /etc/systemd/system/ssh.service.d/override.conf > /dev/null
+
+sudo systemctl enable secure-firewall.service
+sudo systemctl start secure-firewall.service
+
+sleep 1
+
 echo "going... 10"
 # --- Restart Services ---
 sudo systemctl restart lxdm
-
 sudo systemctl restart chrony
 sudo systemctl restart systemd-journald
 sudo systemctl restart systemd-logind
@@ -147,4 +188,6 @@ sudo augenrules --load
 sudo systemctl daemon-reload
 sudo sysctl --system
 sudo systemctl restart ssh
+sudo systemctl restart irqbalance
+sudo systemctl restart cron
 echo "going... 11"
