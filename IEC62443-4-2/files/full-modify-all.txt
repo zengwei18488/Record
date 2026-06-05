@@ -7,18 +7,41 @@ sudo iptables -P INPUT ACCEPT
 
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/etc/pam.d/lxdm /etc/pam.d/lxdm
 
+scp -r *.sh linaro@172.21.170.37:/root
 
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/*.sh .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/all-modify-iec62443.sh .
-scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/iec.tar.gz .
 chmod 777 *
 sudo fw_setenv ima_mode 2
 sudo reboot
-sudo tar zxvf iec.tar.gz -C /
+sudo su
+cd
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/iec.tar.gz .
+chown root:root iec.tar.gz
+sudo tar -xzvf iec.tar.gz -C / --unlink-first --no-same-owner -p
+exit
 sudo ./all-modify-iec62443.sh
 sudo fw_setenv ima_mode 3
 sudo reboot
 
+--no-same-owner：关键就在这里！它会告诉系统：“别管以前在别的主机上是谁的，现在我是用 root 身份解压的，这些文件通通归我（root）所有 [1]。
+-C /etc：将解压的目标路径直接指定为 /etc 目录。
+--overwrite：强制覆盖 /etc 目录下同名的旧配置文件（如果不加，部分系统在面对只读或已有文件时可能会跳过）。
+--same-owner：核心参数。强制让解压出来的文件保持压缩包内原有的属主和属组。因为你在 sudo（root 身份）下运行，该参数会确保文件完美归属于 root。
+-p (或 --preserve-permissions)：核心参数。保持文件原本的权限掩码（如 600 或 644），防止因为当前用户的 umask 设定导致解压后的文件权限过大或过小（符合 IEC 62443 的安全最小权限原则）。
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+废弃配置
+
+echo "going.... 10-1"
+
+sudo mkdir -p /etc/systemd/system/ssh.service.d
+
+sudo printf "[Service]\nPrivateDevices=yes\nProtectSystem=strict\nReadWritePaths=-/run/faillock -/var/run/faillock\n" | sudo tee /etc/systemd/system/ssh.service.d/override.conf > /dev/null
+
+echo "going.... 10-2"
+
+sudo mkdir -p /etc/tmpfiles.d
+sudo printf "d /run/sshd 0755 root root -\nd /run/faillock 0755 root root -\n" | sudo tee /etc/tmpfiles.d/sshd_faillock.conf > /dev/null

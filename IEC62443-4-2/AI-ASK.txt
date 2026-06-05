@@ -7,23 +7,43 @@ Conformity Statement (符合性聲明) 撰寫框架
 [Guidelines] 手冊證據 (對應 EA-16)：指向使用者操作手冊或安全強化指南 (SHG) 的對應章節，證明有指導使用者如何配置。
 [Testing] 測試驗證證據 (對應 EA-18)：指向安全性驗證與確認測試報告 (SVV-1)，必須精確寫出對應的「測試案例編號 (Test Case ID)」
 如上三项包含document、section和Description三小项说明。
-根据上述要求，改造如下CR 1.03，描述使用純技術與架構說明，讀起來更清爽、不臃腫
+根据上述要求，改造如下 CR 3.4 RE(1)，描述使用純技術與架構說明，讀起來更清爽、不臃腫
 Conformity Statement:
-Components shall provide the capability to integrate into a system that supports the management of identifiers and/or provide the capability to support the management of identifiers directly according to IEC 62443 3 3 SR 1.4.
+Not provided this function to use digital signature verify the authenticity.
 Conformity Evidence:
-The Debian12 operating system has built-in features for managing identifiers, which can be integrated into a system that supports identifier management according to IEC 62443-3-3 SR 1.4. The built-in features include Local Security Policy, Active Directory, and Group Policy.
+Not provided this function to use digital signature verify the authenticity.
 
 
 基于rk3568 debian12 kernel6.1用最精简的方式合规，从Conformity Statement、Technical Architecture & Defense-in-Depth Design 、Core Hardening Configurations、Conformity Reference四个方面编写，全英文输出，不要有任何中文字符
-Document: UID01 - [Debian][AFE-E630] Security Design Document (SD).docx
-Section: Chapter 1.4 (Identifier Management and System Directory Integration Specification)
-Description: Defines the centralized repository layout for local POSIX numerical IDs, Name Service Switch (NSS) parsing logic, and PAM pluggable interfaces for external Active Directory integration.
+Document: UID01 - [Debian][AFE-E630] Security Design Document (SD).docxSection: Chapter 3.4.1 (Asymmetric Cryptographic Subsystem and IMA Digital Signature Public Key Verification Specification)Description: Defines the technical framework of the kernel keyring registration pools, RSA/ECDSA signature derivation blocks, and VFS file open intercept routines that manage real-time asymmetric validation hooks.
+
 基于rk3568 debian12 kernel6.1用最精简的方式合规，给出SG的参考内容，全英文输出，不要有任何中文字符，方便整体带格式贴到word
-Document: UID03 - [Debian][AFE-E630] Security Guidelines.docx
-Section: Section 2.4 (Procedures for Identifier Configuration and Enterprise Directory Services Setup)
-Description: Provides pure-text operational guidelines instructing plant operators how to inspect local identifier mappings and safely transition authentication authorities to centralized directory servers.
-基于rk3568 debian12 kernel6.1用最精简的方式合规，按照如下要求给出TS的参考内容：測試環境準備、具體測試步驟、預期結果、實際測試結果，以及 Pass/Fail 結論，对TS进行模板化编写，全英文输出，不要有任何中文字符，方便整体带格式贴到word
-TS-CR1.4-01: Verifies that the platform directly provisions, isolates, and catalogs active user and group identifiers without numerical collision.
-TS-CR1.4-02: Audits the name service switch architecture and external communication modules to confirm systemic readiness for Active Directory/LDAP backend integration.
+Document: UID03 - [Debian][AFE-E630] Security Guidelines.docxSection: Section 4.4.1 (Procedures for Signing Production Binaries and Auditing X.509 Cryptographic Providors)Description: Provides pure-text operational guidelines instructing plant deployment managers how to use code-signing tools to append valid cryptographic extended attributes onto software updates before deployment.
+
+基于rk3568 debian12 kernel6.1用最精简的方式合规，按照如下要求给出TS的参考内容：測試環境準備、具體測試步驟、預期結果、實際測試結果，以及 Pass/Fail 結論，对TS进行模板化编写，testcase的功能选取最小化最简便的验证方式，全英文输出，不要有任何中文字符，方便整体带格式贴到word
+TS-CR3.4_RE1-01: Audits active kernel keyring infrastructures to mathematically verify that the platform maintains an active, locked public key registry dedicated to asymmetric software component signature appraisals.
+
+
+我们AFE-E630 定义为HDR，rk3568平台，debian12 kernel6.1,根据产品定义，我们只做SL2级别，根据如上信息，给我一份说明，涉及
+CCSC 1、CCSC 2、CCSC 3、CCSC 4、
+CR 1.01 RE(2)、CR 1.02、CR 1.02 RE(1)、CR 1.05 RE(1)、CR 1.06、CR 1.07 RE(1)、CR 1.07 RE(2)、CR 1.08、CR 1.09、CR 1.09 RE(1)、CR 1.13、CR 1.14、CR 1.14 RE(1)、
+CR 2.01 RE(3)、CR 2.01 RE(4)、CR 2.02、CR 2.03、CR 2.07、CR 2.09 RE(1)、CR 2.11 RE(2)、CR 2.12 RE(1)、CR 2.13、
+CR 3.3 RE(1)、CR 3.4 RE(2)、CR 3.5、CR 3.6、CR 3.9 RE(1)、CR 3.11、CR 3.13、
+CR 4.2 RE(1)、CR 4.2 RE(2)、
+CR 5.2、CR 5.3、CR 5.4、
+CR 6.1 RE(1)、CR 7.5、CR 7.6 RE(1)
+
+
+
+2026-06-05    27
+2026-06-04    28
+2026-06-03    35
+
+
+
+
+
+
+
 
 

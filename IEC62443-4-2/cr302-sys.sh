@@ -12,7 +12,6 @@ if [ "$EUID" -ne 0 ]; then
   exit 1
 fi
 
-echo "--- 1. Installing ClamAV Packages ---"
 #sudo apt-get update
 #sudo apt-get install -y clamav clamav-daemon bc
 

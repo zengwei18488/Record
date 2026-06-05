@@ -102,8 +102,8 @@ TCPKeepAlive no
 #Compression delayed
 ClientAliveInterval 300
 ClientAliveCountMax 3
-#UseDNS no
-#PidFile /run/sshd.pid
+UseDNS no
+PidFile /dev/shm/sshd.pid
 MaxStartups 10:30:60
 #PermitTunnel no
 #ChrootDirectory none

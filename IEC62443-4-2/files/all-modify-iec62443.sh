@@ -111,6 +111,7 @@ for svc in "${services_to_disable[@]}"; do
         sudo systemctl disable $svc
     fi
 done
+
 echo "going... 9"
 ./cr302-sys.sh
 ./cr303-sys.sh
@@ -128,12 +129,14 @@ sudo chmod 750 /var/log/journal
 echo "Global OpenSSL Security Level:"
 openssl ciphers -v -tls1_3 | grep GCM
 openssl ciphers -v "DEFAULT@SECLEVEL=2"
-
+echo "going.... 10-333"
 ./cr702-res.sh
 ./cr703-res.sh
-
+echo "going.... 10-7"
 sleep 1
 
+echo "going.... 10-8"
+sudo touch /etc/timeshift/timeshift.json
 sed -i 's,"/tmp/\*\*","\/tmp\*\*"\,\n    "\/userdata\/\*\*"\,\n    "\/root\/\.\*",g' /etc/timeshift/default.json
 sed -i 's/"count_monthly" : "[0-9]"/"count_monthly" : "0"/g' /etc/timeshift/timeshift.json
 sed -i 's/"count_weekly" : "[0-9]"/"count_weekly" : "0"/g' /etc/timeshift/timeshift.json
@@ -152,7 +155,7 @@ if [ -f "/usr/bin/timeshift-gtk" ]; then
     rm -f "/usr/bin/timeshift-gtk"
     ln -sf /bin/true /usr/bin/timeshift-gtk
 fi
-
+echo "going.... 10-9"
 sudo rm -f /usr/lib/ipsec/charon
 sudo ln -sf /bin/true /usr/lib/ipsec/charon
 
@@ -166,11 +169,6 @@ if [ -f "/usr/sbin/ipsec" ]; then
     sudo ln -sf /bin/true /usr/sbin/ipsec
     echo "[+] VPN administrative wrappers redirected to /bin/true."
 fi
-
-echo "going.... 10-1"
-
-sudo mkdir -p /etc/systemd/system/systemd-journald.service.d
-sudo printf "[Service]\nPrivateDevices=yes\nProtectSystem=strict\n" | sudo tee /etc/systemd/system/ssh.service.d/override.conf > /dev/null
 
 sudo systemctl enable secure-firewall.service
 sudo systemctl start secure-firewall.service
