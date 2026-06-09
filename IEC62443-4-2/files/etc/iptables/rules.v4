@@ -1,23 +1,47 @@
 # =================================================================
-# IEC 62443-4-2 CR 5.1 / CR 7.1 Permanent Netfilter Matrix (SL2)
+# Script Name: rules.v4
+# Purpose: Permanent Netfilter Configuration Layer (SL2 Framework)
+# Compliance: IEC 62443-4-2 CR 5.1 & CR 7.1 Minimalist Hardening
+# Hardening Target: Rockchip RK3568 Debian 12 (Kernel 6.1)
 # =================================================================
 *filter
 :INPUT DROP [0:0]
 :FORWARD DROP [0:0]
 :OUTPUT DROP [0:0]
 
-# 進站白名單
--A INPUT -i lo -j ACCEPT
--A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+# -----------------------------------------------------------------
+# --- INPUT CHAIN POLICY (Inbound Traffic Whitelist Filters) ----
+# -----------------------------------------------------------------
+# 1. Allow stateful packet returns for active established connections
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+# 2. Secure transport entrance point - Open specialized encrypted SSH line
 -A INPUT -p tcp --dport 22 -j ACCEPT
+# 3. Secure local inter-process communication mapping channel
+-A INPUT -i lo -j ACCEPT
 
-# 出站白名單
+# -----------------------------------------------------------------
+# --- FORWARD CHAIN POLICY (Cross-Interface Routing Controls) ---
+# -----------------------------------------------------------------
+# Hardwired to drop all routed and bridged frames natively via Netfilter
+
+# -----------------------------------------------------------------
+# --- OUTPUT CHAIN POLICY (Outbound Traffic Whitelist Filters) ---
+# -----------------------------------------------------------------
+# 1. Allow stateful outbound packet tracking for existing sessions
+-A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+# 2. Allow outbound communication loops over local loopback interfaces
 -A OUTPUT -o lo -j ACCEPT
--A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+# 3. Allow outbound domain resolution handshakes over target networks
 -A OUTPUT -p udp --dport 53 -j ACCEPT
+# 4. Allow outbound application layer patching channels (Debian APT HTTP)
 -A OUTPUT -p tcp --dport 80 -j ACCEPT
+# 5. Allow outbound application layer patching channels (Debian APT HTTPS)
 -A OUTPUT -p tcp --dport 443 -j ACCEPT
+# 6. Allow outbound high-precision chronological tracking loops (NTP)
 -A OUTPUT -p udp --dport 123 -j ACCEPT
+# 7. Allow outbound secure cryptographic timing handshake protocols (NTS)
 -A OUTPUT -p tcp --dport 4460 -j ACCEPT
+# 8. Allow outbound secure shell connection initiation routines (SSH Out)
+-A OUTPUT -p tcp --dport 22 -j ACCEPT
 
 COMMIT

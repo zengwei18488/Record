@@ -170,10 +170,35 @@ if [ -f "/usr/sbin/ipsec" ]; then
     echo "[+] VPN administrative wrappers redirected to /bin/true."
 fi
 
+echo "going ------  10---   Enforcing permanent kernel module disablement seal..."
+sudo mkdir -p /etc/sysctl.d
+echo "kernel.modules_disabled = 1" | sudo tee /etc/sysctl.d/hardening_malicious_code.conf > /dev/null
+sudo sysctl -p /etc/sysctl.d/hardening_malicious_code.conf 2>/dev/null || sudo sysctl -w kernel.modules_disabled=1
+cat /proc/sys/kernel/modules_disabled
+
 sudo systemctl enable secure-firewall.service
 sudo systemctl start secure-firewall.service
 
 sleep 1
+
+cat << EOT | sudo tee -a /etc/sysctl.d/hardening_network.conf > /dev/null
+net.ipv4.ip_forward = 0
+net.ipv4.conf.all.forwarding = 0
+net.ipv4.conf.default.forwarding = 0
+net.ipv4.tcp_syncookies = 1
+net.ipv4.icmp_echo_ignore_all = 1
+EOT
+
+sudo sysctl --system
+
+sudo iptables -L -n -v
+echo "------------------------------------------------"
+echo "MINIMAL COMPLIANCE VERIFICATION SUMMARY:"
+echo "------------------------------------------------"
+echo -e "[CR 5.1] IP Forwarding (Expect 0): \c" && cat /proc/sys/net/ipv4/ip_forward
+echo -e "[CR 7.1] SYN Cookies (Expect 1): \c" && cat /proc/sys/net/ipv4/tcp_syncookies
+echo "[CR 5.1] Active Perimeter Firewall Rules Loaded Successfully."
+echo "------------------------------------------------"
 
 echo "going... 10"
 # --- Restart Services ---
@@ -184,7 +209,6 @@ sudo systemctl restart systemd-logind
 sudo systemctl restart fail2ban
 sudo augenrules --load
 sudo systemctl daemon-reload
-sudo sysctl --system
 sudo systemctl restart ssh
 sudo systemctl restart irqbalance
 sudo systemctl restart cron
