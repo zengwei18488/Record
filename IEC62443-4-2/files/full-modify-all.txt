@@ -10,6 +10,11 @@ scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC
 scp -r *.sh linaro@172.21.170.37:/root
 
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/*.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr302-sys.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr303-sys.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr310-sys.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr702-res.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr703-res.sh .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/all-modify-iec62443.sh .
 chmod 777 *
 sudo fw_setenv ima_mode 2
@@ -18,7 +23,7 @@ sudo su
 cd
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/iec.tar.gz .
 chown root:root iec.tar.gz
-sudo tar -xzvf iec.tar.gz -C / --unlink-first --no-same-owner -p
+sudo tar -xzvf iec.tar.gz -C / --no-same-owner -p
 exit
 sudo ./all-modify-iec62443.sh
 sudo fw_setenv ima_mode 3
