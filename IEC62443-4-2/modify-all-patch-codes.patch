@@ -1,0 +1,348 @@
+adv@444671c8e4ed:~/BSP/debian12-linux6.1-v130/u-boot$ cat uboot.patch
+diff --git a/board/rockchip/std_rk3568/std_utils.o b/board/rockchip/std_rk3568/std_utils.o
+index 5b638c0f..9bc4419c 100644
+Binary files a/board/rockchip/std_rk3568/std_utils.o and b/board/rockchip/std_rk3568/std_utils.o differ
+diff --git a/common/autoboot.c b/common/autoboot.c
+index c64d566d..7fae6929 100644
+--- a/common/autoboot.c
++++ b/common/autoboot.c
+@@ -123,8 +123,10 @@ static int passwd_abort(uint64_t etime)
+                delaykey[0].str = CONFIG_AUTOBOOT_DELAY_STR;
+ #  endif
+ #  ifdef CONFIG_AUTOBOOT_STOP_STR
+-       if (delaykey[1].str == NULL)
+-               delaykey[1].str = CONFIG_AUTOBOOT_STOP_STR;
++       if (delaykey[1].str == NULL || strlen(delaykey[1].str) == 0) {
++            delaykey[1].str = "\x03";
++            delaykey[1].len = 1;
++        }
+ #  endif
+
+        for (i = 0; i < sizeof(delaykey) / sizeof(delaykey[0]); i++) {
+@@ -174,6 +176,42 @@ static int passwd_abort(uint64_t etime)
+                }
+        } while (!abort && get_ticks() <= etime);
+
++       if (abort) {
++            const char *correct_pw = "Uboot@init#strong";
++            char input_pw[64];
++            int len = 0;
++            char c;
++
++            while (tstc()) getc();
++            printf("\nEnter password: ");
++            while (1) {
++                c = getc();
++                if (c == '\r' || c == '\n') {
++                    input_pw[len] = '\0';
++                    break;
++                }
++                if (c == '\b' || c == 0x7f) {
++                    if (len > 0) {
++                        len--;
++                        puts("\b \b");
++                    }
++                    continue;
++                 }
++                 if (len < 63 && c >= 32 && c <= 126) {
++                     input_pw[len++] = c;
++                     putc('*');
++                 }
++            }
++            printf("\n");
++
++            if (len > 0 && strcmp(input_pw, correct_pw) == 0) {
++                printf("Access Granted.\n");
++                return 1;
++            }
++            printf("Access Denied! Continuing boot...\n");
++            abort = 0;
++        }
++
+        return abort;
+ }
+ #endif
+diff --git a/configs/rk3568_afee630a1.config b/configs/rk3568_afee630a1.config
+index aee4b12b..c13afdb7 100644
+--- a/configs/rk3568_afee630a1.config
++++ b/configs/rk3568_afee630a1.config
+@@ -25,3 +25,8 @@ CONFIG_PHY_REALTEK=y
+ CONFIG_CMD_GPIO=y
+ CONFIG_CMD_I2C=y
+
++CONFIG_AUTOBOOT_KEYED=y
++CONFIG_AUTOBOOT_PROMPT="Press Ctrl+C to enter password (booting in %d s)."
++
++CONFIG_FIT_SIGNATURE=y
++CONFIG_SPL_FIT_SIGNATURE=y
+diff --git a/include/configs/rk3568_afee630.h b/include/configs/rk3568_afee630.h
+index da3043da..a1b2d2dd 100644
+--- a/include/configs/rk3568_afee630.h
++++ b/include/configs/rk3568_afee630.h
+@@ -15,4 +15,6 @@
+
+ #define STD_SARADC_HW_ID_CHANNEL 1
+
++#undef CONFIG_CONSOLE_DISABLE_CLI
++
+ #endif /*__CONFIGS_RK3568_AFEE630_H*/
+diff --git a/keys/aes128.key b/keys/aes128.key
+new file mode 100644
+index 00000000..da2e9393
+--- /dev/null
++++ b/keys/aes128.key
+@@ -0,0 +1 @@
++f05029a99787020cce62e5c9d2f664a5
+diff --git a/keys/dev.crt b/keys/dev.crt
+new file mode 100644
+index 00000000..de65dfad
+--- /dev/null
++++ b/keys/dev.crt
+@@ -0,0 +1,21 @@
++-----BEGIN CERTIFICATE-----
++MIIDazCCAlOgAwIBAgIUIR2TgiUADH+nOz6oA7WJUZpp8/kwDQYJKoZIhvcNAQEL
++BQAwRTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
++GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAeFw0yNjA1MDkwODIxMTBaFw0yNjA2
++MDgwODIxMTBaMEUxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEw
++HwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwggEiMA0GCSqGSIb3DQEB
++AQUAA4IBDwAwggEKAoIBAQCiSxj1d+vpE2ocR3d5fFJsQiDRPV2e9In/2LA7AHLD
++flPb3+TGHu84Vo45OAOX8BBfmM52OOg7MlNj3pyTxsAQA621i7Gnj9I9dBDzlsJ2
++/k79fCHnwrL+vOV2Y93UcEJ1i/fc+k2R6376WWWYyk22uIJU/v3vGNILvwcvuKs5
++ZdJZ/joVcTh2zbD+zkmZy75bhEaDFdHW1tbYjKi7gWu/9qCHv9Bc6ByAXxS45Xap
++CTD9OB3PJOEkQkQesLrJmnROFEyKFzbSRpYZLRI+PW8xbUMcnPSVvLIK5SgX69fz
++b04KSTYcQr6Gq+Wf5Pdasm8nxfSTo9sJqOxR1wc2WnOLAgMBAAGjUzBRMB0GA1Ud
++DgQWBBQE6WO5lkuAJF/VrclA64GyKZVD2TAfBgNVHSMEGDAWgBQE6WO5lkuAJF/V
++rclA64GyKZVD2TAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQAK
++7Okht3q5vt1UXQ7tckPEenhQsO5tzuePRZR4sLqz4oocPhY4b9leB1qwfmBOorIx
++Zi3BTexWjfA0OPC/cn77Afn6djg9S7B4FpWtYZVUzFaGldXOMqwqpn2M7nKMfwSv
++kJsohoCG6VLvEMEq6RkdvAijY6ExAnFR/1j8SFLc/QgV3039HtJDRj7mZULzgjKj
++WH/3mGaUirDMErcwJHdD7sIawCvqpeqQdcqVoXIx1ILBN3n8oQJMkNGwuL08pvu8
++9Qu6EWzWl07dgbPTAm7OOorI4zhBQqNnel8xDu5tZjNy35p1JzOF+xIameofTdNH
++KDFmF4eruXd0s7b8Srft
++-----END CERTIFICATE-----
+diff --git a/keys/dev.key b/keys/dev.key
+new file mode 120000
+index 00000000..a1db2e8b
+--- /dev/null
++++ b/keys/dev.key
+@@ -0,0 +1 @@
++private_key.pem
+\ No newline at end of file
+diff --git a/keys/dev.pubkey b/keys/dev.pubkey
+new file mode 120000
+index 00000000..8664a67f
+--- /dev/null
++++ b/keys/dev.pubkey
+@@ -0,0 +1 @@
++public_key.pem
+\ No newline at end of file
+diff --git a/keys/private_key.pem b/keys/private_key.pem
+new file mode 100644
+index 00000000..028df9ab
+--- /dev/null
++++ b/keys/private_key.pem
+@@ -0,0 +1,28 @@
++-----BEGIN PRIVATE KEY-----
++MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCiSxj1d+vpE2oc
++R3d5fFJsQiDRPV2e9In/2LA7AHLDflPb3+TGHu84Vo45OAOX8BBfmM52OOg7MlNj
++3pyTxsAQA621i7Gnj9I9dBDzlsJ2/k79fCHnwrL+vOV2Y93UcEJ1i/fc+k2R6376
++WWWYyk22uIJU/v3vGNILvwcvuKs5ZdJZ/joVcTh2zbD+zkmZy75bhEaDFdHW1tbY
++jKi7gWu/9qCHv9Bc6ByAXxS45XapCTD9OB3PJOEkQkQesLrJmnROFEyKFzbSRpYZ
++LRI+PW8xbUMcnPSVvLIK5SgX69fzb04KSTYcQr6Gq+Wf5Pdasm8nxfSTo9sJqOxR
++1wc2WnOLAgMBAAECggEAAr+u3ol3b20qwOvc9CvM4ZSFJcYaTdTqeXDcG0O4reL3
++3KOAJnLjrlqY8hMmzG3+eQAHjy0LkeUaUHi2wjH9ksfdK1QAYEwpTW0n1FhbVtSb
++1eNCV8COc44TfNvYJ/72wTLrscxzf+MzNV5KQDo88rlRS8s91czf0d8cagyAqeou
++qHUierZr5uZISp7k24iLeO8eRmltmnV0BrT1Tdsxl8zOiVaSZZ5xFSj7a6lPTVyh
++j01iH0NqaMfijngA5MF7auDOtd+2SO7OOURwSkEV2SGBaUt0BJU6w2T3Anfe9BYl
++CHyp0DbQcrD4voZLDPXUF7/Iz+4EYcw9JSE+Kf0jgQKBgQDZtJagCZOZVQ7fxiW4
++4Fb+/eTGyBpoYUEZFVsIgzjcXZdyzC8TCfUAPbCCN8hKAPHN1wHWwRFIta6L04zI
++m9MIWHLNlIU356oU9UuOZVTuJYc4Gi5Ny9gN64fxuCb3SY88iE+oTkPvVxpBUlMX
++RpyAagsLLJ6oHgOjDXfT9fWIIQKBgQC+10TKg5X8AH33TDgjTpTNyPXv7N3jQiQo
++vPhtSxSQifK0YzV4jVYeqJsQvdT+1judSJbQXJj5tndGR8hNVVxef/UUQDJ6Yr/B
++PRj37OLyAXBL3N7lgwhPG0aEdT7IsBRk2a84uvBbhfVniF88Cqhe7M6d0k2Lhnx6
++Tm4fmDHWKwKBgFGSZM3aSL+vKz+VkxTOmko4/7urxplNt4Kaid2KrYeEWfbdotXT
++aUWJ19Uy6Y0xBWlHIp1BAiToTlp+DcYs/MmnunxlJfVojEYGEyVruoLw9NWEmcz0
++kCPHGMztX0xQ96aKvK4nhTTswh2vpwqVnpZPJYwuT9RWSq6RoVB+XF2BAoGATpo5
++ojO6ZdYKC/5frOMj1PJtoYltBrpqTEExDUr8SGAZEAVAs8t66hvF6opVnTS9zxVj
++0KQi+c8Wp2LPdFKxPdb0KYgbgl8D3eJ9UzhFbSn8h7KMN/nVRUfVrp7f4ibr73Hd
++gr80Wm39WsxHdWJqYNamb0h8Wfhlcra1EtxLwosCgYA+BIxPhRSRM8744jJjbZy+
++RLhZ9Swcuh7/v6gY6z06cLE3JauKqCar5fegbqquQWoRlB5I1c1t31+CRdMkh6dg
++ioXqRyNaySIgh4hbC2hGszErfapI6FrnVT+MH9cIJGgcIGjwt90xO7avCTYsjkok
++UvluHd8he2pTo1JY8iYWPw==
++-----END PRIVATE KEY-----
+diff --git a/keys/public_key.pem b/keys/public_key.pem
+new file mode 100644
+index 00000000..03854e6d
+--- /dev/null
++++ b/keys/public_key.pem
+@@ -0,0 +1,9 @@
++-----BEGIN PUBLIC KEY-----
++MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoksY9Xfr6RNqHEd3eXxS
++bEIg0T1dnvSJ/9iwOwByw35T29/kxh7vOFaOOTgDl/AQX5jOdjjoOzJTY96ck8bA
++EAOttYuxp4/SPXQQ85bCdv5O/Xwh58Ky/rzldmPd1HBCdYv33PpNket++lllmMpN
++triCVP797xjSC78HL7irOWXSWf46FXE4ds2w/s5Jmcu+W4RGgxXR1tbW2Iyou4Fr
++v/agh7/QXOgcgF8UuOV2qQkw/TgdzyThJEJEHrC6yZp0ThRMihc20kaWGS0SPj1v
++MW1DHJz0lbyyCuUoF+vX829OCkk2HEK+hqvln+T3WrJvJ8X0k6PbCajsUdcHNlpz
++iwIDAQAB
++-----END PUBLIC KEY-----
+diff --git a/keys/rk_sign_tool_v1.42_linux.zip b/keys/rk_sign_tool_v1.42_linux.zip
+new file mode 100755
+index 00000000..b6287684
+Binary files /dev/null and b/keys/rk_sign_tool_v1.42_linux.zip differ
+diff --git a/keys/rk_sign_tool_v1.42_linux/bin/afptool b/keys/rk_sign_tool_v1.42_linux/bin/afptool
+new file mode 100755
+index 00000000..02fc7117
+Binary files /dev/null and b/keys/rk_sign_tool_v1.42_linux/bin/afptool differ
+diff --git a/keys/rk_sign_tool_v1.42_linux/bin/boot_merger b/keys/rk_sign_tool_v1.42_linux/bin/boot_merger
+new file mode 100755
+index 00000000..03745c13
+Binary files /dev/null and b/keys/rk_sign_tool_v1.42_linux/bin/boot_merger differ
+diff --git a/keys/rk_sign_tool_v1.42_linux/bin/update_image_maker b/keys/rk_sign_tool_v1.42_linux/bin/update_image_maker
+new file mode 100755
+index 00000000..d69ca586
+Binary files /dev/null and b/keys/rk_sign_tool_v1.42_linux/bin/update_image_maker differ
+diff --git a/keys/rk_sign_tool_v1.42_linux/privateKey.pem b/keys/rk_sign_tool_v1.42_linux/privateKey.pem
+new file mode 100644
+index 00000000..f891b3ad
+--- /dev/null
++++ b/keys/rk_sign_tool_v1.42_linux/privateKey.pem
+@@ -0,0 +1,27 @@
++-----BEGIN RSA PRIVATE KEY-----
++MIIEpAIBAAKCAQEAuCQhp03THStLwfjUnE6HWwN0eOD/Gxd6JxGEyHVp3eKs1RWg
++n2pvxbcAELUmp6zQmRgVSqKh4Lrpv5PSnaVDNjcNPfgWpVoez33oG0IoK0RHnU8q
++7SzHmbEZeyWOr2n2R45UZAv4QsrpLJXRM4UKu2jBT3edQilF9aig+vzVKvbP3FYN
++ZXJ/WfDAf+Nv+CLUQ4NCGbZH0Hp+XSIbGNs9Dqw2ouBZacSs2OXBAhU+b3xdzK5e
++Ae1MUagVVYtiPGCLh4hdIbOXUihS2q9uBmaAtIMPZhkL2kbqqRuZH+IcmjIUkBMZ
++NhifsLuvuZLkceTzkv5oNWIPQTfsUk06B/y9GQIDAQABAoIBAD5dumo0MRb1hYSO
++VtATxsM8EdQo/C38TxpxVAQixDbq4XeQCiVEAtQ3jVWbTRrILKRVZEyxdVssYyPI
++GLLc+L0heyIsZtsdAUdsUNL+nqU8zHaKjDLlEjtLIKK1TzS5EjkdCxcReMWCfOPl
++YAPvgPmFWsej7war/O5dbRxkynvwpdGFfeHwFFPNtvjfNb6xWVEhY32dF9knhftP
++oIbVSla2n1m8e+k00JkRWefaAk98ADwPFaiybcRfL9zzwKAnQNSe0wEZiNEHNrOr
++srMhCzSixmdzcuWcMj898abYWNU674CCPN0ArV/fyVM3Ff8DBdJ6S36ZeSXzibq3
++JsF1PGMCgYEA1Z2AGPkH/mU0hevu3iemDITUKxQN+kepMJ59R6I+q9NkjGCKhL9S
++HA+uUXTvP5dFT676OS5Ri0QmXr9N36ZewdpYLuLJglYyb4amAz2U2ErgFDyUVENP
++a6EQBJ26Pm6FSQ1qRz2gsQotcOI9OyhDVxOuZOLwgw398e5Tc3ZBlbsCgYEA3K2B
++luUFTSHabnWwksjJrzyaScNW9uAyG3eLllBf+Bd5oHaSXJ/f5fGfzSRkWUKnGtkg
++46jwlRKX6wEc27j4w10MBDIv16eoObzKIpfrp+ufnOc86wQoXtS+IQ5munNwKs+k
++TPQknGfbxq/LJinxdWevZOO/L/OT2YGK9TKEgTsCgYA8qkIa1X6DrNJBxkNMLA5o
++N8DZixR9I6TU/e2uTlFmEt7XTwOHt53mAj4LPB5F/PveKV8+pfzahDwxZDsFbQY0
++H4Izroxzy27/ZUn4WaDP3FPO63VkiMkhU9hsty6RVGnd2UV5ffMI1E8bY+TnzANz
++008Pr7OGRI7+CiUBAXCWyQKBgQDDx88jrzW/05v1ycYIw8hjBpIfhQU/a3Io+itG
++BTLPaQxH90oskM5UM8TBfFrm8gJNCHtsXvJqXx+Wp9sReI6CzKcfheL6Ic1WxA5V
++GJFC3gEyc9iQ7JRgZb/0ldE/87B82tD6UNO2S1IpeMbzqdyFe6KZEJELGr9+Bbbh
++iJsUBwKBgQCQpwlvmMJWl+ADyhqr/OZfXT64X+peuCCF0fDPIj3QJPbUNG7G4a3H
+++OHexf2GL76TAwWKaZc+a8/4BI4IMSW6iERi3CNEGb6v+kOmZMB3zKC9Lp0t4uR/
++DLYnNhoFgWlTpH7rLdIAJL2vNDmGbOagJwmpHqTH98vfZFk2LifcqQ==
++-----END RSA PRIVATE KEY-----
+\ No newline at end of file
+diff --git a/keys/rk_sign_tool_v1.42_linux/publicKey.pem b/keys/rk_sign_tool_v1.42_linux/publicKey.pem
+new file mode 100644
+index 00000000..aaa2b6cf
+--- /dev/null
++++ b/keys/rk_sign_tool_v1.42_linux/publicKey.pem
+@@ -0,0 +1,9 @@
++-----BEGIN PUBLIC KEY-----
++MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuCQhp03THStLwfjUnE6H
++WwN0eOD/Gxd6JxGEyHVp3eKs1RWgn2pvxbcAELUmp6zQmRgVSqKh4Lrpv5PSnaVD
++NjcNPfgWpVoez33oG0IoK0RHnU8q7SzHmbEZeyWOr2n2R45UZAv4QsrpLJXRM4UK
++u2jBT3edQilF9aig+vzVKvbP3FYNZXJ/WfDAf+Nv+CLUQ4NCGbZH0Hp+XSIbGNs9
++Dqw2ouBZacSs2OXBAhU+b3xdzK5eAe1MUagVVYtiPGCLh4hdIbOXUihS2q9uBmaA
++tIMPZhkL2kbqqRuZH+IcmjIUkBMZNhifsLuvuZLkceTzkv5oNWIPQTfsUk06B/y9
++GQIDAQAB
++-----END PUBLIC KEY-----
+\ No newline at end of file
+diff --git a/keys/rk_sign_tool_v1.42_linux/readme.txt b/keys/rk_sign_tool_v1.42_linux/readme.txt
+new file mode 100755
+index 00000000..3843ca94
+--- /dev/null
++++ b/keys/rk_sign_tool_v1.42_linux/readme.txt
+@@ -0,0 +1,17 @@
++   rk_sign_tool is a signing tool for secureboot.it can support 3588|3566|3568|3308|3326|3399|3229|3228h|3368|3228|3288|px30|3328|1808|3228P|1109|1126|2206.
++show help of the tool.run it with any parameters.show detail of command,run the command with -h.
++
++step by step:
++1.specify chip,just do it once, all of chips are 3588|3566|3568|3308|3326|3399|3229|3228h|3368|3228|3288|px30|3328|1808|3228P|1109|1126|2206
++  rk_sign_tool cc --chip 3326
++2.generate rsa key pairs ,just do it once.if you have key pairs generated before ,go next
++  rk_sign_tool kk --out .
++3.load rsa key pairs,just do it onece . if you have key pairs loaded before, go next
++  rk_sign_tool lk --key privateKey.pem --pubkey publicKey.pem
++4.sign loader
++  rk_sign_tool sl --loader loader.bin
++5.sign uboot.img trust.img
++  rk_sign_tool si --img uboot.img
++  rk_sign_tool si --img trust.img
++6.sign update.img,it will sign loader,uboot,trust in the update.img
++  rk_sign_tool sf --firmware update.img
+diff --git a/keys/rk_sign_tool_v1.42_linux/revision.txt b/keys/rk_sign_tool_v1.42_linux/revision.txt
+new file mode 100755
+index 00000000..b547ed92
+--- /dev/null
++++ b/keys/rk_sign_tool_v1.42_linux/revision.txt
+@@ -0,0 +1,17 @@
++v1.38 revision(2020\11\16)
++1.support new loader format
++
++v1.39 revision(2020\12\04)
++1.support to 1109 and 1126
++2.fix pem key with non pem extension bug
++
++v1.4 revision(2021\03\01)
++1.merge ssl function into sl command
++
++v1.41 revision(2021\03\04)
++1.si command support to sign resc image
++2.sf command support to sign firmware.img
++3.sl command modify to sign loader without 472
++
++v1.42 revision(2021\04\08)
++1.sf command support to sign 356X firmware
+\ No newline at end of file
+diff --git a/keys/rk_sign_tool_v1.42_linux/rk_sign_tool b/keys/rk_sign_tool_v1.42_linux/rk_sign_tool
+new file mode 100755
+index 00000000..61362c8c
+Binary files /dev/null and b/keys/rk_sign_tool_v1.42_linux/rk_sign_tool differ
+diff --git a/keys/rk_sign_tool_v1.42_linux/setting.ini b/keys/rk_sign_tool_v1.42_linux/setting.ini
+new file mode 100755
+index 00000000..1698d48a
+--- /dev/null
++++ b/keys/rk_sign_tool_v1.42_linux/setting.ini
+@@ -0,0 +1,15 @@
++[System]
++support_chip = 3588|3566|3568|3308|3326|3399|3229|3228h|3368|3228|3288|px30|3328|1808|3228P|1109|1126|2206
++hard_sign_big_hash = 3229|3228h|3368|3228|3288
++hard_sign_litte_hash = 3399|3328
++hard_sign_pss = 3308|3326|px30|1808|3228P|1109|1126|2206
++new_crypto = 3308|3326|px30|1808|1109|1126|2206
++new_idb = 3588|3566|3568
++sign_flag =
++sign_soft_version =
++sign_nonce =
++select_chip = 3568
++select_private_key = PrivateKey.pem
++select_public_key = PublicKey.pem
++exclude_boot_sign =
++
+diff --git a/make.sh b/make.sh
+index dcea13c6..bb7dd621 100755
+--- a/make.sh
++++ b/make.sh
+@@ -13,7 +13,7 @@ CMD_ARGS=$1
+ ########################################### User can modify #############################################
+ RKBIN_TOOLS=../rkbin/tools
+ CROSS_COMPILE_ARM32=../prebuilts/gcc/linux-x86/arm/gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf/bin/arm-linux-gnueabihf-
+-CROSS_COMPILE_ARM64=../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
++CROSS_COMPILE_ARM64=../prebuilts/gcc/linux-x86/aarch64/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin/aarch64-none-linux-gnu-
+ ########################################### User not touch #############################################
+ # Declare global INI file searching index name for every chip, update in select_chip_info()
+ RKCHIP=
+@@ -279,7 +279,7 @@ function select_toolchain()
+                        CROSS_COMPILE_ARM64=`cat ${CC_FILE}`
+                else
+                        if grep -q '^CONFIG_ARM64=y' .config ; then
+-                               CROSS_COMPILE_ARM64=$(cd `dirname ${CROSS_COMPILE_ARM64}`; pwd)"/aarch64-linux-gnu-"
++                               CROSS_COMPILE_ARM64=$(cd `dirname ${CROSS_COMPILE_ARM64}`; pwd)"/aarch64-none-linux-gnu-"
+                        else
+                                CROSS_COMPILE_ARM32=$(cd `dirname ${CROSS_COMPILE_ARM32}`; pwd)"/arm-linux-gnueabihf-"
+                        fi
+

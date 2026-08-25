@@ -16,6 +16,8 @@ scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr702-res.sh .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/cr703-res.sh .
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/all-modify-iec62443.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/find-ethernet.sh .
+
 chmod 777 *
 sudo fw_setenv ima_mode 2
 sudo reboot
@@ -35,6 +37,11 @@ sudo reboot
 --same-owner：核心参数。强制让解压出来的文件保持压缩包内原有的属主和属组。因为你在 sudo（root 身份）下运行，该参数会确保文件完美归属于 root。
 -p (或 --preserve-permissions)：核心参数。保持文件原本的权限掩码（如 600 或 644），防止因为当前用户的 umask 设定导致解压后的文件权限过大或过小（符合 IEC 62443 的安全最小权限原则）。
 
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/iec62443-check.sh .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/IEC62443-4-2/files/iec62443-check-V3.sh .
+
+sudo bash iec62443-check.sh
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5

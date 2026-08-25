@@ -1,8 +1,202 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+PTP
+
+apt update && apt install linuxptp -y
+
+ptp4l -v
+
+sudo ptp4l -i eth3 -m -s -H
+
+sudo phc2sys -s eth3 -c CLOCK_REALTIME -w -m
+
+sudo ptp4l -i eth0 -m -H
+
+
+第一步：物理连线与网络 IP 配置用网线将两片板卡的 eth3 网口直连，并在两台板卡上配置好同网段的静态 IP。
+板卡 A (Master)：
+ip addr add 192.168.99.1/24 dev eth3
+ip link set eth3 up
+板卡 B (Slave)：
+ip addr add 192.168.99.2/24 dev eth3
+ip link set eth3 up
+验证连通性：
+在板卡 B 上执行 ping 192.168.99.1，确保物理链路和网络层已完全畅通。
+第二步：启动板卡 A（主时钟 Master）在板卡 A 的终端执行以下命令。由于没有外部 GPS 源，我们将板卡 A 的本地硬件时钟（/dev/ptp0）作为整个链路的绝对时间基准：
+ptp4l -i eth3 -m -H
+ptp4l[254.886]: selected /dev/ptp0 as PTP clock
+ptp4l[254.888]: port 1: INITIALIZING to LISTENING on INIT_COMPLETE
+ptp4l[254.888]: port 0: INITIALIZING to LISTENING on INIT_COMPLETE
+ptp4l[261.718]: port 1: LISTENING to MASTER on ANNOUNCE_RECEIPT_TIMEOUT_EXPIRES
+ptp4l[261.718]: selected local clock cc827f.fffe.c9241a as best master
+ptp4l[261.718]: port 1: assuming the grand master role
+
+预期日志：你会看到类似 port 1: LISTENING to MASTER 的字样。此时板卡 A 已经开始从 eth3 持续向外广播 PTP 时间同步报文。
+第三步：启动板卡 B（从时钟 Slave）保持板卡 A 的程序运行，在板卡 B 的终端执行以下命令，强制其作为 Slave 去寻找并锁定板卡 A：ptp4l -i eth3 -m -H -s
+ptp4l[258.398]: port 1: INITIALIZING to LISTENING on INIT_COMPLETE
+ptp4l[258.398]: port 0: INITIALIZING to LISTENING on INIT_COMPLETE
+ptp4l[258.624]: port 1: new foreign master cc827f.fffe.c9241a-1
+ptp4l[262.624]: selected best master clock cc827f.fffe.c9241a
+ptp4l[262.624]: port 1: LISTENING to UNCALIBRATED on RS_SLAVE
+ptp4l[264.623]: master offset -113312054 s0 freq      +0 path delay      -208
+ptp4l[265.623]: master offset -113310588 s1 freq   +1466 path delay      -208
+ptp4l[266.623]: master offset      -2743 s2 freq   -1277 path delay      -208
+ptp4l[266.623]: port 1: UNCALIBRATED to SLAVE on MASTER_CLOCK_SELECTED
+ptp4l[267.624]: master offset        540 s2 freq   +1183 path delay      -745
+ptp4l[268.624]: master offset        827 s2 freq   +1632 path delay      -745
+ptp4l[269.624]: master offset        130 s2 freq   +1183 path delay      -208
+ptp4l[270.624]: master offset        351 s2 freq   +1443 path delay      -143
+ptp4l[271.624]: master offset        383 s2 freq   +1580 path delay      -143
+ptp4l[272.624]: master offset        210 s2 freq   +1522 path delay       -78
+ptp4l[273.624]: master offset        108 s2 freq   +1483 path delay       -27
+ptp4l[274.624]: master offset         45 s2 freq   +1453 path delay        21
+ptp4l[275.624]: master offset         65 s2 freq   +1486 path delay        20
+ptp4l[276.624]: master offset         45 s2 freq   +1486 path delay        20
+ptp4l[277.625]: master offset         26 s2 freq   +1480 path delay        22
+ptp4l[278.625]: master offset         21 s2 freq   +1483 path delay        22
+ptp4l[279.625]: master offset         10 s2 freq   +1478 path delay        22
+ptp4l[280.625]: master offset          4 s2 freq   +1475 path delay        22
+ptp4l[281.625]: master offset          1 s2 freq   +1473 path delay        22
+ptp4l[282.625]: master offset         -3 s2 freq   +1470 path delay        21
+ptp4l[283.625]: master offset         -1 s2 freq   +1471 path delay        21
+ptp4l程序运行时间戳     主从时钟偏差 (纳秒级)  时钟同步状态（锁定）  晶振频率微调值（十亿分之一秒）        网络单向路径延迟（纳秒级）
+   ptp4l[284.625]:    master offset -9         s2              freq +1463                     path delay   21
+ptp4l[285.625]: master offset         -7 s2 freq   +1462 path delay        21
+ptp4l[286.625]: master offset         -3 s2 freq   +1464 path delay        21
+ptp4l[287.626]: master offset          0 s2 freq   +1466 path delay        20
+ptp4l[288.626]: master offset         -3 s2 freq   +1463 path delay        20
+ptp4l[289.626]: master offset          2 s2 freq   +1467 path delay        20
+ptp4l[290.626]: master offset          5 s2 freq   +1471 path delay        19
+ptp4l[291.626]: master offset          6 s2 freq   +1473 path delay        19
+ptp4l[292.626]: master offset          9 s2 freq   +1478 path delay        19
+ptp4l[293.626]: master offset          7 s2 freq   +1479 path delay        18
+1. ptp4l[290.626]: —— 时间戳含义：这是 ptp4l 程序自身运行的时间（秒数）。解读：代表这个数据是在 ptp4l 软件启动后的第 290.626 秒（大约 5 分钟左右）打印出来的。PTP 默认每 1 秒钟（有些配置是每 0.5 秒）进行一次对时交互并打印一行。
+2. master offset          5 —— 主从时钟偏差（最核心指标）含义：当前从时钟（板卡 B）与主时钟（板卡 A）之间的绝对时间差值。单位：纳秒（ns），1 纳秒 = 10 亿分之一秒。解读：这里显示为 5，代表在这一瞬间，板卡 B 的硬件时间只比板卡 A 快了 5 纳秒。如果出现负数（如 -3），则代表慢了 3 纳秒。这个值越接近 0，说明对时越精准。
+3. s2 —— 时钟同步状态机含义：从时钟当前处于哪种同步阶段。它一共只有 3 种状态：s0（Unlocked / 放行）：刚开机，主从时间差得太远（比如差了几百毫秒），时钟环路完全没有锁定。s1（Clock Step / 粗调）：时钟发现差距后，强行把自己的时间往前或往后跳跃一大步，进行粗略对齐。s2（Locked / 锁定）：这是我们最希望看到的最终状态。 代表主从时钟已经完成粗调，进入了“精密锁相环”阶段，时钟开始以极小的幅度进行微调。
+4. freq   +1471 —— 晶振频率微调值含义：从时钟（板卡 B）为了配合主时钟的速度，对自身网卡晶振频率进行的微调补偿量。单位：ppb（Parts Per Billion，十亿分之一）。解读：世界上没有两个完全一模一样的硬件晶振，受温度和材质影响，板卡 B 的晶振可能天生比板卡 A 稍微慢一点点。这里的 +1471 代表 PTP 算法对板卡 B 的时钟频率进行了 +1471 ppb 的加速补偿（即让它每秒钟多走十亿分之 1471 秒），以此来死死咬住主时钟的步伐。只要这个数字趋于稳定（不再忽大忽小），就说明频率已经调整到位。
+5. path delay        19 —— 网络单向路径延迟含义：PTP 报文在网线上从板卡 A 飞到板卡 B 所耗费的单向物理传输时间。单位：纳秒（ns）。解读：这里是 19 纳秒。电信号在网线中的传播速度大约是光速的 2/3（约每米 5 纳秒）。19 纳秒扣除芯片内部物理层的固化延迟后，完美符合你们用 1~2 米网线直连的物理事实。在好网络中，这个值必须是一个非常稳定的常数。如果这个值上下剧烈波动（比如一会儿 20 一会儿 5000），说明网线接触不良或者中间有普通交换机在堵塞排队。
+
+参数中的 -s 确保它不会去和板卡 A 竞争 Master 权限。预期日志与数据判定：刚启动时会显示 LISTENING to UNCALIBRATED，大约 10~20 秒后，会开始密集打印如下数据：
+ptp4l[120.456]: master offset       54231 s0 freq      +0 path delay     10500
+ptp4l[121.456]: master offset       -2314 s1 freq   -1420 path delay     10495
+ptp4l[122.456]: master offset         -45 s2 freq   -1455 path delay     10502
+ptp4l[123.456]: master offset          12 s2 freq   -1448 path delay     10500
+ptp4l[124.456]: master offset          -5 s2 freq   -1451 path delay     10501
+看状态：看到状态变为 s2，说明板卡 B 的网卡硬件时钟已经成功锁定（Locked）了板卡 A。
+看精度：观察 master offset（主从时钟纳秒差）。
+
+在 RK3588 直连情况下，这个值在稳定后应该保持在 正负 30 ns 以内（例如 5、-12、8 等）。
+如果它一直在这个极小的区间内微幅摆动，说明你的硬件 PTP 测试完全达标。
+
+💡 RK3588 直连对测常见小问题频繁出现 rms ... history 报警或 offset 突变到几千纳秒：RK3588 默认的 CPU 调频策略（Governor）通常是 ondemand 或 interactive。
+当 CPU 负载突变时，频率切换可能会干扰网卡硬件时间戳的读取精度。
+测试时建议将两台板卡的 CPU 调节为高性能模式：
+echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+path delay（路径延迟）异常：在直连环境下，path delay（两端网卡响应报文的物理延迟）应该是一个非常稳定的常数（通常在几万纳秒以内，由网线长度和网卡 PHY 芯片决定）。如果这个值上下波动超过 100ns，建议更换一根质量更好的六类网线。
+
+
+24小时长期稳定性观察（稳定性与漂移测试）让这两台板卡保持当前状态持续运行几个小时甚至一天，将日志重定向到文件中：
+ptp4l -i eth3 -m -H -s > /var/log/ptp4l_test.log 2>&1 &
+
+
+标准修复（让 ptp4l 开启套接字通信）如果你希望保持 -w 参数，确保“只有在 PTP 硬件锁定时才同步系统时间”的严谨逻辑，你需要让 ptp4l 在后台运行时开启管理套接字。请检查并修改你运行 ptp4l 的命令，在两台板卡上都加上 -z 参数（指定套接字路径），或者通过指定默认配置来运行。
+重新启动板卡 A 的 ptp4l：ptp4l -i eth3 -m -H & 
+重新启动板卡 B 的 ptp4l：ptp4l -i eth3 -m -H -s &
+重新运行你的 phc2sys 命令（此时 -w 就能正常工作了）：
+板卡 A：phc2sys -c eth3 -s CLOCK_REALTIME -w -m
+板卡 B：phc2sys -s eth3 -c CLOCK_REALTIME -w -m
+
+💡 验证 Debian 系统时间是否真的同步成功？
+当 phc2sys 的日志开始正常滚动后，你可以新开一个终端，在两台板卡上分别执行以下命令来验证：查看时钟源状态：
+timedatectl status
+同时打印两端时间（肉眼比对）：在两边终端同时输入 date +"%Y-%m-%d %H:%M:%S.%N"（精确到纳秒）。你会发现两台 RK3588 的系统输出时间，在秒和毫秒级别已经完全肉眼可见地对齐了。建议你先尝试方案一（去掉 -w），看看 phc2sys 的日志是否能顺利滚动起来？
+…………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………
+scp zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/rk3588/*.sh .
+
+eMMC 江波龙固件版本查看
+cat $(find /sys/ -name prv |grep mmc)
+cat $(find /sys/ -name fwrev | grep mmc)
+
+root@linaro-alip:/# cat $(find /sys/ -name fwrev | grep mmc0)
+0x0000040000000000
+root@linaro-alip:/#
+
+
+root@linaro-alip:/# cat /proc/board
+AOM-3821 AKKB920052 V110067 A1
+
+eth0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 3e:69:f3:65:a1:b3  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 71
+
+eth1: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        ether 42:69:f3:65:a1:b3  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+        device interrupt 73
+        
+# 备份 boot0
+dd if=/dev/mmcblk0boot0 of=/root/mmcblk0boot0.bak bs=4M
+# 备份 boot1
+dd if=/dev/mmcblk0boot1 of=/root/mmcblk0boot1.bak bs=4M
+
+# 1. 解除 boot0 和 boot1 的只读保护
+echo 0 > /sys/block/mmcblk0boot0/force_ro
+echo 0 > /sys/block/mmcblk0boot1/force_ro
+
+# 2. 擦除 boot0 (用全 0 填充)
+dd if=/dev/zero of=/dev/mmcblk0boot0 bs=4M conv=notrunc,fdatasync
+
+# 3. 擦除 boot1 (用全 0 填充)
+dd if=/dev/zero of=/dev/mmcblk0boot1 bs=4M conv=notrunc,fdatasync
+
+# 1. 再次确保解除了写保护（防止因重启等原因恢复只读）
+echo 0 > /sys/block/mmcblk0boot0/force_ro
+echo 0 > /sys/block/mmcblk0boot1/force_ro
+
+# 2. 还原 boot0
+dd if=/root/mmcblk0boot0.bak of=/dev/mmcblk0boot0 bs=4M conv=notrunc,fdatasync
+
+# 3. 还原 boot1
+dd if=/root/mmcblk0boot1.bak of=/dev/mmcblk0boot1 bs=4M conv=notrunc,fdatasync
+
+# 4. 恢复分区的只读保护（安全防范，开机也会自动恢复）
+echo 1 > /sys/block/mmcblk0boot0/force_ro
+echo 1 > /sys/block/mmcblk0boot1/force_ro
+
+./root/emmc_tool -d /dev/mmcblk0 -u /root/UP.bin
+
+
+apt update
+apt install stress-ng
+stress -i 1 &
+mmc extcsd read /dev/mmcblk0 &>/dev/null 
+cat /sys/kernel/debug/mmc0/mmc0\:0001/ext_csd
+
+dmesg | grep -E -i "sdhci|mmc0|ADMA|timeout"
+
+root@linaro-alip:~# ls -l /mnt/emmc_stress_test_dir
+total 4194336
+-rw-r--r-- 1 root root 536870912 Aug  3 08:26 rk3588_emmc_combined.0.0
+-rw-r--r-- 1 root root 536870912 Aug  3 08:26 rk3588_emmc_combined.1.0
+-rw-r--r-- 1 root root 536870912 Aug  3 08:26 rk3588_emmc_combined.2.0
+-rw-r--r-- 1 root root 536870912 Aug  3 08:26 rk3588_emmc_combined.3.0
+-rw-r--r-- 1 root root 536870912 Aug  4 00:37 rk3588_emmc_visual.0.0
+-rw-r--r-- 1 root root 536870912 Aug  4 00:37 rk3588_emmc_visual.1.0
+-rw-r--r-- 1 root root 536870912 Aug  4 00:37 rk3588_emmc_visual.2.0
+-rw-r--r-- 1 root root 536870912 Aug  4 00:37 rk3588_emmc_visual.3.0
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
 Debian（RS11）
 ./build.sh lunch
 ./build.sh uboot
-
-
 
 Image：
 ls -l output/firmware/

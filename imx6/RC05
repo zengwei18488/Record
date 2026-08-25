@@ -83,6 +83,98 @@ sudo rm /media/zengwei/BOOT/imx6dl-ebcrc01-a1.dtb
 
 ./linux-4.14.290/drivers/net/ethernet/realtek/r8168-8.053.00/8119.cfg
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo 1-0052 > /sys/bus/i2c/drivers/rtc-rv3028/bind
+echo 1-0052 > /sys/bus/i2c/drivers/rtc-rv3028/unbind
+./i2cset -y 1 0x52 0x10 0x01
+./i2cset -f -y 1 0x52 0x10 0x01
+dmesg | grep -E "i2c|rv3028" | tail -n 20
+
+root@spreev2:~/i2c# ./i2ctransfer -y -f 1 w1@0x52 0x10 r1
+0x84
+root@spreev2:~/i2c#
+
+./i2cget -f -y 1 0x52 0x10
+
+
+root@spreev2:~/i2c# ./i2cget -f -y 1 0x52 0x37
+0x10
+root@spreev2:~/i2c#
+
+./i2cset -f -y 1 0x52 0x37 0x14
+
+root@spreev2:~# i2cdump -y -f 0x1 0x52
+No size specified (using byte-data access)
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f    0123456789abcdef
+00: 58 31 00 04 01 01 66 80 80 80 00 00 00 00 10 20    X1.???f???....?
+10: 84 00 00 00 00 00 00 00 00 00 00 a6 3b 00 00 00    ?..........?;...
+20: 00 00 00 00 00 00 46 00 44 00 00 60 7a 13 11 16    ......F.D..`z???
+30: 00 00 00 00 00 c0 01 10 b9 19 00 00 00 00 00 00    .....?????......
+40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+50: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+
+
+ i2cdump -y -f 0x2 0x2d
+ root@spreev2:~#  i2cdump -y -f 0x2 0x2d
+No size specified (using byte-data access)
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f    0123456789abcdef
+00: 13 43 21 11 07 26 00 00 00 00 00 01 01 00 00 00    ?C!??&.....??...
+10: 01 02 00 00 00 27 00 00 00 00 00 00 1f 01 09 00    ??...'......???.
+20: c1 2d 4b 4b cd 2b 2b 01 3f 3f 00 00 00 00 00 00    ?-KK?++???......
+30: 51 39 51 65 65 65 c5 45 0d 05 00 00 00 00 01 10    Q9Qeee?E??....??
+40: 34 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01    4..............?
+50: 16 bf b8 ff 4a ff 00 00 00 00 00 00 00 00 00 00    ???.J...........
+60: 07 08 08 08 08 08 08 08 08 00 20 00 00 00 00 00    ?????????. .....
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+80: 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ?...............
+90: 00 02 00 00 00 00 00 00 00 00 00 00 00 00 00 00    .?..............
+a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00    ................
+
+  i2cget -y -f 2 0x2d 0x39
+  
+  在 TPS65910/11 芯片中，规格书写的偏移量是 0x39，但在系统中必须用 0x80 访问，并不是芯片厂写错了，而是因为 Linux 内核驱动在底层做了一个“按寄存器功能分区分段”的虚拟地址重新映射（Regmap Mapping）。这是 Linux 驱动为了规范化管理复杂芯片所采用的经典设计，底层存在两层地址的转换：1. 为什么会有 0x39 到 0x80 的映射？在 Linux 内核源码 drivers/mfd/tps65910.c 框架中，为了让外设驱动方便访问，内核将主 PMIC 芯片的所有零散寄存器整合成了一个连续的虚拟寄存器表。内核对地址范围进行了人为的拼接组合：0x00 到 0x3F：被映射为芯片内部的 RTC 专属寄存器区（如秒、分、时、闹钟，以及紧随其后的备用电池充电寄存器 BBCH）。0x40 到 0x7F：被映射为芯片内部的主电源控制寄存器区（各种 LDO、DCDC 电压配置）。0x80 及以上：驱动程序在框架里显式将 BBCH 平移到了连续表的 0x80 边界上（即宏定义 TPS65910_BBCH = 0x80），目的是让它和特定的电压控制、GPIO 核心寄存器保持物理和内存对齐。2. 驱动在底层替你完成了转换当在 Yocto 系统里输入命令 i2cset 2 0x2d 0x80 ... 时，Linux 驱动里的 regmap 核心层 会进行拦截：它看到你要读写虚拟地址 0x80。驱动查阅映射表，发现 0x80 对应的实际硬件物理偏移正是截图里的 0x39。内核在发出的真正 I2C 硬件数据包里，填入的依然是 0x39。这就是为什么规格书是 0x39，而使用 i2ctools 工具（走内核 i2c-dev 驱动映射）时必须操作 0x80 的最根本原因。
+
+强行写到eeprom
+
+./i2cset -f -y 1 0x52 0x0E 0x00
+./i2cset -f -y 1 0x52 0x0F 0x28
+./i2cset -f -y 1 0x52 0x37 0x1C
+./i2cset -f -y 1 0x52 0x27 0x00
+./i2cset -f -y 1 0x52 0x27 0x11
+sleep 1
+
+./i2cset -f -y 1 0x52 0x0E 0x00   # 1. 切换扩展寄存器区，准备写入
+./i2cset -f -y 1 0x52 0x0F 0x28   # 2. 锁定特定配置指针
+./i2cset -f -y 1 0x52 0x37 0x1C   # 3. 关键：把充电使能(TCE=1)和限流电阻(TCR)数据写入 0x37 镜像 RAM
+./i2cset -f -y 1 0x52 0x27 0x00   # 4. 清空 EEPROM 命令寄存器状态
+./i2cset -f -y 1 0x52 0x27 0x11   # 5. 终极一击：写入 0x11 指令，强行触发芯片内部高压，将 0x37 的数据永远烧录进 EEPROM 物理单元
+sleep 1                           # 6. 必须等待 1 秒，因为 EEPROM 的物理“热力学烧录”需要几个毫秒的稳定窗口
+
+
+./i2cset -f -y 1 0x52 0x0E 0x00
+./i2cset -f -y 1 0x52 0x0F 0x28
+./i2cset -f -y 1 0x52 0x37 0x10
+./i2cset -f -y 1 0x52 0x27 0x00
+./i2cset -f -y 1 0x52 0x27 0x11
+sleep 1
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 /home/yanwei/link/ebc_rc01/source/linux-4.14.290
 
@@ -105,15 +197,15 @@ make modules_install
 sudo losetup -fP rc05-sd-img-0.0.0.1.img 
 sudo losetup --find --show rc05-sd-img-0.0.0.1.img
 
-sudo mount /dev/loop27p1 partition1
-sudo mount /dev/loop27p2 partition2
-sudo mount /dev/loop27p3 partition3
-sudo mount /dev/loop27p4 partition4
+sudo mount /dev/loop38p1 partition1
+sudo mount /dev/loop38p2 partition2
+sudo mount /dev/loop38p3 partition3
+sudo mount /dev/loop38p4 partition4
 
-sudo umount /dev/loop27p1
-sudo umount /dev/loop27p2
-sudo umount /dev/loop27p3
-sudo umount /dev/loop27p4
+sudo umount /dev/loop38p1
+sudo umount /dev/loop38p2
+sudo umount /dev/loop38p3
+sudo umount /dev/loop38p4
 
 sudo losetup -d /dev/loop27
 sudo losetup -d /dev/loop28
@@ -127,9 +219,77 @@ sudo dd if=./rc01-sd-img-0.0.0.3.img of=/dev/sdx bs=1M
 sudo dd if=./rc05-sd-img-0.0.0.1.img of=/dev/sdx bs=1M
 dd if=/mnt/usb/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M
 
+ls
 dd if=/mnt/usb/rc05/rc05-sd-img-0.0.0.1.img of=/dev/mmcblk0 bs=1M;sync
+ls
+
+ls
+mount /dev/mmcblk0p1 BOOT
+mount /dev/mmcblk2p1 SDCard
+mount /dev/mmcblk0p4 ROOT
+cp SDCard/imx6dl-ebcrc05-a1.dtb BOOT/
+cp SDCard/zImage BOOT/
+cp i2c-for-erp-rc05.tar.gz ROOT/root/
+sync
+ls
+
+ls
+tar zxvf i2c-for-erp-rc05.tar.gz
+cp -r i2c/lib/* /lib
+cp -r i2c/i2c* /usr/bin/
+date -s "2026-7-15 19:35:20"
+hwclock -w
+hwclock -r
+ls
+
+root@spreev2:~# dmesg | grep rtc
+[    0.270573] vrtc: supplied by vbat
+[    2.405096] imx-drm display-subsystem: bound imx-ipuv3-crtc.2 (ops ipu_crtc_ops)
+[    2.412892] imx-drm display-subsystem: bound imx-ipuv3-crtc.3 (ops ipu_crtc_ops)
+[    2.420995] [drm] Cannot find any crtc or sizes
+[    2.907579] snvs_rtc 20cc000.snvs:snvs-rtc-lp: registered as rtc0
+[    4.041179] snvs_rtc 20cc000.snvs:snvs-rtc-lp: setting system clock to 1970-01-01 00:00:01 UTC (1)
+
+
 
 date -s "2025-12-25 16:41:00"
+
+date -s "2026-7-14 08:43:40"
+
+date -s "2026-7-10 18:41:50"
+
+hwclock --systohc
+hwclock -w
+
+root@spreev2:~# hwclock --systohc
+root@spreev2:~# hwclock -r
+Mon Jul  6 11:15:25 2026  0.000000 seconds
+root@spreev2:~#
+root@spreev2:~# cat /proc/driver/rtc
+rtc_time        : 11:16:51
+rtc_date        : 2026-07-06
+alrm_time       : 00:00:00
+alrm_date       : 1970-01-01
+alarm_IRQ       : no
+alrm_pending    : no
+update IRQ enabled      : no
+periodic IRQ enabled    : no
+periodic IRQ frequency  : 1
+max user IRQ frequency  : 64
+24hr            : yes
+
+
+root@spreev2:~# date -s "2026-07-06 15:00:00"
+Mon Jul  6 15:00:00 UTC 2026
+root@spreev2:~# /sbin/hwclock --systohc --rtc=/dev/rtc0
+root@spreev2:~# /sbin/hwclock --show --rtc=/dev/rtc0
+Mon Jul  6 15:00:08 2026  0.000000 seconds
+root@spreev2:~# reboot
+root@spreev2:~# /sbin/hwclock --show --rtc=/dev/rtc0
+Mon Jul  6 15:01:33 2026  0.000000 seconds
+
+
+
 
 cp /mnt/usb/rc05/*.tar.gz .
 sync

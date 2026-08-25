@@ -7,21 +7,216 @@ Conformity Statement (符合性聲明) 撰寫框架
 [Guidelines] 手冊證據 (對應 EA-16)：指向使用者操作手冊或安全強化指南 (SHG) 的對應章節，證明有指導使用者如何配置。
 [Testing] 測試驗證證據 (對應 EA-18)：指向安全性驗證與確認測試報告 (SVV-1)，必須精確寫出對應的「測試案例編號 (Test Case ID)」
 如上三项包含document、section和Description三小项说明。
-根据上述要求，改造如下 CR 3.4 RE(1)，描述使用純技術與架構說明，讀起來更清爽、不臃腫
-Conformity Statement:
-Not provided this function to use digital signature verify the authenticity.
-Conformity Evidence:
-Not provided this function to use digital signature verify the authenticity.
+根据上述要求，写出如下 CR 2.02 Wireless use control，描述使用純技術與架構說明，讀起來更清爽、不臃腫
+Conformity Statement，Conformity Evidence
+CR 2.02 Wireless use control如下描述，被判定fail，如何修改
+Conformity Statement
+Met by component: Active wireless network connection authorization, link-layer cipher enforcement, and stateful cryptographic handshake tracking are directly and centrally enforced at the operating system and network subsystem layers via NetworkManager Connection Constraints, IEEE 802.11i 4-Way Handshake Verification, and Systemd Centralized Logging Engines (journalctl) on the Debian 12 platform (AFE-E630) [2.4, 3.4].
+●Wireless Use Control Technology: To satisfy the strict requirements of IEC 62443-4-2 CR 2.2 for components operating as wireless clients connecting to external infrastructures, the operating system limits radio frequency interactions to pre-authorized networks exclusively [2.4, 3.1]. The platform orchestrates dynamic hardware-parameter bindings natively for the integrated NXP IW610 Triple-Radio Silicon Chipset, validating and initializing the dedicated wireless direct interface (wfd0) under rigid administrative containment gates [2.4, 3.4]. The network subsystem forces the active interface state flags directly into an operational security containment baseline, mandating a complete cryptographic WPA2/WPA3 four-way handshake sequence (4way_handshake -> completed) and robust pairwise encryption filters (CCMP/AES or GCMP-256) while blocking unencrypted open roaming profiles or unauthorized ad-hoc infrastructure spoofing [2.4, 3.4]. Furthermore, the system log engine captures and serializes all dynamic interface lifecycle transitions, DHCP address assignments, and activation states into immutable logging matrices natively [2.4, 3.4].
+●Boundary Enforcement: This stateful wireless use control perimeter applies uniformly to the integrated hardware NXP IW610 Wi-Fi subsystem, the localized wireless interface adapter hooks (wfd0), all active NetworkManager system connection repositories, and the centralized system log trails active on the device [2.4, 3.4].
+Conformity Evidence
+ [Design]
+●Document: UID01 - [Debian][AFE-E630] Security Design Document (SD).docx
+●Section: Chapter CR 2.2 (Wireless Client Authorization Constraints and NXP IW610 Silicon Interface Specification)
+●Description: Defines the technical framework of the client-side link validation routines, approved cryptographic security ciphers, and NXP IW610 hardware interface registry boundaries (wfd0) that shield the wireless transport layer [2.4, 3.4].
 
+ [Guidelines]
+●Document: UID03 - [Debian][AFE-E630] Security Guidelines.docx
+●Section: Section 3.2 (Procedures for Configuring Secure Wireless Client Profiles and Activating System Audit Rules)
+●Description: Provides pure-text operational guidelines instructing plant deployment managers how to populate secure SSID profiles, lock down allowed wireless connection variables, and inspect active link parameters using native checking utilities without introducing platform execution disruption.
+
+ [Testing]
+●Document: SVV-1 Security Verification and Validation Testing Report.docx
+●Section: Test Case Matrix Block (FR2 / CR 2.2 Wireless Client Interface Policy and Audit Trail Verification)
+●Description: Links directly to full-text execution logs verifying system behavior under the following test case:
+TS-CR2.2-02: Audits the active system network connection states (ifconfig wfd0 or ip link show wfd0) and raw kernel audit trail logs (journalctl -u NetworkManager) following hard reboots to confirm that the host cleanly isolates wireless connectivity to secure profiles and logs all network configuration updates natively [2.4, 3.4].
+
+
+1. 判定結果 退件 (Fail)
+2. 判定理由
+評估標準比對： 依據 IEC 62443-6-2評估方法 章節 6.3 表 2 (Table 2) 對 CR 2.2 的評估標準，系統必須具備「拒絕透過無線連線執行關鍵動作的能力 (capability to deny critical action via wireless connection)」以及「監控設備 (monitor devices)」兩項條件
+
+測試證據審查 (SVV)： 審查提供的 Conformity Statement 與 SVV-1 測試報告 (包含測試案例 TS-CR2.2-02)，產出物內容僅涵蓋並驗證了無線網路的授權 (WPA2/WPA3加密)、無線介面狀態控制 (wfd0) 及透過 journalctl 執行的系統日誌監控
+
+總結： 現有的宣告與測試證據僅滿足了「監控」與「無線連線安全」的基礎要求，完全未涵蓋標準中強制要求的「限制或拒絕透過無線介面執行關鍵動作」之安全設計與測試佐證。因未能滿足 IEC 62443-6-2評估方法 對 CR 2.2 的必要審查條件，證據不完備，故判定退件。
+3. 修補建議
+修正設計文件與宣告： 於 TRF 及 UID01 設計文件中，明確定義該設備(AFE-E630) 的「關鍵動作 (critical actions)」為何，並補充說明系統架構如何辨識指令來源介面，進而限制或阻擋來自無線介面 (wfd0) 的關鍵操作請求。
+新增測試證據： 於 SVV-1 測試報告中新增測試案例，具體驗證並展示「透過無線連線嘗試執行關鍵動作時遭到系統阻擋或拒絕」，以提供符合標準要求之直接技術證據。
+
+HDR 3.11 Physical tamper resistance and detection 我们直接是自锁螺丝和防拆贴纸，然后拍图作为证据，请帮我简单描述下Conformity Statement和Conformity Statement，
+然后我在svv testcase里面就贴了两张实物图
 
 基于rk3568 debian12 kernel6.1用最精简的方式合规，从Conformity Statement、Technical Architecture & Defense-in-Depth Design 、Core Hardening Configurations、Conformity Reference四个方面编写，全英文输出，不要有任何中文字符
-Document: UID01 - [Debian][AFE-E630] Security Design Document (SD).docxSection: Chapter 3.4.1 (Asymmetric Cryptographic Subsystem and IMA Digital Signature Public Key Verification Specification)Description: Defines the technical framework of the kernel keyring registration pools, RSA/ECDSA signature derivation blocks, and VFS file open intercept routines that manage real-time asymmetric validation hooks.
+●Document: UID01 - [Debian][AFE-E630] Security Design Document (SD).docx
+●Section: Chapter 2.1.2 (Cryptographic Device Fingerprinting and Software Process Context Authentication Specification)
+●Description: Defines the technical framework of the asymmetric host key exchange sequence, mutual authentication criteria for preventing man-in-the-middle exploits, local process-to-process capability privilege checking, and security boundary isolation parameters that govern internal component trust relations.
+
 
 基于rk3568 debian12 kernel6.1用最精简的方式合规，给出SG的参考内容，全英文输出，不要有任何中文字符，方便整体带格式贴到word
-Document: UID03 - [Debian][AFE-E630] Security Guidelines.docxSection: Section 4.4.1 (Procedures for Signing Production Binaries and Auditing X.509 Cryptographic Providors)Description: Provides pure-text operational guidelines instructing plant deployment managers how to use code-signing tools to append valid cryptographic extended attributes onto software updates before deployment.
+●Document: UID03 - [Debian][AFE-E630] Security Guidelines.docx
+●Section: Section 2.1.2 (Procedures for Deploying Trusted Host Keys and Auditing Active Process Identity Parameters)
+●Description: Provides pure-text operational guidelines instructing plant deployment managers how to inventory authorized device credentials, configure strict host key checking parameters, review local account execution scopes, and inspect runtime process maps using native system utilities without introducing platform execution disruption.
+
 
 基于rk3568 debian12 kernel6.1用最精简的方式合规，按照如下要求给出TS的参考内容：測試環境準備、具體測試步驟、預期結果、實際測試結果，以及 Pass/Fail 結論，对TS进行模板化编写，testcase的功能选取最小化最简便的验证方式，全英文输出，不要有任何中文字符，方便整体带格式贴到word
-TS-CR3.4_RE1-01: Audits active kernel keyring infrastructures to mathematically verify that the platform maintains an active, locked public key registry dedicated to asymmetric software component signature appraisals.
+●Document: SVV-1 Security Verification and Validation Testing Report.docx
+●Section: Test Case Matrix Block (FR2 / CR 2.2 Wireless Client Interface Policy and Critical Action Interception Verification)
+●Description: Links directly to full-text execution logs verifying system behavior under the following test cases:
+○TS-CR2.2-02: Audits the dynamic packet filtering capabilities over the wireless medium by triggering a critical administrative update action via the wfd0 interface to confirm that the netfilter engine natively blocks and denies the high-privilege execution stream.
+
+
+
+根据Question，帮我回答PM/RD Statements，如下是问题
+1、所負責專案是否包括新平台、新解決方案/功能、新外包廠商, 或涉及產品架構變更？(符合其中一項即填"Yes")
+2、請問所負責的專案是否涵蓋金流管理(如付費功能)、或為關鍵系統服務使用?若有，請列出這些服務內容?
+3、所負責的專案是否被要求高安全標準(如:政府標案、關鍵基礎建設服務商)？若有，請說明誰要求什麼功能
+(1~3符合1項，以下免答)
+4、所負責的專案是否有會處理到使用者相關機敏資料或個資(詳說明1)？ex. 使用者帳號資訊、影像、照片、撥接帳號密碼、wifi密碼、網頁瀏覽行為，若有請列舉。
+5、所負責的專案是否新增對外存取服務(包括啟用新的port)功能？若有，請列出這些功能
+6、請問所負責的專案對於所處理之資料是否回傳至既有的第三方服務(包含架構、平台、服務通應商)？若有，請列出服務廠商名稱
+7、請問所負責的專案所處理之資料是否回傳至公司維運之主機？若有，請列出資料蒐集類型
+(2~5符合1項，以下免答)
+8、專案為既有產品更新或改版，範圍變動幅度不大(非架構變更)，或先前版本一年內已執行過原碼掃描或滲透測試？
+
+
+
+
+
+
+sudo wpa_cli -i wwan0 status | grep -E "key_mgmt=|pairwise_cipher="
+
+
+echo "DECOMMISSION_TEST_DATA_REMANENCE_SECRET_KEY" | sudo tee /tmp/secret.key > /dev/null
+sudo dd if=/dev/zero of=/tmp/secret.key bs=1M count=1 status=none
+sudo head -c 100 /tmp/secret.key | grep -a "DECOMMISSION_TEST"
+
+
+linaro@linaro-alip:~$                                                                                 echo "DECOMMISSION_TEST_DATA_REMANENCE_SECRET_KEY" | sudo tee /tmp/secret.key > /dev/nullinaro-alip:~$ echo "DECOMMISSION_TEST_DATA_REMANENCE_SECRET_KEY" | sudo tee /tmp/secret.key > /dev/null
+[ 2139.158779] sudo[2258]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/tee /tmp/secret.key
+[ 2139.162426] sudo[2258]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+[ 2139.172347] sudo[2258]: pam_unix(sudo:session): session closed for user root
+linaro@linaro-alip:~$                                                                                 sudo dd if=/dev/zero of=/tmp/secret.key bs=1M count=1 status=none
+[ 2168.708601] sudo[2262]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/dd if=/dev/zero of=/tmp/secret.key bs=1M count=1 status=none
+[ 2168.713093] sudo[2262]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+                                                                                                          [ 2168.726058] sudo[2262]: pam_unix(sudo:session): session closed for user root                                                                                                    sudo head -c 100 /tmp/secret.key | grep -a "DECOMMISSION_TEST"
+[ 2177.865916] sudo[2265]:   linaro : TTY=ttyFIQ0 ; PWD=/home/linaro ; USER=root ; COMMAND=/usr/bin/head -c 100 /tmp/secret.key
+[ 2177.869341] sudo[2265]: pam_unix(sudo:session): session opened for user root(uid=0) by linaro(uid=1000)
+[ 2177.880264] sudo[2265]: pam_unix(sudo:session): session closed for user root
+
+第三方评审机构需要如下interface的说明，我们AFE-E630拥有2个lan口，连接hdmi，没有machine interface
+Network Interface	透過網路（如 Ethernet、Wi-Fi、 Web UI、SSH）進行資料通訊的介面。用於系統間或與伺服器交換資料。
+User Interface	提供人員操作設備的介面，如: LCD 操作面板、HMI 等。
+Machine Interface	提供裝置之間（如 PLC 與感測器）進行資料傳輸或控制指令交握的介面。
+涉及填写items如下：ID	敘述	介面類型	實體介面	外部存取	受影響的資產
+帮我完成书写
+
+
+列举出支持哪些演算法
+ID	描述  (除存取方式外，若設備有相關的演算法便填寫於此)	使用的安全機制	條文	安全通道協定	金鑰交換方式	驗證時點	支援哪些加密演算法	有效期與更新	參考的國際標準	國際標準描述
+
+
+
+ID	描述  (除存取方式外，若設備有相關的演算法便填寫於此)
+ComMech-1	使用者透過https在連接埠443登入以存取web介面 (可通過http連接，但會自動轉送至https)
+ComMech-2	使用者透過console實體連接設備，開啟port 22的SSH服務
+ComMech-3	設備與設備溝通
+ComMech-4	PKI相關
+ComMech-5	共享金鑰
+ComMech-6	支援無線通訊協定
+ComMech-7	設備支援 HTTPS、SSH
+ComMech-8	Mobile Code完整性檢查
+ComMech-9	設備啟動前做完整性檢查
+ComMech-10	Mobile Code真實性檢查
+ComMech-11	軟體更新做完整性與真實性檢查 (更新相關)
+ComMech-12	使用供應商所配置的 Root of Trust
+
+开始写 HDR，先是ID（HDR）和描述，然后是如下：
+設備是否具備控制行動碼(Mobile Code)執行的能力?
+---
+Mobile Code:
+JavaSHDRipt、ActiveX、Java Applets、Flash etc.
+HDR 2.4_1
+
+續HDR 2.4_1
+是否可限制 哪些使用者（人員、軟體或設備）有權上傳行動碼至此設備?
+HDR 2.4_2
+
+續HDR 2.4_1
+是否在執行行動碼前執行 完整性檢查（如驗證簽章或雜湊）
+HDR 2.4_3
+
+如上分为三条写
+
+
+L2以上(含)才需填寫，若否，則請填N/A
+是否支援行動碼(Mobile Code)真實性驗證（如簽章檢查），僅允許驗證通過的 mobile code 執行?
+---
+ps: 演算法請至"演算法/協定"工作表填寫
+HDR 2.4 RE (1)
+L2以上(含)才需填寫，若否，則請填N/A
+如何防止未經授權的使用者使用除錯模式/開發者模式?
+e.g. 限制接口的物理存取
+HDR 2.13
+是否提供防護惡意程式的機制？
+---
+e.g.
+白名單、行為監控、病毒掃描、防篡改技術等
+
+
+HDR 3.2
+L2以上(含)才需填寫，若否，則請填N/A
+設備是否在啟動或更新時，自動將惡意程式防護元件的版本資訊寫入日誌檔（如 AV 引擎版本、白名單資料庫版本）?
+---
+紀錄格式: syslog, json,etc..
+ps: 協定請至"演算法/協定"工作表填寫
+
+HDR 3.2 RE (1)
+是否支援更新和升級的功能?
+
+HDR 3.10 
+L2以上(含)才需填寫，若否，則請填N/A
+是否在安裝任何軟體更新或升級檔前執行真實性與完整性驗證（如簽章、hash 檢查）？
+---
+ps: 演算法請至"演算法/協定"工作表填寫
+HDR 3.10 RE (1)
+
+
+L2以上(含)才需填寫，若否，則請填N/A
+是否支援防止未授權實體存取的防篡改機制?
+---
+防竄改機制: 
+密封、防拆電路、硬化外殼、鎖、封裝、安全螺釘 etc.
+HDR 3.11
+L2以上(含)才需填寫，若否，則請填N/A
+是否有機制確保該金鑰與資料於裝置中機密性、完整性與真實性不被破壞？
+HDR 3.12
+L2以上(含)才需填寫，若否，則請填N/A
+是否具備讓資產擁有者（Asset Owner）配置其專屬 Root of Trust（如金鑰、憑證、識別資料) 的能力？
+HDR 3.13_1
+L2以上(含)才需填寫，若否，則請填N/A
+續HDR 3.13_1
+此配置流程是否可於不依賴裝置安全區外部的元件（如外部伺服器）的情況下完成？
+HDR 3.13_2
+是否在開機前，對韌體、軟體、設定檔等進行完整性驗證？
+---
+ps: 演算法請至"演算法/協定"工作表填寫
+HDR 3.14
+L2以上(含)才需填寫，若否，則請填N/A
+設備是否在開機前，會使用由產品供應商配置的 Root of Trust（金鑰／憑證）驗證開機所需的韌體、軟體與設定資料的真實性？
+---
+ps: 演算法請至"演算法/協定"工作表填寫
+HDR 3.14 RE (1)
+
+
+
+L2以上(含)才需填寫，若否，則請填N/A  續CR 1.8_1 1) 如是使用CA頒發之憑證，請說明憑證頒發流程 2) 如使用自簽憑證，請說明私鑰相關人員的控管以避免私鑰流出、簽署流程 --- ps: PKI相關之加密演算法請至"演算法/協定"工作表填寫 CR 1.9_1	
+L2以上(含)才需填寫，若否，則請填N/A  續CR 1.9_1 說明使用何種機制檢查憑證的簽章、有效期限(CRL、OCSP)、Chain of trust、私鑰的管控(存放位置、存取權限)、憑證對應的身份(e.g. 網頁服務、使用者)。  CR 1.9_2
+
+
+
+
+
+
 
 
 我们AFE-E630 定义为HDR，rk3568平台，debian12 kernel6.1,根据产品定义，我们只做SL2级别，根据如上信息，给我一份说明，涉及
@@ -34,7 +229,7 @@ CR 5.2、CR 5.3、CR 5.4、
 CR 6.1 RE(1)、CR 7.5、CR 7.6 RE(1)
 
 
-
+2026-06-08    15
 2026-06-05    27
 2026-06-04    28
 2026-06-03    35

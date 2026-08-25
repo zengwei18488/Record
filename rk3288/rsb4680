@@ -239,6 +239,8 @@ cp phill@172.22.16.148:/home/Local_BSP/BSP/RSB-4680_Android81/rsb-4680-Android8.
 
 docker run -it --name androidO8 -v /media/org-home/zengwei/work/rk3288-android8.1/repo-src-github:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
 
+sudo docker run -it --name androidO8 -v /home/zengwei/work/rk3288-android8.1:/home/adv/BSP:rw advrisc/u18.04-rk3399abv10 /bin/bash
+
 docker run -it --name androidO8-SiYi -v /home/zengwei/work/rk3288-android8.1/SiYi-android8.1:/home/adv/BSP:rw advrisc/u16.04-imx6abv5:20170523 /bin/bash
 
 If you suffer "server certificate verification failed", you can use the following command to disable SSL verification in git repositories with self-signed certificates.
@@ -250,6 +252,9 @@ $ git config --global url."https://".insteadOf git://
 
 docker run -it --name imx8-yocto3.3 -v /home/adv/test:/home/adv/BSP:rw advrisc/u18.04-imx8lbv1 /bin/bash
 
+./out/target/product/rsb4680/system/media/bootanimation.zip
+./vendor/files/system/media/bootanimation.zip
+include/dt-bindings/display/screen-timing/lcd-g215han01.dtsi
 
 Signed
 
@@ -344,6 +349,9 @@ rkboot # setenv use_env_screen 1
 rkboot # setenv extend_screen edp-1024x768
 rkboot # saveenv
 
+export LC_ALL=C
+export LC_CTYPE=C
+
 source build/envsetup.sh;lunch rsb4680-userdebug
 $ make -j12;./mkimage.sh
 $./mkimage.sh
@@ -361,6 +369,13 @@ cd kernel
 make ARCH=arm rk3288_adv_defconfig
 make ARCH=arm rk3288-rsb4680-a3.img -j8
 make ARCH=arm rk3288-usm110-a2.img -j8
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+vim kernel/arch/arm/boot/dts/rk3288-rsb4680-a3.dts
+vim kernel/include/dt-bindings/display/screen-timing/lcd-g215han01.dtsi
+vim u-boot/board/rockchip/advantech/advantech.c
+vim kernel/drivers/video/backlight/pwm_bl.c
+kernel/arch/arm/boot/dts/rk3288-rsb4680-a3.dts kernel/include/dt-bindings/display/screen-timing/lcd-g215han01.dtsi kernel/drivers/video/backlight/pwm_bl.c
+
 ******************************************************************************************************
 NFS
 busybox mount -t nfs -o nolock 172.21.171.105:/home/zengwei /data/temp
@@ -486,6 +501,8 @@ docker run -it --name android-build -v /home/adv/android6.0:/home/adv/android:rw
 docker run -it --name android4.4.2-build -v /media/org-home/zengwei/work/EBC-GF66/android:/home/adv/android:rw advrisc/u14.04-imx6abv4 /bin/bash
 
 docker run -it --name android6.0-build -v /home/zengwei/work/rk3288/android6.0:/home/adv/android:rw advrisc/u14.04-imx6abv4 /bin/bash
+
+sudo docker run -it --name android6.0-build -v /home/zengwei/data_2T/zengwei/work/rk3288/android6.0:/home/adv/android:rw advrisc/u14.04-imx6abv4 /bin/bash
 
 docker run -it --name android10.0-build -v /home/zengwei/work/rk3399/rk3399-android10:/home/adv/android:rw advrisc/u18.04-rk3399abv10 /bin/bash
 

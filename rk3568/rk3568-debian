@@ -1,3 +1,46 @@
+timedatectl status
+
+sudo systemctl stop chrony
+sudo systemctl disable chrony
+sudo systemctl stop systemd-timesyncd
+sudo systemctl disable systemd-timesyncd
+apt-get remove --purge ntp ntpdate chrony
+
+
+
+debian12
+
+
+dmesg | grep -i -E "mwifiex|nxp|iw61"
+
+/lib/firmware/nxp/
+
+dmesg | grep -i mwifiex
+
+root@linaro-alip:~# cat /sys/bus/sdio/devices/mmc3\:0001\:1/vendor
+0x0471
+root@linaro-alip:~# cat /sys/bus/sdio/devices/mmc3\:0001\:1/device
+0x0205
+
+cat /proc/kallsyms | grep woal_init_module
+
+killall hcitool hciattach hciconfig
+        sleep 0.5
+        echo 0 > /sys/class/rfkill/rfkill0/state
+        sleep 0.2
+        echo 1 > /sys/class/rfkill/rfkill0/state
+        sleep 0.5
+        hciattach /dev/ttyS0 any 3000000 flow
+        sleep 1
+        hciconfig hci0 up
+        
+getfattr -m . -d /lib/firmware/nxp/sduartspi_iw610.bin
+
+fw_setenv disable_quiet 0
+fw_setenv disable_quiet 1
+
+#############################################################################################################################
+
 onboard
 
 /usr/bin/onboard

@@ -131,7 +131,7 @@ openssl ciphers -v -tls1_3 | grep GCM
 openssl ciphers -v "DEFAULT@SECLEVEL=2"
 echo "going.... 10-333"
 ./cr702-res.sh
-./cr703-res.sh
+#./cr703-res.sh
 echo "going.... 10-7"
 sleep 1
 

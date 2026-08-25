@@ -20,6 +20,111 @@ drwxr-xr-x  9 zengwei zengwei 4096  2月 25 23:56 rkbin
 lrwxrwxrwx  1 zengwei zengwei   41  2月 25 23:57 rkflash.sh -> device/rockchip/common/scripts/rkflash.sh
 drwxr-xr-x 25 zengwei zengwei 4096  2月 25 23:56 u-boot
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+emmc 如下错误
+
+mmc0: Timeout waiting for hardware interrupt.
+[ 353.947813] mmc0: sdhci: ============ SDHCI REGISTER DUMP ===========
+[ 353.947826] mmc0: sdhci: Sys addr: 0x00000001 | Version: 0x00000005
+[ 353.947841] mmc0: sdhci: Blk size: 0x00007200 | Blk cnt: 0x00000000
+[ 353.947855] mmc0: sdhci: Argument: 0x00000000 | Trn mode: 0x00000013
+[ 353.947867] mmc0: sdhci: Present: 0x03f702f2 | Host ctl: 0x00000034
+[ 353.947881] mmc0: sdhci: Power: 0x0000000d | Blk gap: 0x00000000
+[ 353.947893] mmc0: sdhci: Wake-up: 0x00000000 | Clock: 0x00000007
+[ 353.947905] mmc0: sdhci: Timeout: 0x0000000e | Int stat: 0x00000000
+[ 353.947916] mmc0: sdhci: Int enab: 0x03ff000b | Sig enab: 0x03ff000b
+[ 353.947928] mmc0: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[ 353.947939] mmc0: sdhci: Caps: 0x226dc881 | Caps_1: 0x08000007
+[ 353.947951] mmc0: sdhci: Cmd: 0x0000083a | Max curr: 0x00000000
+[ 353.947963] mmc0: sdhci: Resp: 0x00000900 | Resp: 0x00000008
+[ 353.947975] mmc0: sdhci: Resp: 0x00000900 | Resp: 0x000007c6
+[ 353.947986] mmc0: sdhci: Host ctl2: 0x0000000f
+[ 353.947998] mmc0: sdhci: ADMA Err: 0x00000050 | ADMA Ptr: 0x0a55b200
+[ 353.948010] mmc0: sdhci: ============================================
+[ 353.948069] sdhci-dwcmshc fe2e0000.mmc: __mmc_blk_ioctl_cmd: data error -110
+
+&sdhci {
+    /delete-property/ supports-cqe;
+}
+
+./drivers/mmc/host/dw_mmc-rockchip.c
+./drivers/mmc/host/sdhci-of-dwcmshc.c
+./drivers/mmc/host/cqhci.h
+
+
+终端执行以下两个 FIO 命令：
+1. 测试最高【顺序写入】速度
+fio --filename=/mnt/emmc/test_speed.bin --size=1G --direct=1 --rw=write --bs=1M --ioengine=libaio --iodepth=64 --name=max_seq_write --zero_buffers=1
+--direct=1: 彻底绕过系统缓存（真正直接测硬件）。
+--zero_buffers=1: 缓冲区全填 0，不消耗 CPU 算力，完全释放 eMMC 写入潜能。
+--iodepth=64: 队列深度加大，把 eMMC 的管道塞满。
+
+Jobs: 1 (f=1): [W(1)][100.0%][w=166MiB/s][w=166 IOPS][eta 00m:00s]
+max_seq_write: (groupid=0, jobs=1): err= 0: pid=4219: Tue Aug  4 07:21:06 2026
+  write: IOPS=162, BW=163MiB/s (171MB/s)(1024MiB/6286msec); 0 zone resets
+    slat (usec): min=21, max=126464, avg=5994.57, stdev=10549.97
+    clat (msec): min=133, max=514, avg=381.59, stdev=39.23
+     lat (msec): min=133, max=520, avg=387.58, stdev=40.35
+    clat percentiles (msec):
+     |  1.00th=[  199],  5.00th=[  321], 10.00th=[  363], 20.00th=[  384],
+     | 30.00th=[  388], 40.00th=[  388], 50.00th=[  388], 60.00th=[  388],
+     | 70.00th=[  388], 80.00th=[  388], 90.00th=[  401], 95.00th=[  414],
+     | 99.00th=[  493], 99.50th=[  502], 99.90th=[  514], 99.95th=[  514],
+     | 99.99th=[  514]
+   bw (  KiB/s): min=86016, max=171688, per=95.75%, avg=159720.08, stdev=23426.29, samples=12
+   iops        : min=   84, max=  167, avg=155.58, stdev=22.76, samples=12
+  lat (msec)   : 250=2.05%, 500=97.17%, 750=0.78%
+  cpu          : usr=0.32%, sys=1.02%, ctx=1020, majf=0, minf=11
+  IO depths    : 1=0.1%, 2=0.2%, 4=0.4%, 8=0.8%, 16=1.6%, 32=3.1%, >=64=93.8%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=99.9%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued rwts: total=0,1024,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+  WRITE: bw=163MiB/s (171MB/s), 163MiB/s-163MiB/s (171MB/s-171MB/s), io=1024MiB (1074MB), run=6286-6286msec
+
+Disk stats (read/write):
+  mmcblk0: ios=0/1990, merge=0/1, ticks=0/271350, in_queue=271353, util=98.12%
+
+写入速度：171 MB/s（接近物理极限的顶级表现！🚀）数据：BW=163MiB/s (171MB/s)
+最大延迟：514 毫秒  数据：bw (KiB/s): min=86016
+
+2. 测试最高【顺序读取】速度
+fio --filename=/mnt/emmc/test_speed.bin --size=1G --direct=1 --rw=read --bs=1M --ioengine=libaio --iodepth=64 --name=max_seq_read
+
+Jobs: 1 (f=1): [R(1)][100.0%][r=231MiB/s][r=231 IOPS][eta 00m:00s]
+max_seq_read: (groupid=0, jobs=1): err= 0: pid=4262: Tue Aug  4 07:25:06 2026
+  read: IOPS=227, BW=228MiB/s (239MB/s)(1024MiB/4499msec)
+    slat (usec): min=32, max=24618, avg=4260.09, stdev=6054.30
+    clat (msec): min=119, max=402, avg=273.64, stdev=26.02
+     lat (msec): min=119, max=402, avg=277.90, stdev=26.96
+    clat percentiles (msec):
+     |  1.00th=[  159],  5.00th=[  236], 10.00th=[  271], 20.00th=[  271],
+     | 30.00th=[  271], 40.00th=[  275], 50.00th=[  279], 60.00th=[  279],
+     | 70.00th=[  279], 80.00th=[  279], 90.00th=[  284], 95.00th=[  292],
+     | 99.00th=[  351], 99.50th=[  376], 99.90th=[  388], 99.95th=[  405],
+     | 99.99th=[  405]
+   bw (  KiB/s): min=163840, max=239616, per=96.44%, avg=224768.00, stdev=24836.71, samples=8
+   iops        : min=  160, max=  234, avg=219.50, stdev=24.25, samples=8
+  lat (msec)   : 250=6.05%, 500=93.95%
+  cpu          : usr=0.64%, sys=2.42%, ctx=1024, majf=0, minf=16394
+  IO depths    : 1=0.1%, 2=0.2%, 4=0.4%, 8=0.8%, 16=1.6%, 32=3.1%, >=64=93.8%
+     submit    : 0=0.0%, 4=100.0%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.0%, >=64=0.0%
+     complete  : 0=0.0%, 4=99.9%, 8=0.0%, 16=0.0%, 32=0.0%, 64=0.1%, >=64=0.0%
+     issued rwts: total=1024,0,0,0 short=0,0,0,0 dropped=0,0,0,0
+     latency   : target=0, window=0, percentile=100.00%, depth=64
+
+Run status group 0 (all jobs):
+   READ: bw=228MiB/s (239MB/s), 228MiB/s-228MiB/s (239MB/s-239MB/s), io=1024MiB (1074MB), run=4499-4499msec
+
+Disk stats (read/write):
+  mmcblk0: ios=1996/0, merge=0/0, ticks=255856/0, in_queue=255856, util=97.95%
+
+读取速度：239 MB/s（接近总线物理天花板！🚀）数据：BW=228MiB/s (239MB/s)
+延迟稳定性：极高（绝佳的工控确定性 📊）数据：avg=273.64 msec
+数据：bw (KiB/s): min=163840
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 https://gitlab.com/etherlab.org/ethercat/-/tree/stable-1.6?ref_type=heads
@@ -79,7 +184,7 @@ arch/arm64/boot/dts/rockchip/rk3588s.dtsi
 arch/arm64/boot/dts/rockchip/rk3588-linux.dtsi 
 arch/arm64/configs/rockchip_linux_defconfig
 
-
+scp zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/rk3588/emmc-check-speed.sh .
 scp aka@172.21.171.106:/home/aka/work/code/rk3588/debian/rkcode/kernel/ethcat-org.tar.gz .
 
 cp disk/rk_ethercat_release_2024_6_25/lib/* /usr/lib/
@@ -202,6 +307,13 @@ rm buildroot/output/rockchip_rk3588_recovery  -rf
 source device/rockchip/.BoardConfig.mk
 ./mkfirmware.sh
 
+mkdir rk3588_v110_risc
+cd rk3588_v110_risc/
+git config --global user.name "wei.zeng"
+git config --global user.email wei.zeng@advantech.com.cn
+repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3588-Linux/_git/manifest -b rk3588_linux6.1_v110_risc -m RK3588_RISC_DIV110037.xml
+repo/repo sync
+repo/repo forall -c git checkout -b local --track advantech-azure/rk3588_linux6.1_v110_risc
 
 
 export KERNELPATH=/home/aka/work/code/rk3588/debian/rk3588_azure/kernel
@@ -301,7 +413,17 @@ pactl set-default-sink [sink_name_or_index]
 
 pactl set-default-sink alsa_output.pci-0000_00_1f.3.analog-stereo
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+# 将亮度从默认的 50 调高至 60-65
+xrandr --output HDMI-1 --set "brightness" 62
+
+# 将对比度从默认的 50 调高至 58-65（增强黑白反差，画面更通透）
+xrandr --output HDMI-1 --set "contrast" 60
+
+# 调整软件亮度和 Gamma（默认是 1:1:1）
+# 提高 Gamma 值（例如 1.2）可以让暗部变亮，细节更清晰，而不会让高光过曝
+xrandr --output HDMI-1 --gamma 1.2:1.2:1.2 --brightness 1.05
 
 
 
