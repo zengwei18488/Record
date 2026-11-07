@@ -1,0 +1,167 @@
+2026-10-26T11:10:48.3663691Z Make firmware OK!
+2026-10-26T11:10:48.3664063Z ------ OK ------
+2026-10-26T11:10:48.3701258Z ********rkImageMaker ver 2.29********
+2026-10-26T11:10:48.3701593Z Generating new image, please wait...
+2026-10-26T11:10:48.3701859Z Writing head info...
+2026-10-26T11:10:48.3702064Z Writing boot file...
+2026-10-26T11:10:48.3713978Z Writing firmware...
+2026-10-26T11:10:51.4774602Z Generating MD5 data...
+2026-10-26T11:11:12.8363466Z MD5 data generated successfully!
+2026-10-26T11:11:12.8363826Z New image generated successfully!
+2026-10-26T11:11:12.8365743Z Making update.img  OK.
+2026-10-26T11:11:12.8366994Z Make update image ok!
+2026-10-26T11:11:12.8367678Z /home/adv/BSP/aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_2026-10-26/android
+2026-10-26T11:11:14.4904729Z make and copy packaging in IMAGE 
+2026-10-26T11:11:25.6420035Z [ADV] mkdir aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_all_emmc_2026-10-26
+2026-10-26T11:11:25.6785019Z cp: cannot stat '/home/adv/BSP/aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_2026-10-26/android/RKTools/windows/DriverAssitant_*.zip': No such file or directory
+2026-10-26T11:11:35.6839304Z [ADV] creating aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_all_emmc_2026-10-26.tgz ...
+2026-10-26T11:17:28.4066291Z [ADV] copy images to /home/adv/BSP/./stored/2026-10-26/v0.1.8
+2026-10-26T11:17:28.6148823Z 
+2026-10-26T11:17:28.6149461Z ... A new version of repo (2.69) is available.
+2026-10-26T11:17:28.6149728Z ... You should upgrade soon:
+2026-10-26T11:17:28.6150722Z     cp /home/adv/BSP/aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_2026-10-26/.repo/repo/repo /home/adv/bin/repo
+2026-10-26T11:17:28.6151135Z 
+2026-10-26T11:17:28.9342840Z Saved manifest to aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576.xml
+2026-10-26T11:17:29.0426162Z mv: cannot stat 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_all_emmc_2026-10-26.tgz': No such file or directory
+2026-10-26T11:17:29.0436963Z mv: cannot stat 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_all_emmc_2026-10-26.tgz.md5': No such file or directory
+2026-10-26T11:17:29.0442023Z [ADV] mkdir aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_aom5841_2026-10-26_log
+2026-10-26T11:17:29.0466079Z cp: cannot stat 'aom5841_Build*.log': No such file or directory
+2026-10-26T11:17:29.0468578Z [ADV] creating aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_aom5841_2026-10-26_log.tgz ...
+2026-10-26T11:17:29.1383263Z [local ffb7555] [Official Release] aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:29.1383789Z  1 file changed, 1 insertion(+), 1 deletion(-)
+2026-10-26T11:17:32.8852747Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/u-boot
+2026-10-26T11:17:32.8853241Z    4ee5bd6..ffb7555  local -> adv-rk-androidV15
+2026-10-26T11:17:32.8914599Z [ADV] Create XML file
+2026-10-26T11:17:33.0448521Z 
+2026-10-26T11:17:33.0449334Z ... A new version of repo (2.69) is available.
+2026-10-26T11:17:33.0450237Z ... You should upgrade soon:
+2026-10-26T11:17:33.0450904Z     cp /home/adv/BSP/aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576_2026-10-26/.repo/repo/repo /home/adv/bin/repo
+2026-10-26T11:17:33.0451051Z 
+2026-10-26T11:17:33.1678228Z Saved manifest to aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576.xml
+2026-10-26T11:17:33.1923797Z Switched to a new branch 'adv-rk-androidV15'
+2026-10-26T11:17:33.1924269Z Branch 'adv-rk-androidV15' set up to track remote branch 'adv-rk-androidV15' from 'origin'.
+2026-10-26T11:17:33.2215191Z [adv-rk-androidV15 fd10ecd] [Official Release] aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:33.2215564Z  1 file changed, 41 insertions(+)
+2026-10-26T11:17:35.7550234Z  create mode 100644 aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576.xml
+2026-10-26T11:17:35.7550680Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/android-manifest
+2026-10-26T11:17:35.7551018Z    60ddde1..fd10ecd  adv-rk-androidV15 -> adv-rk-androidV15
+2026-10-26T11:17:35.7612512Z fatal: could not open or read '/home/adv/BSP/': Is a directory
+2026-10-26T11:17:35.7683912Z error: src refspec aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 does not match any
+2026-10-26T11:17:35.7684546Z error: failed to push some refs to 'https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/android-manifest'
+2026-10-26T11:17:35.7739561Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:38.0325370Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/u-boot
+2026-10-26T11:17:38.0325907Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:38.0411072Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:40.7898135Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/kernel
+2026-10-26T11:17:40.7899163Z  * [new tag]             aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:40.7984231Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:44.6229712Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/bsp
+2026-10-26T11:17:44.6230334Z  * [new tag]             aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:44.6308935Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:49.2838137Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external
+2026-10-26T11:17:49.2838763Z  * [new tag]               aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:49.2928120Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:51.8491685Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-deqp
+2026-10-26T11:17:51.8492268Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:51.8573751Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:54.6249442Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-swiftshader
+2026-10-26T11:17:54.6250459Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:54.6333335Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:57.6337861Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-google-cloud-java
+2026-10-26T11:17:57.6338413Z  * [new tag]             aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:57.6425716Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:17:59.9155235Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-cronet
+2026-10-26T11:17:59.9155840Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:17:59.9237675Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:02.4220878Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-camera_engine_rkaiq
+2026-10-26T11:18:02.4221648Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:02.4303054Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:10.1360017Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-chromium-webview
+2026-10-26T11:18:10.1360700Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:10.1440233Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:13.0843670Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-python
+2026-10-26T11:18:13.0932718Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:13.0933553Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:15.7553488Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-jackson-databind
+2026-10-26T11:18:15.7554083Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:15.7642020Z error: no signature found
+2026-10-26T11:18:15.7679647Z [ADV] tag exists! There is no need to add tag
+2026-10-26T11:18:15.7718277Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:18.0602077Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-angle
+2026-10-26T11:18:18.0602650Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:18.0683378Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:20.6081286Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-icu
+2026-10-26T11:18:20.6081894Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:20.6162641Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:22.1169579Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-vixl
+2026-10-26T11:18:22.1170750Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:22.1255573Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:24.7638877Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-rust
+2026-10-26T11:18:24.7639456Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:24.7723679Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:27.4668398Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-tensorflow
+2026-10-26T11:18:27.4669509Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:27.4759507Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:29.8970590Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-cldr
+2026-10-26T11:18:29.8971422Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:29.9055397Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:32.8068033Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-mesa3d
+2026-10-26T11:18:32.8068563Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:32.8150060Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:35.2589843Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-intel-media-driver
+2026-10-26T11:18:35.2590405Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:35.2679487Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:37.1882070Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-exoplayer
+2026-10-26T11:18:37.1882748Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:37.1965344Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:39.0644039Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-leakcanary2
+2026-10-26T11:18:39.0644782Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:39.0727362Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:40.6972241Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-llvm
+2026-10-26T11:18:40.6972818Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:40.7054996Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:43.6120607Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-sdv
+2026-10-26T11:18:43.6121409Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:43.6203133Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:45.2791410Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-coreboot
+2026-10-26T11:18:45.2792143Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:45.2871972Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:47.4734316Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-vboot_reference
+2026-10-26T11:18:47.4735076Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:47.4819628Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:49.7311582Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-webrtc
+2026-10-26T11:18:49.7312155Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:49.7393725Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:52.6209709Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/external-skia
+2026-10-26T11:18:52.6210814Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:52.6292239Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:55.1060274Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/tools
+2026-10-26T11:18:55.1060843Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:55.1141257Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:57.6763846Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/vendor
+2026-10-26T11:18:57.6764441Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:18:57.6855264Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:18:59.9963528Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/cts
+2026-10-26T11:18:59.9964205Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:19:00.0050811Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:19:03.2623171Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/packages
+2026-10-26T11:19:03.2623781Z  * [new tag]             aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:19:03.2707534Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:19:05.6605246Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/hardware
+2026-10-26T11:19:05.6605935Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:19:05.6686721Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:19:08.6218060Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/frameworks
+2026-10-26T11:19:08.6218663Z  * [new tag]             aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:19:08.6301003Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:19:11.0466389Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/system
+2026-10-26T11:19:11.0466917Z  * [new tag]           aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:19:11.0550556Z error: tag 'aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576' not found.
+2026-10-26T11:19:13.4964811Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/device
+2026-10-26T11:19:13.4965695Z  * [new tag]         aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576 -> aom5841a1_android-15.0-mid-rkr4_v0.1.8_kernel-6.1.118_rk3576
+2026-10-26T11:19:13.5008167Z [ADV] build script done!
+2026-10-26T11:19:24.5802582Z e7eea9044bf3830ebc6b321fcda2c8c0264abd7cc1651ae2f740d2273b82fb26
+2026-10-26T11:19:24.8586626Z e7eea9044bf3830ebc6b321fcda2c8c0264abd7cc1651ae2f740d2273b82fb26
+2026-10-26T11:19:24.8613912Z ----------------------------------------------------------------------------------------------
+2026-10-26T11:19:24.8614396Z Build in docker end
+2026-10-26T11:19:24.9190584Z [command]/usr/bin/az account clear
+2026-10-26T11:19:25.8824762Z ##[section]Finishing: Build-In-Docker

@@ -1,0 +1,358 @@
+can issue
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 sample-point 0.875 restart-ms 100 fd off
+ip link set can0 up
+candump can0
+
+
+ip link set can0 down
+# 将采样点降低到标准的 80% (0.800)
+ip link set can0 type can bitrate 1000000 sample-point 0.800 restart-ms 100 fd off
+ip link set can0 up
+
+
+ip link set can0 type can bitrate 500000 sample-point 0.800 restart-ms 100 fd off
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+can常用指令
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 sample-point 0.8 restart-ms 100 fd off
+ip link set can0 txqueuelen 4096
+ip link set can0 up
+ip -details -statistics link show can0
+sysctl -w net.core.rmem_max=16777216
+sysctl -w net.core.rmem_default=1048576
+candump can0
+
+chrt -f 99 candump can0 > /tmp/can_dump.log 2>&1 &
+
+busybox devmem 0x2ac00000
+busybox devmem 0x2ac0000c
+busybox devmem 0x2ac00010
+busybox devmem 0x2ac00604
+busybox devmem 0x2ac0060c
+
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 sample-point 0.875 fd off
+ip link set can0 txqueuelen 4096
+ip link set can0 up
+ip -details -statistics link show can0
+sysctl -w net.core.rmem_max=16777216
+sysctl -w net.core.rmem_default=1048576
+
+chrt -f 99 candump can0 > /tmp/can_dump.log 2>&1 &
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 sample-point 0.875 restart-ms 100 fd off
+ip link set can0 up
+ip -details -statistics link show can0
+candump can0 -t d
+candump any -e
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 sample-point 0.875 fd off
+ip link set can0 up
+ip -details -statistics link show can0
+candump can0 -t d
+
+ip -details -statistics link show can0
+
+root@imx8mprm02a1:~# [  111.769846] irq 161: nobody cared (try booting with the "irqpoll" option)
+[  111.776646] CPU: 0 PID: 0 Comm: swapper/0 Tainted: G         C        5.4.70-RM02A1AIM30LIVA1001 #1
+[  111.785689] Hardware name: NXP i.MX8MPlus RM02A1 SMARC 2.0 Computer-on-Module (DT)
+[  111.793257] Call trace:
+[  111.795706]  dump_backtrace+0x0/0x140
+[  111.799367]  show_stack+0x14/0x20
+[  111.802684]  dump_stack+0xb4/0x114
+[  111.806086]  __report_bad_irq+0x48/0xd4
+[  111.809920]  note_interrupt+0x2c4/0x388
+[  111.813759]  handle_irq_event_percpu+0x80/0x88
+[  111.818202]  handle_irq_event+0x44/0xd8
+[  111.822036]  handle_level_irq+0xb4/0x138
+[  111.825959]  generic_handle_irq+0x24/0x38
+[  111.829969]  mxc_gpio_irq_handler+0x48/0x138
+[  111.834238]  mx3_gpio_irq_handler+0x80/0xe8
+[  111.838420]  generic_handle_irq+0x24/0x38
+[  111.842429]  __handle_domain_irq+0x60/0xb8
+[  111.846525]  gic_handle_irq+0x5c/0x148
+[  111.850273]  el1_irq+0xb8/0x180
+[  111.853416]  cpuidle_enter_state+0x84/0x360
+[  111.857597]  cpuidle_enter+0x34/0x48
+[  111.861173]  call_cpuidle+0x18/0x38
+[  111.864661]  do_idle+0x1e0/0x280
+[  111.867888]  cpu_startup_entry+0x20/0x80
+[  111.871810]  rest_init+0xd4/0xe0
+[  111.872723] pca953x 0-0071: failed reading register
+[  111.875042]  arch_call_rest_init+0xc/0x14
+[  111.883918]  start_kernel+0x418/0x44c
+[  111.887578] handlers:
+[  111.889854] [<00000000625d33fd>] irq_default_primary_handler threaded [<000000003a1a2c72>] pca953x_irq_handler
+[  111.899857] Disabling IRQ #161
+
+Message from syslogd@imx8mprm02a1 at Sat Jan  1 00:15:58 2000 ...
+imx8mprm02a1 kernel: [  111.899857] Disabling IRQ #161
+
+Message from syslogd@imx8mprm02a1 at Sat Jan  1 00:15:58 2000 ...
+imx8mprm02a1 kernel: [  111.899857] Disabling IRQ #161
+
+root@imx8mprm02a1:~#
+root@imx8mprm02a1:~# cat /proc/interrupts | grep -i can
+ 28:         14          0          0          0     GICv3 174 Level     can0
+root@imx8mprm02a1:~# cat /proc/interrupts | grep -i 161
+ 30:     416176          0          0          0     GICv3  67 Level     30a20000.i2c
+161:     100001          0          0          0  gpio-mxc  24 Level     0-0071
+
+
+
+cat /proc/interrupts | grep -i can
+
+
+@@ -929,7 +935,7 @@ static int rk3576_canfd_err(struct net_device *ndev, u32 isr)
+        struct can_frame *cf;
+        struct sk_buff *skb;
+        unsigned int rxerr, txerr;
+-       u32 sta_reg;
++       u32 sta_reg, val;
+
+        skb = alloc_can_err_skb(ndev, &cf);
+
+@@ -980,6 +986,14 @@ static int rk3576_canfd_err(struct net_device *ndev, u32 isr)
+                rk3576_canfd_write(rcan, CANFD_BUSOFFRCY_CFG,
+                                   BUSOFF_RCY_MODE_EN | BUSOFF_RCY_CNT_SLOW);
+                rk3576_canfd_write(rcan, CANFD_INT_MASK, INT_ENABLE);
++
++                val = rk3576_canfd_read(rcan, CANFD_MODE);
++                val |= MODE_RETT;
++                rk3576_canfd_write(rcan, CANFD_MODE, val);
++                udelay(5);
++                val &= ~MODE_RETT;
++                rk3576_canfd_write(rcan, CANFD_MODE, val);
++
+                netif_stop_queue(ndev);
+                can_free_echo_skb(ndev, 0, NULL);
+                netif_start_queue(ndev);
+
+
+candump can0 &
+
+ip link set can0 type can bitrate 1000000
+
+canfd常用指令
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 sample-point 0.75 dbitrate 1000000 sample-point 0.75 fd on 
+ip -details -statistics link show can0
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len
+candump can0 &
+
+busybox devmem 0x2ac00000
+busybox devmem 0x2ac0000c
+busybox devmem 0x2ac00010
+busybox devmem 0x2ac00604
+busybox devmem 0x2ac0060c
+
+
+grep -r "CANFD_INT\b\|CANFD_INT_MASK\|CANFD_STR_STATE\|CANFD_MODE\|CANFD_STR_WTM" drivers/net/can/rockchip/rk3576_canfd.c | grep "#define"
+
+
+drivers/net/can/rockchip/rk3576_canfd.c:        CANFD_MODE = 0x00,
+drivers/net/can/rockchip/rk3576_canfd.c:        CANFD_INT = 0x0c,
+drivers/net/can/rockchip/rk3576_canfd.c:        CANFD_INT_MASK = 0x10,
+drivers/net/can/rockchip/rk3576_canfd.c:        CANFD_STR_STATE = 0x604,
+drivers/net/can/rockchip/rk3576_canfd.c:        CANFD_STR_WTM = 0x60c,
+
+
+aka@aka-DeskTop:~/work/extdisk/code/rk3576/rk3576_azure/kernel$ grep -r "ERR\|STATE\|STATUS\|CNT" drivers/net/can/rockchip/rk3576_canfd.c | grep "#define" | head -20
+#define MODE_PASS_ERR           BIT(10)
+#define RETX_TIME_LIMIT_CNT_MAX 0xffff
+#define ERR_WARNING_STATE       BIT(3)
+#define BUS_OFF_STATE           BIT(4)
+#define ERR_WARN_INT            BIT(2)
+#define PASSIVE_ERR_INT         BIT(4)
+#define BUS_ERR_INT             BIT(6)
+#define ERR_PHASE               BIT(28)
+#define ERR_TYPE_MASK           GENMASK(27, 25)
+#define ERR_TYPE_SHIFT          25
+#define BIT_ERROR               0
+#define BIT_STUFF_ERROR         1
+#define FORM_ERROR              2
+#define ACK_ERROR               3
+#define CRC_ERROR               4
+#define RECEIVE_ERROR           BIT(18)
+#define INTM_CNT_SHIFT          17
+#define INTM_CNT_MASK           (0x1ff << INTM_CNT_SHIFT)
+#define INTM_LEFT_CNT_SHIFT     8
+#define INTM_LEFT_CNT_MASK      (0x1ff << INTM_LEFT_CNT_SHIFT)
+
+
+# 先读错误状态（假设偏移是 0x04 或 0x08，先用这个试试）
+busybox devmem 0x2ac00004
+busybox devmem 0x2ac00008
+
+# 然后手动复位控制器：清 WORK_MODE 位，再重新置位
+busybox devmem 0x2ac00000 32 0x0   # 进入 reset 模式
+sleep 0.1
+busybox devmem 0x2ac00000 32 0x1   # 回到工作模式
+
+# 重新使能中断
+busybox devmem 0x2ac00010 32 0x0
+
+# 然后重新 candump
+candump can0
+
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 sample-point 0.800 dbitrate 1000000 dsample-point 0.800 fd on restart-ms 100
+ip -details -statistics link show can0
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len
+
+ip link set can0 down
+# 1Mbps 速率，强制 brp=2/dbrp=2 对齐，同时将采样点微调至 75% 提高抗干扰能力
+ip link set can0 type can tq 10 prop-seg 34 phase-seg1 40 phase-seg2 25 sjw 1 dtq 10 dprop-seg 6 dphase-seg1 8 dphase-seg2 5 dsjw 1 fd on restart-ms 100
+ip -details -statistics link show can0
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len
+
+
+ip link set can0 down
+# 强制将 sjw 放大到 12，将 dsjw 放大到 4，大幅提升对端时钟偏色的容错率
+ip link set can0 type can tq 10 prop-seg 34 phase-seg1 40 phase-seg2 25 sjw 12 dtq 10 dprop-seg 6 dphase-seg1 8 dphase-seg2 5 dsjw 4 fd on restart-ms 100
+ip -details -statistics link show can0
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len
+
+
+ip link set can0 down
+# 手动灌入寄存器时间片参数，强行让两端的 brp 和 dbrp 都等于 2！
+ip link set can0 type can tq 10 prop-seg 39 phase-seg1 40 phase-seg2 20 sjw 1 dtq 10 dprop-seg 9 dphase-seg1 10 dphase-seg2 5 dsjw 1 fd on restart-ms 100
+ip -details -statistics link show can0
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len
+
+改100M
+ip link set can0 down
+# 100MHz 时钟专属：让基础段和数据段都使用完美的 brp=2 硬件分频
+ip link set can0 type can tq 20 prop-seg 19 phase-seg1 20 phase-seg2 10 sjw 4 dtq 20 dprop-seg 4 dphase-seg1 5 dphase-seg2 5 dsjw 4 fd on restart-ms 100
+ip -details -statistics link show can0
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len
+candump can0 > /tmp/can_test.log &
+cat /tmp/can_test.log | wc -l
+
+
+ip link set can0 down
+# 100MHz 降频专属：数据段总 TQ = 1 + 11 + 13 + 5 = 30 (完全小于32上限)，速率精准锁死在 1Mbps 
+ip link set can0 type can tq 20 prop-seg 19 phase-seg1 20 phase-seg2 10 sjw 4 dtq 20 dprop-seg 11 dphase-seg1 13 dphase-seg2 5 dsjw 4 fd on restart-ms 100
+ip -details -statistics link show can0
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len
+candump can0
+
+
+ip link set can0 down
+# 让系统在 100MHz 下自动计算，将基础段和数据段强制设定为完全相同的 1M
+ip link set can0 type can bitrate 1000000 dbitrate 1000000 fd on restart-ms 100
+ip link set can0 up
+ip -details -statistics link show can0
+echo 4096 > /sys/class/net/can0/tx_queue_len
+
+
+root@linaro-alip:/# ip -details -statistics link show can0
+3: can0: <NOARP,UP,LOWER_UP,ECHO> mtu 72 qdisc pfifo_fast state UP mode DEFAULT group default qlen 4096
+    link/can  promiscuity 0  allmulti 0 minmtu 0 maxmtu 0
+    can <FD> state ERROR-ACTIVE (berr-counter tx 0 rx 1) restart-ms 100
+          bitrate 1000000 sample-point 0.800
+          tq 20 prop-seg 19 phase-seg1 20 phase-seg2 10 sjw 4 brp 2
+          rk3576_canfd: tseg1 1..128 tseg2 1..128 sjw 1..128 brp 1..256 brp_inc 2
+          dbitrate 3333333 dsample-point 0.666
+          dtq 20 dprop-seg 4 dphase-seg1 5 dphase-seg2 5 dsjw 4 dbrp 2
+          rk3576_canfd: dtseg1 1..32 dtseg2 1..16 dsjw 1..16 dbrp 1..256 dbrp_inc 2
+          clock 100000000
+          re-started bus-errors arbit-lost error-warn error-pass bus-off
+          0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 parentbus platform parentdev 2ac00000.can
+    RX:  bytes packets errors dropped  missed   mcast
+           264      33      0       0       0       0
+    TX:  bytes packets errors dropped carrier collsns
+             0       0      0       0       0       0
+
+
+回环模式测试： 
+ip link set can0 down 
+ip link set can0 type can bitrate 1000000 sample-point 0.875 dbitrate 1000000 sample-point 0.875 fd on loopback on 
+ip link set can0 up 
+ip -details -statistics link show can0 
+echo 4096 > /sys/class/net/can0/tx_queue_len 
+candump can0 &
+
+io -4 0x2ac00000
+io -4 0x2ac10000
+
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+cansend can0 188#11223344556677889900
+
+ip link set can0 down 
+ip link set can0 type can bitrate 1000000 dbitrate 1000000 fd on loopback off
+ip link set can0 up
+ip -details -statistics link show can0 
+echo 4096 > /sys/class/net/can0/tx_queue_len 
+candump can0 &
+
+io -4 0x2ac00000
+io -4 0x2ac10000
+
+
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 fd off restart-ms 100
+ip link set can0 up
+candump can0 -t d &
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 dbitrate 1000000 fd on restart-ms 100
+# 强行放大can0网卡的用户层和内核层排队深度（核心）
+ip link set can0 txqueuelen 10000
+sysctl -w net.core.rmem_max=26214400
+sysctl -w net.core.rmem_default=26214400
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 dbitrate 1000000 fd on restart-ms 100
+ip link set can0 up
+echo 4096 > /sys/class/net/can0/tx_queue_len 
+candump can0 -t d &
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 fd off restart-ms 100
+ip link set can0 up
+ip -details -statistics link show can0 
+echo 4096 > /sys/class/net/can0/tx_queue_len 
+candump can0,188:7FF
+
+candump can0
+
+chrt -f 99 candump can0
+
+cat /proc/interrupts | grep -i can
+
+ip link set can0 down
+ip link set can0 type can bitrate 1000000 dbitrate 1000000 fd on restart-ms 100
+ip link set can0 up
+ip -details -statistics link show can0 
+echo 4096 > /sys/class/net/can0/tx_queue_len 
+candump can0 -x -e -t d
+
+candump can0,188:7FF
+
+
+

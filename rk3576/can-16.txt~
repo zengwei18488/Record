@@ -1,0 +1,488 @@
+root@linaro-alip:/# [   13.918676] rk3576_canfd_read!
+[   18.790645] platform mtd_vendor_storage: deferred probe pending
+[   18.790760] platform rom_ep73_gpio_i2c0: deferred probe pending
+[   18.790793] platform rom_ep73_gpio_i2c7: deferred probe pending
+[   18.790823] platform rt5640-sound-0: deferred probe pending
+[   18.790851] platfip link set can0 downeferred probe pending
+ip link set can0 type can bitrate 1000000 sample-point 0.875 dbitrate 1000000 sample-point 0.875 fd on
+ip -details -statistics link show can0000 sample-point 0.875 dbitrate 1000000 sample-point 0.875 fd on
+[   19.525438] rk3576_canfd_read! can0
+ip link set can0 up
+[   19.525464] rk3576_canfd_read!x_queue_len
+echo 4096 > /sys/class/net/can0/tx_queue_len
+[   19.532129] rk3576_canfd_read!
+candump can0
+[   19.532159] rk3576_canfd_read!
+3: can0: <NOARP,ECHO> mtu 72 qdisc noop state DOWN mode DEFAULT group default qlen 10
+[   19.532622] rk3576_canfd_set_bittiming!
+    link/can  promiscuity 0  allmulti 0 minmtu 0 maxmtu 0
+[   19.532634] rk3576_canfd_write!
+    can <FD> state STOPPED (berr-counter tx 0 rx 0) restart-ms 0
+[   19.532642] rk3576_canfd_write!
+          bitrate 1000000 sample-point 0.860
+[   19.532648] rk3576_canfd_write!
+          tq 20 prop-seg 21 phase-seg1 21 phase-seg2 7 sjw 1 brp 2
+[   19.532659] rk3576_canfd_set_bittiming!
+          rk3576_canfd: tseg1 1..128 tseg2 1..128 sjw 1..128 brp 1..256 brp_inc 2
+[   19.532665] rk3576_canfd_write!
+          dbitrate 1000000 dsample-point 0.720
+[   19.532671] rk3576_canfd_write!
+          dtq 40 dprop-seg 8 dphase-seg1 9 dphase-seg2 7 dsjw 1 dbrp 4
+[   19.532678] rk3576_canfd_write!
+          rk3576_canfd: dtseg1 1..32 dtseg2 1..16 dsjw 1..16 dbrp 1..256 dbrp_inc 2
+[   19.540080] rk3576_canfd_read!
+          clock 100000000
+[   19.540128] rk3576_canfd_read!
+          re-started bus-errors arbit-lost error-warn error-pass bus-off
+[   19.540296] rk3576_canfd_read!
+          0          0          0          0          0          0         numtxqueues 1 numrxqueues 1 gso_max_size 65536 gso_max_segs 65535 tso_max_size 65536 tso_max_segs 65535 gro_max_size 65536 parentbus platform parentdev 2ac00000.can
+[   19.540306] rk3576_canfd_read!
+    RX:  bytes packets errors dropped  missed   mcast
+[   19.555630] rk3576_canfd_read!
+             0       0      0       0       0       0
+[   19.555683] rk3576_canfd_read!
+    TX:  bytes packets errors dropped carrier collsns
+[   19.555852] rk3576_canfd_write!
+             0       0      0       0       0       0
+[   19.555860] rk3576_canfd_write!
+[   19.555865] rk3576_canfd_write!
+[   19.555869] rk3576_canfd_write!
+[   19.555874] rk3576_canfd_write!
+[   19.555878] rk3576_canfd_write!
+[   19.555882] rk3576_canfd_write!
+[   19.555887] rk3576_canfd_write!
+[   19.555891] rk3576_canfd_write!
+[   19.555896] rk3576_canfd_write!
+[   19.555900] rk3576_canfd_write!
+[   19.555905] rk3576_canfd_write!
+[   19.555909] rk3576_canfd_write!
+[   19.555914] rk3576_canfd_read!
+[   19.555918] rk3576_canfd_write!
+[   19.555923] rk3576_canfd_write!
+[   19.555927] rk3576_canfd_write!
+[   19.555932] rk3576_canfd_write!
+[   19.555936] rk3576_canfd_write!
+[   19.555940] rk3576_canfd_write!
+[   19.555945] rk3576_canfd_write!
+[   19.555949] rk3576_canfd_write!
+[   19.555953] rk3576_canfd_set_bittiming!
+[   19.555957] rk3576_canfd_write!
+[   19.555961] rk3576_canfd_write!
+[   19.555966] rk3576_canfd_write!
+[   19.555970] rk3576_canfd_read!
+[   19.555974] rk3576_canfd_write!
+[   19.556007] rk3576_canfd_read!
+[   19.556012] rk3576_canfd_read!
+[   19.556068] IPv6: ADDRCONF(NETDEV_CHANGE): can0: link becomes ready
+[   19.556091] rk3576_canfd_read!
+[   19.556093] rk3576_canfd_read!
+[   19.557158] rk3576_canfd_read!
+[   19.557185] rk3576_canfd_read!
+[   19.955866] systemd-journald[335]: Time jumped backwards, rotating.
+[   20.918654] rk3576_canfd_read!
+[   20.918674] rk3576_canfd_read!
+[   20.918767] rk3576_canfd_read!
+[   20.918788] rk3576_canfd_read!
+[   20.918823] rk3576_canfd_read!
+
+[   20.918841] rk3576_canfd_read!
+[   37.587130] rk3576_canfd_interrupt!
+[   37.587186] rk3576_canfd_read!
+[   37.587206] rk3576_canfd_read!
+[   37.587222] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.587267] rk3576_canfd_read!
+[   37.587273] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 A7 80 10 82 EC
+[   37.587290] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 9D 80 09 82 EB
+[   37.587310] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 9B 80 08 82 F2
+[   37.587326] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 A8 80 08 83 0D
+[   37.587341] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 AB 80 0E 82 F7
+[   37.587357] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 9E 80 0F 82 EA
+[   37.587372] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 9B 80 16 82 F4
+[   37.587387] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+  can0  188   [8]  00 00 87 A7 80 0D 82 E9
+[   37.587421] rk3576_canfd_write!
+  can0  188   [8]  00 00 87 9F 80 0F 82 F0
+[   37.602580] rk3576_canfd_interrupt!
+  can0  188   [8]  00 00 87 97 80 0B 82 EE
+[   37.602618] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 9B 80 09 82 E3
+[   37.602637] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 97 80 11 82 EB
+[   37.602652] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+  can0  188   [8]  00 00 87 9E 80 08 82 E8
+[   37.602694] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 AB 80 08 82 F6
+[   37.602700] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 A9 80 0C 82 FE
+[   37.602716] rk3576_canfd_read!
+  can0  188   [8]  00 00 87 A5 80 0C 82 F5
+[   37.602735] rk3576_canfd_read!
+[   37.602751] rk3576_canfd_read!
+[   37.602766] rk3576_canfd_read!
+[   37.602781] rk3576_canfd_read!
+[   37.602796] rk3576_canfd_read!
+[   37.602812] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.602847] rk3576_canfd_write!
+[   37.603144] rk3576_canfd_interrupt!
+[   37.603158] rk3576_canfd_read!
+[   37.603166] rk3576_canfd_read!
+[   37.603173] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.603188] rk3576_canfd_read!
+[   37.603191] rk3576_canfd_read!
+[   37.603198] rk3576_canfd_read!
+[   37.603206] rk3576_canfd_read!
+[   37.603212] rk3576_canfd_read!
+[   37.603219] rk3576_canfd_read!
+[   37.603225] rk3576_canfd_read!
+[   37.603231] rk3576_canfd_read!
+[   37.603237] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.603251] rk3576_canfd_write!
+[   37.603466] rk3576_canfd_interrupt!
+[   37.603483] rk3576_canfd_read!
+[   37.603490] rk3576_canfd_read!
+[   37.603497] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.603512] rk3576_canfd_read!
+[   37.603515] rk3576_canfd_read!
+[   37.603521] rk3576_canfd_read!
+[   37.603528] rk3576_canfd_read!
+[   37.603535] rk3576_canfd_read!
+[   37.603541] rk3576_canfd_read!
+[   37.603548] rk3576_canfd_read!
+[   37.603554] rk3576_canfd_read!
+[   37.603561] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.603574] rk3576_canfd_write!
+[   37.603839] rk3576_canfd_interrupt!
+[   37.603851] rk3576_canfd_read!
+[   37.603859] rk3576_canfd_read!
+[   37.603866] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.603880] rk3576_canfd_read!
+[   37.603883] rk3576_canfd_read!
+[   37.603890] rk3576_canfd_read!
+[   37.603897] rk3576_canfd_read!
+[   37.603903] rk3576_canfd_read!
+[   37.603909] rk3576_canfd_read!
+[   37.603915] rk3576_canfd_read!
+[   37.603921] rk3576_canfd_read!
+[   37.603928] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.603941] rk3576_canfd_write!
+[   37.603950] rk3576_canfd_interrupt!
+[   37.603958] rk3576_canfd_read!
+[   37.603965] rk3576_canfd_read!
+[   37.603971] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.603984] rk3576_canfd_read!
+[   37.603986] rk3576_canfd_read!
+[   37.603992] rk3576_canfd_read!
+[   37.603998] rk3576_canfd_read!
+[   37.604004] rk3576_canfd_read!
+[   37.604011] rk3576_canfd_read!
+[   37.604017] rk3576_canfd_read!
+[   37.604024] rk3576_canfd_read!
+[   37.604030] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.604043] rk3576_canfd_write!
+[   37.604210] rk3576_canfd_interrupt!
+[   37.604224] rk3576_canfd_read!
+[   37.604232] rk3576_canfd_read!
+[   37.604238] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.604253] rk3576_canfd_read!
+[   37.604256] rk3576_canfd_read!
+[   37.604263] rk3576_canfd_read!
+[   37.604269] rk3576_canfd_read!
+[   37.604276] rk3576_canfd_read!
+[   37.604282] rk3576_canfd_read!
+[   37.604288] rk3576_canfd_read!
+[   37.604294] rk3576_canfd_read!
+[   37.604301] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.604315] rk3576_canfd_write!
+[   37.604325] rk3576_canfd_interrupt!
+[   37.604331] rk3576_canfd_read!
+[   37.604338] rk3576_canfd_read!
+[   37.604344] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.604357] rk3576_canfd_read!
+[   37.604359] rk3576_canfd_read!
+[   37.604365] rk3576_canfd_read!
+[   37.604372] rk3576_canfd_read!
+[   37.604378] rk3576_canfd_read!
+[   37.604386] rk3576_canfd_read!
+[   37.604392] rk3576_canfd_read!
+[   37.604398] rk3576_canfd_read!
+[   37.604404] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.604417] rk3576_canfd_write!
+[   37.604587] rk3576_canfd_interrupt!
+[   37.604600] rk3576_canfd_read!
+[   37.604607] rk3576_canfd_read!
+[   37.604614] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.604630] rk3576_canfd_read!
+[   37.604632] rk3576_canfd_read!
+[   37.604639] rk3576_canfd_read!
+[   37.604646] rk3576_canfd_read!
+[   37.604653] rk3576_canfd_read!
+[   37.604659] rk3576_canfd_read!
+[   37.604666] rk3576_canfd_read!
+[   37.604672] rk3576_canfd_read!
+[   37.604678] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.604692] rk3576_canfd_write!
+[   37.604963] rk3576_canfd_interrupt!
+[   37.604976] rk3576_canfd_read!
+[   37.604983] rk3576_canfd_read!
+[   37.604989] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.605005] rk3576_canfd_read!
+[   37.605007] rk3576_canfd_read!
+[   37.605014] rk3576_canfd_read!
+[   37.605021] rk3576_canfd_read!
+[   37.605029] rk3576_canfd_read!
+[   37.605035] rk3576_canfd_read!
+[   37.605041] rk3576_canfd_read!
+[   37.605048] rk3576_canfd_read!
+[   37.605054] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.605068] rk3576_canfd_write!
+[   37.605349] rk3576_canfd_interrupt!
+[   37.605361] rk3576_canfd_read!
+[   37.605369] rk3576_canfd_read!
+[   37.605375] IRQ0: isr=0x40 str_state=0x5 fifo_len=0
+[   37.605391] rk3576_canfd_read!
+[   37.605394] rk3576_canfd_read!
+[   37.605401] rk3576_canfd_read!
+[   37.605408] rk3576_canfd_read!
+[   37.605415] rk3576_canfd_read!
+[   37.605421] rk3576_canfd_read!
+[   37.605427] rk3576_canfd_read!
+[   37.605434] rk3576_canfd_read!
+[   37.605440] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.605455] rk3576_canfd_write!
+[   37.605861] rk3576_canfd_interrupt!
+[   37.605873] rk3576_canfd_read!
+[   37.605881] rk3576_canfd_read!
+[   37.605888] IRQ0: isr=0x8000 str_state=0x60c04 fifo_len=3
+[   37.605902] rk3576_canfd_write!
+[   37.605904] rk3576_canfd_read!
+[   37.605912] rk3576_canfd_read!
+[   37.605918] rk3576_canfd_read!
+[   37.605925] rk3576_canfd_read!
+[   37.605931] rk3576_canfd_read!
+[   37.605940] rk3576_canfd_read!
+[   37.605948] rk3576_canfd_read!
+[   37.605954] rk3576_canfd_read!
+[   37.605962] rk3576_canfd_read!
+[   37.605969] rk3576_canfd_read!
+[   37.605976] rk3576_canfd_read!
+[   37.605983] rk3576_canfd_read!
+[   37.605990] rk3576_canfd_read!
+[   37.605997] rk3576_canfd_read!
+[   37.606004] rk3576_canfd_read!
+[   37.606011] rk3576_canfd_read!
+[   37.606018] rk3576_canfd_read!
+[   37.606025] rk3576_canfd_read!
+[   37.606031] rk3576_canfd_read!
+[   37.606038] rk3576_canfd_read!
+[   37.606046] rk3576_canfd_read!
+[   37.606053] rk3576_canfd_write!
+[   37.606059] rk3576_canfd_read!
+[   37.606065] rk3576_canfd_read!
+[   37.606072] rk3576_canfd_read!
+[   37.606078] rk3576_canfd_read!
+[   37.606085] rk3576_canfd_read!
+[   37.606091] rk3576_canfd_read!
+[   37.606098] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.606112] rk3576_canfd_write!
+[   37.606123] rk3576_canfd_interrupt!
+[   37.606130] rk3576_canfd_read!
+[   37.606136] rk3576_canfd_read!
+[   37.606142] IRQ0: isr=0x1 str_state=0x5 fifo_len=0
+[   37.606155] rk3576_canfd_write!
+[   37.606157] rk3576_canfd_read!
+[   37.606164] rk3576_canfd_write!
+[   37.606170] rk3576_canfd_read!
+[   37.606177] rk3576_canfd_read!
+[   37.606183] rk3576_canfd_read!
+[   37.606189] rk3576_canfd_read!
+[   37.606196] rk3576_canfd_read!
+[   37.606202] rk3576_canfd_read!
+[   37.606208] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=4 ERR_CODE=0x00000000
+[   37.606221] rk3576_canfd_write!
+[   37.606477] rk3576_canfd_interrupt!
+[   37.606494] rk3576_canfd_read!
+[   37.606502] rk3576_canfd_read!
+[   37.606509] IRQ0: isr=0x1 str_state=0x40804 fifo_len=2
+[   37.606523] rk3576_canfd_write!
+[   37.606526] rk3576_canfd_read!
+[   37.606533] rk3576_canfd_read!
+[   37.606540] rk3576_canfd_read!
+[   37.606546] rk3576_canfd_read!
+[   37.606553] rk3576_canfd_read!
+[   37.606563] rk3576_canfd_read!
+[   37.606571] rk3576_canfd_read!
+[   37.606577] rk3576_canfd_read!
+[   37.606584] rk3576_canfd_read!
+[   37.606590] rk3576_canfd_read!
+[   37.606600] rk3576_canfd_read!
+[   37.606606] rk3576_canfd_read!
+[   37.606613] rk3576_canfd_read!
+[   37.606619] rk3576_canfd_read!
+[   37.606626] rk3576_canfd_read!
+[   37.606635] rk3576_canfd_read!
+[   37.606642] rk3576_canfd_write!
+[   37.606648] rk3576_canfd_read!
+[   37.606654] rk3576_canfd_read!
+[   37.606660] rk3576_canfd_read!
+[   37.606666] rk3576_canfd_read!
+[   37.606673] rk3576_canfd_read!
+[   37.606680] rk3576_canfd_read!
+[   37.606686] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.606701] rk3576_canfd_write!
+[   37.606717] rk3576_canfd_interrupt!
+[   37.606725] rk3576_canfd_read!
+[   37.606731] rk3576_canfd_read!
+[   37.606738] IRQ0: isr=0x8000 str_state=0x5 fifo_len=0
+[   37.606751] rk3576_canfd_write!
+[   37.606753] rk3576_canfd_read!
+[   37.606759] rk3576_canfd_write!
+[   37.606766] rk3576_canfd_read!
+[   37.606772] rk3576_canfd_read!
+[   37.606778] rk3576_canfd_read!
+[   37.606785] rk3576_canfd_read!
+[   37.606792] rk3576_canfd_read!
+[   37.606801] rk3576_canfd_write!
+[   37.606807] rk3576_canfd_read!
+[   37.606814] rk3576_canfd_read!
+[   37.606820] rk3576_canfd_read!
+[   37.606827] rk3576_canfd_read!
+[   37.606833] rk3576_canfd_read!
+[   37.606840] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.606854] rk3576_canfd_write!
+[   37.606858] rk3576_canfd_interrupt!
+[   37.606865] rk3576_canfd_read!
+[   37.606872] rk3576_canfd_read!
+[   37.606878] IRQ0: isr=0x1 str_state=0x5 fifo_len=0
+[   37.606890] rk3576_canfd_write!
+[   37.606892] rk3576_canfd_read!
+[   37.606898] rk3576_canfd_write!
+[   37.606904] rk3576_canfd_read!
+[   37.606910] rk3576_canfd_read!
+[   37.606916] rk3576_canfd_read!
+[   37.606922] rk3576_canfd_read!
+[   37.606929] rk3576_canfd_read!
+[   37.606934] rk3576_canfd_read!
+[   37.606941] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.606953] rk3576_canfd_write!
+[   37.607139] rk3576_canfd_interrupt!
+[   37.607153] rk3576_canfd_read!
+[   37.607160] rk3576_canfd_read!
+[   37.607166] IRQ0: isr=0x1 str_state=0x40804 fifo_len=2
+[   37.607178] rk3576_canfd_write!
+[   37.607181] rk3576_canfd_read!
+[   37.607187] rk3576_canfd_read!
+[   37.607193] rk3576_canfd_read!
+[   37.607200] rk3576_canfd_read!
+[   37.607206] rk3576_canfd_read!
+[   37.607216] rk3576_canfd_read!
+[   37.607222] rk3576_canfd_read!
+[   37.607229] rk3576_canfd_read!
+[   37.607235] rk3576_canfd_read!
+[   37.607242] rk3576_canfd_read!
+[   37.607249] rk3576_canfd_read!
+[   37.607255] rk3576_canfd_write!
+[   37.607261] rk3576_canfd_read!
+[   37.607268] rk3576_canfd_read!
+[   37.607274] rk3576_canfd_read!
+[   37.607280] rk3576_canfd_read!
+[   37.607287] rk3576_canfd_read!
+[   37.607293] rk3576_canfd_read!
+[   37.607299] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.607312] rk3576_canfd_write!
+[   37.607326] rk3576_canfd_interrupt!
+[   37.607334] rk3576_canfd_read!
+[   37.607340] rk3576_canfd_read!
+[   37.607347] IRQ0: isr=0x1 str_state=0x20404 fifo_len=1
+[   37.607359] rk3576_canfd_write!
+[   37.607361] rk3576_canfd_read!
+[   37.607367] rk3576_canfd_read!
+[   37.607373] rk3576_canfd_read!
+[   37.607379] rk3576_canfd_read!
+[   37.607385] rk3576_canfd_read!
+[   37.607394] rk3576_canfd_read!
+[   37.607400] rk3576_canfd_write!
+[   37.607407] rk3576_canfd_read!
+[   37.607413] rk3576_canfd_read!
+[   37.607419] rk3576_canfd_read!
+[   37.607425] rk3576_canfd_read!
+[   37.607431] rk3576_canfd_read!
+[   37.607438] rk3576_canfd_read!
+[   37.607444] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.607457] rk3576_canfd_write!
+[   37.607600] rk3576_canfd_interrupt!
+[   37.607616] rk3576_canfd_read!
+[   37.607624] rk3576_canfd_read!
+[   37.607631] IRQ0: isr=0x1 str_state=0x20404 fifo_len=1
+[   37.607646] rk3576_canfd_write!
+[   37.607648] rk3576_canfd_read!
+[   37.607655] rk3576_canfd_read!
+[   37.607661] rk3576_canfd_read!
+[   37.607667] rk3576_canfd_read!
+[   37.607674] rk3576_canfd_read!
+[   37.607684] rk3576_canfd_read!
+[   37.607690] rk3576_canfd_write!
+[   37.607697] rk3576_canfd_read!
+[   37.607703] rk3576_canfd_read!
+[   37.607709] rk3576_canfd_read!
+[   37.607715] rk3576_canfd_read!
+[   37.607722] rk3576_canfd_read!
+[   37.607729] rk3576_canfd_write!
+[   37.607735] rk3576_canfd_read!
+[   37.607742] rk3576_canfd_read!
+[   37.607748] rk3576_canfd_read!
+[   37.607755] rk3576_canfd_read!
+[   37.607761] rk3576_canfd_read!
+[   37.607767] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+[   37.607781] rk3576_canfd_write!
+[   37.607965] rk3576_canfd_interrupt!
+[   37.607977] rk3576_canfd_read!
+[   37.607985] rk3576_canfd_read!
+[   37.607992] IRQ0: isr=0x1 str_state=0x20404 fifo_len=1
+[   37.608005] rk3576_canfd_write!
+[   37.608008] rk3576_canfd_read!
+[   37.608015] rk3576_canfd_read!
+[   37.608021] rk3576_canfd_read!
+[   37.608028] rk3576_canfd_read!
+[   37.608035] rk3576_canfd_read!
+[   37.608044] rk3576_canfd_read!
+[   37.608050] rk3576_canfd_write!
+[   37.608057] rk3576_canfd_read!
+[   37.608063] rk3576_canfd_read!
+[   37.608070] rk3576_canfd_read!
+[   37.608076] rk3576_canfd_read!
+[   37.608082] rk3576_canfd_read!
+[   37.608088] rk3576_canfd_read!
+[   37.608094] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=4 ERR_CODE=0x00000000
+[   37.608108] rk3576_canfd_write!
+[   37.608339] rk3576_canfd_interrupt!
+[   37.608351] rk3576_canfd_read!
+[   37.608358] rk3576_canfd_read!
+[   37.608365] IRQ0: isr=0x1 str_state=0x40804 fifo_len=2
+[   37.608379] rk3576_canfd_write!
+[   37.608382] rk3576_canfd_read!
+[   37.608389] rk3576_canfd_read!
+[   37.608395] rk3576_canfd_read!
+[   37.608402] rk3576_canfd_read!
+[   37.608408] rk3576_canfd_read!
+[   37.608418] rk3576_canfd_read!
+[   37.608424] rk3576_canfd_read!
+[   37.608431] rk3576_canfd_read!
+[   37.608437] rk3576_canfd_read!
+[   37.608444] rk3576_canfd_read!
+[   37.608451] rk3576_canfd_read!
+[   37.608458] rk3576_canfd_write!
+[   37.608464] rk3576_canfd_read!
+[   37.608471] rk3576_canfd_read!
+[   37.608477] rk3576_canfd_read!
+[   37.608483] rk3576_canfd_read!
+[   37.608490] rk3576_canfd_read!
+[   37.608496] rk3576_canfd_read!
+[   37.608503] REG_STATE=0x00000005 RX_ERR=0 TX_ERR=0 FIFO_CNT=0 ERR_CODE=0x00000000
+

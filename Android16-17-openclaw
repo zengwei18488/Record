@@ -1,0 +1,22 @@
+
+export NVM_DIR="$HOME/.nvm"
+       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+nvm --version
+nvm install 26
+nvm use 26
+
+node -v
+
+npm install -g openclaw@latest --registry=https://registry.npmjs.org/
+
+npm config set allow-scripts=openclaw,@google/genai,koffi,tree-sitter-bash,protobufjs --location=user
+
+openclaw onboard
+
+url: http://172.21.161.219:4000/v1
+key: sk-YZtPnm-cPAo4jV_wL00KpA
+Qwen3.8-27B
+
+/home/zengwei/.openclaw/workspace
+openclaw chat
+

@@ -1,0 +1,36 @@
+2025-11-18T05:12:13.3046853Z Making update.img  OK.
+2025-11-18T05:12:13.3051508Z Make update image ok!
+2025-11-18T05:12:13.3052551Z /home/adv/BSP/aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_2025-11-18/android
+2025-11-18T05:12:14.9586596Z make and copy packaging in IMAGE 
+2025-11-18T05:12:25.3563586Z [ADV] mkdir aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_aom3841_2025-11-18
+2025-11-18T05:12:25.3988874Z cp: cannot stat '/home/adv/BSP/aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_2025-11-18/android/RKTools/windows/DriverAssitant_*.zip': No such file or directory
+2025-11-18T05:12:35.1359645Z [ADV] creating aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_aom3841_2025-11-18.tgz ...
+2025-11-18T05:18:27.3018995Z [ADV] copy images to /home/adv/BSP/./stored/2025-11-18/v0.1.7
+2025-11-18T05:18:27.4978150Z 
+2025-11-18T05:18:27.4978781Z ... A new version of repo (2.54) is available.
+2025-11-18T05:18:27.4979064Z ... You should upgrade soon:
+2025-11-18T05:18:27.4980609Z     cp /home/adv/BSP/aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_2025-11-18/.repo/repo/repo /home/adv/bin/repo
+2025-11-18T05:18:27.4981239Z 
+2025-11-18T05:18:27.8050254Z Saved manifest to aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576.xml
+2025-11-18T05:18:27.9082298Z [ADV] mkdir aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_aom3841_2025-11-18_log
+2025-11-18T05:18:27.9101803Z cp: cannot stat 'aom3841_Build*.log': No such file or directory
+2025-11-18T05:18:27.9103960Z [ADV] creating aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_aom3841_2025-11-18_log.tgz ...
+2025-11-18T05:18:27.9855117Z [local 0e6a28c] [Official Release] aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576
+2025-11-18T05:18:27.9855442Z  1 file changed, 1 insertion(+), 1 deletion(-)
+2025-11-18T05:18:30.3969061Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/u-boot
+2025-11-18T05:18:30.3969918Z    92b462c..0e6a28c  local -> adv-rk-androidV15
+2025-11-18T05:18:30.4027317Z [ADV] Create XML file
+2025-11-18T05:18:30.5429823Z 
+2025-11-18T05:18:30.5430548Z ... A new version of repo (2.54) is available.
+2025-11-18T05:18:30.5430796Z ... You should upgrade soon:
+2025-11-18T05:18:30.5431398Z     cp /home/adv/BSP/aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576_2025-11-18/.repo/repo/repo /home/adv/bin/repo
+2025-11-18T05:18:30.5432235Z 
+2025-11-18T05:18:30.6510207Z Saved manifest to aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576.xml
+2025-11-18T05:18:30.6746309Z Switched to a new branch 'adv-rk-androidV15'
+2025-11-18T05:18:30.6746755Z Branch 'adv-rk-androidV15' set up to track remote branch 'adv-rk-androidV15' from 'origin'.
+2025-11-18T05:18:30.7041658Z [adv-rk-androidV15 60ddde1] [Official Release] aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576
+2025-11-18T05:18:30.7041980Z  1 file changed, 41 insertions(+)
+2025-11-18T05:18:30.7042328Z  create mode 100644 aom3841a1_android-15.0-mid-rkr4_v0.1.7_kernel-6.1.118_rk3576.xml
+2025-11-18T05:18:32.9525536Z To https://dev.azure.com/AIM-Linux/RISC-Rockchip-Android15/_git/android-manifest
+2025-11-18T05:18:32.9526295Z    eb55307..60ddde1  adv-rk-androidV15 -> adv-rk-androidV15
+2025-11-18T05:18:32.9595456Z fatal: could not open or read '/home/adv/BSP/': Is a directory
