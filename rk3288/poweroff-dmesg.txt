@@ -1,0 +1,274 @@
+rsb4680:/ $ [  100.232601] type=1400 audit(1793300104.613:147): avc: denied { getattr } for pid=1280 comm="Handler01" path="/dev/__properties__/u:object_r:serialno_prop:s0" dev="tmpfs" ino=2373 scontext=u:r:untrusted_app:s0:c512,c768 tcontext=u:object_r:serialno_prop:s0 tclass=file permissive=1
+[  100.232672] type=1400 audit(1793300118.380:148): avc: denied { execute_no_trans } for pid=1687 comm="start-ssh" path="/system/bin/busybox" dev="mmcblk1p11" ino=658 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:system_file:s0 tclass=file permissive=1
+[  100.239234] type=1400 audit(1793300118.380:148): avc: denied { execute_no_trans } for pid=1687 comm="start-ssh" path="/system/bin/busybox" dev="mmcblk1p11" ino=658 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:system_file:s0 tclass=file permissive=1
+[  100.239299] type=1400 audit(1793300118.383:149): avc: denied { read } for pid=1687 comm="busybox" name="__properties__" dev="tmpfs" ino=2354 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:properties_device:s0 tclass=dir permissive=1
+[  100.268499] type=1400 audit(1793300118.383:149): avc: denied { read } for pid=1687 comm="busybox" name="__properties__" dev="tmpfs" ino=2354 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:properties_device:s0 tclass=dir permissive=1
+[  100.268534] type=1400 audit(1793300118.383:150): avc: denied { open } for pid=1687 comm="busybox" path="/dev/__properties__" dev="tmpfs" ino=2354 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:properties_device:s0 tclass=dir permissive=1
+[  100.272727] type=1400 audit(1793300118.383:150): avc: denied { open } for pid=1687 comm="busybox" path="/dev/__properties__" dev="tmpfs" ino=2354 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:properties_device:s0 tclass=dir permissive=1
+[  100.272769] type=1400 audit(1793300118.383:151): avc: denied { read } for pid=1687 comm="busybox" name="stat" dev="proc" ino=4026531959 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_stat:s0 tclass=file permissive=1
+[  100.272994] type=1400 audit(1793300118.383:151): avc: denied { read } for pid=1687 comm="busybox" name="stat" dev="proc" ino=4026531959 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_stat:s0 tclass=file permissive=1
+[  100.273038] type=1400 audit(1793300118.383:152): avc: denied { open } for pid=1687 comm="busybox" path="/proc/stat" dev="proc" ino=4026531959 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_stat:s0 tclass=file permissive=1
+[  100.277637] type=1400 audit(1793300118.383:152): avc: denied { open } for pid=1687 comm="busybox" path="/proc/stat" dev="proc" ino=4026531959 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_stat:s0 tclass=file permissive=1
+[  100.277672] type=1400 audit(1793300118.383:153): avc: denied { getattr } for pid=1687 comm="busybox" path="/proc/stat" dev="proc" ino=4026531959 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_stat:s0 tclass=file permissive=1
+[  100.293504] type=1400 audit(1793300118.383:153): avc: denied { getattr } for pid=1687 comm="busybox" path="/proc/stat" dev="proc" ino=4026531959 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_stat:s0 tclass=file permissive=1
+[  100.293549] type=1400 audit(1793300118.436:154): avc: denied { create } for pid=1686 comm="ifconfig" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.294686] type=1400 audit(1793300118.436:154): avc: denied { create } for pid=1686 comm="ifconfig" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.294733] type=1400 audit(1793300118.440:155): avc: denied { net_raw } for pid=1686 comm="ifconfig" capability=13 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=capability permissive=1
+[  100.295191] type=1400 audit(1793300118.440:155): avc: denied { net_raw } for pid=1686 comm="ifconfig" capability=13 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=capability permissive=1
+[  100.295231] type=1400 audit(1793300118.440:156): avc: denied { read } for pid=1686 comm="ifconfig" name="dev" dev="proc" ino=4026531941 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[  100.295606] type=1400 audit(1793300118.440:156): avc: denied { read } for pid=1686 comm="ifconfig" name="dev" dev="proc" ino=4026531941 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[  100.295642] type=1400 audit(1793300118.440:157): avc: denied { open } for pid=1686 comm="ifconfig" path="/proc/1686/net/dev" dev="proc" ino=4026531941 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[  100.298402] type=1400 audit(1793300118.440:157): avc: denied { open } for pid=1686 comm="ifconfig" path="/proc/1686/net/dev" dev="proc" ino=4026531941 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[  100.298442] type=1400 audit(1793300118.440:158): avc: denied { getattr } for pid=1686 comm="ifconfig" path="/proc/1686/net/dev" dev="proc" ino=4026531941 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[  100.298738] type=1400 audit(1793300118.440:158): avc: denied { getattr } for pid=1686 comm="ifconfig" path="/proc/1686/net/dev" dev="proc" ino=4026531941 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:proc_net:s0 tclass=file permissive=1
+[  100.298766] type=1400 audit(1793300118.440:159): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=8913 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299112] type=1400 audit(1793300118.440:159): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=8913 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299138] type=1400 audit(1793300118.440:160): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=8927 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299406] type=1400 audit(1793300118.440:160): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=8927 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299430] type=1400 audit(1793300118.440:161): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=891d scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299668] type=1400 audit(1793300118.440:161): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=891d scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299695] type=1400 audit(1793300118.440:162): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=8970 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299940] type=1400 audit(1793300118.440:162): avc: denied { ioctl } for pid=1686 comm="ifconfig" path="socket:[35935]" dev="sockfs" ino=35935 ioctlcmd=8970 scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=udp_socket permissive=1
+[  100.299964] type=1400 audit(1793300118.446:163): avc: denied { create } for pid=1700 comm="busybox" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=tcp_socket permissive=1
+[  100.300233] type=1400 audit(1793300118.446:163): avc: denied { create } for pid=1700 comm="busybox" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=tcp_socket permissive=1
+[  100.300255] type=1400 audit(1793300118.446:164): avc: denied { setopt } for pid=1700 comm="busybox" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=tcp_socket permissive=1
+[  100.300488] type=1400 audit(1793300118.446:164): avc: denied { setopt } for pid=1700 comm="busybox" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=tcp_socket permissive=1
+[  100.300516] type=1400 audit(1793300118.446:165): avc: denied { connect } for pid=1700 comm="busybox" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=tcp_socket permissive=1
+[  100.300762] type=1400 audit(1793300118.446:165): avc: denied { connect } for pid=1700 comm="busybox" scontext=u:r:adv_autorun:s0 tcontext=u:r:adv_autorun:s0 tclass=tcp_socket permissive=1
+[  100.300794] type=1400 audit(1793300118.446:166): avc: denied { name_connect } for pid=1700 comm="busybox" dest=8888 scontext=u:r:adv_autorun:s0 tcontext=u:object_r:port:s0 tclass=tcp_socket permissive=1
+[  100.301573] init: Untracked pid 328 killed by signal 1
+[  100.731567] init: Clear action queue and start shutdown trigger
+[  100.731730] init: processing action (shutdown_done) from (<Builtin Action>:0)
+[  100.731791] init: Reboot start, reason: shutdown,userrequested, rebootTarget:
+[  100.732181] init: Shutdown timeout: 0 ms
+[  100.732374] init: Sending signal 9 to service 'healthd' (pid 239) process group...
+[  100.737839] init: Successfully killed process cgroup uid 0 pid 239 in 5ms
+[  100.738070] init: Sending signal 9 to service 'console' (pid 253) process group...
+[  100.743538] init: Successfully killed process cgroup uid 2000 pid 253 in 5ms
+[  100.744301] init: Sending signal 9 to service 'eGTouchD' (pid 289) process group...
+[  100.749819] init: Successfully killed process cgroup uid 0 pid 289 in 5ms
+[  100.750047] init: Sending signal 9 to service 'tee-supplicant' (pid 210) process group...
+[  100.755451] init: Successfully killed process cgroup uid 0 pid 210 in 5ms
+[  100.755730] init: Sending signal 9 to service 'zygote' (pid 222) process group...
+[  100.807863] init: Successfully killed process cgroup uid 0 pid 222 in 52ms
+[  100.808124] init: Sending signal 9 to service 'hidl_memory' (pid 224) process group...
+[  100.813756] init: Successfully killed process cgroup uid 1000 pid 224 in 5ms
+[  100.814006] init: Sending signal 9 to service 'audioserver' (pid 260) process group...
+[  100.819658] init: Successfully killed process cgroup uid 1041 pid 260 in 5ms
+[  100.819894] init: Sending signal 9 to service 'cameraserver' (pid 265) process group...
+[  100.830710] init: Successfully killed process cgroup uid 1047 pid 265 in 10ms
+[  100.830964] init: Sending signal 9 to service 'drm' (pid 266) process group...
+[  100.831192] binder: undelivered death notification, 00000000aee0d0c0
+[  100.836431] init: Successfully killed process cgroup uid 1019 pid 266 in 5ms
+[  100.836754] init: Sending signal 9 to service 'gatekeeperd' (pid 282) process group...
+[  100.842498] init: Successfully killed process cgroup uid 1000 pid 282 in 5ms
+[  100.842742] init: Sending signal 9 to service 'installd' (pid 267) process group...
+[  100.848273] init: Successfully killed process cgroup uid 0 pid 267 in 5ms
+[  100.848523] init: Sending signal 9 to service 'keystore' (pid 268) process group...
+[  100.855544] init: Successfully killed process cgroup uid 1017 pid 268 in 6ms
+[  100.855850] init: Sending signal 9 to service 'lmkd' (pid 240) process group...
+[  100.861669] init: Successfully killed process cgroup uid 0 pid 240 in 5ms
+[  100.861901] init: Sending signal 9 to service 'mdnsd' (pid 308) process group...
+[  100.867782] init: Successfully killed process cgroup uid 1020 pid 308 in 5ms
+[  100.867999] init: Sending signal 9 to service 'mediadrm' (pid 269) process group...
+[  100.873582] init: Successfully killed process cgroup uid 1013 pid 269 in 5ms
+[  100.873760] init: Sending signal 9 to service 'mediaextractor' (pid 270) process group...
+[  100.879266] init: Successfully killed process cgroup uid 1040 pid 270 in 5ms
+[  100.879554] init: Sending signal 9 to service 'mediametrics' (pid 271) process group...
+[  100.885067] init: Successfully killed process cgroup uid 1013 pid 271 in 5ms
+[  100.885251] init: Sending signal 9 to service 'media' (pid 272) process group...
+[  100.888507] mtp_release
+[  100.890688] init: Successfully killed process cgroup uid 1013 pid 272 in 5ms
+[  100.890891] init: Sending signal 9 to service 'netd' (pid 221) process group...
+[  100.896484] init: Successfully killed process cgroup uid 0 pid 221 in 5ms
+[  100.896784] init: Sending signal 9 to service 'storaged' (pid 273) process group...
+[  100.896959] init: Successfully killed process cgroup uid 0 pid 273 in 0ms
+[  100.897164] init: Sending signal 9 to service 'thermalservice' (pid 242) process group...
+[  100.903534] init: Successfully killed process cgroup uid 0 pid 242 in 6ms
+[  100.903886] init: Sending signal 9 to service 'webview_zygote32' (pid 642) process group...
+[  100.920311] init: Successfully killed process cgroup uid 1053 pid 642 in 16ms
+[  100.920606] init: Sending signal 9 to service 'wificond' (pid 274) process group...
+[  100.926142] init: Successfully killed process cgroup uid 1010 pid 274 in 5ms
+[  100.926450] init: Sending signal 9 to service 'audio-hal-2-0' (pid 225) process group...
+[  100.933710] init: Successfully killed process cgroup uid 1041 pid 225 in 7ms
+[  100.934018] init: Sending signal 9 to service 'bluetooth-1-0' (pid 226) process group...
+[  100.939536] init: Successfully killed process cgroup uid 1002 pid 226 in 5ms
+[  100.939834] init: Sending signal 9 to service 'camera-provider-2-4' (pid 227) process group...
+[  100.945404] init: Successfully killed process cgroup uid 1047 pid 227 in 5ms
+[  100.945636] init: Sending signal 9 to service 'cas-hal-1-0' (pid 228) process group...
+[  100.951145] init: Successfully killed process cgroup uid 1013 pid 228 in 5ms
+[  100.951335] init: Sending signal 9 to service 'drm-hal-1-0' (pid 230) process group...
+[  100.955772] binder: undelivered transaction 47334, process died.
+[  100.956038] binder: undelivered transaction 47360, process died.
+[  100.956155] binder: 241:390 transaction failed 29189/-22, size 68-0 line 2962
+[  100.956843] init: Successfully killed process cgroup uid 1013 pid 230 in 5ms
+[  100.956899] binder: undelivered transaction 47351, process died.
+[  100.956989] binder: release 437:497 transaction 1772 out, still active
+[  100.957054] init: Sending signal 9 to service 'drm-widevine-hal-1-0' (pid 231) process group...
+[  100.963247] init: Successfully killed process cgroup uid 1013 pid 231 in 6ms
+[  100.963466] init: Sending signal 9 to service 'gatekeeper-1-0' (pid 232) process group...
+[  101.167840] init: Failed to kill process cgroup uid 1000 pid 232 in 204ms, 1 processes remain
+[  101.167933] init: Sending signal 9 to service 'keymaster-3-0' (pid 211) process group...
+[  101.371984] init: Failed to kill process cgroup uid 1000 pid 211 in 203ms, 1 processes remain
+[  101.372074] init: Sending signal 9 to service 'light-hal-2-0' (pid 235) process group...
+[  101.377425] init: Successfully killed process cgroup uid 1000 pid 235 in 5ms
+[  101.377615] init: Sending signal 9 to service 'mediacodec' (pid 279) process group...
+[  101.383011] init: Successfully killed process cgroup uid 1046 pid 279 in 5ms
+[  101.383223] init: Sending signal 9 to service 'power-hal-1-0' (pid 236) process group...
+[  101.388555] init: Successfully killed process cgroup uid 1000 pid 236 in 5ms
+[  101.388710] init: Sending signal 9 to service 'sensors-hal-1-0' (pid 237) process group...
+[  101.389506] binder: release 237:237 transaction 1772 in, still active
+[  101.389519] binder: send failed reply for transaction 1772, target dead
+[  101.394039] init: Successfully killed process cgroup uid 1000 pid 237 in 5ms
+[  101.394200] init: Sending signal 9 to service 'wifi_hal_legacy' (pid 238) process group...
+[  101.399532] init: Successfully killed process cgroup uid 0 pid 238 in 5ms
+[  101.399716] init: Sending signal 9 to service 'ril-daemon' (pid 281) process group...
+[  101.405052] init: Successfully killed process cgroup uid 0 pid 281 in 5ms
+[  101.405237] init: Service 'tee-supplicant' (pid 210) killed by signal 9
+[  101.405402] init: Service 'netd' (pid 221) killed by signal 9
+[  101.405893] init: Service 'zygote' (pid 222) killed by signal 9
+[  101.406418] init: Service 'hidl_memory' (pid 224) killed by signal 9
+[  101.406597] init: Service 'audio-hal-2-0' (pid 225) killed by signal 9
+[  101.406789] init: Service 'bluetooth-1-0' (pid 226) killed by signal 9
+[  101.406968] init: Service 'camera-provider-2-4' (pid 227) killed by signal 9
+[  101.407358] init: Service 'cas-hal-1-0' (pid 228) killed by signal 9
+[  101.407536] init: Service 'drm-hal-1-0' (pid 230) killed by signal 9
+[  101.407718] init: Service 'drm-widevine-hal-1-0' (pid 231) killed by signal 9
+[  101.407911] init: Service 'light-hal-2-0' (pid 235) killed by signal 9
+[  101.408082] init: Service 'power-hal-1-0' (pid 236) killed by signal 9
+[  101.408256] init: Service 'sensors-hal-1-0' (pid 237) killed by signal 9
+[  101.408495] init: Service 'wifi_hal_legacy' (pid 238) killed by signal 9
+[  101.408684] init: Service 'healthd' (pid 239) killed by signal 9
+[  101.408853] init: Service 'lmkd' (pid 240) killed by signal 9
+[  101.409109] init: Service 'thermalservice' (pid 242) killed by signal 9
+[  101.409300] init: Service 'console' (pid 253) killed by signal 9
+[  101.409461] init: Service 'audioserver' (pid 260) killed by signal 9
+[  101.409814] init: Service 'cameraserver' (pid 265) killed by signal 9
+[  101.410130] init: Service 'drm' (pid 266) killed by signal 9
+[  101.410438] init: Service 'installd' (pid 267) killed by signal 9
+[  101.410618] init: Service 'keystore' (pid 268) killed by signal 9
+[  101.410835] init: Service 'mediadrm' (pid 269) killed by signal 9
+[  101.411057] init: Service 'mediaextractor' (pid 270) killed by signal 9
+[  101.411404] init: Service 'mediametrics' (pid 271) killed by signal 9
+[  101.411698] init: Service 'media' (pid 272) killed by signal 9
+[  101.412090] init: Service 'storaged' (pid 273) killed by signal 1
+[  101.412266] init: Service 'wificond' (pid 274) killed by signal 9
+[  101.412499] init: Service 'mediacodec' (pid 279) killed by signal 9
+[  101.412787] init: Service 'ril-daemon' (pid 281) killed by signal 9
+[  101.412975] init: Service 'gatekeeperd' (pid 282) killed by signal 9
+[  101.413166] init: Service 'eGTouchD' (pid 289) killed by signal 9
+[  101.413302] init: Service 'mdnsd' (pid 308) killed by signal 9
+[  101.413523] init: Service 'webview_zygote32' (pid 642) killed by signal 9
+[  101.413940] init: Untracked pid 437 killed by signal 9
+[  101.414608] init: Untracked pid 600 killed by signal 9
+[  101.414851] init: Untracked pid 621 killed by signal 9
+[  101.415239] init: Untracked pid 681 killed by signal 9
+[  101.415499] init: Untracked pid 781 killed by signal 9
+[  101.415838] init: Untracked pid 1007 killed by signal 9
+[  101.416061] init: Untracked pid 1047 killed by signal 9
+[  101.416264] init: Untracked pid 1081 killed by signal 9
+[  101.416503] init: Untracked pid 1090 killed by signal 9
+[  101.416709] init: Untracked pid 1111 killed by signal 9
+[  101.416902] init: Untracked pid 1126 killed by signal 9
+[  101.417107] init: Untracked pid 1176 killed by signal 9
+[  101.417329] init: Untracked pid 1196 killed by signal 9
+[  101.417541] init: Untracked pid 1220 killed by signal 9
+[  101.417813] init: Untracked pid 1280 killed by signal 9
+[  101.418120] init: Untracked pid 1361 killed by signal 9
+[  101.418314] init: Untracked pid 1387 killed by signal 9
+[  101.418518] init: Untracked pid 1409 killed by signal 9
+[  101.418731] init: Untracked pid 1444 killed by signal 9
+[  101.418942] init: Untracked pid 1462 killed by signal 9
+[  101.419996] init: Untracked pid 1484 killed by signal 9
+[  101.420208] init: Untracked pid 1506 killed by signal 9
+[  101.420413] init: Untracked pid 1525 killed by signal 9
+[  101.420629] init: Untracked pid 1552 killed by signal 9
+[  101.420833] init: Untracked pid 1583 killed by signal 9
+[  101.421049] init: Untracked pid 1600 killed by signal 9
+[  101.421247] init: Untracked pid 1690 killed by signal 9
+[  101.421354] init: Untracked pid 1360 killed by signal 9
+[  101.421621] init: Untracked pid 243 killed by signal 9
+[  101.421740] init: Untracked pid 244 killed by signal 9
+[  101.433169] vdc: 200 1712 Command succeeded
+[  101.433169]
+[  101.433370] init: Sending signal 9 to service 'vold' (pid 212) process group...
+[  101.438779] init: Successfully killed process cgroup uid 0 pid 212 in 5ms
+[  101.438961] init: Sending signal 9 to service 'adbd' (pid 1003) process group...
+[  101.439925] pcd_pullup, is_on 0
+[  101.439970] configfs-gadget gadget: unbind function 'mtp'/c4944800
+[  101.439993] configfs-gadget gadget: unbind function 'Function FS Gadget'/d2cc5aa4
+[  101.440685] android_work: sent uevent USB_STATE=DISCONNECTED
+[  101.444381] init: Successfully killed process cgroup uid 0 pid 1003 in 5ms
+[  101.444563] init: Sending signal 9 to service 'logd' (pid 200) process group...
+[  101.449912] init: Successfully killed process cgroup uid 1036 pid 200 in 5ms
+[  101.450124] init: Sending signal 9 to service 'tombstoned' (pid 288) process group...
+[  101.455440] init: Successfully killed process cgroup uid 1058 pid 288 in 5ms
+[  101.518332] init: umounted /dev/block/by-name/userdata:/data opts rw,seclabel,nosuid,nodev,noatime,nodiratime,discard,noauto_da_alloc,errors=panic,data=ordered
+[  101.540825] init: umounted /dev/block/by-name/metadata:/metadata opts rw,seclabel,nosuid,nodev,noatime,nodiratime,discard,noauto_da_alloc,data=ordered
+[  101.558005] init: umounted /dev/block/by-name/cache:/cache oINF USER-TA:TA_CloseSessionEntryPoint:138: Goodbye Rockchip gatekeeper!
+
+
+pts rw,seclabel,nosuid,nodev,noatime,nodiratime,discard,noauto_da_alloc,data=ordered
+[  101.907745] e2fsck: e2fsck 1.43.3 (04-Sep-2016)
+[  101.907745]
+[  101.907767] e2fsck: Pass 1: Checking inodes, blocks, and sizes
+[  101.907767]
+[  101.907775] e2fsck: Pass 2: Checking directory structure
+[  101.907775]
+[  101.907783] e2fsck: Pass 3: Checking directory connectivity
+[  101.907783]
+[  101.907790] e2fsck: Pass 4: Checking reference counts
+[  101.907790]
+[  101.907798] e2fsck: Pass 5: Checking group summary information
+[  101.907798]
+[  101.907805] e2fsck: /dev/block/by-name/userdata: 1381/261632 files (2.8% non-contiguous), 50158/1046400 blocks
+[  101.907805]
+[  101.922347] audit: netlink_unicast sending to audit_pid=200 returned error: -111
+[  101.922364] audit: audit_lost=37 audit_rate_limit=20 audit_backlog_limit=64
+[  101.922369] audit: audit_pid=200 reset
+[  101.922377] audit: type=1400 audit(1793300120.073:168): avc:  denied  { open } for  pid=1714 comm="e2fsck" path="/dev/block/mmcblk1p12" dev="tmpfs" ino=9603 scontext=u:r:fsck:s0 tcontext=u:object_r:metadata_block_device:s0 tclass=blk_file permissive=1
+[  101.922424] audit: type=1400 audit(1793300120.073:169): avc:  denied  { write } for  pid=1714 comm="e2fsck" name="mmcblk1p12" dev="tmpfs" ino=9603 scontext=u:r:fsck:s0 tcontext=u:object_r:metadata_block_device:s0 tclass=blk_file permissive=1
+[  101.922472] audit: type=1400 audit(1793300120.073:170): avc:  denied  { ioctl } for  pid=1714 comm="e2fsck" path="/dev/block/mmcblk1p12" dev="tmpfs" ino=9603 ioctlcmd=127c scontext=u:r:fsck:s0 tcontext=u:object_r:metadata_block_device:s0 tclass=blk_file permissive=1
+[  101.934451] e2fsck: e2fsck 1.43.3 (04-Sep-2016)
+[  101.934451]
+[  101.934478] e2fsck: Pass 1: Checking inodes, blocks, and sizes
+[  101.934478]
+[  101.934491] e2fsck: Pass 2: Checking directory structure
+[  101.934491]
+[  101.934498] e2fsck: Pass 3: Checking directory connectivity
+[  101.934498]
+[  101.934506] e2fsck: Pass 4: Checking reference counts
+[  101.934506]
+[  101.934513] e2fsck: Pass 5: Checking group summary information
+[  101.934513]
+[  101.934521] e2fsck: /dev/block/by-name/metadata: 13/4096 files (7.7% non-contiguous), 1169/4096 blocks
+[  101.934521]
+[  101.975401] e2fsck: e2fsck 1.43.3 (04-Sep-2016)
+[  101.975401]
+[  101.975423] e2fsck: Pass 1: Checking inodes, blocks, and sizes
+[  101.975423]
+[  101.975432] e2fsck: Pass 2: Checking directory structure
+[  101.975432]
+[  101.975440] e2fsck: Pass 3: Checking directory connectivity
+[  101.975440]
+[  101.975448] e2fsck: Pass 4: Checking reference counts
+[  101.975448]
+[  101.975455] e2fsck: Pass 5: Checking group summary information
+[  101.975455]
+[  101.975463] e2fsck: /dev/block/by-name/cache: 21/32768 files (0.0% non-contiguous), 6391/131072 blocks
+[  101.975463]
+[  102.075738] init: powerctl_shutdown_time_ms:1343:0
+[  102.075779] init: Reboot ending, jumping to kernel
+[  102.075831] cpu0 limit freq=816000 min=816000 max=816000
+[  102.079045] I : [File] : drivers/gpu/arm/midgard/platform/rk/mali_kbase_config_rk.c; [Line] : 273; [Func] : kbase_platform_rk_shutdown(); to make vdd_gpu enabled for turning off pd_gpu in pm_framework.
+INF USER-TA:TA_CloseSessionEntryPoint:357: Goodbye Rockchip Keymaster!
+
+
+[  102.420111] armv7sec armv7sec.0: Free lost chunkH=0xdd59e858
+[  102.425791] armv7sec armv7sec.0: Free lost chunkH=0xc4b9a298
+[  102.431464] armv7sec armv7sec.0: Free lost chunkH=0xddfc8e18
+[  102.667256] dwc_otg_driver_shutdown: disconnect USB device mode
+[  103.122424] rk-vcodec ff9c0000.hevc-service: vcodec shutdown
+[  103.128111] rk-vcodec ff9a0000.vpu-service: vcodec shutdown
+[  103.134424] rk808 0-001b: System power off
+

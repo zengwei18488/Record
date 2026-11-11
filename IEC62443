@@ -3,6 +3,29 @@ default.xml
 debian12-linux6.1-v130
 
 
+export IEC62443=true
+./build.sh rk3568_afee630a1_defconfig
+./build.sh uboot
+./build.sh kernel
+cd u-boot
+./scripts/fit.sh --boot_img "$CURR_PATH/$ROOT_DIR/kernel/boot.img"
+./scripts/fit.sh --recovery_img "$CURR_PATH/$ROOT_DIR/output/recovery/ramboot.img"
+ln -sf "$CURR_PATH/$ROOT_DIR/u-boot/boot.img" "$CURR_PATH/$ROOT_DIR/rockdev/boot.img"
+ln -sf "$CURR_PATH/$ROOT_DIR/u-boot/recovery.img" "$CURR_PATH/$ROOT_DIR/rockdev/recovery.img"
+
+./scripts/fit.sh --boot_img "/home/adv/BSP/code/kernel/boot.img"
+./scripts/fit.sh --recovery_img "/home/adv/BSP/code/output/recovery/ramboot.img"
+ln -sf "/home/adv/BSP/code/u-boot/boot.img" "/home/adv/BSP/code/rockdev/boot.img"
+ln -sf "/home/adv/BSP/code/u-boot/recovery.img" "/home/adv/BSP/code/rockdev/recovery.img"
+./build.sh debian
+./build.sh firmware
+
+
+echo 'deb https://ustc.edu.cn bookworm-security main contrib non-free non-free-firmware' > /etc/apt/sources.list.d/iec-security-fix.list
+
+apt-get install -y --only-upgrade curl libcurl4 gnupg gnupg2 perl perl-base tar tpm2-tools || \
+apt-get install -y ima-evm-utils attr keyutils curl libcurl4 gnupg gnupg2 perl perl-base tar tpm2-tools
+
 $ cd ~/BSP
 $ git clone https://github.com/ADVANTECH-Rockchip/repo.git
 $ mkdir debian12-linux6.1-v130
@@ -12,6 +35,32 @@ $ git config --global user.email you@example.com
 $ ../repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Linux/_git/manifest -b debian12-linux6.1-v130 -m default.xml
 $ ../repo/repo sync
 $ ../repo/repo forall -c git checkout -b local --track advantech-azure/debian12-linux6.1-v130
+
+
+sudo docker run -it \
+  --name rk356x_debian12-linux6.1-v130 \
+  -v /home/zengwei/data_8T2/work/rk3568-debian12-linux6.1-v130-forCRA:/home/adv/BSP:rw \
+  -v /home/zengwei/.ssh:/home/adv/.ssh:rw \
+  -e GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/home/adv/.ssh/known_hosts" \
+  --privileged \
+  advrisc/u20.04-rklbv1:latest \
+  /bin/bash
+
+cd ~/BSP
+git clone https://github.com/ADVANTECH-Rockchip/repo.git
+mkdir debian12-linux6.1-v130
+cd debian12-linux6.1-v130
+git config --global user.name "wei.zeng"
+git config --global user.email wei.zeng@advantech.com.cn
+git config --global url."git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Linux/".insteadOf "azure-base:/"
+../repo/repo init -u azure-base:/manifest -m default.xml -b debian12-linux6.1-v130
+改成ssh
+
+<remote name="advantech-azure" fetch="git@ssh.dev.azure.com:v3/AIM-Linux/RISC-RK3568-Linux" />
+<remote name="advantech-azure-priv" fetch="git@ssh.dev.azure.com:v3/AIM-Linux/risc-private-bsp" />
+
+../repo/repo sync -j12
+../repo/repo forall -c git checkout -b local --track advantech-azure/debian12-linux6.1-v130
 
 # 修复用的，编译不报错不管，在宿主机（即运行 docker 的那台机器）执行：
 docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
@@ -57,6 +106,8 @@ cd live-build
 rm -rf manpages/po/
 sudo make install -j8
 
+sudo apt-get install -y ima-evm-utils
+
 ###按顺序执行，uboot的指令在device目录有添加编译flag，然后先编译kernel，再uboot签名，uboot、boot、recovery三个img从uboot目录获取
 ./build.sh rk3568_afee630a1_defconfig
 ./build.sh kernel
@@ -70,6 +121,46 @@ sudo make install -j8
 https://github.com/microsoft/sbom-tool
 https://github.com/aquasecurity/trivy
 https://github.com/anchore/syft
+https://github.com/scanoss/purl2cpe
+https://github.com/anchore/grype
+git clone --depth 1 https://github.com/scanoss/purl2cpe.git .
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/rk3568/enrich_sbom.py .
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/rk3568/enrich_sbom_2.py .
+
+python3 /opt/purl2cpe/enrich_sbom_2.py \
+  /opt/raw-sbom.json \
+  /opt/purl2cpe/purl2cpe.db \
+  /opt/enriched-sbom.json
+
+# 找出所有非 Debian 且可能命名非標的組件
+python3 -c '
+import json
+with open("/opt/enriched-sbom.json", "r") as f:
+    data = json.load(f)
+with open("/opt/fallback_list.txt", "w") as out:
+    for comp in data.get("components", []):
+        purl = comp.get("purl", "")
+        if purl and not purl.startswith("pkg:deb/debian"):
+            name = comp.get("name", "unknown")
+            cpe = comp.get("cpe", "none")
+            out.write("Name: " + str(name) + " | CPE: " + str(cpe) + "\n")
+print("[+] Successfully exported fallback list to /opt/fallback_list.txt")
+'
+
+syft dir:/ -o cyclonedx-json=/opt/raw-sbom.json
+
+python3 /opt/purl2cpe/enrich_sbom.py \
+  /opt/raw-sbom.json \
+  /opt/purl2cpe/purl2cpe.db \
+  /opt/enriched-sbom.json
+
+grype sbom:/opt/enriched-sbom.json -o json > /opt/final-compliance-report.json
+
+curl -sSfL https://githubusercontent.com | sh -s -- -b /usr/local/bin
+# 验证安装
+grype --version
+
 
 生成标准 CycloneDX 格式（推荐，兼容性最好）：
 sudo syft dir:/ -o cyclonedx-json > my_debian12_sbom.json
@@ -383,6 +474,9 @@ faillock --reset
 IEC 62443 认证通常要求“禁止通用默认密码”。最合规的变通方案是：设置一个强初始密码，但强制用户在第一次通过 HDMI 登录时修改它。
 在构建脚本中添加：
 bash
+
+Uboot@init#strong
+
 # 1. 设定强初始密码
 echo "linaro:Init@2026#strong" | chroot $DEST chpasswd
 

@@ -1,0 +1,188 @@
+系统层级盲扫  最终二进制镜像（❌ 不分层做法）研华推荐：分层提取再合并（🟢 闭环做法）
+1. MaskROM完全扫描不到。 
+因为它是固化在芯片内部的硬件，镜像文件里根本没有对应的代码数据。
+静态申报： 研发团队在静态 JSON 模板中直接声明：Rockchip RK35xx MaskROM 作为一个硬件只读组件。
+2.U-Boot基本扫描不到。 
+编译后的 u-boot.bin 会被高度压缩并打包进瑞芯微特有的二进制分区，外部扫描工具无法识别其版本和开源许可证（GPL）。
+源码级扫描： 在编译完成、清理之前，使用 Syft 或 Trivy 扫描 u-boot 源码目录，百分之百精准抓取版本。
+3.Linux Kernel只能扫出粗略哈希。 
+编译后的内核镜像（boot.img / zImage）是一个被深度压缩的块，外部工具扫不出里面的特定驱动模块（.ko）和具体配置（Kconfig）。
+源码级扫描： 使用工具在编译期直接扫描 kernel 源码目录，抓取所有使能的内核组件和相关的开源许可证。
+4.第三方固件 (.fw)漏报率极高。 
+存在于 /lib/firmware/ 下的无线网卡或 4G 模块固件都是“黑盒二进制（Blob）”，扫描工具由于没有源码，无法判定其真正的供应商和内部真实版本号。
+供应链登记： 研发根据芯片规格书，手动在静态 JSON 清单中注册：供应商（Realtek/移远）、固件名称、版本号、以及文件的 SHA-256 哈希值。
+5. Debian Rootfs可以扫描。 
+它是唯一可以通过读取系统内 /var/lib/dpkg/status 数据库被工具自动识别并拉取全量基础包的层级。
+数据库扫描： 使用 Syft 直接扫描未打包前的 debian/rootfs 目录，全自动生成 Debian 基础组件的 SBOM。
+
+
+
+
+确定保留的核心清单（共 9 个）
+这 9 个组件构成了 Debian 10 基础系统的骨架。缺少任何一个，都会导致无法开机、系统崩溃，或者导致设备变成无法通过网络维护的“孤岛”：
+1.systemd（系统初始化服务管理器）：绝对必留。PID 1 进程，负责挂载分区、驱动硬件、拉起所有系统基本服务。
+2.util-linux（Linux 核心工具集）：绝对必留。包含 mount, login, dmesg, passwd 等，没有它无法登录和操作文件系统。
+3.e2fsprogs（EXT 文件系统工具集）：绝对必留。提供 fsck。嵌入式设备极易异常断电，开机时必须靠它自检修复文件系统，否则直接卡死。
+4.dash（轻量级 Shell）：绝对必留。Debian 10 绝大部分底层开机和环境初始化脚本强制指定由 /bin/sh（即 dash）解析。
+5.tar（压缩包管理工具）：核心基础。Debian 体系中极底层的核心包，系统日常维护、解压固件、打包日志不可或缺。
+6.libxml2（XML 解析基础库）：基础服务依赖。Debian 10 的核心网络管理（如 NetworkManager）、底层硬件总线（dbus）以及许多动态设备树工具在编译时都强制链接了该库，删除会导致这些服务无法启动。
+7.openssl（加密安全基础）：基础服务依赖。负责全系统的安全加密。没有它，远程 SSH 登录（sshd 依赖 libcrypto）、HTTPS 请求以及系统内部账户密码的哈希校验将彻底失效。
+8.sudo（特权管理工具）：基本运作需要。出于系统安全和日常维护，除非你极其激进地完全使用 root 账户裸奔，否则必须依靠 sudo 给普通账户赋权。
+9.curl（网络传输工具）：基本运作需要。最基础的网络连通性测试与数据传输工具，用于最基本的服务调试或拉取云端配置。
+
+
+
+🔴 确定去除的冗余清单（共 15 个）
+在“仅保留 Debian 10 命令行基础功能”的前提下，以下 15 个组件完全是冗余的，可以直接裁剪以极大地释放 Flash 空间（预计可省下 150MB~300MB+）：
+●完全可以无脑删除的图形/过时工具：
+○blueman（蓝牙图形管理）、xdg-utils（桌面关联工具）、xterm（图形终端模拟器）：这三个纯属桌面环境的产物，嵌入式无显示器（Headless）系统完全不需要。
+○ftp（传统 FTP 客户端）：完全可以用 SSH 自带的 scp 或 sftp 替代，且更安全。
+●出厂固件不需要的开发/升级工具：
+○binutils（二进制工具链）：本地编译才需要，出厂固件直接去除，还能防止黑客在设备上本地编译恶意脚本。
+○apt、gnupg：如果你的设备定型后不需要在线联网安装新软件，而是通过整体刷写固件（OTA）来升级，那么包管理器 apt 及其签名验证工具 gnupg 就可以完全删掉，能省下巨大的索引缓存空间。
+●强烈建议去除的特定业务与语言环境（除非主业务程序用到）：
+○bluez（蓝牙协议栈）：如果 RK3568 硬件上没有蓝牙芯片，或者业务不用蓝牙，直接去除。
+○openvpn（VPN 客户端）：如果不走特定的 VPN 组网，直接去除。
+○mosquitto（MQTT 代理）：如果不是做物联网网关、不用 MQTT 协议，直接去除。
+○perl、python、lxml、urllib3：Debian 的 Python 环境极其庞大。如果你的核心业务主程序是用 C/C++、Go、Rust 或 Shell 脚本写的，这整套 Python 环境（以及它的第三方网络/XML库）和 Perl 解释器完全可以打包拔除，这是精简空间的大头。
+
+
+
+针对研华科技在瑞芯微 RK3568 / RK3588 / RK3576 平台上运行 Debian 10 / 11 / 12 的系统架构，为了交付一份完全符合欧盟 CRA（网络韧性法案） 审计标准的 完整且完善的 SBOM，你们必须采取“分层扫描 + 静态补充 + 终极拼装”的自动化流水线方案。
+由于瑞芯微 SDK 是分段编译的，直接用一个工具“盲扫”最终镜像必然会导致严重漏报（无法解析二进制、漏掉第三方固件等），无法通过欧盟合规审计。
+以下是为您量身定制的完整实施步骤与操作指南：
+
+
+
+🛠️ 第一部分：分层生成 SBOM 的具体操作步骤
+完整的嵌入式 SBOM 必须包含 5 大核心大类。请在你们的编译服务器（CI/CD 流程）中，按照以下步骤分步执行并生成对应的 JSON 文件。
+
+1. 引导加载程序层（Bootloader）与内核层（Kernel）
+●扫描对象：u-boot 源码目录、kernel 源码目录。
+●操作步骤：
+在瑞芯微 SDK 根目录下，当 Build.sh 编译完 U-Boot 和 Kernel，但尚未执行 make clean 之前，利用 Syft 扫描工具直接对源码目录进行结构化分析。
+●执行命令：bash
+
+# 扫描 U-Boot 源码并输出标准 CycloneDX JSON 格式
+syft dir:./u-boot -o cyclonedx-json=./output/uboot-sbom.json
+
+# 扫描 Kernel 源码并输出标准 CycloneDX JSON 格式
+syft dir:./kernel -o cyclonedx-json=./output/kernel-sbom.json
+
+
+请谨慎使用此类代码。
+
+
+
+
+2. 操作系统文件系统层（Debian Rootfs）
+●扫描对象：已经通过 debootstrap 生成、并由瑞芯微脚本修改完成的 rootfs 目录（或者未打包前的 debian/rootfs 文件夹）。
+●操作步骤：
+利用 Syft 深度扫描该目录，工具会自动读取 Debian 的核心包管理器数据库（/var/lib/dpkg/status），从而精准拉取如 systemd、openssl、libxml2 的名称、精确版本号及开源许可证（CRA 重点审计项）。
+●执行命令：bash
+
+syft dir:./debian/rootfs -o cyclonedx-json=./output/rootfs-sbom.json
+
+
+请谨慎使用此类代码。
+
+
+
+
+3. 外设无线与网卡固件层（Wi-Fi / 4G / RTL Firmware）
+●对象：存在于 /lib/firmware/ 下的 .bin、.fw 等黑盒二进制文件（如 Realtek、正基 AP6275 固件）。工具直接扫描只会报错或识别为未知二进制。
+●操作步骤（人工介入与录入）：
+研发团队需要向芯片供应商索要固件版本，或在研发端手动建立一个静态的 JSON 清单文件（例如命名为 hardware-firmware-manifest.json），手动注册这些组件：
+●JSON 模板示例：json
+
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.5",
+  "components": [
+    {
+      "type": "firmware",
+      "publisher": "Realtek",
+      "name": "rtl8152-firmware",
+      "version": "v1.0.6",
+      "hashes": [
+        { "alg": "SHA-256", "content": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855" }
+      ]
+    }
+  ]
+}
+
+
+请谨慎使用此类代码。
+
+
+
+
+4. 芯片级硬固件与研华私有软件层（MaskROM & Advantech SUSI）
+●对象：瑞芯微内置且无法被工具扫描的 MaskROM，以及研华自研的不可变私有驱动/中间件（如 .ko 文件、SUSI API 动态库）。
+●操作步骤：
+同理，这些属于研华商业机密或底层硬件，使用外部工具无法反编译获取。研华需要为每一款板卡（如基于 RK3588 的某款工控板）维护一个固定的静态声明文件 advantech-private-manifest.json，在里面登记：
+○Rockchip RK3588 MaskROM (作为第三方不可变组件挂载)
+○Advantech SUSI API Library (定义好商业许可证与版本号)
+
+5. 终极步骤：自动化拼装与融合成一个文件
+●操作步骤：
+在瑞芯微系统的最终打包脚本末尾，引入 CycloneDX CLI 工具，将上述分步生成的 5 个 JSON 文件融合成一份全栈、唯一的 Master SBOM 交付文件。
+●执行命令：bash
+
+cyclonedx-cli merge \
+  --input-files ./output/uboot-sbom.json \
+                ./output/kernel-sbom.json \
+                ./output/rootfs-sbom.json \
+                ./metadata/hardware-firmware-manifest.json \
+                ./metadata/advantech-private-manifest.json \
+  --output-file ./output/advantech_rk35xx_master_sbom.json
+
+
+请谨慎使用此类代码。
+
+
+
+
+
+
+📄 第二部分：研华最终需要向欧洲客户“出具的东西”
+当欧洲的大型工业客户（如西门子、ABB等）根据 CRA 法案对研华的产品进行安全合规审计时，你们不能只给一个 SBOM JSON 文件，而是需要提供一套完整的“CRA 合规交付包（Compliance Bundle）”，包含以下 4 样核心物件：
+1.一份全栈 Master SBOM（机器可读文件）
+○格式：必须是 CycloneDX JSON 或 SPDX JSON 标准格式。
+○内容：即上述拼装完成、涵盖 U-Boot 到研华应用软件的全量清单，直接作为产品的数字化身份证（Digital Product Passport）流转。
+2.一份关联的 VEX（Vulnerability Exploitability eXchange，漏洞可解释性文档）
+○重要性：这是解决 Debian 10/11 EOL（生命周期结束）后产生大量已知漏洞的“唯一合法解药”。
+○内容：它是一个与 SBOM 配套的 JSON 报告。当客户系统扫描出 Debian 10 已经停止维护、自带 300 个 CVE 漏洞时，研华需要通过 VEX 文档向其证明：“由于本工控机处于 Headless（无图形界面）或特定隔离网络模式下，其中 290 个漏洞在产品实际运行中根本无法被触发或利用（Status: not_affected）”。这样客户就能合法豁免，顺利在欧洲上市。
+3.一份《硬件安全与设备韧性指导手册》（Technical Documentation）
+○内容：说明 RK3568/RK3588 平台的硬件防护机制。例如：如何开启芯片级的安全启动（Secure Boot）、板卡上的 UART 调试串口和 JTAG 接口在出厂时是否关闭或提供密码保护、以及如何进行安全的固件加密升级（OTA）。
+4.一份签署的《欧盟符合性声明》（Declaration of Conformity, DoC）
+○内容：当上述工作全部闭环后，研华需要正式在 DoC 文件上勾选符合“Cyber Resilience Act (CRA)”法规，并加贴 CE 标志。没有这一纸声明，2027 年后产品在欧洲海关将无法清关。
+
+
+
+⚖️ 第三部分：欧盟 CRA 到底会严格执行，还是流于形式？
+结论：CRA 绝对会变成一个极其严厉、具有摧毁性执行力的“硬核法案”，绝无流于形式的可能。
+许多国内厂家习惯了过去一些流于形式的环保或自检标准，但 CRA 法案的底层逻辑完全不同，它是一部“长满了牙齿”的法律。原因有以下三点：
+
+1. 与“CE 标志”强行挂钩（不合规等于走私）
+CRA 并不是一个鼓励性的行业标准，而是强制性的市场准入法规。如果产品的安全设计、SBOM 或是漏洞通报不符合 CRA 要求，产品就无法获得 CE 认证。
+在欧洲，没有 CE 标志的电子产品等同于非法走私，会被海关直接扣押、没收，且全欧洲的经销商和下线渠道没有一个人敢上架销售。
+
+2. 天价罚款与“极速上报”机制
+CRA 规定了极其恐怖的经济惩罚：
+●如果产品违反了核心的网络安全基本要求（如含有未修复的已知高危漏洞，包含已经 EOL 的 Debian 10 且无法自证安全），最高可面临 1500 万欧元（或全球年营业额的 2.5%） 的巨额罚款。
+●Article 14 漏洞通报红线（已于 2026 年 9 月强制执行）：如果产品被发现有“已被积极利用的漏洞”，制造商必须在 24 小时内 向欧盟官方（ENISA）通报。瞒报或迟报将直接触发欧盟的联合执法审查。
+
+3. 欧洲客户（买方）会疯狂倒逼研华（卖方）
+这是最重要的商业动因。因为西门子、施耐德等欧洲本地厂商需要把研华的 RK 系列板卡组装进他们的工业医疗整机或电网设备中。如果研华不提供完整合规的 SBOM 和 VEX，欧洲客户作为“将产品推向市场的最终主体”，就要替研华承担千万欧元的罚款风险。
+因此，欧洲客户为了自保，在签 ODM 合同的第一天就会把“提供符合 CRA 的全套 SBOM 和 VEX”作为必须交付的商务硬性指标。
+
+💡 研华 ODM 团队的当务之急
+既然法案执行不可逆转，且 Debian 10/11 已经全面 EOL，研华的当务之急是：
+1.在新项目（如 RK3588/RK3576）中全面淘汰 Debian 10/11，强推官方仍在维护期的 Debian 12 (Bookworm)。
+2.将上述 Syft + CycloneDX CLI 拼装脚本直接固化进研华的 BSP 自动编译流水线，让每一个出厂的固件镜像在生成时，同步在服务器上自动吐出一份 Master SBOM。
+如果你们在配置 Yocto 或者在 Debian 下使用 Syft 工具时遇到特定的扫描报错（例如某些 .ko 驱动无法解析），我们可以针对具体的编译报错提供针对性的工具排除（Exclude）或覆写（Override）脚本。
+
+
+
+

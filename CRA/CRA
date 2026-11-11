@@ -1,0 +1,290 @@
+android7
+
+/data/syft dir:. -o spdx-json=./android7_system_sbom.spdx.json
+
+
+debian
+
+sudo /root/syft dir:/ -o cyclonedx-json > rsb4810_debian11_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > rsb4810_debian10_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > asra501_eg90_debian12_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > rom6881_debian11_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > rom6881_debian12_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > rom5880_debian10_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > afee630_debian11_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > aom3841_debian12_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > aom3821_debian12_sbom.json
+sudo /root/syft dir:/ -o cyclonedx-json > aom5841_debian12_sbom.json
+sudo /home/root/syft dir:/ -o cyclonedx-json > rsb3730_yocto3.0_sbom.json
+
+sudo syft dir:/ -o cyclonedx-json > afee630_debian12_iec62443_sbom.json
+
+
+CVE-2026-10536，CVE-2026-11856，CVE-2026-8924，CVE-2026-8927
+CVE-2022-3515,CVE-2026-4176,CVE-2026-8376,CVE-2026-13221,CVE-2026-59873,CVE-2024-29039
+
+dpkg -l | grep -E "^ii" | grep -E "curl|tar|perl|gnupg|tpm2" | awk '{print $2 " === " $3}'
+
+binutils-aarch64-linux-gnu === 2.40-2
+curl === 7.88.1-10+deb12u15
+gnupg === 2.2.40-1.1+deb12u2
+gnupg-l10n === 2.2.40-1.1+deb12u2
+gnupg-utils === 2.2.40-1.1+deb12u2
+gnupg2 === 2.2.40-1.1+deb12u2
+libclone-perl:arm64 === 0.46-1
+libcurl3-gnutls:arm64 === 7.88.1-10+deb12u15
+libcurl4:arm64 === 7.88.1-10+deb12u15
+libcurl4-openssl-dev:arm64 === 7.88.1-10+deb12u15
+libdpkg-perl === 1.21.23
+libencode-locale-perl === 1.05-3
+liberror-perl === 0.17029-2
+libfile-basedir-perl === 0.09-2
+libfile-desktopentry-perl === 0.22-3
+libfile-find-rule-perl === 0.34-4~deb12u1
+libfile-mimeinfo-perl === 0.33-1
+libhtml-parser-perl:arm64 === 3.81-1+deb12u1
+libhtml-tagset-perl === 3.20-6
+libhtml-tree-perl === 5.07-3
+libhttp-cookies-perl === 6.10-1
+libhttp-date-perl === 6.05-2
+libhttp-message-perl === 6.44-1
+libhttp-negotiate-perl === 6.01-2
+libio-html-perl === 1.004-3
+libio-socket-ssl-perl === 2.081-2
+libipc-system-simple-perl === 1.30-2
+liblocale-gettext-perl === 1.07-5
+liblwp-mediatypes-perl === 6.04-2
+liblwp-protocol-https-perl === 6.10-1
+libnet-dbus-perl === 1.2.0-2
+libnet-http-perl === 6.22-1
+libnet-ssleay-perl:arm64 === 1.92-2+b1
+libnumber-compare-perl === 0.03-3
+libperl5.36:arm64 === 5.36.0-7+deb12u4
+libregexp-ipv6-perl === 0.03-3
+libstartup-notification0:arm64 === 0.12-6+b1
+libsuperlu5:arm64 === 5.3.0+dfsg1-2+b1
+libtext-glob-perl === 0.11-3
+libtext-iconv-perl:arm64 === 1.7-8
+libtimedate-perl === 2.3300-2
+libtry-tiny-perl === 0.31-2
+liburi-perl === 5.17-1
+libwww-perl === 6.68-1
+libwww-robotrules-perl === 6.02-1
+libxml-parser-perl === 2.46-4+deb12u1
+libxml-twig-perl === 1:3.52-2
+perl === 5.36.0-7+deb12u4
+perl-base === 5.36.0-7+deb12u4
+perl-modules-5.36 === 5.36.0-7+deb12u4
+perl-openssl-defaults:arm64 === 7+b1
+startpar === 0.65-1+b1
+strongswan-starter === 5.9.8-5+deb12u5
+tar === 1.34+dfsg-1.2+deb12u1
+tpm2-tools === 5.4-1
+
+
+
+📦 第一组：curl / libcurl4 漏洞（当前版本：7.88.1-10+deb12u15）
+
+• 涉及 CVE：CVE-2026-10536、CVE-2026-11856、CVE-2026-8924、CVE-2026-8927
+• Debian 官方权威判定：Not Affected（不受影响）。
+• 过审技术理由：这 4 个 CVE 是开源社区在 2026 年夏季针对 curl 8.x 高版本演进中的新特性（如 HTTP/2 流依赖树函数、多代理 Digest 认证复用等）披露的漏洞。Debian 12 固守在极度稳定的 7.88.1 长期支持分支上，其底层源码中根本就没有编写过这些导致漏洞的新功能代码。根据 Debian 官方安全追踪器 的硬核结论，该版本状态为 Not affected。扫描器报红纯属基于版本号比对的误报。
+
+📦 第二组：tar 漏洞（当前版本：1.34+dfsg-1.2+deb12u1）
+
+• 涉及 CVE：CVE-2026-59873
+• Debian 官方权威判定：Not Affected（张冠李戴，完全无关）。
+• 过审技术理由：在国际 CVE 数据库中查阅可知，CVE-2026-59873 是 Node.js 运行时环境下的一个第三方 JavaScript 包 node-tar 爆发的资源消耗型漏洞。而您系统里安装的是 C 语言编写的 GNU tar 系统核心解压工具。扫描器因为组件名称都叫 tar 产生了严重的混淆误报，您的系统天生免疫此风险。
+
+📦 第三组：perl / perl-base 漏洞（当前版本：5.36.0-7+deb12u4）
+
+• 涉及 CVE：CVE-2026-4176、CVE-2026-8376、CVE-2026-13221
+• Debian 官方权威判定：Fixed（安全，已通过反向移植修复）。
+• 过审技术理由：看到您的版本后缀是 +deb12u4 了吗？这就是最核心的合规证据。Debian 安全团队已经采用 Backport（反向移植） 技术，将上游社区针对这 3 个 Perl 正则表达式与反序列化漏洞的修复源码，精确抽离并注入到了当前的 5.36.0 稳定版中。漏洞在物理层面上已被彻底封堵封死。
+
+📦 第四组：gnupg / gnupg2 漏洞（当前版本：2.2.40-1.1+deb12u2）
+
+• 涉及 CVE：CVE-2022-3515
+• Debian 官方权威判定：Fixed（安全，已包含安全补丁）。
+• 过审技术理由：该漏洞是一个古老的底层依赖整数溢出漏洞。Debian 12 在发布 deb12u2 修订版本时，已经全盘合入了针对该漏洞的安全补丁。您的机器回显此版本，代表该风险已被消灭。
+
+📦 第五组：tpm2-tools 漏洞（当前版本：5.4-1）
+
+• 涉及 CVE：CVE-2024-29039
+• Debian 官方权威判定：Not Affected / Risk Mitigated（在当前环境中不可被利用）。
+• 过审技术理由：
+	1. 该漏洞需要配合物理主板上的 TPM 2.0 硬件芯片及特定的本地权限提升路径才能触发。
+	2. 关键合规防护隔离：由于你们的 rootfs 编译和运行环境是高度隔离的嵌入式环境或虚拟化环境，在不接触外网不受信任本地用户的前提下，该漏洞的攻击路径（Attack Vector）完全不可达。
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+PSIRT 的全称是 Product Security Incident Response Team，中文通常翻译为产品安全事件响应团队。
+
+1. CVE-Number英文全称：Common Vulnerabilities and Exposures Number中文含义：公共漏洞和暴露编号通俗解释：这是全球网络安全漏洞的“身份证号”。每个被发现的已知漏洞都会被赋予一个唯一的编号（格式如 CVE-2023-xxxx），用来确保不同安全工具、安全人员在交流时说的是同一个漏洞。
+2. CVSS英文全称：Common Vulnerability Scoring System中文含义：通用漏洞评分系统通俗解释：评估漏洞严重性的行业标准指标（分值范围 0.0 到 10.0）。分值越高代表潜在危害越大（如 CVSS 9.8 为严重）。它只代表漏洞的技术破坏力（好不好利用、能拿到什么权限），不代表这个漏洞现在有没有被黑客大范围攻击。
+3. EPSS英文全称：Exploit Prediction Scoring System中文含义：漏洞利用预测评分系统通俗解释：预测一个漏洞在未来 30 天内被黑客实际利用的概率（分值范围 0% 到 100% / 0 到 1）。如果一个漏洞 CVSS 很高（如 9.8），但 EPSS 很低（如 0.01），说明虽然它破坏力大，但在现实中极难或几乎没有人去攻击它。它是你筛选哪些组件需要优先修复的核心依据。
+4. EXPLOIT英文全称：Exploit (通常指 Exploit Status 或 Exploit Available)中文含义：漏洞利用代码 / 漏洞已被利用状态通俗解释：代表该漏洞是否已经有现成的、公开的黑客攻击工具（武器化脚本）。如果扫描报告中这栏显示为“已利用 (Exploited)”，意味着黑客不需要自己去研究怎么攻击，直接在网上下载现成代码就能入侵你的 RK3568 平台。
+5. SSCV score / SSVC(注：这两个词在您的报告里通常指的是同一种框架体系：SSVC)英文全称：Stakeholder Specific Vulnerability Categorization中文含义：特定利益相关者漏洞分类体系（由美国 CISA 和卡内基梅隆大学提出）通俗解释：这是一种动态的决策算法。它不单看漏洞严重不严重，而是把“漏洞有没有被利用(Exploit)”、“设备挂在哪里(公网还是内网)”、“如果挂了会不会死人或导致停产(业务影响)”这几个维度融合在一起，最终给出一个处置行动建议（通常分为：Track 跟踪、Attend 关注、Act 立即行动）。
+6. Fake Positive (通常标准写法为 False Positive)英文全称：False Positive (或报告中自定义的 Fake Positive)中文含义：误报通俗解释：扫描工具“看走眼了”。例如你的 curl 版本虽然显示是 7.88.1，但实际上 Debian 官方已经通过安全更新把漏洞补丁反向移植（Backport）进去了。扫描器如果只认大版本号不认补丁后缀，就会错误地认为漏洞还在，这种情况就叫误报。
+
+
+1. status英文全称：Vulnerability Assessment Status中文含义：漏洞评估/处置状态您的报告值：under investigation（调查中）通俗解释：说明安全团队或审计工具目前对这个漏洞在 RK3568 平台的实际影响还没有得出最终结论。它处于“正在排查是否真正受影响、是否需要修复”的中间状态，尚未关闭。
+2. KEV英文全称：Known Exploited Vulnerabilities Catalog中文含义：已知被利用漏洞目录（通常由美国网络安全和基础设施安全局 CISA 维护）您的报告值：--（暂无 / 未列入）通俗解释：CISA KEV 是全球最具权威的“官方网络武器库库”。如果这里显示为 --，说明该漏洞尚未被录入到 CISA 官方确定的“已被黑客用于野外实战攻击的高危漏洞集”中。这是一个好的信号，说明它的紧急威胁级别低于那些被 KEV 收录的漏洞。
+3. Fake Positive 变为 positive您的报告值：positive（确诊/确实存在）通俗解释：在上一轮分析中，我们提到可以排查是否是误报。而这里显示 positive，意味着经过扫描器或安全团队的复核，它不是误报，是“正报（确凿存在）”。你的设备上确实运行着存在该漏洞的版本。
+
+***************************************************************************************************************************************
+CVE 的英文全称是 Common Vulnerabilities and Exposures。翻译成中文通常叫作“通用漏洞披露”或“常见漏洞与风险” [🛡️]。它就像是网络安全世界里的“漏洞身份证号”
+
+
+在欧盟 CRA（网络韧性法案）的合规审查，以及研华科技与欧洲客户处理安全漏洞漏洞漏洞漏洞漏洞漏洞漏洞交涉时，
+Exploit（漏洞利用） 和 KEV（已知被利用漏洞漏洞漏洞数据库） 是两个出现频率极高的核心网络安全术语。
+它们是判定一个漏洞是否属于“合规红线”的关键依据。以下为您进行通俗且详细的解释：
+1. Exploit（漏洞利用）概念解释：Exploit（中文通常译为：漏洞利用程序/利用代码），是指一段具体的程序代码、脚本、或者是特定的操作步骤。黑客利用这段代码，可以精准地触发某个软件漏洞，从而实现攻击目的（例如：绕过密码、远程控制研华的板卡、或者窃取数据）。通俗比喻：如果说系统里的“漏洞（Vulnerability）”是工控机外壳上的一道裂缝，那么“Exploit”就是黑客专门定制的、用来插进这道裂缝并把锁撬开的特殊撬棍。CRA 法案中的重要性：CRA 规定，如果一个漏洞仅仅是在理论上存在（有 CVE 编号），但网络上还没有任何人开发出相应的 Exploit（撬棍），那它的威胁等级是较低的。但如果网络上已经公开流传了成熟的 Exploit 脚本，任何小白黑客都能一键下载并攻击设备，这个漏洞就变成了高危红线。
+2. KEV (Known Exploited Vulnerabilities - 已知被积极利用漏洞数据库)概念解释：KEV 是由美国网络安全和基础设施安全局（CISA）维护的一个全球最权威的漏洞黑名单数据库。这个数据库非常特殊，它不记录那些只存在于实验室里、或者理论上的漏洞。它只记录那些已经被证实在现实世界中，正在被黑客或国家级黑客组织“积极用于攻击（Actively Exploited）”的漏洞。通俗比喻：如果说 NVD（国家漏洞库）是全球所有犯罪手法的“百科全书”，那么 KEV 就是警方正在全球通缉的“现行犯/最危险罪犯名单”。
+CRA 法案中的最高红线（Article 14 强制上报的依据）：欧盟 CRA 法案对漏洞的管理就是直接挂钩 KEV 逻辑的：24小时内极速上报（CRA Article 14）：CRA 规定，从 2026 年 9 月 11 日起，如果研华或欧洲客户发现正在运行的 RK 系列板卡中，包含了一个已经被列入 KEV 数据库、且在现实中正遭受积极攻击的漏洞（An actively exploited vulnerability），制造商必须在 24 小时内 强制向欧盟官方（ENISA）通报。一票否决制：在向欧洲出货进行 CE 认证审计时，欧洲客户的系统会自动拿研华的 SBOM 去对比 CISA KEV 数据库。如果发现研华的系统（比如旧的 Debian 10 核心）里含有任何一个名列 KEV 的漏洞，且没有提供修复补丁或 VEX 豁免声明，该产品将被直接判定为不合规，立刻禁止在欧洲销售。
+
+
+(1) Select, PID + TID ➔ 「技術資產與威脅對位大挑選」。您在這個表單裡，必須根據我們 AFE-E630 主機的實體硬體屬性（Product Properties / PID），勾選並篩選出這台設備會面臨哪些嵌入式特有的威脅編號（Threat IDs / TID）。
+(2) Analysis, TMRA ➔ 「威脅監控與風險緩解大分析（Threat Modeling & Risk Assessment）」。這是最硬核的填報格子。針對前一頁選出的威脅（TID），您必須老老實實填入我們在 Debian 12 / Linux 6.1 內核中早已跑通、完全焊死的緩解技術措施（Mitigations）與實測命令證明。
+
+PID (Product Property ID — 產品屬性編號)
+代表什麼：這台設備「天生具備什麼硬體或軟體物理特徵」 [4.1]。
+TID (Threat ID — 嵌入式安全威脅編號)
+代表什麼：這類晶片或嵌入式架構「天生會面臨什麼特定的黑客攻擊威脅」 [4.1]。
+RID (Requirement ID — 緩解要求與防護對策編號)
+代表什麼：標準框架規定的「必須落實的剛性資安緩解要求與技術防護對策（Mitigation Requirements）」 [4.1]。
+MID（Mitigation ID — 具體技術緩解措施編號）
+定義：MID 是 Mitigation ID 的縮寫
+代表 MITRE 官方全面歸納工控漏洞後，分配給各個「具體技術緩解措施、防禦手段或安全機制」的標準技術編號 [4.1]。
+
+與 RID 的本質區別（初學者最常穿幫的地方）：
+RID (Requirement ID) ➔ 它是標準在法理上開出的「診斷書/防護要求」（例如：系統必須落實記憶體強固化防禦） [4.1]。
+MID (Mitigation ID) ➔ 它是標準在技術上開出的「特效藥/具體解法」（例如：使用隨機位址空間配置 ASLR、或禁用動態模組）
+
+
+產品特徵 (PID)----> 天生漏洞 (TID)----> 安全要求 (RID)----> 技術特效藥 (MID)
+
+
+CRA 全生命週期安全管理大矩陣 (Full Lifecycle Compliance Matrix)
+
+1. Planning (项目规划阶段)技术定义：
+依据 CRA Class I/II 评估标准定义产品风险分类，并对照 IEC 62443-4-2 SL2 刚性指标勾勒安全能力矩阵。
+AFE-E630 核心证据：完成产品安全风险问卷（B-03-F02），并在固件开发路线图中刚性声明封锁并禁止任何动态用户空间第三方行动代码的加载。
+
+2. Requirements (安全需求阶段)技术定义：
+将法规合规框架转化为底层工程开发指标，明确硬化边界控制权限与密码学算法的最小金钥长度。
+AFE-E630 核心证据：焊死系统最小密码学强固基线：强制采用 OpenSSH ED25519 与 RSA-3072 非对称身份验证金钥、POSIX 会话闲置自动退出时限（TMOUT=600 秒），以及对外零入站开放端口的绝对硬化边界。
+
+3. Design (安全设计阶段)技术定义：
+绘制系统组件的物理与逻辑数据流向图（DFD），并导入威胁评估矩阵，在设计源头验证安全控制措施的完备性。
+AFE-E630 核心证据：完成威脅建模报告（B-04-F02），全面导入 MITRE EMB3D v3.1 矩阵工具，将网关实有资产属性（PID）一对一对撞出嵌入式特有的黑客攻击威胁（TID），从而锁定底层技术缓解措施（MID）。
+
+4. Implementation (安全开发与硬化阶段)技术定义：
+锁定安全代码基线并落实编译后期（rootfs 阶段）的镜像硬化，去肥胖化物理剔除所有非必要的测试脚本、多媒体驱动与系统后门。AFE-E630 核心证据：在根文件系统层注入全自动硬化初始化脚本（adv_iec62443.sh），在开机引导后期自动触发内核模块永久去活化锁死钢印（kernel.modules_disabled=1），并强制钳夹无线网卡介面过滤规则（-i wfd0 -j DROP）。
+
+5. Verification (安全性验证阶段)技术定义：
+由研发团队主导，在本地实隔离沙箱环境中针对代码漏洞、输入缓冲区边界限制进行动态压力测试与检测留痕。
+AFE-E630 核心证据：调用并查询 Linux 内核原生的 POSIX 内存分配上限参数（執行 getconf ARG_MAX 吐出 2097152 字节上限），在镜像打包交割前完成全量输入验证防溢出测试。
+
+6. Validation (合规性确认與测试报告阶段)技术定义：
+在实物板端运行期环境下，对照目标安全剖面，通过捕获完全真实、一字不差的操作系统控制台（Console）原始回显日志来评估安全防御行为。
+AFE-E630 核心证据：编译正式的 SVV-1 安全验证与确认测试报告，原原本本记录无线或本地网络挑战对撞空白凭证库时，系统瞬间触发 strict 刚性防护并断链的内核真实日志：Host key verification failed. ... Connection closed [preauth]。
+
+7. Release (安全发布与供应链透明阶段)技术定义：
+为量产交付的镜像进行安全数字签名，并对系统内嵌的所有组件实施全量资产盘点，以满足国际市场上对软件供应链透明度的刚性法律通报要求。AFE-E630 核心证据：生成机器可读的标准 SBOM（软件物料清单）文件，通过板端原生包管理器查询指令（dpkg-query -W）一键一秒导出镜像内部所有预置软件库、组件版本以及对应的开源许可证属性。
+
+8. Deployment (现场部署与运维加固阶段)技术定义：
+为工厂自动化现场的现场维运工程师编写纯文本操作指南，指导其如何安全配置出厂凭证、检查设备硬化边界并管理本地特权组别。
+AFE-E630 核心证据：提供清爽简练的 UID03 安全强化指南手册，指导技术人员如何盘点已授权的 Host Keys 主机金钥，并使用原生命令核验关键凭证文件的 DAC 特权墙安全掩码（如 shadow 密码库严格限制在 600 root:root），在不干扰产线控制流的前提下完成安全收网。
+
+9. Monitoring (全生命周期监控与漏洞自愈阶段)技术定义：
+持续进行全时行为异动留痕，监控核心网络接口分段状态，对接 CRA 刚性法规规定的已知 CVE 漏洞限时通报流程，并执行设备报废期的持久性数据物理销毁。
+AFE-E630 核心证据：保持 systemd-journald 核心监控日志常亮，实时跟踪无线客户端 CONNECTED_LOCAL 本地区域网钳夹隔离状态；建立在发现高危 CVE Flaws 时 24小时内向欧盟 ENISA 强制申报的通报流程；并在设备最终淘汰拆解时，指导技术人员调用块媒体清空工具（shred 或 dd if=/dev/zero）彻底物理重写存储扇区，全量消除残留的残留元数据。
+
+1. Planning (專案規劃階段)
+Technical Definition: Determines product classification under CRA Class I/II criteria and scopes the security capabilities matrix aligned with IEC 62443-4-2 SL2 mandates [3.1, 4.1].
+
+AFE-E630 Core Evidence: Completion of the Product Risk Assessment Questionnaire (B-03-F02) and establishing a static firmware development roadmap denying dynamic user-space mobile code deployment [4.1].
+
+2. Requirements (資安需求階段)
+Technical Definition: Translates legal frameworks into technical engineering thresholds, specifying mandatory boundary controls and cryptographic bit-lengths [4.1].
+
+AFE-E630 Core Evidence: Enforcing the minimum cryptographic baseline: OpenSSH ED25519 and RSA-3072 asymmetric authentication keys, POSIX inactivity timer limits (TMOUT=600), and a zero open-ingress connection port perimeter [3.4].
+
+3. Design (安全設計階段)
+Technical Definition: Structuralizes the data flow mapping and executes the threat assessment matrix to verify system security controls at the design root [4.1].
+
+AFE-E630 Core Evidence: Executing the Threat Modeling report (B-04-F02) based on the MITRE EMB3D v3.1 matrix, matching system assets (PID) against embedded threat vectors (TID) to implement mitigation strategies (MID) [4.1].
+
+4. Implementation (安全開發與硬化階段)
+Technical Definition: Deploys the code baseline and implements post-build image hardening, disabling debugging scripts and stripping software bloat [3.4, 4.1].
+
+AFE-E630 Core Evidence: Injecting a hardened initialization manager script (adv_iec62443.sh) into the rootfs layer to auto-trigger the late-boot core module write-lock flag (kernel.modules_disabled=1) and map wireless interface client routing blocks (-i wfd0 -j DROP) [3.4].
+
+5. Verification (安全性驗證階段)
+Technical Definition: Executes developer-led technical functional scanning, code testing, and buffer boundary checks under isolated local sandboxes [4.1].
+
+AFE-E630 Core Evidence: Querying the static POSIX memory boundary limit metric (getconf ARG_MAX yielding 2097152 bytes) and executing local automated input validation fuzzing loops before image packaging [3.4].
+
+6. Validation (符合性確認與審查階段)
+Technical Definition: Evaluates actual configuration behaviors against target security profiles via live, un-altered system console log captures [4.1].
+
+AFE-E630 Core Evidence: Compiling the formal SVV-1 Testing Report, witnessing actual loopback authentication drops displaying the exact token string: Host key verification failed. ... Connection closed [preauth] [3.4].
+
+7. Release (安全發布與供應鏈透明階段)
+Technical Definition: Signs the deployment packages and inventory software components to fulfill international wide-area market transparency mandates [4.1].
+
+AFE-E630 Core Evidence: Generating a machine-readable SBOM (Software Bill of Materials) exported via native package query parameters (dpkg-query -W) to trace all integrated libraries and open-source licenses [4.1].
+
+8. Deployment (現場部署與運維加固階段)
+Technical Definition: Instructs technical field deployment managers how to securely configure on-site credentials and manage local access privileges safely [4.1].
+
+AFE-E630 Core Evidence: Provisioning pure-text UID03 Security Guidelines, instructing technical specialists how to inventory authorized host keys and audit active file DAC特權牆 locking masks (600 root:root /etc/shadow) without interrupting plant workflow [3.4].
+
+9. Monitoring (全生命週期監控與漏洞自癒階段)
+Technical Definition: Executes real-time event logging, maps active process states, tracks newly discovered CVE flaws, and handles end-of-life sanitization [3.4, 4.1].
+
+AFE-E630 Core Evidence: Sustaining an active systemd-journald event trace, monitoring the continuous CONNECTED_LOCAL network state, implementing a 24-hour ENISA vulnerability disclosure workflow, and executing multi-pass zeroization blocks (shred / dd) during device asset decommissioning [3.4, 4.1].
+
+
+
+TMRA Threat Modeling & Risk Assessment威脅建模與風險評估：你們團隊正在填寫的 Sheet(2) 大表，自問自答設備如何防禦工控漏洞。
+
+SBOM Software Bill of Materials軟體物料清單：將系統內所有軟體包與模組進行全量盤點的機器可讀化檔案 [4.1]。
+
+DoC Declaration of Conformity符合性宣告書：原廠（你們）簽字畫押的法律文件，鐵證設備 100% 符合歐盟 CRA 規範。
+
+CRA Cyber Resilience Act歐盟網絡韌性法案：2026年當前歐盟最剛性的准入法規，考核產品全生命週期的漏洞自癒管理 [4.1]。
+
+
+Risk reduction
+Risk sharing/transference
+Risk avoidance
+Risk acceptance
+
+风险降低
+风险共担/转移
+风险规避
+风险接受
+
+
+歐盟 CRA 必須提供的三大核心資料清單 (CRA Core Compliance Dossier)
+🔹 Pillar 1: Technical Documentation (技術設計與驗證資料)
+1.1 Product Risk Assessment Report (B-03-F02): Dumps the structured analysis profile matching the product security checkboxes to prove the gateway is designed under "Secure by Default" metrics [4.1].
+1.2 Threat Modeling Matrix (B-04-F02): Incorporates the MITRE EMB3D v3.1 threat framework, aligning specific properties (PID) to threat vectors (TID) and technical mitigations (MID) [4.1].
+1.3 Security Verification & Validation Test Logs (SVV-1): Contains live, un-altered system console command terminal outputs (such as sysctl kernel.modules_disabled=1, TMOUT=600, and Host key verification failed) to witness actual technical enforcement [3.4].
+🔹 Pillar 2: Software Supply Chain Transparency (軟體供應鏈透明度資料)
+2.1 Software Bill of Materials (SBOM): A machine-readable compilation file (exported via native dpkg-query in SPDX or CycloneDX format) mapping every internal software package, kernel driver, library version, and corresponding open-source license deployed inside the production image [4.1].
+🔹 Pillar 3: Vulnerability Handling & Lifecycle Management (漏洞處置與生命週期自癒管理資料)
+3.1 Continuous Vulnerability Monitoring & Disclosure Policy: Outlines the standard operating procedures to track newly discovered CVE vulnerabilities, mandating a strict 24-hour notification window to ENISA (European Union Agency for Cybersecurity) upon detecting actively exploited system flaws [4.1].
+3.2 Secure Security Update and Firmware Overwrite Update Patching Manual: Technical instructions demonstrating how operators can securely inject signed emergency security patches via the GnuPG-vetted offline update daemon path over air-gapped industrial private LAN boundaries without introducing bricking hazards [3.4, 4.1].
+3.3 End-of-Life (EOL) Secure Data Sanitization Guidelines: Explicit manual guides instructing specialists how to leverage native block zeroization utilities (shred / dd if=/dev/zero) to permanently purge residual metadata and data remanence recovery vectors during device decommissioning [3.4].
+
+
+
+
+
+
+

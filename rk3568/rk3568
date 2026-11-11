@@ -477,13 +477,6 @@ arch/arm64/boot/dts/rockchip/rk3568-android.dtsi
 arch/arm64/boot/dts/rockchip/rk3568-rsb4810-a2.dts
 arch/arm64/configs/rk3568_adv_defconfig
 
-rkbin/tools/ddrbin_param.txt
-rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.11.bin
-rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.14.bin
-./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.11.bin
-./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.14.bin
-./ddrbin_tool rk3568 ddrbin_param.txt rk3568_ddr_1560MHz_v1.19.bin
-
  MINOR=1
  [CODE471_OPTION]
  NUM=1

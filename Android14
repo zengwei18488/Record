@@ -205,7 +205,19 @@ sudo apt-get install zip
 
 sudo apt-get install bc device-tree-compiler
 
+find . -maxdepth 3 -name ".git" -type d | while read dir; do
+  proj_dir=$(dirname "$dir")
+  echo "=== $proj_dir ==="
+  git -C "$proj_dir" status --short 2>/dev/null
+  echo ""
+done
 
+find . -maxdepth 3 -name ".git" -type d | while read dir; do
+  proj_dir=$(dirname "$dir")
+  echo "=== $proj_dir ==="
+  git -C "$proj_dir" log --oneline -5 2>/dev/null
+  echo ""
+done
 
 sudo docker run -it --name build_rk_androidU14_risc -v /home/zengwei/work/rk-all-android14/Reop-from-azure-Android14:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
 

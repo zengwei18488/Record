@@ -1,3 +1,9 @@
+EBC-RB07
+
+scp zengwei@172.21.171.105:/media/zengwei/CA00-0A01/BurnIn/BurnIn.sh BurnIn-select-RB07.sh
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 timedatectl status
 
 sudo systemctl stop chrony
@@ -128,11 +134,18 @@ hwclock --hctosys
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+git clone https://github.com/ADVANTECH-Rockchip/repo.git
+
 sudo docker run -it --name rk3568_linux_risc_V123006 -v /home/zengwei/data_8T2/work/rk3568-debian10/RISC_V123006:/home/adv/BSP:rw --privileged advrisc/u18.04-rklbv1:latest /bin/bash
 
 repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Linux/_git/manifest -b rk356x_v123_risc -m RK3568_RISC_DIV123006.xml
 repo/repo sync
 
+
+sudo docker run -it --name rk3568_linux_risc_V130068 -v /home/zengwei/data_8T2/work/rk3568-debian10/RISC_V130068:/home/adv/BSP:rw --privileged advrisc/u18.04-rklbv1:latest /bin/bash
+
+repo/repo init -u https://AIM-Linux@dev.azure.com/AIM-Linux/RISC-RK3568-Linux/_git/manifest -b rk356x_v130_risc -m RK3568_RISC_DIV130068.xml
+repo/repo sync
 
 rm -rf buildroot/output/rockchip_rk356x_recovery/build/rkupdate-develop/
 rm -rf buildroot/output/rockchip_rk356x_recovery/build/recovery-develop/

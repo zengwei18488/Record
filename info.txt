@@ -1,8 +1,21 @@
+https://AIM-Linux@dev.azure.com/AIM-Linux/Developer_Center/_git/DocSite
+
+https://advrmu.advantech.com.tw:3028/my/page
+Wei.zeng
+Zw@887#adv,
+
+
 Account: advantech.ess.rd@gmail.com
 Password: #adv27927818
 
 www.dropbox.com/login?cont=%2Fhome%2FESSRISC_SHARE
 
+
+biscuit3zw@gmail.com
+
+PLM
+wei.zeng
+PLM0610*
 
 WorkDay
 100000166 Adv@zw#166
@@ -45,16 +58,21 @@ Employeezone
 wei.zeng@advantechcom.cn   Zwq-18488
 
 
-NXP and trell
+NXP
+wei.zeng@advantech.com.cn 
+Zw@18488
 
+trell
 wei.zeng@advantech.com.cn 
 Zwq-18488
+
 
 
 Rockchip Redmine
 
 AdvantechECGRISC
-20170328
+RISC20230915
+
 
 
 https://www.t-firefly.com/

@@ -393,9 +393,293 @@ source build/envsetup.sh;lunch rom6881_t-userdebug
 ./build.sh -AUCKu
 
 ./ddrbin_tool rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.13.bin
+./ddrbin_tool rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
+
+./ddrbin_tool rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_eyescan_v1.24.bin
+
+./ddrbin_tool.py rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_eyescan_v1.24.bin
+./ddrbin_tool.py rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.24_vref_in_min_199.bin
+./ddrbin_tool.py rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.24_ok.bin
+
+rkbin/tools/ddrbin_param.txt
+rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.11.bin
+rkbin/bin/rk35/rk3568_ddr_1560MHz_v1.14.bin
+./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.11.bin
+./ddrbin_tool ddrbin_param.txt rk3568_ddr_1560MHz_v1.14.bin
+./ddrbin_tool rk3568 ddrbin_param.txt rk3568_ddr_1560MHz_v1.19.bin
+
+yanwei@AKTC-RISC:~/link/rk3588-linux/rkbin/tools$ cp ../bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin.org rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
+yanwei@AKTC-RISC:~/link/rk3588-linux/rkbin/tools$ ./ddrbin_tool rk3588 ddrbin_param.txt rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
+version v1.19 20240117
+chip rk3588
+version 5
+
+new bin config:
+lp4_freq: 1560
+uart baudrate: 115200
+sr_idle: 1024
+pd_idle: 512
+per_bank_ref_en: 1
+dis_train_print: 0
+uboot_log_en: 1
+spl_log_en: 1
+tpl_log_en: 1
+dfs_disable: 1
+boot_fsp: 3
+modify end
+yanwei@AKTC-RISC:~/link/rk3588-linux/rkbin/tools$ cp rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin ../bin/rk35/
+yanwei@AKTC-RISC:~/link/rk3588-linux/rkbin/tools$ cd ../../
+yanwei@AKTC-RISC:~/link/rk3588-linux$ ./build.sh uboot
+
+lp4_freq: 1560 搭配 boot_fsp: 3 —— 「降頻
+dfs_disable: 1 —— 「全時高頻鎖死（定頻）、切斷歷史連鎖干擾」
+sr_idle: 1024 —— 「上電 Delay 緩衝、避開通電浪湧」
+per_bank_ref_en: 1 搭配 pd_idle: 512 —— 「電流削峰拉直、根治地彈雜訊」   
+
+
+* dfs_disable    变频
+1: disbale ddr freq switch function
+0: enable ddr freq switch function
+
+* boot_fsp    uboot频率
+To choose the which DDR freq to boot system. 0 means fsp0_freq, 1 means fsp1_freq, 2 means fsp2_freq, 3 means fsp3_freq, the default is 0.
+
+sr_idle: auto self-refresh mode delay time.
+pd_idle: auto power-down mode delay time.
+
+per_bank_ref_en: 1: will enable per bank refresh
+
+参数设置 boot_fsp     对应的硬件频点 (DDR Freq)      技术定位
+ boot_fsp: 0 (默认)    2112MHz                   (F0)最高性能频点（您当前测试高频坠毁的频点） [1.17]
+ boot_fsp: 1           528MHz                    (F1)极低功耗待机频点
+ boot_fsp: 2           1068MHz                   (F2)平衡中频频点
+ boot_fsp: 3           1560MHz                   (F3)高容错性能频点（降频自救的首选）
+ 
+ 
+ BootROM → ddr.bin(DDR训练) → 返回BootROM → SPL(miniloader) → BL31 → U-Boot proper
+
+diff --git a/RKBOOT/RK3588MINIALL.ini b/RKBOOT/RK3588MINIALL.ini
+index 3d1927c..8e27ff5 100644
+--- a/RKBOOT/RK3588MINIALL.ini
++++ b/RKBOOT/RK3588MINIALL.ini
+@@ -5,7 +5,7 @@ MAJOR=1
+ MINOR=11
+ [CODE471_OPTION]
+ NUM=1
+-Path1=bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
++Path1=bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.24_vref_in_min_199.bin
+ Sleep=1
+ [CODE472_OPTION]
+ NUM=1
+@@ -14,10 +14,10 @@ Path1=bin/rk35/rk3588_usbplug_v1.11.bin
+ NUM=2
+ LOADER1=FlashData
+ LOADER2=FlashBoot
+-FlashData=bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
+diff --git a/RKBOOT/RK3588MINIALL.ini b/RKBOOT/RK3588MINIALL.ini
+index 3d1927c..8e27ff5 100644
+--- a/RKBOOT/RK3588MINIALL.ini
++++ b/RKBOOT/RK3588MINIALL.ini
+@@ -5,7 +5,7 @@ MAJOR=1
+ MINOR=11
+ [CODE471_OPTION]
+ NUM=1
+-Path1=bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
++Path1=bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.24_vref_in_min_199.bin
+ Sleep=1
+ [CODE472_OPTION]
+ NUM=1
+@@ -14,10 +14,10 @@ Path1=bin/rk35/rk3588_usbplug_v1.11.bin
+ NUM=2
+ LOADER1=FlashData
+ LOADER2=FlashBoot
+-FlashData=bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.17.bin
++FlashData=bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2400MHz_v1.24_vref_in_min_199.bin
+ FlashBoot=bin/rk35/rk3588_spl_v1.13.bin
+ [OUTPUT]
+-PATH=rk3588_spl_loader_v1.17.113.bin
++PATH=rk3588_spl_loader_v1.24.113-199.bin
+ [SYSTEM]
+ NEWIDB=true
+ [FLAG]
+diff --git a/RKTRUST/RK3588TRUST.ini b/RKTRUST/RK3588TRUST.ini
+index 7aed542..31c6a97 100644
+--- a/RKTRUST/RK3588TRUST.ini
++++ b/RKTRUST/RK3588TRUST.ini
+@@ -5,7 +5,7 @@ MINOR=0
+ SEC=0
+ [BL31_OPTION]
+ SEC=1
+-PATH=bin/rk35/rk3588_bl31_v1.46.elf
++PATH=bin/rk35/rk3588_bl31_v1.57.elf
+ ADDR=0x00040000
+ [BL32_OPTION]
+ SEC=1
+
 
 repo/repo forall -c "git checkout advantech-azure/rk3588_v130_risc"
 repo/repo forall -c "git status"
+
+
+sudo cat /sys/kernel/debug/clk/clk_summary | grep clk_ddr
+
+PerformanceTest_Linux_ARM64
+find /usr/lib /lib -name "libncurses.so.6*" 2>/dev/null
+sudo ln -s /lib/aarch64-linux-gnu/libncurses.so.6 /lib/aarch64-linux-gnu/libncurses.so.5
+
+
+DDR 6ed950b diankun.hu 26/10/14-15:40.10,fwver: v1.17
+LPDDR4, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+Manufacturer ID:0xff
+CH0 RX Vref:34.4%, TX Vref:13.2%,13.2%DQ rds:
+h1 l0, h4 l0, h3 l0, h4 l0, h1 l0, h1 l0, h2 l0, h1 l0,
+h0 l0, h1 l0, h2 l0, h2 l0, h2 l0, h5 l0, h2 l0, h1 l0,
+
+CH1 RX Vref:34.4%, TX Vref:13.2%,13.2%DQ rds:
+h1 l0, h2 l0, h1 l0, h2 l0, h3 l0, h1 l0, h2 l0, h1 l0,
+h1 l0, h7 l0, h1 l0, h1 l0, h2 l0, h1 l0, h1 l0, h4 l0,
+
+CH2 RX Vref:36.1%, TX Vref:13.2%,13.2%DQ rds:
+h0 l0, h3 l0, h1 l0, h4 l0, h4 l0, h2 l0, h2 l0, h1 l0,
+h1 l0, h3 l0, h1 l0, h2 l0, h5 l0, h0 l0, h1 l0, h6 l0,
+
+CH3 RX Vref:36.9%, TX Vref:13.2%,13.2%DQ rds:
+h6 l0, h0 l0, h5 l0, h1 l0, h2 l0, h2 l0, h1 l0, h5 l0,
+h4 l0, h4 l0, h2 l0, h0 l0, h2 l0, h3 l0, h0 l0, h1 l0,
+
+stride=0x2, ddr_config=0x4
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x401000
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+
+./PerformanceTest_Linux_ARM64 -r 2 -d 3 -i 3 | tee ddr_score_2.1G_vref199.txt
+
+Memory Mark:                       1015
+  Database Operations              2231 Thousand Operations/s
+  Memory Read Cached               7514 MB/s
+  Memory Read Uncached             7524 MB/s
+  Memory Write                     9879 MB/s
+  Available RAM                    6598 Megabytes
+  
+
+
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+Manufacturer ID:0xff
+CH0 RX Vref:33.9%, TX Vref:13.2%,13.2%DQ rds:
+h2 l0, h1 l0, h1 l0, h0 l0, h0 l0, h0 l0, h1 l0, h0 l0,
+h0 l0, h0 l0, h0 l0, h1 l0, h2 l0, h1 l0, h0 l0, h0 l0,
+
+CH1 RX Vref:35.7%, TX Vref:13.2%,13.2%DQ rds:
+h0 l0, h1 l0, h4 l0, h3 l0, h1 l0, h1 l0, h0 l0, h3 l0,
+h1 l0, h2 l0, h2 l0, h2 l0, h1 l0, h2 l0, h1 l0, h2 l0,
+
+CH2 RX Vref:36.5%, TX Vref:13.2%,13.2%DQ rds:
+h1 l0, h1 l0, h1 l0, h0 l0, h1 l0, h2 l0, h0 l0, h1 l0,
+h1 l0, h2 l0, h4 l0, h3 l0, h3 l0, h2 l0, h3 l0, h4 l0,
+
+CH3 RX Vref:38.5%, TX Vref:13.2%,13.2%DQ rds:
+h3 l0, h4 l0, h3 l0, h4 l0, h2 l0, h1 l0, h1 l0, h1 l0,
+h1 l0, h2 l0, h4 l0, h2 l0, h1 l0, h0 l0, h1 l0, h3 l0,
+
+stride=0x2, ddr_config=0x4
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x401000
+change to F1: 528MHz
+change to F2: 1068MHz
+change to F3: 1560MHz
+change to F0: 2112MHz
+out
+
+./PerformanceTest_Linux_ARM64 -r 2 -d 3 -i 3 | tee ddr_score_2.1G.txt
+Memory Mark:                       1003
+  Database Operations              2220 Thousand Operations/s
+  Memory Read Cached               7464 MB/s
+  Memory Read Uncached             7494 MB/s
+  Memory Write                     9750 MB/s
+  Available RAM                    6553 Megabytes
+  
+
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4, 1560MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+Manufacturer ID:0xff
+CH0 RX Vref:37.7%, TX Vref:13.2%,13.2%DQ rds:
+h3 l0, h3 l0, h2 l0, h1 l0, h1 l0, h2 l0, h3 l0, h1 l0,
+h2 l0, h3 l0, h1 l0, h4 l0, h5 l0, h5 l0, h2 l0, h2 l0,
+
+CH1 RX Vref:39.8%, TX Vref:13.2%,13.2%DQ rds:
+h2 l0, h5 l0, h7 l0, h4 l0, h6 l0, h4 l0, h0 l0, h5 l0,
+h2 l0, h5 l0, h5 l0, h5 l0, h5 l0, h4 l0, h2 l0, h5 l0,
+
+CH2 RX Vref:40.8%, TX Vref:13.2%,13.2%DQ rds:
+h2 l0, h3 l0, h3 l0, h1 l0, h3 l0, h6 l0, h1 l0, h4 l0,
+h3 l0, h3 l0, h6 l0, h6 l0, h6 l0, h5 l0, h6 l0, h6 l0,
+
+CH3 RX Vref:43.2%, TX Vref:13.2%,13.2%DQ rds:
+h5 l0, h6 l0, h6 l0, h6 l0, h5 l0, h2 l0, h3 l0, h3 l0,
+h3 l0, h4 l0, h7 l0, h5 l0, h3 l0, h2 l0, h3 l0, h7 l0,
+
+stride=0x2, ddr_config=0x4
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x401000
+out
+
+./PerformanceTest_Linux_ARM64 -r 2 -d 3 -i 3 | tee ddr_score_1560M.txt
+Memory Mark:                       1255
+  Database Operations              2125 Thousand Operations/s
+  Memory Read Cached               7610 MB/s
+  Memory Read Uncached             7578 MB/s
+  Memory Write                     9939 MB/s
+  Available RAM                    6559 Megabytes
+  
+  
+DDR 3488111f83 cym 24/04/12-12:49:26,fwver: v1.17
+LPDDR4, 2112MHz
+channel[0] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[1] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[2] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+channel[3] BW=16 Col=10 Bk=8 CS0 Row=16 CS1 Row=16 CS=2 Die BW=16 Size=2048MB
+Manufacturer ID:0xff
+CH0 RX Vref:33.9%, TX Vref:13.2%,13.2%DQ rds:
+h2 l0, h1 l0, h1 l0, h0 l0, h0 l0, h0 l0, h1 l0, h0 l0,
+h1 l0, h0 l0, h0 l0, h1 l0, h2 l0, h2 l0, h0 l0, h0 l0,
+
+CH1 RX Vref:35.2%, TX Vref:13.2%,13.2%DQ rds:
+h0 l0, h1 l0, h5 l0, h2 l0, h1 l0, h1 l0, h0 l0, h3 l0,
+h1 l0, h2 l0, h2 l0, h2 l0, h2 l0, h2 l0, h1 l0, h2 l0,
+
+CH2 RX Vref:36.5%, TX Vref:13.2%,13.2%DQ rds:
+h1 l0, h2 l0, h1 l0, h0 l0, h1 l0, h4 l0, h0 l0, h1 l0,
+h1 l0, h2 l0, h4 l0, h3 l0, h3 l0, h2 l0, h4 l0, h4 l0,
+
+CH3 RX Vref:38.5%, TX Vref:13.2%,13.2%DQ rds:
+h3 l0, h4 l0, h3 l0, h4 l0, h2 l0, h1 l0, h1 l0, h1 l0,
+h1 l0, h2 l0, h4 l0, h1 l0, h2 l0, h0 l0, h1 l0, h3 l0,
+
+stride=0x2, ddr_config=0x4
+hash ch_mask0-1 0x20 0x40, bank_mask0-3 0xa00 0x1400 0x2800 0x0, rank_mask0 0x401000
+out
+
+./PerformanceTest_Linux_ARM64 -r 2 -d 3 -i 3 | tee ddr_score_2112M_fixed.txt
+Memory Mark:                       1316
+  Database Operations              2240 Thousand Operations/s
+  Memory Read Cached               7612 MB/s
+  Memory Read Uncached             7597 MB/s
+  Memory Write                     9939 MB/s
+  Available RAM                    6530 Megabytes
 
 #############################################################################
 console:/ # fw_printenv

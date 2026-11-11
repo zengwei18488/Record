@@ -1,8 +1,362 @@
-image core
+zstd -d imx-image-full-imx8mmebcrs20a1.rootfs-*.wic.zst
 
-3720
+sudo umount /dev/sde* 2>/dev/null
+sudo bmaptool copy imx-image-full-imx8mmebcrs20a1.rootfs-20261113081432.wic /dev/sde
+sync
 
-5722比较好
+sudo cp imx-image-full-imx8mmebcrs20a1.rootfs-20261117081035.wic /media/zengwei/root/root
+sudo dd if=imx-image-full-imx8mmebcrs20a1.rootfs-20261117081035.wic of=/dev/mmcblk2 bs=4M conv=fsync status=progress
+
+grep -rn -E "make .*SOC=iMX8MM|cp .*tee\.bin|cp .*bl31" /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/imx-boot/*/temp/run.do_compile
+
+sudo dd if=iMX8M/flash.bin of=/dev/sde bs=1k seek=33 conv=fsync
+
+/etc/udev/scripts/mount.sh
+/etc/udev/rules.d/automount.rules
+
+*****************************************************************************************
+QT Demo
+source /opt/fsl-imx-xwayland/6.18-wrynose/environment-setup-armv8a-poky-linux
+$CXX -O2 -fPIC qt_popup_demo.cpp -o qt_popup_demo $(pkg-config --cflags --libs Qt6Widgets || pkg-config --cflags --libs Qt5Widgets)
+
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/rs20-local/linux-imx_rs20_6.18.37_y6.0/QT-Demo/qt_popup_demo .
+
+chmod +x qt_popup_demo
+export XDG_RUNTIME_DIR=/run/user/0
+export QT_QPA_PLATFORM=wayland
+export QT_QUICK_BACKEND=software
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+./qt_popup_demo
+
+
+客户demo
+
+
+scp -r aka@172.21.171.106:/home/aka/work/CSMWTestTool_Linux_aarch64_V1.1.4.1_FB2/* .
+
+mkdir -p /root/demo/Qtlibs_bak
+mv /root/demo/Qtlibs/libstdc++.so* /root/demo/Qtlibs_bak/
+
+# 2. 設置 Wayland 環境變數並啟動客戶程式（請替換為實際執行檔名）
+export XDG_RUNTIME_DIR=/run/user/0
+export WAYLAND_DISPLAY=$(ls /run/user/0/wayland-* | head -n 1 | xargs basename)
+export QT_QPA_PLATFORM=wayland
+export LD_LIBRARY_PATH=/root/demo/Qtlibs:/usr/lib
+
+./run.sh
+
+env | grep -E "LD_LIBRARY_PATH|QT_QPA_PLUGIN_PATH|QT_PLUGIN_PATH"
+
+cd /home/adv/BSP/imx-yocto-bsp/build_ebcrs20
+bitbake -c patch weston
+SHELL_C=$(find tmp/work/*/weston/ -path "*/desktop-shell/shell.c" | head -n 1)
+echo "$SHELL_C"
+grep -rn -C 15 "click_to_activate_binding" "$SHELL_C"
+
+tmp/work/armv8a-mx8mm-poky-linux/weston/15.0.1.imx/packages-split/weston-src/usr/src/debug/weston/15.0.1.imx/desktop-shell/shell.c
+tmp/work/armv8a-mx8mm-poky-linux/weston/15.0.1.imx/sources/weston-15.0.1.imx/desktop-shell/shell.c
+
+devtool modify weston
+cd /home/adv/BSP/imx-yocto-bsp/build_ebcrs20/workspace/sources/weston
+devtool reset weston
+
+mv /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/armv8a-mx8mm-poky-linux/weston/15.0.1.imx/sources/weston-15.0.1.imx/0001-desktop-shell-prevent-modal-dialog-bury.patch recipes-graphics/wayland/files/
+
+cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-support/libcanberra/* recipes-support/libcanberra/
+cp -r /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/ .
+cp -r /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/quectel-cm/ recipes-connectivity/
+cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/conf/machine/imx8mmebcrs20a1.conf conf/machine/imx8mmebcrs20a1.conf
+cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-graphics/wayland/files/0001-desktop-shell-prevent-modal-dialog-bury.patch .
+
+bitbake -c cleansstate weston weston-init
+bitbake imx-image-full
+bitbake -c cleansstate libcanberra cheese
+bitbake cheese
+
+bitbake qtmultimedia-examples
+bitbake imx-image-full
+
+bitbake -c compile -f weston
+find tmp/work/armv8a-mx8mm-poky-linux/weston/ -name "desktop-shell.so"
+
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/armv8a-mx8mm-poky-linux/weston/15.0.1.imx/build/desktop-shell/desktop-shell.so /tmp
+
+# 1. 備份原版 desktop-shell.so
+cp /usr/lib/weston/desktop-shell.so /usr/lib/weston/desktop-shell.so.bak
+
+# 2. 覆蓋為新編譯的版本
+cp /tmp/desktop-shell.so /usr/lib/weston/desktop-shell.so
+
+# 3. 重啟 Weston 桌面服務使其生效
+systemctl restart weston.service
+sleep 2
+
+# 4. 啟動客戶 Demo 進行測試
+unset DISPLAY
+export XDG_RUNTIME_DIR=/run/user/0
+export WAYLAND_DISPLAY=$(ls /run/user/0/wayland-* | head -n 1 | xargs basename)
+export QT_QPA_PLATFORM=wayland
+export LD_LIBRARY_PATH=/root/demo/Qtlibs:/usr/lib
+/root/demo/run.sh
+
+scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/imx8/rs20/demo-yocto6.0.tar.gz .
+export LD_LIBRARY_PATH=/root/demo/Qtlibs:/usr/lib
+cd /root/demo && ./run.sh
+
+
+unset LD_LIBRARY_PATH
+export XDG_RUNTIME_DIR=/run/user/0
+export WAYLAND_DISPLAY=$(ls /run/user/0/wayland-* 2>/dev/null | grep -v '\.lock$' | head -n 1 | xargs -r basename)
+export QT_QPA_PLATFORM=wayland
+
+# 2. 啟動相機預覽工具
+/usr/share/examples/multimedia/declarative-camera/declarative-camera
+
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+unset LD_LIBRARY_PATH
+cheese
+
+你可以執行這一行確認哪一個才是 USB 攝像頭：
+grep "" /sys/class/video4linux/video*/name
+
+gst-launch-1.0 v4l2src device=/dev/video2 ! video/x-raw,width=1280,height=720 ! imxvideoconvert_g2d ! waylandsink
+
+# 1. 確保環境變數乾淨並指向 Wayland（若已載入 wayland-env.sh 可省略前三行）
+unset LD_LIBRARY_PATH
+export XDG_RUNTIME_DIR=/run/user/0
+export WAYLAND_DISPLAY=$(ls /run/user/0/wayland-* 2>/dev/null | grep -v '\.lock$' | head -n 1 | xargs basename)
+export QT_QPA_PLATFORM=wayland
+
+# 2. 啟動 Qt6 官方相機圖形工具
+/usr/share/examples/multimedia/declarative-camera/declarative-camera
+
+# 1. 強制將版本庫與工作區還原到指定節點
+git reset --hard 8005c2af949e0243f401208178ae8e2754fa2634
+# 2. 清除所有未追蹤（untracked）的殘留目錄與檔案
+git clean -fd
+# 3. 確認當前狀態已完全乾淨
+git log -n 2
+git status
+
+git ls-tree -r --name-only HEAD | grep "imx-mkimage"
+
+git push --force-with-lease adv HEAD:wrynose-6.18.37-2.1.0-rs20
+
+git fetch adv
+git reset --hard adv/wrynose-6.18.37-2.1.0-rs20
+
+# 2. 一次性產生反向還原提交（將內容完全恢復到 8005c2af949e0243f401208178ae8e2754fa2634 的狀態）
+git revert --no-commit 8005c2af949e0243f401208178ae8e2754fa2634..HEAD
+git commit -m "Revert cheese and libcanberra changes back to 8005c2af"
+
+# 3. 正常推送到遠端
+git push adv HEAD:wrynose-6.18.37-2.1.0-rs20
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+# 1. 先斷開目前的 ppp0 連線（釋放 ttyUSB2 串口占用）
+nmcli connection down "4g-auto"
+
+# 2. 發送 AT 指令將 Quectel EG25 切換為標準 MBIM 模式（usbnet=2）並重啟模組生效
+echo -e 'AT+QCFG="usbnet",2\r' > /dev/ttyUSB2
+sleep 1
+echo -e 'AT+CFUN=1,1\r' > /dev/ttyUSB2
+
+# 1. 查看 ModemManager 識別到的數據機列表與端口
+mmcli -L
+mmcli -m 0 2>/dev/null || mmcli -m 1 2>/dev/null
+
+# 2. 查看 USB 設備與驅動綁定情況（確認是否有 cdc_mbim 與 /dev/cdc-wdm0）
+ls -l /dev/cdc-wdm* /dev/ttyUSB*
+lsusb -t
+
+# 3. 查看 NetworkManager 連線狀態
+nmcli connection show
+nmcli device status
+
+udevadm control --reload-rules && udevadm trigger
+systemctl restart ModemManager
+# 2. 重載 udev 規則、重啟 ModemManager 並重新拉起連線
+udevadm control --reload-rules
+udevadm trigger --name-match=cdc-wdm0
+systemctl restart ModemManager
+sleep 6
+nmcli connection up "4g-auto"
+
+ping -I usb0 -c 4 223.5.5.5
+
+mmcli -m 0 | grep -E "ports:|state:"
+ip addr show wwan0
+
+# 查看 usb0 對應的 NetworkManager 連線名稱（通常為 "Wired connection 2"）
+nmcli connection show
+
+# 將 usb0 的連線改名為 4g-ecm 並設定 route-metric=200（將 <連線名稱> 替換為上面看到的 usb0 連線名）
+nmcli connection modify "<連線名稱>" connection.id "4g-ecm" ipv4.route-metric 200 ipv6.route-metric 200
+nmcli connection up "4g-ecm"
+
+systemctl stop ModemManager
+fuser -k /dev/ttyUSB2 /dev/ttyUSB3 2>/dev/null || true
+
+# 1. 設定 ttyUSB3 為 115200 raw 模式並監聽回顯
+stty -F /dev/ttyUSB3 115200 raw -echo
+cat /dev/ttyUSB3 &
+CAT_PID=$!
+sleep 0.5
+
+# 2. 發送恢復 QMI 模式指令並重啟模組
+printf 'AT+QCFG="usbnet",0\r\n' > /dev/ttyUSB3
+sleep 1
+printf 'AT+CFUN=1,1\r\n' > /dev/ttyUSB3
+sleep 2
+kill $CAT_PID 2>/dev/null
+lsusb -t
+-------------------------------------------------------------------
+cd /home/adv/BSP/imx-yocto-bsp/build_ebcrs20
+bitbake -e wpa-supplicant | grep -E "^(FILE|PACKAGECONFIG|SRC_URI)="
+
+bitbake -c cleansstate modemmanager networkmanager wpa-supplicant
+bitbake imx-image-full
+
+# 1. 觸發 mlan0 重新掃描周圍熱點
+nmcli device wifi rescan ifname mlan0
+
+# 2. 顯示掃描到的所有 SSID 清單、訊號強度與加密類型
+nmcli device wifi list ifname mlan0
+
+# 1. 連接指定熱點（將 "你的SSID" 與 "你的密碼" 替換為實際熱點資訊）
+nmcli device wifi connect "W iPhone" password "1443384846" ifname mlan0
+
+nmcli connection add type wifi con-name "iphone-test" ifname mlan0 \
+    ssid $'\xe6\xb3\xa2' \
+    802-11-wireless.bssid "0E:BC:A5:E8:43:DC" \
+    wifi-sec.key-mgmt wpa-psk \
+    wifi-sec.psk "1234567890"
+nmcli connection modify "iphone-test" wifi-sec.psk "1234567890"
+nmcli connection up "iphone-test"
+
+# 1. 清除所有殘留的同名設定檔
+while nmcli connection delete "iphone-test" 2>/dev/null; do :; done
+
+# 2. 建立不綁定 BSSID 的純淨連線（自动适配每次变化的 MAC 地址）
+nmcli connection add type wifi con-name "iphone-test" ifname mlan0 \
+    ssid $'\xe6\xb3\xa2' \
+    wifi-sec.key-mgmt wpa-psk \
+    wifi-sec.psk "1234567890"
+
+# 3. 立即連接熱點
+nmcli connection up "iphone-test"
+
+切換加密為 sae：如果熱點為 iPhone 15/16 等純 WPA3 模式且上述指令仍報密碼錯誤，只需修改為 sae 後重新啟動即可。sh
+nmcli connection modify "iphone-test" wifi-sec.key-mgmt sae
+nmcli connection up "iphone-test"
+
+
+nmcli device wifi connect "ADvantech for Guest" password "12345678" ifname mlan0
+nmcli device wifi connect "km32" ifname mlan0
+# 2. 查看已保存的連線設定與分配到的 IP 位址
+nmcli connection show
+ip addr show mlan0
+
+# 3. 透過 Wi-Fi 網卡測試外網連通性
+ping -I mlan0 -c 4 223.5.5.5
+
+# 1. 讓 NetworkManager 暫時停止接管 mlan0（避免搶佔控制權）
+nmcli device set mlan0 managed no
+
+# 1. 查看 Wi-Fi 連線訊號強度與連接的熱點名稱,iphone热点
+iw dev mlan0 link
+
+ip link set mlan0 up
+iw dev mlan0 scan | grep -E "SSID:|freq:|signal:"
+
+cat << 'EOF' > /etc/wpa_supplicant.conf
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+update_config=1
+
+network={
+    ssid=e6b3a2
+    psk="你的熱點密碼"
+    key_mgmt=WPA-PSK SAE
+    ieee80211w=1
+}
+EOF
+
+killall wpa_supplicant 2>/dev/null
+ip link set mlan0 up
+wpa_supplicant -B -i mlan0 -c /etc/wpa_supplicant.conf
+udhcpc -i mlan0
+
+# 1. 直接幫網關 172.20.10.1 綁定剛才查到的 iPhone 真實 MAC 位址
+ip neigh replace 172.20.10.1 lladdr 4e:5d:6a:32:7c:64 dev mlan0 nud permanent
+
+# 2. 調整 mlan0 預設路由優先級高於 eth0（可選，若用 -I mlan0 測試則不影響）
+ip route del default dev mlan0 2>/dev/null
+ip route add default via 172.20.10.1 dev mlan0 metric 5
+
+# 3. 強制指定 IPv4 測試連通外網（保證秒通！）
+ping -4 -c 4 -I mlan0 223.5.5.5
+
+
+休眠唤醒测试功能
+
+echo mem > /sys/power/state
+
+dmesg | grep tpm
+
+lsblk
+
+ ping -c 4 -I eth0 172.21.170.48
+
+
+scp -r yanwei@172.21.170.48:/home/yanwei/risc-tools/test/ebc-rs08/Quectel_QConnectManager_Linux_V1.6.8/quectel-CM .
+./quectel-CM &
+ping -c 4 -I wwan0 223.5.5.5
+
+killall wpa_supplicant 2>/dev/null
+
+cat << EOF > /tmp/wpa_km32.conf
+ctrl_interface=/var/run/wpa_supplicant
+network={
+    ssid="km32"
+    bssid=68:dd:b7:ce:46:3d
+    key_mgmt=NONE
+}
+EOF
+
+wpa_supplicant -B -i mlan0 -c /tmp/wpa_km32.conf -D nl80211 -C /var/run/wpa_supplicant
+sleep 5
+
+wpa_cli -p /var/run/wpa_supplicant -i mlan0 status
+udhcpc -i mlan0
+ip route add default via 192.168.1.1 dev mlan0 metric 50
+
+ping -c 4 -I mlan0 223.5.5.5
+
+arecord -D plughw:0,0 -f dat -d 3 /tmp/test_mic.wav && aplay -D plughw:0,0 /tmp/test_mic.wav
+speaker-test -D plughw:0,0 -c 2 -r 48000 -t sine -f 1000
+
+/etc/udev/rules.d/90-rt5640-mute.rules
+/usr/local/bin/adv_codec.sh
+/lib/systemd/system/adv-codec.service
+
+stty -F /dev/ttymxc2 -echo -onlcr -icanon 115200
+stty -F /dev/ttymxc3 -echo -onlcr -icanon 115200
+
+cat /dev/ttymxc2
+cat /dev/ttymxc3
+echo "pass" > /dev/ttymxc2
+echo "pass" > /dev/ttymxc3
+
+stty -F /dev/ttyRS4850 -echo -onlcr -icanon 115200
+stty -F /dev/ttyRS4851 -echo -onlcr -icanon 115200
+
+cat /dev/ttyRS4850
+cat /dev/ttyRS4851
+echo "pass" > /dev/ttyRS4850
+echo "pass" > /dev/ttyRS4851
 
 ##################################################################################################################
 
@@ -172,7 +526,32 @@ imx-mkimage/iMX8M/
 git checkout -b imx-linux-Wrynose-rs20
 git push -u origin adv_6.18.37_2.1.0_rs20
 
+/home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/linux-imx/6.18.37+git/build/
+/home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work-shared/imx8mmebcrs20a1/kernel-source/
 
+在终端执行以下指令，跳过 fsync 检查，直接让 Linux 内核卸载该 SCSI/USB 块设备：
+echo 1 | sudo tee /sys/block/sdd/device/delete
+
+echo '2-4' | sudo tee /sys/bus/usb/drivers/usb/unbind
+sleep 1
+echo '2-4' | sudo tee /sys/bus/usb/drivers/usb/bind
+
+# 1. 對比兩邊內核的 .config 差異（最關鍵！一眼看出哪些驅動在 Yocto 裡沒開或變成模組 =m）
+diff -u /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/rs20-local/linux-imx_rs20_6.18.37_y6.0/.config \
+        /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work-shared/imx8mmebcrs20a1/kernel-build-artifacts/.config \
+        | grep -E "^[+-]CONFIG_"
+# 2. 確認 Yocto 實際使用的基礎 defconfig 名稱
+grep "KBUILD_DEFCONFIG" /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/linux-imx/6.18.37+git/temp/log.do_configure
+
+bitbake -e linux-imx | grep "^KBUILD_DEFCONFIG"
+
+bitbake -c cleansstate linux-imx
+bitbake -c cleansstate kernel-module-nxp-wlan
+bitbake -c configure linux-imx
+grep -E "CONFIG_ARCH_ADVANTECH|CONFIG_DRM_SAMSUNG_DSIM|CONFIG_SND_SOC_RT5640" /home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/linux-imx/6.18.37+git/build/.config
+bitbake adv-codec
+bitbake adv-udev-rules
+bitbake imx-image-full
 
 cp -r /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_imx8mm_evk/tmp/deploy/images/imx8mm-lpddr4-evk/imx-boot-tools/* ./
 git clone git@github.com:ADVANTECH-Corp/uboot-imx.git -b adv_v2026.04_6.18.37_2.1.0_rs20
@@ -217,6 +596,11 @@ git clone git@ssh.dev.azure.com:v3/AIM-Linux/meta-advantech-nxp/meta-advantech-n
 
 git checkout -b adv_6.18.37_2.1.0_rs20 --track origin/adv_6.18.37_2.1.0_rs20
 
+adv@0cd0a8a22b93:~/BSP/imx-yocto-bsp/build_ebcrs20$ ssh -T git@ssh.dev.azure.com
+remote: Shell access is not supported.
+shell request failed on channel 0
+adv@0cd0a8a22b93:~/BSP/imx-yocto-bsp/build_ebcrs20$ 
+
 source /opt/fsl-imx-xwayland/6.18-wrynose/environment-setup-armv8a-poky-linux
 make imx_v8_adv_defconfig
 make -j4 freescale/imx8mm-ebcrs20-a1.dtb
@@ -224,11 +608,600 @@ make -j8 Image
 make -j8 modules
 make modules_install INSTALL_MOD_PATH=$CURRENT_DIR/k-modules/
 
+ls -l k-modules/lib/modules/
+
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/rs20-local/linux-imx_rs20_6.18.37_y6.0/k-modules/lib/modules/6.18.37-gc9800eda0915-dirty.tgz .
+
 ./common.sh
 ./dtb_build.sh
 ./image_build.sh
 ./mode_build.sh
 
+cp arch/arm64/boot/dts/freescale/imx8mm-ebcrs20-a1.dtb /media/zengwei/boot/
+cp arch/arm64/boot/Image /media/zengwei/boot/
+
+ scp -r yanwei@172.21.170.48:/home/yanwei/risc-tools/test/ebc-rs08/Quectel_QConnectManager_Linux_V1.6.8/quectel-CM .
+ 
+cd /home/adv/BSP/imx-yocto-bsp/build_ebcrs20
+bitbake -c cleansstate packagegroup-core-tools-testapps networkmanager quectel-cm
+bitbake imx-image-full
+
+# 檢查兩個服務是否均處於 active (running)
+systemctl status quectel-cm.service quectel-watchdog.service --no-pager
+
+# 檢查 wwan0 是否已取得電信商 IP 位址，並測試外網連通性
+ip addr show wwan0
+ping -I wwan0 -c 4 223.5.5.5
+
+# 讀取當前 GPIO1_IO06 電平（正常應輸出 gpio 6=1）
+gpio-ctrl 6
+
+# 手動拉低斷電 2 秒再拉高（觀察串口或 dmesg 應出現 USB 2c7c 斷開並重新枚舉）
+gpio-ctrl 6 0 && sleep 2 && gpio-ctrl 6 1
+
+# 1. 實時監控看門狗日誌
+journalctl -u quectel-watchdog.service -f &
+
+# 2. 模擬第一級故障：手動殺掉 quectel-CM 進程（quectel-cm.service 應在 5 秒內自動拉起並重新取 IP）
+killall -9 quectel-CM
+
+# 3. 模擬深層故障（觸發多級恢復直到第四級 GPIO 斷電）：
+# 臨時封鎖 ping 探測流量，觀察日誌依序執行 Stage 1 -> Stage 2 (AT+CFUN) -> Stage 3 (USB Rebind) -> Stage 4 (GPIO1_IO06 Power Cycle)
+iptables -I OUTPUT -o wwan0 -p icmp -j DROP
+# （觀察完整演練完四級恢復後，執行下行解除封鎖，即可看到網路自動恢復）
+iptables -D OUTPUT -o wwan0 -p icmp -j DROP
+
+# 進入深度休眠（測量底電流應與無 4G 服務時完全一致）
+echo mem > /sys/power/state
+
+# 喚醒後等待約 10~15 秒，確認 4G 自動恢復連網
+ip addr show wwan0
+ping -I wwan0 -c 4 223.5.5.5
+
+systemctl is-active quectel-cm.service quectel-watchdog.service
+
+echo 1 > /sys/devices/platform/misc-adv-gpio/minipcie_reset
+sleep 5
+dmesg | tail -n 12
+
+systemctl stop quectel-cm.service
+for dev in /sys/bus/usb/devices/*; do
+    [ -f "$dev/idVendor" ] && [ "$(cat "$dev/idVendor")" = "2c7c" ] && devname=$(basename "$dev")
+done
+echo "$devname" > /sys/bus/usb/drivers/usb/unbind && sleep 3 && echo "$devname" > /sys/bus/usb/drivers/usb/bind
+sleep 5
+systemctl start quectel-cm.service
+
+systemctl stop quectel-cm.service
+stty -F /dev/ttyUSB2 115200 raw -echo && printf 'AT+CFUN=1,1\r\n' > /dev/ttyUSB2
+sleep 15
+systemctl start quectel-cm.service
+
+dmesg | tail -n 200
+
+killall -9 quectel-CM
+sleep 8
+systemctl is-active quectel-cm.service && ip addr show wwan0 | grep "inet "
+
+systemctl status quectel-cm.service quectel-watchdog.service --no-pager
+journalctl -u quectel-watchdog.service --no-pager
+# 1. 確認 USB 總線上確實沒有移遠模組 (2c7c)
+lsusb | grep -i 2c7c || echo "No Quectel USB device present"
+# 2. 確認背景沒有殘留任何撥號或看門狗進程
+pgrep -af "quectel" || echo "No quectel processes running (0 overhead)"
+
+# 查看上一次開機（-b -1）的 4G 看門狗日誌
+journalctl -b -1 -u quectel-watchdog.service -u quectel-cm.service
+先列出所有歷史開機批次清單（含精確日期與時間）
+journalctl --list-boots
+
+全自动演练测试脚本
+cat << 'EOF' > /tmp/test_4g_4stages.sh
+#!/bin/sh
+
+LOG_FILE="/tmp/4g_4stages_test.log"
+: > "$LOG_FILE"
+
+# ANSI Color Codes
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[1;34m'
+MAGENTA='\033[1;35m'
+CYAN='\033[1;36m'
+NC='\033[0m'
+
+log_both() {
+    color="$1"
+    msg="$2"
+    printf "${color}%s${NC}\n" "$msg"
+    printf "%s\n" "$msg" >> "$LOG_FILE"
+}
+
+print_mechanism() {
+    title="$1"
+    detail="$2"
+    log_both "$MAGENTA" "[MECHANISM - $title]"
+    log_both "$BLUE" "  -> $detail"
+}
+
+print_log_guide() {
+    log_both "$CYAN" "\n=================================================================="
+    log_both "$CYAN" "  PERSISTENT LOG ARCHITECTURE & QUERY GUIDE"
+    log_both "$CYAN" "=================================================================="
+    log_both "$BLUE" "1. Storage Architecture (Survives Reboot & Power Loss):"
+    log_both "$NC"   "   - Symlink : /var/log/journal -> /var/log-persistent/journal (on eMMC)"
+    log_both "$NC"   "   - Config  : /etc/systemd/journald.conf.d/persistent.conf"
+    log_both "$NC"   "   - Limits  : SystemMaxUse=50M (auto-rotates oldest logs), SyncIntervalSec=30s"
+    log_both "$NC"   "   - Drill Log: $LOG_FILE (temporary volatile report for current drill)"
+    log_both "$BLUE" "2. Essential Log Query Commands:"
+    log_both "$YELLOW" "   - Live monitor 4G services :"
+    log_both "$NC"   "       journalctl -u quectel-watchdog.service -u quectel-cm.service -f"
+    log_both "$YELLOW" "   - View current boot logs   :"
+    log_both "$NC"   "       journalctl -b 0 -u quectel-watchdog.service -u quectel-cm.service --no-pager"
+    log_both "$YELLOW" "   - View previous boot logs  :"
+    log_both "$NC"   "       journalctl -b -1 -u quectel-watchdog.service -u quectel-cm.service --no-pager"
+    log_both "$YELLOW" "   - List all recorded boots  :"
+    log_both "$NC"   "       journalctl --list-boots"
+    log_both "$YELLOW" "   - Search all Stage events  :"
+    log_both "$NC"   "       journalctl -u quectel-watchdog.service | grep -E 'Stage [1-4]|hardware reset|recovered'"
+    log_both "$CYAN" "=================================================================="
+}
+
+cleanup() {
+    iptables -D OUTPUT -o wwan0 -p icmp -j DROP 2>/dev/null || true
+    [ -n "$JOURNAL_PID" ] && { pkill -P "$JOURNAL_PID" 2>/dev/null; kill "$JOURNAL_PID" 2>/dev/null; } || true
+}
+trap cleanup EXIT INT TERM
+
+log_both "$CYAN" "=================================================================="
+log_both "$CYAN" "[$(date '+%F %T')] Starting Adaptive 4G Keepalive & Self-Healing Drill"
+log_both "$CYAN" "Live colored output on console; plain log saved at: $LOG_FILE"
+log_both "$CYAN" "=================================================================="
+
+# =========================================================================
+# PHASE 0: Persistent Journald Storage Verification
+# =========================================================================
+log_both "$CYAN" "\n--- [PHASE 0] Verifying Persistent Journald Storage (eMMC) ---"
+print_mechanism "Persistent Logging" \
+    "systemd-tmpfiles maps /var/log/journal to /var/log-persistent/journal on eMMC (50MB cap) so logs survive reboots."
+
+if [ -L /var/log/journal ] && [ -d /var/log-persistent/journal ]; then
+    TARGET=$(readlink -f /var/log/journal)
+    log_both "$GREEN" "[PASS] Persistent journal symlink verified: /var/log/journal -> $TARGET"
+    journalctl --flush 2>/dev/null || true
+    BOOT_COUNT=$(journalctl --list-boots 2>/dev/null | wc -l)
+    log_both "$BLUE" "[INFO] Total recorded boot sessions on eMMC: $BOOT_COUNT"
+else
+    log_both "$YELLOW" "[WARN] /var/log/journal persistent symlink not found (logs may currently reside in RAM)."
+fi
+
+# =========================================================================
+# PHASE 1: Hardware Presence Detection (Auto-branch for No-Modem vs Modem)
+# =========================================================================
+log_both "$CYAN" "\n--- [PHASE 1] Detecting Quectel 4G Module (idVendor=2c7c) ---"
+print_mechanism "Hardware Auto-Detection" \
+    "Both services scan /sys/bus/usb/devices/*/idVendor for '2c7c'. If absent, they exit with code 0 (RestartPreventExitStatus=0) for zero CPU/log overhead."
+
+if ! grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then
+    log_both "$YELLOW" "[INFO] No Quectel 4G module (2c7c) detected on USB bus."
+    log_both "$BLUE" "[TEST] Waiting up to 25s to verify both services exit cleanly without restart loops..."
+    sleep 25
+
+    CM_STATE=$(systemctl is-active quectel-cm.service 2>/dev/null || true)
+    WD_STATE=$(systemctl is-active quectel-watchdog.service 2>/dev/null || true)
+    CM_RESULT=$(systemctl show -p Result --value quectel-cm.service 2>/dev/null || true)
+    WD_RESULT=$(systemctl show -p Result --value quectel-watchdog.service 2>/dev/null || true)
+
+    log_both "$BLUE" "[STATUS] quectel-cm.service       : state=$CM_STATE, result=$CM_RESULT"
+    log_both "$BLUE" "[STATUS] quectel-watchdog.service : state=$WD_STATE, result=$WD_RESULT"
+    journalctl -u quectel-watchdog.service -n 5 --no-pager | tee -a "$LOG_FILE"
+
+    if [ "$CM_STATE" = "inactive" ] && [ "$WD_STATE" = "inactive" ] && \
+       [ "$CM_RESULT" = "success" ] && [ "$WD_RESULT" = "success" ]; then
+        log_both "$GREEN" "\n=================================================================="
+        log_both "$GREEN" "[$(date '+%F %T')] PASS! No-Modem Silent Mode verified (0 CPU/log overhead)."
+        log_both "$GREEN" "=================================================================="
+        print_log_guide
+        exit 0
+    else
+        log_both "$RED" "[FAIL] Services did not exit cleanly in No-Modem mode!"
+        exit 1
+    fi
+fi
+
+log_both "$GREEN" "[OK] Quectel modem (idVendor=2c7c) detected on USB bus. Proceeding to active protection tests..."
+
+# Start real-time log stream with color highlighting
+(
+    journalctl -u quectel-watchdog.service -u quectel-cm.service -f -n 0 | while IFS= read -r line; do
+        printf "%s\n" "$line" >> "$LOG_FILE"
+        case "$line" in
+            *"quectel-CM process not running"*)
+                printf "${YELLOW}%s${NC}\n" "$line"
+                ;;
+            *"Stage 1 Recovery"*|*"Stage 2 Recovery"*|*"Stage 3 Recovery"*)
+                printf "${YELLOW}%s${NC}\n" "$line"
+                ;;
+            *"Stage 4 Recovery"*|*"Mini PCIe hardware reset triggered"*)
+                printf "${RED}%s${NC}\n" "$line"
+                ;;
+            *"recovered"*)
+                printf "${GREEN}%s${NC}\n" "$line"
+                ;;
+            *)
+                printf "%s\n" "$line"
+                ;;
+        esac
+    done
+) &
+JOURNAL_PID=$!
+sleep 1
+
+# =========================================================================
+# PHASE 2: Systemd 2s Fast Crash Recovery Test (kill -9 quectel-CM)
+# =========================================================================
+log_both "$CYAN" "\n--- [PHASE 2] Testing Systemd 2s Crash Recovery (SIGKILL quectel-CM) ---"
+print_mechanism "Systemd Fast Respawn" \
+    "quectel-cm.service uses Restart=always with RestartSec=2 to immediately respawn crashed dialer processes."
+
+OLD_PID=$(pgrep -x quectel-CM | head -n 1)
+if [ -z "$OLD_PID" ]; then
+    log_both "$RED" "[FAIL] quectel-CM process not found before Phase 2!"
+    exit 1
+fi
+log_both "$YELLOW" "[ACTION] Killing quectel-CM (PID=$OLD_PID) with SIGKILL..."
+kill -9 "$OLD_PID"
+sleep 4
+
+NEW_PID=$(pgrep -x quectel-CM | head -n 1)
+if [ -n "$NEW_PID" ] && [ "$NEW_PID" != "$OLD_PID" ]; then
+    log_both "$GREEN" "[PASS] Systemd restarted quectel-CM within 4s (Old PID=$OLD_PID -> New PID=$NEW_PID)."
+else
+    log_both "$RED" "[FAIL] quectel-CM did not restart within 4s!"
+    exit 1
+fi
+sleep 8
+
+# =========================================================================
+# PHASE 3: Watchdog 5s Process Liveness Enforcement (systemctl stop)
+# =========================================================================
+log_both "$CYAN" "\n--- [PHASE 3] Testing Watchdog 5s Process Enforcement (systemctl stop) ---"
+print_mechanism "5s Process Liveness Polling" \
+    "Watchdog polls 'pgrep -x quectel-CM' every 5s during idle intervals and immediately restarts the service if stopped."
+
+log_both "$YELLOW" "[ACTION] Stopping quectel-cm.service manually to simulate accidental service stop..."
+systemctl stop quectel-cm.service
+sleep 7
+
+RECOVERED_PID=$(pgrep -x quectel-CM | head -n 1)
+if [ -n "$RECOVERED_PID" ]; then
+    log_both "$GREEN" "[PASS] Watchdog detected missing process and revived quectel-CM (PID=$RECOVERED_PID) within 7s!"
+else
+    log_both "$RED" "[FAIL] Watchdog failed to revive stopped quectel-cm.service!"
+    exit 1
+fi
+sleep 8
+
+# =========================================================================
+# PHASE 4: 4-Stage Progressive Network Outage Self-Healing Drill
+# =========================================================================
+log_both "$CYAN" "\n--- [PHASE 4] Testing 4-Stage Progressive Network Self-Healing ---"
+print_mechanism "4-Stage Progressive Escalation" \
+    "Every 30s, Watchdog binds 'ping -I wwan0' to isolate 4G from eth0/Wi-Fi. 3 consecutive failures (~90s) escalate: Stage 1 (Service Restart) -> Stage 2 (AT+CFUN=1,1) -> Stage 3 (USB unbind/bind) -> Stage 4 (minipcie_reset hardware power-cycle)."
+
+log_both "$YELLOW" "[STEP 1] Injecting simulated 4G outage (iptables DROP wwan0 ICMP)..."
+iptables -I OUTPUT -o wwan0 -p icmp -j DROP
+
+log_both "$BLUE" "[STEP 2] Waiting for Watchdog escalation Stage 1 -> Stage 2 -> Stage 3 -> Stage 4 (approx. 8-9 mins)..."
+TIMEOUT=650
+ELAPSED=0
+while [ "$ELAPSED" -lt "$TIMEOUT" ]; do
+    if grep -q "Mini PCIe hardware reset triggered" "$LOG_FILE"; then
+        log_both "$RED" "[STEP 3] Stage 4 hardware reset triggered! Waiting 25s for modem cold boot & redial..."
+        sleep 25
+        break
+    fi
+    sleep 3
+    ELAPSED=$((ELAPSED + 3))
+done
+
+if [ "$ELAPSED" -ge "$TIMEOUT" ]; then
+    log_both "$RED" "[ERROR] Timeout waiting for Stage 4 (exceeded ${TIMEOUT}s). Check $LOG_FILE!"
+    exit 1
+fi
+log_both "$YELLOW" "[STEP 4] Removing network block, restoring wwan0 traffic..."
+iptables -D OUTPUT -o wwan0 -p icmp -j DROP 2>/dev/null || true
+log_both "$BLUE" "[STEP 5] Waiting 35s for Watchdog to verify link recovery and reset counters..."
+sleep 35
+log_both "$CYAN" "------------------------------------------------------------------"
+log_both "$BLUE" "[STEP 6] Verifying wwan0 IP address and external ping:"
+ip addr show wwan0 | tee -a "$LOG_FILE"
+if ping -I wwan0 -c 4 223.5.5.5 | tee -a "$LOG_FILE"; then
+log_both "$GREEN" "\n=================================================================="
+log_both "$GREEN" "[$(date '+%F %T')] ALL PHASES PASSED! Persistent logs, hardware check, 2s respawn, 5s enforcement, and 4-stage reset succeeded!"
+log_both "$GREEN" "Full drill report saved at: $LOG_FILE"
+log_both "$GREEN" "=================================================================="
+print_log_guide
+else
+log_both "$RED" "[$(date '+%F %T')] [WARN] Ping test failed. Please inspect $LOG_FILE."
+print_log_guide
+exit 1
+fi
+EOF
+
+chmod +x /tmp/test_4g_4stages.sh
+/tmp/test_4g_4stages.sh
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^…………………………………………………………………………………………………………………………………………………………………………………………………………………………6
+arecord -D hw:0,0 -f S16_LE -r 48000 -c 2 -V stereo -d 5 audio_test.wav
+aplay -D hw:0,0 audio_test.wav
+
+root@imx8mmebcrs20a1:~# gpioinfo -c gpiochip3 | grep "line  29"
+        line  29:       unnamed                 input
+
+grep -rn -A 10 "pinctrl_codec_mute\|misc-adv-gpio" arch/arm64/boot/dts/freescale/imx8mm-ebcrs20*
+# 2. 在板子上查看所有已被驅動申請的 GPIO 清單（看功放控制腳叫什麼名字）
+cat /sys/kernel/debug/gpio
+
+speaker-test -D plughw:0,0 -c 2 -r 48000 -t sine -f 1000
+
+arecord -D plughw:0,0 -f dat -d 3 /tmp/test_mic.wav && aplay -D plughw:0,0 /tmp/test_mic.wav
+
+scp -r aka@172.21.171.106:/home/aka/work/extdisk/code/imx/6.12.20/flexbuild/rootfs-overlay-adv/imx8mmebcrs20a1/usr/local/bin/adv_codec.sh .
+
+bitbake -c cleansstate adv-codec  linux-imx
+
+ls -l /home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/imx-image-full/1.0/rootfs/usr/local/bin/adv_codec.sh
+
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/meta-advantech-nxp-rs20/recipes-bsp/adv-codec/files/adv_codec.sh .
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/meta-advantech-nxp-rs20/recipes-bsp/adv-codec/files/adv_codec.sh /usr/local/bin/adv_codec.sh .
+
+systemctl --user stop pipewire.socket pipewire.service wireplumber.service 2>/dev/null
+systemctl stop pipewire.socket pipewire.service 2>/dev/null
+killall -9 pipewire wireplumber 2>/dev/null
+
+amixer -c 0 cset name='DAC IF1 Data Switch' 1
+amixer -c 0 cset name='DAC MIXL INF1 Switch' 1
+amixer -c 0 cset name='DAC MIXR INF1 Switch' 1
+amixer -c 0 cset name='DAC1 Playback Volume' 175
+
+amixer -c 0 cset name='Stereo DAC MIXL DAC L1 Switch' 1
+amixer -c 0 cset name='Stereo DAC MIXR DAC R1 Switch' 1
+amixer -c 0 cset name='Mono DAC MIXL DAC L1 Switch' 1
+amixer -c 0 cset name='Mono DAC MIXR DAC R1 Switch' 1
+
+amixer -c 0 cset name='SPK MIXL DAC L1 Switch' 1
+amixer -c 0 cset name='SPK MIXR DAC R1 Switch' 1
+amixer -c 0 cset name='SPOL MIX DAC L1 Switch' 1
+amixer -c 0 cset name='SPOR MIX DAC R1 Switch' 1
+amixer -c 0 cset name='Speaker L Playback Switch' 1
+amixer -c 0 cset name='Speaker R Playback Switch' 1
+amixer -c 0 cset name='Speaker Playback Volume' 39
+
+amixer -c 0 cset name='LOUT MIX DAC L1 Switch' 1
+amixer -c 0 cset name='LOUT MIX DAC R1 Switch' 1
+amixer -c 0 cset name='OUT Playback Switch' on,on
+amixer -c 0 cset name='OUT Channel Switch' on,on 2>/dev/null || true
+amixer -c 0 cset name='OUT Playback Volume' 28,28
+
+amixer -c 0 cset name='HPO MIX DAC1 Switch' 1
+amixer -c 0 cset name='HPO MIX DAC2 Switch' 1
+amixer -c 0 cset name='HP Channel Switch' on,on 2>/dev/null || true
+amixer -c 0 cset name='HP L Playback Switch' 1
+amixer -c 0 cset name='HP R Playback Switch' 1
+amixer -c 0 cset name='HP Playback Volume' 39
+
+amixer -c 0 cset name='RECMIXL BST1 Switch' 1
+amixer -c 0 cset name='RECMIXR BST1 Switch' 1
+amixer -c 0 cset name='RECMIXL BST2 Switch' 0
+amixer -c 0 cset name='RECMIXR BST2 Switch' 0
+amixer -c 0 cset name='Stereo ADC1 Mux' 'ADC'
+amixer -c 0 cset name='Stereo ADC MIXL ADC1 Switch' 1
+amixer -c 0 cset name='Stereo ADC MIXR ADC1 Switch' 1
+amixer -c 0 cset name='Stereo ADC MIXL ADC2 Switch' 0
+amixer -c 0 cset name='Stereo ADC MIXR ADC2 Switch' 0
+amixer -c 0 cset name='ADC Capture Switch' 1,1
+amixer -c 0 cset name='ADC Capture Volume' 50%
+amixer -c 0 cset name='ADC Boost Gain' 1,1
+amixer -c 0 cset name='IN Capture Volume' 17,17
+amixer -c 0 cset name='IN1 Boost' 3
+amixer -c 0 cset name='IN2 Boost' 3
+amixer -c 0 cset name='IN3 Boost' 3
+
+speaker-test -D plughw:0,0 -c 2 -r 48000 -t sine -f 1000
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+stty -F /dev/ttymxc2 -echo -onlcr -icanon 115200
+stty -F /dev/ttymxc3 -echo -onlcr -icanon 115200
+
+stty -F /dev/ttyUSB4 -echo -onlcr -icanon 115200
+stty -F /dev/ttyUSB5 -echo -onlcr -icanon 115200
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+root@imx8mmebcrs20a1:~# cat /sys/power/state
+freeze mem
+透過 systemd 標準休眠指令（推薦，會正常通知系統服務）
+systemctl suspend
+
+直接寫入內核電源管理介面（最底層直接觸發）
+echo mem > /sys/power/state
+
+
+# 1. 查看系統中有幾個 RTC 設備及各自名稱（例如 snvs_rtc 或 rtc-s35390a）
+cat /sys/class/rtc/rtc*/name
+
+# 2. 檢查 rtc0 的父設備是否有 power/wakeup 屬性節點
+ls -l /sys/class/rtc/rtc0/device/power/wakeup
+
+# 3. 若存在該節點，手動啟用 wakeup 後再測 10 秒定時休眠喚醒
+echo enabled > /sys/class/rtc/rtc0/device/power/wakeup
+rtcwake -m mem -s 10
+# 設定 10 秒後由 RTC 鬧鐘自動喚醒，並立即進入深度休眠
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+echo -e "AT+CPIN? \r\n" > /dev/ttyUSB2
+
+# 1. 查詢目前的 SIM 卡熱插拔偵測狀態
+echo -e "AT+QSIMDET?\r\n" > /dev/ttyUSB2
+
+# 2. 關閉 SIM 卡熱插拔偵測（若底板沒接偵測腳，或高低電平極性與預設相反，關閉後模組會直接強行讀取卡槽）
+echo -e "AT+QSIMDET=0,0\r\n" > /dev/ttyUSB2
+
+# 3. 軟重啟模組讓設定生效（執行後需等待約 10~15 秒讓 USB 重新枚舉）
+echo -e "AT+CFUN=1,1\r\n" > /dev/ttyUSB2
+
+ping -c 4 -I wwan0 223.5.5.5
+
+# 寫入阿里雲與 114 公共 DNS
+echo "nameserver 223.5.5.5" > /etc/resolv.conf
+echo "nameserver 114.114.114.114" >> /etc/resolv.conf
+
+# 再次測試解析並 Ping 百度
+ping -c 4 www.baidu.com
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ ip link show
+ ip link set mlan0 up
+iw dev mlan0 scan | grep "SSID:"
+
+iw dev mlan0 scan | awk '
+/^BSS / { bss=$2 }
+/freq:/ { freq=$2 }
+/signal:/ { sig=$2 }
+/SSID:/ { 
+    sub(/.*SSID: /, ""); 
+    if ($0 != "") printf "%6.1f dBm | %4s MHz | %s | %s\n", sig, freq, bss, $0 
+}' | sort -nr
+
+
+killall wpa_supplicant 2>/dev/null
+
+cat << EOF > /tmp/wpa_km32.conf
+ctrl_interface=/var/run/wpa_supplicant
+network={
+    ssid="km32"
+    bssid=68:dd:b7:ce:46:3d
+    key_mgmt=NONE
+}
+EOF
+
+wpa_supplicant -B -i mlan0 -c /tmp/wpa_km32.conf -D nl80211 -C /var/run/wpa_supplicant
+sleep 5
+
+wpa_cli -p /var/run/wpa_supplicant -i mlan0 status
+udhcpc -i mlan0
+
+echo "nameserver 223.5.5.5" > /etc/resolv.conf
+ip route
+ip route show
+ip route replace default via 192.168.1.1 dev mlan0
+
+cat << EOF > /etc/resolv.conf
+nameserver 172.21.218.102
+nameserver 223.5.5.5
+EOF
+
+ping -c 4 www.baidu.com
+
+
+killall wpa_supplicant 2>/dev/null
+ip addr flush dev mlan0
+
+# 2. 建立手機熱點配置檔（請將 "你的手機熱點密碼" 替換為實際密碼）
+cat << EOF > /tmp/wpa_phone.conf
+ctrl_interface=/var/run/wpa_supplicant
+network={
+    ssid="0306-Mate 60"
+    psk="abc123abc"
+}
+EOF
+
+# 3. 啟動連線並等待 4 秒讓握手完成
+wpa_supplicant -B -i mlan0 -c /tmp/wpa_phone.conf -D nl80211 -C /var/run/wpa_supplicant
+sleep 4
+
+# 4. 確認無線層已連線（顯示 wpa_state=COMPLETED）
+wpa_cli -p /var/run/wpa_supplicant -i mlan0 status | grep "wpa_state"
+
+# 5. 透過 DHCP 取得手機配發的 IP，並自動更新預設路由與 DNS
+udhcpc -i mlan0
+echo "nameserver 223.5.5.5" > /etc/resolv.conf
+
+# 6. 測試連通外網（強制走 mlan0 網卡）
+ping -c 4 -I mlan0 www.baidu.com
+
+Bluetooth test
+-------------------------------------------------------
+# 1. 立即手動載入 NXP 藍牙串口驅動模組（自動匹配設備樹生成 hci0）
+modprobe btnxpuart
+
+# 2. 設定開機自動載入模組（永久生效，免除每次重開機手動 modprobe）
+mkdir -p /etc/modules-load.d
+echo "btnxpuart" > /etc/modules-load.d/bt.conf
+sync
+
+# 3. 確認 hci0 裝置狀態與 MAC 位址
+hciconfig -a
+
+bluetoothctl
+power on
+scan on
+
+# 1. 檢查 bluez5 與 packagegroup-tools-bluetooth 是否已在映像安裝清單中
+bitbake -e imx-image-full | grep "^IMAGE_INSTALL=" | tr ' ' '\n' | grep -E "^(bluez5|packagegroup-tools-bluetooth)$"
+
+# 2. 檢查 networkmanager 是否已開啟 bluetooth 支援
+bitbake -e networkmanager | grep "^PACKAGECONFIG="
+
+root@imx8mmebcrs20a1:~# bluetoothctl devices Connected
+Device 4C:5D:6A:21:C0:C4 波
+root@imx8mmebcrs20a1:~# hcitool con
+Connections:
+        < ACL 4C:5D:6A:21:C0:C4 handle 1 state 1 lm PERIPHERAL AUTH ENCRYPT
+root@imx8mmebcrs20a1:~#
+root@imx8mmebcrs20a1:~# hcitool rssi 4C:5D:6A:21:C0:C4
+RSSI return value: -47
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
+./scripts/dtc/dtc -I dtb -O dts -o restored_flash_evk.dts arch/arm64/boot/dts/freescale/imx8mm-ebcrs20-a1.dtb
+vim restored_flash_evk.dts
+CONFIG_DRM_SAMSUNG_DSIM
+CONFIG_DRM_IMX_SEC_DSIM
+
+进入救援模式
+setenv mmcargs "${mmcargs} systemd.unit=rescue.target"
+boot
+
+
+/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/deploy/images/imx8mmebcrs20a1
+
+zstd -d imx-image-full-imx8mmebcrs20a1.rootfs-*.wic.zst
+
+sudo dd if=imx-image-full-imx8mmebcrs20a1.rootfs-20261111094046.wic of=/dev/sde bs=4M conv=fsync status=progress
+sudo dd if=imx-image-full-imx8mmebcrs20a1.rootfs-20261111075248.wic of=/dev/mmcblk2 bs=4M conv=fsync status=progress
+
+# 1. 驗證 .wic.zst 檔案本身是否完整無損（輸出 OK 代表映像檔完全正常）
+zstd -t /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/deploy/images/imx8mmebcrs20a1/imx-image-full-imx8mmebcrs20a1.rootfs-20261111075248.wic.zst
+
+# 2. 確認 SD 卡設備代號（看容量為 29.7G 的磁碟）並卸載所有自動掛載的分區
+lsblk -d -o NAME,SIZE,MODEL,TRAN
+sudo umount /dev/sde* 2>/dev/null
+
+# 3. 寫入映像（conv=fsync 確保資料直接寫入物理閃存而非記憶體快取）
+zstdcat imx-image-full-imx8mmebcrs20a1.rootfs-20261111094046.wic.zst | sudo dd of=/dev/sde bs=4M status=progress conv=fsync
+
+# 4. 強制同步並檢查寫入後的分區表與檔案系統是否完好
+sync
+sudo partprobe /dev/sde
+sudo e2fsck -f -n /dev/sde2
+
+
+sudo dd if=imx-boot-imx8mmebcrs20a1-sd.bin-flash_evk of=/dev/sdd bs=1k seek=33 conv=fsync
 
 MACHINE=imx8mmebcrs20a1 DISTRO=fsl-imx-xwayland EULA=1 source ./imx-setup-release.sh -b build_ebcrs20
 bitbake-layers add-layer ../sources/meta-advantech-nxp
@@ -237,19 +1210,65 @@ bitbake imx-image-full
 bitbake linux-imx -c cleansstate
 bitbake u-boot-imx -c cleansstate
 bitbake imx-boot -c cleansstate
+bitbake -c cleansstate kernel-module-nxp-wlan
 bitbake optee-os -c cleansstate
+
 bitbake imx-atf -c cleanall
 bitbake optee-os -c cleanall
 bitbake u-boot-imx -c cleanall
 bitbake imx-boot -c cleanall
 bitbake imx-boot
 
+bitbake -c cleansstate linux-firmware adv-wakeup-script adv-udev-rules
+bitbake linux-firmware adv-wakeup-script
+bitbake -c cleansstate advresize-script && bitbake imx-image-full
+cat /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/armv8a-poky-linux/advresize-script/1.0/image/tools/adv_resize.sh
+cat /home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work/armv8a-poky-linux/advresize-script/1.0/image/tools/adv_resize.sh
+
+bitbake -c cleansstate optee-os-tadevkit
+
+bitbake -c cleansstate quectel-cm u-boot-imx linux-imx imx-boot
+bitbake quectel-cm u-boot-imx imx-boot linux-imx 
+bitbake -c cleansstate u-boot-imx linux-imx imx-boot
+bitbake -c clean imx-image-full
+bitbake imx-image-full
+bitbake u-boot-imx linux-imx imx-boot
+bitbake imx-boot
+bitbake -c cleansstate advresize-script
+bitbake advresize-script boottimes-script poweronoff-script
+bitbake advresize-script
+
+root@imx8mmebcrs20a1:~# df -h /
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        29G  3.3G   24G  12% /
+root@imx8mmebcrs20a1:~# systemctl is-enabled adv_resize.service
+disabled
+root@imx8mmebcrs20a1:~#
+
+
+bitbake linux-imx -c fetch -f
+bitbake u-boot-imx -c fetch -f
+
+測試直接連線 GitHub 的回應速度
+curl -I -v --connect-timeout 5 https://github.com
+sudo extundelete /dev/sda2 --restore-file /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/deploy/images/imx8mmebcrs20a1/imx-image-full-imx8mmebcrs20a1.rootfs-20261106014952.wic
+
+tar -I "zstd -T0 -3" -cf wrynose-6.18.37-2.1.0-downloads.tar.zst downloads/ && \
+tar -I "zstd -T0 -6" -cf wrynose-6.18.37-2.1.0-sstate-cache.tar.zst sstate-cache/ && \
+sha256sum wrynose-6.18.37-2.1.0-downloads.tar.zst wrynose-6.18.37-2.1.0-sstate-cache.tar.zst > wrynose-6.18.37-2.1.0-sha256sums.txt
+
+
+
 bitbake -e optee-os | grep ^S=
 S="/home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/optee-os/4.10.0.imx/sources/optee-os-4.10.0.imx"
 vim /home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/optee-os/4.10.0.imx/sources/optee-os-4.10.0.imx/core/arch/arm/plat-imx/conf.mk 
 
 vim /home/adv/BSP/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/imx-atf/2.14+git/sources/imx-atf-2.14+git/plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c
-
+quilt new 0001-add-imx8mm-ebcrs20a1-4G-atf-rdc-support.patch
+quilt add plat/imx/imx8m/imx8mm/imx8mm_bl31_setup.c
+quilt refresh
+sed -i '1i Upstream-Status: Inappropriate [oe specific]\nSigned-off-by: zengwei <zengwei@advantech.com>\n' patches/0001-add-imx8mm-ebcrs20a1-4G-atf-rdc-support.patch
+cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/imx-atf/2.14+git/sources/imx-atf-2.14+git/patches/0001-add-imx8mm-ebcrs20a1-4G-atf-rdc-support.patch /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/meta-advantech-nxp-rs20/recipes-bsp/imx-atf/files/
 
 
 ./meta-freescale/conf/machine/include/imx8mn-evk.inc
@@ -330,4 +1349,22 @@ rm -rf workspace/
 
 sudo dd if=flash_4G_andy_changxin.bin of=/dev/sdd bs=1k seek=33 conv=fsync
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+
+cat /proc/cpuinfo| grep "processor"| wc -l
+cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq
+cat /sys/devices/system/cpu/cpufreq/policy0/scaling_cur_freq
+cat /proc/meminfo
+df -h
+cat /sys/class/backlight/backlight@0/bl_power
+echo 0 > /sys/class/backlight/backlight\@0/brightness
+echo 100 > /sys/class/backlight/backlight\@0/brightness
+i2cdetect -y 1
+i2cdump -f -y 1 0x2E
+
+echo 0 > /sys/class/leds/user-led2/brightness
+echo 1 > /sys/class/leds/user-led2/brightness
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 

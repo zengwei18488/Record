@@ -20,6 +20,12 @@ PLM
 ID: Wei.Zeng
 PW: @PLM0911
 
+for d in /sys/class/net/*; do [ -e "$d/device" ] && [ -f "$d/type" ] && [ "$(cat "$d/type")" = "1" ] && [ ! -d "$d/wireless" ] && b=$(readlink -f "$d/device") && s=$(readlink -f "$d/device/subsystem") && [ "${s##*/}" != "usb" ] && [[ "$b" != *"virtual"* ]] && echo -e "\033[32m[ETHERNET]\033[0m Interface: \033[1m${d##*/}\033[0m | Node: $b"; done
+
+for d in /sys/class/net/*; do [ -e "$d/device" ] && [ -f "$d/type" ] && [ "$(cat "$d/type")" = "1" ] && [ ! -d "$d/wireless" ] && b=$(readlink -f "$d/device") && s=$(readlink -f "$d/device/subsystem") && [ "${s##*/}" != "usb" ] && [[ "$b" != *"virtual"* ]] && echo -e "\033[32m[ETHERNET]\033[0m Interface: \033[1m${d##*/}\033[0m | Bus: \033[36m${s##*/}\033[0m | Node: $b"; done
+
+find . -type f -size 0c
+
 sudo systemctl start openvpn@advrisc-vpn
 ftpuser
 P@ssw0rd

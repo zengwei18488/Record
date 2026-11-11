@@ -360,14 +360,13 @@ $./mkimage.sh
 make ANDROID_COMPILE_WITH_JACK = false
 
 u-boot 编译步骤
-make rk3288_rsb4680a3_2G_defconfig
 make rk3288_usm110a2_2G_defconfig
+make rk3288_rsb4680a3_2G_defconfig
 ./mkv7.sh
 
 kernel 编译步骤
 cd kernel
-make ARCH=arm rk3288_adv_defconfig
-make ARCH=arm rk3288-rsb4680-a3.img -j8
+make ARCH=arm rk3288_adv_defconfig;make ARCH=arm rk3288-rsb4680-a3.img -j8
 make ARCH=arm rk3288-usm110-a2.img -j8
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 vim kernel/arch/arm/boot/dts/rk3288-rsb4680-a3.dts
@@ -375,6 +374,15 @@ vim kernel/include/dt-bindings/display/screen-timing/lcd-g215han01.dtsi
 vim u-boot/board/rockchip/advantech/advantech.c
 vim kernel/drivers/video/backlight/pwm_bl.c
 kernel/arch/arm/boot/dts/rk3288-rsb4680-a3.dts kernel/include/dt-bindings/display/screen-timing/lcd-g215han01.dtsi kernel/drivers/video/backlight/pwm_bl.c
+
+out/target/product/rsb4680/system/media/bootanimation.zip
+vendor/files/system/media/bootanimation.zip
+
+cat /sys/kernel/debug/dri/0/summary
+
+kernel/include/dt-bindings/display/screen-timing/lcd-g215han01.dtsi
+kernel/arch/arm/boot/dts/rk3288-rsb4680-a3.dts
+
 
 ******************************************************************************************************
 NFS

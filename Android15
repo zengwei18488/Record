@@ -6,6 +6,32 @@ kernel-6.1/drivers/media/platform/rockchip/isp/capture.h
 
 BSP Launcher
 
+ 524  git config --global --unset http.postBuffer
+  525  git config --global --unset http.maxRequestBuffer
+  526  git config --global --unset core.compression
+  527  # 重新設定一個合理的大專案快取（500MB 即可）
+  528  git config --global http.postBuffer 524288000
+  529  git config --global http.version HTTP/1.1
+  530  export GIT_SSL_NO_VERIFY=true
+  531  git config --global http.sslVerify false
+repo sync -c -j1 --fail-fast --force-sync
+
+repo sync -c --no-tags --prune -j1 --fail-fast --force-sync
+
+# 1. 進入 external 的實際工作目錄（如果目錄不存在，請先建立它）
+cd external/
+
+# 2. 如果裡面已經有 .git 檔案，直接手動做淺層抓取
+git fetch --depth=1 advantech-azure adv-rk-androidV15
+
+# 3. 成功後，退回根目錄讓 repo 接手
+cd ..
+repo sync -c -j1 --fail-fast
+
+repo init --depth=1
+
+
+
 https://ess-kms.edgecenter.io/en/xdept/internal/BSP_Launcher/scripts-user-manual
 
 脚本
@@ -59,7 +85,7 @@ git push origin android-15.0-mid-rkr4:android-15.0-mid-rkr4
 
 git checkout android-15.0-mid-rkr4_develop
 
-sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/data_8T2/work/BSP-Launcher/Rockchip:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
+sudo docker run -it --name local_rk_androidV15_risc -v /home/zengwei/data_8T2/work/BSP-Launcher/BSP_Launcher/bsp_build:/home/adv/BSP:rw --privileged advrisc/u22.04-rkabv14:latest /bin/bash
 
 wget -c https://riscsw.blob.core.windows.net/android-prebuilts/rk-all-android15/prebuilts-rk-androidV15-rkr4-20250926.tar.gz?snapshot=2025-11-25T07:33:05.1128027Z
 
@@ -136,6 +162,9 @@ gedit configs/rk3576_aom5841a1_defconfig
 gedit include/configs/rk3576_aom5841.h
 
 cp arch/arm64/boot/dts/rockchip/rk3576-aom3841-a1.dts arch/arm64/boot/dts/rockchip/rk3576-aom5841-a1.dts
+
+
+
 
 # 启用凭据存储
 git config --global credential.helper store
