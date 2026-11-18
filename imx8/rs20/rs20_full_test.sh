@@ -103,19 +103,23 @@ test_storage() {
     log_line "$CYAN" "=================================================================="
     lsblk | tee -a "$LOG_FILE"
 
-    # eMMC RootFS R/W test on /tmp or /var/log-persistent
-    if dd if=/dev/urandom of=/var/tmp/.emmc_test_$$.bin bs=1M count=2 conv=fsync >/dev/null 2>&1; then
-        rm -f /var/tmp/.emmc_test_$$.bin
-        record_result "eMMC Storage" "PASS" "Root filesystem 2MB R/W verified"
+    EMMC_MNT=$(lsblk -no MOUNTPOINTS /dev/mmcblk2p2 /dev/mmcblk2p1 2>/dev/null | grep -v "^$" | head -n 1)
+    if [ -n "$EMMC_MNT" ]; then
+        verify_block_rw "eMMC (mmcblk2)" "/dev/mmcblk2"
     else
-        record_result "eMMC Storage" "FAIL" "Root filesystem write failed"
+        record_result "eMMC (mmcblk2)" "SKIP" "mmcblk2 partition not mounted"
     fi
 
-    verify_block_rw "SD Card" "/dev/mmcblk[01]p"
+    SD_MNT=$(lsblk -no MOUNTPOINTS /dev/mmcblk1p2 /dev/mmcblk1p1 2>/dev/null | grep -v "^$" | head -n 1)
+    if [ -n "$SD_MNT" ]; then
+        verify_block_rw "SD Card (mmcblk1)" "/dev/mmcblk1"
+    else
+        record_result "SD Card (mmcblk1)" "SKIP" "No SD card mounted on mmcblk1"
+    fi
+
     verify_block_rw "USB Disk" "/dev/sd[a-z]"
     verify_block_rw "NVMe SSD" "/dev/nvme[0-9]"
 
-    # SPI Flash mtdinfo check
     if [ -e /dev/mtd0 ]; then
         log_line "$BLUE" "Running mtdinfo /dev/mtd0..."
         if mtdinfo /dev/mtd0 | tee -a "$LOG_FILE"; then
@@ -133,7 +137,6 @@ test_network_and_wireless() {
     log_line "$CYAN" "  3. NETWORK & WIRELESS TESTS (LAN / Wi-Fi / Bluetooth / 4G)"
     log_line "$CYAN" "=================================================================="
 
-    # 3.1 LAN (Ethernet) Ping Test
     ETH_IF=$(ip -o link show | awk -F': ' '/eth[0-9]+/ {print $2}' | head -n 1)
     if [ -n "$ETH_IF" ] && ip addr show "$ETH_IF" | grep -q "inet "; then
         GW_IP=$(ip route show dev "$ETH_IF" | awk '/default/ {print $3}' | head -n 1)
@@ -148,26 +151,42 @@ test_network_and_wireless() {
         record_result "LAN (${ETH_IF:-eth0})" "SKIP" "Interface down or no IP assigned"
     fi
 
-    # 3.2 Wi-Fi AP Scan Test
-    WIFI_IF=$(iw dev 2>/dev/null | awk '/Interface/ {print $2}' | head -n 1)
+    WIFI_IF=$(iw dev 2>/dev/null | awk '/Interface/ {print $2}' | grep -E "^(mlan|wlan)" | head -n 1)
     if [ -n "$WIFI_IF" ]; then
         ip link set "$WIFI_IF" up 2>/dev/null
         log_line "$BLUE" "Scanning nearby Wi-Fi APs on $WIFI_IF..."
-        AP_LIST=$(iw dev "$WIFI_IF" scan 2>/dev/null | grep "SSID:" | head -n 8)
+        AP_LIST=""
+        if command -v nmcli >/dev/null 2>&1; then
+            nmcli radio wifi on 2>/dev/null
+            AP_LIST=$(nmcli -t -f SSID dev wifi list ifname "$WIFI_IF" --rescan yes 2>/dev/null | grep -v "^$" | sort -u | head -n 8)
+        fi
+        if [ -z "$AP_LIST" ]; then
+            for try in 1 2 3; do
+                AP_LIST=$(iw dev "$WIFI_IF" scan 2>/dev/null | awk -F'SSID: ' '/SSID:/ && $2 != "" {print $2}' | sort -u | head -n 8)
+                [ -n "$AP_LIST" ] && break
+                sleep 2
+            done
+        fi
         if [ -n "$AP_LIST" ]; then
-            printf "%s\n" "$AP_LIST" | tee -a "$LOG_FILE"
+            printf "%s\n" "$AP_LIST" | sed 's/^/  SSID: /' | tee -a "$LOG_FILE"
             AP_COUNT=$(printf "%s\n" "$AP_LIST" | wc -l)
             record_result "Wi-Fi ($WIFI_IF)" "PASS" "Scanned $AP_COUNT+ nearby APs"
         else
-            record_result "Wi-Fi ($WIFI_IF)" "FAIL" "No APs found or scan failed"
+            record_result "Wi-Fi ($WIFI_IF)" "FAIL" "No APs found or scan busy"
         fi
     else
-        record_result "Wi-Fi" "SKIP" "No wireless interface detected"
+        record_result "Wi-Fi" "SKIP" "No mlan/wlan interface detected"
     fi
 
-    # 3.3 Bluetooth Scan Test
+    if ! hciconfig hci0 >/dev/null 2>&1; then
+        log_line "$YELLOW" "hci0 not found, loading btnxpuart driver..."
+        modprobe btnxpuart 2>/dev/null
+        sleep 2
+    fi
+
     if hciconfig hci0 >/dev/null 2>&1; then
         hciconfig hci0 up 2>/dev/null
+        bluetoothctl power on >/dev/null 2>&1
         log_line "$BLUE" "Scanning nearby Bluetooth devices (5s)..."
         BT_SCAN=$(timeout 6 bluetoothctl --timeout 5 scan on 2>/dev/null | grep "Device " | head -n 6)
         [ -z "$BT_SCAN" ] && BT_SCAN=$(hcitool scan --flush 2>/dev/null | tail -n +2 | head -n 6)
@@ -178,11 +197,19 @@ test_network_and_wireless() {
             record_result "Bluetooth (hci0)" "PASS" "Controller hci0 is UP (no discoverable BT devices nearby)"
         fi
     else
-        record_result "Bluetooth (hci0)" "SKIP" "hci0 adapter not found"
+        record_result "Bluetooth (hci0)" "FAIL" "hci0 adapter failed to initialize even after modprobe btnxpuart"
     fi
 
-    # 3.4 4G LTE (wwan0) Dedicated Ping Test
     if grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then
+        if ! pgrep -x quectel-CM >/dev/null 2>&1; then
+            systemctl start quectel-cm.service 2>/dev/null || (command -v quectel-CM >/dev/null 2>&1 && quectel-CM >/dev/null 2>&1 &)
+        fi
+        WAIT=0
+        while [ "$WAIT" -lt 25 ]; do
+            ip addr show wwan0 2>/dev/null | grep -q "inet " && break
+            sleep 2
+            WAIT=$((WAIT + 2))
+        done
         if ip addr show wwan0 2>/dev/null | grep -q "inet "; then
             log_line "$BLUE" "Pinging 223.5.5.5 via 4G (wwan0)..."
             if ping -I wwan0 -c 3 -W 3 223.5.5.5 | tee -a "$LOG_FILE"; then
@@ -191,7 +218,7 @@ test_network_and_wireless() {
                 record_result "4G LTE (wwan0)" "FAIL" "wwan0 has IP but ping 223.5.5.5 failed"
             fi
         else
-            record_result "4G LTE (wwan0)" "FAIL" "Modem present but wwan0 has no IP"
+            record_result "4G LTE (wwan0)" "FAIL" "Modem present but wwan0 has no IP after 20s"
         fi
     else
         record_result "4G LTE (wwan0)" "SKIP" "No Quectel 4G module installed"
@@ -268,8 +295,16 @@ print_summary() {
     log_line "$CYAN" "\n=================================================================="
     log_line "$CYAN" "  FINAL TEST SUMMARY REPORT"
     log_line "$CYAN" "=================================================================="
-    printf "${NC}%b${NC}\n" "$SUMMARY_LIST"
-    printf "%b\n" "$SUMMARY_LIST" >> "$LOG_FILE"
+    printf "%b\n" "$SUMMARY_LIST" | while IFS= read -r line; do
+        [ -z "$line" ] && continue
+        printf "%s\n" "$line" >> "$LOG_FILE"
+        case "$line" in
+            *"[PASS]"*) printf "${GREEN}%s${NC}\n" "$line" ;;
+            *"[FAIL]"*) printf "${RED}%s${NC}\n" "$line" ;;
+            *"[SKIP]"*) printf "${YELLOW}%s${NC}\n" "$line" ;;
+            *)          printf "%s\n" "$line" ;;
+        esac
+    done
     log_line "$CYAN" "------------------------------------------------------------------"
     log_line "$GREEN" "TOTAL PASSED : $PASS_CNT"
     log_line "$RED"   "TOTAL FAILED : $FAIL_CNT"
