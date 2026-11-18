@@ -262,10 +262,10 @@ test_peripherals() {
         LED_PATH="/sys/class/leds/${led}/brightness"
         if [ -w "$LED_PATH" ]; then
             LED_TESTED=$((LED_TESTED + 1))
-            log_line "$BLUE" "Toggling $led ON (1) -> OFF (0)..."
-            echo 1 > "$LED_PATH"
-            sleep 1
+            log_line "$BLUE" "Toggling $led OFF (0) -> ON (1, active high)..."
             echo 0 > "$LED_PATH"
+            sleep 1
+            echo 1 > "$LED_PATH"
             sleep 1
         else
             log_line "$YELLOW" "LED node not found or not writable: $LED_PATH"
@@ -274,7 +274,7 @@ test_peripherals() {
     done
 
     if [ "$LED_TESTED" -eq 2 ] && [ "$LED_OK" -eq 1 ]; then
-        record_result "User LEDs (led1/led2)" "PASS" "Both user-led1 and user-led2 toggled 1 -> 0"
+        record_result "User LEDs (led1/led2)" "PASS" "Both user-led1 and user-led2 toggled 0 -> 1 (held HIGH)"
     elif [ "$LED_TESTED" -gt 0 ]; then
         record_result "User LEDs" "PASS" "Toggled $LED_TESTED LED(s)"
     else
@@ -288,6 +288,46 @@ test_peripherals() {
         record_result "Watchdog" "PASS" "Nodes detected: $WDT_NODES"
     else
         record_result "Watchdog" "FAIL" "No /dev/watchdog* nodes found"
+    fi
+}
+
+test_audio() {
+    log_line "$CYAN" "\n=================================================================="
+    log_line "$CYAN" "  5. AUDIO PLAYBACK & 5S RECORDING TEST"
+    log_line "$CYAN" "=================================================================="
+
+    REC_FILE="/tmp/rs20_audio_rec.wav"
+    rm -f "$REC_FILE"
+
+    if aplay -l 2>/dev/null | grep -q "^card "; then
+        aplay -l | tee -a "$LOG_FILE"
+        SAMPLE_WAV=$(find /usr/share/sounds -type f -name "*.wav" 2>/dev/null | head -n 1)
+
+        log_line "$BLUE" "[AUDIO Step 1/3] Playing built-in system audio..."
+        if [ -n "$SAMPLE_WAV" ]; then
+            log_line "$BLUE" "Playing sample file: $SAMPLE_WAV"
+            aplay "$SAMPLE_WAV" >/dev/null 2>&1
+        else
+            log_line "$BLUE" "No built-in .wav found, playing 2s test tone via speaker-test..."
+            timeout 3 speaker-test -t sine -f 1000 -l 1 >/dev/null 2>&1
+        fi
+
+        log_line "$YELLOW" "[AUDIO Step 2/3] >>> PLEASE SPEAK INTO MIC NOW! Recording for 5 seconds... <<<"
+        if arecord -f cd -d 5 "$REC_FILE" 2>/dev/null && [ -s "$REC_FILE" ]; then
+            REC_SIZE=$(ls -lh "$REC_FILE" | awk '{print $5}')
+            log_line "$GREEN" "[AUDIO Step 2/3] Recording finished ($REC_SIZE saved at $REC_FILE)."
+
+            log_line "$BLUE" "[AUDIO Step 3/3] Playing back recorded audio ($REC_FILE)..."
+            if aplay "$REC_FILE" >/dev/null 2>&1; then
+                record_result "Audio (Play/Rec/Loop)" "PASS" "Built-in played, 5s recorded ($REC_FILE), playback succeeded"
+            else
+                record_result "Audio (Play/Rec/Loop)" "FAIL" "Playback of $REC_FILE failed"
+            fi
+        else
+            record_result "Audio (Play/Rec/Loop)" "FAIL" "arecord 5s failed or empty file"
+        fi
+    else
+        record_result "Audio" "SKIP" "No ALSA sound card detected (aplay -l empty)"
     fi
 }
 
@@ -318,4 +358,5 @@ print_sys_info
 test_storage
 test_network_and_wireless
 test_peripherals
+test_audio
 print_summary
