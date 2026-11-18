@@ -230,13 +230,42 @@ test_peripherals() {
     log_line "$CYAN" "  4. PERIPHERALS TESTS (RTC / TPM / LEDs / Watchdog)"
     log_line "$CYAN" "=================================================================="
 
-    # 4.1 RTC Hardware Clock Test
+    # 4.1 RTC Hardware Clock Read, Compare (HH:MM), Write & Verify
     if [ -e /dev/rtc0 ]; then
-        log_line "$BLUE" "Reading hardware RTC (/dev/rtc0)..."
-        if hwclock -r -f /dev/rtc0 | tee -a "$LOG_FILE"; then
-            record_result "RTC (/dev/rtc0)" "PASS" "Hardware clock read succeeded"
+        log_line "$BLUE" "Reading hardware RTC (/dev/rtc0) and comparing with system time..."
+        RTC_RAW=$(hwclock -r -f /dev/rtc0 2>/dev/null)
+        if [ -n "$RTC_RAW" ]; then
+            SYS_STR=$(date -u "+%Y-%m-%d %H:%M:%S UTC")
+            RTC_HM=$(echo "$RTC_RAW" | grep -oE "[0-9]{2}:[0-9]{2}" | head -n 1)
+            SYS_HM=$(date -u "+%H:%M")
+
+            log_line "$BLUE" "  Hardware RTC Time : $RTC_RAW (HH:MM = $RTC_HM)"
+            log_line "$BLUE" "  System UTC Time   : $SYS_STR (HH:MM = $SYS_HM)"
+
+            if [ "$RTC_HM" = "$SYS_HM" ]; then
+                CMP_MSG="Initial HH:MM matched ($RTC_HM == $SYS_HM)"
+                log_line "$GREEN" "  [COMPARE] $CMP_MSG"
+            else
+                CMP_MSG="Initial HH:MM differed (RTC=$RTC_HM vs SYS=$SYS_HM)"
+                log_line "$YELLOW" "  [COMPARE] $CMP_MSG"
+            fi
+
+            log_line "$BLUE" "Writing system time to RTC (hwclock -w -f /dev/rtc0)..."
+            if hwclock -w -f /dev/rtc0 2>/dev/null; then
+                RTC_AFTER=$(hwclock -r -f /dev/rtc0 2>/dev/null)
+                RTC_AFTER_HM=$(echo "$RTC_AFTER" | grep -oE "[0-9]{2}:[0-9]{2}" | head -n 1)
+                SYS_AFTER_HM=$(date -u "+%H:%M")
+                log_line "$BLUE" "  RTC After Write   : $RTC_AFTER (HH:MM = $RTC_AFTER_HM)"
+                if [ -n "$RTC_AFTER_HM" ] && [ "$RTC_AFTER_HM" = "$SYS_AFTER_HM" ]; then
+                    record_result "RTC (/dev/rtc0)" "PASS" "$CMP_MSG; Write & readback verified ($RTC_AFTER_HM)"
+                else
+                    record_result "RTC (/dev/rtc0)" "FAIL" "RTC readback HH:MM ($RTC_AFTER_HM) mismatch after write ($SYS_AFTER_HM)"
+                fi
+            else
+                record_result "RTC (/dev/rtc0)" "FAIL" "hwclock -w write failed"
+            fi
         else
-            record_result "RTC (/dev/rtc0)" "FAIL" "hwclock read failed"
+            record_result "RTC (/dev/rtc0)" "FAIL" "hwclock -r read failed"
         fi
     else
         record_result "RTC (/dev/rtc0)" "SKIP" "/dev/rtc0 not found"
