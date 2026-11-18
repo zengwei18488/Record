@@ -178,12 +178,6 @@ test_network_and_wireless() {
         record_result "Wi-Fi" "SKIP" "No mlan/wlan interface detected"
     fi
 
-    if ! hciconfig hci0 >/dev/null 2>&1; then
-        log_line "$YELLOW" "hci0 not found, loading btnxpuart driver..."
-        modprobe btnxpuart 2>/dev/null
-        sleep 2
-    fi
-
     if hciconfig hci0 >/dev/null 2>&1; then
         hciconfig hci0 up 2>/dev/null
         bluetoothctl power on >/dev/null 2>&1
@@ -197,28 +191,26 @@ test_network_and_wireless() {
             record_result "Bluetooth (hci0)" "PASS" "Controller hci0 is UP (no discoverable BT devices nearby)"
         fi
     else
-        record_result "Bluetooth (hci0)" "FAIL" "hci0 adapter failed to initialize even after modprobe btnxpuart"
+        record_result "Bluetooth (hci0)" "FAIL" "hci0 adapter not ready (check boot autoload)"
     fi
 
+    # 3.4 4G LTE (wwan0): Check module presence -> Skip if absent -> Test wwan0 directly
     if grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then
-        if ! pgrep -x quectel-CM >/dev/null 2>&1; then
-            systemctl start quectel-cm.service 2>/dev/null || (command -v quectel-CM >/dev/null 2>&1 && quectel-CM >/dev/null 2>&1 &)
-        fi
         WAIT=0
-        while [ "$WAIT" -lt 25 ]; do
+        while [ "$WAIT" -lt 15 ]; do
             ip addr show wwan0 2>/dev/null | grep -q "inet " && break
-            sleep 2
-            WAIT=$((WAIT + 2))
+            sleep 3
+            WAIT=$((WAIT + 3))
         done
         if ip addr show wwan0 2>/dev/null | grep -q "inet "; then
-            log_line "$BLUE" "Pinging 223.5.5.5 via 4G (wwan0)..."
+            log_line "$BLUE" "Quectel 4G module detected, pinging 223.5.5.5 via wwan0..."
             if ping -I wwan0 -c 3 -W 3 223.5.5.5 | tee -a "$LOG_FILE"; then
-                record_result "4G LTE (wwan0)" "PASS" "Ping 223.5.5.5 via wwan0 succeeded"
+                record_result "4G LTE (wwan0)" "PASS" "Modem present and ping via wwan0 succeeded"
             else
                 record_result "4G LTE (wwan0)" "FAIL" "wwan0 has IP but ping 223.5.5.5 failed"
             fi
         else
-            record_result "4G LTE (wwan0)" "FAIL" "Modem present but wwan0 has no IP after 20s"
+            record_result "4G LTE (wwan0)" "FAIL" "Modem present but wwan0 has no IP (check keepalive service)"
         fi
     else
         record_result "4G LTE (wwan0)" "SKIP" "No Quectel 4G module installed"
@@ -318,6 +310,19 @@ test_peripherals() {
     else
         record_result "Watchdog" "FAIL" "No /dev/watchdog* nodes found"
     fi
+
+    # 4.5 Custom Udev Symlink Nodes Check (/dev/4g_at, /dev/scanner0, /dev/camera0, /dev/camera0_meta)
+    log_line "$BLUE" "Checking custom device nodes (/dev/4g_at, /dev/scanner0, /dev/camera0, /dev/camera0_meta)..."
+    for dev_node in /dev/4g_at /dev/scanner0 /dev/camera0 /dev/camera0_meta; do
+        if [ -e "$dev_node" ]; then
+            NODE_DETAIL=$(ls -l "$dev_node" 2>/dev/null)
+            log_line "$GREEN" "  [FOUND] $NODE_DETAIL"
+            record_result "Device Node ($dev_node)" "PASS" "Exists ($NODE_DETAIL)"
+        else
+            log_line "$YELLOW" "  [NOT FOUND] $dev_node"
+            record_result "Device Node ($dev_node)" "SKIP" "Node not present (peripheral not attached)"
+        fi
+    done
 }
 
 test_audio() {
@@ -360,6 +365,52 @@ test_audio() {
     fi
 }
 
+test_serial_and_manual_guides() {
+    log_line "$CYAN" "\n=================================================================="
+    log_line "$CYAN" "  6. SERIAL PORTS (RS232 / RS485) & MANUAL VERIFICATION GUIDES"
+    log_line "$CYAN" "=================================================================="
+
+    CONFIGURED_PORTS=""
+    MISSING_PORTS=""
+    for port in /dev/ttymxc2 /dev/ttymxc3 /dev/ttyRS4850 /dev/ttyRS4851; do
+        if [ -c "$port" ]; then
+            if stty -F "$port" -echo -onlcr -icanon 115200 2>/dev/null; then
+                log_line "$GREEN" "  [OK] Configured $port (-echo -onlcr -icanon 115200)"
+                CONFIGURED_PORTS="${CONFIGURED_PORTS} ${port}"
+            else
+                log_line "$RED" "  [ERR] Failed to configure $port via stty"
+                MISSING_PORTS="${MISSING_PORTS} ${port}(err)"
+            fi
+        else
+            log_line "$YELLOW" "  [WARN] Serial node not found: $port"
+            MISSING_PORTS="${MISSING_PORTS} ${port}(missing)"
+        fi
+    done
+
+    if [ -n "$CONFIGURED_PORTS" ] && [ -z "$MISSING_PORTS" ]; then
+        record_result "Serial Ports (232/485)" "PASS" "All 4 ports configured at 115200 raw mode"
+    elif [ -n "$CONFIGURED_PORTS" ]; then
+        record_result "Serial Ports (232/485)" "PASS" "Configured:${CONFIGURED_PORTS} (Missing:${MISSING_PORTS})"
+    else
+        record_result "Serial Ports (232/485)" "FAIL" "No RS232/RS485 serial nodes found"
+    fi
+
+    log_line "$YELLOW" "\n--- [MANUAL VERIFICATION REMINDERS] ---"
+    log_line "$BLUE"   "1. RS232 & RS485 Loopback/Transfer Test (Ports configured at 115200):"
+    log_line "$NC"     "   - RS232 : /dev/ttymxc2 , /dev/ttymxc3"
+    log_line "$NC"     "   - RS485 : /dev/ttyRS4850 , /dev/ttyRS4851"
+    log_line "$NC"     "   - Example: cat /dev/ttyRS4850 &  echo 'hello' > /dev/ttyRS4851"
+    log_line "$BLUE"   "2. Display & Touch Test:"
+    log_line "$NC"     "   - Check LVDS screen display quality and test touchscreen tap/drag response."
+    log_line "$BLUE"   "3. Suspend & Wakeup Test Command:"
+    log_line "$GREEN"  "   echo mem > /sys/power/state"
+    log_line "$BLUE"   "4. Camera Preview Test Command:"
+    log_line "$GREEN"  "   /usr/share/examples/multimedia/declarative-camera/declarative-camera"
+    log_line "$BLUE"   "5. Reboot & Poweroff Test Commands:"
+    log_line "$GREEN"  "   reboot"
+    log_line "$GREEN"  "   poweroff"
+}
+
 print_summary() {
     log_line "$CYAN" "\n=================================================================="
     log_line "$CYAN" "  FINAL TEST SUMMARY REPORT"
@@ -388,4 +439,5 @@ test_storage
 test_network_and_wireless
 test_peripherals
 test_audio
+test_serial_and_manual_guides
 print_summary
