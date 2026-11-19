@@ -66,8 +66,7 @@ log_both "$CYAN" "==============================================================
 # =========================================================================
 log_both "$CYAN" ""
 log_both "$CYAN" "--- [PHASE 0] Verifying Persistent Journald Storage (eMMC) ---"
-print_mechanism "Persistent Logging" \
-    "systemd-tmpfiles maps /var/log/journal to /var/log-persistent/journal on eMMC (50MB cap) so logs survive reboots."
+print_mechanism "Persistent Logging" "systemd-tmpfiles maps /var/log/journal to /var/log-persistent/journal on eMMC (50MB cap) so logs survive reboots."
 
 if [ -L /var/log/journal ] && [ -d /var/log-persistent/journal ]; then
     TARGET=$(readlink -f /var/log/journal)
@@ -84,8 +83,7 @@ fi
 # =========================================================================
 log_both "$CYAN" ""
 log_both "$CYAN" "--- [PHASE 1] Detecting Quectel 4G Module (idVendor=2c7c) ---"
-print_mechanism "Hardware Auto-Detection" \
-    "Both services scan /sys/bus/usb/devices/*/idVendor for '2c7c'. If absent, they exit with code 0 (RestartPreventExitStatus=0) for zero CPU/log overhead."
+print_mechanism "Hardware Auto-Detection" "Both services scan /sys/bus/usb/devices/*/idVendor for '2c7c'. If absent, they exit with code 0 (RestartPreventExitStatus=0) for zero CPU/log overhead."
 
 if ! grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then
     log_both "$YELLOW" "[INFO] No Quectel 4G module (2c7c) detected on USB bus."
@@ -148,8 +146,7 @@ sleep 1
 # =========================================================================
 log_both "$CYAN" ""
 log_both "$CYAN" "--- [PHASE 1.5] Checking SIM Card State via AT Port ---"
-print_mechanism "Tri-State SIM & Dialer Standby Protection" \
-    "When modem is healthy but no SIM is inserted (or dialer crashes repeatedly / fails a full 4-stage cycle), watchdog stops quectel-cm and enters 30s low-frequency standby polling."
+print_mechanism "Tri-State SIM & Dialer Standby Protection" "When modem is healthy but no SIM is inserted (or dialer crashes repeatedly / fails a full 4-stage cycle), watchdog stops quectel-cm and enters 30s low-frequency standby polling."
 
 SIM_READY=0
 for tty in /dev/4g_at /dev/ttyUSB2 /dev/ttyUSB3; do
@@ -202,8 +199,7 @@ log_both "$GREEN" "[OK] SIM card is READY (+CPIN: READY). Proceeding to active 4
 # =========================================================================
 log_both "$CYAN" ""
 log_both "$CYAN" "--- [PHASE 2] Testing Systemd 2s Crash Recovery (SIGKILL quectel-CM) ---"
-print_mechanism "Systemd Fast Respawn" \
-    "quectel-cm.service uses Restart=always with RestartSec=2 to immediately respawn crashed dialer processes."
+print_mechanism "Systemd Fast Respawn" "quectel-cm.service uses Restart=always with RestartSec=2 to immediately respawn crashed dialer processes."
 
 OLD_PID=$(pgrep -x quectel-CM | head -n 1)
 if [ -z "$OLD_PID" ]; then
@@ -223,8 +219,7 @@ fi
 sleep 6
 log_both "$CYAN" ""
 log_both "$CYAN" "--- [PHASE 3] Testing Watchdog 5s Process Enforcement (systemctl stop) ---"
-print_mechanism "5s Process Liveness Polling" 
-"Watchdog polls 'pgrep -x quectel-CM' every 5s during idle intervals and immediately restarts the service if stopped."
+print_mechanism "5s Process Liveness Polling" "Watchdog polls 'pgrep -x quectel-CM' every 5s during idle intervals and immediately restarts the service if stopped."
 log_both "$YELLOW" "[ACTION] Stopping quectel-cm.service manually..."
 systemctl stop quectel-cm.service
 sleep 8
@@ -238,8 +233,7 @@ fi
 sleep 6
 log_both "$CYAN" ""
 log_both "$CYAN" "--- [PHASE 4] Simulating Network Blackhole for 4-Stage Recovery (~210s) ---"
-print_mechanism "4-Stage Escalation + Low-Frequency Standby Fallback" 
-"With max_fails=3, Stage 1->4 executes within ~210s, then transitions into 30s low-frequency polling until recovery."
+print_mechanism "4-Stage Escalation + Low-Frequency Standby Fallback" "With max_fails=3, Stage 1->4 executes within ~210s, then transitions into 30s low-frequency polling until recovery."
 if ! ip addr show wwan0 2>/dev/null | grep -q "inet "; then
 log_both "$YELLOW" "[WARN] Waiting 10s for wwan0 IP before injecting ICMP drop..."
 sleep 10
@@ -262,8 +256,8 @@ log_both "$GREEN" "[ACTION] Removing iptables DROP rule to allow connection reco
 iptables -D OUTPUT -o wwan0 -p icmp -j DROP 2>/dev/null || true
 if [ "$STAGE4_SEEN" -eq 1 ]; then
 log_both "$GREEN" "[PASS] All 4 recovery stages executed within ${ELAPSED}s including Stage 4 Mini PCIe hardware reset!"
-log_both "$BLUE" "[WAIT] Waiting up to 45s for modem cold boot, standby wake-up, and 4G reconnection..."
-sleep 45
+log_both "$BLUE" "[WAIT] Waiting up to 55s for modem cold boot, standby wake-up, and 4G reconnection..."
+sleep 55
 if ping -I wwan0 -c 3 -W 3 223.5.5.5 >/dev/null 2>&1; then
 log_both "$GREEN" "[PASS] 4G connectivity on wwan0 fully restored after Stage 4 hardware reset & standby polling!"
 else
