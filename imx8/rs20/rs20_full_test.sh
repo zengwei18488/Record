@@ -98,7 +98,7 @@ verify_block_rw() {
 }
 
 test_storage() {
-    log_line "$CYAN" "\n=================================================================="
+    log_line "$CYAN" "=================================================================="
     log_line "$CYAN" "  2. STORAGE TESTS (eMMC / SD / USB / NVMe / SPI Flash)"
     log_line "$CYAN" "=================================================================="
     lsblk | tee -a "$LOG_FILE"
@@ -133,7 +133,7 @@ test_storage() {
 }
 
 test_network_and_wireless() {
-    log_line "$CYAN" "\n=================================================================="
+    log_line "$CYAN" "=================================================================="
     log_line "$CYAN" "  3. NETWORK & WIRELESS TESTS (LAN / Wi-Fi / Bluetooth / 4G)"
     log_line "$CYAN" "=================================================================="
 
@@ -218,7 +218,7 @@ test_network_and_wireless() {
 }
 
 test_peripherals() {
-    log_line "$CYAN" "\n=================================================================="
+    log_line "$CYAN" "=================================================================="
     log_line "$CYAN" "  4. PERIPHERALS TESTS (RTC / TPM / LEDs / Watchdog)"
     log_line "$CYAN" "=================================================================="
 
@@ -311,7 +311,20 @@ test_peripherals() {
         record_result "Watchdog" "FAIL" "No /dev/watchdog* nodes found"
     fi
 
-    # 4.5 Custom Udev Symlink Nodes Check (/dev/4g_at, /dev/scanner0, /dev/camera0, /dev/camera0_meta)
+    # 4.5 Auto-Exported Sysfs GPIO12 & GPIO14 Check (Presence Only)
+    log_line "$BLUE" "Checking auto-exported /sys/class/gpio/gpio12 and gpio14 nodes..."
+    for gnum in 12 14; do
+        GPATH="/sys/class/gpio/gpio${gnum}"
+        if [ -d "$GPATH" ] && [ -e "$GPATH/direction" ] && [ -e "$GPATH/value" ]; then
+            log_line "$GREEN" "  [FOUND] $GPATH exported successfully"
+            record_result "Sysfs GPIO${gnum}" "PASS" "$GPATH node exported"
+        else
+            log_line "$RED" "  [MISSING] $GPATH not exported"
+            record_result "Sysfs GPIO${gnum}" "FAIL" "$GPATH missing (check CONFIG_GPIO_SYSFS and tmpfiles)"
+        fi
+    done
+
+    # 4.6 Custom Udev Symlink Nodes Check (/dev/4g_at, /dev/scanner0, /dev/camera0, /dev/camera0_meta)
     log_line "$BLUE" "Checking custom device nodes (/dev/4g_at, /dev/scanner0, /dev/camera0, /dev/camera0_meta)..."
     for dev_node in /dev/4g_at /dev/scanner0 /dev/camera0 /dev/camera0_meta; do
         if [ -e "$dev_node" ]; then
@@ -326,7 +339,7 @@ test_peripherals() {
 }
 
 test_audio() {
-    log_line "$CYAN" "\n=================================================================="
+    log_line "$CYAN" "=================================================================="
     log_line "$CYAN" "  5. AUDIO PLAYBACK & 5S RECORDING TEST"
     log_line "$CYAN" "=================================================================="
 
@@ -365,9 +378,63 @@ test_audio() {
     fi
 }
 
+test_gpu_and_vpu() {
+    log_line "$CYAN" ""
+    log_line "$CYAN" "=================================================================="
+    log_line "$CYAN" "  6. GPU (3D/2D) & VPU (1080P HW CODEC) ACCELERATION TESTS"
+    log_line "$CYAN" "=================================================================="
+
+    export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/0}"
+    if [ -z "$WAYLAND_DISPLAY" ]; then
+        WL_SOCK=$(ls "$XDG_RUNTIME_DIR"/wayland-* 2>/dev/null | grep -v '\.lock$' | head -n 1)
+        [ -n "$WL_SOCK" ] && export WAYLAND_DISPLAY=$(basename "$WL_SOCK")
+    fi
+
+    # 6.1 GPU 3D Hardware Acceleration Test
+    if [ -e /dev/galcore ] && command -v glmark2-es2-wayland >/dev/null 2>&1 && [ -n "$WAYLAND_DISPLAY" ]; then
+        IRQ_BEFORE=$(awk '/galcore:0/ {print $2}' /proc/interrupts 2>/dev/null | head -n 1)
+        IRQ_BEFORE=${IRQ_BEFORE:-0}
+        log_line "$BLUE" "Running 2s 3D GPU benchmark (glmark2-es2-wayland)..."
+        GL_OUT=$(glmark2-es2-wayland -b build:duration=2.0 2>&1)
+        printf "%s\n" "$GL_OUT" | grep -E "GL_VENDOR|GL_RENDERER|FPS:" | tee -a "$LOG_FILE"
+        IRQ_AFTER=$(awk '/galcore:0/ {print $2}' /proc/interrupts 2>/dev/null | head -n 1)
+        IRQ_AFTER=${IRQ_AFTER:-0}
+
+        if echo "$GL_OUT" | grep -q "Vivante" && [ "$IRQ_AFTER" -gt "$IRQ_BEFORE" ]; then
+            RENDERER=$(echo "$GL_OUT" | awk -F': ' '/GL_RENDERER/ {print $2}' | xargs)
+            record_result "GPU 3D Acceleration" "PASS" "$RENDERER active (IRQ galcore:0: $IRQ_BEFORE -> $IRQ_AFTER)"
+        else
+            record_result "GPU 3D Acceleration" "FAIL" "Vivante renderer or IRQ increment not detected"
+        fi
+    else
+        record_result "GPU 3D Acceleration" "SKIP" "/dev/galcore, glmark2-es2-wayland, or Wayland display unavailable"
+    fi
+
+    # 6.2 VPU 1080p Hardware Encode + Decode Test
+    if command -v gst-launch-1.0 >/dev/null 2>&1 && gst-inspect-1.0 v4l2h264dec >/dev/null 2>&1 && [ -n "$WAYLAND_DISPLAY" ]; then
+        VPU_IRQ_BEFORE=$(awk '/hantro/ {sum+=$2} END {print sum+0}' /proc/interrupts 2>/dev/null)
+        log_line "$BLUE" "Running 3s 1080p@30fps VPU HW encode+decode pipeline (v4l2h264enc -> v4l2h264dec)..."
+        if gst-launch-1.0 videotestsrc num-buffers=90 ! \
+            video/x-raw,width=1920,height=1080,framerate=30/1 ! \
+            v4l2h264enc ! h264parse ! v4l2h264dec ! waylandsink >/dev/null 2>&1; then
+            VPU_IRQ_AFTER=$(awk '/hantro/ {sum+=$2} END {print sum+0}' /proc/interrupts 2>/dev/null)
+            if [ "$VPU_IRQ_AFTER" -gt "$VPU_IRQ_BEFORE" ]; then
+                record_result "VPU 1080p HW Codec" "PASS" "Hantro HW enc/dec verified (IRQ: $VPU_IRQ_BEFORE -> $VPU_IRQ_AFTER)"
+            else
+                record_result "VPU 1080p HW Codec" "FAIL" "Pipeline succeeded but VPU IRQ did not increase"
+            fi
+        else
+            record_result "VPU 1080p HW Codec" "FAIL" "GStreamer VPU pipeline failed"
+        fi
+    else
+        record_result "VPU 1080p HW Codec" "SKIP" "GStreamer v4l2h264dec or Wayland display unavailable"
+    fi
+}
+
 test_serial_and_manual_guides() {
-    log_line "$CYAN" "\n=================================================================="
-    log_line "$CYAN" "  6. SERIAL PORTS (RS232 / RS485) & MANUAL VERIFICATION GUIDES"
+    log_line "$CYAN" ""
+    log_line "$CYAN" "=================================================================="
+    log_line "$CYAN" "  7. SERIAL PORTS (RS232 / RS485) & MANUAL VERIFICATION GUIDES"
     log_line "$CYAN" "=================================================================="
 
     CONFIGURED_PORTS=""
@@ -395,70 +462,21 @@ test_serial_and_manual_guides() {
         record_result "Serial Ports (232/485)" "FAIL" "No RS232/RS485 serial nodes found"
     fi
 
-    log_line "$YELLOW" "\n--- [MANUAL VERIFICATION REMINDERS] ---"
+    log_line "$YELLOW" ""
+    log_line "$YELLOW" "--- [MANUAL VERIFICATION REMINDERS] ---"
     log_line "$BLUE"   "1. RS232 & RS485 Loopback/Transfer Test (Ports configured at 115200):"
     log_line "$NC"     "   - RS232 : /dev/ttymxc2 , /dev/ttymxc3"
     log_line "$NC"     "   - RS485 : /dev/ttyRS4850 , /dev/ttyRS4851"
-    log_line "$NC"     "   - Example: cat /dev/ttyRS4850 &  echo 'hello' > /dev/ttyRS4851"
+    log_line "$RED"    "   cat /dev/ttyRS4850 &  echo 'hello' > /dev/ttyRS4851"
     log_line "$BLUE"   "2. Display & Touch Test:"
     log_line "$NC"     "   - Check LVDS screen display quality and test touchscreen tap/drag response."
     log_line "$BLUE"   "3. Suspend & Wakeup Test Command:"
-    log_line "$GREEN"  "   echo mem > /sys/power/state"
+    log_line "$RED"    "   echo mem > /sys/power/state"
     log_line "$BLUE"   "4. Camera Preview Test Command:"
-    log_line "$GREEN"  "   /usr/share/examples/multimedia/declarative-camera/declarative-camera"
+    log_line "$RED"    "   /usr/share/examples/multimedia/declarative-camera/declarative-camera"
     log_line "$BLUE"   "5. Reboot & Poweroff Test Commands:"
-    log_line "$GREEN"  "   reboot"
-    log_line "$GREEN"  "   poweroff"
-}
-
-test_gpu_and_vpu() {
-    log_line "$CYAN" "\n=================================================================="
-    log_line "$CYAN" "  7. GPU (3D/2D) & VPU (1080P HW CODEC) ACCELERATION TESTS"
-    log_line "$CYAN" "=================================================================="
-
-    export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-/run/user/0}"
-    if [ -z "$WAYLAND_DISPLAY" ]; then
-        WL_SOCK=$(ls "$XDG_RUNTIME_DIR"/wayland-* 2>/dev/null | grep -v '\.lock$' | head -n 1)
-        [ -n "$WL_SOCK" ] && export WAYLAND_DISPLAY=$(basename "$WL_SOCK")
-    fi
-
-    # 7.1 GPU 3D Hardware Acceleration Test
-    if [ -e /dev/galcore ] && command -v glmark2-es2-wayland >/dev/null 2>&1 && [ -n "$WAYLAND_DISPLAY" ]; then
-        IRQ_BEFORE=$(awk '/galcore:0/ {print $2}' /proc/interrupts 2>/dev/null | head -n 1)
-        IRQ_BEFORE=${IRQ_BEFORE:-0}
-        log_line "$BLUE" "Running 2s 3D GPU benchmark (glmark2-es2-wayland)..."
-        GL_OUT=$(glmark2-es2-wayland -b build:duration=2.0 2>&1)
-        printf "%s\n" "$GL_OUT" | grep -E "GL_VENDOR|GL_RENDERER|FPS:" | tee -a "$LOG_FILE"
-        IRQ_AFTER=$(awk '/galcore:0/ {print $2}' /proc/interrupts 2>/dev/null | head -n 1)
-        IRQ_AFTER=${IRQ_AFTER:-0}
-
-        if echo "$GL_OUT" | grep -q "Vivante" && [ "$IRQ_AFTER" -gt "$IRQ_BEFORE" ]; then
-            RENDERER=$(echo "$GL_OUT" | awk -F': ' '/GL_RENDERER/ {print $2}' | xargs)
-            record_result "GPU 3D Acceleration" "PASS" "$RENDERER active (IRQ galcore:0: $IRQ_BEFORE -> $IRQ_AFTER)"
-        else
-            record_result "GPU 3D Acceleration" "FAIL" "Vivante renderer or IRQ increment not detected"
-        fi
-    else
-        record_result "GPU 3D Acceleration" "SKIP" "/dev/galcore, glmark2-es2-wayland, or Wayland display unavailable"
-    fi
-
-    # 7.2 VPU 1080p Hardware Encode + Decode Test
-    if command -v gst-launch-1.0 >/dev/null 2>&1 && gst-inspect-1.0 v4l2h264dec >/dev/null 2>&1 && [ -n "$WAYLAND_DISPLAY" ]; then
-        VPU_IRQ_BEFORE=$(awk '/hantro/ {sum+=$2} END {print sum+0}' /proc/interrupts 2>/dev/null)
-        log_line "$BLUE" "Running 3s 1080p@30fps VPU HW encode+decode pipeline (v4l2h264enc -> v4l2h264dec)..."
-        if gst-launch-1.0 videotestsrc num-buffers=90 !             video/x-raw,width=1920,height=1080,framerate=30/1 !             v4l2h264enc ! h264parse ! v4l2h264dec ! waylandsink >/dev/null 2>&1; then
-            VPU_IRQ_AFTER=$(awk '/hantro/ {sum+=$2} END {print sum+0}' /proc/interrupts 2>/dev/null)
-            if [ "$VPU_IRQ_AFTER" -gt "$VPU_IRQ_BEFORE" ]; then
-                record_result "VPU 1080p HW Codec" "PASS" "Hantro HW enc/dec verified (IRQ: $VPU_IRQ_BEFORE -> $VPU_IRQ_AFTER)"
-            else
-                record_result "VPU 1080p HW Codec" "FAIL" "Pipeline succeeded but VPU IRQ did not increase"
-            fi
-        else
-            record_result "VPU 1080p HW Codec" "FAIL" "GStreamer VPU pipeline failed"
-        fi
-    else
-        record_result "VPU 1080p HW Codec" "SKIP" "GStreamer v4l2h264dec or Wayland display unavailable"
-    fi
+    log_line "$RED"    "   reboot"
+    log_line "$RED"    "   poweroff"
 }
 
 print_summary() {
@@ -489,6 +507,6 @@ test_storage
 test_network_and_wireless
 test_peripherals
 test_audio
-test_serial_and_manual_guides
 test_gpu_and_vpu
+test_serial_and_manual_guides
 print_summary
