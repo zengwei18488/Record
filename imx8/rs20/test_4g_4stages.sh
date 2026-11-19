@@ -239,13 +239,14 @@ log_both "$YELLOW" "[WARN] Waiting 10s for wwan0 IP before injecting ICMP drop..
 sleep 10
 fi
 log_both "$RED" "[ACTION] Injecting iptables DROP rule on wwan0 ICMP traffic..."
+DRILL_START=$(date "+%Y-%m-%d %H:%M:%S")
 iptables -I OUTPUT -o wwan0 -p icmp -j DROP
 log_both "$BLUE" "[WAIT] Monitoring escalation through Stage 1 -> Stage 2 -> Stage 3 -> Stage 4 (~210s)..."
 ELAPSED=0
 MAX_DRILL_SEC=320
 STAGE4_SEEN=0
 while [ "$ELAPSED" -lt "$MAX_DRILL_SEC" ]; do
-if journalctl -u quectel-watchdog.service -n 25 --no-pager | grep -q "Mini PCIe hardware reset triggered"; then
+if journalctl -u quectel-watchdog.service --since "$DRILL_START" --no-pager | grep -q "Mini PCIe hardware reset triggered"; then
 STAGE4_SEEN=1
 break
 fi
