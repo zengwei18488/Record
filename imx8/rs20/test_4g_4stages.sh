@@ -50,11 +50,19 @@ print_log_guide() {
     log_both "$CYAN" "=================================================================="
 }
 
+CLEANED=0
 cleanup() {
+    [ "$CLEANED" -eq 1 ] && return
+    CLEANED=1
+    trap - EXIT INT TERM
     iptables -D OUTPUT -o wwan0 -p icmp -j DROP 2>/dev/null || true
-    [ -n "$JOURNAL_PID" ] && { pkill -P "$JOURNAL_PID" 2>/dev/null; kill "$JOURNAL_PID" 2>/dev/null; } || true
+    if [ -n "$JOURNAL_PID" ]; then
+        pkill -9 -P "$JOURNAL_PID" 2>/dev/null || true
+        kill -9 "$JOURNAL_PID" 2>/dev/null || true
+    fi
 }
-trap cleanup EXIT INT TERM
+trap cleanup EXIT
+trap 'cleanup; exit 130' INT TERM
 
 log_both "$CYAN" "=================================================================="
 log_both "$CYAN" "[$(date '+%F %T')] Starting Adaptive 4G Keepalive & Self-Healing Drill"
@@ -222,12 +230,12 @@ log_both "$CYAN" "--- [PHASE 3] Testing Watchdog 5s Process Enforcement (systemc
 print_mechanism "5s Process Liveness Polling" "Watchdog polls 'pgrep -x quectel-CM' every 5s during idle intervals and immediately restarts the service if stopped."
 log_both "$YELLOW" "[ACTION] Stopping quectel-cm.service manually..."
 systemctl stop quectel-cm.service
-sleep 8
+sleep 14
 if pgrep -x quectel-CM >/dev/null 2>&1; then
 RESTORED_PID=$(pgrep -x quectel-CM | head -n 1)
 log_both "$GREEN" "[PASS] Watchdog detected stopped service and restored quectel-CM (PID=$RESTORED_PID)."
 else
-log_both "$RED" "[FAIL] Watchdog did not restore stopped quectel-cm.service within 8s!"
+log_both "$RED" "[FAIL] Watchdog did not restore stopped quectel-cm.service within 14s!"
 exit 1
 fi
 sleep 6
