@@ -179,16 +179,19 @@ test_network_and_wireless() {
     fi
 
     if hciconfig hci0 >/dev/null 2>&1; then
-        hciconfig hci0 up 2>/dev/null
-        bluetoothctl power on >/dev/null 2>&1
-        log_line "$BLUE" "Scanning nearby Bluetooth devices (5s)..."
-        BT_SCAN=$(timeout 6 bluetoothctl --timeout 5 scan on 2>/dev/null | grep "Device " | head -n 6)
-        [ -z "$BT_SCAN" ] && BT_SCAN=$(hcitool scan --flush 2>/dev/null | tail -n +2 | head -n 6)
-        if [ -n "$BT_SCAN" ]; then
-            printf "%s\n" "$BT_SCAN" | tee -a "$LOG_FILE"
-            record_result "Bluetooth (hci0)" "PASS" "Controller active and discovered devices"
+        if hciconfig hci0 up >/dev/null 2>&1 && hciconfig hci0 2>/dev/null | grep -q "UP RUNNING"; then
+            bluetoothctl power on >/dev/null 2>&1
+            log_line "$BLUE" "Scanning nearby Bluetooth devices (5s)..."
+            BT_SCAN=$(timeout 6 bluetoothctl --timeout 5 scan on 2>/dev/null | grep "Device " | head -n 6)
+            [ -z "$BT_SCAN" ] && BT_SCAN=$(hcitool scan --flush 2>/dev/null | tail -n +2 | head -n 6)
+            if [ -n "$BT_SCAN" ]; then
+                printf "%s\n" "$BT_SCAN" | tee -a "$LOG_FILE"
+                record_result "Bluetooth (hci0)" "PASS" "Controller UP RUNNING and discovered devices"
+            else
+                record_result "Bluetooth (hci0)" "PASS" "Controller hci0 is UP RUNNING (no discoverable BT devices nearby)"
+            fi
         else
-            record_result "Bluetooth (hci0)" "PASS" "Controller hci0 is UP (no discoverable BT devices nearby)"
+            record_result "Bluetooth (hci0)" "FAIL" "hciconfig hci0 up failed or not UP RUNNING (check btnxpuart/firmware timing)"
         fi
     else
         record_result "Bluetooth (hci0)" "FAIL" "hci0 adapter not ready (check boot autoload)"

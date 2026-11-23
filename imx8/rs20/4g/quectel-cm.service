@@ -1,0 +1,11 @@
+[Unit]
+Description=Quectel 4G CM Auto Dial Service
+After=network.target systemd-udevd.service
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -c 'if grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then exec /usr/bin/quectel-CM; else exit 0; fi'
+Restart=on-failure
+RestartSec=2
+RestartPreventExitStatus=0

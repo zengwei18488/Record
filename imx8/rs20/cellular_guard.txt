@@ -1,0 +1,83 @@
+4g拨号管理和保活逻辑需要大改，上来先确定模块在，工作正常，然后发at指令确认sim卡正常且注网成功且信号正常，立马开始拨号执行quectel-cm
+后面保活参考如下说明，设置配置文件档
+CHECK_INTERVAL: 
+# Used for delay time of "main program module" loop
+# Can be changed according to specific requirements
+# Default 8h
+PING_INTERVALS:
+# Used for delay time of "frequency maintenance module" check network,
+# Can be changed according to specific requirements
+ # Unit must be second
+ # Default : 60 1200 3600 3600
+PING_INTERVAL_NORMAL：
+# The period when the network is normal
+# 10 minutes by default 
+# Default 10m
+MAX_SIM_ERROR_COUNT：
+# Used for trigger 4G module frequency clearing of "SIM card maintenance module",
+# Can be changed according to specific requirements 
+# Default 4
+MAX_PING_ERROR_COUNT：
+# Used for Record the number of network check failures in "frequency maintenance module",
+# Can be changed according to specific requirements
+# Default 3 3 5 12
+MAX_FREQUENCY_ERROR_COUNT_MIN：
+# Minimum value of 4G module frequency clearing of "frequency maintenance module",
+# Can be changed according to specific requirements 
+# Default 3
+MAX_FREQUENCY_ERROR_COUNT_MAX：
+# Max value of 4G module frequency clearing of "frequency maintenance module",
+# Can be changed according to specific requirements
+# Default 5
+MAX_LOG_SIZE
+# The maximum log file size limit saved in storage, unit KiB 
+# Default 100
+Description of time gradient
+When the frequency check network is abnormal, enter the gradient check network state
+according to the default configuration in “cellular_env_docker”
+Time gradient of ping network : 60 1200 3600 3600 (seconds)
+Time limit of ping fail : 3 3 5 12
+Minimum value of maximum error times of frequency point check : 3
+Maximum value of maximum error times of frequency point check: 5
+For example :
+Cellular start up is in “fitst gradient”.
+First time “reset modem” happen caused by network error, then form “first gradient” enter “second 
+gradient”
+                First gradient  Second gradient  Third gradient   Fourth gradient   Fifth gradient  Sixth gradient
+time gradient       60            1200                3600               3600              3600       3600
+of ping
+ 
+time limit of      3                3                    5                 12               12        12
+ping fail 
+
+time of gradient  2 minutes        40 minutes         4 hours          11 hours          11 hours     11 hours
+module   reset
+
+Cellular guard V2.0 import log management function.
+Log file is at DIR : /mnt/data/cellular_guard/cellular_guard.log
+You can change the size of log file by changing MAX_LOG_SIZE in “cellular_env_docker” .
+When the log size exceeds MAX_LOG_SIZE, cellular will Clear half size of log.
+Log format like that:
+2022-11-16 22:17:51: modem index changed from '0' to '11' 
+2022-11-16 22:17:51: jump to network check loop 
+2022-11-16 22:17:51: ping network error, signal quality: 20 
+2022-11-16 22:17:51: can't access network via cellular 1 times, will ping network again in 1 mi
+2022-11-16 22:18:51: do ping network check 
+2022-11-16 22:18:51: ping network error, signal quality: 20 
+2022-11-16 22:18:51: can't access network via cellular 2 times, will ping network again in 1 mi
+2022-11-16 22:19:51: do ping network check 
+2022-11-16 22:19:51: ping network error, signal quality: 20 
+2022-11-16 22:19:51: ping error count reach max:3, restart modem module 
+2022-11-16 22:19:56: will ping network again in 20 minutes 
+Status files are stored in: /mnt/data/cellular_guard/status
+There are the following situations:
+OK
+The network is normal
+sim_error10
+SIM card not inserted or not detected
+sim_error
+Failed to obtain SIM ICCID
+network_error
+Unable to connect to the network
+
+

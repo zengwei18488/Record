@@ -1,11 +1,49 @@
 zstd -d imx-image-full-imx8mmebcrs20a1.rootfs-*.wic.zst
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+快速编译，conf/local.conf
+
+DISTRO ?= 'fsl-imx-xwayland'
+MACHINE ??= 'imx8mmebcrs20a1'
+USER_CLASSES ?= "buildstats"
+PATCHRESOLVE = "noop"
+BB_DISKMON_DIRS ??= "\
+    STOPTASKS,${TMPDIR},1G,100K \
+    STOPTASKS,${DL_DIR},1G,100K \
+    STOPTASKS,${SSTATE_DIR},1G,100K \
+    STOPTASKS,/tmp,100M,100K \
+    HALT,${TMPDIR},100M,1K \
+    HALT,${DL_DIR},100M,1K \
+    HALT,${SSTATE_DIR},100M,1K \
+    HALT,/tmp,10M,1K"
+CONF_VERSION = "2"
+
+DL_DIR ?= "${BSPDIR}/downloads/"
+ACCEPT_FSL_EULA = "1"
+IMAGE_FSTYPES:forcevariable = "wic.zst wic.bmap"
+USER_CLASSES:remove = "buildstats"
+# Switch to Debian packaging and include package-management in the image
+PACKAGE_CLASSES = "package_deb"
+EXTRA_IMAGE_FEATURES += "package-management"
+
+# 1. 关闭 SBOM / SPDX 文档生成（省去海量 JSON 遍历与打包耗时）
+INHERIT:remove = "create-spdx"
+
+# 2. 关闭 CVE 安全漏洞扫描
+INHERIT:remove = "cve-check"
+
+# 3. 精简调试符号包生成，加快 do_package 阶段
+PACKAGE_DEBUG_SPLIT_STYLE = "debug-without-src"
+
+# 4. 仅生成刷机所需的 wic.zst 镜像，跳过耗时的 tar.zst / ext4 等多余根文件系统归档
+IMAGE_FSTYPES = "wic.zst"
+**************************************************************************************************************
 
 sudo umount /dev/sde* 2>/dev/null
 sudo bmaptool copy imx-image-full-imx8mmebcrs20a1.rootfs-20261113081432.wic /dev/sde
 sync
 
 sudo cp imx-image-full-imx8mmebcrs20a1.rootfs-20261117081035.wic /media/zengwei/root/root
-sudo dd if=imx-image-full-imx8mmebcrs20a1.rootfs-20261117081035.wic of=/dev/mmcblk2 bs=4M conv=fsync status=progress
+sudo dd if=imx-image-full-imx8mmebcrs20a1.rootfs-20261119033706.wic of=/dev/mmcblk2 bs=4M conv=fsync status=progress
 
 grep -rn -E "make .*SOC=iMX8MM|cp .*tee\.bin|cp .*bl31" /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/imx8mmebcrs20a1-poky-linux/imx-boot/*/temp/run.do_compile
 
@@ -62,11 +100,15 @@ devtool reset weston
 
 mv /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/build_ebcrs20/tmp/work/armv8a-mx8mm-poky-linux/weston/15.0.1.imx/sources/weston-15.0.1.imx/0001-desktop-shell-prevent-modal-dialog-bury.patch recipes-graphics/wayland/files/
 
-cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-support/libcanberra/* recipes-support/libcanberra/
-cp -r /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/ .
-cp -r /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/quectel-cm/ recipes-connectivity/
+
 cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/conf/machine/imx8mmebcrs20a1.conf conf/machine/imx8mmebcrs20a1.conf
-cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-graphics/wayland/files/0001-desktop-shell-prevent-modal-dialog-bury.patch .
+cp /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-core/udev/adv-udev-rules/99-adv-custom.rules recipes-core/udev/adv-udev-rules/99-adv-custom.rules
+cp -r /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-multimedia/ recipes-multimedia/
+
+cp -r /home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/quectel-cm/files/ recipes-connectivity/quectel-cm/files/
+
+
+bitbake -c cleansstate quectel-cm  gpio-export && bitbake -c clean imx-image-full && bitbake imx-image-full
 
 bitbake -c cleansstate weston weston-init
 bitbake imx-image-full
@@ -102,7 +144,8 @@ export LD_LIBRARY_PATH=/root/demo/Qtlibs:/usr/lib
 scp -r zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/imx8/rs20/demo-yocto6.0.tar.gz .
 export LD_LIBRARY_PATH=/root/demo/Qtlibs:/usr/lib
 cd /root/demo && ./run.sh
-
+测试完成后恢复设定
+unset LD_LIBRARY_PATH
 
 unset LD_LIBRARY_PATH
 export XDG_RUNTIME_DIR=/run/user/0
@@ -111,6 +154,42 @@ export QT_QPA_PLATFORM=wayland
 
 # 2. 啟動相機預覽工具
 /usr/share/examples/multimedia/declarative-camera/declarative-camera
+/usr/share/examples/multimedia/camera/camera
+
+v4l2-ctl -d /dev/camera0 --get-fmt-video
+
+scp \
+    /etc/cellular_guard/cellular_env.conf \
+    /usr/sbin/real_endless_stress.sh \
+    /usr/sbin/verify_4g_now.sh \
+    /lib/systemd/system/quectel-cm.service \
+    /usr/sbin/quectel-watchdog.sh \
+    /usr/lib/systemd/system-sleep/quectel-sleep-hook \
+    zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/imx8/rs20/4g/
+
+export XDG_RUNTIME_DIR=/run/user/0
+export WAYLAND_DISPLAY=wayland-0
+
+H.264 硬體直通解碼 (vpudec) + 2D GPU 色彩轉換 (imxvideoconvert_g2d) + Wayland 零拷貝送顯
+
+gst-launch-1.0 -v \
+  v4l2src device=/dev/camera0 io-mode=dmabuf ! \
+  video/x-h264,width=1920,height=1080,framerate=30/1 ! \
+  h264parse ! \
+  vpudec ! \
+  imxvideoconvert_g2d ! \
+  waylandsink sync=false
+  
+  
+使用 Yocto 6.0 標準 V4L2 狀態機硬解外掛（v4l2h264dec + DMA-BUF 零拷貝）：
+
+gst-launch-1.0 -v \
+  v4l2src device=/dev/camera0 io-mode=dmabuf ! \
+  video/x-h264,width=1920,height=1080,framerate=30/1 ! \
+  h264parse ! \
+  v4l2h264dec capture-io-mode=dmabuf ! \
+  imxvideoconvert_g2d ! \
+  waylandsink sync=false
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
@@ -300,7 +379,9 @@ ip route add default via 172.20.10.1 dev mlan0 metric 5
 ping -4 -c 4 -I mlan0 223.5.5.5
 
 
-休眠唤醒测试功能
+休眠唤醒测试全功能***************************************************************************************************************************
+scp zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/imx8/rs20/rs20_full_test.sh .
+scp zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/imx8/rs20/verify_cellular_guard.sh .
 
 echo mem > /sys/power/state
 
@@ -610,7 +691,7 @@ make modules_install INSTALL_MOD_PATH=$CURRENT_DIR/k-modules/
 
 ls -l k-modules/lib/modules/
 
-scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/rs20-local/linux-imx_rs20_6.18.37_y6.0/k-modules/lib/modules/6.18.37-gc9800eda0915-dirty.tgz .
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/rs20-local/linux-imx_rs20_6.18.37_y6.0/k-modules/lib/modules/6.18.37-g1e5b5f7a7997-dirty.tgz .
 
 ./common.sh
 ./dtb_build.sh
@@ -683,253 +764,69 @@ killall -9 quectel-CM
 sleep 8
 systemctl is-active quectel-cm.service && ip addr show wwan0 | grep "inet "
 
+
+4g living保活测试验证
+
+scp \
+    /etc/cellular_guard/cellular_env.conf \
+    /lib/systemd/system/quectel-cm.service \
+    /usr/sbin/quectel-watchdog.sh \
+    /usr/lib/systemd/system-sleep/quectel-sleep-hook \
+    zengwei@172.21.171.105:/home/zengwei/data_2T/zengwei/documents/Record/imx8/rs20/4g/
+    
+scp \
+    /usr/sbin/quectel-watchdog.sh \
+    /usr/lib/systemd/system-sleep/quectel-sleep-hook \
+    zengwei@172.21.171.105:/home/zengwei//data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/quectel-cm/files/
+
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/quectel-cm/files/quectel-watchdog.sh /usr/sbin/quectel-watchdog.sh
+
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/quectel-cm/files/quectel-sleep-hook /usr/lib/systemd/system-sleep/quectel-sleep-hook
+
+scp zengwei@172.21.171.105:/home/zengwei/data_8T2/work/rs20/yocto-6.0-Wrynose/imx-yocto-bsp/sources/meta-advantech-nxp/recipes-connectivity/quectel-cm/files/cellular_env.conf /etc/cellular_guard/cellular_env.conf
+
+chmod +x /usr/sbin/quectel-watchdog.sh /usr/lib/systemd/system-sleep/quectel-sleep-hook
+systemctl restart quectel-watchdog.service   
+ 
+    # 查看保活看門狗全部日誌
+journalctl -u quectel-watchdog.service --no-pager
+
+# 查看撥號服務 quectel-cm 日誌
+journalctl -u quectel-cm.service --no-pager
+
+# 查看休眠與喚醒鉤子日誌
+journalctl -t quectel-sleep --no-pager
+
+• 查看歷史啟動次數與時間表：
+journalctl --list-boots
+• 查詢「上次開機（-1）」的 4G 保活看門狗日誌：
+journalctl -b -1 -u quectel-watchdog.service --no-pager
+• 查詢「上上次開機（-2）」的 4G 保活看門狗日誌：
+journalctl -b -2 -u quectel-watchdog.service --no-pager
+• 查詢「上次開機（-1）」的休眠與喚醒日誌：
+journalctl -b -1 -t quectel-sleep --no-pager
+    
+
 systemctl status quectel-cm.service quectel-watchdog.service --no-pager
+cat /etc/systemd/system/quectel-cm.service
+
+systemctl status quectel-cm.service quectel-watchdog.service --no-pager
+pgrep -af "quectel" || echo "Zero quectel processes running"
+執行以下指令查看看門狗日誌：
 journalctl -u quectel-watchdog.service --no-pager
 # 1. 確認 USB 總線上確實沒有移遠模組 (2c7c)
 lsusb | grep -i 2c7c || echo "No Quectel USB device present"
 # 2. 確認背景沒有殘留任何撥號或看門狗進程
 pgrep -af "quectel" || echo "No quectel processes running (0 overhead)"
 
+執行一次 reboot 重啟後，使用以下命令依然能調出剛才拔卡測試的完整記錄
+journalctl -b -1 -u quectel-watchdog.service --no-pager
 # 查看上一次開機（-b -1）的 4G 看門狗日誌
 journalctl -b -1 -u quectel-watchdog.service -u quectel-cm.service
 先列出所有歷史開機批次清單（含精確日期與時間）
 journalctl --list-boots
 
 全自动演练测试脚本
-cat << 'EOF' > /tmp/test_4g_4stages.sh
-#!/bin/sh
-
-LOG_FILE="/tmp/4g_4stages_test.log"
-: > "$LOG_FILE"
-
-# ANSI Color Codes
-RED='\033[1;31m'
-GREEN='\033[1;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[1;34m'
-MAGENTA='\033[1;35m'
-CYAN='\033[1;36m'
-NC='\033[0m'
-
-log_both() {
-    color="$1"
-    msg="$2"
-    printf "${color}%s${NC}\n" "$msg"
-    printf "%s\n" "$msg" >> "$LOG_FILE"
-}
-
-print_mechanism() {
-    title="$1"
-    detail="$2"
-    log_both "$MAGENTA" "[MECHANISM - $title]"
-    log_both "$BLUE" "  -> $detail"
-}
-
-print_log_guide() {
-    log_both "$CYAN" "\n=================================================================="
-    log_both "$CYAN" "  PERSISTENT LOG ARCHITECTURE & QUERY GUIDE"
-    log_both "$CYAN" "=================================================================="
-    log_both "$BLUE" "1. Storage Architecture (Survives Reboot & Power Loss):"
-    log_both "$NC"   "   - Symlink : /var/log/journal -> /var/log-persistent/journal (on eMMC)"
-    log_both "$NC"   "   - Config  : /etc/systemd/journald.conf.d/persistent.conf"
-    log_both "$NC"   "   - Limits  : SystemMaxUse=50M (auto-rotates oldest logs), SyncIntervalSec=30s"
-    log_both "$NC"   "   - Drill Log: $LOG_FILE (temporary volatile report for current drill)"
-    log_both "$BLUE" "2. Essential Log Query Commands:"
-    log_both "$YELLOW" "   - Live monitor 4G services :"
-    log_both "$NC"   "       journalctl -u quectel-watchdog.service -u quectel-cm.service -f"
-    log_both "$YELLOW" "   - View current boot logs   :"
-    log_both "$NC"   "       journalctl -b 0 -u quectel-watchdog.service -u quectel-cm.service --no-pager"
-    log_both "$YELLOW" "   - View previous boot logs  :"
-    log_both "$NC"   "       journalctl -b -1 -u quectel-watchdog.service -u quectel-cm.service --no-pager"
-    log_both "$YELLOW" "   - List all recorded boots  :"
-    log_both "$NC"   "       journalctl --list-boots"
-    log_both "$YELLOW" "   - Search all Stage events  :"
-    log_both "$NC"   "       journalctl -u quectel-watchdog.service | grep -E 'Stage [1-4]|hardware reset|recovered'"
-    log_both "$CYAN" "=================================================================="
-}
-
-cleanup() {
-    iptables -D OUTPUT -o wwan0 -p icmp -j DROP 2>/dev/null || true
-    [ -n "$JOURNAL_PID" ] && { pkill -P "$JOURNAL_PID" 2>/dev/null; kill "$JOURNAL_PID" 2>/dev/null; } || true
-}
-trap cleanup EXIT INT TERM
-
-log_both "$CYAN" "=================================================================="
-log_both "$CYAN" "[$(date '+%F %T')] Starting Adaptive 4G Keepalive & Self-Healing Drill"
-log_both "$CYAN" "Live colored output on console; plain log saved at: $LOG_FILE"
-log_both "$CYAN" "=================================================================="
-
-# =========================================================================
-# PHASE 0: Persistent Journald Storage Verification
-# =========================================================================
-log_both "$CYAN" "\n--- [PHASE 0] Verifying Persistent Journald Storage (eMMC) ---"
-print_mechanism "Persistent Logging" \
-    "systemd-tmpfiles maps /var/log/journal to /var/log-persistent/journal on eMMC (50MB cap) so logs survive reboots."
-
-if [ -L /var/log/journal ] && [ -d /var/log-persistent/journal ]; then
-    TARGET=$(readlink -f /var/log/journal)
-    log_both "$GREEN" "[PASS] Persistent journal symlink verified: /var/log/journal -> $TARGET"
-    journalctl --flush 2>/dev/null || true
-    BOOT_COUNT=$(journalctl --list-boots 2>/dev/null | wc -l)
-    log_both "$BLUE" "[INFO] Total recorded boot sessions on eMMC: $BOOT_COUNT"
-else
-    log_both "$YELLOW" "[WARN] /var/log/journal persistent symlink not found (logs may currently reside in RAM)."
-fi
-
-# =========================================================================
-# PHASE 1: Hardware Presence Detection (Auto-branch for No-Modem vs Modem)
-# =========================================================================
-log_both "$CYAN" "\n--- [PHASE 1] Detecting Quectel 4G Module (idVendor=2c7c) ---"
-print_mechanism "Hardware Auto-Detection" \
-    "Both services scan /sys/bus/usb/devices/*/idVendor for '2c7c'. If absent, they exit with code 0 (RestartPreventExitStatus=0) for zero CPU/log overhead."
-
-if ! grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then
-    log_both "$YELLOW" "[INFO] No Quectel 4G module (2c7c) detected on USB bus."
-    log_both "$BLUE" "[TEST] Waiting up to 25s to verify both services exit cleanly without restart loops..."
-    sleep 25
-
-    CM_STATE=$(systemctl is-active quectel-cm.service 2>/dev/null || true)
-    WD_STATE=$(systemctl is-active quectel-watchdog.service 2>/dev/null || true)
-    CM_RESULT=$(systemctl show -p Result --value quectel-cm.service 2>/dev/null || true)
-    WD_RESULT=$(systemctl show -p Result --value quectel-watchdog.service 2>/dev/null || true)
-
-    log_both "$BLUE" "[STATUS] quectel-cm.service       : state=$CM_STATE, result=$CM_RESULT"
-    log_both "$BLUE" "[STATUS] quectel-watchdog.service : state=$WD_STATE, result=$WD_RESULT"
-    journalctl -u quectel-watchdog.service -n 5 --no-pager | tee -a "$LOG_FILE"
-
-    if [ "$CM_STATE" = "inactive" ] && [ "$WD_STATE" = "inactive" ] && \
-       [ "$CM_RESULT" = "success" ] && [ "$WD_RESULT" = "success" ]; then
-        log_both "$GREEN" "\n=================================================================="
-        log_both "$GREEN" "[$(date '+%F %T')] PASS! No-Modem Silent Mode verified (0 CPU/log overhead)."
-        log_both "$GREEN" "=================================================================="
-        print_log_guide
-        exit 0
-    else
-        log_both "$RED" "[FAIL] Services did not exit cleanly in No-Modem mode!"
-        exit 1
-    fi
-fi
-
-log_both "$GREEN" "[OK] Quectel modem (idVendor=2c7c) detected on USB bus. Proceeding to active protection tests..."
-
-# Start real-time log stream with color highlighting
-(
-    journalctl -u quectel-watchdog.service -u quectel-cm.service -f -n 0 | while IFS= read -r line; do
-        printf "%s\n" "$line" >> "$LOG_FILE"
-        case "$line" in
-            *"quectel-CM process not running"*)
-                printf "${YELLOW}%s${NC}\n" "$line"
-                ;;
-            *"Stage 1 Recovery"*|*"Stage 2 Recovery"*|*"Stage 3 Recovery"*)
-                printf "${YELLOW}%s${NC}\n" "$line"
-                ;;
-            *"Stage 4 Recovery"*|*"Mini PCIe hardware reset triggered"*)
-                printf "${RED}%s${NC}\n" "$line"
-                ;;
-            *"recovered"*)
-                printf "${GREEN}%s${NC}\n" "$line"
-                ;;
-            *)
-                printf "%s\n" "$line"
-                ;;
-        esac
-    done
-) &
-JOURNAL_PID=$!
-sleep 1
-
-# =========================================================================
-# PHASE 2: Systemd 2s Fast Crash Recovery Test (kill -9 quectel-CM)
-# =========================================================================
-log_both "$CYAN" "\n--- [PHASE 2] Testing Systemd 2s Crash Recovery (SIGKILL quectel-CM) ---"
-print_mechanism "Systemd Fast Respawn" \
-    "quectel-cm.service uses Restart=always with RestartSec=2 to immediately respawn crashed dialer processes."
-
-OLD_PID=$(pgrep -x quectel-CM | head -n 1)
-if [ -z "$OLD_PID" ]; then
-    log_both "$RED" "[FAIL] quectel-CM process not found before Phase 2!"
-    exit 1
-fi
-log_both "$YELLOW" "[ACTION] Killing quectel-CM (PID=$OLD_PID) with SIGKILL..."
-kill -9 "$OLD_PID"
-sleep 4
-
-NEW_PID=$(pgrep -x quectel-CM | head -n 1)
-if [ -n "$NEW_PID" ] && [ "$NEW_PID" != "$OLD_PID" ]; then
-    log_both "$GREEN" "[PASS] Systemd restarted quectel-CM within 4s (Old PID=$OLD_PID -> New PID=$NEW_PID)."
-else
-    log_both "$RED" "[FAIL] quectel-CM did not restart within 4s!"
-    exit 1
-fi
-sleep 8
-
-# =========================================================================
-# PHASE 3: Watchdog 5s Process Liveness Enforcement (systemctl stop)
-# =========================================================================
-log_both "$CYAN" "\n--- [PHASE 3] Testing Watchdog 5s Process Enforcement (systemctl stop) ---"
-print_mechanism "5s Process Liveness Polling" \
-    "Watchdog polls 'pgrep -x quectel-CM' every 5s during idle intervals and immediately restarts the service if stopped."
-
-log_both "$YELLOW" "[ACTION] Stopping quectel-cm.service manually to simulate accidental service stop..."
-systemctl stop quectel-cm.service
-sleep 7
-
-RECOVERED_PID=$(pgrep -x quectel-CM | head -n 1)
-if [ -n "$RECOVERED_PID" ]; then
-    log_both "$GREEN" "[PASS] Watchdog detected missing process and revived quectel-CM (PID=$RECOVERED_PID) within 7s!"
-else
-    log_both "$RED" "[FAIL] Watchdog failed to revive stopped quectel-cm.service!"
-    exit 1
-fi
-sleep 8
-
-# =========================================================================
-# PHASE 4: 4-Stage Progressive Network Outage Self-Healing Drill
-# =========================================================================
-log_both "$CYAN" "\n--- [PHASE 4] Testing 4-Stage Progressive Network Self-Healing ---"
-print_mechanism "4-Stage Progressive Escalation" \
-    "Every 30s, Watchdog binds 'ping -I wwan0' to isolate 4G from eth0/Wi-Fi. 3 consecutive failures (~90s) escalate: Stage 1 (Service Restart) -> Stage 2 (AT+CFUN=1,1) -> Stage 3 (USB unbind/bind) -> Stage 4 (minipcie_reset hardware power-cycle)."
-
-log_both "$YELLOW" "[STEP 1] Injecting simulated 4G outage (iptables DROP wwan0 ICMP)..."
-iptables -I OUTPUT -o wwan0 -p icmp -j DROP
-
-log_both "$BLUE" "[STEP 2] Waiting for Watchdog escalation Stage 1 -> Stage 2 -> Stage 3 -> Stage 4 (approx. 8-9 mins)..."
-TIMEOUT=650
-ELAPSED=0
-while [ "$ELAPSED" -lt "$TIMEOUT" ]; do
-    if grep -q "Mini PCIe hardware reset triggered" "$LOG_FILE"; then
-        log_both "$RED" "[STEP 3] Stage 4 hardware reset triggered! Waiting 25s for modem cold boot & redial..."
-        sleep 25
-        break
-    fi
-    sleep 3
-    ELAPSED=$((ELAPSED + 3))
-done
-
-if [ "$ELAPSED" -ge "$TIMEOUT" ]; then
-    log_both "$RED" "[ERROR] Timeout waiting for Stage 4 (exceeded ${TIMEOUT}s). Check $LOG_FILE!"
-    exit 1
-fi
-log_both "$YELLOW" "[STEP 4] Removing network block, restoring wwan0 traffic..."
-iptables -D OUTPUT -o wwan0 -p icmp -j DROP 2>/dev/null || true
-log_both "$BLUE" "[STEP 5] Waiting 35s for Watchdog to verify link recovery and reset counters..."
-sleep 35
-log_both "$CYAN" "------------------------------------------------------------------"
-log_both "$BLUE" "[STEP 6] Verifying wwan0 IP address and external ping:"
-ip addr show wwan0 | tee -a "$LOG_FILE"
-if ping -I wwan0 -c 4 223.5.5.5 | tee -a "$LOG_FILE"; then
-log_both "$GREEN" "\n=================================================================="
-log_both "$GREEN" "[$(date '+%F %T')] ALL PHASES PASSED! Persistent logs, hardware check, 2s respawn, 5s enforcement, and 4-stage reset succeeded!"
-log_both "$GREEN" "Full drill report saved at: $LOG_FILE"
-log_both "$GREEN" "=================================================================="
-print_log_guide
-else
-log_both "$RED" "[$(date '+%F %T')] [WARN] Ping test failed. Please inspect $LOG_FILE."
-print_log_guide
-exit 1
-fi
-EOF
-
 chmod +x /tmp/test_4g_4stages.sh
 /tmp/test_4g_4stages.sh
 
@@ -1039,7 +936,33 @@ ls -l /sys/class/rtc/rtc0/device/power/wakeup
 echo enabled > /sys/class/rtc/rtc0/device/power/wakeup
 rtcwake -m mem -s 10
 # 設定 10 秒後由 RTC 鬧鐘自動喚醒，並立即進入深度休眠
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+export XDG_RUNTIME_DIR=/run/user/0
+export WAYLAND_DISPLAY=wayland-0
 
+# 1080p@30fps 測試流：v4l2h264enc (硬編) -> v4l2h264dec (硬解) -> waylandsink (零拷貝顯示)
+gst-launch-1.0 -v videotestsrc num-buffers=300 ! \
+    video/x-raw,width=1920,height=1080,framerate=30/1 ! \
+    v4l2h264enc ! h264parse ! v4l2h264dec ! waylandsink
+    
+    驗證 3D GPU 硬體加速（讓 galcore:0 中斷跳起來）
+export XDG_RUNTIME_DIR=/run/user/0
+export WAYLAND_DISPLAY=wayland-0
+
+# 1. 運行 3D 測試（約跑 1 個場景或按 Ctrl+C 結束即可）
+glmark2-es2-wayland -b build:duration=3.0
+
+# 2. 再次查看中斷計數，確認 galcore:0 已大幅增加
+grep -iE "galcore" /proc/interrupts
+
+接著驗證 VPU 硬體編解碼
+# 1. 執行 1080p@30fps 硬體編碼 -> 硬體解碼 -> Wayland 零拷貝顯示（約 10 秒）
+gst-launch-1.0 -v videotestsrc num-buffers=300 ! \
+    video/x-raw,width=1920,height=1080,framerate=30/1 ! \
+    v4l2h264enc ! h264parse ! v4l2h264dec ! waylandsink
+
+# 2. 確認 VPU 硬體中斷計數增加
+grep -iE "vpu|hantro" /proc/interrupts
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 echo -e "AT+CPIN? \r\n" > /dev/ttyUSB2
@@ -1208,6 +1131,7 @@ bitbake-layers add-layer ../sources/meta-advantech-nxp
 bitbake imx-image-full
 
 bitbake linux-imx -c cleansstate
+bitbake imx-image-full
 bitbake u-boot-imx -c cleansstate
 bitbake imx-boot -c cleansstate
 bitbake -c cleansstate kernel-module-nxp-wlan

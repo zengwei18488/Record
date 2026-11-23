@@ -1,0 +1,50 @@
+#!/bin/sh
+
+case "$1" in
+    pre)
+        logger -t quectel-sleep "System suspending: stopping watchdog and quectel-cm, enabling modem sleep..."
+        # 1. 先停看門狗並清理殘留進程，確保串口獨佔且休眠前不會搶拉撥號
+        systemctl stop quectel-watchdog.service 2>/dev/null || true
+        systemctl stop quectel-cm.service 2>/dev/null || true
+        pkill -9 -f quectel-watchdog.sh 2>/dev/null || true
+        pkill -9 -x quectel-CM 2>/dev/null || true
+
+        # 2. 開啟移遠模組慢時鐘低功耗模式 (純 RAM 寄存器操作，零 Flash 壽命損耗，保留電話喚醒)
+        for tty in /dev/4g_at /dev/ttyUSB2; do
+            if [ -c "$tty" ]; then
+                stty -F "$tty" 115200 raw -echo 2>/dev/null
+                printf 'AT+QSCLK=1\r\n' > "$tty" 2>/dev/null || true
+                break
+            fi
+        done
+
+        # 3. 允許移遠 USB 設備進入 autosuspend 低功耗掛起（保留 wakeup 能力）
+        for dev in /sys/bus/usb/devices/*; do
+            if [ -f "$dev/idVendor" ] && [ "$(cat "$dev/idVendor" 2>/dev/null)" = "2c7c" ]; then
+                echo auto > "$dev/power/control" 2>/dev/null || true
+            fi
+        done
+        ;;
+    post)
+        logger -t quectel-sleep "System resumed: restoring USB power and scheduling service recovery..."
+        # 1. 立即恢復移遠 USB 設備電源狀態為 on
+        for dev in /sys/bus/usb/devices/*; do
+            if [ -f "$dev/idVendor" ] && [ "$(cat "$dev/idVendor" 2>/dev/null)" = "2c7c" ]; then
+                echo on > "$dev/power/control" 2>/dev/null || true
+            fi
+        done
+
+        # 2. 使用 systemd-run 脫離 sleep cgroup 延遲 5 秒安全拉起服務（防止被 systemd-sleep 連帶殺死）
+        if command -v systemd-run >/dev/null 2>&1; then
+            systemd-run --no-block --unit=quectel-resume-recover /bin/sh -c '
+                sleep 5
+                if grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then
+                    systemctl start quectel-cm.service 2>/dev/null || true
+                    systemctl start quectel-watchdog.service 2>/dev/null || true
+                fi
+            ' 2>/dev/null || true
+        else
+            systemctl start --no-block quectel-watchdog.service 2>/dev/null || true
+        fi
+        ;;
+esac

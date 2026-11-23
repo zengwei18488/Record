@@ -1,0 +1,17 @@
+在您目前的 4G 保活方案（quectel-watchdog.sh 與 quectel-sleep-hook）中，quectel-sleep-hook 已經完全移除了所有 AT 指令，目前整個方案裡僅剩 quectel-watchdog.sh 在以下 3 個異常／啟動場景 會發送 AT 指令（除了您提到的開機/異常體檢與 AT+CFUN=1,1 重啟外，還有 串口心跳探測）：
+
+目前方案中所有發送 AT 指令的場景一覽
+
+
+觸發場景	發送的 AT 指令	所在函數	實際作用與目的
+1. 開機體檢 / PING 失敗後診斷	AT+CPIN?	query_modem_and_sim()	查詢 SIM 卡狀態（區分 READY 有卡 vs CME ERROR: 10/13 無卡）。
+2. SIM 卡正常後的網路與信號體檢	AT+CEREG?;+CREG?;+CSQ	query_modem_and_sim()	同時查詢 4G/2G 網路註冊狀態以及信號強度（要求 CSQ >= 1 且 != 99）。
+3. 串口心跳存活探測（新增點）	AT	query_modem_and_sim()	當前面兩組指令超時無預期的 READY 或錯誤碼回顯時，單獨發送基礎 AT 測試模組串口是否還活著（返回 OK 代表串口正常、僅未註冊基站；無任何回顯則判定為串口假死，轉入異常恢復）。
+4. 模組異常恢復（Stage 2）	AT+CFUN=1,1	send_at_reset()	軟重啟 4G 模組協議棧（在 quectel-cm 重啟無效、或待機輪詢檢測到模組異常時觸發）。
+
+
+結論
+
+• 休眠／喚醒路徑（quectel-sleep-hook）：目前 0 條 AT 指令，完全依賴標準 Linux USB 電源狀態（auto / on）與 systemd-run 服務重啟，徹底避免了休眠臨界點操作串口引起的 100mA 半醒問題與日常漏接來電問題。
+• 看門狗路徑（quectel-watchdog.sh）：平時網路正常（ping 通過）時 完全不發送任何 AT 指令；只有在開機、無卡待機輪詢、或 ping 連續失敗時才會發送上述 4 組只讀／軟復位 AT 指令。
+目前整個 4G 方案除了開機體檢與 AT+CFUN=1,1 軟復位外，僅在 query_modem_and_sim() 體檢超時時多了一條基礎 AT 心跳探測（用來區分「僅未註冊基站」與「串口徹底假死」）；日常正常聯網與系統休眠／喚醒過程中均為 零 AT 指令。如果你希望進一步精簡掉某條探測指令或調整超時時間，隨時告訴我！
