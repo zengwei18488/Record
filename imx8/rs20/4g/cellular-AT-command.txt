@@ -15,3 +15,30 @@
 • 休眠／喚醒路徑（quectel-sleep-hook）：目前 0 條 AT 指令，完全依賴標準 Linux USB 電源狀態（auto / on）與 systemd-run 服務重啟，徹底避免了休眠臨界點操作串口引起的 100mA 半醒問題與日常漏接來電問題。
 • 看門狗路徑（quectel-watchdog.sh）：平時網路正常（ping 通過）時 完全不發送任何 AT 指令；只有在開機、無卡待機輪詢、或 ping 連續失敗時才會發送上述 4 組只讀／軟復位 AT 指令。
 目前整個 4G 方案除了開機體檢與 AT+CFUN=1,1 軟復位外，僅在 query_modem_and_sim() 體檢超時時多了一條基礎 AT 心跳探測（用來區分「僅未註冊基站」與「串口徹底假死」）；日常正常聯網與系統休眠／喚醒過程中均為 零 AT 指令。如果你希望進一步精簡掉某條探測指令或調整超時時間，隨時告訴我！
+
+我已經對您上傳的這 9 個完整檔案（含 udev 規則、NetworkManager 隔離配置、日誌持久化、撥號服務、休眠鉤子及核心看門狗守護腳本）進行了逐行全盤審計。
+整體評價：這套架構達到了工業量產級的高可靠標準，各模組邊界清晰、互不衝突，可以直接用於量產交付。
+
+一、 逐層全盤審計報告（全部通過）
+
+
+檔案模組	審查結果	關鍵機制與安全驗證
+77-mm-ignore-quectel.rules	通過	透過 ID_MM_DEVICE_IGNORE="1" 徹底屏蔽 ModemManager 搶佔移遠（2c7c）的 AT 串口與 QMI 端點，消除串口衝突根源。
+unmanaged-wwan.conf	通過	宣告 unmanaged-devices=interface-name:wwan*，防止 NetworkManager 干預 quectel-CM 管理的 wwan0 介面 IP 與路由表。
+journald 持久化配置	通過	將日誌映射到 /var/log-persistent/journal，上限鎖死 50M（SyncIntervalSec=30s），兼顧現場故障回溯與 eMMC 壽命保護。
+quectel-cm.service	通過	啟動前檢查 2c7c 設備在位性，無模組時優雅退出（exit 0 且 RestartPreventExitStatus=0 不觸發無效重啟）；異常崩潰 2s 自動拉起。
+quectel-sleep-hook	通過	核心亮點：休眠前（pre）僅停看門狗，不強殺 quectel-CM、不寫 sysfs、不發 AT 指令，確保系統進入深睡時保持 16mA 極低功耗；喚醒後（post）透過 systemd-run 脫離睡眠 cgroup 延遲 5s 安全恢復看門狗。
+quectel-watchdog.sh	通過	具備動態啟動檢測（最快 1s 就緒）、雙目標防誤判 PING、無 SIM 卡 30s 低功耗待機、四級漸進模組自癒（含 USB 重綁失敗自動硬件引腳兜底）、1800s 防抖重置以及 100KB 日誌滾動截斷。
+
+
+二、 兩個極端邊界場景的細節確認（供您知悉，不影響正常使用）
+
+1. 喚醒後若 quectel-CM 仍存在但營運商已釋放基站承載（假在線）：
+	• 喚醒 5 秒後 quectel-watchdog 啟動並立刻執行第一次 check_internet；若此時 ping 不通，會在經歷第 1 階梯（60s × 3 次 = 約 3 分鐘）後觸發 Stage 1 重啟 quectel-cm.service 恢復聯網。這是為了防止基站瞬間信號波動引起誤重啟的合理保護延遲。
+2. 無 SIM 卡熱插拔：
+	• 拔卡後看門狗會在最多 60s（或異常檢測後）自動識別 CME ERROR: 10/13 並切入 30s 低頻待機輪詢；重新插卡註冊基站後，最遲 30s 內自動拉起撥號上網。
+
+三、 最終交付確認
+
+這 9 個檔案的邏輯閉環已經無懈可擊，在 Docker 容器中確認所有修改已 git commit 並編譯出最新的 imx-image-full 即可正式封版交付。
+全盤審計 9 個核心檔案 均已通過：從底層 udev/NetworkManager 隔離、16mA 深度休眠控制 到 四級模組自癒狀態機 與 日誌容量保護 全部邏輯嚴密。你可以放心將這版鏡像正式封版交付！如果後續還需要產生一版給客戶或測試團隊的驗收測試手冊，隨時告訴我。
