@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, sys, time, signal, subprocess, re
+import os, sys, time, signal, subprocess, re, glob
 
 os.environ.setdefault("XDG_RUNTIME_DIR", "/run/user/0")
 os.environ.setdefault("WAYLAND_DISPLAY", "wayland-0")
@@ -16,7 +16,7 @@ from PySide6.QtMultimedia import QVideoFrame
 from PySide6.QtMultimediaWidgets import QVideoWidget
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QPushButton, QLabel, QButtonGroup
+    QPushButton, QLabel, QButtonGroup, QComboBox
 )
 
 SAVE_DIR = "/mnt/data/cheese"
@@ -31,7 +31,8 @@ class CheeseWindow(QMainWindow):
         self.resize(1024, 640)
         os.makedirs(SAVE_DIR, exist_ok=True)
 
-        self.dev = "/dev/camera0" if os.path.exists("/dev/camera0") else "/dev/video2"
+        self.cameras = self.scan_cameras()
+        self.dev = next(iter(self.cameras))[1]
         self.pipeline = None
         self.is_rec = False
         self.rec_file = ""
@@ -53,6 +54,15 @@ class CheeseWindow(QMainWindow):
         vbox.setSpacing(8)
 
         top = QHBoxLayout()
+        top.addWidget(QLabel("Camera:"))
+        self.cam_combo = QComboBox()
+        self.cam_combo.setMinimumHeight(32)
+        self.cam_combo.setMinimumWidth(200)
+        for lbl, dp in self.cameras:
+            self.cam_combo.addItem(lbl, dp)
+        self.cam_combo.currentIndexChanged.connect(self.on_camera_changed)
+        top.addWidget(self.cam_combo)
+        top.addSpacing(8)
         top.addWidget(QLabel("HW Res:"))
         self.res_group = QButtonGroup(self)
         self.res_btns = []
@@ -93,25 +103,80 @@ class CheeseWindow(QMainWindow):
         next(iter(self.res_btns)).setChecked(True)
         QTimer.singleShot(50, lambda: self.start_hw_stream(self.cur_w, self.cur_h))
 
+    def scan_cameras(self):
+        found = []
+        seen = set()
+        cands = sorted(glob.glob("/dev/camera*")) + sorted(
+            glob.glob("/dev/video*"),
+            key=lambda x: int(re.search(r"(\d+)$", x).group(1)) if re.search(r"(\d+)$", x) else 999
+        )
+        for dev in cands:
+            rdev = os.path.realpath(dev)
+            if rdev in seen: continue
+            try:
+                info = subprocess.check_output(["v4l2-ctl", "-d", dev, "--info"], stderr=subprocess.DEVNULL, text=True)
+                if any(k in info.lower() for k in ("vpu", "amphion", "coda", "m2m")) or "Video Capture" not in info:
+                    continue
+                fmts = subprocess.check_output(["v4l2-ctl", "-d", dev, "--list-formats"], stderr=subprocess.DEVNULL, text=True)
+                if not re.search(r"\[\d+\]:", fmts): continue
+                seen.add(rdev)
+                m = re.search(r"Card type\s*:\s*(.+)", info)
+                name = m.group(1).strip() if m else os.path.basename(dev)
+                found.append((f"{name} ({dev})", dev))
+            except Exception:
+                continue
+        if not found:
+            fb = "/dev/camera0" if os.path.exists("/dev/camera0") else "/dev/video2"
+            found.append((f"Default ({fb})", fb))
+        return found
+
+    def on_camera_changed(self, idx):
+        if self.is_rec or idx < 0: return
+        ndev = self.cam_combo.itemData(idx)
+        if not ndev or ndev == self.dev: return
+        self.dev = ndev
+        self.cam_combo.setEnabled(False)
+        for b in self.res_btns: b.setEnabled(False)
+        self.status_lbl.setText(f"Switching {os.path.basename(self.dev)}...")
+        self.stop_hw_stream()
+        self.supported_res = self.read_hw_resolutions()
+        self.cur_w, self.cur_h = next(iter(self.supported_res))
+        for i, b in enumerate(self.res_btns):
+            if i < len(self.supported_res):
+                w, h = self.supported_res[i]
+                b.setText(f"{w}x{h}")
+                b.setVisible(True)
+            else:
+                b.setVisible(False)
+        next(iter(self.res_btns)).setChecked(True)
+        QTimer.singleShot(300, lambda: self.start_hw_stream(self.cur_w, self.cur_h))
+
     def read_hw_resolutions(self):
-        res = []
+        fmt_res = {"H264": [], "MJPG": [], "YUYV": []}
         try:
-            out = subprocess.check_output(["v4l2-ctl", "-d", self.dev, "--list-formats-ext"], text=True)
-            in_h264 = False
+            out = subprocess.check_output(["v4l2-ctl", "-d", self.dev, "--list-formats-ext"], stderr=subprocess.DEVNULL, text=True)
+            cur_f = None
             for line in out.splitlines():
-                if "'H264'" in line: in_h264 = True
-                elif line.strip().startswith("["): in_h264 = False
-                if in_h264 and "Size: Discrete" in line:
+                if "'H264'" in line: cur_f = "H264"
+                elif "'MJPG'" in line: cur_f = "MJPG"
+                elif "'YUYV'" in line: cur_f = "YUYV"
+                elif line.strip().startswith("["): cur_f = None
+                if cur_f and "Size: Discrete" in line:
                     m = re.search(r"(\d+)x(\d+)", line)
                     if m:
                         pair = (int(m.group(1)), int(m.group(2)))
-                        if pair not in res:
-                            res.append(pair)
+                        if pair not in fmt_res[cur_f]:
+                            fmt_res[cur_f].append(pair)
         except Exception:
             pass
         preferred = [(1920, 1080), (1280, 720), (800, 600), (640, 480)]
-        filtered = [p for p in preferred if p in res]
-        return filtered if filtered else preferred
+        for f in ("H264", "MJPG", "YUYV"):
+            if fmt_res[f]:
+                self.cam_fmt = f
+                filtered = [p for p in preferred if p in fmt_res[f]]
+                return filtered if filtered else fmt_res[f][:4]
+        self.cam_fmt = "H264"
+        return preferred
 
     def stop_hw_stream(self):
         if self.pipeline:
@@ -121,16 +186,38 @@ class CheeseWindow(QMainWindow):
     def start_hw_stream(self, w, h):
         self.stop_hw_stream()
         self.cur_w, self.cur_h = w, h
-        pipe_str = (
-            f"v4l2src device={self.dev} ! video/x-h264,width={w},height={h},framerate=30/1 ! "
-            f"h264parse ! vpudec ! imxvideoconvert_g2d ! "
-            f"video/x-raw,format=RGBx ! appsink name=sink emit-signals=true max-buffers=1 drop=true sync=false"
-        )
-        self.pipeline = Gst.parse_launch(pipe_str)
-        self.pipeline.get_by_name("sink").connect("new-sample", self.on_gst_sample)
-        self.pipeline.set_state(Gst.State.PLAYING)
-        for b in self.res_btns: b.setEnabled(True)
-        self.status_lbl.setText(f"HW Preview {w}x{h}")
+        fmt = getattr(self, "cam_fmt", "H264")
+        if fmt == "H264":
+            pipe_str = (
+                f"v4l2src device={self.dev} ! video/x-h264,width={w},height={h},framerate=30/1 ! "
+                f"h264parse ! vpudec ! imxvideoconvert_g2d ! "
+                f"video/x-raw,format=RGBx ! appsink name=sink emit-signals=true max-buffers=1 drop=true sync=false"
+            )
+        elif fmt == "MJPG":
+            pipe_str = (
+                f"v4l2src device={self.dev} ! image/jpeg,width={w},height={h} ! "
+                f"jpegparse ! jpegdec ! videoconvert ! "
+                f"video/x-raw,format=RGBx ! appsink name=sink emit-signals=true max-buffers=1 drop=true sync=false"
+            )
+        else:
+            pipe_str = (
+                f"v4l2src device={self.dev} ! video/x-raw,width={w},height={h} ! "
+                f"videoconvert ! "
+                f"video/x-raw,format=RGBx ! appsink name=sink emit-signals=true max-buffers=1 drop=true sync=false"
+            )
+        try:
+            self.pipeline = Gst.parse_launch(pipe_str)
+            self.pipeline.get_by_name("sink").connect("new-sample", self.on_gst_sample)
+            ret = self.pipeline.set_state(Gst.State.PLAYING)
+            if ret == Gst.StateChangeReturn.FAILURE:
+                raise RuntimeError("Pipeline failed to enter PLAYING state")
+            self.status_lbl.setText(f"[{os.path.basename(self.dev)}|{fmt}] {w}x{h}")
+        except Exception as e:
+            self.stop_hw_stream()
+            self.status_lbl.setText(f"Err ({os.path.basename(self.dev)}): {e}")
+        finally:
+            self.cam_combo.setEnabled(True)
+            for b in self.res_btns: b.setEnabled(True)
 
     def on_gst_sample(self, sink):
         sample = sink.emit("pull-sample")
@@ -224,6 +311,7 @@ class CheeseWindow(QMainWindow):
             self.rec_thread.start()
             self.is_rec = True
             self.rec_btn.setText("Stop Record")
+            self.cam_combo.setEnabled(False)
             for b in self.res_btns: b.setEnabled(False)
             self.status_lbl.setText(f"REC {self.cur_w}x{self.cur_h} -> {os.path.basename(self.rec_file)}")
         else:
@@ -235,6 +323,7 @@ class CheeseWindow(QMainWindow):
                 self.rec_thread = None
             self.rec_queue = None
             self.rec_btn.setText("Start Record")
+            self.cam_combo.setEnabled(True)
             for b in self.res_btns: b.setEnabled(True)
             self.status_lbl.setText(f"Saved: {os.path.basename(self.rec_file)}")
 
