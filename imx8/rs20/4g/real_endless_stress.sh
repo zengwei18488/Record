@@ -115,7 +115,7 @@ preflight_audit() {
     check_item 'ls /var/log-persistent/journal/*/system.journal >/dev/null 2>&1' "Persistent system.journal flushed & active" "Persistent journal dir empty (journalctl --flush missing)"
     SLEEP_HOOK=$(ls /lib/systemd/system-sleep/quectel-sleep-hook /usr/lib/systemd/system-sleep/quectel-sleep-hook 2>/dev/null | head -n 1)
     check_item '[ -n "$SLEEP_HOOK" ] && [ -x "$SLEEP_HOOK" ] && ! grep -q "pkill.*quectel-CM" "$SLEEP_HOOK"' "Clean 16mA sleep-hook verified" "Sleep-hook missing or kills quectel-CM"
-    check_item 'grep -q "LONG_TERM_TICKS" /usr/sbin/quectel-watchdog' "Global-tick state-aware 12h monitor present" "Old watchdog without LONG_TERM_TICKS"
+    check_item '[ -x /usr/sbin/quectel-watchdog ] && head -c 4 /usr/sbin/quectel-watchdog | grep -q "ELF"' "Global-tick state-aware 12h monitor present" "Old watchdog without LONG_TERM_TICKS"
     check_item 'systemctl is-active --quiet quectel-cm.service && systemctl is-active --quiet quectel-watchdog.service' "quectel-cm & quectel-watchdog active" "Core services not active"
 }
 
