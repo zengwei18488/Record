@@ -196,7 +196,7 @@ class CheeseWindow(QMainWindow):
         elif fmt == "MJPG":
             pipe_str = (
                 f"v4l2src device={self.dev} ! image/jpeg,width={w},height={h} ! "
-                f"jpegparse ! jpegdec ! videoconvert ! "
+                f"jpegparse ! jpegdec ! videoconvert n-threads=4 ! "
                 f"video/x-raw,format=RGBx ! appsink name=sink emit-signals=true max-buffers=1 drop=true sync=false"
             )
         else:
@@ -228,9 +228,14 @@ class CheeseWindow(QMainWindow):
         w, h = s.get_value("width"), s.get_value("height")
         ok, mapinfo = buf.map(Gst.MapFlags.READ)
         if ok:
-            stride = mapinfo.size // h
-            raw = bytes(mapinfo.data)
+            if not self.ui_busy or self.is_rec:
+                stride = mapinfo.size // h
+                raw = bytes(mapinfo.data)
+            else:
+                raw = None
             buf.unmap(mapinfo)
+            if raw is None:
+                return Gst.FlowReturn.OK
             if self.is_rec and self.rec_queue is not None:
                 now = time.monotonic()
                 if now - self.last_rec_ts >= 0.05 and not self.rec_queue.full():
