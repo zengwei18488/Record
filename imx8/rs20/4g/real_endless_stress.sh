@@ -77,6 +77,7 @@ cleanup() {
     trap - EXIT INT TERM
     clear_blackhole
     [ -n "$JCTL_PID" ] && kill -9 "$JCTL_PID" 2>/dev/null || true
+    pkill -f "journalctl -u quectel-watchdog.service" 2>/dev/null || true
     sync
     log_rep "$CYAN" "[STOP] Endless stress test stopped. Report: $REPORT_LOG"
     exit 0
@@ -145,7 +146,6 @@ while true; do
         WLOG_SZ=$(wc -c < "$WD_LOG" 2>/dev/null || echo 0)
         [ "$WLOG_SZ" -gt $(((MAX_LOG_SIZE + 20) * 1024)) ] && dump_bug "watchdog.log exceeded limit: ${WLOG_SZ} bytes"
         log_rep "$BLUE" "[HEARTBEAT] Cycle #${CYCLE} ${ELAPSED}s/${FAULT_DURATION}s | wd=${WD_ST} | log=${WLOG_SZ}B"
-        sync
     done
 
     log_rep "$GREEN" ">>> [CYCLE #${CYCLE}] Phase 2: Removing blackhole & waiting ${RECOVER_DURATION}s for recovery + gradient reset..."
@@ -170,7 +170,6 @@ while true; do
 
     BUGS=$(grep -c "LOGIC-BUG-DETECTED" "$REPORT_LOG" 2>/dev/null || echo 0)
     log_rep "$CYAN" "=== CYCLE #${CYCLE} SUMMARY | wwan0=${WWAN_IP:-NONE} | BugsDetected=${BUGS} ==="
-    sync
     CYCLE=$((CYCLE + 1))
 done
 
