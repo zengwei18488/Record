@@ -21,7 +21,7 @@ log_rep() {
     TS=$(date '+%Y-%m-%d %H:%M:%S')
     printf "${1}[%s] %s${NC}\n" "$TS" "$2"
     printf "[%s] %s\n" "$TS" "$2" >> "$REPORT_LOG"
-    SZ=$(wc -c < "$REPORT_LOG" 2>/dev/null || echo 0)
+    SZ=$(wc -c < "$REPORT_LOG" 2>/dev/null || true); SZ=${SZ:-0}
     [ "$SZ" -gt 4194304 ] && tail -n 3000 "$REPORT_LOG" > "${REPORT_LOG}.tmp" && mv -f "${REPORT_LOG}.tmp" "$REPORT_LOG"
     return 0
 }
@@ -98,6 +98,7 @@ restore_all_faults() {
             break
         fi
     done
+    sleep 15
     if ! grep -qi "2c7c" /sys/bus/usb/devices/*/idVendor 2>/dev/null; then
         [ -w /sys/devices/platform/misc-adv-gpio/minipcie_reset ] && echo 1 > /sys/devices/platform/misc-adv-gpio/minipcie_reset
     fi
@@ -249,12 +250,12 @@ while true; do
     done
 
     log_rep "$YELLOW" ">>> [CYCLE #${CYCLE}] Phase 3: Restoring network, waiting for watchdog recovery detection, then re-breaking BEFORE 30m..."
-    PREV_REC_CNT=$(grep -c "\[RECOVERED\]" "$REPORT_LOG" 2>/dev/null || echo 0)
+    PREV_REC_CNT=$(grep -c "\[RECOVERED\]" "$REPORT_LOG" 2>/dev/null || true)
     restore_all_faults
     WAIT_REC=0
     while [ "$WAIT_REC" -lt 4200 ]; do
         sleep 30; WAIT_REC=$((WAIT_REC + 30))
-        CUR_REC_CNT=$(grep -c "\[RECOVERED\]" "$REPORT_LOG" 2>/dev/null || echo 0)
+        CUR_REC_CNT=$(grep -c "\[RECOVERED\]" "$REPORT_LOG" 2>/dev/null || true)
         [ "$CUR_REC_CNT" -gt "$PREV_REC_CNT" ] && break
     done
     log_rep "$GREEN" "[TEMP-RECOVER-DETECTED] Watchdog detected recovery; holding healthy for 15m (900s < 1800s) then re-breaking..."
@@ -266,7 +267,7 @@ while true; do
     ROUND4_DONE=0
     while [ "$ROUND4_DONE" -eq 0 ]; do
         sleep 30
-        ACT_CNT=$(grep -c "LONG-TERM-12H-ACTION" "$REPORT_LOG" 2>/dev/null || echo 0)
+        ACT_CNT=$(grep -c "LONG-TERM-12H-ACTION" "$REPORT_LOG" 2>/dev/null || true)
         [ "$ACT_CNT" -ge 3 ] && ROUND4_DONE=1
     done
 
@@ -290,8 +291,8 @@ while true; do
             || log_rep "$GREEN" "[RESPAWN-OK] quectel-CM respawned (PID=$NEW_PID)"
     fi
 
-    LT_ACT=$(grep -c "LONG-TERM-12H-ACTION" "$REPORT_LOG" 2>/dev/null || echo 0)
-    BUGS=$(grep -c "LOGIC-BUG-DETECTED" "$REPORT_LOG" 2>/dev/null || echo 0)
+    LT_ACT=$(grep -c "LONG-TERM-12H-ACTION" "$REPORT_LOG" 2>/dev/null || true)
+    BUGS=$(grep -c "LOGIC-BUG-DETECTED" "$REPORT_LOG" 2>/dev/null || true)
     log_rep "$CYAN" "=================================================================="
     log_rep "$CYAN" "  CYCLE #${CYCLE} FULL-MECHANISM AUDIT SUMMARY (wwan0=${WWAN_IP:-NONE})"
     log_rep "$CYAN" "  LongTerm12hActions=${LT_ACT} (Expected 3) | BugsDetected=${BUGS}"
