@@ -4,6 +4,7 @@ GUARD_DIR="/mnt/data/cellular_guard"
 REPORT_LOG="${GUARD_DIR}/real_stress_report.log"
 WD_LOG="${GUARD_DIR}/watchdog.log"
 STATE_FLAG="/tmp/audit_lt_tick_now"
+SWITCH_FLAG="/tmp/audit_sim_switch_now"
 mkdir -p "$GUARD_DIR"
 : > "$REPORT_LOG"
 echo 0 > "$STATE_FLAG"
@@ -86,6 +87,18 @@ inject_modem_state() {
                 fi
             done
             ;;
+        sim_switch)
+            log_rep "$CYAN" "[INJECT-STATE] -> SIM/eSIM Switch simulation (<10s modem reset)..."
+            systemctl stop quectel-cm.service 2>/dev/null || true
+            for tty in /dev/4g_at /dev/ttyUSB2 /dev/ttyUSB3; do
+                if [ -c "$tty" ]; then
+                    stty -F "$tty" 115200 raw -echo 2>/dev/null
+                    printf 'AT+CFUN=1,1\r\n' > "$tty" 2>/dev/null || true
+                    break
+                fi
+            done
+            sleep 8
+            ;;
     esac
 }
 
@@ -126,7 +139,7 @@ cleanup() {
     CLEANED=1
     trap - EXIT INT TERM
     restore_all_faults
-    rm -f "$STATE_FLAG"
+    rm -f "$STATE_FLAG" "$SWITCH_FLAG"
     [ -n "$JCTL_PID" ] && kill -9 "$JCTL_PID" 2>/dev/null || true
     pkill -f "journalctl -u quectel-watchdog.service" 2>/dev/null || true
     sync
@@ -145,7 +158,11 @@ journalctl -u quectel-watchdog.service -f -n 0 -o cat | while IFS= read -r line;
     NOW=$(date +%s)
     case "$line" in
         *"Pre-dial check passed"*) log_rep "$GREEN" "[PRE-DIAL] $line" ;;
+        *"waiting 15s for modem stabilization"*)
+            log_rep "$GREEN" "[DEBOUNCE-HOLD] $line (Verified 15s stabilization buffer triggered)"
+            ;;
         *"Connectivity check failed ("*)
+            [ -f "$SWITCH_FLAG" ] && dump_bug "Watchdog false-triggered failure during <10s SIM switch! ($line)" 
             G_NUM=$(echo "$line" | sed -n 's/.*gradient=\([0-9]*\).*/\1/p')
             [ -n "$G_NUM" ] && [ "$G_NUM" -ne "$CUR_GRAD" ] && dump_bug "Expected gradient=$CUR_GRAD, got $G_NUM ($line)"
             DELTA=""
@@ -170,6 +187,7 @@ journalctl -u quectel-watchdog.service -f -n 0 -o cat | while IFS= read -r line;
             log_rep "$CYAN" "[LT-TICK] $line"
             ;;
         *"Stage "*" Recovery"*)
+            [ -f "$SWITCH_FLAG" ] && dump_bug "Watchdog false-triggered recovery stage during <10s SIM switch! ($line)"
             ST_NUM=$(echo "$line" | sed -n 's/.*Stage \([0-9]*\) Recovery.*/\1/p')
             [ "$IN_LONG_TERM" -eq 1 ] && dump_bug "Repeated Stage $ST_NUM reset after entering LONG_TERM_MONITOR! ($line)"
             [ -n "$ST_NUM" ] && [ "$ST_NUM" -ne "$EXP_STAGE" ] && dump_bug "Expected Stage $EXP_STAGE, got Stage $ST_NUM ($line)"
@@ -285,10 +303,27 @@ while true; do
     CM_PID=$(pgrep -x quectel-CM | head -n 1)
     if [ -n "$CM_PID" ]; then
         kill -9 "$CM_PID" 2>/dev/null || true
-        sleep 10
+        sleep 22
         NEW_PID=$(pgrep -x quectel-CM | head -n 1)
-        [ -z "$NEW_PID" ] || [ "$NEW_PID" = "$CM_PID" ] && dump_bug "quectel-CM failed to respawn in 10s" \
-            || log_rep "$GREEN" "[RESPAWN-OK] quectel-CM respawned (PID=$NEW_PID)"
+        [ -z "$NEW_PID" ] || [ "$NEW_PID" = "$CM_PID" ] && dump_bug "quectel-CM failed to respawn after 15s debounce + restart" \
+            || log_rep "$GREEN" "[RESPAWN-OK] quectel-CM respawned cleanly after 15s debounce (PID=$NEW_PID)"
+    fi
+
+    log_rep "$CYAN" ">>> [CYCLE #${CYCLE}] Phase 6: Testing <10s eSIM/SIM switch debounce & zero-penalty recovery..."
+    touch "$SWITCH_FLAG"
+    PREV_DEBOUNCE=$(grep -c "\[DEBOUNCE-HOLD\]" "$REPORT_LOG" 2>/dev/null || true)
+    inject_modem_state "sim_switch"
+    sleep 35
+    rm -f "$SWITCH_FLAG"
+
+    CUR_DEBOUNCE=$(grep -c "\[DEBOUNCE-HOLD\]" "$REPORT_LOG" 2>/dev/null || true)
+    [ "$CUR_DEBOUNCE" -le "$PREV_DEBOUNCE" ] && dump_bug "Watchdog did NOT trigger 15s stabilization debounce during SIM switch!"
+
+    WWAN_IP=$(ip -4 addr show wwan0 2>/dev/null | awk '/inet / {print $2}' | head -n 1)
+    if [ -z "$WWAN_IP" ] || ! ping -I wwan0 -c 2 -W 3 223.5.5.5 >/dev/null 2>&1; then
+        dump_bug "Cycle #${CYCLE} failed to recover wwan0 after <10s SIM/eSIM switch"
+    else
+        log_rep "$GREEN" "[SIM-SWITCH-OK] Debounced cleanly & recovered wwan0=${WWAN_IP} with 0 penalty!"
     fi
 
     LT_ACT=$(grep -c "LONG-TERM-12H-ACTION" "$REPORT_LOG" 2>/dev/null || true)

@@ -154,6 +154,18 @@ test_network_and_wireless() {
     WIFI_IF=$(iw dev 2>/dev/null | awk '/Interface/ {print $2}' | grep -E "^(mlan|wlan)" | head -n 1)
     if [ -n "$WIFI_IF" ]; then
         ip link set "$WIFI_IF" up 2>/dev/null
+        WIFI_LINK=$(iw dev "$WIFI_IF" link 2>/dev/null)
+        WIFI_IP=$(ip -4 addr show "$WIFI_IF" 2>/dev/null | awk '/inet / {print $2}' | head -n 1)
+        CONN_SSID=""
+        if echo "$WIFI_LINK" | grep -q "Connected to"; then
+            CONN_SSID=$(echo "$WIFI_LINK" | awk -F'SSID: ' '/SSID:/ {print $2}')
+            CONN_BSSID=$(echo "$WIFI_LINK" | awk '/Connected to/ {print $3}')
+            CONN_SIG=$(echo "$WIFI_LINK" | awk -F'signal: ' '/signal:/ {print $2}')
+            log_line "$GREEN" "  [Wi-Fi Connected] Interface: $WIFI_IF | SSID: ${CONN_SSID:-Hidden} ($CONN_BSSID) | Signal: ${CONN_SIG:-N/A} | IP: ${WIFI_IP:-No IP}"
+        else
+            log_line "$YELLOW" "  [Wi-Fi Status] Interface: $WIFI_IF is Not connected (IP: ${WIFI_IP:-None})"
+        fi
+
         log_line "$BLUE" "Scanning nearby Wi-Fi APs on $WIFI_IF..."
         AP_LIST=""
         if command -v nmcli >/dev/null 2>&1; then
@@ -167,10 +179,14 @@ test_network_and_wireless() {
                 sleep 2
             done
         fi
-        if [ -n "$AP_LIST" ]; then
-            printf "%s\n" "$AP_LIST" | sed 's/^/  SSID: /' | tee -a "$LOG_FILE"
-            AP_COUNT=$(printf "%s\n" "$AP_LIST" | wc -l)
-            record_result "Wi-Fi ($WIFI_IF)" "PASS" "Scanned $AP_COUNT+ nearby APs"
+        if [ -n "$AP_LIST" ] || [ -n "$CONN_SSID" ]; then
+            [ -n "$AP_LIST" ] && printf "%s\n" "$AP_LIST" | sed 's/^/  Scanned SSID: /' | tee -a "$LOG_FILE"
+            AP_COUNT=$(printf "%s\n" "$AP_LIST" | grep -c .)
+            if [ -n "$CONN_SSID" ]; then
+                record_result "Wi-Fi ($WIFI_IF)" "PASS" "Connected to '$CONN_SSID' (IP: ${WIFI_IP:-None}), scanned $AP_COUNT APs"
+            else
+                record_result "Wi-Fi ($WIFI_IF)" "PASS" "Not connected, scanned $AP_COUNT nearby APs"
+            fi
         else
             record_result "Wi-Fi ($WIFI_IF)" "FAIL" "No APs found or scan busy"
         fi
@@ -181,14 +197,25 @@ test_network_and_wireless() {
     if hciconfig hci0 >/dev/null 2>&1; then
         if hciconfig hci0 up >/dev/null 2>&1 && hciconfig hci0 2>/dev/null | grep -q "UP RUNNING"; then
             bluetoothctl power on >/dev/null 2>&1
+            BT_CONN=$(bluetoothctl devices Connected 2>/dev/null)
+            [ -z "$BT_CONN" ] && BT_CONN=$(hcitool con 2>/dev/null | grep "ACL")
+            if [ -n "$BT_CONN" ]; then
+                log_line "$GREEN" "  [BT Connected Devices]:"
+                printf "%s\n" "$BT_CONN" | sed 's/^/    /' | tee -a "$LOG_FILE"
+                BT_CONN_SUMMARY=$(printf "%s" "$BT_CONN" | tr '\n' '; ' | sed 's/; $//')
+            else
+                log_line "$YELLOW" "  [BT Connected Devices]: None"
+                BT_CONN_SUMMARY="None"
+            fi
+
             log_line "$BLUE" "Scanning nearby Bluetooth devices (5s)..."
             BT_SCAN=$(timeout 6 bluetoothctl --timeout 5 scan on 2>/dev/null | grep "Device " | head -n 6)
             [ -z "$BT_SCAN" ] && BT_SCAN=$(hcitool scan --flush 2>/dev/null | tail -n +2 | head -n 6)
             if [ -n "$BT_SCAN" ]; then
                 printf "%s\n" "$BT_SCAN" | tee -a "$LOG_FILE"
-                record_result "Bluetooth (hci0)" "PASS" "Controller UP RUNNING and discovered devices"
+                record_result "Bluetooth (hci0)" "PASS" "Connected: [$BT_CONN_SUMMARY]; Scan OK"
             else
-                record_result "Bluetooth (hci0)" "PASS" "Controller hci0 is UP RUNNING (no discoverable BT devices nearby)"
+                record_result "Bluetooth (hci0)" "PASS" "Connected: [$BT_CONN_SUMMARY]; Controller UP RUNNING"
             fi
         else
             record_result "Bluetooth (hci0)" "FAIL" "hciconfig hci0 up failed or not UP RUNNING (check btnxpuart/firmware timing)"
@@ -434,22 +461,48 @@ test_gpu_and_vpu() {
     fi
 }
 
+check_uart_flags() {
+    port="$1"
+    STTY_OUT=$(stty -F "$port" -a 2>/dev/null)
+    CUR_SPEED=$(echo "$STTY_OUT" | grep -oE "speed [0-9]+ baud" | awk '{print $2}')
+    ECHO_OK=0; ONLCR_OK=0; ICANON_OK=0; SPEED_OK=0
+    echo "$STTY_OUT" | grep -qw -- "-echo" && ECHO_OK=1
+    echo "$STTY_OUT" | grep -qw -- "-onlcr" && ONLCR_OK=1
+    echo "$STTY_OUT" | grep -qw -- "-icanon" && ICANON_OK=1
+    [ "$CUR_SPEED" = "115200" ] && SPEED_OK=1
+
+    F_ECHO=$(echo "$STTY_OUT" | grep -oE "(^| )-?echo( |$)" | xargs)
+    F_ONLCR=$(echo "$STTY_OUT" | grep -oE "(^| )-?onlcr( |$)" | xargs)
+    F_ICANON=$(echo "$STTY_OUT" | grep -oE "(^| )-?icanon( |$)" | xargs)
+    STATUS_STR="speed=${CUR_SPEED:-?} ${F_ECHO} ${F_ONLCR} ${F_ICANON}"
+
+    if [ "$ECHO_OK" -eq 1 ] && [ "$ONLCR_OK" -eq 1 ] && [ "$ICANON_OK" -eq 1 ] && [ "$SPEED_OK" -eq 1 ]; then
+        echo "MATCH|$STATUS_STR"
+    else
+        echo "DIFF|$STATUS_STR"
+    fi
+}
+
 test_serial_and_manual_guides() {
     log_line "$CYAN" ""
     log_line "$CYAN" "=================================================================="
     log_line "$CYAN" "  7. SERIAL PORTS (RS232 / RS485) & MANUAL VERIFICATION GUIDES"
     log_line "$CYAN" "=================================================================="
 
-    CONFIGURED_PORTS=""
+    PRE_MATCH_PORTS=""
+    PRE_DIFF_PORTS=""
     MISSING_PORTS=""
     for port in /dev/ttymxc2 /dev/ttymxc3 /dev/ttyRS4850 /dev/ttyRS4851; do
         if [ -c "$port" ]; then
-            if stty -F "$port" -echo -onlcr -icanon 115200 2>/dev/null; then
-                log_line "$GREEN" "  [OK] Configured $port (-echo -onlcr -icanon 115200)"
-                CONFIGURED_PORTS="${CONFIGURED_PORTS} ${port}"
+            RES=$(check_uart_flags "$port")
+            STATE=$(echo "$RES" | cut -d'|' -f1)
+            DETAIL=$(echo "$RES" | cut -d'|' -f2)
+            if [ "$STATE" = "MATCH" ]; then
+                log_line "$GREEN" "  [CHECK OK]   $port matches target ($DETAIL)"
+                PRE_MATCH_PORTS="${PRE_MATCH_PORTS} ${port}"
             else
-                log_line "$RED" "  [ERR] Failed to configure $port via stty"
-                MISSING_PORTS="${MISSING_PORTS} ${port}(err)"
+                log_line "$YELLOW" "  [CHECK DIFF] $port current state is ($DETAIL) [Read-Only Check]"
+                PRE_DIFF_PORTS="${PRE_DIFF_PORTS} ${port}(${DETAIL})"
             fi
         else
             log_line "$YELLOW" "  [WARN] Serial node not found: $port"
@@ -457,12 +510,12 @@ test_serial_and_manual_guides() {
         fi
     done
 
-    if [ -n "$CONFIGURED_PORTS" ] && [ -z "$MISSING_PORTS" ]; then
-        record_result "Serial Ports (232/485)" "PASS" "All 4 ports configured at 115200 raw mode"
-    elif [ -n "$CONFIGURED_PORTS" ]; then
-        record_result "Serial Ports (232/485)" "PASS" "Configured:${CONFIGURED_PORTS} (Missing:${MISSING_PORTS})"
+    if [ -n "$MISSING_PORTS" ]; then
+        record_result "Serial Ports (232/485)" "FAIL" "Missing nodes:${MISSING_PORTS}"
+    elif [ -n "$PRE_DIFF_PORTS" ]; then
+        record_result "Serial Ports (232/485)" "WARN" "State diff (read-only):${PRE_DIFF_PORTS}"
     else
-        record_result "Serial Ports (232/485)" "FAIL" "No RS232/RS485 serial nodes found"
+        record_result "Serial Ports (232/485)" "PASS" "All 4 ports kept (-echo -onlcr -icanon 115200)"
     fi
 
     log_line "$YELLOW" ""
@@ -474,9 +527,9 @@ test_serial_and_manual_guides() {
     log_line "$BLUE"   "2. Display & Touch Test:"
     log_line "$NC"     "   - Check LVDS screen display quality and test touchscreen tap/drag response."
     log_line "$BLUE"   "3. Suspend & Wakeup Test Command:"
-    log_line "$RED"    "   echo mem > /sys/power/state"
+    log_line "$RED"    "   systemctl suspend"
     log_line "$BLUE"   "4. Camera Preview Test Command:"
-    log_line "$RED"    "   /usr/share/examples/multimedia/declarative-camera/declarative-camera"
+    log_line "$RED"    "   cheese or /usr/share/examples/multimedia/declarative-camera/declarative-camera"
     log_line "$BLUE"   "5. Reboot & Poweroff Test Commands:"
     log_line "$RED"    "   reboot"
     log_line "$RED"    "   poweroff"
